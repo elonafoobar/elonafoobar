@@ -1,7 +1,9 @@
 .DS_Store
 *.dump
+*.log
+bak/
+
 *.o
-bin/
 *.a
-a.out
+bin/
 runtime/
