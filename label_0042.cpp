@@ -1358,14 +1358,14 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは火炎に耐性がある"s,
                     u8"You have resistance to fire."s);
                 traitrefn(4) = lang(u8"あなたは火炎にかなりの耐性がある"s,
                     u8"You have strong resistance to fire."s);
             }
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは火炎に弱い"s, u8"You have weakness to fire."s);
                 traitrefn(4) = lang(u8"あなたはかなり火炎に弱い"s,
@@ -1389,14 +1389,14 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは冷気に耐性がある"s,
                     u8"You have resistance to cold."s);
                 traitrefn(4) = lang(u8"あなたは冷気にかなりの耐性がある"s,
                     u8"You have strong resistance to cold."s);
             }
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは冷気に弱い"s, u8"You have weakness to cold."s);
                 traitrefn(4) = lang(u8"あなたはかなり冷気に弱い"s,
@@ -1420,14 +1420,14 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは毒に耐性がある"s,
                     u8"You have resistance to poison."s);
                 traitrefn(4) = lang(u8"あなたは毒にかなりの耐性がある"s,
                     u8"You have strong resistance to poison."s);
             }
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは毒に弱い"s, u8"You have weakness to poison."s);
                 traitrefn(4) = lang(u8"あなたはかなり毒に弱い"s,
@@ -1451,14 +1451,14 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは暗黒に耐性がある"s,
                     u8"You have resistance to darkness."s);
                 traitrefn(4) = lang(u8"あなたは暗黒にかなりの耐性がある"s,
                     u8"You have strong resistance to darkness."s);
             }
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは暗黒に弱い"s,
                     u8"You have weakness to darkness."s);
                 traitrefn(4) = lang(u8"あなたはかなり暗黒に弱い"s,
@@ -1482,7 +1482,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたはマナの反動を軽減できる"s,
                     u8"You take less damages from the mana reaction."s);
             }
@@ -1502,7 +1502,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは高い耐性をもっている"s,
                     u8"You have outstanding resistances."s);
             }
@@ -1530,7 +1530,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは1s以上の物を装備できない[DV上昇]"s,
                     u8"You can't wear equipment weight more than 1s. [DV++]"s);
@@ -1552,7 +1552,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたは罪悪感を感じない[カルマ上限-20]"s,
                         u8"You don't feel guilty. [Karma limit -20]"s);
@@ -1573,7 +1573,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたは良い心を持っている[カルマ上限+20]"s,
                         u8"You are a good man. [Karma limit +20]"s);
@@ -1594,7 +1594,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたの周りでは質の高いエンチャントが生成される"s,
                         u8"Quality stuff are generated around you."s);
@@ -1615,7 +1615,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたが受ける物理ダメージは軽減される"s,
                     u8"You are given physical damage reduction."s);
             }
@@ -1635,7 +1635,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたの元素魔法は強化されている"s,
                     u8"Elemental spells you cast are empowered."s);
             }
@@ -1655,7 +1655,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは周囲の狂気を緩和する"s,
                     u8"You are surrounded by an aura that cures sanity."s);
             }
@@ -1675,7 +1675,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは萌える"s, u8"You moe."s);
             }
             stat = 1;
@@ -1694,7 +1694,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは朦朧状態にならない"s, u8"You won't be dim."s);
             }
@@ -1714,7 +1714,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたの食料の消化は遅い"s,
                     u8"Your digestion is slow."s);
             }
@@ -1734,7 +1734,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたはより多く採取できる"s,
                     u8"You can gather more materials."s);
             }
@@ -1754,7 +1754,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたには追加の成長ボーナスが与えられる"s,
                         u8"You receive extra bonus points."s);
@@ -1775,14 +1775,14 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは魔法に耐性がある"s,
                     u8"You have resistance to magic."s);
                 traitrefn(4) = lang(u8"あなたは魔法にかなりの耐性がある"s,
                     u8"You have strong resistance to magic."s);
             }
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは魔法に弱い"s, u8"You have weakness to magic."s);
                 traitrefn(4) = lang(u8"あなたはかなり魔法に弱い"s,
@@ -1806,7 +1806,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたの肉体は刻々と変化する"s,
                     u8"Your body is changing every moment."s);
             }
@@ -1826,7 +1826,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) >= 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたのエーテル病の進行は遅い"s,
                     u8"Your body slows the Ether Disease progress."s);
             }
@@ -1846,7 +1846,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは重力を生み出している[重量+10%]"s,
                     u8"You generate gravity. [Weight+10%]"s);
                 traitrefn(4) =
@@ -1876,7 +1876,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたの顔はただれている[魅力"s +
                         -1 * (4 + cdata(38, 0) / 5) + u8"]"s,
                     u8"You have sores on your face. [CHR"s +
@@ -1912,7 +1912,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたの足の裏は蹄になっている[足装備不可 速度+"s +
                             (20 + cdata(38, 0) / 2) + u8"]"s,
@@ -1941,7 +1941,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたの目は4つある[感覚+"s +
                         (5 + cdata(38, 0) / 3) + u8" 魅力"s +
                         (5 + cdata(38, 0) / 3) * -1 + u8"]"s,
@@ -1972,7 +1972,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの背中には羽がある[背中装備不可 重量-20% 速度+"s +
                         (12 + cdata(38, 0) / 4) + u8"]"s,
@@ -2003,7 +2003,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたの首はもの凄く太い[首装備不可 魅力"s +
                             (5 + cdata(38, 0) / 5) * -1 + u8" PV+"s +
@@ -2035,7 +2035,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは殺戮に飢えている[DV"s +
                         (15 + cdata(38, 0) * 3 / 2) * -1 + u8" ダメージ修正+"s +
                         (5 + cdata(38, 0) * 2 / 3) + u8"]"s,
@@ -2064,7 +2064,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたの頭は巨大化している[耐久"s +
                         (5 + cdata(38, 0) / 3) * -1 + u8" 器用"s +
                         (4 + cdata(38, 0) / 4) * -1 + u8" 習得+"s +
@@ -2104,7 +2104,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは雨を呼ぶ[雨天確率上昇]"s,
                     u8"Clouds of rain follow you. [Chance of rain+]"s);
             }
@@ -2128,7 +2128,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) =
                     lang(u8"あなたはポーション中毒だ[定期的ポーション消費]"s,
                         u8"You are addicted to potion. [Consume potions]"s);
@@ -2153,7 +2153,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは衰弱している[HP-15% 筋力"s +
                         (4 + cdata(38, 0) / 2) * -1 + u8"]"s,
                     u8"You suffer debilitation. [HP-15% STR"s +
@@ -2182,7 +2182,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは痴呆になっている[MP-15% 魔力"s +
                         (4 + cdata(38, 0) / 2) * -1 + u8"]"s,
                     u8"You have dementia. [MP-15% MAG"s +
@@ -2211,7 +2211,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは重い甲殻で覆われている[PV+"s +
                         (15 + cdata(38, 0) / 2) + u8" 速度"s +
                         (20 + cdata(38, 0) / 2) * -1 + u8"]"s,
@@ -2242,7 +2242,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの周囲の空間は捩れている[ランダムテレポート]"s,
                     u8"You are unstablizing space around you. [Random teleporation]"s);
@@ -2267,7 +2267,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは生きたマナバッテリーだ[杖から魔力抽出]"s,
                     u8"You are a living mana battery. [Absorb mana from rods]"s);
@@ -2292,7 +2292,7 @@ int label_0042()
             traitref(5) = 100;
             traitref(6) = -1;
             if (trait(tid) < 0) {
-                traitrefn(2) = u8""s;
+                traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの手から毒が滴っている[ポーション毒化 毒耐性強化]"s,
                     u8"Poison drips from your hands. [Poison potions RES Poison+]"s);

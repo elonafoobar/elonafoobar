@@ -16,7 +16,7 @@ int label_2107()
         if (fmode == 8) { fread = 0; }
         if (fmode == 7) { fread = 1; }
         if (fmode == 8) {
-            playerheader = u8""s + cdatan(0, 0) + u8" Lv:"s + cdata(38, 0) +
+            playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata(38, 0) +
                 u8" "s + mdatan(0);
             bsave(folder + u8"header.txt"s, playerheader);
         }
@@ -218,7 +218,7 @@ int label_2107()
         }
         if (fmode == 14) {
             playerheader =
-                u8""s + cdatan(0, 0) + u8"(Lv"s + cdata(38, 0) + u8")の遺伝子"s;
+                ""s + cdatan(0, 0) + u8"(Lv"s + cdata(38, 0) + u8")の遺伝子"s;
             file = folder + u8"gene_header.txt"s;
             bsave(file, playerheader);
             fileadd(file);
@@ -269,7 +269,7 @@ int label_2107()
                 }
                 if (fread == 0) {
                     zOpen(hgz, file, 1, 3);
-                    fileadd(u8""s + file);
+                    fileadd(""s + file);
                 }
                 if (fread == 1) { zOpen(hgz, file, 0); }
                 if (cnt == 0) {}
@@ -366,7 +366,7 @@ int label_2107()
                 }
                 if (fread == 0) {
                     zOpen(hgz, file, 1, 3);
-                    fileadd(u8""s + file);
+                    fileadd(""s + file);
                 }
                 if (fread == 1) { zOpen(hgz, file, 0); }
                 if (cnt == 0) {
@@ -718,7 +718,7 @@ int label_2107()
         fsize = 4000;
         if (fread == 0) {
             zOpen(hgz, file, 1, 3);
-            fileadd(u8""s + file);
+            fileadd(""s + file);
         }
         if (fread == 1) { zOpen(hgz, file, 0); }
         if (fread == 0) { zWrite(deck, hgz, fsize); }
@@ -750,7 +750,7 @@ int label_2107()
                 }
                 if (fread == 0) {
                     zOpen(hgz, file, 1, 3);
-                    fileadd(u8""s + file);
+                    fileadd(""s + file);
                 }
                 if (fread == 1) { zOpen(hgz, file, 0); }
                 if (cnt == 0) {

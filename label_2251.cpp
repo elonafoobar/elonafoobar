@@ -7,7 +7,7 @@ namespace elona
 void label_2251()
 {
     listmax = 0;
-    if (buff == u8""s) {
+    if (buff == ""s) {
         label_0176();
         customtalk(tc, 106);
         if (stat) { label_0173(); }
@@ -486,7 +486,7 @@ void label_2251()
         }
     }
     if (chatval == 1) {
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -497,7 +497,7 @@ void label_2251()
         screenupdate = -1;
         label_1419();
         cs = 0;
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -509,7 +509,7 @@ void label_2251()
         screenupdate = -1;
         label_1419();
         cs = 0;
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -582,9 +582,9 @@ void label_2251()
                     }
                 }
             }
-            txt(lang(u8""s + p(1) + u8"個の未判明のアイテムのうち、"s + p +
+            txt(lang(""s + p(1) + u8"個の未判明のアイテムのうち、"s + p +
                     u8"個のアイテムが完全に判明した。"s,
-                u8""s + p + u8" out of "s + p(1) +
+                ""s + p + u8" out of "s + p(1) +
                     u8" unknown items are fully identified."s));
             buff = lang(u8"鑑定結果はこの通り"s + _da(),
                 u8"Here, I have finished identifing your stuff."s);
@@ -812,7 +812,7 @@ void label_2251()
             arenaop(1) = 2;
             arenaop(2) = (100 - gdata(121) / 100) / 2 + 1;
             arenaop(1) = rnd(7) + 2;
-            buff = lang(u8""s + arenaop(1) +
+            buff = lang(""s + arenaop(1) +
                     u8"人同士のチームバトルで、対戦相手はレベル"s + arenaop(2) +
                     u8"以下の相手複数"s + _da() + u8"挑戦する"s + _noka(1),
                 u8"It's a "s + arenaop(1) + u8" vs "s + arenaop(1) +
@@ -825,7 +825,7 @@ void label_2251()
             arenaop(2) = rtval(1);
             enemylv = rtval(1);
             arenaop(1) = rtval;
-            buff = lang(u8""s + arenaop(1) +
+            buff = lang(""s + arenaop(1) +
                     u8"人同士のチームバトルで、対戦相手はレベル"s + arenaop(2) +
                     u8"以下の相手複数"s + _da() + u8"挑戦する"s + _noka(1),
                 u8"It's a "s + arenaop(1) + u8" vs "s + arenaop(1) +
@@ -1013,7 +1013,7 @@ void label_2251()
             }
         }
         label_1521();
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -1098,14 +1098,14 @@ void label_2251()
         chatesc = 1;
         label_2257();
         if (chatval == 1) {
-            txt(lang(u8""s + name(tc) + u8"と別れた…"s,
+            txt(lang(""s + name(tc) + u8"と別れた…"s,
                 u8"You abandoned "s + name(tc) + u8"..."s));
             map(cdata(1, tc), cdata(2, tc), 1) = 0;
             del_chara(tc);
             label_2256();
             return;
         }
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -1129,7 +1129,7 @@ void label_2251()
             }
         }
         listmax = 0;
-        buff = lang(u8"そう"s + _dana() + u8""s + cdatan(0, 56) + u8"を"s +
+        buff = lang(u8"そう"s + _dana() + ""s + cdatan(0, 56) + u8"を"s +
                 calcslavevalue(56) + strgold + u8"でどう"s + _da(1),
             u8"Okay. Let me check the stable....How about "s +
                 cnven(cdatan(0, 56)) + u8" for "s + calcslavevalue(56) +
@@ -1305,14 +1305,14 @@ void label_2251()
         chatesc = 1;
         label_2257();
         if (chatval == 1) {
-            txt(lang(u8""s + name(tc) + u8"を解雇した… "s,
+            txt(lang(""s + name(tc) + u8"を解雇した… "s,
                 u8"You dismiss "s + name(tc) + u8"."s));
             chara_vanquish(tc);
             calccosthire();
             label_2256();
             return;
         }
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -1416,7 +1416,7 @@ void label_2251()
                 label_20332();
                 cc = 0;
                 label_2241();
-                buff = u8""s;
+                buff = "";
             } else {
                 buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
             }
@@ -1620,7 +1620,7 @@ void label_2251()
         label_1419();
         invctrl = 0;
         label_1984();
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }
@@ -1678,7 +1678,7 @@ void label_2251()
                 return;
             }
         }
-        buff = u8""s;
+        buff = "";
         label_2251();
         return;
     }

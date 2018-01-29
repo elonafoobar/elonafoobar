@@ -1310,9 +1310,9 @@ void label_2246()
                 return;
             }
             listmax = 0;
-            buff = lang(u8""s + cdatan(0, 0) +
+            buff = lang(""s + cdatan(0, 0) +
                     u8"の言うとおり、私達に残されている時間は少ないわ。こうしている間にも、新王国のかの者の計画は着実に進んでいる… 出発しよう、ロミアス。"s,
-                u8""s + cdatan(0, 0) +
+                ""s + cdatan(0, 0) +
                     u8" is right. The time left for us is scarce. We need to depart, Lomias."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -1412,7 +1412,7 @@ void label_2246()
             }
             if (jp) {
                 listmax = 0;
-                buff = lang(u8"次はzキーでの行動について説明しよう。"s, u8""s);
+                buff = lang(u8"次はzキーでの行動について説明しよう。"s, ""s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = strmore;
@@ -2037,7 +2037,7 @@ void label_2246()
         if (gdata(252) >= 60) {
             buff = lang(u8"あら、"s + cdatan(0, 0) +
                     u8"。レシマスの調査は進んでいるかしら？ 何か必要な情報があれば、何でも聞いてください。"s,
-                u8""s + cdatan(0, 0) +
+                ""s + cdatan(0, 0) +
                     u8", how's your investigation going? Ask anything you'd like to know."s);
             list(0, listmax) = 6;
             listn(0, listmax) =
@@ -2865,7 +2865,7 @@ void label_2246()
         }
         if (gdata(453) == 5 || gdata(453) == 7) {
             listmax = 0;
-            buff = lang(u8""s + cdatan(0, 0) +
+            buff = lang(""s + cdatan(0, 0) +
                     u8"さん、大好き〜。おかあさん、どんどん元気になってるよ♪"s,
                 u8"Thanks "s + cdatan(0, 0) +
                     u8", you're the best! Mommy's getting better and better."s);
@@ -2920,9 +2920,9 @@ void label_2246()
             return;
         }
         if (gdata(453) == 8) {
-            buff = lang(u8""s + cdatan(0, 0) +
+            buff = lang(""s + cdatan(0, 0) +
                     u8"さん…おかあさんが…！おかあさんが…急に具合が悪くなって…身体がおかしくなって…あぁ…神様…"s,
-                u8""s + cdatan(0, 0) +
+                ""s + cdatan(0, 0) +
                     u8"! It's mommy... something's wrong! Suddenly she started acting strange and... now her body is changing and... oh gods..."s);
             label_2248();
             if (stat == 0) {
@@ -2960,7 +2960,7 @@ void label_2246()
             listmax = 0;
             buff = lang(
                 u8"おかあさんが…"s + cdatan(0, 0) + u8"さんにお話があるって…"s,
-                u8""s + cdatan(0, 0) +
+                ""s + cdatan(0, 0) +
                     u8", mommy has something to say to you."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -2999,9 +2999,9 @@ void label_2246()
         }
         if (gdata(453) == 10) {
             listmax = 0;
-            buff = lang(u8""s + cdatan(0, 0) +
+            buff = lang(""s + cdatan(0, 0) +
                     u8"さん…こんな姿でごめんなさい…どうか、怖がらないで…逃げないで…。私の病気は、もう手遅れだったようです。この醜い身体が元に戻ることは…もうないでしょう。"s,
-                u8""s + cdatan(0, 0) +
+                ""s + cdatan(0, 0) +
                     u8", I'm sorry you have to see me this way... please don't turn away... don't run. It seems my disease has already progressed too far... my twisted and hideous body... I can never return to normal... the disease is too advanced now."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -3134,7 +3134,7 @@ void label_2246()
             listmax = 0;
             buff = lang(u8"…"s + cdatan(0, 0) +
                     u8"さん、あなたに最後のお願いがあります。この短剣で、私の胸を貫いてください。うふふ、だって、この姿がばれてしまったら、せっかくできたパエルの友達が逃げてしまうじゃない。あの子が幸せになれるなら、私は…"s,
-                u8""s + cdatan(0, 0) +
+                ""s + cdatan(0, 0) +
                     u8", I have... I have one final request. Take this knife and... *weep*. If Pael's friends saw me like this, they'd run in fear and treat her with fear and suspicion. As long as she can be happy, I..."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -3254,7 +3254,7 @@ void label_2246()
         }
         if (gdata(453) > 5) {
             listmax = 0;
-            buff = lang(u8""s + cdatan(0, 0) +
+            buff = lang(""s + cdatan(0, 0) +
                     u8"さん、いらっしゃい。え？嬉しそうな顔をしてる？…うふふ、この前ね、パエルが家の外に大きな雪だるまを作ってくれたのよ。「お友達と一緒に作ったの」って、あんな嬉しそうな顔は、あの子の父親が死んでしまって以来見ていないわ。あのパエルの作った雪だるまを窓から見てるとね、とても幸せな気分になるのよ。"s,
                 u8"It's good to see you, "s + cdatan(0, 0) +
                     u8". Hmm? You say I look happy? Hehe, just before you arrived Pael made a snowman outside. She said she made it with her friends. I haven't seen her smile like that since her father died. When I see that snowman through the window, I feel a joy I cannot describe to you."s);
@@ -4193,7 +4193,7 @@ void label_2246()
     case 243:
         if (gdata(459) == 1000) {
             listmax = 0;
-            buff = lang(u8""s + cdatan(0, 0) +
+            buff = lang(""s + cdatan(0, 0) +
                     u8"さん、あなたとまた会話できるとは光栄です！"s,
                 u8"I hope we can talk again sometime, "s + cdatan(0, 0) +
                     u8"!"s);
@@ -6074,7 +6074,7 @@ void label_2246()
                     gdata(268) = cdata(27, 56);
                     chara_vanquish(56);
                     listmax = 0;
-                    buff = lang(u8""s + refchara_str(gdata(268), 2) + u8"を"s +
+                    buff = lang(""s + refchara_str(gdata(268), 2) + u8"を"s +
                             gdata(267) +
                             u8"匹討伐するのが、お前に課せられた試験だ。ノルマを達成したら、私に報告したまえ。"s,
                         u8"The task given to you is this. Find and slay "s +

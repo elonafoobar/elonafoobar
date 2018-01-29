@@ -400,14 +400,14 @@ label_20591:
         } else {
             if (invctrl == 21) { valn = itemname(citrade); }
         }
-        s(0) = u8""s;
+        s(0) = "";
         s(1) = lang(u8"どのアイテムを調べる？ "s, u8"Examine what? "s);
         s(2) = lang(u8"どのアイテムを置く？ "s, u8"Drop what? "s);
         s(3) = lang(u8"どのアイテムを拾う？ "s,
             u8"Which item do you want to pick up? "s);
         s(4) = lang(u8"何を装備する？"s, u8"Equip what?"s);
         s(5) = lang(u8"何を食べよう？ "s, u8"Eat what? "s);
-        s(6) = u8""s;
+        s(6) = "";
         s(7) = lang(u8"どれを読む？ "s, u8"Read what? "s);
         s(8) = lang(u8"どれを飲む？ "s, u8"Drink what? "s);
         s(9) = lang(u8"どれを振る？ "s, u8"Zap what? "s);
@@ -439,7 +439,7 @@ label_20591:
         s(28) = lang(u8"何と交換する？ "s, u8"Trade what? "s);
         s(29) =
             lang(u8"何を予約する？"s, u8"Which item do you want to reserve? "s);
-        if (s(invctrl) != u8""s) { txtnew(); }
+        if (s(invctrl) != ""s) { txtnew(); }
         if (invsc == 0) { txt(s(invctrl)); }
         if (invctrl == 28) {
             item_find(622, 3, 1);
@@ -456,7 +456,7 @@ label_20591:
             if (invctrl(1) == 0) {
                 if (gdata(20) == 36) {
                     txt(lang(u8"ノルマ残り: "s + gdata(266) + u8"GP"s,
-                        u8""s + gdata(266) +
+                        ""s + gdata(266) +
                             u8"guild points are needed to gain a rank."s));
                 }
             }
@@ -564,7 +564,7 @@ label_2060_internal:
                 } else {
                     bmes(invtitle(p), 165, 165, 165);
                 }
-                if (invkey(p) != u8""s) {
+                if (invkey(p) != ""s) {
                     pos(x + cnt * 44 + 46, y + 18);
                     color(0, 0, 0);
                     bmes(u8"("s + invkey(p) + u8")"s, 235, 235, 235);
@@ -573,7 +573,7 @@ label_2060_internal:
         }
         color(0, 0, 0);
         pos(x + 325, y + 32);
-        bmes(u8""s + key_prev + u8","s + key_next + u8",Tab "s +
+        bmes(""s + key_prev + u8","s + key_next + u8",Tab "s +
                 lang(u8"[メニュー切替]"s, u8"[Change]"s),
             255, 255, 255);
     }
@@ -586,12 +586,12 @@ label_2061_internal:
         s(1) += strhint7;
     }
     if (invctrl == 1) {
-        s(1) += u8""s + key_mode2 + u8" "s +
+        s(1) += ""s + key_mode2 + u8" "s +
             lang(u8"[保持指定]"s, u8"[Tag No-Drop]"s);
     }
     if (invctrl == 2) {
         if (dropcontinue == 0) {
-            s(1) += u8""s + key_mode2 + u8" "s +
+            s(1) += ""s + key_mode2 + u8" "s +
                 lang(u8"[連続で置く]"s, u8"[Multi Drop]"s);
         }
     }
@@ -621,10 +621,10 @@ label_2061_internal:
     gcopy(3, 1008, 144, 48, 72);
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
-    s = u8""s + listmax + u8" items"s;
+    s = ""s + listmax + u8" items"s;
     s += u8"  (重さ合計 "s + cnvweight(cdata(43, 0)) + u8"/"s +
         cnvweight(cdata(44, 0)) + u8"  荷車 "s + cnvweight(gdata(80)) + u8")"s;
-    if (invctrl == 25) { s = u8""s; }
+    if (invctrl == 25) { s = ""s; }
     display_note(s);
     if (invctrl == 25) {
         x = (windoww - 640) / 2 + inf_screenx + 455;
@@ -638,7 +638,7 @@ label_2061_internal:
         mes(u8"Dv:"s + cdata(71, tc) + u8" Pv:"s + cdata(70, tc));
         pos(x + 16, y + 35);
         mes(lang(u8"装備重量:"s, u8"EquipWt:"s) + cnvweight(cdata(64, tc)) +
-            u8""s + cnveqweight(tc));
+            ""s + cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
         pos(x, y);
@@ -655,7 +655,7 @@ label_2061_internal:
                     color(100, 100, 100);
                 }
                 pos(x, y);
-                mes(u8""s + bodyn(p / 10000));
+                mes(""s + bodyn(p / 10000));
                 x += (strlen(bodyn(p / 10000)) + 1) * 6;
             }
         }
@@ -688,14 +688,14 @@ label_2061_internal:
             s(1) = cnvweight(inv(7, p) * inv(0, p));
             if (invctrl == 11) {
                 s += u8" "s + cnvweight(inv(7, p));
-                s(1) = u8""s + calcitemvalue(p, 0) + u8" gp"s;
+                s(1) = ""s + calcitemvalue(p, 0) + u8" gp"s;
             }
             if (invctrl == 12) {
                 s += u8" "s + cnvweight(inv(7, p));
-                s(1) = u8""s + calcitemvalue(p, 1) + u8" gp"s;
+                s(1) = ""s + calcitemvalue(p, 1) + u8" gp"s;
             }
             if (invctrl == 28) {
-                s(1) = u8""s + calcmedalvalue(p) + lang(u8" 枚"s, u8" Coins"s);
+                s(1) = ""s + calcmedalvalue(p) + lang(u8" 枚"s, u8" Coins"s);
             }
             if (invctrl != 3 && invctrl != 11 && invctrl != 22 &&
                 invctrl != 27 && invctrl != 28) {
@@ -782,7 +782,7 @@ label_2061_internal:
             gcopy(3, 0, 392, 24, 24);
             color(0, 0, 0);
             pos(wx + 368, wy + 37 - en * 2);
-            mes(u8""s + cdata(30, tc) + u8" gp"s);
+            mes(""s + cdata(30, tc) + u8" gp"s);
         }
     }
     redraw(1);
@@ -854,7 +854,7 @@ label_2061_internal:
                 val(2) = 8;
                 val(3) = 1;
                 val(4) = inv(0, ci);
-                inputlog = u8""s + inv(0, ci);
+                inputlog = ""s + inv(0, ci);
                 label_21262();
                 in = elona_int(inputlog);
                 if (in > inv(0, ci)) { in = inv(0, ci); }
@@ -971,7 +971,7 @@ label_2061_internal:
                 val(2) = 8;
                 val(3) = 1;
                 val(4) = inv(0, ci);
-                inputlog = u8""s + inv(0, ci);
+                inputlog = ""s + inv(0, ci);
                 label_21262();
                 in = elona_int(inputlog);
                 if (in > inv(0, ci)) { in = inv(0, ci); }
@@ -1190,7 +1190,7 @@ label_2061_internal:
                 --inv(0, ci);
                 label_1521();
                 txt(lang(u8"「え、これを"s + _ore(3) + u8"にくれるの"s +
-                        _ka(1) + u8""s + _thanks(2) + u8"」"s,
+                        _ka(1) + ""s + _thanks(2) + u8"」"s,
                     cnvtalk(u8"Thank you!"s)));
                 modimp(tc, giftvalue(inv(28, ci)));
                 cdata(79, tc) = 317;
@@ -1208,7 +1208,7 @@ label_2061_internal:
             }
             if (inv(7, ci) < 0) { f = 4; }
             if (f) {
-                s(0) = u8""s;
+                s(0) = "";
                 s(1) = lang(u8"重すぎ"s, u8"Too heavy!"s);
                 s(2) = lang(u8"無理"s, u8"No way."s);
                 s(3) = lang(u8"いらん"s, u8"I don't want it."s);
@@ -1522,7 +1522,7 @@ label_2061_internal:
             f = 0;
             if (refitem(inv(3, ci), 5) == 77000) { f = 2; }
             if (f != 0) {
-                s(0) = u8""s;
+                s(0) = "";
                 s(1) = lang(u8"やだ"s, u8"No!"s);
                 s(2) = lang(u8"あげないよ"s, u8"It's mine."s);
                 s(3) = lang(u8"だめ"s, u8"Get off!"s);
@@ -1535,7 +1535,7 @@ label_2061_internal:
             if (inv(18, ci) != 0) {
                 if (inv(17, ci) == -1 || inv(17, ci) == -2) {
                     txt(lang(itemname(ci) + u8"は呪われていて外せない。"s,
-                        u8""s + itemname(ci) +
+                        ""s + itemname(ci) +
                             u8" is cursed and can't be taken off."s));
                     goto label_20591;
                 }
@@ -1634,7 +1634,7 @@ label_2061_internal:
             inv(0, i) -= calcmedalvalue(ci);
             snd(12);
             item_copy(ci, ti);
-            txt(lang(u8""s + itemname(ti, 1) + u8"を受け取った！"s,
+            txt(lang(""s + itemname(ti, 1) + u8"を受け取った！"s,
                 u8"You receive "s + itemname(ti, 1) + u8"!"s));
             item_stack(0, ti, 1);
             convertartifact(ti, 1);

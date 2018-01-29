@@ -3611,7 +3611,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"森"s, u8"forest"s);
         cardrefpic = -1;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3622,7 +3622,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"山"s, u8"mountain"s);
         cardrefpic = -2;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3633,7 +3633,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"海"s, u8"sea"s);
         cardrefpic = -3;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3644,7 +3644,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"島"s, u8"island"s);
         cardrefpic = -4;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3655,7 +3655,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"沼"s, u8"swamp"s);
         cardrefpic = -5;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3666,7 +3666,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"枯地"s, u8"dead land"s);
         cardrefpic = -6;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3677,7 +3677,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"平地"s, u8"plain"s);
         cardrefpic = -7;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3688,7 +3688,7 @@ int label_1756()
         cardrefcost = 0;
         cardrefn = lang(u8"雪原"s, u8"snow field"s);
         cardrefpic = -8;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3700,7 +3700,7 @@ int label_1756()
         cardrefcost = 3;
         cardrefn = lang(u8"伝書鳩"s, u8"homing pigeon"s);
         cardrefpic = -22;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }
@@ -3712,7 +3712,7 @@ int label_1756()
         cardrefcost = 2;
         cardrefn = lang(u8"帰還"s, u8"return"s);
         cardrefpic = -23;
-        cardrefrace = u8""s;
+        cardrefrace = "";
         stat = 1;
         return stat;
     }

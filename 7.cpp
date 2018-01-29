@@ -7,7 +7,7 @@ int main()
 {
     SDIM3(proclist, 50, 4);
     exedir = dirinfo(1) + u8"\\"s;
-    devfile = u8""s;
+    devfile = "";
     randomize();
     randseed = rnd(2000);
     randomize(randseed);
@@ -57,17 +57,17 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
 }
 std::string cnvrank(int prm_248)
 {
-    if (jp) { return u8""s + prm_248; }
+    if (jp) { return ""s + prm_248; }
     if (prm_248 % 10 == 1) {
-        if (prm_248 != 11) { return u8""s + prm_248 + u8"st"s; }
+        if (prm_248 != 11) { return ""s + prm_248 + u8"st"s; }
     }
     if (prm_248 % 10 == 2) {
-        if (prm_248 != 12) { return u8""s + prm_248 + u8"nd"s; }
+        if (prm_248 != 12) { return ""s + prm_248 + u8"nd"s; }
     }
     if (prm_248 % 10 == 3) {
-        if (prm_248 != 13) { return u8""s + prm_248 + u8"rd"s; }
+        if (prm_248 != 13) { return ""s + prm_248 + u8"rd"s; }
     }
-    return u8""s + prm_248 + u8"th"s;
+    return ""s + prm_248 + u8"th"s;
 }
 std::string cnvtalk(const std::string& prm_249)
 {
@@ -81,7 +81,7 @@ std::string cnvarticle(const std::string& prm_250)
 std::string cnvitemname(int prm_251)
 {
     if (jp) { return ioriginalnameref(prm_251); }
-    if (ioriginalnameref2(prm_251) == u8""s) {
+    if (ioriginalnameref2(prm_251) == ""s) {
         return ioriginalnameref(prm_251);
     }
     return ioriginalnameref2(prm_251) + u8" of "s + ioriginalnameref(prm_251);
@@ -515,55 +515,55 @@ void label_0031()
     bdataref(1, 20) = 1;
     bdataref(2, 20) = 0;
     buffname(20) = lang(u8"筋力の成長"s, u8"Grow Strength"s);
-    bufftxt(0, 20) = u8""s;
+    bufftxt(0, 20) = "";
     bufftxt(1, 20) = u8" magical effect."s;
     bdataref(0, 21) = 3;
     bdataref(1, 21) = 1;
     bdataref(2, 21) = 0;
     buffname(21) = lang(u8"耐久の成長"s, u8"Grow Endurance"s);
-    bufftxt(0, 21) = u8""s;
+    bufftxt(0, 21) = "";
     bufftxt(1, 21) = u8" magical effect."s;
     bdataref(0, 22) = 3;
     bdataref(1, 22) = 1;
     bdataref(2, 22) = 0;
     buffname(22) = lang(u8"器用の成長"s, u8"Grow Dexterity"s);
-    bufftxt(0, 22) = u8""s;
+    bufftxt(0, 22) = "";
     bufftxt(1, 22) = u8" magical effect."s;
     bdataref(0, 23) = 3;
     bdataref(1, 23) = 1;
     bdataref(2, 23) = 0;
     buffname(23) = lang(u8"感覚の成長"s, u8"Grow Perception"s);
-    bufftxt(0, 23) = u8""s;
+    bufftxt(0, 23) = "";
     bufftxt(1, 23) = u8" magical effect."s;
     bdataref(0, 24) = 3;
     bdataref(1, 24) = 1;
     bdataref(2, 24) = 0;
     buffname(24) = lang(u8"学習の成長"s, u8"Grow Learning"s);
-    bufftxt(0, 24) = u8""s;
+    bufftxt(0, 24) = "";
     bufftxt(1, 24) = u8" magical effect."s;
     bdataref(0, 25) = 3;
     bdataref(1, 25) = 1;
     bdataref(2, 25) = 0;
     buffname(25) = lang(u8"意思の成長"s, u8"Grow Will"s);
-    bufftxt(0, 25) = u8""s;
+    bufftxt(0, 25) = "";
     bufftxt(1, 25) = u8" magical effect."s;
     bdataref(0, 26) = 3;
     bdataref(1, 26) = 1;
     bdataref(2, 26) = 0;
     buffname(26) = lang(u8"魔力の成長"s, u8"Grow Magic"s);
-    bufftxt(0, 26) = u8""s;
+    bufftxt(0, 26) = "";
     bufftxt(1, 26) = u8" magical effect."s;
     bdataref(0, 27) = 3;
     bdataref(1, 27) = 1;
     bdataref(2, 27) = 0;
     buffname(27) = lang(u8"魅力の成長"s, u8"Grow Charisma"s);
-    bufftxt(0, 27) = u8""s;
+    bufftxt(0, 27) = "";
     bufftxt(1, 27) = u8" magical effect."s;
     bdataref(0, 28) = 3;
     bdataref(1, 28) = 1;
     bdataref(2, 28) = 0;
     buffname(28) = lang(u8"速度の成長"s, u8"Grow Speed"s);
-    bufftxt(0, 28) = u8""s;
+    bufftxt(0, 28) = "";
     bufftxt(1, 28) = u8" magical effect."s;
     return;
 }
@@ -580,7 +580,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
                         p_at_m8 + u8"%上昇"s,
                     u8"Increases the growth rate "s +
                         skillname((prm_267 - 20 + 10)) + u8" by "s + p_at_m8 +
-                        u8""s);
+                        ""s);
                 return;
             }
         }
@@ -651,7 +651,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             if (prm_266 == -1) {
                 return;
             } else {
-                buffdesc = lang(u8""s + p_at_m8 + u8"の加速"s,
+                buffdesc = lang(""s + p_at_m8 + u8"の加速"s,
                     u8"Increases speed by "s + p_at_m8);
                 return;
             }
@@ -667,7 +667,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             if (prm_266 == -1) {
                 return;
             } else {
-                buffdesc = lang(u8""s + p_at_m8 + u8"の鈍足"s,
+                buffdesc = lang(""s + p_at_m8 + u8"の鈍足"s,
                     u8"Decreases speed by "s + p_at_m8);
                 return;
             }
@@ -787,7 +787,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             if (prm_266 == -1) {
                 return;
             } else {
-                buffdesc = lang(u8""s + p_at_m8 + u8"の鈍足/PVを20%減少"s,
+                buffdesc = lang(""s + p_at_m8 + u8"の鈍足/PVを20%減少"s,
                     u8"Decreases speed by "s + p_at_m8 + u8", PV by 20%"s);
                 return;
             }
@@ -805,7 +805,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             if (prm_266 == -1) {
                 return;
             } else {
-                buffdesc = lang(u8""s + p_at_m8 + u8"の加速"s,
+                buffdesc = lang(""s + p_at_m8 + u8"の加速"s,
                     u8"Increases speed by "s + p_at_m8);
                 return;
             }
@@ -847,7 +847,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             if (prm_266 == -1) {
                 return;
             } else {
-                buffdesc = lang(u8""s + p_at_m8 + u8"の加速と能力のアップ"s,
+                buffdesc = lang(""s + p_at_m8 + u8"の加速と能力のアップ"s,
                     u8"Increases speed by "s + p_at_m8 +
                         u8"/Boosts physical attributes"s);
                 return;
@@ -871,7 +871,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             } else {
                 buffdesc = lang(u8"致命傷を負ったとき"s + p_at_m8 +
                         u8"%の確率でダメージ分回復。"s,
-                    u8""s + p_at_m8 +
+                    ""s + p_at_m8 +
                         u8"% chances taking a lethal damage heals you instead"s);
                 return;
             }
@@ -886,7 +886,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             if (prm_266 == -1) {
                 return;
             } else {
-                buffdesc = lang(u8""s + p_at_m8 + u8"の幸運の上昇"s,
+                buffdesc = lang(""s + p_at_m8 + u8"の幸運の上昇"s,
                     u8"Increase luck by "s + p_at_m8 + u8"."s);
                 return;
             }
@@ -1799,7 +1799,7 @@ void label_0067()
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt) {
             noteget(s, cnt);
-            if (s == u8""s) { continue; }
+            if (s == ""s) { continue; }
             musicfile(cnt + 50) = strmid(s, 0, instr(s, 0, u8"\t"s));
         }
     }
@@ -1931,9 +1931,9 @@ void key_check(int prm_299)
     if (ginfo(2) == 0) {
         objsel(0);
     } else {
-        key = u8""s;
-        objprm(0, u8""s);
-        keylog = u8""s;
+        key = "";
+        objprm(0, ""s);
+        keylog = "";
         await(100);
         return;
     }
@@ -1962,17 +1962,17 @@ void key_check(int prm_299)
                 }
             }
             msgalert = 0;
-            keylog = u8""s;
-            objprm(0, u8""s);
+            keylog = "";
+            objprm(0, ""s);
         }
     }
-    key = u8""s;
-    if (keylog != u8""s) {
+    key = "";
+    if (keylog != ""s) {
         keylog = strmid(keylog, 0, 1);
         if (peek(keylog, 0) == 13) { keylog = key_enter; }
         key = keylog;
-        keylog = u8""s;
-        objprm(0, u8""s);
+        keylog = "";
+        objprm(0, ""s);
     }
     mousel = 0;
     f_at_m19 = 0;
@@ -2161,31 +2161,31 @@ void key_check(int prm_299)
         if (keybd_wait == 0) { keyactive_at_m19 = key; }
         if (prm_299 == 1) {
             if (keybd_attacking != 0) {
-                if (keybd_wait % cfg_attackwait != 0) { key = u8""s; }
+                if (keybd_wait % cfg_attackwait != 0) { key = ""s; }
             } else {
                 if (cfg_scroll == 0) {
                     if (keybd_wait < cfg_walkwait * cfg_startrun) {
                         if (keybd_wait % cfg_walkwait == 0) {
                         } else {
-                            key = u8""s;
+                            key = "";
                         }
                     } else {
                         running = 1;
                         if (keybd_wait < 100000) {
-                            if (keybd_wait % cfg_runwait != 0) { key = u8""s; }
+                            if (keybd_wait % cfg_runwait != 0) { key = ""s; }
                         }
                     }
                 } else {
                     if (p_at_m19 == 0) {
                         if (keybd_wait < 10) {
-                            if (keybd_wait != 0) { key = u8""s; }
+                            if (keybd_wait != 0) { key = ""s; }
                         }
                     } else {
                         if (keybd_wait > cfg_startrun) {
                             if (cfg_runscroll == 0) {
                                 if (keybd_wait % cfg_runwait == 0) {
                                 } else {
-                                    key = u8""s;
+                                    key = "";
                                 }
                             }
                             running = 1;
@@ -2197,11 +2197,11 @@ void key_check(int prm_299)
             if (keybd_wait < 14) {
                 if (keybd_wait == 0 || keybd_wait == 7) {
                 } else {
-                    key = u8""s;
+                    key = "";
                 }
             } else {
                 if (keybd_wait < 1000) {
-                    if (keybd_wait % 2 != 1) { key = u8""s; }
+                    if (keybd_wait % 2 != 1) { key = ""s; }
                 }
             }
         }
@@ -2210,7 +2210,7 @@ void key_check(int prm_299)
         keybd_wait = 0;
         keybd_attacking = 0;
         running = 0;
-        keyactive_at_m19 = u8""s;
+        keyactive_at_m19 = "";
     }
     {
         int cnt = 48;
@@ -2228,13 +2228,13 @@ void key_check(int prm_299)
     if (scon_at_m19) {
         key = u8"sc"s;
         scon_at_m19 = 0;
-        keylog = u8""s;
-        objprm(0, u8""s);
+        keylog = "";
+        objprm(0, ""s);
         return;
     }
     if (keyhalt != 0) {
-        if (key != u8""s || keybd_wait != 0) {
-            key = u8""s;
+        if (key != ""s || keybd_wait != 0) {
+            key = "";
         } else {
             keyhalt = 0;
         }
@@ -2250,7 +2250,7 @@ void keyrelease()
             stick(a_at_m20, 768);
             if (a_at_m20 == 0) {
                 key_check();
-                if (key == u8""s) { break; }
+                if (key == ""s) { break; }
             }
         }
     }
@@ -2264,7 +2264,7 @@ void press(int prm_300)
             await(20);
             key_check();
             if (prm_300 == 0) {
-                if (key != u8""s) { break; }
+                if (key != ""s) { break; }
             }
             if (prm_300 == 1) {
                 if (key == key_enter || key == key_cancel) { break; }
@@ -2343,9 +2343,9 @@ void txtcontinue()
 }
 void anime_halt()
 {
-    key = u8""s;
-    objprm(0, u8""s);
-    keylog = u8""s;
+    key = "";
+    objprm(0, ""s);
+    keylog = "";
     redraw(0);
     gmode(0);
     gsel(3);
@@ -2427,7 +2427,7 @@ void msg_newline()
     msglen = 0;
     ++msgline;
     if (msgline >= inf_maxlog) { msgline -= inf_maxlog; }
-    msg(msgline % inf_maxlog) = u8""s;
+    msg(msgline % inf_maxlog) = "";
     p_at_txtfunc = (windoww - inf_msgx) / 192;
     redraw(0);
     gmode(0);
@@ -2448,7 +2448,7 @@ void msg_newline()
         }
     }
     gmode(2);
-    msgtempprev = u8""s;
+    msgtempprev = "";
     return;
 }
 void txtnew()
@@ -2464,7 +2464,7 @@ void txtnew()
 void msg_clear()
 {
     msg_len = 0;
-    msgtemp = u8""s;
+    msgtemp = "";
     {
         int cnt = 0;
         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt) { msg_newline(); }
@@ -2474,13 +2474,13 @@ void msg_clear()
 void txt_conv()
 {
     redraw(0);
-    if (msgtemp == u8""s) { return; }
+    if (msgtemp == ""s) { return; }
     if (tcopy) {
         tcopy = 0;
-        txtcopy = u8""s + msgtemp;
+        txtcopy = ""s + msgtemp;
     }
     if (tnew == 1) {
-        if (msg(msgline % inf_maxlog) != u8""s) {
+        if (msg(msgline % inf_maxlog) != ""s) {
             if (cfg_msgtrans) {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
                 redraw(0);
@@ -2528,7 +2528,7 @@ void txt_conv()
             for (;; ++cnt) {
                 len_at_txtfunc = strlen(msgtemp);
                 if (msglen + 4 > inf_maxmsglen) {
-                    if (msgtemp != u8""s) { msg_newline(); }
+                    if (msgtemp != ""s) { msg_newline(); }
                 }
                 if (msglen + len_at_txtfunc > inf_maxmsglen) {
                     p2_at_txtfunc = 0;
@@ -2567,7 +2567,7 @@ void txt_conv()
                     msg_write(m_at_txtfunc);
                     msgtemp = strmid(
                         msgtemp, p2_at_txtfunc, len_at_txtfunc - p2_at_txtfunc);
-                    if (msgtemp == u8""s || msgtemp == u8" "s) { break; }
+                    if (msgtemp == ""s || msgtemp == u8" "s) { break; }
                     msg_newline();
                     continue;
                 }
@@ -2639,15 +2639,15 @@ std::string name(int prm_309)
 }
 std::string aln(int prm_310)
 {
-    if (prm_310 == 0) { return u8""s; }
+    if (prm_310 == 0) { return ""; }
     if (synccheck(prm_310, -1) == 0) { return u8"それは"s; }
-    return u8""s + cdatan(0, prm_310) + u8"は"s;
+    return ""s + cdatan(0, prm_310) + u8"は"s;
 }
 std::string npcn(int prm_311)
 {
-    if (prm_311 == 0) { return u8""s; }
+    if (prm_311 == 0) { return ""; }
     if (synccheck(prm_311, -1) == 0) { return u8"それは"s; }
-    return u8""s + cdatan(0, prm_311) + u8"は"s;
+    return ""s + cdatan(0, prm_311) + u8"は"s;
 }
 std::string _s(int prm_312, int prm_313)
 {
@@ -2658,7 +2658,7 @@ std::string _s(int prm_312, int prm_313)
             return u8"s"s;
         }
     }
-    if (prm_312 == 0) { return u8""s; }
+    if (prm_312 == 0) { return ""; }
     if (prm_313) {
         return u8"es"s;
     } else {
@@ -2668,7 +2668,7 @@ std::string _s(int prm_312, int prm_313)
 std::string _s2(int prm_314)
 {
     if (prm_314 > 1) {
-        return u8""s;
+        return "";
     } else {
         return u8"s"s;
     }
@@ -2840,7 +2840,7 @@ std::string cnvfix(int prm_339)
     if (prm_339 >= 0) {
         return u8"+"s + prm_339;
     } else {
-        return u8""s + prm_339;
+        return ""s + prm_339;
     }
 }
 void stxt(int prm_340, const std::string& prm_341)
@@ -2866,19 +2866,19 @@ std::string cnvdate(int prm_342, int prm_343)
     }
     year_at_m27 = p_at_m27 / 24 / 30 / 12;
     if (jp) {
-        s_at_m27 = u8""s + year_at_m27 + u8"年"s + month_at_m27 + u8"月"s +
+        s_at_m27 = ""s + year_at_m27 + u8"年"s + month_at_m27 + u8"月"s +
             day_at_m27 + u8"日"s;
-        if (prm_343 == 1) { s_at_m27 += u8""s + hour_at_m27 + u8"時"s; }
+        if (prm_343 == 1) { s_at_m27 += ""s + hour_at_m27 + u8"時"s; }
     } else {
-        s_at_m27 = u8""s + year_at_m27 + u8" "s + month_at_m27 + u8"/"s +
+        s_at_m27 = ""s + year_at_m27 + u8" "s + month_at_m27 + u8"/"s +
             day_at_m27 + u8" "s;
-        if (prm_343 == 1) { s_at_m27 += u8""s + hour_at_m27 + u8"h"s; }
+        if (prm_343 == 1) { s_at_m27 += ""s + hour_at_m27 + u8"h"s; }
     }
     return s_at_m27;
 }
 std::string cnvplaytime(int prm_344)
 {
-    return u8""s + prm_344 / 60 / 60 + lang(u8"時間"s, u8":"s) +
+    return ""s + prm_344 / 60 / 60 + lang(u8"時間"s, u8":"s) +
         prm_344 / 60 % 60 + lang(u8"分"s, u8":"s) + prm_344 % 60 +
         lang(u8"秒"s, u8" Sec"s);
 }
@@ -2914,7 +2914,7 @@ void at(int prm_347)
 void text_set()
 {
     SDIM3(bodyn, 4, 15);
-    bodyn(0) = u8""s;
+    bodyn(0) = "";
     bodyn(1) = u8"頭"s;
     bodyn(2) = u8"首"s;
     bodyn(3) = u8"背中"s;
@@ -2936,14 +2936,14 @@ void text_set()
     _impression(7) = lang(u8"魂の友"s, u8"Soul Mate"s);
     _impression(8) = lang(u8" *Love*"s, u8" *Love*"s);
     if (jp) {
-        _weather(0) = u8""s;
+        _weather(0) = "";
         _weather(1) = u8"*エーテル*"s;
         _weather(2) = u8"雪"s;
         _weather(3) = u8"雨"s;
         _weather(4) = u8"雷雨"s;
     }
     if (en) {
-        _weather(0) = u8""s;
+        _weather(0) = "";
         _weather(1) = u8"Etherwind"s;
         _weather(2) = u8"Snow"s;
         _weather(3) = u8"Rain"s;
@@ -2956,7 +2956,7 @@ void text_set()
         _homename(3) = u8"セレブ邸"s;
         _homename(4) = u8"サイバーハウス"s;
         _homename(5) = u8"小城"s;
-        _furniture(0) = u8""s;
+        _furniture(0) = "";
         _furniture(1) = u8"みすぼらしい"s;
         _furniture(2) = u8"気になる"s;
         _furniture(3) = u8"いい感じの"s;
@@ -2985,7 +2985,7 @@ void text_set()
         _homename(3) = u8"estate"s;
         _homename(4) = u8"cyber house"s;
         _homename(5) = u8"small castle"s;
-        _furniture(0) = u8""s;
+        _furniture(0) = "";
         _furniture(1) = u8"stupid"s;
         _furniture(2) = u8"lame"s;
         _furniture(3) = u8"cool"s;
@@ -3010,7 +3010,7 @@ void text_set()
     }
     SDIM3(_tone, 20, 10);
     if (jp) {
-        _reward(0) = u8""s;
+        _reward(0) = "";
         _reward(1) = u8"装備品"s;
         _reward(2) = u8"魔道具"s;
         _reward(3) = u8"防具"s;
@@ -3018,7 +3018,7 @@ void text_set()
         _reward(5) = u8"補給品"s;
     }
     if (en) {
-        _reward(0) = u8""s;
+        _reward(0) = "";
         _reward(1) = u8"equipment"s;
         _reward(2) = u8"magical goods"s;
         _reward(3) = u8"armor"s;
@@ -3033,8 +3033,8 @@ void text_set()
         _time(3) = u8"昼"s;
         _time(4) = u8"宵"s;
         _time(5) = u8"夜"s;
-        _time(6) = u8""s;
-        _time(7) = u8""s;
+        _time(6) = "";
+        _time(7) = "";
     }
     if (en) {
         _time(0) = u8"Midnight"s;
@@ -3043,8 +3043,8 @@ void text_set()
         _time(3) = u8"Noon"s;
         _time(4) = u8"Dusk"s;
         _time(5) = u8"Night"s;
-        _time(6) = u8""s;
-        _time(7) = u8""s;
+        _time(6) = "";
+        _time(7) = "";
     }
     if (jp) {
         _stats(0) = u8" 力"s;
@@ -3092,11 +3092,11 @@ void text_set()
         _hunger(2) = u8"空腹"s;
         _hunger(3) = u8"空腹"s;
         _hunger(4) = u8"空腹"s;
-        _hunger(5) = u8""s;
-        _hunger(6) = u8""s;
-        _hunger(7) = u8""s;
-        _hunger(8) = u8""s;
-        _hunger(9) = u8""s;
+        _hunger(5) = "";
+        _hunger(6) = "";
+        _hunger(7) = "";
+        _hunger(8) = "";
+        _hunger(9) = "";
         _hunger(10) = u8"満腹"s;
         _hunger(11) = u8"満腹"s;
         _hunger(12) = u8"食過ぎ"s;
@@ -3107,24 +3107,24 @@ void text_set()
         _hunger(2) = u8"Hungry!"s;
         _hunger(3) = u8"Hungry"s;
         _hunger(4) = u8"Hungry"s;
-        _hunger(5) = u8""s;
-        _hunger(6) = u8""s;
-        _hunger(7) = u8""s;
-        _hunger(8) = u8""s;
-        _hunger(9) = u8""s;
+        _hunger(5) = "";
+        _hunger(6) = "";
+        _hunger(7) = "";
+        _hunger(8) = "";
+        _hunger(9) = "";
         _hunger(10) = u8"Satisfied"s;
         _hunger(11) = u8"Satisfied!"s;
         _hunger(12) = u8"Bloated"s;
     }
     if (jp) {
-        _burden(0) = u8""s;
+        _burden(0) = "";
         _burden(1) = u8"重荷"s;
         _burden(2) = u8"圧迫"s;
         _burden(3) = u8"超過"s;
         _burden(4) = u8"潰れ中"s;
     }
     if (en) {
-        _burden(0) = u8""s;
+        _burden(0) = "";
         _burden(1) = u8"Burden"s;
         _burden(2) = u8"Burden!"s;
         _burden(3) = u8"Overweight"s;
@@ -3229,7 +3229,7 @@ void text_set()
         _confatigue(2) = u8"VERY tired"s;
     }
     if (jp) {
-        _quality(0) = u8""s;
+        _quality(0) = "";
         _quality(1) = u8"粗悪"s;
         _quality(2) = u8"良質"s;
         _quality(3) = u8"高品質"s;
@@ -3238,7 +3238,7 @@ void text_set()
         _quality(6) = u8"特別"s;
     }
     if (en) {
-        _quality(0) = u8""s;
+        _quality(0) = "";
         _quality(1) = u8"bad"s;
         _quality(2) = u8"good"s;
         _quality(3) = u8"great"s;
@@ -3268,13 +3268,13 @@ void text_set()
         _mark(0) = u8"。"s;
         _mark(1) = u8"？"s;
         _mark(2) = u8"！"s;
-        _mark(3) = u8""s;
+        _mark(3) = "";
     }
     if (en) {
         _mark(0) = u8"."s;
         _mark(1) = u8"?"s;
         _mark(2) = u8"!"s;
-        _mark(3) = u8""s;
+        _mark(3) = "";
     }
     if (jp) {
         _sex(0) = u8"男"s;
@@ -3303,12 +3303,12 @@ void text_set()
     if (jp) {
         strhint1 = u8"ｶｰｿﾙ [選択]  "s;
         strhint2 =
-            u8""s + key_pageup + u8","s + key_pagedown + u8" [ページ切替]  "s;
+            ""s + key_pageup + u8","s + key_pagedown + u8" [ページ切替]  "s;
         strhint3 = u8"Shift,Esc [閉じる]  "s;
         strhint3b = u8"Shift,Esc [戻る]  "s;
         strhint4 = u8"決定、"s;
-        strhint5 = u8""s + key_identify + u8" [既知の情報]  "s;
-        strhint5b = u8""s + key_mode + u8" [情報切替]  "s;
+        strhint5 = ""s + key_identify + u8" [既知の情報]  "s;
+        strhint5b = ""s + key_mode + u8" [情報切替]  "s;
         strhint6 = u8"p [ポートレイト変更]  "s;
         strhint7 = u8"0〜9 [ショートカット]  "s;
         strmale = u8"男性"s;
@@ -3317,11 +3317,11 @@ void text_set()
         strmore = u8"(続く)"s;
         strnogold = u8"(所持金が足りない！)"s;
         strinteractfail = u8"その方向には、操作できる対象はない。"s;
-        invtitle(0) = u8""s;
+        invtitle(0) = "";
         invtitle(1) = u8"調べる"s;
         invtitle(2) = u8"置く"s;
         invtitle(3) = u8"拾う"s;
-        invtitle(4) = u8""s;
+        invtitle(4) = "";
         invtitle(5) = u8"食べる"s;
         invtitle(6) = u8"装備する"s;
         invtitle(7) = u8"読む"s;
@@ -3347,7 +3347,7 @@ void text_set()
         invtitle(27) = u8"盗む"s;
         invtitle(28) = u8"交換する"s;
         invtitle(29) = u8"予約する"s;
-        bodyn(0) = u8""s;
+        bodyn(0) = "";
         bodyn(1) = u8"頭"s;
         bodyn(2) = u8"首"s;
         bodyn(3) = u8"背中"s;
@@ -3375,12 +3375,12 @@ void text_set()
         actlistn(13) = u8"行動"s;
     } else {
         strhint1 = u8"Cursor [Select]  "s;
-        strhint2 = u8""s + key_pageup + u8","s + key_pagedown + u8" [Page]  "s;
+        strhint2 = ""s + key_pageup + u8","s + key_pagedown + u8" [Page]  "s;
         strhint3 = u8"Shift,Esc [Close]  "s;
         strhint3b = u8"Shift,Esc [Back]  "s;
         strhint4 = u8"Enter,"s;
-        strhint5 = u8""s + key_identify + u8" [Known info]  "s;
-        strhint5b = u8""s + key_mode + u8" [Mode]  "s;
+        strhint5 = ""s + key_identify + u8" [Known info]  "s;
+        strhint5b = ""s + key_mode + u8" [Mode]  "s;
         strhint6 = u8"p [Portrait]  "s;
         strhint7 = u8"0~9 [Shortcut]  "s;
         strmale = u8"male"s;
@@ -3389,11 +3389,11 @@ void text_set()
         strmore = u8"(More)"s;
         strnogold = u8"(You don't have enough money!)"s;
         strinteractfail = u8"There's no valid target in that direction."s;
-        invtitle(0) = u8""s;
+        invtitle(0) = "";
         invtitle(1) = u8"Examine"s;
         invtitle(2) = u8"Drop"s;
         invtitle(3) = u8"Pick Up"s;
-        invtitle(4) = u8""s;
+        invtitle(4) = "";
         invtitle(5) = u8"Eat"s;
         invtitle(6) = u8"Wear"s;
         invtitle(7) = u8"Read"s;
@@ -3419,7 +3419,7 @@ void text_set()
         invtitle(27) = u8"Pickpocket"s;
         invtitle(28) = u8"Trade"s;
         invtitle(29) = u8"Reserve"s;
-        bodyn(0) = u8""s;
+        bodyn(0) = "";
         bodyn(1) = u8"Head"s;
         bodyn(2) = u8"Neck"s;
         bodyn(3) = u8"Back"s;
@@ -3709,7 +3709,7 @@ void text_set()
         strno = u8"No.."s;
     }
     if (jp) {
-        strblank = u8""s;
+        strblank = "";
     } else {
         strblank = u8" "s;
     }
@@ -3939,11 +3939,11 @@ std::string maplevel(int)
         if (adata(16, gdata(20)) == 3 || adata(16, gdata(20)) == 8 ||
             adata(16, gdata(20)) == 13 ||
             (mdata(6) >= 20 && mdata(6) <= 23) == 1) {
-            return u8""s + cnvrank((gdata(22) - adata(17, gdata(20)) + 1)) +
-                lang(u8"層"s, u8""s);
+            return ""s + cnvrank((gdata(22) - adata(17, gdata(20)) + 1)) +
+                lang(u8"層"s, ""s);
         }
     }
-    return u8""s;
+    return "";
 }
 std::string mapfile(int prm_365)
 {
@@ -3958,8 +3958,8 @@ std::string mapfile(int prm_365)
 }
 std::string mapname(int prm_366, int prm_367)
 {
-    s(0) = u8""s;
-    s(1) = u8""s;
+    s(0) = "";
+    s(1) = "";
     if (adata(16, prm_366) == 4) {
         s = lang(u8"ノースティリス"s, u8"North Tyris"s);
     }
@@ -4132,8 +4132,8 @@ std::string mapname(int prm_366, int prm_367)
         if (adata(0, prm_366) == 23) { s += lang(u8"砦"s, u8"Fort"s); }
     }
     if (prm_367 == 1) {
-        if (adata(16, prm_366) == 29) { return u8""s; }
-        if (s(1) != u8""s) { return s(1); }
+        if (adata(16, prm_366) == 29) { return ""; }
+        if (s(1) != ""s) { return s(1); }
         if (adata(0, prm_366) >= 20) {
             return lang(s + u8"への入り口がある(入り口の危険度は"s +
                     adata(17, prm_366) + u8"階相当)。"s,
@@ -4293,7 +4293,7 @@ std::string foodname(
         }
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"グロテスクな"s + n_at_m33 + u8"の肉"s,
-                            u8"grotesque "s + n_at_m33 + u8" meat"s) != u8""s) +
+                            u8"grotesque "s + n_at_m33 + u8" meat"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4301,15 +4301,15 @@ std::string foodname(
                     u8"grotesque "s + n_at_m33 + u8" meat"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"焼け焦げた"s + n_at_m33 + u8"の肉"s,
-                            u8"charred "s + n_at_m33 + u8" meat"s) != u8""s) +
+                            u8"charred "s + n_at_m33 + u8" meat"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4317,131 +4317,131 @@ std::string foodname(
                     u8"charred "s + n_at_m33 + u8" meat"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"のこんがり肉"s,
-                            u8"roast "s + n_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"のこんがり肉"s,
+                            u8"roast "s + n_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + n_at_m33 + u8"のこんがり肉"s,
+                return lang(""s + n_at_m33 + u8"のこんがり肉"s,
                     u8"roast "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"肉のオードブル"s,
-                            u8"deep fried "s + n_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"肉のオードブル"s,
+                            u8"deep fried "s + n_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + n_at_m33 + u8"肉のオードブル"s,
+                return lang(""s + n_at_m33 + u8"肉のオードブル"s,
                     u8"deep fried "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"のピリ辛炒め"s,
-                            u8"skewer grilled "s + n_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"のピリ辛炒め"s,
+                            u8"skewer grilled "s + n_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + n_at_m33 + u8"のピリ辛炒め"s,
+                return lang(""s + n_at_m33 + u8"のピリ辛炒め"s,
                     u8"skewer grilled "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"コロッケ"s,
-                            n_at_m33 + u8" croquette"s) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"コロッケ"s,
+                            n_at_m33 + u8" croquette"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + n_at_m33 + u8"コロッケ"s,
+                return lang(""s + n_at_m33 + u8"コロッケ"s,
                     n_at_m33 + u8" croquette"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"のハンバーグ"s,
-                            n_at_m33 + u8" hamburger"s) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"のハンバーグ"s,
+                            n_at_m33 + u8" hamburger"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + n_at_m33 + u8"のハンバーグ"s,
+                return lang(""s + n_at_m33 + u8"のハンバーグ"s,
                     n_at_m33 + u8" hamburger"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"肉の大葉焼き"s,
-                            n_at_m33 + u8" cutlet"s) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"肉の大葉焼き"s,
+                            n_at_m33 + u8" cutlet"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + n_at_m33 + u8"肉の大葉焼き"s,
+                return lang(""s + n_at_m33 + u8"肉の大葉焼き"s,
                     n_at_m33 + u8" cutlet"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
-            p_at_m33 = (lang(u8""s + n_at_m33 + u8"ステーキ"s,
-                            n_at_m33 + u8" steak"s) != u8""s) +
+            p_at_m33 = (lang(""s + n_at_m33 + u8"ステーキ"s,
+                            n_at_m33 + u8" steak"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + n_at_m33 + u8"ステーキ"s, n_at_m33 + u8" steak"s);
+                    ""s + n_at_m33 + u8"ステーキ"s, n_at_m33 + u8" steak"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         return s_at_m33;
     }
     if (prm_373 == 2) {
-        if (s_at_m33 == u8""s) { s_at_m33 = lang(u8"野菜"s, u8"vegetable"s); }
+        if (s_at_m33 == ""s) { s_at_m33 = lang(u8"野菜"s, u8"vegetable"s); }
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"生ごみ同然の"s + s_at_m33,
-                            u8"kitchen refuse "s + s_at_m33) != u8""s) +
+                            u8"kitchen refuse "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4449,15 +4449,15 @@ std::string foodname(
                     u8"kitchen refuse "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"悪臭を放つ"s + s_at_m33,
-                            u8"smelly "s + s_at_m33) != u8""s) +
+                            u8"smelly "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4465,131 +4465,131 @@ std::string foodname(
                     u8"悪臭を放つ"s + s_at_m33, u8"smelly "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"のサラダ"s,
-                            s_at_m33 + u8" salad"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"のサラダ"s,
+                            s_at_m33 + u8" salad"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"のサラダ"s, s_at_m33 + u8" salad"s);
+                    ""s + s_at_m33 + u8"のサラダ"s, s_at_m33 + u8" salad"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の炒め物"s,
-                            u8"fried "s + s_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の炒め物"s,
+                            u8"fried "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の炒め物"s, u8"fried "s + s_at_m33);
+                    ""s + s_at_m33 + u8"の炒め物"s, u8"fried "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"風味の肉じゃが"s,
-                            s_at_m33 + u8" roll"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"風味の肉じゃが"s,
+                            s_at_m33 + u8" roll"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"風味の肉じゃが"s,
+                return lang(""s + s_at_m33 + u8"風味の肉じゃが"s,
                     s_at_m33 + u8" roll"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の天ぷら"s,
-                            s_at_m33 + u8" tenpura"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の天ぷら"s,
+                            s_at_m33 + u8" tenpura"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
+                    ""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の煮込み"s,
-                            s_at_m33 + u8" gratin"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の煮込み"s,
+                            s_at_m33 + u8" gratin"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の煮込み"s, s_at_m33 + u8" gratin"s);
+                    ""s + s_at_m33 + u8"の煮込み"s, s_at_m33 + u8" gratin"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"シチュー"s,
-                            u8"meat and "s + s_at_m33 + u8" stew"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"シチュー"s,
+                            u8"meat and "s + s_at_m33 + u8" stew"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"シチュー"s,
+                return lang(""s + s_at_m33 + u8"シチュー"s,
                     u8"meat and "s + s_at_m33 + u8" stew"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"風カレー"s,
-                            s_at_m33 + u8" curry"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"風カレー"s,
+                            s_at_m33 + u8" curry"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"風カレー"s, s_at_m33 + u8" curry"s);
+                    ""s + s_at_m33 + u8"風カレー"s, s_at_m33 + u8" curry"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         return s_at_m33;
     }
     if (prm_373 == 3) {
-        if (s_at_m33 == u8""s) { s_at_m33 = lang(u8"果物"s, u8"fruit"s); }
+        if (s_at_m33 == ""s) { s_at_m33 = lang(u8"果物"s, u8"fruit"s); }
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"食べてはならない"s + s_at_m33,
-                            u8"dangerous "s + s_at_m33) != u8""s) +
+                            u8"dangerous "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4597,15 +4597,15 @@ std::string foodname(
                     u8"dangerous "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"べっちょりした"s + s_at_m33,
-                            u8"doubtful "s + s_at_m33) != u8""s) +
+                            u8"doubtful "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4613,121 +4613,121 @@ std::string foodname(
                     u8"べっちょりした"s + s_at_m33, u8"doubtful "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"のフルーツサラダ"s,
-                            s_at_m33 + u8" jelly salad"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"のフルーツサラダ"s,
+                            s_at_m33 + u8" jelly salad"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"のフルーツサラダ"s,
+                return lang(""s + s_at_m33 + u8"のフルーツサラダ"s,
                     s_at_m33 + u8" jelly salad"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"のプリン"s,
-                            s_at_m33 + u8" pudding"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"のプリン"s,
+                            s_at_m33 + u8" pudding"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"のプリン"s, s_at_m33 + u8" pudding"s);
+                    ""s + s_at_m33 + u8"のプリン"s, s_at_m33 + u8" pudding"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"シャーベット"s,
-                            s_at_m33 + u8" sherbet"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"シャーベット"s,
+                            s_at_m33 + u8" sherbet"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"シャーベット"s,
+                return lang(""s + s_at_m33 + u8"シャーベット"s,
                     s_at_m33 + u8" sherbet"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"シェイク"s,
-                            s_at_m33 + u8" ice cream"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"シェイク"s,
+                            s_at_m33 + u8" ice cream"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"シェイク"s,
+                return lang(""s + s_at_m33 + u8"シェイク"s,
                     s_at_m33 + u8" ice cream"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"クレープ"s,
-                            s_at_m33 + u8" crepe"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"クレープ"s,
+                            s_at_m33 + u8" crepe"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"クレープ"s, s_at_m33 + u8" crepe"s);
+                    ""s + s_at_m33 + u8"クレープ"s, s_at_m33 + u8" crepe"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"フルーツケーキ"s,
-                            s_at_m33 + u8" fruit cake"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"フルーツケーキ"s,
+                            s_at_m33 + u8" fruit cake"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"フルーツケーキ"s,
+                return lang(""s + s_at_m33 + u8"フルーツケーキ"s,
                     s_at_m33 + u8" fruit cake"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"パフェ"s,
-                            s_at_m33 + u8" grand parfait"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"パフェ"s,
+                            s_at_m33 + u8" grand parfait"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"パフェ"s,
+                return lang(""s + s_at_m33 + u8"パフェ"s,
                     s_at_m33 + u8" grand parfait"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
@@ -4737,22 +4737,22 @@ std::string foodname(
         n_at_m33 = lang(u8"麺"s, u8"noodle"s);
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"禁断の"s + n_at_m33, u8"risky "s + n_at_m33) !=
-                           u8""s) +
+                           ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"禁断の"s + n_at_m33, u8"risky "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"のびてふにゃった"s + n_at_m33,
-                            u8"exhausted "s + n_at_m33) != u8""s) +
+                            u8"exhausted "s + n_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4760,115 +4760,115 @@ std::string foodname(
                     u8"exhausted "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
             p_at_m33 =
-                (lang(u8"サラダパスタ"s, u8"salad pasta"s) != u8""s) + 0 + 0;
+                (lang(u8"サラダパスタ"s, u8"salad pasta"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"サラダパスタ"s, u8"salad pasta"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
-            p_at_m33 = (lang(u8"うどん"s, u8"udon"s) != u8""s) + 0 + 0;
+            p_at_m33 = (lang(u8"うどん"s, u8"udon"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"うどん"s, u8"udon"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
-            p_at_m33 = (lang(u8"冷やし蕎麦"s, u8"soba"s) != u8""s) + 0 + 0;
+            p_at_m33 = (lang(u8"冷やし蕎麦"s, u8"soba"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"冷やし蕎麦"s, u8"soba"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
             p_at_m33 =
-                (lang(u8"ペペロンチーノ"s, u8"peperoncino"s) != u8""s) + 0 + 0;
+                (lang(u8"ペペロンチーノ"s, u8"peperoncino"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
             p_at_m33 =
-                (lang(u8"カルボナーラ"s, u8"carbonara"s) != u8""s) + 0 + 0;
+                (lang(u8"カルボナーラ"s, u8"carbonara"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"カルボナーラ"s, u8"carbonara"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
-            p_at_m33 = (lang(u8"ラーメン"s, u8"ramen"s) != u8""s) + 0 + 0;
+            p_at_m33 = (lang(u8"ラーメン"s, u8"ramen"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"ラーメン"s, u8"ramen"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
             p_at_m33 =
-                (lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s) != u8""s) +
+                (lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         return s_at_m33;
     }
     if (prm_373 == 4) {
-        if (s_at_m33 == u8""s) { s_at_m33 = lang(u8"お菓子"s, u8"candy"s); }
+        if (s_at_m33 == ""s) { s_at_m33 = lang(u8"お菓子"s, u8"candy"s); }
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"原型を留めない"s + s_at_m33,
-                            u8"collapsed "s + s_at_m33) != u8""s) +
+                            u8"collapsed "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -4876,161 +4876,161 @@ std::string foodname(
                     u8"原型を留めない"s + s_at_m33, u8"collapsed "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"まずそうな"s + s_at_m33,
-                            u8"nasty "s + s_at_m33) != u8""s) +
+                            u8"nasty "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"まずそうな"s + s_at_m33, u8"nasty "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"クッキー"s,
-                            s_at_m33 + u8" cookie"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"クッキー"s,
+                            s_at_m33 + u8" cookie"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"クッキー"s, s_at_m33 + u8" cookie"s);
+                    ""s + s_at_m33 + u8"クッキー"s, s_at_m33 + u8" cookie"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"のゼリー"s,
-                            s_at_m33 + u8" jelly"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"のゼリー"s,
+                            s_at_m33 + u8" jelly"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"のゼリー"s, s_at_m33 + u8" jelly"s);
+                    ""s + s_at_m33 + u8"のゼリー"s, s_at_m33 + u8" jelly"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"パイ"s,
-                            s_at_m33 + u8" pie"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"パイ"s,
+                            s_at_m33 + u8" pie"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"パイ"s, s_at_m33 + u8" pie"s);
+                return lang(""s + s_at_m33 + u8"パイ"s, s_at_m33 + u8" pie"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"まんじゅう"s,
-                            s_at_m33 + u8" bun"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"まんじゅう"s,
+                            s_at_m33 + u8" bun"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"まんじゅう"s, s_at_m33 + u8" bun"s);
+                    ""s + s_at_m33 + u8"まんじゅう"s, s_at_m33 + u8" bun"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"風味のシュークリーム"s,
-                            s_at_m33 + u8" cream puff"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"風味のシュークリーム"s,
+                            s_at_m33 + u8" cream puff"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"風味のシュークリーム"s,
+                return lang(""s + s_at_m33 + u8"風味のシュークリーム"s,
                     s_at_m33 + u8" cream puff"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"のケーキ"s,
-                            s_at_m33 + u8" cake"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"のケーキ"s,
+                            s_at_m33 + u8" cake"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"のケーキ"s, s_at_m33 + u8" cake"s);
+                    ""s + s_at_m33 + u8"のケーキ"s, s_at_m33 + u8" cake"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"風ザッハトルテ"s,
-                            s_at_m33 + u8" sachertorte"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"風ザッハトルテ"s,
+                            s_at_m33 + u8" sachertorte"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"風ザッハトルテ"s,
+                return lang(""s + s_at_m33 + u8"風ザッハトルテ"s,
                     s_at_m33 + u8" sachertorte"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         return s_at_m33;
     }
     if (prm_373 == 6) {
-        if (s_at_m33 == u8""s) { s_at_m33 = lang(u8"魚"s, u8"fish"s); }
+        if (s_at_m33 == ""s) { s_at_m33 = lang(u8"魚"s, u8"fish"s); }
         if (prm_375 == 1) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の残骸"s,
-                            u8"leftover "s + s_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の残骸"s,
+                            u8"leftover "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の残骸"s, u8"leftover "s + s_at_m33);
+                    ""s + s_at_m33 + u8"の残骸"s, u8"leftover "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"骨だけ残った"s + s_at_m33,
-                            u8"bony "s + s_at_m33) != u8""s) +
+                            u8"bony "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5038,121 +5038,121 @@ std::string foodname(
                     u8"骨だけ残った"s + s_at_m33, u8"bony "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"のフライ"s,
-                            u8"fried "s + s_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"のフライ"s,
+                            u8"fried "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"のフライ"s, u8"fried "s + s_at_m33);
+                    ""s + s_at_m33 + u8"のフライ"s, u8"fried "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の煮込み"s,
-                            u8"stewed "s + s_at_m33) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の煮込み"s,
+                            u8"stewed "s + s_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の煮込み"s, u8"stewed "s + s_at_m33);
+                    ""s + s_at_m33 + u8"の煮込み"s, u8"stewed "s + s_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"スープ"s,
-                            s_at_m33 + u8" soup"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"スープ"s,
+                            s_at_m33 + u8" soup"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"スープ"s, s_at_m33 + u8" soup"s);
+                    ""s + s_at_m33 + u8"スープ"s, s_at_m33 + u8" soup"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の天ぷら"s,
-                            s_at_m33 + u8" tenpura"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の天ぷら"s,
+                            s_at_m33 + u8" tenpura"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
+                    ""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"ソーセージ"s,
-                            s_at_m33 + u8" sausage"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"ソーセージ"s,
+                            s_at_m33 + u8" sausage"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
-                return lang(u8""s + s_at_m33 + u8"ソーセージ"s,
+                return lang(""s + s_at_m33 + u8"ソーセージ"s,
                     s_at_m33 + u8" sausage"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の刺身"s,
-                            s_at_m33 + u8" sashimi"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の刺身"s,
+                            s_at_m33 + u8" sashimi"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の刺身"s, s_at_m33 + u8" sashimi"s);
+                    ""s + s_at_m33 + u8"の刺身"s, s_at_m33 + u8" sashimi"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
-            p_at_m33 = (lang(u8""s + s_at_m33 + u8"の活け作り"s,
-                            s_at_m33 + u8" sushi"s) != u8""s) +
+            p_at_m33 = (lang(""s + s_at_m33 + u8"の活け作り"s,
+                            s_at_m33 + u8" sushi"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(
-                    u8""s + s_at_m33 + u8"の活け作り"s, s_at_m33 + u8" sushi"s);
+                    ""s + s_at_m33 + u8"の活け作り"s, s_at_m33 + u8" sushi"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
@@ -5162,131 +5162,131 @@ std::string foodname(
         n_at_m33 = lang(u8"パン"s, u8"bread"s);
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"恐怖の"s + n_at_m33,
-                            u8"fearsome "s + n_at_m33) != u8""s) +
+                            u8"fearsome "s + n_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"恐怖の"s + n_at_m33, u8"fearsome "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"ガチガチの"s + n_at_m33,
-                            u8"hard "s + n_at_m33) != u8""s) +
+                            u8"hard "s + n_at_m33) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"ガチガチの"s + n_at_m33, u8"hard "s + n_at_m33);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
             p_at_m33 =
-                (lang(u8"くるみパン"s, u8"walnut bread"s) != u8""s) + 0 + 0;
+                (lang(u8"くるみパン"s, u8"walnut bread"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"くるみパン"s, u8"walnut bread"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
             p_at_m33 =
-                (lang(u8"アップルパイ"s, u8"apple pie"s) != u8""s) + 0 + 0;
+                (lang(u8"アップルパイ"s, u8"apple pie"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"アップルパイ"s, u8"apple pie"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
             p_at_m33 =
-                (lang(u8"サンドイッチ"s, u8"sandwich"s) != u8""s) + 0 + 0;
+                (lang(u8"サンドイッチ"s, u8"sandwich"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"サンドイッチ"s, u8"sandwich"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
             p_at_m33 =
-                (lang(u8"クロワッサン"s, u8"croissant"s) != u8""s) + 0 + 0;
+                (lang(u8"クロワッサン"s, u8"croissant"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"クロワッサン"s, u8"croissant"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
             p_at_m33 =
-                (lang(u8"コロッケパン"s, u8"croquette sandwich"s) != u8""s) +
+                (lang(u8"コロッケパン"s, u8"croquette sandwich"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
             p_at_m33 =
-                (lang(u8"カレーパン"s, u8"chocolate babka"s) != u8""s) + 0 + 0;
+                (lang(u8"カレーパン"s, u8"chocolate babka"s) != ""s) + 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"カレーパン"s, u8"chocolate babka"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
             p_at_m33 =
-                (lang(u8"メロンパン"s, u8"melon flavored bread"s) != u8""s) +
+                (lang(u8"メロンパン"s, u8"melon flavored bread"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
                 return lang(u8"メロンパン"s, u8"melon flavored bread"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
@@ -5300,7 +5300,7 @@ std::string foodname(
         }
         if (prm_375 == 1) {
             p_at_m33 = (lang(u8"グロテスクな"s + n_at_m33 + u8"の卵"s,
-                            u8"grotesque "s + n_at_m33 + u8" egg"s) != u8""s) +
+                            u8"grotesque "s + n_at_m33 + u8" egg"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5308,15 +5308,15 @@ std::string foodname(
                     u8"grotesque "s + n_at_m33 + u8" egg"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 2) {
             p_at_m33 = (lang(u8"焦げた"s + n_at_m33 + u8"の卵"s,
-                            u8"overcooked "s + n_at_m33 + u8" egg"s) != u8""s) +
+                            u8"overcooked "s + n_at_m33 + u8" egg"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5324,15 +5324,15 @@ std::string foodname(
                     u8"overcooked "s + n_at_m33 + u8" egg"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 3) {
             p_at_m33 = (lang(n_at_m33 + u8"の卵の目玉焼き"s,
-                            u8"fried "s + n_at_m33 + u8" egg"s) != u8""s) +
+                            u8"fried "s + n_at_m33 + u8" egg"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5340,15 +5340,15 @@ std::string foodname(
                     u8"fried "s + n_at_m33 + u8" egg"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 4) {
             p_at_m33 = (lang(n_at_m33 + u8"風味のキッシュ"s,
-                            n_at_m33 + u8" egg toast"s) != u8""s) +
+                            n_at_m33 + u8" egg toast"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5356,16 +5356,16 @@ std::string foodname(
                     n_at_m33 + u8"風味のキッシュ"s, n_at_m33 + u8" egg toast"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 5) {
             p_at_m33 =
                 (lang(u8"半熟"s + n_at_m33,
-                     u8"soft boiled "s + n_at_m33 + u8" egg"s) != u8""s) +
+                     u8"soft boiled "s + n_at_m33 + u8" egg"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5373,15 +5373,15 @@ std::string foodname(
                     u8"soft boiled "s + n_at_m33 + u8" egg"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 6) {
             p_at_m33 = (lang(n_at_m33 + u8"の卵入りスープ"s,
-                            u8"soup with "s + n_at_m33 + u8" egg"s) != u8""s) +
+                            u8"soup with "s + n_at_m33 + u8" egg"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5389,15 +5389,15 @@ std::string foodname(
                     u8"soup with "s + n_at_m33 + u8" egg"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 7) {
             p_at_m33 = (lang(u8"熟成"s + n_at_m33 + u8"チーズ"s,
-                            u8"mature "s + n_at_m33 + u8" cheeze"s) != u8""s) +
+                            u8"mature "s + n_at_m33 + u8" cheeze"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5405,15 +5405,15 @@ std::string foodname(
                     u8"mature "s + n_at_m33 + u8" cheeze"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 8) {
             p_at_m33 = (lang(n_at_m33 + u8"のレアチーズケーキ"s,
-                            n_at_m33 + u8" cheeze cake"s) != u8""s) +
+                            n_at_m33 + u8" cheeze cake"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5421,15 +5421,15 @@ std::string foodname(
                     n_at_m33 + u8" cheeze cake"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
         if (prm_375 == 9) {
             p_at_m33 = (lang(n_at_m33 + u8"風オムライス"s,
-                            n_at_m33 + u8" omelet"s) != u8""s) +
+                            n_at_m33 + u8" omelet"s) != ""s) +
                 0 + 0;
             p_at_m33 = prm_376 % p_at_m33;
             if (p_at_m33 == 0) {
@@ -5437,9 +5437,9 @@ std::string foodname(
                     n_at_m33 + u8"風オムライス"s, n_at_m33 + u8" omelet"s);
             } else {
                 if (p_at_m33 == 1) {
-                    return u8""s;
+                    return "";
                 } else {
-                    return u8""s;
+                    return "";
                 }
             }
         }
@@ -5538,17 +5538,17 @@ std::string _yoro(int prm_377)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よろしくお願いします"s;
             _tone_at_m34(1) = u8"どうぞ、よろしくです"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしくお願いしますわ"s;
             _tone_at_m34(1) = u8"よろしくです"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5557,17 +5557,17 @@ std::string _yoro(int prm_377)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よろしく頼むぜ"s;
             _tone_at_m34(1) = u8"よろしくな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしくね"s;
             _tone_at_m34(1) = u8"よろしくな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5576,17 +5576,17 @@ std::string _yoro(int prm_377)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よろしくね"s;
             _tone_at_m34(1) = u8"よろしくお願いするよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしくねっ"s;
             _tone_at_m34(1) = u8"よろしく〜"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5595,17 +5595,17 @@ std::string _yoro(int prm_377)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よろしく…"s;
             _tone_at_m34(1) = u8"今後とも、よろしく…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしくね…"s;
             _tone_at_m34(1) = u8"よろ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5614,17 +5614,17 @@ std::string _yoro(int prm_377)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よろしく頼もう"s;
             _tone_at_m34(1) = u8"よろしく頼むぞよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしく頼むぞよ"s;
             _tone_at_m34(1) = u8"よろしく頼むぞな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5633,17 +5633,17 @@ std::string _yoro(int prm_377)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よしなに"s;
             _tone_at_m34(1) = u8"よろしく頼むでござる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしくでござりまする"s;
             _tone_at_m34(1) = u8"どうぞよしなに"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5651,18 +5651,18 @@ std::string _yoro(int prm_377)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よろしくッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         } else {
             _tone_at_m34(0) = u8"よろしくにゃの"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
@@ -5675,17 +5675,17 @@ std::string _dozo(int prm_378)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"はい、どうぞ"s;
             _tone_at_m34(1) = u8"お待ちどうさまです"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"はい、どうぞ"s;
             _tone_at_m34(1) = u8"注文の品ですわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5694,17 +5694,17 @@ std::string _dozo(int prm_378)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ほらよ"s;
             _tone_at_m34(1) = u8"ほれ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"ほら"s;
             _tone_at_m34(1) = u8"待たせたね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5713,17 +5713,17 @@ std::string _dozo(int prm_378)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"はい、お待ち"s;
             _tone_at_m34(1) = u8"さあ、どうぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"さあ、どうぞ"s;
             _tone_at_m34(1) = u8"お待ちどうさま"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5732,17 +5732,17 @@ std::string _dozo(int prm_378)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ほら…"s;
             _tone_at_m34(1) = u8"待たせたな…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"はい…"s;
             _tone_at_m34(1) = u8"どうぞ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5751,17 +5751,17 @@ std::string _dozo(int prm_378)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ほうれ"s;
             _tone_at_m34(1) = u8"ほれ、受け取りたまえ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"ほれ、受け取るが良い"s;
             _tone_at_m34(1) = u8"ほれ、待たせたのう"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5770,17 +5770,17 @@ std::string _dozo(int prm_378)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"お待たせ申した"s;
             _tone_at_m34(1) = u8"待たせたでござる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"お待たせ致しました"s;
             _tone_at_m34(1) = u8"ささ、どうぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5788,18 +5788,18 @@ std::string _dozo(int prm_378)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"お待たせッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         } else {
             _tone_at_m34(0) = u8"お待たせにゃん"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
@@ -5812,17 +5812,17 @@ std::string _thanks(int prm_379)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"感謝します"s;
             _tone_at_m34(1) = u8"ありがとうございます"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"感謝します"s;
             _tone_at_m34(1) = u8"ありがとうございます"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5831,17 +5831,17 @@ std::string _thanks(int prm_379)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ありがとよ"s;
             _tone_at_m34(1) = u8"ありがたい"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"礼を言うよ"s;
             _tone_at_m34(1) = u8"ありがたいね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5850,17 +5850,17 @@ std::string _thanks(int prm_379)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ありがとう"s;
             _tone_at_m34(1) = u8"感謝するよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"ありがとう〜"s;
             _tone_at_m34(1) = u8"感謝するわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5869,17 +5869,17 @@ std::string _thanks(int prm_379)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"礼を言う…"s;
             _tone_at_m34(1) = u8"感謝する…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"ありがと…"s;
             _tone_at_m34(1) = u8"礼を言うわ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5888,17 +5888,17 @@ std::string _thanks(int prm_379)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"礼を申すぞ"s;
             _tone_at_m34(1) = u8"感謝してつかわす"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"くるしゅうない"s;
             _tone_at_m34(1) = u8"礼をいってつかわす"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5907,17 +5907,17 @@ std::string _thanks(int prm_379)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かたじけない"s;
             _tone_at_m34(1) = u8"恩に着る"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"ありがたや"s;
             _tone_at_m34(1) = u8"お礼申し上げます"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5925,18 +5925,18 @@ std::string _thanks(int prm_379)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"アザーッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         } else {
             _tone_at_m34(0) = u8"にゃりーん"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
@@ -5949,18 +5949,18 @@ std::string _rob(int prm_380)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"悪いことは言わない。おやめなさい"s;
             _tone_at_m34(1) = u8"止めてください。きっと後悔しますよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"止めてくださいませ"s;
             _tone_at_m34(1) =
                 u8"こういう時のために、傭兵に金をかけているのです"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -5969,17 +5969,17 @@ std::string _rob(int prm_380)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"なんだ、貴様賊だったのか"s;
             _tone_at_m34(1) = u8"馬鹿な奴だ。後になって謝っても遅いぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"ふん、返り討ちにしてくれるよ"s;
             _tone_at_m34(1) = u8"ごろつき風情に何が出来る"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -5990,17 +5990,17 @@ std::string _rob(int prm_380)
                 u8"おい、傭兵さんたち、このごろつきを追い払ってくれ"s;
             _tone_at_m34(1) =
                 u8"馬鹿な真似をするな。こっちには屈強の傭兵がいるんだぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"やめて"s;
             _tone_at_m34(1) = u8"傭兵さんたち〜出番ですよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -6009,17 +6009,17 @@ std::string _rob(int prm_380)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"甘く見られたものだ…"s;
             _tone_at_m34(1) = u8"この護衛の数が見えないのか…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"おやめ…"s;
             _tone_at_m34(1) = u8"愚かな試みよ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -6028,17 +6028,17 @@ std::string _rob(int prm_380)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"なんたる無礼者か"s;
             _tone_at_m34(1) = u8"ほほほ、こやつめ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"下賤の者どもの分際で"s;
             _tone_at_m34(1) = u8"ほほほ、殺してあげなさい"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -6046,18 +6046,18 @@ std::string _rob(int prm_380)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"何をするでござるか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"ご無体な"s;
             _tone_at_m34(1) = u8"まあ、お戯れが過ぎますわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -6065,18 +6065,18 @@ std::string _rob(int prm_380)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"見損なったッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         } else {
             _tone_at_m34(0) = u8"にゃりーん"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
@@ -6088,18 +6088,18 @@ std::string _ka(int prm_381)
     if (cdata(18, tc) == 0) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ですか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"ですか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6108,17 +6108,17 @@ std::string _ka(int prm_381)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かよ"s;
             _tone_at_m34(1) = u8"か"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"かい"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6127,17 +6127,17 @@ std::string _ka(int prm_381)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かい"s;
             _tone_at_m34(1) = u8"なの"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"なの"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6146,17 +6146,17 @@ std::string _ka(int prm_381)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"か…"s;
             _tone_at_m34(1) = u8"かよ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"なの…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6165,17 +6165,17 @@ std::string _ka(int prm_381)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"であるか"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"であるか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6183,18 +6183,18 @@ std::string _ka(int prm_381)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござるか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"でござりまするか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6202,18 +6202,18 @@ std::string _ka(int prm_381)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         } else {
             _tone_at_m34(0) = u8"かにゃ"s;
             _tone_at_m34(1) = u8"かニャン"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
@@ -6226,17 +6226,17 @@ std::string _da(int prm_382)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"です"s;
             _tone_at_m34(1) = u8"ですね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"ですわ"s;
             _tone_at_m34(1) = u8"です"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6245,17 +6245,17 @@ std::string _da(int prm_382)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だぜ"s;
             _tone_at_m34(1) = u8"だ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"よ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6263,18 +6263,18 @@ std::string _da(int prm_382)
     if (cdata(18, tc) == 2) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だよ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"だわ"s;
             _tone_at_m34(1) = u8"よ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6283,17 +6283,17 @@ std::string _da(int prm_382)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だ…"s;
             _tone_at_m34(1) = u8"さ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"よ…"s;
             _tone_at_m34(1) = u8"ね…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6302,17 +6302,17 @@ std::string _da(int prm_382)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"じゃ"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"じゃ"s;
             _tone_at_m34(1) = u8"でおじゃるぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6321,17 +6321,17 @@ std::string _da(int prm_382)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござる"s;
             _tone_at_m34(1) = u8"でござるよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"でござりまする"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6339,18 +6339,18 @@ std::string _da(int prm_382)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         } else {
             _tone_at_m34(0) = u8"みゃん"s;
             _tone_at_m34(1) = u8"ミャ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
@@ -6363,36 +6363,36 @@ std::string _nda(int prm_383)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のです"s;
             _tone_at_m34(1) = u8"んです"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"のですわ"s;
             _tone_at_m34(1) = u8"のです"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
     if (cdata(18, tc) == 1) {
         if (cdata(8, tc) == 0) {
-            _tone_at_m34(0) = u8""s;
+            _tone_at_m34(0) = "";
             _tone_at_m34(1) = u8"んだ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"の"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
@@ -6401,17 +6401,17 @@ std::string _nda(int prm_383)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"んだよ"s;
             _tone_at_m34(1) = u8"んだ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"わ"s;
             _tone_at_m34(1) = u8"のよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
@@ -6420,17 +6420,17 @@ std::string _nda(int prm_383)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"んだ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"の…"s;
             _tone_at_m34(1) = u8"わ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
@@ -6439,17 +6439,17 @@ std::string _nda(int prm_383)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のじゃ"s;
             _tone_at_m34(1) = u8"のだぞよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"のじゃわ"s;
             _tone_at_m34(1) = u8"のだぞよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
@@ -6457,18 +6457,18 @@ std::string _nda(int prm_383)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のでござる"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"のでございます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
@@ -6476,18 +6476,18 @@ std::string _nda(int prm_383)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"んだッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         } else {
             _tone_at_m34(0) = u8"のニャ"s;
             _tone_at_m34(1) = u8"のにゃん"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
@@ -6500,17 +6500,17 @@ std::string _noka(int prm_384)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のですか"s;
             _tone_at_m34(1) = u8"んですか"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"のですか"s;
             _tone_at_m34(1) = u8"んですか"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6519,17 +6519,17 @@ std::string _noka(int prm_384)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のか"s;
             _tone_at_m34(1) = u8"のだな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"の"s;
             _tone_at_m34(1) = u8"のかい"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6538,17 +6538,17 @@ std::string _noka(int prm_384)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のかい"s;
             _tone_at_m34(1) = u8"の"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"の"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6556,18 +6556,18 @@ std::string _noka(int prm_384)
     if (cdata(18, tc) == 3) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のか…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"の…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6576,17 +6576,17 @@ std::string _noka(int prm_384)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のかのう"s;
             _tone_at_m34(1) = u8"のだな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"のかね"s;
             _tone_at_m34(1) = u8"のだな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6594,18 +6594,18 @@ std::string _noka(int prm_384)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のでござるか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"のでございます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6613,18 +6613,18 @@ std::string _noka(int prm_384)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"のッスか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         } else {
             _tone_at_m34(0) = u8"にゃんか"s;
             _tone_at_m34(1) = u8"ニャン"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
@@ -6637,17 +6637,17 @@ std::string _kana(int prm_385)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でしょうか"s;
             _tone_at_m34(1) = u8"ですか"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"かしら"s;
             _tone_at_m34(1) = u8"でしょう"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6656,17 +6656,17 @@ std::string _kana(int prm_385)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"か"s;
             _tone_at_m34(1) = u8"かい"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"か"s;
             _tone_at_m34(1) = u8"かい"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6675,17 +6675,17 @@ std::string _kana(int prm_385)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かな"s;
             _tone_at_m34(1) = u8"かなぁ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"かな"s;
             _tone_at_m34(1) = u8"かなー"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6694,17 +6694,17 @@ std::string _kana(int prm_385)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かな…"s;
             _tone_at_m34(1) = u8"か…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"かな…"s;
             _tone_at_m34(1) = u8"か…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6713,17 +6713,17 @@ std::string _kana(int prm_385)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"かの"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"かの"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6731,18 +6731,18 @@ std::string _kana(int prm_385)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござるか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"でございますか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6750,18 +6750,18 @@ std::string _kana(int prm_385)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスか"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         } else {
             _tone_at_m34(0) = u8"かにゃん"s;
             _tone_at_m34(1) = u8"かニャ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
@@ -6773,18 +6773,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 0) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"貴方"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"貴方"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6792,18 +6792,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 1) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"お前"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"お前"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6811,18 +6811,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 2) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"君"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"君"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6830,18 +6830,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 3) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"君"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"君"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6849,18 +6849,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 4) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"お主"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"お主"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6868,18 +6868,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"そこもと"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"そなた様"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6887,18 +6887,18 @@ std::string _kimi(int prm_386)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"アンタ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         } else {
             _tone_at_m34(0) = u8"あにゃた"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
@@ -6911,17 +6911,17 @@ std::string _ru(int prm_387)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ます"s;
             _tone_at_m34(1) = u8"ますよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"ますわ"s;
             _tone_at_m34(1) = u8"ますの"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -6930,17 +6930,17 @@ std::string _ru(int prm_387)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"るぜ"s;
             _tone_at_m34(1) = u8"るぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"るわ"s;
             _tone_at_m34(1) = u8"るよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -6949,17 +6949,17 @@ std::string _ru(int prm_387)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"るよ"s;
             _tone_at_m34(1) = u8"るね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"るの"s;
             _tone_at_m34(1) = u8"るわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -6968,17 +6968,17 @@ std::string _ru(int prm_387)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"る…"s;
             _tone_at_m34(1) = u8"るが…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"る…"s;
             _tone_at_m34(1) = u8"るわ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -6987,17 +6987,17 @@ std::string _ru(int prm_387)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"るぞよ"s;
             _tone_at_m34(1) = u8"るぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"るぞよ"s;
             _tone_at_m34(1) = u8"るぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -7006,17 +7006,17 @@ std::string _ru(int prm_387)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"るでござる"s;
             _tone_at_m34(1) = u8"るでござるよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"るのでございます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -7024,18 +7024,18 @@ std::string _ru(int prm_387)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"るッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         } else {
             _tone_at_m34(0) = u8"るのニャ"s;
             _tone_at_m34(1) = u8"るにゃん"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
@@ -7048,17 +7048,17 @@ std::string _tanomu(int prm_388)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"お願いします"s;
             _tone_at_m34(1) = u8"頼みます"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"お願いしますわ"s;
             _tone_at_m34(1) = u8"頼みますわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7067,17 +7067,17 @@ std::string _tanomu(int prm_388)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頼む"s;
             _tone_at_m34(1) = u8"頼むな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"頼むよ"s;
             _tone_at_m34(1) = u8"頼む"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7086,17 +7086,17 @@ std::string _tanomu(int prm_388)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頼むね"s;
             _tone_at_m34(1) = u8"頼むよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"頼むわ"s;
             _tone_at_m34(1) = u8"頼むね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7105,17 +7105,17 @@ std::string _tanomu(int prm_388)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頼む…"s;
             _tone_at_m34(1) = u8"頼むぞ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"頼むわ…"s;
             _tone_at_m34(1) = u8"頼むよ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7123,18 +7123,18 @@ std::string _tanomu(int prm_388)
     if (cdata(18, tc) == 4) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頼むぞよ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"頼むぞよ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7143,17 +7143,17 @@ std::string _tanomu(int prm_388)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頼み申す"s;
             _tone_at_m34(1) = u8"頼むでござる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"お頼み申し上げます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7161,18 +7161,18 @@ std::string _tanomu(int prm_388)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頼むッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         } else {
             _tone_at_m34(0) = u8"おねがいにゃ"s;
             _tone_at_m34(1) = u8"おねがいニャン"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
@@ -7184,18 +7184,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 0) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"私"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"私"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7203,18 +7203,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 1) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"俺"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"あたし"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7222,18 +7222,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 2) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"僕"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"わたし"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7241,18 +7241,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 3) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"自分"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"自分"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7260,18 +7260,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 4) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"麻呂"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"わらわ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7279,18 +7279,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"拙者"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"手前"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7298,18 +7298,18 @@ std::string _ore(int prm_389)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"あっし"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         } else {
             _tone_at_m34(0) = u8"みゅー"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
@@ -7322,17 +7322,17 @@ std::string _ga(int prm_390)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ですが"s;
             _tone_at_m34(1) = u8"ですけど"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"ですが"s;
             _tone_at_m34(1) = u8"ですけど"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7341,17 +7341,17 @@ std::string _ga(int prm_390)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"が"s;
             _tone_at_m34(1) = u8"がな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"が"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7360,17 +7360,17 @@ std::string _ga(int prm_390)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"けど"s;
             _tone_at_m34(1) = u8"が"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"が"s;
             _tone_at_m34(1) = u8"けど"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7379,17 +7379,17 @@ std::string _ga(int prm_390)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"が…"s;
             _tone_at_m34(1) = u8"けど…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"が…"s;
             _tone_at_m34(1) = u8"けど…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7397,18 +7397,18 @@ std::string _ga(int prm_390)
     if (cdata(18, tc) == 4) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"であるが"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"であるが"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7416,18 +7416,18 @@ std::string _ga(int prm_390)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござるが"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"でございますが"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7436,17 +7436,17 @@ std::string _ga(int prm_390)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスけど"s;
             _tone_at_m34(1) = u8"ッスが"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         } else {
             _tone_at_m34(0) = u8"ニャけど"s;
             _tone_at_m34(1) = u8"にゃが"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
@@ -7458,18 +7458,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 0) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ですね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"ですわね"s;
             _tone_at_m34(1) = u8"ですね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7477,18 +7477,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 1) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"だね"s;
             _tone_at_m34(1) = u8"ね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7496,18 +7496,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 2) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"ね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7515,18 +7515,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 3) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だな…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"だね…"s;
             _tone_at_m34(1) = u8"ね…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7534,18 +7534,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 4) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"であるな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"であるな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7553,18 +7553,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござるな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"でございますね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7572,18 +7572,18 @@ std::string _dana(int prm_391)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         } else {
             _tone_at_m34(0) = u8"にゃ"s;
             _tone_at_m34(1) = u8"みゃ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
@@ -7596,17 +7596,17 @@ std::string _kure(int prm_392)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ください"s;
             _tone_at_m34(1) = u8"くださいよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"くださいな"s;
             _tone_at_m34(1) = u8"ください"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7615,17 +7615,17 @@ std::string _kure(int prm_392)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"くれ"s;
             _tone_at_m34(1) = u8"くれよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"くれ"s;
             _tone_at_m34(1) = u8"よ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7634,17 +7634,17 @@ std::string _kure(int prm_392)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"よ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"ね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7653,17 +7653,17 @@ std::string _kure(int prm_392)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"くれ…"s;
             _tone_at_m34(1) = u8"…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"よ…"s;
             _tone_at_m34(1) = u8"…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7672,17 +7672,17 @@ std::string _kure(int prm_392)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"つかわせ"s;
             _tone_at_m34(1) = u8"たもれ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"つかわせ"s;
             _tone_at_m34(1) = u8"たもれ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7690,18 +7690,18 @@ std::string _kure(int prm_392)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"頂きたいでござる"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"くださいませ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7709,18 +7709,18 @@ std::string _kure(int prm_392)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"くれッス"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         } else {
             _tone_at_m34(0) = u8"にゃ"s;
             _tone_at_m34(1) = u8"みゃ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
@@ -7732,18 +7732,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 0) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でしょう"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"でしょう"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7751,18 +7751,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 1) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だろ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"だろうね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7770,18 +7770,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 2) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だろうね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"でしょ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7789,18 +7789,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 3) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"だろ…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"でしょ…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7808,18 +7808,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 4) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"であろう"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"であろうな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7827,18 +7827,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござろうな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"でございましょう"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7846,18 +7846,18 @@ std::string _daro(int prm_393)
     if (cdata(18, tc) == 6) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスね"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         } else {
             _tone_at_m34(0) = u8"にゃ"s;
             _tone_at_m34(1) = u8"みゃ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
@@ -7870,17 +7870,17 @@ std::string _yo(int prm_394)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ですよ"s;
             _tone_at_m34(1) = u8"です"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"ですよ"s;
             _tone_at_m34(1) = u8"です"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -7889,17 +7889,17 @@ std::string _yo(int prm_394)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ぜ"s;
             _tone_at_m34(1) = u8"ぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"わ"s;
             _tone_at_m34(1) = u8"よ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -7908,17 +7908,17 @@ std::string _yo(int prm_394)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"よ"s;
             _tone_at_m34(1) = u8"ぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"わよ"s;
             _tone_at_m34(1) = u8"わ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -7927,17 +7927,17 @@ std::string _yo(int prm_394)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"ぞ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"わ…"s;
             _tone_at_m34(1) = u8"…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -7946,17 +7946,17 @@ std::string _yo(int prm_394)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"であろう"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"であろうぞ"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -7964,18 +7964,18 @@ std::string _yo(int prm_394)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござろう"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"でございますわ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -7984,17 +7984,17 @@ std::string _yo(int prm_394)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスよ"s;
             _tone_at_m34(1) = u8"ッス"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         } else {
             _tone_at_m34(0) = u8"にゃぁ"s;
             _tone_at_m34(1) = u8"みゃぁ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
@@ -8007,17 +8007,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"あります"s;
             _tone_at_m34(1) = u8"ありますね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"あります"s;
             _tone_at_m34(1) = u8"ありますわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8026,17 +8026,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ある"s;
             _tone_at_m34(1) = u8"あるな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"あるね"s;
             _tone_at_m34(1) = u8"あるよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8045,17 +8045,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"あるね"s;
             _tone_at_m34(1) = u8"あるよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"あるわ"s;
             _tone_at_m34(1) = u8"あるわね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8064,17 +8064,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ある…"s;
             _tone_at_m34(1) = u8"あるぞ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"あるわ…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8083,17 +8083,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"あろう"s;
             _tone_at_m34(1) = u8"おじゃる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"あろう"s;
             _tone_at_m34(1) = u8"おじゃる"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8102,17 +8102,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"あるでござる"s;
             _tone_at_m34(1) = u8"あるでござるな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"ござます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8121,17 +8121,17 @@ std::string _aru(int prm_395)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"あるッスよ"s;
             _tone_at_m34(1) = u8"あるッス"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         } else {
             _tone_at_m34(0) = u8"あにゅ"s;
             _tone_at_m34(1) = u8"あみぅ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
@@ -8144,17 +8144,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"います"s;
             _tone_at_m34(1) = u8"いますよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"いますわ"s;
             _tone_at_m34(1) = u8"います"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8163,17 +8163,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"うぜ"s;
             _tone_at_m34(1) = u8"うぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"うわ"s;
             _tone_at_m34(1) = u8"うよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8182,17 +8182,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"うよ"s;
             _tone_at_m34(1) = u8"う"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"うわ"s;
             _tone_at_m34(1) = u8"う"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8201,17 +8201,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"う…"s;
             _tone_at_m34(1) = u8"うぞ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"うわ…"s;
             _tone_at_m34(1) = u8"う…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8220,17 +8220,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"うぞよ"s;
             _tone_at_m34(1) = u8"うぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"うぞよ"s;
             _tone_at_m34(1) = u8"うぞ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8239,17 +8239,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"うでござる"s;
             _tone_at_m34(1) = u8"うでござるよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"うでございます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8258,17 +8258,17 @@ std::string _u(int prm_396)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"うッスよ"s;
             _tone_at_m34(1) = u8"うッス"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         } else {
             _tone_at_m34(0) = u8"うにぁ"s;
             _tone_at_m34(1) = u8"うみぁ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
@@ -8281,17 +8281,17 @@ std::string _na(int prm_397)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ですね"s;
             _tone_at_m34(1) = u8"です"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"ですわ"s;
             _tone_at_m34(1) = u8"ですね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8300,17 +8300,17 @@ std::string _na(int prm_397)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ぜ"s;
             _tone_at_m34(1) = u8"な"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"な"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8319,17 +8319,17 @@ std::string _na(int prm_397)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"なぁ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"わ"s;
             _tone_at_m34(1) = u8"わね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8338,17 +8338,17 @@ std::string _na(int prm_397)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"な…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"わ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8357,17 +8357,17 @@ std::string _na(int prm_397)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でおじゃるな"s;
             _tone_at_m34(1) = u8"のう"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"でおじゃるな"s;
             _tone_at_m34(1) = u8"のう"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8375,18 +8375,18 @@ std::string _na(int prm_397)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"でござるな"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"でございますわ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8395,17 +8395,17 @@ std::string _na(int prm_397)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = u8"ッス"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         } else {
             _tone_at_m34(0) = u8"ニァ"s;
             _tone_at_m34(1) = u8"ミァ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
@@ -8418,17 +8418,17 @@ std::string _ta(int prm_398)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"ました"s;
             _tone_at_m34(1) = u8"ましたね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"ました"s;
             _tone_at_m34(1) = u8"ましたわ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8437,17 +8437,17 @@ std::string _ta(int prm_398)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"た"s;
             _tone_at_m34(1) = u8"たな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"たね"s;
             _tone_at_m34(1) = u8"たよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8456,17 +8456,17 @@ std::string _ta(int prm_398)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"たね"s;
             _tone_at_m34(1) = u8"たよ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"たよ"s;
             _tone_at_m34(1) = u8"たね"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8475,17 +8475,17 @@ std::string _ta(int prm_398)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"た…"s;
             _tone_at_m34(1) = u8"たぞ…"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"たわ…"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8494,17 +8494,17 @@ std::string _ta(int prm_398)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"たぞよ"s;
             _tone_at_m34(1) = u8"たぞな"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"たぞよ"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8512,18 +8512,18 @@ std::string _ta(int prm_398)
     if (cdata(18, tc) == 5) {
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"たでござる"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"ましてございます"s;
-            _tone_at_m34(1) = u8""s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(1) = "";
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 1;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8532,17 +8532,17 @@ std::string _ta(int prm_398)
         if (cdata(8, tc) == 0) {
             _tone_at_m34(0) = u8"たッスよ"s;
             _tone_at_m34(1) = u8"たッス"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         } else {
             _tone_at_m34(0) = u8"たにゃぁ"s;
             _tone_at_m34(1) = u8"たみゃぁ"s;
-            _tone_at_m34(2) = u8""s;
-            _tone_at_m34(3) = u8""s;
-            _tone_at_m34(4) = u8""s;
+            _tone_at_m34(2) = "";
+            _tone_at_m34(3) = "";
+            _tone_at_m34(4) = "";
             p_at_m34 = 2;
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
@@ -8567,8 +8567,8 @@ void label_0173()
                 for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
                     if (s == u8"ref"s) {
                         if (talkref == 1) {
-                            s = lang(u8""s + gdata(814),
-                                u8""s + gdata(814) + u8" guest"s +
+                            s = lang(""s + gdata(814),
+                                ""s + gdata(814) + u8" guest"s +
                                     _s2(gdata(814)));
                             break;
                         }
@@ -8666,7 +8666,7 @@ void label_0174()
 }
 void label_0175()
 {
-    buff = u8""s;
+    buff = "";
     notesel(buff);
     noteload(exedir + u8"data\\talk.txt"s);
     p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
@@ -8675,7 +8675,7 @@ void label_0175()
 }
 void label_0176()
 {
-    buff = u8""s;
+    buff = "";
     notesel(buff);
     noteload(exedir + u8"data\\talk.txt"s);
     p = -1;
@@ -8756,8 +8756,8 @@ void label_0176()
 }
 std::string cnvweight(int prm_399)
 {
-    s_at_m35 = u8""s + abs(prm_399) / 1000 + u8"."s +
-        abs(prm_399) % 1000 / 100 + u8""s + strweight;
+    s_at_m35 = ""s + abs(prm_399) / 1000 + u8"."s +
+        abs(prm_399) % 1000 / 100 + ""s + strweight;
     return s_at_m35;
 }
 std::string fltname(int prm_400)
@@ -8817,13 +8817,13 @@ void label_0180()
     }
     talk_conv(s1, 40 - en * 4);
     buff += s1;
-    noteadd(u8""s);
+    noteadd(""s);
     return;
 }
 void label_0181()
 {
     if (val == 0) {
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(lang(u8"@QM[サブクエスト]"s, u8"@QM[Sub Quest]"s));
     }
     p = 0;
@@ -8841,7 +8841,7 @@ void label_0181()
                 u8"Miches of Vernis asked me to investigate the house just south of her home."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8851,7 +8851,7 @@ void label_0181()
                 u8"I've wiped out the putit's nest. I have to visit Miches of Vernis to report it."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -8869,7 +8869,7 @@ void label_0181()
                 u8"Bandits have been stealing things in Vernis. I need to find and destroy their hideout."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8879,7 +8879,7 @@ void label_0181()
                 u8"Those bandits are no more. All I have to do now is bring the news to Shena of Vernis."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -8897,7 +8897,7 @@ void label_0181()
                 u8"Rilian of Vernis asked me to find her puppy named poppy in the puppy's cave located east of Vernis."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -8915,7 +8915,7 @@ void label_0181()
                 u8"Loyter of Vernis has a dangerous, yet highly profitable job for me. I need to prepare well before talking to him again."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8924,7 +8924,7 @@ void label_0181()
                 u8"I need to eliminate all of the monsters in the test ground."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8934,7 +8934,7 @@ void label_0181()
                 u8"I've survived the nightmare. Now to meet Loyer of Vernis to receive the reward."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -8952,7 +8952,7 @@ void label_0181()
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8962,7 +8962,7 @@ void label_0181()
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8972,7 +8972,7 @@ void label_0181()
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8982,7 +8982,7 @@ void label_0181()
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -8992,7 +8992,7 @@ void label_0181()
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9002,7 +9002,7 @@ void label_0181()
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9012,7 +9012,7 @@ void label_0181()
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9022,7 +9022,7 @@ void label_0181()
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9032,7 +9032,7 @@ void label_0181()
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9042,7 +9042,7 @@ void label_0181()
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9060,7 +9060,7 @@ void label_0181()
                 u8"I was asked by Raphael of Port Kapul to bring my wife. What a moron."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9078,7 +9078,7 @@ void label_0181()
                 u8"Tam of Yowyn asked me to eliminate the cats in his house. The house is located southern part of Yowyn."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9088,7 +9088,7 @@ void label_0181()
                 u8"I've freed Tam's house from the cats. To get the reward, I need to speak Tam again in Yowyn."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9106,7 +9106,7 @@ void label_0181()
                 u8"Carnel Gilbert of Yowyn asked me to help the Juere freedom force fight the Yerles Army. I should speak to him again when I'm ready."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9115,7 +9115,7 @@ void label_0181()
                 u8"I need to destroy the Yerles Army."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9125,7 +9125,7 @@ void label_0181()
                 u8"I've won the war. Now to bring the good news to carnel Gilbert."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9143,7 +9143,7 @@ void label_0181()
                 u8"Ainc of Yowyn asked me to help his promotion task. I need to enter the Yeek's dungeon which is located west of Yowyn and kill the chief."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9153,7 +9153,7 @@ void label_0181()
                 u8"I've defeated the chief of Yeek. I should head back to Yowyn and report to Ainc."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9171,7 +9171,7 @@ void label_0181()
                 u8"Arnord of Port Kapul asked me to help the isolated Palmian 10th regiment from massive Kamikaze attacks. I should prepare and speak to Arnord when ready."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9181,7 +9181,7 @@ void label_0181()
                 u8"I have to hold the battle line to gain time while the Palmian army retreats. A messenger will inform me when it's done."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9191,7 +9191,7 @@ void label_0181()
                 u8"I survived the kamikaze attack. I have to bring the good news to Arnord of Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9209,7 +9209,7 @@ void label_0181()
                 u8"Mia of Palmia wants a silver cat, a very rare cat. If I happen to capture one, I should bring it to Mia."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9227,7 +9227,7 @@ void label_0181()
                 u8"Renton of Lumiest is looking for the fairy tale books written by Rachael. I should bring it to him if I happen to find one. There're total of 4 books in the series."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9245,7 +9245,7 @@ void label_0181()
                 u8"I've got a invitation to the pyramid. The pyramid is located north of Port Kapul and it is rumored that it holds great treasure."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9264,7 +9264,7 @@ void label_0181()
                 u8"Noel of Derphy asked me to set up a bomb in Palmia. I need to place it right on the teddy bear in the inn."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9274,7 +9274,7 @@ void label_0181()
                 u8"I have successfully destroyed Palmia. Now all I need to report back to Noel in Derphy."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9295,7 +9295,7 @@ void label_0181()
                     (6 - gdata(464)) + u8" of them."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9313,7 +9313,7 @@ void label_0181()
                 u8"Balzak of Lumiest wants me to sweep the entire sewer. I can find the entrance to the sewer around the inn."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9323,7 +9323,7 @@ void label_0181()
                 u8"I've finished sweeping the sewer. I need to report it to Balzak of Lumiest."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9343,7 +9343,7 @@ void label_0181()
                     u8" more guild points and talk to the guild guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9361,7 +9361,7 @@ void label_0181()
                 u8"To join the Thieves Guild, I need to not pay tax for 4 months, that means I'll be a criminal for sure."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9382,7 +9382,7 @@ void label_0181()
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9403,7 +9403,7 @@ void label_0181()
                     u8" more guild points and talk to the guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9424,7 +9424,7 @@ void label_0181()
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9445,7 +9445,7 @@ void label_0181()
                     u8" gold pices and talk to the guild guard in Derphy."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9463,7 +9463,7 @@ void label_0181()
                 u8"General Conery wants me to hunt the chief of minotaur. The nest is located south of Yowyn."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     if (val == 0) {
@@ -9473,7 +9473,7 @@ void label_0181()
                 u8"I've killed the chief of minotaur. I should head back to Palmia and speak to General Conery."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     p = 0;
@@ -9491,7 +9491,7 @@ void label_0181()
                 u8"A strange scientist asked me to bring little sisters to her. To capture a little sister, I need to kill Big Daddy first then throw the little ball at her."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     return;
@@ -9539,9 +9539,9 @@ void label_0183()
 void label_0184()
 {
     randomize(qdata(0, rq) + 1);
-    s(6) = u8""s;
+    s(6) = "";
     s(5) = lang(u8"金貨"s + qdata(6, rq) + u8"枚"s,
-        u8""s + qdata(6, rq) + u8" gold pieces"s);
+        ""s + qdata(6, rq) + u8" gold pieces"s);
     if (qdata(7, rq) != 0) {
         if (qdata(7, rq) < 10000) {
             s(5) += lang(u8"と"s, u8" and "s) + _reward(qdata(7, rq));
@@ -9552,14 +9552,14 @@ void label_0184()
     if (qdata(9, rq) == -1) {
         nquestdate = lang(u8"即時"s, u8"-"s);
     } else {
-        nquestdate = u8""s + qdata(9, rq) + lang(u8"日"s, u8"d"s);
+        nquestdate = ""s + qdata(9, rq) + lang(u8"日"s, u8"d"s);
     }
     if (qdata(3, rq) == 1006) {
         s = u8"%HARVEST"s;
         label_0183();
-        s(10) = u8""s + cnvweight(qdata(12, rq));
+        s(10) = ""s + cnvweight(qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
-        s(4) = lang(u8""s + s(10) + u8"の作物の納入"s,
+        s(4) = lang(""s + s(10) + u8"の作物の納入"s,
             u8"Gather harvests weight "s + s(10) + u8"."s);
         if (gdata(72) == rq) {
             s(4) += lang(u8"(現在"s, u8" (Now "s) + cnvweight(qdata(13, rq)) +
@@ -9570,9 +9570,9 @@ void label_0184()
     if (qdata(3, rq) == 1009) {
         s = u8"%PARTY"s;
         label_0183();
-        s(10) = u8""s + qdata(12, rq) + lang(u8"ポイント"s, u8" points"s);
+        s(10) = ""s + qdata(12, rq) + lang(u8"ポイント"s, u8" points"s);
         s(11) = mapname(qdata(1, rq));
-        s(4) = lang(u8""s + s(10) + u8"の獲得"s, u8"Gather "s + s(10) + u8"."s);
+        s(4) = lang(""s + s(10) + u8"の獲得"s, u8"Gather "s + s(10) + u8"."s);
         if (gdata(72) == rq) {
             s(4) += lang(u8"(現在"s, u8" (Now "s) + qdata(13, rq) + u8")"s;
         }
@@ -9581,10 +9581,10 @@ void label_0184()
     if (qdata(3, rq) == 1007) {
         s = u8"%ESCORT,"s + qdata(4, rq);
         label_0183();
-        s(11) = u8""s + mapname(qdata(12, rq));
+        s(11) = ""s + mapname(qdata(12, rq));
         s(4) = lang(u8"クライアントを"s + s(11),
             u8"Escort the client to "s + s(11) + u8"."s);
-        s(6) = s(4) + lang(u8"まで護衛"s, u8""s);
+        s(6) = s(4) + lang(u8"まで護衛"s, ""s);
     }
     if (qdata(3, rq) == 1001) {
         s = u8"%HUNT"s;
@@ -9603,21 +9603,21 @@ void label_0184()
         s = u8"%DELIVER,"s + qdata(12, rq);
         label_0183();
         s(10) = cnvarticle(cnvitemname(qdata(11, rq)));
-        s(11) = u8""s + mapname(qdata(1, qdata(10, rq)));
-        s(12) = u8""s + qname(qdata(10, rq));
+        s(11) = ""s + mapname(qdata(1, qdata(10, rq)));
+        s(12) = ""s + qname(qdata(10, rq));
         if (iorgweight(qdata(11, rq)) > 50000) {
             s(10) += lang(u8"(凄く重い)"s, u8"(Heavy!)"s);
         }
-        s(4) = lang(u8""s + s(11) + u8"に住む"s + s(12) + u8"に"s + s(10),
+        s(4) = lang(""s + s(11) + u8"に住む"s + s(12) + u8"に"s + s(10),
             u8"Deliver "s + s(10) + u8" to "s + s(12) + u8" who lives in "s +
                 s(11) + u8"."s);
-        s(6) = s(4) + lang(u8"を配達"s, u8""s);
+        s(6) = s(4) + lang(u8"を配達"s, ""s);
     }
     if (qdata(3, rq) == 1003) {
         s = u8"%COOK,"s + qdata(12, rq);
         if (rnd(6) == 0) { s = u8"%COOK,GENERAL"s; }
         label_0183();
-        s(4) = cnvarticle(foodname(qdata(12, rq), u8""s, qdata(13, rq)));
+        s(4) = cnvarticle(foodname(qdata(12, rq), ""s, qdata(13, rq)));
         s(6) =
             lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
     }
@@ -9628,23 +9628,23 @@ void label_0184()
         if (qdata(12, rq) == 343) {
             s(4) = lang(u8"正体不明の存在"s, u8"unknown monster"s);
         }
-        s(10) = u8""s + qdata(5, rq) * 10 / 6;
+        s(10) = ""s + qdata(5, rq) * 10 / 6;
         s(6) = lang(s(4) + u8"の討伐"s, u8"Slay "s + s(4) + u8"."s);
     }
     if (qdata(3, rq) == 1010) {
         s = u8"%HUNTEX"s;
         label_0183();
         s(4) = refchara_str(qdata(12, rq), 2);
-        s(10) = u8""s + qdata(5, rq) * 3 / 2;
+        s(10) = ""s + qdata(5, rq) * 3 / 2;
         s(6) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters"s);
     }
     if (qdata(3, rq) == 1011) {
         s = u8"%COLLECT"s;
         label_0183();
         s(10) = cnvarticle(cnvitemname(qdata(11, rq)));
-        s(11) = u8""s + mapname(qdata(1, rq));
+        s(11) = ""s + mapname(qdata(1, rq));
         if (gdata(20) == qdata(1, rq) && gdata(22) == 1) {
-            s(12) = u8""s + cdatan(0, qdata(10, rq));
+            s(12) = ""s + cdatan(0, qdata(10, rq));
         } else {
             s(12) = lang(s(11) + u8"に住む人物"s, u8"the target in "s + s(11));
         }
@@ -9654,12 +9654,12 @@ void label_0184()
         s(4) = lang(u8"依頼人のために"s + s(12) + u8"から"s + s(10),
             u8"Acquire "s + s(10) + u8" from "s + s(12) +
                 u8" for the client."s);
-        s(6) = s(4) + lang(u8"を調達"s, u8""s);
+        s(6) = s(4) + lang(u8"を調達"s, ""s);
     }
     label_0185();
     if (val == 1) {
         buff =
-            lang(_kimi(3) + u8"に頼みたいことがある"s + _nda(), u8""s) + buff;
+            lang(_kimi(3) + u8"に頼みたいことがある"s + _nda(), ""s) + buff;
         if (qdata(9, rq) != -1) {
             buff += lang(u8"期限は残り"s + qdata(9, rq) + u8"日"s + _da(),
                 u8" You have "s + qdata(9, rq) +
@@ -9679,7 +9679,7 @@ void label_0184()
         buff += lang(u8"場所: "s, u8"Location: "s) + mapname(qdata(1, rq)) +
             u8"\n"s;
         buff += lang(u8"期限: "s, u8"Deadline: "s);
-        if (qdata(9, rq) != -1) { buff += lang(u8"残り"s, u8""s); }
+        if (qdata(9, rq) != -1) { buff += lang(u8"残り"s, ""s); }
         buff += nquestdate + u8"\n"s;
         s(5) = lang(u8"報酬: "s, u8"Reward  : "s) + s(5);
         talk_conv(s(5), 40 - en * 10);
@@ -9697,7 +9697,7 @@ void label_0184()
         buff = lang(u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
             u8"You've done well. Thanks. Here's your reward."s);
         if (elona_int(s(5)) != 0) {
-            txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), u8""s));
+            txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), ""s));
         }
         if (qdata(3, rq) == 1006) {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq)) {
@@ -9860,7 +9860,7 @@ void addnews2(const std::string& prm_401, int prm_402)
 void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 {
     addnews2(prm_403 + u8" "s + gdata(10) + u8"/"s + gdata(11) + u8"/"s +
-        gdata(12) + u8" h"s + gdata(13) + u8""s + u8" "s + prm_404);
+        gdata(12) + u8" h"s + gdata(13) + ""s + u8" "s + prm_404);
     return;
 }
 void addnews(int prm_405, int prm_406)
@@ -10385,7 +10385,7 @@ void txtgod(int prm_407, int prm_408)
         }
         if (prm_407 == 7) {
             txt(lang(u8"「ずっと一緒…だよね？…もう離さない…君が死ぬまで」"s,
-                cnvtalk(u8""s)));
+                cnvtalk(""s)));
         }
     }
     return;
@@ -10708,7 +10708,7 @@ void label_0192()
     {
         int cnt = 0;
         for (int cnt_end = cnt + (inf_maxlog - 2); cnt < cnt_end; ++cnt) {
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     noteadd(lang(u8"■メッセージログ"s, u8"<Message Log>"s));
@@ -10838,25 +10838,25 @@ void label_0192()
     lastctrl = 1;
     DIM2(invicon, 40);
     SDIM3(invkey, 4, 40);
-    invkey(0) = u8""s;
-    invkey(1) = u8""s + key_inventory;
-    invkey(2) = u8""s + key_drop;
-    invkey(3) = u8""s;
-    invkey(4) = u8""s;
-    invkey(5) = u8""s + key_eat;
-    invkey(6) = u8""s;
-    invkey(7) = u8""s + key_read;
-    invkey(8) = u8""s + key_drink;
-    invkey(9) = u8""s + key_zap;
-    invkey(10) = u8""s;
-    invkey(11) = u8""s;
-    invkey(12) = u8""s;
-    invkey(13) = u8""s;
-    invkey(14) = u8""s + key_use;
-    invkey(15) = u8""s + key_open;
-    invkey(16) = u8""s;
-    invkey(17) = u8""s + key_dip;
-    invkey(26) = u8""s + key_throw;
+    invkey(0) = "";
+    invkey(1) = ""s + key_inventory;
+    invkey(2) = ""s + key_drop;
+    invkey(3) = "";
+    invkey(4) = "";
+    invkey(5) = ""s + key_eat;
+    invkey(6) = "";
+    invkey(7) = ""s + key_read;
+    invkey(8) = ""s + key_drink;
+    invkey(9) = ""s + key_zap;
+    invkey(10) = "";
+    invkey(11) = "";
+    invkey(12) = "";
+    invkey(13) = "";
+    invkey(14) = ""s + key_use;
+    invkey(15) = ""s + key_open;
+    invkey(16) = "";
+    invkey(17) = ""s + key_dip;
+    invkey(26) = ""s + key_throw;
     invicon(0) = -1;
     invicon(1) = 7;
     invicon(2) = 8;
@@ -12789,7 +12789,7 @@ void csvsort(
     {
         int cnt = 0;
         for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt) {
-            prm_435(cnt) = u8""s;
+            prm_435(cnt) = "";
             getstr(prm_435(cnt), prm_436, p_at_m40(0), prm_437);
             if (strsize == 0) {
                 csvmax = cnt;
@@ -12839,7 +12839,7 @@ std::string randomname(int)
 {
 label_0223_internal:
     s_at_m41 = rn1(rnd(length(rn1)));
-    if (s_at_m41 == u8""s) { goto label_0223_internal; }
+    if (s_at_m41 == ""s) { goto label_0223_internal; }
     if (jp) {
         if (rnd(8) == 0) { s_at_m41 += u8"ー"s; }
     }
@@ -12866,7 +12866,7 @@ label_0227_internal : {
     for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
         p_at_m41(2) = rnd(length2(rnlist));
         p_at_m41(1) = rnd(14);
-        if (rnlist(p_at_m41(1), p_at_m41(2)) == u8""s) {
+        if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s) {
             --cnt;
             continue;
         }
@@ -12946,7 +12946,7 @@ label_0227_internal : {
                 p_at_m41(1) = rnd(2);
                 p_at_m41(1) += 10;
             }
-            if (rnlist(p_at_m41(1), p_at_m41(4)) == u8""s) { continue; }
+            if (rnlist(p_at_m41(1), p_at_m41(4)) == ""s) { continue; }
             rtval_at_m41 = 1;
             break;
         }
@@ -13137,7 +13137,7 @@ void flt(int prm_445, int prm_446)
     fltselect = 0;
     flttypemajor = 0;
     flttypeminor = 0;
-    fltnrace = u8""s;
+    fltnrace = "";
     if (prm_445 == 0) {
         objlv = calcobjlv(gdata(22));
     } else {
@@ -13657,7 +13657,7 @@ void label_0247()
     val(10) = val / 10000;
     if (val(10) != 0) {
         if (val(2) == 1) {
-            s = u8""s;
+            s = "";
             return;
         }
         sid = val % 10000;
@@ -13665,12 +13665,12 @@ void label_0247()
             rtval = 2;
             if (val(1) / 50 + 1 < 0) {
                 rtval = 9;
-                s = lang(u8""s + skillname(sid) + u8"を"s +
+                s = lang(""s + skillname(sid) + u8"を"s +
                         abs((val(1) / 50 + 1)) + u8"下げる"s,
                     u8"decreases your "s + skillname(sid) + u8" by "s +
                         abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000) {
-                    s = lang(u8""s + skillname(sid) +
+                    s = lang(""s + skillname(sid) +
                                 u8"を減衰させる毒素を含んでいる"s,
                             u8"has which deteriorates your "s + skillname(sid) +
                                 u8"."s) +
@@ -13679,12 +13679,12 @@ void label_0247()
                     s += u8"]"s;
                 }
             } else {
-                s = lang(u8""s + skillname(sid) + u8"を"s +
+                s = lang(""s + skillname(sid) + u8"を"s +
                         abs((val(1) / 50 + 1)) + u8"上げる"s,
                     u8"increases your "s + skillname(sid) + u8" by "s +
                         abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000) {
-                    s = lang(u8""s + skillname(sid) +
+                    s = lang(""s + skillname(sid) +
                                 u8"を増強させる栄養をもっている"s,
                             u8"has essential nutrients to enhance your "s +
                                 skillname(sid) + u8"."s) +
@@ -13699,12 +13699,12 @@ void label_0247()
             i = val(1) / 2 / 50;
             if (val(1) / 2 < 0) {
                 rtval = 9;
-                s = lang(u8""s + skillname(sid) + u8"への耐性を弱化する"s,
+                s = lang(""s + skillname(sid) + u8"への耐性を弱化する"s,
                     u8"weaken your resistance to "s + skillname(sid) + u8"."s);
             } else {
                 s = skillencdesc(sid);
-                if (s == u8""s) {
-                    s = lang(u8""s + skillname(sid) + u8"への耐性を授ける"s,
+                if (s == ""s) {
+                    s = lang(""s + skillname(sid) + u8"への耐性を授ける"s,
                         u8"grants your resistance to "s + skillname(sid) +
                             u8"."s);
                 }
@@ -13718,12 +13718,12 @@ void label_0247()
             i = val(1) / 50 + 1;
             if (val(1) / 50 + 1 < 0) {
                 rtval = 9;
-                s = lang(u8""s + skillname(sid) + u8"の技能を下げる"s,
+                s = lang(""s + skillname(sid) + u8"の技能を下げる"s,
                     u8"decreases your "s + skillname(sid) + u8" skill."s);
             } else {
                 s = skillencdesc(sid);
-                if (s == u8""s) {
-                    s = lang(u8""s + skillname(sid) + u8"の技能を上げる"s,
+                if (s == ""s) {
+                    s = lang(""s + skillname(sid) + u8"の技能を上げる"s,
                         u8"improves your "s + skillname(sid) + u8" skill."s);
                 }
             }
@@ -13736,7 +13736,7 @@ void label_0247()
             s = lang(skillname(sid) + u8"を維持する"s,
                 u8"maintains "s + skillname(sid) + u8"."s);
             if (val(3) == 57000) {
-                s = lang(u8""s + skillname(sid) +
+                s = lang(""s + skillname(sid) +
                             u8"の成長を助ける栄養をもっている"s,
                         u8"can help you exercise your "s + skillname(sid) +
                             u8" faster."s) +
@@ -13749,9 +13749,9 @@ void label_0247()
             rtval = 4;
             i = val(1) / 2 / 50;
             s = skillencdesc(sid);
-            if (s == u8""s) {
+            if (s == ""s) {
                 s = lang(
-                    u8""s + skillname(sid) + u8"属性の追加ダメージを与える"s,
+                    ""s + skillname(sid) + u8"属性の追加ダメージを与える"s,
                     u8"deals "s + skillname(sid) + u8" damage."s);
             }
             s += u8" ["s;
@@ -13762,7 +13762,7 @@ void label_0247()
             rtval = 4;
             i = val(1) / 50;
             sid = encprocref(0, sid);
-            s = lang(u8""s + skillname(sid) + u8"を発動する"s,
+            s = lang(""s + skillname(sid) + u8"を発動する"s,
                 u8"invokes "s + skillname(sid) + u8"."s);
             s += u8" ["s;
             putenclv(i);
@@ -13770,7 +13770,7 @@ void label_0247()
         }
         if (val(10) == 9) {
             rtval = 4;
-            s = lang(u8""s + ammoname(sid) + u8"を装填できる"s,
+            s = lang(""s + ammoname(sid) + u8"を装填できる"s,
                 u8"can be loaded with "s + ammoname(sid) + u8"."s);
             s += lang(u8" [最大"s, u8" [Max "s) + val(1) / 1000 +
                 lang(u8"発]"s, u8"]"s);
@@ -16919,18 +16919,18 @@ void item_checkknown(int prm_515)
 std::string rpname(int prm_516)
 {
     s_at_m62 = u8"?????"s;
-    if (rpdatan(prm_516) != u8""s) { return rpdatan(prm_516); }
+    if (rpdatan(prm_516) != ""s) { return rpdatan(prm_516); }
     if (prm_516 >= 400) { return ioriginalnameref(prm_516 - 400); }
     return s_at_m62;
 }
 void label_0311()
 {
     if (inv(3, prm_518) == 578) {
-        s_at_m63 += lang(u8""s + moneyboxn(inv(26, prm_518)),
+        s_at_m63 += lang(""s + moneyboxn(inv(26, prm_518)),
             u8"("s + moneyboxn(inv(26, prm_518)) + u8")"s);
     }
     if (inv(3, prm_518) == 617) {
-        s_at_m63 += lang(u8""s + biten(inv(25, prm_518)),
+        s_at_m63 += lang(""s + biten(inv(25, prm_518)),
             u8" <"s + biten(inv(25, prm_518)) + u8">"s);
     }
     if (inv(3, prm_518) == 687) {
@@ -16949,7 +16949,7 @@ void label_0311()
                 lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
         } else {
             if (inv(23, prm_518) == 0) {
-                s_at_m63 += lang(u8"カスタム"s, u8""s);
+                s_at_m63 += lang(u8"カスタム"s, ""s);
             } else {
                 s_at_m63 += lang(u8"《"s + rpname(inv(23, prm_518)) + u8"》の"s,
                     u8" of <"s + rpname(inv(23, prm_518)) + u8">"s);
@@ -16964,7 +16964,7 @@ void label_0311()
         } else {
             if (inv(3, prm_518) == 668) {
                 s_at_m63 += lang(u8"第"s, u8" of Rachel No."s) +
-                    inv(26, prm_518) + lang(u8"巻目の"s, u8""s);
+                    inv(26, prm_518) + lang(u8"巻目の"s, ""s);
             } else {
                 if (inv(3, prm_518) == 24) {
                     s_at_m63 += lang(u8"《"s + booktitle(inv(25, prm_518)) +
@@ -16987,7 +16987,7 @@ void label_0311()
                 if (inv(3, prm_518) == 618) {
                     s_at_m63 = s_at_m63 +
                         foodname(inv(25, prm_518) / 1000,
-                            (u8""s + fishdatan(inv(23, prm_518))),
+                            (""s + fishdatan(inv(23, prm_518))),
                             inv(26, prm_518), inv(23, prm_518));
                 } else {
                     s_at_m63 = s_at_m63 +
@@ -16999,8 +16999,8 @@ void label_0311()
             }
         }
         if (inv(21, prm_518) == 4) {
-            s_at_m63 += lang(u8""s, u8" grown "s) + _weight(inv(23, prm_518)) +
-                lang(u8"育った"s, u8""s);
+            s_at_m63 += lang(""s, u8" grown "s) + _weight(inv(23, prm_518)) +
+                lang(u8"育った"s, ""s);
         }
     }
     if (inv(23, prm_518) != 0) {
@@ -17009,7 +17009,7 @@ void label_0311()
                 s_at_m63 += u8"/bugged/"s;
                 return;
             }
-            s_at_m63 += u8""s + fishdatan(inv(23, prm_518));
+            s_at_m63 += ""s + fishdatan(inv(23, prm_518));
         } else {
             if (a_at_m63 == 57000 || a_at_m63 == 62000 ||
                 inv(3, prm_518) == 503 || inv(3, prm_518) == 504 ||
@@ -17019,7 +17019,7 @@ void label_0311()
                     return;
                 }
                 if (inv(21, prm_518) != 4) {
-                    s_at_m63 += lang(u8""s, u8" of "s) +
+                    s_at_m63 += lang(""s, u8" of "s) +
                         refchara_str(inv(23, prm_518), 2);
                     if (jp) { s_at_m63 += u8"の"s; }
                 }
@@ -17035,11 +17035,11 @@ void label_0311()
             }
         }
         if (inv(3, prm_518) == 344) {
-            s_at_m63 += lang(u8""s, u8" of "s) + _homename(inv(25, prm_518)) +
-                lang(u8"の"s, u8""s);
+            s_at_m63 += lang(""s, u8" of "s) + _homename(inv(25, prm_518)) +
+                lang(u8"の"s, ""s);
         }
         if (inv(3, prm_518) == 615) {
-            s_at_m63 += lang(u8""s + inv(23, prm_518) + u8"goldの"s,
+            s_at_m63 += lang(""s + inv(23, prm_518) + u8"goldの"s,
                 u8" <"s + inv(23, prm_518) + u8" gp>"s);
         }
         if (inv(3, prm_518) == 704) {
@@ -17048,7 +17048,7 @@ void label_0311()
                 return;
             }
             s_at_m63 +=
-                lang(u8""s + refchara_str(inv(23, prm_518), 2) + u8"の"s,
+                lang(""s + refchara_str(inv(23, prm_518), 2) + u8"の"s,
                     u8" of "s + refchara_str(inv(23, prm_518), 2));
         }
     }
@@ -17115,9 +17115,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                 s2_at_m63 = u8"枚の"s;
             }
             if (inv(3, prm_518) == 618) { s2_at_m63 = u8"匹の"s; }
-            s_at_m63 = u8""s + num2_at_m63 + s2_at_m63;
+            s_at_m63 = ""s + num2_at_m63 + s2_at_m63;
         } else {
-            s_at_m63 = u8""s;
+            s_at_m63 = "";
         }
         if (inv(8, prm_518) >= 3) {
             if (inv(17, prm_518) == 1) { s_at_m63 += strblessed; }
@@ -17125,23 +17125,23 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             if (inv(17, prm_518) == -2) { s_at_m63 += strdoomed; }
         }
     } else {
-        s_at_m63 = u8""s;
+        s_at_m63 = "";
         if (inv(8, prm_518) >= 3) {
             if (inv(17, prm_518) == 1) { s_at_m63 = strblessed + u8" "s; }
             if (inv(17, prm_518) == -1) { s_at_m63 = strcursed + u8" "s; }
             if (inv(17, prm_518) == -2) { s_at_m63 = strdoomed + u8" "s; }
         }
         if (irandomname(inv(3, prm_518)) == 1 && inv(8, prm_518) < 1) {
-            s2_at_m63 = u8""s;
+            s2_at_m63 = "";
         } else {
-            s2_at_m63 = u8""s + ioriginalnameref2(inv(3, prm_518));
+            s2_at_m63 = ""s + ioriginalnameref2(inv(3, prm_518));
             if (instr(ioriginalnameref(inv(3, prm_518)), 0, u8"with"s) != -1) {
                 s3_at_m63 = u8"with"s;
             } else {
                 s3_at_m63 = u8"of"s;
             }
             if (inv(8, prm_518) != 0) {
-                if (s2_at_m63 == u8""s) {
+                if (s2_at_m63 == ""s) {
                     if (inv(7, prm_518) < 0) { s2_at_m63 = u8"cargo"s; }
                     if (a_at_m63 == 22000 || a_at_m63 == 18000) {
                         s2_at_m63 = u8"pair"s;
@@ -17154,16 +17154,16 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                 }
             }
         }
-        if (s2_at_m63 != u8""s) {
+        if (s2_at_m63 != ""s) {
             if (num2_at_m63 > 1) {
-                s_at_m63 = u8""s + num2_at_m63 + u8" "s + s_at_m63 + s2_at_m63 +
+                s_at_m63 = ""s + num2_at_m63 + u8" "s + s_at_m63 + s2_at_m63 +
                     u8"s "s + s3_at_m63 + u8" "s;
             } else {
                 s_at_m63 = s_at_m63 + s2_at_m63 + u8" "s + s3_at_m63 + u8" "s;
             }
         } else {
             if (num2_at_m63 > 1) {
-                s_at_m63 = u8""s + num2_at_m63 + u8" "s + s_at_m63;
+                s_at_m63 = ""s + num2_at_m63 + u8" "s + s_at_m63;
             }
         }
     }
@@ -17200,20 +17200,20 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (inv(3, prm_518) == 630) {
         s_at_m63 +=
-            u8""s + mtname(0, inv(24, prm_518)) + lang(u8"製の"s, u8" "s);
+            ""s + mtname(0, inv(24, prm_518)) + lang(u8"製の"s, u8" "s);
     }
     if (jp) { label_0311(); }
     if (a_at_m63 == 60000) {
         if (inv(24, prm_518) != 0) {
             if (jp) {
-                s_at_m63 += u8""s + mtname(0, inv(24, prm_518)) + u8"細工の"s;
+                s_at_m63 += ""s + mtname(0, inv(24, prm_518)) + u8"細工の"s;
             } else {
-                s_at_m63 += u8""s + mtname(0, inv(24, prm_518)) + u8"work "s;
+                s_at_m63 += ""s + mtname(0, inv(24, prm_518)) + u8"work "s;
             }
         }
     }
     if (inv(3, prm_518) == 729) {
-        s_at_m63 += u8""s + giftn(inv(28, prm_518)) + lang(u8""s, u8" "s);
+        s_at_m63 += ""s + giftn(inv(28, prm_518)) + lang(""s, u8" "s);
     }
     if (skip_at_m63 == 1) { goto label_0313_internal; }
     alpha_at_m63 = 0;
@@ -17323,7 +17323,7 @@ label_0313_internal:
                 }
             }
         }
-        if (s2_at_m63 == u8""s) {
+        if (s2_at_m63 == ""s) {
             if (inv(3, prm_518) != 618) {
                 if (num2_at_m63 > 1) { s_at_m63 += u8"s"s; }
             }
@@ -17332,7 +17332,7 @@ label_0313_internal:
     }
     if (inv(8, prm_518) >= 3) {
         if (inv(20, prm_518) != 0) {
-            s_at_m63 += u8""s + cnvfix(inv(20, prm_518)) + u8" "s;
+            s_at_m63 += ""s + cnvfix(inv(20, prm_518)) + u8" "s;
         }
         if (ibit(4, prm_518) == 1) {
             s_at_m63 += lang(u8"(残り"s + inv(9, prm_518) + u8"回)"s,
@@ -17343,12 +17343,12 @@ label_0313_internal:
             s_at_m63 += u8" ("s;
             if (inv(10, prm_518) != 0) {
                 s_at_m63 +=
-                    u8""s + inv(10, prm_518) + u8"d"s + inv(11, prm_518);
+                    ""s + inv(10, prm_518) + u8"d"s + inv(11, prm_518);
                 if (inv(12, prm_518) != 0) {
                     if (inv(12, prm_518) > 0) {
                         s_at_m63 += u8"+"s + inv(12, prm_518);
                     } else {
-                        s_at_m63 += u8""s + inv(12, prm_518);
+                        s_at_m63 += ""s + inv(12, prm_518);
                     }
                 }
                 s_at_m63 += u8")"s;
@@ -17356,7 +17356,7 @@ label_0313_internal:
                     s_at_m63 += u8"("s + inv(13, prm_518) + u8")"s;
                 }
             } else {
-                s_at_m63 += u8""s + inv(13, prm_518) + u8","s +
+                s_at_m63 += ""s + inv(13, prm_518) + u8","s +
                     inv(12, prm_518) + u8")"s;
             }
         }
@@ -17596,7 +17596,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             if (p_at_m66 > 5) {
                 s_at_m66 = u8"+"s;
             } else {
-                s_at_m66 = u8""s + p_at_m66;
+                s_at_m66 = ""s + p_at_m66;
             }
             if (jp) {
                 colorres();
@@ -17614,10 +17614,10 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             } else {
                 color(80, 60, 40);
                 pos(prm_530 + (i_at_m66 - 50) * 20 + 5, prm_531);
-                mes(u8""s + p_at_m66);
+                mes(""s + p_at_m66);
                 colorres();
                 pos(prm_530 + (i_at_m66 - 50) * 20 + 4, prm_531);
-                mes(u8""s + p_at_m66);
+                mes(""s + p_at_m66);
             }
         }
     }
@@ -17631,7 +17631,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     {
         int cnt = 0;
         for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt) {
-            prm_532(cnt) = u8""s;
+            prm_532(cnt) = "";
             getstr(prm_532(cnt), word_at_m67, limit(p_at_m67, 0, i_at_m67), 44);
             if (strsize > i_at_m67) { break; }
             p_at_m67 += strsize;
@@ -17854,7 +17854,7 @@ void modrank(int prm_552, int prm_553, int prm_554)
             txtef(8);
         }
         s_at_m75 = u8" "s + orgrank_at_m75 / 100 + lang(u8"位 → "s, u8" -> "s) +
-            gdata(p_at_m75) / 100 + lang(u8"位 "s, u8""s);
+            gdata(p_at_m75) / 100 + lang(u8"位 "s, ""s);
         txt(lang(u8"ランク変動"s, u8"Ranking Change "s) + u8"("s +
             rankn(10, prm_552) + s_at_m75 + u8") "s + lang(u8"《"s, u8"<"s) +
             ranktitle(prm_552) + lang(u8"》"s, u8">"s));
@@ -19044,7 +19044,7 @@ void display_customkey(
     gcopy(3, 0, 30, 24, 18);
     pos(629, 31);
     color(50, 60, 80);
-    bmes(u8""s + prm_637, 250, 240, 230);
+    bmes(""s + prm_637, 250, 240, 230);
     gmode(2, inf_tiles, inf_tiles);
     gsel(0);
     pos(prm_638, prm_639);
@@ -19171,7 +19171,7 @@ void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
             }
         }
     }
-    if (s != u8""s) {
+    if (s != ""s) {
         pos(x_at_m91 + 40, y_at_m91 + prm_649 - 67 - prm_649 % 8);
         gcopy(3, 96, 360, 24, 16);
         color(194, 173, 161);
@@ -19370,7 +19370,7 @@ void display_window2(int prm_662, int prm_663, int prm_664, int prm_665,
     gcopy(prm_666, 0, 0, prm_664, prm_665);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     color(0, 0, 0);
-    if (s != u8""s) {
+    if (s != ""s) {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
             prm_663 + prm_665 - 24 - prm_665 % 8 + prm_667);
         mes(s);
@@ -19391,7 +19391,7 @@ void display_window(int prm_668, int prm_669, int prm_670, int prm_671,
         windowshadow = 0;
     }
     window(prm_668, prm_669, prm_670, prm_671 - prm_671 % 8, 0, 0);
-    if (s != u8""s) {
+    if (s != ""s) {
         window2(prm_668 + 34, prm_669 - 4,
             45 * prm_670 / 100 + limit((strlen_u(s) * 8 - 120), 0, 200), 32, 1,
             1);
@@ -19524,7 +19524,7 @@ void fileadd(const std::string& prm_692, int prm_693)
 void arrayfile()
 {
     notesel(tmp);
-    tmp = u8""s;
+    tmp = "";
     if (fread == 1) {
         exist(file);
         if (strsize != -1) { noteload(file); }
@@ -19700,16 +19700,16 @@ std::string cnv_str(std::string& prm_696, const std::string& prm_697,
 }
 void fix_wish(std::string& prm_699)
 {
-    cnv_str(prm_699, u8"の剥製"s, u8""s);
-    cnv_str(prm_699, u8"剥製"s, u8""s);
-    cnv_str(prm_699, u8"のはく製"s, u8""s);
-    cnv_str(prm_699, u8"はく製"s, u8""s);
-    cnv_str(prm_699, u8"のカード"s, u8""s);
-    cnv_str(prm_699, u8"カード"s, u8""s);
-    cnv_str(prm_699, u8"card "s, u8""s);
-    cnv_str(prm_699, u8"figure "s, u8""s);
-    cnv_str(prm_699, u8"card"s, u8""s);
-    cnv_str(prm_699, u8"figure"s, u8""s);
+    cnv_str(prm_699, u8"の剥製"s, ""s);
+    cnv_str(prm_699, u8"剥製"s, ""s);
+    cnv_str(prm_699, u8"のはく製"s, ""s);
+    cnv_str(prm_699, u8"はく製"s, ""s);
+    cnv_str(prm_699, u8"のカード"s, ""s);
+    cnv_str(prm_699, u8"カード"s, ""s);
+    cnv_str(prm_699, u8"card "s, ""s);
+    cnv_str(prm_699, u8"figure "s, ""s);
+    cnv_str(prm_699, u8"card"s, ""s);
+    cnv_str(prm_699, u8"figure"s, ""s);
     return;
 }
 void fix_input_chat(std::string& prm_700)
@@ -19717,8 +19717,8 @@ void fix_input_chat(std::string& prm_700)
     cnv_str(prm_700, u8" "s, u8"+"s);
     cnv_str(prm_700, u8"%"s, u8"per"s);
     cnv_str(prm_700, u8"&"s, u8"and"s);
-    cnv_str(prm_700, u8"<"s, u8""s);
-    cnv_str(prm_700, u8">"s, u8""s);
+    cnv_str(prm_700, u8"<"s, ""s);
+    cnv_str(prm_700, u8">"s, ""s);
     return;
 }
 void fix_input_chat2(std::string& prm_701)
@@ -19756,8 +19756,8 @@ int imeget()
 }
 void gmes(const std::string& prm_715)
 {
-    m_at_m102 = u8""s;
-    msg_at_m102 = u8""s + prm_715 + u8"$end"s;
+    m_at_m102 = "";
+    msg_at_m102 = ""s + prm_715 + u8"$end"s;
     i_at_m102 = 0;
     xorg_at_m102 = gmesx;
     size_at_m102 = 14;
@@ -19893,7 +19893,7 @@ void boxl(int prm_716, int prm_717, int prm_718, int prm_719)
 }
 std::string fixtxt(const std::string& prm_724, int prm_725)
 {
-    m_at_m104 = u8""s + prm_724;
+    m_at_m104 = ""s + prm_724;
     if (strlen_u(prm_724) < prm_725) {
         {
             int cnt = 0;
@@ -19903,9 +19903,9 @@ std::string fixtxt(const std::string& prm_724, int prm_725)
             }
         }
     } else {
-        m_at_m104 = u8""s + strmid(prm_724, 0, prm_725);
+        m_at_m104 = ""s + strmid(prm_724, 0, prm_725);
     }
-    return u8""s + m_at_m104;
+    return ""s + m_at_m104;
 }
 void windowanime(int prm_726, int prm_727, int prm_728, int prm_729,
     int prm_730, int prm_731)
@@ -20024,7 +20024,7 @@ void drawmenu(int prm_742)
         s(1) = lang(u8"装備"s, u8"Wear"s);
         s(2) = lang(u8"特徴"s, u8"Feat"s);
         s(3) = lang(u8"ﾏﾃﾘｱﾙ"s, u8"Material"s);
-        s(4) = u8""s;
+        s(4) = "";
     }
     if (prm_742 == 1) {
         x_at_m107(0) = windoww - 160;
@@ -20033,7 +20033,7 @@ void drawmenu(int prm_742)
         p(1) = 14;
         s(0) = lang(u8"魔法"s, u8"Spell"s);
         s(1) = lang(u8"技能"s, u8"Skill"s);
-        s(2) = u8""s;
+        s(2) = "";
     }
     if (prm_742 == 2) {
         x_at_m107(0) = windoww - 210;
@@ -20044,7 +20044,7 @@ void drawmenu(int prm_742)
         s(0) = lang(u8"ログ"s, u8"Log"s);
         s(1) = lang(u8"日誌"s, u8"Journal"s);
         s(2) = lang(u8"チャット"s, u8"Chat"s);
-        s(3) = u8""s;
+        s(3) = "";
     }
     if (prm_742 == 3) {
         x_at_m107(0) = windoww - 210;
@@ -20055,7 +20055,7 @@ void drawmenu(int prm_742)
         s(0) = lang(u8"チャート"s, u8"Chart"s);
         s(1) = lang(u8"街情報"s, u8"City"s);
         s(2) = lang(u8"法律"s, u8"Law"s);
-        s(3) = u8""s;
+        s(3) = "";
     }
     if (menucycle == 0) { return; }
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
@@ -20065,7 +20065,7 @@ void drawmenu(int prm_742)
     {
         int cnt = 0;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
-            if (s(cnt) == u8""s) { break; }
+            if (s(cnt) == ""s) { break; }
             pos(x_at_m107 + cnt * 50 + 20, y_at_m107 - 24);
             gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
             if (curmenu == cnt) {
@@ -20086,7 +20086,7 @@ void drawmenu(int prm_742)
     }
     color(0, 0, 0);
     pos(x_at_m107 + x_at_m107(1) - 150, y_at_m107 + 28);
-    bmes(u8""s + key_prev + u8","s + key_next + u8",Tab "s +
+    bmes(""s + key_prev + u8","s + key_next + u8",Tab "s +
             lang(u8"[メニュー切替]"s, u8"[Change]"s),
         255, 255, 255);
     return;
@@ -21702,7 +21702,7 @@ int customtalk(int prm_764, int prm_765)
     } else {
         if (cdata(27, prm_764) == 343) {
             f_at_m116 = 1;
-            buff_at_m116 = u8""s + usertxt(cdata(157, prm_764));
+            buff_at_m116 = ""s + usertxt(cdata(157, prm_764));
             notesel(buff_at_m116);
         }
     }
@@ -21720,7 +21720,7 @@ int customtalk(int prm_764, int prm_765)
         if (noteinfo(0) > 1) {
             p_at_m116 = rnd(noteinfo(0) - 1) + 1;
             noteget(s_at_m116, p_at_m116);
-            if (s_at_m116 != u8""s) {
+            if (s_at_m116 != ""s) {
                 if (prm_765 == 106) {
                     buff = s_at_m116;
                 } else {
@@ -21968,7 +21968,7 @@ void check_quest()
                 txtmore();
                 txtef(4);
                 txt(lang(u8"[殲滅依頼]残り"s + p_at_m119 + u8"体"s + u8"] "s,
-                    u8""s + p_at_m119 + u8" more to go."s));
+                    ""s + p_at_m119 + u8" more to go."s));
             }
         }
         if (gdata(70) == 1008) {
@@ -22035,7 +22035,7 @@ void ride_begin(int prm_772)
     create_pcpic(0, 1);
     rowactend(gdata(183));
     refreshspeed(gdata(183));
-    txt(u8""s + cdata(11, prm_772) + u8") "s);
+    txt(""s + cdata(11, prm_772) + u8") "s);
     if (cbit(22, gdata(183))) {
         txt(lang(
             u8"この生物は乗馬用にちょうどいい！"s, u8"You feel comfortable."s));
@@ -22160,7 +22160,7 @@ void del_chara(int prm_783)
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt) {
-            cdatan(cnt, prm_783) = u8""s;
+            cdatan(cnt, prm_783) = "";
         }
     }
     sdata.clear(prm_783);
@@ -22251,7 +22251,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt) {
             cdatan(cnt, tc_at_m125) = cdatan(cnt, prm_784);
-            cdatan(cnt, prm_784) = u8""s;
+            cdatan(cnt, prm_784) = "";
         }
     }
     {
@@ -22589,7 +22589,7 @@ void delbuff(int prm_805, int prm_806)
 {
     if (prm_805 == 0) {
         txtef(8);
-        txt(lang(u8""s + buffname(cdata((280 + prm_806 * 3), prm_805)) +
+        txt(lang(""s + buffname(cdata((280 + prm_806 * 3), prm_805)) +
                 u8"の効果が切れた。"s,
             u8"The effect of "s +
                 buffname(cdata((280 + prm_806 * 3), prm_805)) + u8" ends."s));
@@ -23984,7 +23984,7 @@ int item_cold(int prm_844, int prm_845)
             if (ibit(5, ci_at_m138) == 0) {
                 a_at_m138 = refitem(inv(3, ci_at_m138), 5);
                 if (prm_844 == -1) {
-                    s_at_m138 = u8""s;
+                    s_at_m138 = "";
                 } else {
                     s_at_m138 = name(prm_844) + lang(u8"の"s, your(prm_844));
                 }
@@ -25272,7 +25272,7 @@ void label_1370()
 {
     if (cbit(985, prm_853)) {
         if (synccheck(prm_853, -1)) {
-            txt(u8"("s + dmg_at_m141 + u8")"s + lang(u8" "s, u8""s));
+            txt(u8"("s + dmg_at_m141 + u8")"s + lang(u8" "s, ""s));
             if (rnd(20) == 0) {
                 txt(lang(u8"「くっ！」"s, cnvtalk(u8"Kill me already!"s)),
                     lang(u8"「まだまだ！」"s, cnvtalk(u8"No..not yet...!"s)),
@@ -25624,8 +25624,8 @@ int net_send(const std::string& prm_883, int prm_884)
 }
 int net_read(int prm_885)
 {
-    chatnew = u8""s;
-    netbuf = u8""s;
+    chatnew = "";
+    netbuf = "";
     if (cfg_net == 0) {
         stat = 0;
         return stat;
@@ -25667,7 +25667,7 @@ int net_read(int prm_885)
         stat = 0;
         return stat;
     }
-    a_at_m147 = u8""s;
+    a_at_m147 = "";
     sz_at_m147 = 0;
     t_at_m147 = 0;
 label_1393_internal:
@@ -25733,13 +25733,13 @@ label_1394_internal:
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 listn(0, listmax) =
-                    u8""s + strmid(netbuf, header_at_m147, tail_at_m147);
+                    ""s + strmid(netbuf, header_at_m147, tail_at_m147);
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 list(1, listmax) =
                     elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
-                listn(1, listmax) = u8""s + list(1, listmax);
+                listn(1, listmax) = ""s + list(1, listmax);
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
@@ -25771,7 +25771,7 @@ label_1394_internal:
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
                 chat_ip_at_m147 = strmid(netbuf, header_at_m147, tail_at_m147);
                 header_at_m147 += tail_at_m147 + 2;
-                chatnew += u8""s + chat_msg_at_m147 + u8"\n"s;
+                chatnew += ""s + chat_msg_at_m147 + u8"\n"s;
             }
             if (prm_885 == 3) {
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
@@ -25829,7 +25829,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
                         list(1, listmax) = elona_int(s_at_m147);
                     }
                     if (cnt == 2) {
-                        listn(0, listmax) = u8""s + s_at_m147;
+                        listn(0, listmax) = ""s + s_at_m147;
                         listn(1, listmax) = u8"net"s;
                     }
                     if (cnt == 3) {
@@ -25878,7 +25878,7 @@ void label_1398()
     } else {
         noteload(exedir + u8"server.txt"s);
         netbuf = serverlist;
-        dialog(u8""s + serverlist);
+        dialog(""s + serverlist);
     }
     p = instr(netbuf, 0, u8"%"s);
     cgiurl2 = strmid(netbuf, 0, p);
@@ -25919,10 +25919,10 @@ void label_1399()
     val(2) = 38;
     val(3) = 1;
     val(4) = 0;
-    inputlog = u8""s;
+    inputlog = "";
     label_21262();
     imeset(0);
-    if (inputlog == u8""s) { return; }
+    if (inputlog == ""s) { return; }
     if (jp) {
         inputlog = u8"「"s + inputlog + u8"」"s;
     } else {
@@ -25930,8 +25930,8 @@ void label_1399()
     }
     txtmore();
     txt(inputlog);
-    net_send(u8"chat"s + cdatan(1, 0) + lang(u8""s, u8" "s) + cdatan(0, 0) +
-        lang(u8""s, u8" says, "s) + inputlog);
+    net_send(u8"chat"s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0) +
+        lang(""s, u8" says, "s) + inputlog);
     chatturn = 0;
     chatdeny = 1;
     return;
@@ -26021,7 +26021,7 @@ label_1402_internal:
     grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     s(0) = lang(u8"投票項目"s, u8"Choice"s);
-    s(1) = u8""s;
+    s(1) = "";
     s(2) = lang(u8"備考"s, u8"Vote"s);
     display_topic(s, wx + 28, wy + 36);
     display_topic(s(2), wx + 440, wy + 36);
@@ -26050,14 +26050,14 @@ label_1402_internal:
             p = pagesize * page + cnt;
             if (p >= listmax) { break; }
             i = list(0, p);
-            s(0) = u8""s + listn(0, p);
-            s(1) = u8""s + listn(1, p);
+            s(0) = ""s + listn(0, p);
+            s(1) = ""s + listn(1, p);
             if (p != 0) {
                 pos(wx + 90, wy + 66 + cnt * 19 + 2);
                 if (comctrl == 0) {
                     mes(lang(u8"第"s + p + u8"位"s, cnvrank(p)));
                 } else {
-                    mes(lang(u8"候補"s, u8""s));
+                    mes(lang(u8"候補"s, ""s));
                 }
             }
             cs_list(cnt, s, wx + 138, wy + 66 + cnt * 19 - 1, 19);
@@ -26086,7 +26086,7 @@ label_1402_internal:
     if (p != -1) {
         if (p == -999) {
             net_send(
-                u8""s + cdatan(1, 0) + lang(u8""s, u8" "s) + cdatan(0, 0), 1);
+                ""s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0), 1);
             promptl(0, 0) = lang(u8"オッケー"s, u8"Ok"s);
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
@@ -26111,7 +26111,7 @@ label_1402_internal:
             cnvtalk(u8"I like "s + listn(0, (cs + pagesize * page)) + u8"!"s)));
         txtmore();
         txt(lang(u8"投票した。"s, u8"You vote."s));
-        net_send(u8""s + p, 2);
+        net_send(""s + p, 2);
         modrank(6, 100, 5);
         promptl(0, 0) = lang(u8"オッケー"s, u8"Ok"s);
         promptl(1, 0) = u8"y"s;
@@ -26253,8 +26253,8 @@ void label_14170()
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     color(0, 0, 0);
     pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
-    if (strlen_u(mdatan(0)) > 16 - (maplevel() != u8""s) * 4) {
-        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != u8""s) * 4)));
+    if (strlen_u(mdatan(0)) > 16 - (maplevel() != ""s) * 4) {
+        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
     } else {
         mes(cnven(mdatan(0)));
     }
@@ -26348,12 +26348,12 @@ void label_1421()
     sy = inf_hpy - 8;
     color(0, 0, 0);
     pos(sx + 4, sy);
-    bmes(u8""s + cdata(50, 0) + u8"("s + cdata(51, 0) + u8")"s, 255, 255, 255);
+    bmes(""s + cdata(50, 0) + u8"("s + cdata(51, 0) + u8")"s, 255, 255, 255);
     sx = inf_mpx + 16;
     sy = inf_mpy - 8;
     color(0, 0, 0);
     pos(sx + 4, sy);
-    bmes(u8""s + cdata(55, 0) + u8"("s + cdata(56, 0) + u8")"s, 255, 255, 255);
+    bmes(""s + cdata(55, 0) + u8"("s + cdata(56, 0) + u8")"s, 255, 255, 255);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(0, 0, 0);
     sy = inf_bary + 2 + vfix;
@@ -26383,12 +26383,12 @@ void label_1421()
                             color(0, 0, 0);
                         }
                     }
-                    mes(u8""s + gspd);
+                    mes(""s + gspd);
                 } else {
                     color(0, 0, 0);
                     pos(sx + 14, sy);
                     gcopy(3, 0, 440, 64, 16);
-                    mes(u8""s + cdata(71, 0) + u8"/"s + cdata(70, 0));
+                    mes(""s + cdata(71, 0) + u8"/"s + cdata(70, 0));
                 }
             }
         }
@@ -26400,13 +26400,13 @@ void label_1421()
     gcopy(3, 0, 392, 24, 24);
     color(0);
     pos(sx + 28, sy + 2);
-    bmes(u8""s + cdata(30, 0) + u8" gp"s, 255, 255, 255);
+    bmes(""s + cdata(30, 0) + u8" gp"s, 255, 255, 255);
     sx = windoww - 120;
     pos(sx, sy);
     gcopy(3, 24, 392, 24, 24);
     color(0);
     pos(sx + 28, sy + 2);
-    bmes(u8""s + cdata(31, 0) + u8" pp"s, 255, 255, 255);
+    bmes(""s + cdata(31, 0) + u8" pp"s, 255, 255, 255);
     color(0, 0, 0);
     pos(4, inf_ver - 16);
     gcopy(3, 48, 392, 24, 24);
@@ -26436,7 +26436,7 @@ void label_1421()
             } else {
                 color(0, 0, 0);
             }
-            if (_hunger(cdata(22, 0) / 1000) != u8""s) {
+            if (_hunger(cdata(22, 0) / 1000) != ""s) {
                 pos(sx, sy);
                 gcopy(3, 0, 416, 50 + en * 30, 15);
                 pos(sx + 6, sy + 1);
@@ -26740,7 +26740,7 @@ void label_1421()
     gmode(2, 48, 48);
     grotate(3, 0, 288, 0.0174532925199433 * (gdata(13) * 30), 48, 48);
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(u8""s + gdata(10) + u8"/"s + gdata(11) + u8"/"s + gdata(12));
+    mes(""s + gdata(10) + u8"/"s + gdata(11) + u8"/"s + gdata(12));
     pos(inf_clockw + 6, inf_clocky + 35);
     bmes(_time(gdata(13) / 4) + u8" "s + _weather(gdata(17)), 255, 255, 255);
     ap3 = 0;
@@ -26756,11 +26756,11 @@ void label_1421()
             }
             pos(16, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
-            bmes(u8""s + strmid(skillname(ap), 0, 6), 255, 255, 255);
-            skilltmps = u8""s + sdata((600 + ap), ap2) / 1000;
+            bmes(""s + strmid(skillname(ap), 0, 6), 255, 255, 255);
+            skilltmps = ""s + sdata((600 + ap), ap2) / 1000;
             pos(66, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
-            bmes(u8""s + sorg(ap, ap2) + u8"."s + strmid(skilltmps, -1, 3), 255,
+            bmes(""s + sorg(ap, ap2) + u8"."s + strmid(skilltmps, -1, 3), 255,
                 255, 255);
             ++ap3;
         }
@@ -26783,10 +26783,10 @@ void label_1422()
 void label_1423()
 {
     if (racount == 0) { label_1422(); }
-    if (msgtemp != u8""s ||
+    if (msgtemp != ""s ||
         cdata(140, 0) == 7 && rowactre == 0 && fishanime == 0) {
         label_1433();
-        msgtemp = u8""s;
+        msgtemp = "";
     }
     label_1421();
     if (cdata(140, 0) == 7) {
@@ -31817,7 +31817,7 @@ void label_1540()
 void label_1541()
 {
     if (cfg_wizard) { gdata(828) = 1; }
-    if (geneuse != u8""s) { label_2092(); }
+    if (geneuse != ""s) { label_2092(); }
     redraw(0);
     rc = 0;
     mode = 1;
@@ -31855,7 +31855,7 @@ void label_1541()
         key_check();
         cursor_check();
         await(cfg_wait1);
-        if (key != u8""s) {
+        if (key != ""s) {
             label_2115();
             return;
         }
@@ -31884,7 +31884,7 @@ void label_1544()
     pos(20, windowh - 20);
     color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
-    if (geneuse != u8""s) {
+    if (geneuse != ""s) {
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
@@ -32027,7 +32027,7 @@ label_1548:
     pos(20, windowh - 20);
     color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
-    if (geneuse != u8""s) {
+    if (geneuse != ""s) {
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
@@ -32105,7 +32105,7 @@ label_1551:
     pos(20, windowh - 20);
     color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
-    if (geneuse != u8""s) {
+    if (geneuse != ""s) {
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
@@ -32216,7 +32216,7 @@ label_1554:
     pos(20, windowh - 20);
     color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
-    if (geneuse != u8""s) {
+    if (geneuse != ""s) {
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
@@ -32291,7 +32291,7 @@ label_1555_internal:
                 gmode(2, inf_tiles, inf_tiles);
                 grotate(1, (cnt - 2) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
                 pos(wx + 210, wy + 66 + cnt * 23);
-                mes(u8""s + list(0, cnt) / 1000000);
+                mes(""s + list(0, cnt) / 1000000);
                 if (cmlock(cnt - 2) == 1) {
                     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
                     pos(wx + 240, wy + 66 + cnt * 23 + 2);
@@ -32365,7 +32365,7 @@ void label_1557(bool label_1558_flg)
         pos(20, windowh - 20);
         color(0, 0, 0);
         mes(u8"Press F1 to show help."s);
-        if (geneuse != u8""s) {
+        if (geneuse != ""s) {
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
@@ -32392,7 +32392,7 @@ label_1558:
     pos(20, windowh - 20);
     color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
-    if (geneuse != u8""s) {
+    if (geneuse != ""s) {
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
@@ -32495,7 +32495,7 @@ label_1561_internal:
     pos(20, windowh - 20);
     color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
-    if (geneuse != u8""s) {
+    if (geneuse != ""s) {
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
@@ -32563,15 +32563,15 @@ label_1563_internal:
     label_1425();
     promptl(0, promptmax) = lang(u8"はい"s, u8"Yes"s);
     promptl(1, promptmax) = u8"a"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) = lang(u8"いいえ"s, u8"No"s);
     promptl(1, promptmax) = u8"b"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) = lang(u8"最初から"s, u8"Restart"s);
     promptl(1, promptmax) = u8"c"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     val(0) = promptx;
     val(1) = 240;
@@ -32599,11 +32599,11 @@ label_1565_internal:
     val(2) = 10;
     val(3) = 0;
     val(4) = 0;
-    inputlog = u8""s;
+    inputlog = "";
     input_mode = 1;
     label_21262();
-    cmname = u8""s + inputlog;
-    if (cmname == u8""s || cmname == u8" "s) { cmname = randomname(); }
+    cmname = ""s + inputlog;
+    if (cmname == ""s || cmname == u8" "s) { cmname = randomname(); }
     playerid = u8"sav_"s + cmname;
     dirlist(buff, exedir + u8"save\\*"s, 5);
     notesel(buff);
@@ -32633,7 +32633,7 @@ label_1565_internal:
     snd(101);
     cdatan(0, rc) = cmname;
     cdata(30, 0) = 400 + rnd(200);
-    if (geneuse != u8""s) { label_2091(); }
+    if (geneuse != ""s) { label_2091(); }
     await(250);
     mode = 5;
     label_2732();
@@ -32868,7 +32868,7 @@ int convertartifact(int prm_930, int prm_931)
         stat = prm_930;
         return stat;
     }
-    n_at_m163 = u8""s + itemname(prm_930);
+    n_at_m163 = ""s + itemname(prm_930);
 label_1569_internal:
     flt(refitem(inv(3, prm_930), 7), 4);
     flttypeminor = refitem(inv(3, prm_930), 9);
@@ -35260,7 +35260,7 @@ void label_1588()
                 label_0175();
             }
             txtef(5);
-            txt(u8""s + buff);
+            txt(""s + buff);
         }
     }
     if (inv(3, ci) == 667) {
@@ -38912,7 +38912,7 @@ void label_1712()
         cell_refresh(inv(5, ci), inv(6, ci));
         label_1713();
         midbk = mid;
-        mid = u8""s + 7 + u8"_"s + 101;
+        mid = ""s + 7 + u8"_"s + 101;
         fmode = 12;
         label_2107();
         mid = midbk;
@@ -39075,7 +39075,7 @@ void label_1714()
         txtmore();
         txt(lang(u8"現在"s + p + u8"人の滞在者がいる(最大"s + (gdata(24) + 2) +
                 u8"人) "s,
-            u8""s + p + u8" members are staying at your home. (Max: "s +
+            ""s + p + u8" members are staying at your home. (Max: "s +
                 (gdata(24) + 2) + u8")."s));
     }
     txtnew();
@@ -39085,13 +39085,13 @@ void label_1714()
         promptl(0, promptmax) =
             lang(u8"仲間に店主を頼む"s, u8"Assign a shopkeeper"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 4;
+        promptl(2, promptmax) = ""s + 4;
         ++promptmax;
         if (mdata(18) < 400) {
             promptl(0, promptmax) = lang(u8"店を拡張"s, u8"Extend"s) + u8"("s +
                 calcshopreform() + u8" GP)"s;
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 5;
+            promptl(2, promptmax) = ""s + 5;
             ++promptmax;
         }
     }
@@ -39099,32 +39099,32 @@ void label_1714()
         promptl(0, promptmax) =
             lang(u8"ブリーダーを任命する"s, u8"Assign a breeder"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 4;
+        promptl(2, promptmax) = ""s + 4;
         ++promptmax;
     }
     promptl(0, promptmax) = lang(u8"家の模様替え"s, u8"Design"s);
     promptl(1, promptmax) = u8"null"s;
-    promptl(2, promptmax) = u8""s + 0;
+    promptl(2, promptmax) = ""s + 0;
     ++promptmax;
     if (gdata(20) == 7) {
         promptl(0, promptmax) = lang(u8"家の情報"s, u8"Home rank"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 2;
+        promptl(2, promptmax) = ""s + 2;
         ++promptmax;
         promptl(0, promptmax) = lang(u8"仲間の滞在"s, u8"Allies in your home"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 4;
+        promptl(2, promptmax) = ""s + 4;
         ++promptmax;
         if (gdata(22) == 1) {
             promptl(0, promptmax) =
                 lang(u8"使用人を募集する"s, u8"Recruit a servant"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 6;
+            promptl(2, promptmax) = ""s + 6;
             ++promptmax;
         }
         promptl(0, promptmax) = lang(u8"滞在者の移動"s, u8"Move a stayer"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 3;
+        promptl(2, promptmax) = ""s + 3;
         ++promptmax;
     }
     homemakewall = 0;
@@ -39292,7 +39292,7 @@ void label_1714()
                 grotate(1, 0, 960, 0,
                     chipi(2, p(1)) * inf_tiles / chipi(3, p(1)), inf_tiles);
                 pos(wx + 68, cnt * 16 + wy + 138);
-                mes(u8""s + cnvrank((10 - cnt)) + lang(u8"位."s, u8""s));
+                mes(""s + cnvrank((10 - cnt)) + lang(u8"位."s, ""s));
                 pos(wx + 110, cnt * 16 + wy + 138);
                 mes(itemname(p));
             }
@@ -39577,7 +39577,7 @@ void label_1724()
         for (int cnt_end = cnt + (150); cnt < cnt_end; ++cnt) {
             if (adata(16, cnt) == 102) {
                 area = cnt;
-                mid = u8""s + area + u8"_"s + 101;
+                mid = ""s + area + u8"_"s + 101;
                 label_1725();
             }
         }
@@ -39754,7 +39754,7 @@ void label_1725()
         }
     } else {
         if (cfg_hideshopresult <= 1) {
-            s = u8""s + income + lang(u8"gold"s, u8" gold pieces"s);
+            s = ""s + income + lang(u8"gold"s, u8" gold pieces"s);
             if (income(1) != 0) {
                 s += lang(u8"と"s + income(1) + u8"個のアイテム"s,
                     u8" and "s + income(1) + u8" items"s);
@@ -42428,7 +42428,7 @@ void cpisenemy()
 }
 std::string cnvrare(int prm_990)
 {
-    s_at_tcg = u8""s;
+    s_at_tcg = "";
     {
         int cnt = 0;
         for (int cnt_end = cnt + (limit(5 - prm_990 / 20, 1, 5)); cnt < cnt_end;
@@ -42471,7 +42471,7 @@ int card_ref(int prm_991)
         lang(u8"  ドメイン:"s, u8"  Domain:"s) + domname_at_tcg(cardrefdomain);
     rtvaln += lang(u8"  レア度:"s, u8"  Rare:"s) + cnvrare(cardrefrare);
     if (cardrefskill != 0) {
-        s_at_tcg = u8""s;
+        s_at_tcg = "";
         if (cardreftype == 10) { s_at_tcg += lang(u8"スキル:"s, u8"Skill:"s); }
         s_at_tcg += cdrefn_at_tcg(cardrefskill);
         talk_conv(s_at_tcg, 95);
@@ -42598,7 +42598,7 @@ void tcgdrawcard(int prm_994, int prm_995)
         if (0 || cdbit(1, prm_994) == 1 || card_at_tcg(1, prm_994) == 0) {
             cardhelp(carddetailn_at_tcg(prm_994));
         } else {
-            cardhelp(u8""s);
+            cardhelp(""s);
         }
     }
     {
@@ -42711,7 +42711,7 @@ label_1772_internal:
             pos(x_at_tcg, y_at_tcg);
             gcopy(7, 96, 144, 72, 96);
             pos(x_at_tcg + 14, y_at_tcg + 75);
-            mes(u8""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
+            mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
         }
     }
     font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
@@ -43514,7 +43514,7 @@ void tcginit()
     phasen_at_tcg(1) = u8"Draw"s;
     phasen_at_tcg(2) = u8"Main"s;
     phasen_at_tcg(3) = u8"End"s;
-    phasen_at_tcg(4) = u8""s;
+    phasen_at_tcg(4) = "";
     domname_at_tcg(0) = lang(u8"ルルウィ"s, u8"Lulwy"s);
     domname_at_tcg(1) = lang(u8"クミロミ"s, u8"Kumiromi"s);
     domname_at_tcg(2) = lang(u8"ヤカテクト"s, u8"Yacatect"s);
@@ -43659,7 +43659,7 @@ label_1812_internal:
         int cnt = 0;
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            file_at_tcg = u8""s + exedir + u8"tmp\\deck_"s + cnt + u8".s2"s;
+            file_at_tcg = ""s + exedir + u8"tmp\\deck_"s + cnt + u8".s2"s;
             exist(file_at_tcg);
             if (strsize == -1) {
                 s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
@@ -43672,7 +43672,7 @@ label_1812_internal:
             }
             promptl(0, promptmax) = s_at_tcg(cnt);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
         }
     }
@@ -43684,17 +43684,17 @@ label_1812_internal:
     if (rtval != -1) {
         DIM2(deck, 1000);
         curdeck = rtval;
-        file = u8""s + exedir + u8"tmp\\deck_"s + curdeck + u8".s2"s;
+        file = ""s + exedir + u8"tmp\\deck_"s + curdeck + u8".s2"s;
         exist(file);
         if (strsize != -1) {
             promptl(0, promptmax) = lang(u8"デッキの構築"s, u8"Edit Deck"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             promptl(0, promptmax) =
                 lang(u8"メインデッキに設定"s, u8"Set as Main Deck"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             val(0) = 400;
             val(1) = basey_at_tcg + 230;
@@ -44046,9 +44046,9 @@ void label_1824()
             y_at_tcg = basey_at_tcg + 70 + cnt / 8 * 150;
             if (deckmode_at_tcg == 0) {
                 if (deck(i_at_tcg) != 0) {
-                    s_at_tcg = u8""s + deck(i_at_tcg);
+                    s_at_tcg = ""s + deck(i_at_tcg);
                 } else {
-                    s_at_tcg = u8""s;
+                    s_at_tcg = "";
                 }
                 s_at_tcg += u8"("s + card(0, i_at_tcg) + u8")"s;
                 color(0, 0, 0);
@@ -44070,9 +44070,9 @@ void label_1824()
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(255, 255, 255);
     pos(basex_at_tcg + 160, basey_at_tcg + 510);
-    mes(lang(u8""s + key_next + u8","s + key_prev +
+    mes(lang(""s + key_next + u8","s + key_prev +
             u8",Tab [フィルター切替]  決定ｷｰ [カード選択]  ｷｬﾝｾﾙｷｰ [終了]"s,
-        u8""s + key_next + u8","s + key_prev +
+        ""s + key_next + u8","s + key_prev +
             u8" [Change Filter]  Enter [Select]  Cancel [Exit]"s));
     pos(basex_at_tcg + 700, basey_at_tcg + 510);
     mes(u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s +
@@ -44106,13 +44106,13 @@ void label_1825()
                 y_at_tcg = cpy_at_tcg(cnt);
                 pos(x_at_tcg, y_at_tcg);
                 gcopy(7, 264, 144, 72, 120);
-                s_at_tcg = u8""s + cpdata_at_tcg(4, cnt);
+                s_at_tcg = ""s + cpdata_at_tcg(4, cnt);
                 pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 9 - en);
                 mes(s_at_tcg);
                 if (cnt != player_at_tcg && 1) {
                     s_at_tcg = u8"?/"s + cpdata_at_tcg(6, cnt);
                 } else {
-                    s_at_tcg = u8""s + cpdata_at_tcg(5, cnt) + u8"/"s +
+                    s_at_tcg = ""s + cpdata_at_tcg(5, cnt) + u8"/"s +
                         cpdata_at_tcg(6, cnt);
                 }
                 pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 95 - en);
@@ -44164,12 +44164,12 @@ void label_1825()
         mes(u8"Card "s + calcstartcard(0));
         pos(basex_at_tcg + 24, basey_at_tcg + 220);
         mes(u8"Domain * "s + cpdata_at_tcg(9, 0));
-        s_at_tcg = u8""s;
+        s_at_tcg = "";
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
                 if (domain_at_tcg(cnt)) {
-                    s_at_tcg += u8""s + domname_at_tcg(cnt) + u8"\n"s;
+                    s_at_tcg += ""s + domname_at_tcg(cnt) + u8"\n"s;
                 }
             }
         }
@@ -44407,12 +44407,12 @@ label_1830_internal:
         if (deckmode_at_tcg == 0) {
             promptl(0, promptmax) = lang(u8"セーブして終了"s, u8"Save & Exit"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             promptl(0, promptmax) =
                 lang(u8"セーブしないで終了"s, u8"Just Exit"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             val(0) = basex_at_tcg + 420;
             val(1) = basey_at_tcg + 230;
@@ -44420,7 +44420,7 @@ label_1830_internal:
             val(3) = 1;
             label_2131();
             if (rtval == 0) {
-                file = u8""s + exedir + u8"tmp\\deck_"s + curdeck + u8".s2"s;
+                file = ""s + exedir + u8"tmp\\deck_"s + curdeck + u8".s2"s;
                 fmode = 23;
                 label_2107();
             } else {
@@ -44501,7 +44501,7 @@ label_1837_internal:
         act_at_tcg(0) = 0;
         act_at_tcg(1) = 0;
         act_at_tcg(2) = 0;
-        s_at_tcg = u8""s;
+        s_at_tcg = "";
         cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
         if (csline_at_tcg == 0 || csline_at_tcg == 3 && 0) {
             if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg)) {
@@ -44565,7 +44565,7 @@ label_1837_internal:
         tcgdraw();
         label_1840();
         cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
-        key = u8""s;
+        key = "";
         if (f_at_tcg == -1) { goto label_1837_internal; }
         if (act_at_tcg(f_at_tcg) == 0) { goto label_1837_internal; }
         if (csline_at_tcg == 1 || csline_at_tcg == 2 && 0) {
@@ -44660,7 +44660,7 @@ label_1837_internal:
     if (key == u8"s"s) {
         promptl(0, promptmax) = lang(u8"降参する"s, u8"Surrender"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + promptmax;
+        promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
         val(0) = basex_at_tcg + 420;
         val(1) = basey_at_tcg + 230;
@@ -44750,7 +44750,7 @@ label_1841_internal:
         label_1842();
         return;
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         f_at_tcg = -1;
         label_1842();
         return;
@@ -45071,7 +45071,7 @@ label_18551_internal:
                     if (matval != 177) { continue; }
                 }
                 if (sdata(matval, 0) + 3 < matval(1)) { continue; }
-                listn(0, listmax) = u8""s + prodcheck();
+                listn(0, listmax) = ""s + prodcheck();
                 list(0, listmax) = cnt;
                 list(1, listmax) = 0;
                 ++listmax;
@@ -45082,7 +45082,7 @@ label_18551_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt) {
                 label_1854();
-                listn(0, listmax) = u8""s + prodcheck();
+                listn(0, listmax) = ""s + prodcheck();
                 list(0, listmax) = 630;
                 list(1, listmax) = cnt;
                 ++listmax;
@@ -45376,7 +45376,7 @@ label_1861_internal:
             p = pagesize * page + cnt;
             if (p >= listmax) { break; }
             i = list(0, p);
-            s = u8""s + matname(i) + lang(u8" ? "s, u8" x "s) + mat(i);
+            s = ""s + matname(i) + lang(u8" ? "s, u8" x "s) + mat(i);
             cs_list(cnt, s, wx + 96, wy + 66 + cnt * 19 - 1, 19, 0, 0);
             s = matdesc(i);
             pos(wx + 308, wy + 66 + cnt * 19 + 2);
@@ -45497,7 +45497,7 @@ void atxinit()
 {
     if (atxthrough == 0) {
         notesel(atbuff);
-        atbuff = u8""s;
+        atbuff = "";
     }
     atxthrough = 0;
     listmax = 0;
@@ -45569,7 +45569,7 @@ void label_1866()
     snd(39);
     mode = 9;
     atxbg = u8"bg13"s;
-    atxbgbk = u8""s;
+    atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
     redraw(0);
     if (atxid == 2) {
@@ -46277,7 +46277,7 @@ void label_1878()
         u8"You can bet the casino chips you have and play some games."s));
     noteadd(lang(u8"ごゆっくりお楽しみ下さい。"s, u8"Enjoy your stay."s));
     if (gdata(256) == 0) {
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(lang(u8"お客様は初めてのご利用のようですね。"s,
             u8"Looks like you play for the first time, sir."s));
         noteadd(lang(u8"当店からチップマテリアルを10枚進呈します。"s,
@@ -46292,7 +46292,7 @@ void label_1878()
     }
     atxinfon(1) = lang(u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
         u8"Casino chips left: "s + mat(1) + u8"\n"s);
-    atxinfon(2) = u8""s;
+    atxinfon(2) = "";
     list(0, listmax) = 0;
     listn(0, listmax) = lang(u8"店を出る"s, u8"Later."s);
     ++listmax;
@@ -46330,9 +46330,9 @@ void label_1879()
         u8"How many tips would you like to bet?"s));
     atxinfon(1) = lang(u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
         u8"Casino chips left: "s + mat(1) + u8"\n"s);
-    atxinfon(2) = u8""s;
+    atxinfon(2) = "";
     if (mat(1) <= 0) {
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(lang(u8"お客様はチップをもっていません。"s,
             u8"Sorry sir, you don't seem to have casino chips."s));
     }
@@ -46342,19 +46342,19 @@ void label_1879()
     if (mat(1) >= 1) {
         list(0, listmax) = 1;
         listn(0, listmax) =
-            lang(u8""s + 1 + u8"枚賭ける"s, u8"Bet "s + 1 + u8" chips."s);
+            lang(""s + 1 + u8"枚賭ける"s, u8"Bet "s + 1 + u8" chips."s);
         ++listmax;
     }
     if (mat(1) >= 5) {
         list(0, listmax) = 5;
         listn(0, listmax) =
-            lang(u8""s + 5 + u8"枚賭ける"s, u8"Bet "s + 5 + u8" chips."s);
+            lang(""s + 5 + u8"枚賭ける"s, u8"Bet "s + 5 + u8" chips."s);
         ++listmax;
     }
     if (mat(1) >= 20) {
         list(0, listmax) = 20;
         listn(0, listmax) =
-            lang(u8""s + 20 + u8"枚賭ける"s, u8"Bet "s + 20 + u8" chips."s);
+            lang(""s + 20 + u8"枚賭ける"s, u8"Bet "s + 20 + u8" chips."s);
         ++listmax;
     }
     chatesc = 0;
@@ -46452,7 +46452,7 @@ void label_1879()
                 u8"Casino chips left: "s + mat(1) + u8"\n"s);
             atxinfon(2) = lang(
                 u8"賭けチップ "s + stake + u8"枚 現在"s + winrow + u8"連勝中"s,
-                u8"Bets: "s + stake + u8" Wins: "s + winrow + u8""s);
+                u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
             if (cardround == -1) {
                 if (winner == 1) { ++winrow; }
                 if (winner != 0) {
@@ -46535,7 +46535,7 @@ void label_1879()
                             u8"Casino chips left: "s + mat(1) + u8"\n"s);
                     atxinfon(2) = lang(u8"賭けチップ "s + stake + u8"枚 現在"s +
                             winrow + u8"連勝中"s,
-                        u8"Bets: "s + stake + u8" Wins: "s + winrow + u8""s);
+                        u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
                     winrow = 0;
                     txt(lang(u8"イカサマが見つかってしまった…"s,
                         u8"You are caught in cheating..."s));
@@ -46962,9 +46962,9 @@ void label_1886()
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = u8""s;
-    objprm(0, u8""s);
-    keylog = u8""s;
+    key = "";
+    objprm(0, ""s);
+    keylog = "";
     listmax = 0;
     chatesc = 2;
     if (cdata(61, 0) != 0) {
@@ -47992,7 +47992,7 @@ int label_1896()
     if (cfg_skiprandevents) {
         if (listmax <= 1) {
             snd(62);
-            txt(u8""s + buff);
+            txt(""s + buff);
             txt(lang(u8"「"s, u8"\""s) + listn(0, 0) + lang(u8"」"s, u8"\""s));
             rtval = -1;
             stat = rtval;
@@ -48005,9 +48005,9 @@ int label_1896()
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = u8""s;
-    objprm(0, u8""s);
-    keylog = u8""s;
+    key = "";
+    objprm(0, ""s);
+    keylog = "";
     if (listmax <= 1) {
         chatesc = 0;
     } else {
@@ -48102,7 +48102,7 @@ label_1897_internal:
 }
 int label_1898()
 {
-    key = u8""s;
+    key = "";
     stat = rtval;
     return stat;
 }
@@ -48184,7 +48184,7 @@ void label_1901()
         flt();
         itemcreate(-1, 54, -1, -1, p);
     }
-    s = u8""s + income + lang(u8"gold"s, u8" gold pieces"s);
+    s = ""s + income + lang(u8"gold"s, u8" gold pieces"s);
     if (income(1) != 0) {
         s += lang(u8"と"s + income(1) + u8"個のアイテム"s,
             u8" and "s + income(1) + u8" items"s);
@@ -48232,7 +48232,7 @@ void label_1901()
                             u8"You have to go to the Embassy of Palmia and pay tax at once. "s);
                     } else {
                         s(0) = lang(u8"注意！"s, u8"Caution! "s);
-                        s(1) = u8""s;
+                        s(1) = "";
                     }
                     txt(s +
                         lang((u8"税金を"s + (gdata(179) - 1) +
@@ -48605,7 +48605,7 @@ void window_recipe2()
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
     font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
-    s_at_m183 = u8""s + rpsuccessrate(rpdiff(rpid, step, -1));
+    s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
     pos(dx_at_m183 + 140, dy_at_m183);
     color(30, 30, 30);
     bmes(lang(u8"成功率: "s, u8"Success Rate: "s) + s_at_m183, 235, 235, 235);
@@ -48618,7 +48618,7 @@ void window_recipe2()
         }
         p_at_m183 += rpdata(1, rpid) / 10000 * val * 10000;
     }
-    s_at_m183 = u8""s + p_at_m183 % 10000 + lang(u8"ターン"s, u8" turns"s);
+    s_at_m183 = ""s + p_at_m183 % 10000 + lang(u8"ターン"s, u8" turns"s);
     if (p_at_m183 >= 10000) {
         s_at_m183 += lang(u8"と"s, u8" and "s) + p_at_m183 / 10000 +
             lang(u8"時間"s, u8" hours"s);
@@ -48650,7 +48650,7 @@ void window_recipe_(
     line(prm_1051 + 50 + 0, prm_1052 + prm_1054 - 49 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40, prm_1052 + prm_1054 - 49 - prm_1054 % 8);
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
-    s_at_m184(1) = u8""s + key_prev + u8","s + key_next + u8""s +
+    s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s +
         lang(u8"[ページ切替]  "s, u8"[Page]  "s);
     if (step == -1) {
         s_at_m184(1) += strhint3;
@@ -48685,11 +48685,11 @@ void window_recipe_(
     }
     if (step == -1) {
         pos(dx_at_m184, dy_at_m184);
-        mes(u8""s + i_at_m184 + u8"."s +
+        mes(""s + i_at_m184 + u8"."s +
             lang(u8"レシピを選ぶ"s, u8"Choose a recipe"s));
     } else {
         pos(dx_at_m184, dy_at_m184);
-        mes(u8""s + i_at_m184 + u8"."s +
+        mes(""s + i_at_m184 + u8"."s +
             lang((rpname(rpid) + u8"のレシピを選んだ"s),
                 (u8"Chose the recipe of "s + rpname(rpid))));
     }
@@ -48710,16 +48710,16 @@ void window_recipe_(
                 blendmatnum(rpdata(20 + cnt, rpid), cnt);
                 p_at_m184 = stat;
                 s_at_m184 = lang(rpmatname(cnt) + u8"を加える"s,
-                                u8"Add "s + rpmatname(cnt) + u8""s) +
+                                u8"Add "s + rpmatname(cnt) + ""s) +
                     u8"("s + lang(u8"所持:"s, u8"Stock:"s) + p_at_m184 + u8")"s;
             } else {
-                s_at_m184 = lang(u8""s, u8"Selected "s) +
+                s_at_m184 = lang(""s, u8"Selected "s) +
                     itemname(rpref((10 + cnt * 2))) +
-                    lang(u8"を選んだ"s, u8""s);
+                    lang(u8"を選んだ"s, ""s);
                 s_at_m184 = strmid(s_at_m184, 0, 44);
             }
             pos(dx_at_m184, dy_at_m184);
-            mes(u8""s + i_at_m184 + u8"."s + s_at_m184);
+            mes(""s + i_at_m184 + u8"."s + s_at_m184);
             dy_at_m184 += 17;
             ++i_at_m184;
         }
@@ -48734,7 +48734,7 @@ void window_recipe_(
         if (step > i_at_m184 - 2) { gfdec2(25, 30, 35); }
     }
     pos(dx_at_m184, dy_at_m184);
-    mes(u8""s + i_at_m184 + u8"."s +
+    mes(""s + i_at_m184 + u8"."s +
         lang(u8"調合を始める！"s, u8"Start blending!"s));
     dy_at_m184 += 30;
     if (rppage == 0) {
@@ -49036,7 +49036,7 @@ void label_1921()
     rfnameorg(1, 3) = lang(u8"木材を含む何か"s, u8"something made of wood"s);
     rfnameorg(0, 5) = u8"fish"s;
     rfnameorg(1, 5) = lang(u8"魚介類"s, u8"fish"s);
-    rfnameorg(0, 4) = u8""s;
+    rfnameorg(0, 4) = "";
     rfnameorg(1, 4) = lang(u8"何か物体"s, u8"any item"s);
     return;
 }
@@ -49062,15 +49062,15 @@ label_1923:
             promptl(0, promptmax) =
                 lang(u8"調合を始める"s, u8"Start blending"s);
             promptl(1, promptmax) = u8"a"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             promptl(0, promptmax) = lang(u8"前に戻る"s, u8"Go back"s);
             promptl(1, promptmax) = u8"b"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             promptl(0, promptmax) = lang(u8"最初から"s, u8"From the start"s);
             promptl(1, promptmax) = u8"c"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             p = 10;
             {
@@ -49172,7 +49172,7 @@ label_1925_internal:
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(lang(u8"レシピの名称"s, u8"Name"s), wx + 28, wy + 30);
-    s = u8""s + listmax + u8" recipes"s;
+    s = ""s + listmax + u8" recipes"s;
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
@@ -49218,8 +49218,8 @@ label_1925_internal:
             if (p >= listmax) { break; }
             p = list(0, p);
             rpid = p;
-            s = lang(u8""s, u8"Recipe of "s) + cnven(rpname(rpid)) +
-                lang(u8"のレシピ"s, u8""s);
+            s = lang(""s, u8"Recipe of "s) + cnven(rpname(rpid)) +
+                lang(u8"のレシピ"s, ""s);
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
             cs_list(cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 19, 0, 1, p);
         }
@@ -49301,7 +49301,7 @@ label_1928_internal:
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(lang(u8"アイテムの名称"s, u8"Name"s), wx + 28, wy + 30);
-    s = u8""s + listmax + u8" items"s;
+    s = ""s + listmax + u8" items"s;
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
@@ -49812,7 +49812,7 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
     cell_itemoncell(prm_1055, prm_1056);
     if (stat <= 3) {
         if (map(prm_1055, prm_1056, 5) < 0) {
-            rtvaln = u8""s;
+            rtvaln = "";
             p_at_m185(0) = -map(prm_1055, prm_1056, 5);
             p_at_m185(1) = 0;
             i_at_m185(0) = p_at_m185 % 1000 + 5080;
@@ -49838,7 +49838,7 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
         } else {
             if (inv(21, rtval(1)) == 3) {
                 return lang(rtvaln + u8"が設置されている。"s,
-                    u8""s + rtvaln + u8" is constructed here."s);
+                    ""s + rtvaln + u8" is constructed here."s);
             } else {
                 return lang(rtvaln + u8"がある。"s,
                     u8"You see "s + rtvaln + u8" placed here."s);
@@ -50011,7 +50011,7 @@ void label_1942()
         label_2743(false);
     }
     p = rnd(listmax);
-    net_dl(u8""s + list(1, p) + u8".eum"s, u8"temp.eum"s);
+    net_dl(""s + list(1, p) + u8".eum"s, u8"temp.eum"s);
     usermapid = list(1, p);
     if (stat == 0) {
         txt(lang(u8"ファイルの取得に失敗した。"s,
@@ -50024,7 +50024,7 @@ void label_1942()
     notesel(headtemp);
     noteget(s, 5);
     noteget(s(1), 6);
-    username = u8""s + s;
+    username = ""s + s;
     userrelation = elona_int(s(1));
     msg_halt();
     label_2114();
@@ -50135,7 +50135,7 @@ label_1945_internal:
             cutname(s, 64);
             cs_list(cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 19);
             pos(wx + 570, wy + 66 + cnt * 19);
-            mes(u8""s + (list(2, p) % 1000 + 1) + u8".0"s);
+            mes(""s + (list(2, p) % 1000 + 1) + u8".0"s);
         }
     }
     if (keyrange != 0) { cs_bk = cs; }
@@ -50167,7 +50167,7 @@ label_1945_internal:
             } else {
                 s = u8".eum"s;
             }
-            net_dl(u8""s + list(1, p) + s, u8"temp"s + s);
+            net_dl(""s + list(1, p) + s, u8"temp"s + s);
             usermapid = list(1, p);
             if (stat == 0) {
                 txt(lang(u8"ファイルの取得に失敗した。"s,
@@ -50183,7 +50183,7 @@ label_1945_internal:
         noteget(s, 5);
         noteget(s(1), 6);
         if (comctrl == 0 || comctrl == 2) {
-            username = u8""s + s;
+            username = ""s + s;
             userrelation = elona_int(s(1));
         }
         if (comctrl == 1) {
@@ -50887,7 +50887,7 @@ label_1961_internal:
             }
             if (allyctrl == 0 || allyctrl == 2 || allyctrl == 3 ||
                 allyctrl == 4 || allyctrl == 5) {
-                s = u8""s + cdatan(1, i) + u8" "s + cdatan(0, i);
+                s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
                 if (cdata(80, i) != 0) {
                     s = s + u8"("s + mapname(cdata(80, i)) + u8")"s;
                 }
@@ -50945,7 +50945,7 @@ label_1961_internal:
                         if (stat == 0) {
                             s += lang(u8"なし"s, u8"None"s);
                         } else {
-                            s += u8""s + skillname(rtval);
+                            s += ""s + skillname(rtval);
                             if (rtval(1) != -1) {
                                 s += u8", "s + skillname(rtval(1));
                             }
@@ -50956,10 +50956,10 @@ label_1961_internal:
                 mes(s);
             }
             if (allyctrl == 1) {
-                s = u8""s + cdatan(1, i) + u8" "s + cdatan(0, i);
+                s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
                 s += u8" Lv."s + cdata(38, i);
                 cs_list(cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 19);
-                s = u8""s + calcslavevalue(i) * 2 / 3 + strgold;
+                s = ""s + calcslavevalue(i) * 2 / 3 + strgold;
                 pos(wx + 390, wy + 66 + cnt * 19 + 2);
                 mes(s);
             }
@@ -51066,7 +51066,7 @@ void label_1964()
     cc = 0;
     cs_bk = -1;
     snd(26);
-    buff = u8""s;
+    buff = "";
     notesel(buff);
     del_chara(56);
     r1 = 56;
@@ -51257,7 +51257,7 @@ label_196901_internal:
             traitmode = 0;
             label_0042();
             featrq = stat;
-            s = u8""s;
+            s = "";
             if (list(1, cnt) < 10000) {
                 if (trait(tid) < traitref(2)) {
                     s = traitrefn2(trait(tid));
@@ -51365,7 +51365,7 @@ label_196901_internal:
         return stat;
     }
     xnotesel(buff);
-    buff = u8""s;
+    buff = "";
     {
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt) {
@@ -51381,7 +51381,7 @@ label_196901_internal:
                     val(2) = 1;
                     val(3) = 0;
                     label_0247();
-                    if (s == u8""s) { continue; }
+                    if (s == ""s) { continue; }
                     xnoteadd(s);
                 }
             }
@@ -51696,15 +51696,15 @@ void label_1972()
     keyrange = 0;
     key_list(0) = key_enter;
     buff = newsbuff;
-    if (newsbuff == u8""s) { buff = u8"No news"s; }
+    if (newsbuff == ""s) { buff = u8"No news"s; }
     notesel(buff);
     noteadd(u8" - News - "s, 0);
-    noteadd(u8""s, 1);
+    noteadd(""s, 1);
     if (noteinfo(0) / (pagesize / 2) % 2 == 1) {
         {
             int cnt = 0;
             for (int cnt_end = cnt + (pagesize / 2); cnt < cnt_end; ++cnt) {
-                noteadd(u8""s, 2);
+                noteadd(""s, 2);
             }
         }
     }
@@ -51713,11 +51713,11 @@ void label_1972()
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
              cnt < cnt_end; ++cnt) {
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     noteadd(u8" - Quest - "s);
-    noteadd(u8""s);
+    noteadd(""s);
     label_0180();
     {
         int cnt = 0;
@@ -51734,17 +51734,17 @@ void label_1972()
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
              cnt < cnt_end; ++cnt) {
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     noteadd(u8" - Quest Item - "s);
-    noteadd(u8""s);
+    noteadd(""s);
     label_0182();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
              cnt < cnt_end; ++cnt) {
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     gold = 0;
@@ -51752,14 +51752,14 @@ void label_1972()
     if (cdata(34, 0) >= 25000) { p += (cdata(34, 0) - 25000) / 100; }
     gold += p;
     noteadd(u8" - Title & Ranking - "s);
-    noteadd(u8""s);
+    noteadd(""s);
     noteadd(lang(u8"名声: "s, u8"Fame: "s) + cdata(34, 0));
-    noteadd(u8""s);
+    noteadd(""s);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (9); cnt < cnt_end; ++cnt) {
             if (gdata(120 + cnt) < 10000) {
-                noteadd(u8""s + ranktitle(cnt) + u8" Rank."s +
+                noteadd(""s + ranktitle(cnt) + u8" Rank."s +
                     gdata((120 + cnt)) / 100);
                 s = lang(u8"給料: 約 "s + calcincome(cnt) + u8" gold  "s,
                     u8"Pay: About "s + calcincome(cnt) + u8" gold pieces "s);
@@ -51770,7 +51770,7 @@ void label_1972()
                         gdata((140 + cnt)) + lang(u8"日以内"s, u8" Days left"s);
                 }
                 noteadd(s);
-                noteadd(u8""s);
+                noteadd(""s);
             }
         }
     }
@@ -51778,50 +51778,50 @@ void label_1972()
         lang(u8"EXバトル: 勝利 "s + gdata(802) + u8"回 最高Lv"s + gdata(803),
             u8"EX Arena Wins:"s + gdata(802) + u8"  Highest Level:"s +
                 cnvrank(gdata(803))));
-    noteadd(u8""s);
+    noteadd(""s);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
              cnt < cnt_end; ++cnt) {
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     noteadd(u8" - Income & Expense - "s);
-    noteadd(u8""s);
+    noteadd(""s);
     if (jp) {
         noteadd(u8"◆ 給料(毎月1日と15日に支給)"s);
         noteadd(u8"@BL　合計　　 : 約 "s + gold + strgold);
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(u8"◆ 請求書内訳(毎月1日に発行)"s);
         noteadd(u8"@RE　人件費  : 約 "s + gdata(170) + strgold);
         noteadd(u8"@RE　運営費  : 約 "s + calccostbuilding() + strgold);
         noteadd(u8"@RE　税金    : 約 "s + calccosttax() + strgold);
         noteadd(u8"@RE　合計　  : 約 "s +
             (gdata(170) + calccostbuilding() + calccosttax()) + strgold);
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(u8"現在未払いの請求書は"s + gdata(179) + u8"枚"s);
     } else {
         noteadd(u8"Salary (Paid every 1st and 15th day)"s);
         noteadd(u8"@BL  Sum    : About "s + gold + u8" GP"s);
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(u8"Bills  (Issued every 1st day)"s);
         noteadd(u8"@RE  Labor  : About "s + gdata(170) + u8" GP"s);
         noteadd(u8"@RE  Maint. : About "s + calccostbuilding() + u8" GP"s);
         noteadd(u8"@RE  Tax    : About "s + calccosttax() + u8" GP"s);
         noteadd(u8"@RE  Sum    : About "s +
             (gdata(170) + calccostbuilding() + calccosttax()) + u8" GP"s);
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(u8"You have "s + gdata(179) + u8" unpaid bills."s);
     }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
              cnt < cnt_end; ++cnt) {
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     noteadd(u8" - Completed Quests - "s);
-    noteadd(u8""s);
+    noteadd(""s);
     val = 1;
     label_0181();
     listmax = noteinfo(0);
@@ -51907,7 +51907,7 @@ label_1974_internal:
                 --curmenu;
                 if (curmenu < 0) { curmenu = 2; }
             }
-            key = u8""s;
+            key = "";
             if (p != curmenu) {
                 screenupdate = -1;
                 label_1419();
@@ -52281,16 +52281,16 @@ label_1982_internal:
             } else {
                 s += cnven(strfemale);
             }
-            s += lang(u8" "s, u8"("s) + calcage(i) + u8""s +
+            s += lang(u8" "s, u8"("s) + calcage(i) + ""s +
                 lang(u8"歳"s, u8")"s);
             pos(wx + 372, wy + 66 + cnt * 19 + 2);
             mes(s);
             if (allyctrl != 2) {
                 if (allyctrl == 1) {
-                    s = u8""s + calchirecost(i) * 20 + u8"("s +
+                    s = ""s + calchirecost(i) * 20 + u8"("s +
                         calchirecost(i) + u8")"s;
                 } else {
-                    s = u8""s + calchirecost(i);
+                    s = ""s + calchirecost(i);
                 }
                 pos(wx + 512, wy + 66 + cnt * 19 + 2);
                 mes(s + lang(u8" gold"s, u8"gp"s));
@@ -52538,16 +52538,16 @@ label_1990_internal:
             grotate(5, 0, 960, 0, chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
                 inf_tiles);
             pos(wx + 84, wy + 66 + cnt * 19 + 2);
-            mes(cnvrank(p + 1) + lang(u8"位"s, u8""s));
+            mes(cnvrank(p + 1) + lang(u8"位"s, ""s));
             i = list(0, p);
-            s = u8""s + cdatan(1, i) + u8" "s + cdatan(0, i);
+            s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
             cutname(s, 26);
             cs_list(cnt, s, wx + 118, wy + 66 + cnt * 19 - 1, 19);
-            s = u8""s + cdata(34, i) + u8"("s + cdata(38, i) + u8")"s;
+            s = ""s + cdata(34, i) + u8"("s + cdata(38, i) + u8")"s;
             pos(wx + 402 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
             mes(s);
             s = mapname(cdata(80, i));
-            if (s == u8""s) { s = lang(u8"不明"s, u8"Unknown"s); }
+            if (s == ""s) { s = lang(u8"不明"s, u8"Unknown"s); }
             if (cdata(0, i) == 4) { s = lang(u8"病院"s, u8"Hospital"s); }
             pos(wx + 435, wy + 66 + cnt * 19 + 2);
             mes(s);
@@ -52693,7 +52693,7 @@ void label_1996()
 }
 void label_1997()
 {
-    txtcopy = u8""s;
+    txtcopy = "";
     txtef(5);
     txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
     val(0) = (windoww - 290) / 2 + inf_screenx;
@@ -52701,14 +52701,14 @@ void label_1997()
     val(2) = 16;
     val(3) = 0;
     val(4) = 0;
-    inputlog = u8""s;
+    inputlog = "";
     label_21262();
     txtmore();
     txt(lang(u8"「"s + inputlog + u8"！！」"s, cnvtalk(inputlog + u8"!!"s)));
-    msgtemp = u8""s;
+    msgtemp = "";
     autosave = 1 * (gdata(20) != 35);
     tcopy = 1;
-    if (inputlog == u8""s || inputlog == u8" "s) {
+    if (inputlog == ""s || inputlog == u8" "s) {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         return;
     }
@@ -52986,7 +52986,7 @@ label_1998_internal:
                 }
                 item_identify(ci, 3);
                 txt(lang(u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-                    u8""s + itemname(ci) + u8" appear"s + _s2(inv(0, ci)) +
+                    ""s + itemname(ci) + u8" appear"s + _s2(inv(0, ci)) +
                         u8"."s));
                 f = 1;
                 break;
@@ -53041,7 +53041,7 @@ label_1999_internal:
                 }
             }
         }
-        if (skillname(p) != u8""s) {
+        if (skillname(p) != ""s) {
             txtef(5);
             if (sorg(p, 0) == 0) {
                 txt(lang(skillname(p) + u8"の技術を会得した！"s,
@@ -53075,7 +53075,7 @@ void label_2000()
     chara_vanquish(56);
     cell_refresh(cdata(1, 0), cdata(2, 0));
     txt(lang(u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-        u8""s + itemname(ci) + u8" appear"s + _s2(inv(0, ci)) +
+        ""s + itemname(ci) + u8" appear"s + _s2(inv(0, ci)) +
             u8" from nowhere."s));
     label_1996();
     return;
@@ -53092,7 +53092,7 @@ void label_2001()
     chara_vanquish(56);
     cell_refresh(cdata(1, 0), cdata(2, 0));
     txt(lang(u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-        u8""s + itemname(ci) + u8" appear"s + _s2(inv(0, ci)) +
+        ""s + itemname(ci) + u8" appear"s + _s2(inv(0, ci)) +
             u8" from nowhere."s));
     label_1996();
     return;
@@ -53344,7 +53344,7 @@ label_2009_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(1, (sdataref(0, list(0, p)) - 10) * inf_tiles, 672, 0,
                 inf_tiles, inf_tiles);
-            s = u8""s;
+            s = "";
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt) {
@@ -53355,7 +53355,7 @@ label_2009_internal:
             }
             cs_list(cnt, skillname(list(0, p)) + s, wx + 84,
                 wy + 66 + cnt * 19 - 1, 19);
-            s = u8""s + sdataref(2, list(0, p)) + u8" Sp"s;
+            s = ""s + sdataref(2, list(0, p)) + u8" Sp"s;
             pos(wx + 288 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
             mes(s);
             label_2031();
@@ -53516,11 +53516,11 @@ void label_2012()
         if (cdata(254, 0) == 0) {
             promptl(0, promptmax) = lang(u8"話しかける"s, u8"Talk"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 0;
+            promptl(2, promptmax) = ""s + 0;
             ++promptmax;
             promptl(0, promptmax) = lang(u8"攻撃する"s, u8"Attack"s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 1;
+            promptl(2, promptmax) = ""s + 1;
             ++promptmax;
         }
         if (cbit(963, tc) == 0) {
@@ -53528,54 +53528,54 @@ void label_2012()
                 if (tc < 16) {
                     promptl(0, promptmax) = lang(u8"所持品"s, u8"Inventory"s);
                     promptl(1, promptmax) = u8"null"s;
-                    promptl(2, promptmax) = u8""s + 4;
+                    promptl(2, promptmax) = ""s + 4;
                     ++promptmax;
                 } else {
                     promptl(0, promptmax) = lang(u8"何かを渡す"s, u8"Give"s);
                     promptl(1, promptmax) = u8"null"s;
-                    promptl(2, promptmax) = u8""s + 2;
+                    promptl(2, promptmax) = ""s + 2;
                     ++promptmax;
                 }
                 if (cbit(960, tc) == 1) {
                     promptl(0, promptmax) = lang(u8"連れ出す"s, u8"Bring Out"s);
                     promptl(1, promptmax) = u8"null"s;
-                    promptl(2, promptmax) = u8""s + 5;
+                    promptl(2, promptmax) = ""s + 5;
                     ++promptmax;
                 }
                 if (tc < 16) {
                     promptl(0, promptmax) =
                         lang(u8"着替えさせる"s, u8"Appearence"s);
                     promptl(1, promptmax) = u8"null"s;
-                    promptl(2, promptmax) = u8""s + 8;
+                    promptl(2, promptmax) = ""s + 8;
                     ++promptmax;
                 }
             }
         }
         promptl(0, promptmax) = lang(u8"言葉を教える"s, u8"Teach Words"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 7;
+        promptl(2, promptmax) = ""s + 7;
         ++promptmax;
         promptl(0, promptmax) = lang(u8"口調を変える"s, u8"Change Tone"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 10;
+        promptl(2, promptmax) = ""s + 10;
         ++promptmax;
         if (gdata(20) != 35) {
             if (cbit(985, tc)) {
                 promptl(0, promptmax) = lang(u8"縄を解く"s, u8"Release"s);
                 promptl(1, promptmax) = u8"null"s;
-                promptl(2, promptmax) = u8""s + 9;
+                promptl(2, promptmax) = ""s + 9;
                 ++promptmax;
             }
         }
     }
     promptl(0, promptmax) = lang(u8"名前をつける"s, u8"Name"s);
     promptl(1, promptmax) = u8"null"s;
-    promptl(2, promptmax) = u8""s + 3;
+    promptl(2, promptmax) = ""s + 3;
     ++promptmax;
     if (0 || gdata(828)) {
         promptl(0, promptmax) = lang(u8"情報"s, u8"Info"s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 6;
+        promptl(2, promptmax) = ""s + 6;
         ++promptmax;
     }
     val(0) = promptx;
@@ -53646,15 +53646,15 @@ void label_2012()
         val(2) = 20;
         val(3) = 1;
         val(4) = 0;
-        inputlog = u8""s;
+        inputlog = "";
         label_21262();
         cbitmod(989, tc, 0);
-        if (inputlog == u8""s) {
-            cdatan(4, tc) = u8""s;
+        if (inputlog == ""s) {
+            cdatan(4, tc) = "";
         } else {
             cdatan(4, tc) = inputlog;
             txtef(9);
-            txt(u8""s + cdatan(4, tc));
+            txt(""s + cdatan(4, tc));
         }
         label_1419();
         label_2743(false);
@@ -53692,15 +53692,15 @@ void label_2013()
     val(2) = 12;
     val(3) = 1;
     val(4) = 0;
-    inputlog = u8""s;
+    inputlog = "";
     input_mode = 1;
     label_21262();
-    if (inputlog == u8""s) {
+    if (inputlog == ""s) {
         txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
     } else {
-        cdatan(0, tc) = u8""s + inputlog;
+        cdatan(0, tc) = ""s + inputlog;
         cbitmod(977, tc, 1);
-        txt(lang(u8""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
+        txt(lang(""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
     }
     label_1416();
@@ -53786,7 +53786,7 @@ label_2016_internal:
             p = pagesize * page + cnt;
             if (p >= listmax) { break; }
             i = list(0, p);
-            s = u8""s + listn(0, p);
+            s = ""s + listn(0, p);
             cs_list(cnt, s, wx + 138, wy + 66 + cnt * 19 - 1, 19);
         }
     }
@@ -53812,7 +53812,7 @@ label_2016_internal:
             name(tc) + u8" is somewhat different."s));
         if (p == -999) {
             cbitmod(989, tc, 0);
-            cdatan(4, tc) = u8""s;
+            cdatan(4, tc) = "";
             stat = 1;
             return stat;
         }
@@ -53923,9 +53923,9 @@ label_2020_internal:
             p = pagesize * page + cnt;
             if (p >= listmax) { break; }
             i = list(0, p);
-            s = u8""s + listn(0, p);
+            s = ""s + listn(0, p);
             pos(wx + 380, wy + 66 + cnt * 19);
-            mes(u8""s + userdata(2, i));
+            mes(""s + userdata(2, i));
             cs_list(cnt, s, wx + 85, wy + 66 + cnt * 19 - 1, 19);
         }
     }
@@ -53951,7 +53951,7 @@ label_2020_internal:
         txt(listn(0, listmax) +
             lang(u8"は、あなたの世界に召喚された！"s,
                 u8" has been summoned to your world!"s));
-        file = u8""s + userfile;
+        file = ""s + userfile;
         label_2095();
         bcopy(exedir + u8"user\\"s + listn(1, listmax),
             exedir + u8"user\\"s + listn(0, listmax) + u8".npc"s);
@@ -53996,7 +53996,7 @@ void label_2022()
     gsel(0);
     notesel(buff);
     noteload(exedir + u8"data\\book.txt"s);
-    p = instr(buff, 0, u8""s + inv(25, ci) + u8","s + lang(u8"JP"s, u8"EN"s));
+    p = instr(buff, 0, ""s + inv(25, ci) + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1) { return; }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
@@ -54162,7 +54162,7 @@ label_2029_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(1, (sdataref(0, i) - 10) * inf_tiles, 672, 0, inf_tiles,
                 inf_tiles);
-            s = u8""s;
+            s = "";
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt) {
@@ -54172,14 +54172,14 @@ label_2029_internal:
                 }
             }
             cs_list(cnt, skillname(i) + s, wx + 84, wy + 66 + cnt * 19 - 1, 19);
-            s = u8""s + calcspellcostmp(i, cc) + u8" ("s + spell((i - 400)) +
+            s = ""s + calcspellcostmp(i, cc) + u8" ("s + spell((i - 400)) +
                 u8")"s;
             pos(wx + 328 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
             mes(s);
             label_2031();
             s = strmid(s, 0, 40);
             pos(wx + 340, wy + 66 + cnt * 19 + 2);
-            mes(u8""s + sdata(i, cc) + u8"/"s + calcspellfail(i, cc) + u8"%"s);
+            mes(""s + sdata(i, cc) + u8"/"s + calcspellfail(i, cc) + u8"%"s);
             pos(wx + 420, wy + 66 + cnt * 19 + 2);
             mes(s);
         }
@@ -54274,11 +54274,11 @@ label_2029_internal:
 }
 void label_2031()
 {
-    s = u8""s;
+    s = "";
     if (sdataref(1, i) / 1000 == 1) {
         p = sdataref(1, i) % 1000;
         calcbuff(-2, p, calcspellpower(i, cc));
-        s = u8""s + dur + lang(u8"ﾀｰﾝ "s, u8"t "s) + buffdesc;
+        s = ""s + dur + lang(u8"ﾀｰﾝ "s, u8"t "s) + buffdesc;
         return;
     }
     calcskill(i, cc, calcspellpower(i, cc));
@@ -54291,7 +54291,7 @@ void label_2031()
     }
     if (stat == 1) {
         if (dice1 != 0) {
-            s += u8""s + dice1 + u8"d"s + dice2;
+            s += ""s + dice1 + u8"d"s + dice2;
             if (bonus != 0) {
                 if (bonus > 0) {
                     s += u8"+"s + bonus;
@@ -54301,7 +54301,7 @@ void label_2031()
             }
         } else {
             if (i == 461) {
-                s += u8""s + limit(bonus, 1, 100) + u8"%"s;
+                s += ""s + limit(bonus, 1, 100) + u8"%"s;
             } else {
                 s += lang(u8"ﾊﾟﾜｰ"s, u8"Power:"s) + bonus;
             }
@@ -54684,14 +54684,14 @@ label_2034_internal:
     }
     if (csctrl != 1) {
         if (page != 0) {
-            s += u8""s + key_mode2 + u8" ["s +
+            s += ""s + key_mode2 + u8" ["s +
                 lang(u8"スキルトラック"s, u8"Track Skill"s) + u8"]"s;
         }
     }
     showtitle(s, s, 236, 1);
 label_2035_internal:
     redraw(0);
-    s = u8""s;
+    s = "";
     if (csctrl == 0) {
         if (page != 0) {
             s = lang(u8"残り "s + cdata(41, cc) +
@@ -54784,18 +54784,18 @@ label_2035_internal:
         s(1) = lang(u8"マナ"s, u8"Mana"s);
         s(2) = lang(u8"狂気度"s, u8"Sanity"s);
         s(3) = lang(u8"速度"s, u8"Speed"s);
-        s(4) = u8""s;
+        s(4) = "";
         s(5) = lang(u8"名声"s, u8"Fame"s);
         s(6) = lang(u8"カルマ"s, u8"Karma"s);
-        s(7) = u8""s;
+        s(7) = "";
         s(8) = lang(u8"打撃修正"s, u8"Melee"s);
         s(9) = lang(u8"射撃修正"s, u8"Shoot"s);
-        s(10) = u8""s;
-        s(11) = u8""s;
-        s(12) = u8""s;
-        s(13) = u8""s;
-        s(14) = u8""s;
-        s(15) = u8""s;
+        s(10) = "";
+        s(11) = "";
+        s(12) = "";
+        s(13) = "";
+        s(14) = "";
+        s(15) = "";
         {
             int cnt = 0;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
@@ -54807,8 +54807,8 @@ label_2035_internal:
         s(1) = lang(u8"経過日"s, u8"Days"s);
         s(2) = lang(u8"殺害数"s, u8"Kills"s);
         s(3) = lang(u8"総時間"s, u8"Time"s);
-        s(4) = u8""s;
-        s(5) = u8""s;
+        s(4) = "";
+        s(5) = "";
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
@@ -54829,9 +54829,9 @@ label_2035_internal:
         }
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
-        s(0) = u8""s + cdata(38, cc);
-        s(1) = u8""s + cdata(35, cc);
-        s(2) = u8""s + cdata(36, cc);
+        s(0) = ""s + cdata(38, cc);
+        s(1) = ""s + cdata(35, cc);
+        s(2) = ""s + cdata(36, cc);
         s(3) = godname(cdata(61, cc));
         s(4) = guildname();
         {
@@ -54846,19 +54846,19 @@ label_2035_internal:
         dbidn = cdatan(2, cc);
         dbmode = 2;
         label_2297();
-        s(2) = cnven(lang(u8""s + racename, cdatan(2, cc)));
+        s(2) = cnven(lang(""s + racename, cdatan(2, cc)));
         dbidn = cdatan(3, cc);
         dbmode = 2;
         label_2298();
-        s(4) = cnven(lang(u8""s + classname, cdatan(3, cc)));
+        s(4) = cnven(lang(""s + classname, cdatan(3, cc)));
         if (cdata(8, cc) == 0) {
             s(3) = cnven(strmale);
         } else {
             s(3) = cnven(strfemale);
         }
-        s(5) = u8""s + calcage(cc) + u8" "s + lang(u8"歳"s, u8""s);
-        s(6) = u8""s + cdata(19, cc) + u8" cm"s;
-        s(7) = u8""s + cdata(20, cc) + u8" kg"s;
+        s(5) = ""s + calcage(cc) + u8" "s + lang(u8"歳"s, ""s);
+        s(6) = ""s + cdata(19, cc) + u8" cm"s;
+        s(7) = ""s + cdata(20, cc) + u8" kg"s;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
@@ -54874,7 +54874,7 @@ label_2035_internal:
                 s = u8"("s + sdata((10 + cnt + 600), cc) / 1000000 + u8")"s;
                 if (encfind(cc, 60010 + cnt) != -1) { s += u8"*"s; }
                 pos(wx + 92, wy + 151 + cnt * 15);
-                mes(u8""s + sdata((10 + cnt), cc));
+                mes(""s + sdata((10 + cnt), cc));
                 pos(wx + 124, wy + 151 + cnt * 15);
                 mes(s);
                 p = sdata((10 + cnt + 600), cc) % 1000;
@@ -54898,15 +54898,15 @@ label_2035_internal:
                 mes(u8"Hopeless"s);
             }
         }
-        s(0) = u8""s + sdata(2, cc) + u8"("s + sorg(2, cc) + u8")"s;
-        s(1) = u8""s + sdata(3, cc) + u8"("s + sorg(3, cc) + u8")"s;
-        s(2) = u8""s + cdata(86, cc);
-        s(3) = u8""s + cdata(11, cc) + u8"("s + sorg(18, cc) + u8")"s;
-        s(4) = u8""s;
-        s(5) = u8""s + cdata(34, cc);
-        s(6) = u8""s + cdata(49, cc);
-        s(7) = u8""s;
-        s(8) = u8""s;
+        s(0) = ""s + sdata(2, cc) + u8"("s + sorg(2, cc) + u8")"s;
+        s(1) = ""s + sdata(3, cc) + u8"("s + sorg(3, cc) + u8")"s;
+        s(2) = ""s + cdata(86, cc);
+        s(3) = ""s + cdata(11, cc) + u8"("s + sorg(18, cc) + u8")"s;
+        s(4) = "";
+        s(5) = ""s + cdata(34, cc);
+        s(6) = ""s + cdata(49, cc);
+        s(7) = "";
+        s(8) = "";
         {
             int cnt = 0;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
@@ -54929,18 +54929,18 @@ label_2035_internal:
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
-        mes(u8""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 +
+        mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 +
             u8"d"s + protdice2);
         pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
-        mes(u8""s + evade + u8"%"s);
+        mes(""s + evade + u8"%"s);
         ++p(2);
-        s(0) = u8""s + gdata(4) + u8""s + lang(u8"ターン"s, u8" Turns"s);
-        s(1) = u8""s + gdata(7) + u8""s + lang(u8"日"s, u8" Days"s);
-        s(2) = u8""s + gdata(2);
-        s(3) = u8""s +
+        s(0) = ""s + gdata(4) + ""s + lang(u8"ターン"s, u8" Turns"s);
+        s(1) = ""s + gdata(7) + ""s + lang(u8"日"s, u8" Days"s);
+        s(2) = ""s + gdata(2);
+        s(3) = ""s +
             cnvplaytime((gdata(805) + timeGetTime() / 1000 - time_begin));
-        s(4) = u8""s;
-        s(5) = u8""s;
+        s(4) = "";
+        s(5) = "";
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
@@ -54948,7 +54948,7 @@ label_2035_internal:
                 mes(s(cnt));
             }
         }
-        s(0) = u8""s + cnvweight(gdata(80));
+        s(0) = ""s + cnvweight(gdata(80));
         s(1) = cnvweight(gdata(82));
         s(2) = cnvweight(cdata(64, cc)) + u8" "s + cnveqweight(cc);
         s(3) = cnvrank(gdata(1)) + lang(u8"階相当"s, u8" Level"s);
@@ -54985,7 +54985,7 @@ label_2035_internal:
         if (cs_buffmax != 0) {
             calcbuff(-2, cdata(280 + cs_buff * 3, cc),
                 cdata(280 + cs_buff * 3 + 1, cc));
-            s = u8""s + buffname(cdata((280 + cs_buff * 3), cc)) + u8": "s +
+            s = ""s + buffname(cdata((280 + cs_buff * 3), cc)) + u8": "s +
                 cdata((280 + cs_buff * 3 + 2), cc) +
                 lang((u8"("s + dur + u8")ﾀｰﾝの間、"s),
                     (u8"("s + dur + u8") "s)) +
@@ -55059,8 +55059,8 @@ label_2035_internal:
                     grotate(1, p(1) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
                     s = skillname(i);
                     if (i >= 50 && i < 100) {
-                        s = lang(u8""s, u8"Resist "s) + cnven(s) +
-                            lang(u8"耐性"s, u8""s);
+                        s = lang(""s, u8"Resist "s) + cnven(s) +
+                            lang(u8"耐性"s, ""s);
                     }
                     {
                         int cnt = 0;
@@ -55077,7 +55077,7 @@ label_2035_internal:
                     } else {
                         s = elona_str(sdata(list(0, p) + 600, cc));
                         s = strmid(s, -1, 6);
-                        s = u8""s + sorg(i, cc) + u8"."s + strmid(s, 0, 3);
+                        s = ""s + sorg(i, cc) + u8"."s + strmid(s, 0, 3);
                         if (sorg(i, cc) != sdata(i, cc)) {
                             p(1) = sdata(i, cc) - sorg(i, cc);
                         }
@@ -55089,9 +55089,9 @@ label_2035_internal:
                     mes(skilldesc(i));
                     if (csctrl == 2 || csctrl == 3) {
                         if (csctrl == 2) {
-                            s = u8""s + calctraincost(i, cc) + u8"p "s;
+                            s = ""s + calctraincost(i, cc) + u8"p "s;
                         } else {
-                            s = u8""s + calclearncost(i, cc) + u8"p "s;
+                            s = ""s + calclearncost(i, cc) + u8"p "s;
                         }
                         pos(wx + 322 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
                         mes(s);
@@ -55103,7 +55103,7 @@ label_2035_internal:
                             } else {
                                 i = i / 5;
                             }
-                            s = u8""s;
+                            s = "";
                             putenclv(i);
                             pos(wx + 282, wy + 66 + cnt * 19 + 2);
                             mes(s);
@@ -55327,7 +55327,7 @@ void label_2038()
         }
         if (val == 8) {
             rtval = -1;
-            rtvaln = u8""s;
+            rtvaln = "";
         }
         if (val == 9) {
             if (cc != 0) {
@@ -55383,7 +55383,7 @@ void label_2038()
         }
         if (val == 7) {
             rtval = -1;
-            rtvaln = u8""s;
+            rtvaln = "";
         }
     }
     return;
@@ -55585,7 +55585,7 @@ label_2041_internal:
             stat = 1;
             return stat;
         }
-        if (key == key_pageup || key == key_pagedown) { key = u8""s; }
+        if (key == key_pageup || key == key_pagedown) { key = ""s; }
     } else {
         if (key == key_enter) { key = key_pageup; }
     }
@@ -55832,15 +55832,15 @@ void label_2048()
     dmg = calcattackdmg(1);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
-    s(2) = u8""s + dmgmulti;
-    s = u8""s + tohit + u8"%"s;
+    s(2) = ""s + dmgmulti;
+    s = ""s + tohit + u8"%"s;
     if (val == 0) {
         pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
         mes(s);
     } else {
         s(3) = s;
     }
-    s = u8""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s +
+    s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s +
         strmid(s(2), 0, (3 + (elona_int(s(2)) >= 10)));
     if (val == 0) {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
@@ -56121,7 +56121,7 @@ label_2052_internal:
             ci = cdata(body, cc) % 10000 - 1;
             if (inv(17, ci) == -1 || inv(17, ci) == -2) {
                 txt(lang(itemname(ci) + u8"は外せない。"s,
-                    u8""s + itemname(ci) + u8" can't be taken off."s));
+                    ""s + itemname(ci) + u8" can't be taken off."s));
                 goto label_2051_internal;
             }
             r1 = cc;
@@ -56516,7 +56516,7 @@ void label_2068()
     pagesize = 15;
     listmax = 0;
     p = 0;
-    s = u8""s;
+    s = "";
     reftype = refitem(inv(3, ci), 5);
     getinheritance(ci, inhlist, inhmax);
     dbid = inv(3, ci);
@@ -56526,7 +56526,7 @@ void label_2068()
     label_0481();
     if (inv(8, ci) >= 3) {
         buf = trimdesc(description(3), 1);
-        if (buf != u8""s) {
+        if (buf != ""s) {
             list(0, p) = 7;
             listn(0, p) = buf;
             ++p;
@@ -56680,9 +56680,9 @@ void label_2068()
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt) {
-                    if (description(cnt) == u8""s) { continue; }
+                    if (description(cnt) == ""s) { continue; }
                     list(0, p) = 0;
-                    listn(0, p) = u8""s;
+                    listn(0, p) = "";
                     ++p;
                     buf = trimdesc(description(cnt), 2);
                     notesel(buf);
@@ -56705,7 +56705,7 @@ void label_2068()
                                                 u8"、"s) {
                                             p(1) += 2;
                                         }
-                                        if (strmid(q, p(2), p(1)) == u8""s) {
+                                        if (strmid(q, p(2), p(1)) == ""s) {
                                             break;
                                         }
                                         list(0, p) = -1;
@@ -57077,15 +57077,15 @@ void label_2079()
     }
     promptl(0, promptmax) = lang(u8"はい"s, u8"Exit"s);
     promptl(1, promptmax) = u8"a"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) = lang(u8"いいえ"s, u8"Cancel"s);
     promptl(1, promptmax) = u8"b"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) = lang(u8"ゲーム設定"s, u8"Game Setting"s);
     promptl(1, promptmax) = u8"c"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     val(0) = promptx;
     val(1) = prompty;
@@ -57166,7 +57166,7 @@ void label_2081()
         list(1, p) = 1;
         promptl(0, promptmax) = mapname(i);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + promptmax;
+        promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
         ++p;
     }
@@ -57194,7 +57194,7 @@ void label_2081()
                     cnvrank((adata(6, i) - adata(17, i) + 1)) +
                     lang(u8"階"s, u8" Lv"s);
                 promptl(1, promptmax) = u8"null"s;
-                promptl(2, promptmax) = u8""s + promptmax;
+                promptl(2, promptmax) = ""s + promptmax;
                 ++promptmax;
                 ++p;
             }
@@ -57239,7 +57239,7 @@ void label_2082()
     label_1419();
     if (inv(3, ci) == 413) { tmat = 40; }
     if (inv(3, ci) == 414) { tmat = 41; }
-    txt(lang(u8""s + matname(tmat) + u8"を使ってガシャガシャする？"s,
+    txt(lang(""s + matname(tmat) + u8"を使ってガシャガシャする？"s,
         u8"Pay "s + matname(tmat) + u8" to gasha-gasha?"s));
     promptl(0, 0) = stryes;
     promptl(1, 0) = u8"y"s;
@@ -57267,7 +57267,7 @@ void label_2082()
             txt(lang(u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
         } else {
-            txt(lang(u8""s + matname(tmat) + u8"を持っていない…"s,
+            txt(lang(""s + matname(tmat) + u8"を持っていない…"s,
                 u8"You don't have "s + matname(tmat) + u8"."s));
         }
     }
@@ -57320,7 +57320,7 @@ void label_2084()
     }
     label_2719();
     redraw(0);
-    if (gdatan(0) == u8""s) {
+    if (gdatan(0) == ""s) {
         gdatan(0) = random_title(2);
         txt(lang(u8"チームネームが決まっていないので、自動的に"s + gdatan(0) +
                 u8"という名前が付けられた。"s,
@@ -57333,30 +57333,30 @@ void label_2084()
     promptl(0, promptmax) =
         lang(u8"ショウルームを記録"s, u8"Save current area"s);
     promptl(1, promptmax) = u8"a"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) =
         lang(u8"ペットチームを記録"s, u8"Save your pet team"s);
     promptl(1, promptmax) = u8"b"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) =
         lang(u8"チームネーム変更"s, u8"Change your team name"s);
     promptl(1, promptmax) = u8"c"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) = lang(u8"カスタムNPCを作成"s, u8"Make custom NPC"s);
     promptl(1, promptmax) = u8"d"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     if (gdata(828) == 0) {
         promptl(0, promptmax) = lang(u8"アップロード"s, u8"Upload"s);
         promptl(1, promptmax) = u8"e"s;
-        promptl(2, promptmax) = u8""s + promptmax;
+        promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
         promptl(0, promptmax) = lang(u8"設定"s, u8"Setting"s);
         promptl(1, promptmax) = u8"f"s;
-        promptl(2, promptmax) = u8""s + promptmax;
+        promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
     }
     val(0) = promptx;
@@ -57484,18 +57484,18 @@ void label_2085()
     dbidn = cdatan(3, 0);
     dbmode = 2;
     label_2298();
-    buff = u8""s;
+    buff = "";
     notesel(buff);
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:1 ct:"s + ct;
     noteadd(u8"Elona Version 1.22 キャラクター情報 "s + gdata(10) + u8"年"s +
         gdata(11) + u8"月"s + gdata(12) + u8"日 "s + gdata(13) + u8"時"s +
         gdata(14) + u8"分  "s + mdatan(0));
-    noteadd(u8""s);
-    noteadd(u8"  "s + fixtxt((u8""s + cdatan(1, 0) + cdatan(0, 0)), 34) +
+    noteadd(""s);
+    noteadd(u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34) +
         _sex(cdata(8, 0)) + u8" "s + calcage(0) + u8"歳"s + u8"  "s +
         cdata(19, 0) + u8"cm"s + u8" "s + cdata(20, 0) + u8"kg"s);
-    noteadd(u8""s);
+    noteadd(""s);
     noteadd(fixtxt(u8"種族       : "s + racename, 30) +
         fixtxt((u8"信仰      : "s + godname(cdata(61, 0))), 32));
     noteadd(fixtxt(u8"職業       : "s + classname, 30) +
@@ -57515,7 +57515,7 @@ void label_2085()
     noteadd(fixtxt(u8"プレイ時間 : "s +
             cnvplaytime((gdata(805) + timeGetTime() / 1000 - time_begin)),
         30));
-    noteadd(u8""s);
+    noteadd(""s);
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:2 ct:"s + ct;
     s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s + sorg(2, 0) + u8")"s;
@@ -57526,13 +57526,13 @@ void label_2085()
     s(6) = u8"カルマ    : "s + cdata(49, 0);
     s(7) = u8"DV        : "s + cdata(71, 0);
     s(8) = u8"PV        : "s + cdata(70, 0);
-    s(9) = u8""s;
+    s(9) = "";
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:3 ct:"s + ct;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
-            s = u8""s;
+            s = "";
             p = sdata((10 + cnt + 600), 0) % 1000;
             if (p >= 200) {
                 s += u8"superb"s;
@@ -57559,7 +57559,7 @@ void label_2085()
             noteadd(s + s((1 + cnt)));
         }
     }
-    noteadd(u8""s);
+    noteadd(""s);
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:4 ct:"s + ct;
     val = 1;
@@ -57571,10 +57571,10 @@ void label_2085()
     noteadd(u8"回避    : "s + evade + u8"%"s);
     noteadd(u8"軽減    : "s + (100 - 10000 / (prot + 100)) + u8"% + "s +
         protdice1 + u8"d"s + protdice2);
-    noteadd(u8""s);
+    noteadd(""s);
     noteadd(u8"------------------------------ 装備品 合計重量"s +
         cnvweight(cdata(64, cc)) + u8" "s + cnveqweight(cc));
-    noteadd(u8""s);
+    noteadd(""s);
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:5 ct:"s + ct;
     listmax = 0;
@@ -57593,7 +57593,7 @@ void label_2085()
                 }
                 p(1) = cdata(cnt, cc);
                 q(0) = u8"装備なし"s;
-                q(1) = u8""s;
+                q(1) = "";
                 if (p(1) % 10000 != 0) {
                     p(1) = p(1) % 10000 - 1;
                     q(0) = itemname(p(1));
@@ -57614,14 +57614,14 @@ void label_2085()
                         noteadd(listn(0, cnt));
                     }
                 }
-                noteadd(u8""s);
+                noteadd(""s);
             }
         }
     }
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:6 ct:"s + ct;
     noteadd(u8"------------------------------ 特徴"s);
-    noteadd(u8""s);
+    noteadd(""s);
     dump_return = 1;
     tc = 0;
     label_1969();
@@ -57633,11 +57633,11 @@ void label_2085()
             noteadd(listn(0, cnt));
         }
     }
-    noteadd(u8""s);
+    noteadd(""s);
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:7 ct:"s + ct;
     noteadd(u8"------------------------------ 仲間"s);
-    noteadd(u8""s);
+    noteadd(""s);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt) {
@@ -57656,18 +57656,18 @@ void label_2085()
             s = u8"レベル "s + cdata(38, cnt) + u8" "s;
             if (cbit(961, cnt) == 1) { s += u8"婚約済み "s; }
             noteadd(s);
-            noteadd(u8""s);
+            noteadd(""s);
         }
     }
     procid = (procid + 1) % 4;
     proclist(procid) = u8"Dump:8 ct:"s + ct;
     noteadd(u8"------------------------------ 称号"s);
-    noteadd(u8""s);
+    noteadd(""s);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (9); cnt < cnt_end; ++cnt) {
             if (gdata(120 + cnt) < 10000) {
-                noteadd(u8""s + ranktitle(cnt) + u8" Rank."s +
+                noteadd(""s + ranktitle(cnt) + u8" Rank."s +
                     gdata((120 + cnt)) / 100);
                 s = u8"給料: 約 "s + calcincome(cnt) + u8" gold  "s +
                     u8"ノルマ: "s;
@@ -57675,10 +57675,10 @@ void label_2085()
                 if (cnt == 3 || cnt == 4 || cnt == 5 || cnt == 8) {
                     s += u8"なし"s;
                 } else {
-                    s += u8""s + gdata((140 + cnt)) + u8"日以内"s;
+                    s += ""s + gdata((140 + cnt)) + u8"日以内"s;
                 }
                 noteadd(s);
-                noteadd(u8""s);
+                noteadd(""s);
             }
         }
     }
@@ -57752,7 +57752,7 @@ void label_2086()
                 i(0) = inv((40 + p * 2 + 1), ci) % 1000;
                 i(1) = inv((40 + p * 2 + 1), ci) / 1000;
                 s(0) = ammoname(inv((40 + p * 2), ci) % 10000);
-                s(1) = u8""s + i + u8"/"s + i(1);
+                s(1) = ""s + i + u8"/"s + i(1);
             }
             s = s + u8":"s + s(1);
             if (inv(9, ci) == cnt - 1) {
@@ -58285,13 +58285,13 @@ void label_2104()
             cdata(220 + cnt, rc) = userdata(20 + cnt, cun);
         }
     }
-    if (userdatan(5, cun) != u8""s) {
+    if (userdatan(5, cun) != ""s) {
         SDIM3(unres, 6, 32);
         csvstr2(unres, userdatan(5, cun));
         {
             int cnt = 0;
             for (;; ++cnt) {
-                if (cnt > 15 || unres(cnt) == u8""s) { break; }
+                if (cnt > 15 || unres(cnt) == ""s) { break; }
                 sdata(elona_int(unres(cnt * 2)), rc) +=
                     elona_int(unres((cnt * 2 + 1))) * 50;
             }
@@ -58415,8 +58415,8 @@ void label_2105()
             proclist(procid) = u8"userNpc_update:set info ct:"s + ct;
             userdatan(2, tg) = getnpctxt(u8"race."s, u8"slime"s);
             userdatan(3, tg) = getnpctxt(u8"class."s, u8"tourist"s);
-            userdatan(4, tg) = getnpctxt(u8"filter."s, u8""s);
-            userdatan(5, tg) = getnpctxt(u8"resist."s, u8""s);
+            userdatan(4, tg) = getnpctxt(u8"filter."s, ""s);
+            userdatan(5, tg) = getnpctxt(u8"resist."s, ""s);
             s = getnpctxt(u8"meleeElem."s, u8"0,0"s);
             csvstr2(s, s);
             userdata(11, tg) = elona_int(s) * 100000 + elona_int(s(1));
@@ -58522,7 +58522,7 @@ void label_2106()
     redraw(1);
     fileext = u8"txt"s;
     filedsc = u8"Custom Npc Text"s;
-    _fdialog(fileext, 16, filedsc, exedir + u8"user"s, u8""s);
+    _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
     if (stat == 0) { return; }
     txtfile = refstr;
     exist(txtfile);
@@ -58537,7 +58537,7 @@ void label_2106()
     redraw(1);
     fileext = u8"bmp"s;
     filedsc = u8"Bit Map File"s;
-    _fdialog(fileext, 16, filedsc, exedir + u8"user"s, u8""s);
+    _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
     if (stat == 0) { return; }
     bmpfile = refstr;
     exist(bmpfile);
@@ -58622,17 +58622,17 @@ void label_2108()
     id = 0;
     lensum = 1024;
     SDIM2(filebuff, lensum);
-    if (usertitle != u8""s) {
+    if (usertitle != ""s) {
         headtemp = u8"【"s + usertitle + u8"】\n"s;
     } else {
         headtemp = u8"【"s + mdatan(0) + u8"】\n"s;
     }
-    headtemp += u8""s + cdatan(1, 0) + cdatan(0, 0) + u8"\n"s;
+    headtemp += ""s + cdatan(1, 0) + cdatan(0, 0) + u8"\n"s;
     headtemp += u8"\n"s;
     headtemp += u8"\n"s;
-    headtemp += u8""s + 100001 + u8"\n"s;
-    headtemp += u8""s + usermsg + u8"\n"s;
-    headtemp += u8""s + userrelation + u8"\n"s;
+    headtemp += ""s + 100001 + u8"\n"s;
+    headtemp += ""s + usermsg + u8"\n"s;
+    headtemp += ""s + userrelation + u8"\n"s;
     memcpy_(filebuff, headtemp, 1024, 0);
     fmode = 20;
     label_2107();
@@ -58662,12 +58662,12 @@ void label_2109()
     lensum = 1024;
     SDIM2(filebuff, lensum);
     headtemp = u8"【"s + gdatan(0) + u8"】("s + n + u8"体)  Lv"s + lv + u8"\n"s;
-    headtemp += u8""s + cdatan(1, 0) + cdatan(0, 0) + u8"\n"s;
+    headtemp += ""s + cdatan(1, 0) + cdatan(0, 0) + u8"\n"s;
     headtemp += u8"\n"s;
     headtemp += u8"\n"s;
-    headtemp += u8""s + 100001 + u8"\n"s;
-    headtemp += u8""s + n + u8"\n"s;
-    headtemp += u8""s + lv + u8"\n"s;
+    headtemp += ""s + 100001 + u8"\n"s;
+    headtemp += ""s + n + u8"\n"s;
+    headtemp += ""s + lv + u8"\n"s;
     memcpy_(filebuff, headtemp, 1024, 0);
     fmode = 22;
     label_2107();
@@ -58716,7 +58716,7 @@ void label_2111()
 }
 void label_2112()
 {
-    filemod = u8""s;
+    filemod = "";
     fmode = 10;
     label_2107();
     folder = exedir + u8"save\\"s + playerid + u8"\\"s;
@@ -58807,7 +58807,7 @@ void label_2113()
     }
     fmode = 8;
     label_2107();
-    filemod = u8""s;
+    filemod = "";
     dirlist(buff, exedir + u8"tmp\\*.*"s);
     notesel(buff);
     notesave(exedir + u8"save\\"s + playerid + u8"\\filelist.txt"s);
@@ -58972,7 +58972,7 @@ label_2116_internal:
     cursor_check();
     if (key == u8"b"s) {
         snd(20);
-        geneuse = u8""s;
+        geneuse = "";
         label_1541();
         return;
     }
@@ -59045,7 +59045,7 @@ void label_2118()
             bload(file, playerheader);
             list(0, cnt) = cnt;
             listn(0, cnt) = s;
-            listn(1, cnt) = u8""s + playerheader;
+            listn(1, cnt) = ""s + playerheader;
             key_list(cnt) = key_select(cnt);
             ++keyrange;
         }
@@ -59206,7 +59206,7 @@ void label_2121()
             bload(file, playerheader);
             list(0, listmax) = listmax;
             listn(0, listmax) = s;
-            listn(1, listmax) = u8""s + playerheader;
+            listn(1, listmax) = ""s + playerheader;
             key_list(listmax) = key_select(listmax);
             ++keyrange;
             ++listmax;
@@ -59346,7 +59346,7 @@ label_21261_internal:
                 pos(x + dx - 51, y + 4);
                 gcopy(3, 336, 336, 24, 24);
                 inputlog2 =
-                    u8""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
+                    ""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
                 pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
                 color(255, 255, 255);
                 mes(inputlog2);
@@ -59381,15 +59381,15 @@ label_21261_internal:
                     snd(5);
                     val(4) = val(5);
                 }
-                inputlog = u8""s + val(4);
+                inputlog = ""s + val(4);
             }
         }
         if (f == -1) {
-            inputlog = u8""s;
+            inputlog = "";
             rtval = -1;
         }
         keywait = 1;
-        key = u8""s;
+        key = "";
         rtval = 0;
         return;
     }
@@ -59411,7 +59411,7 @@ label_21261_internal:
             cfg_msg_box = 0;
             goto label_21261_internal;
         }
-        aplobj(u8""s, 1);
+        aplobj(""s, 1);
         if (stat == 1) {
             dialog(u8"Failed to get OBJECT ID"s, 1);
             clrobj(1);
@@ -59429,8 +59429,8 @@ label_21261_internal:
             if (ginfo(2) == 0) {
                 objsel(1);
             } else {
-                objprm(1, u8""s);
-                inputlog = u8""s;
+                objprm(1, ""s);
+                inputlog = "";
                 await(100);
                 --cnt;
                 continue;
@@ -59486,16 +59486,16 @@ label_21261_internal:
                 break;
             }
             if (instr(inputlog, 0, u8"\t"s) != -1) {
-                objprm(1, u8""s);
-                inputlog = u8""s;
+                objprm(1, ""s);
+                inputlog = "";
                 if (val(3) == 1) { ime_esc = 1; }
             }
             redraw(1);
             if (val(3) == 1) {
                 if (ime_esc == 1) {
-                    inputlog = u8""s;
+                    inputlog = "";
                     keywait = 1;
-                    key = u8""s;
+                    key = "";
                     break;
                 }
             }
@@ -59612,7 +59612,7 @@ label_2128_internal:
         x += 1;
         y += 1;
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1)) {
             x = cdata(1, 0);
             y = cdata(2, 0);
@@ -59687,11 +59687,11 @@ label_2132_internal:
         gcopy(3, 312, 336, 24, 24);
         pos(dx(1) + sx + dx - 51, dy + 4);
         gcopy(3, 336, 336, 24, 24);
-        inputlog2 = u8""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
+        inputlog2 = ""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
         pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
         color(255, 255, 255);
         mes(inputlog2);
-        inputlog = u8""s + val(4);
+        inputlog = ""s + val(4);
     }
     window2(sx + 8, sy + 8, val(2) - 16, promptmax * 20 + 42 - 16, 0, 0);
     pos(sx - 16, sy);
@@ -59762,11 +59762,11 @@ label_2132_internal:
 void label_2134()
 {
     notesel(dbm);
-    buff = u8""s;
-    if (dbm == u8""s) {
+    buff = "";
+    if (dbm == ""s) {
         noteadd(
             u8"Elona v1.22 Debug Console    Type \"?\" for help. Hit ESC to exit."s);
-        noteadd(u8""s);
+        noteadd(""s);
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     objmode(2);
@@ -59810,14 +59810,14 @@ void label_2138()
         noteadd(u8"\tclient\t\tLists all the clients."s);
         noteadd(u8"\texitroom\tLeaves current show-room."s);
         noteadd(u8"\twizard\t\tEnables wizard mode."s);
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(u8"\tThe commands below can be used in the Wizard mode."s);
         noteadd(u8"\tgain_spell\tPC gains all spells."s);
         noteadd(u8"\tgain_spact\tPC gains all special actions."s);
         noteadd(u8"\tgain_exp\tPC gains a billion of exp."s);
         noteadd(u8"\tgain_fame\tPC gains fame."s);
         noteadd(u8"\tallinv\t\tDisplays all the items in the map."s);
-        noteadd(u8""s);
+        noteadd(""s);
         noteadd(
             u8"\tThe commands below should be only used to deal with certain problems."s);
         noteadd(u8"\t108fix\t\tTurns all the NPCs in the map hostile."s);
@@ -59834,7 +59834,7 @@ void label_2138()
         {
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt) {
-                noteadd(u8""s + cnt + u8"\t"s + cdatan(0, cnt) + u8"\tExist:"s +
+                noteadd(""s + cnt + u8"\t"s + cdatan(0, cnt) + u8"\tExist:"s +
                     cdata(0, cnt) + u8"\tRespawn:"s + cdata(5, cnt) +
                     u8"\tRole:"s + cdata(150, cnt));
             }
@@ -59849,7 +59849,7 @@ void label_2138()
                 p = 100 + cnt;
                 if (cdata(p, 0) != 0) {
                     p(1) = cdata(p, 0);
-                    s = u8""s + p + u8"\t"s + p(1) + u8"\t"s;
+                    s = ""s + p + u8"\t"s + p(1) + u8"\t"s;
                     if (p(1) % 10000 > 0) { s += itemname(p(1) % 10000 - 1); }
                     noteadd(s);
                 }
@@ -59863,7 +59863,7 @@ void label_2138()
         {
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt) {
-                noteadd(u8""s + cnt + u8"\t"s + itemname(cnt) + u8"\t"s);
+                noteadd(""s + cnt + u8"\t"s + itemname(cnt) + u8"\t"s);
             }
         }
         label_2139();
@@ -59884,14 +59884,14 @@ void label_2138()
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt) {
-                        s = u8""s;
+                        s = "";
                         if (cnt == 6 || cnt == 10) { s = u8"*"s; }
                         if (dbg_compare == 0) {
                             cdata2(cnt, cnt2) = cdata(cnt, cnt2);
                         }
                         if (dbg_compare == 1) {
                             if (cdata2(cnt, cnt2) != cdata(cnt, cnt2)) {
-                                noteadd(s + u8""s + cnt2 + u8"\t"s + cnt +
+                                noteadd(s + ""s + cnt2 + u8"\t"s + cnt +
                                     u8"\t"s + cdata2(cnt, cnt2) + u8"\t->"s +
                                     cdata(cnt, cnt2));
                             }
@@ -59908,13 +59908,13 @@ void label_2138()
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt) {
-                        s = u8""s;
+                        s = "";
                         if (dbg_compare == 0) {
                             cdatan2(cnt, cnt2) = cdatan(cnt, cnt2);
                         }
                         if (dbg_compare == 1) {
                             if (cdatan2(cnt, cnt2) != cdatan(cnt, cnt2)) {
-                                noteadd(s + u8""s + cnt2 + u8"\t"s + cnt +
+                                noteadd(s + ""s + cnt2 + u8"\t"s + cnt +
                                     u8"\t"s + cdatan2(cnt, cnt2) + u8"\t->"s +
                                     cdatan(cnt, cnt2));
                             }
@@ -59931,13 +59931,13 @@ void label_2138()
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (1200); cnt < cnt_end; ++cnt) {
-                        s = u8""s;
+                        s = "";
                         if (dbg_compare == 0) {
                             sdata2(cnt, cnt2) = sdata(cnt, cnt2);
                         }
                         if (dbg_compare == 1) {
                             if (sdata2(cnt, cnt2) != sdata(cnt, cnt2)) {
-                                noteadd(s + u8""s + cnt2 + u8"\t"s + cnt +
+                                noteadd(s + ""s + cnt2 + u8"\t"s + cnt +
                                     u8"\t"s + sdata2(cnt, cnt2) + u8"\t->"s +
                                     sdata(cnt, cnt2));
                             }
@@ -59954,13 +59954,13 @@ void label_2138()
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (70); cnt < cnt_end; ++cnt) {
-                        s = u8""s;
+                        s = "";
                         if (dbg_compare == 0) {
                             inv2(cnt, cnt2) = inv(cnt, cnt2);
                         }
                         if (dbg_compare == 1) {
                             if (inv2(cnt, cnt2) != inv(cnt, cnt2)) {
-                                noteadd(s + u8""s + cnt2 + u8"\t"s + cnt +
+                                noteadd(s + ""s + cnt2 + u8"\t"s + cnt +
                                     u8"\t"s + inv2(cnt, cnt2) + u8"\t->"s +
                                     inv(cnt, cnt2));
                             }
@@ -59982,14 +59982,14 @@ void label_2138()
         {
             int cnt = 0;
             for (int cnt_end = cnt + (1000); cnt < cnt_end; ++cnt) {
-                noteadd(u8""s + cnt + u8"\t"s + gdata(cnt));
+                noteadd(""s + cnt + u8"\t"s + gdata(cnt));
             }
         }
         label_2139();
         return;
     }
     if (instr(buff, 0, u8"del"s) != -1 || buff == u8"\n"s) {
-        dbm = u8""s;
+        dbm = "";
         label_2139();
         return;
     }
@@ -60144,7 +60144,7 @@ void label_2138()
             int cnt = 0;
             for (int cnt_end = cnt + (1000); cnt < cnt_end; ++cnt) {
                 if (mapclient(cnt) != 0) {
-                    noteadd(u8""s + mapname(cnt) + u8":"s + mapclient(cnt), 1);
+                    noteadd(""s + mapname(cnt) + u8":"s + mapclient(cnt), 1);
                 }
             }
         }
@@ -60170,7 +60170,7 @@ void label_2138()
         {
             int cnt = 0;
             for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt) {
-                noteadd(u8""s + cnt + u8":"s + mapname(cnt) + u8"/"s +
+                noteadd(""s + cnt + u8":"s + mapname(cnt) + u8"/"s +
                     adata(16, cnt));
             }
         }
@@ -60203,7 +60203,7 @@ void label_2138()
         {
             int cnt = 0;
             for (int cnt_end = cnt + (gdata(75)); cnt < cnt_end; ++cnt) {
-                noteadd(u8""s + cnt + u8" "s + qdata(0, cnt) + u8"/"s +
+                noteadd(""s + cnt + u8" "s + qdata(0, cnt) + u8"/"s +
                     qdata(1, cnt));
             }
         }
@@ -60255,7 +60255,7 @@ void label_2138()
                     if (cnt == 5080) {
                         noteadd(u8"-----------------------MAP INV"s);
                     }
-                    noteadd(u8""s + cnt + u8"\t"s + inv(0, cnt) + u8"\t"s +
+                    noteadd(""s + cnt + u8"\t"s + inv(0, cnt) + u8"\t"s +
                         itemname(cnt) + u8" it:"s + inv(30, cnt));
                 }
             }
@@ -60270,7 +60270,7 @@ void label_2138()
                         noteadd(u8"-----------------------MAP INV"s);
                     }
                     if (inv(0, cnt) != 0) {
-                        noteadd(u8""s + cnt + u8"\t"s + inv(0, cnt) + u8"\t"s +
+                        noteadd(""s + cnt + u8"\t"s + inv(0, cnt) + u8"\t"s +
                             itemname(cnt) + u8" it:"s + inv(30, cnt));
                     }
                 }
@@ -60300,9 +60300,9 @@ void label_2138()
 }
 void label_2139()
 {
-    noteadd(u8""s);
+    noteadd(""s);
     objprm(1, dbm);
-    objprm(2, u8""s);
+    objprm(2, ""s);
     return;
 }
 void label_2140()
@@ -60724,7 +60724,7 @@ void label_2146()
                                         cnvtalk(u8"What are you doing!"s),
                                         cnvtalk(u8"You can't play shit."s));
                                 }
-                                txt(lang(u8""s + name(tc) + u8"は石を投げた。"s,
+                                txt(lang(""s + name(tc) + u8"は石を投げた。"s,
                                     name(tc) + u8" throw"s + _s(tc) +
                                         u8" a rock."s));
                             }
@@ -61547,7 +61547,7 @@ void label_2151()
         if (tc != -1) {
             s = lang(u8"遺伝子"s, u8"Gene"s);
             file = u8"bg_re14"s;
-            buff = lang(u8""s + name(tc) +
+            buff = lang(""s + name(tc) +
                     u8"とあなたは熱い一夜を供にした。新たな遺伝子が生成された。"s,
                 u8"You spent a night with "s + name(tc) +
                     u8". A new gene is created."s);
@@ -61566,7 +61566,7 @@ void label_2151()
     wake_up();
     cdata(22, cc) -= 1500 / (trait(158) + 1);
     txtef(2);
-    txt(lang(u8""s + timeslept + u8"時間眠った。あなたはリフレッシュした。"s,
+    txt(lang(""s + timeslept + u8"時間眠った。あなたはリフレッシュした。"s,
         u8"You have slept for "s + timeslept +
             u8" hours. You are refreshed."s));
     f = 0;
@@ -62608,7 +62608,7 @@ int label_2168()
                 txtmore();
             } else {
                 txt(lang(name(cc) + u8"は"s + _cast(cdata(65, cc)),
-                    name(cc) + u8""s + _cast(cdata(65, cc))));
+                    name(cc) + ""s + _cast(cdata(65, cc))));
                 txtmore();
             }
         }
@@ -62813,7 +62813,7 @@ int label_2170()
             if (p > 40) {
                 if (cdata(38, cc) < 5) { break; }
                 if (synccheck(cc, -1)) {
-                    txt(lang(u8""s + name(cc) +
+                    txt(lang(""s + name(cc) +
                             u8"は何かいけないものを飲み込んだ。"s,
                         name(cc) + u8" swallow"s + _s(cc) +
                             u8" something bad."s));
@@ -63646,7 +63646,7 @@ int label_2192()
                 snd(58);
                 if (inv(3, ci) == 555) {
                     midbk = mid;
-                    mid = u8""s + 30 + u8"_"s + (100 + inv(9, ci));
+                    mid = ""s + 30 + u8"_"s + (100 + inv(9, ci));
                     exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
                     if (strsize != -1) {
                         fmode = 11;
@@ -64646,7 +64646,7 @@ void label_2206()
         }
         p = chipm(0, map(x, y, 0));
         if (p != 0) {
-            if (tname(p) != u8""s) {
+            if (tname(p) != ""s) {
                 txtmore();
                 txt(lang(u8"足元には"s + tname(p) + u8"がある。"s,
                     u8"You walk into "s + tname(p) + u8"."s));
@@ -64729,19 +64729,19 @@ void label_2206()
                 if (feat(2) == 41) { s = lang(u8"宝石"s, u8"gem"s); }
                 if (feat(2) == 42) { s = lang(u8"魔法の木"s, u8"magic"s); }
                 if (feat == tile_plant) {
-                    txt(lang(u8""s + s + u8"の種が植えてある。"s,
+                    txt(lang(""s + s + u8"の種が植えてある。"s,
                         u8"A "s + s + u8" seed is planted."s));
                 }
                 if (feat == tile_plant + 1) {
-                    txt(lang(u8""s + s + u8"が育っている。"s,
+                    txt(lang(""s + s + u8"が育っている。"s,
                         u8"A "s + s + u8" bud is growing."s));
                 }
                 if (feat == tile_plant + 2) {
-                    txt(lang(u8""s + s + u8"の実が成っている。"s,
+                    txt(lang(""s + s + u8"の実が成っている。"s,
                         u8"A"s + s + u8" tree has bore a lot of fruit."s));
                 }
                 if (feat == tile_plant + 3) {
-                    txt(lang(u8""s + s + u8"の草は枯れてしまっている… "s,
+                    txt(lang(""s + s + u8"の草は枯れてしまっている… "s,
                         u8"A "s + s + u8" tree has withered..."s));
                 }
             }
@@ -65739,7 +65739,7 @@ label_22191_internal:
         if (attackskill != 106) {
             if (inv(4, cw) >= 4) {
                 if (inv(4, cw) == 6) {
-                    s(1) = lang(u8""s, u8"The "s) + iknownnameref(inv(3, cw));
+                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv(3, cw));
                 } else {
                     if (inv(23, cw) >= 40000) {
                         randomize(inv(23, cw) - 40000);
@@ -65747,7 +65747,7 @@ label_22191_internal:
                         randomize();
                     } else {
                         s(1) =
-                            lang(u8""s, u8"The "s) + iknownnameref(inv(3, cw));
+                            lang(""s, u8"The "s) + iknownnameref(inv(3, cw));
                     }
                 }
                 s(1) = lang(u8"『"s, u8"<"s) + s(1) + lang(u8"』"s, u8">"s);
@@ -66417,21 +66417,21 @@ void dipcursed(int prm_1078, int)
     if (refitem(inv(3, prm_1078), 5) == 57000) {
         if (inv(24, prm_1078) == 35) {
             txt(lang(itemname(prm_1078) + u8"は腐ってしまった…"s,
-                u8""s + itemname(prm_1078) + u8" rots."s));
+                ""s + itemname(prm_1078) + u8" rots."s));
             inv(27, prm_1078) = -1;
             inv(2, prm_1078) = 336;
             cell_refresh(inv(5, prm_1078), inv(6, prm_1078));
             return;
         } else {
             txt(lang(itemname(prm_1078) + u8"に変化はない。"s,
-                u8""s + itemname(prm_1078) + u8" remains unchanged."s));
+                ""s + itemname(prm_1078) + u8" remains unchanged."s));
             return;
         }
     }
     if (refitem(inv(3, prm_1078), 5) < 50000) {
         --inv(20, prm_1078);
         txt(lang(itemname(prm_1078) + u8"は錆びてしまった…"s,
-            u8""s + itemname(prm_1078) + u8" rusts."s));
+            ""s + itemname(prm_1078) + u8" rusts."s));
         if (inv_getowner(prm_1078) != -1) {
             r1 = inv_getowner(prm_1078);
             label_1477();
@@ -66754,7 +66754,7 @@ void label_2228()
                         label_0247();
                         promptl(0, promptmax) = s;
                         promptl(1, promptmax) = u8"null"s;
-                        promptl(2, promptmax) = u8""s + promptmax;
+                        promptl(2, promptmax) = ""s + promptmax;
                         ++promptmax;
                         ++listmax;
                     }
@@ -66765,7 +66765,7 @@ void label_2228()
             s = lang(u8"ボーナス+1"s, u8"Bonus+1"s);
             promptl(0, promptmax) = s;
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             val(0) = promptx;
             val(1) = prompty;
@@ -66838,27 +66838,27 @@ void label_2228()
             u8"You sit on "s + itemname(ci, 1) + u8"."s));
         promptl(0, promptmax) = lang(u8"くつろぐ"s, u8"Relax."s);
         promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = u8""s + 0;
+        promptl(2, promptmax) = ""s + 0;
         ++promptmax;
         if (inv(25, ci) != 1) {
             promptl(0, promptmax) =
                 lang(u8"マイチェアにする"s, u8"It's my chair."s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 1;
+            promptl(2, promptmax) = ""s + 1;
             ++promptmax;
         }
         if (inv(25, ci) != 2) {
             promptl(0, promptmax) =
                 lang(u8"お客用のチェアにする"s, u8"It's for my guest."s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 2;
+            promptl(2, promptmax) = ""s + 2;
             ++promptmax;
         }
         if (inv(25, ci) != 0) {
             promptl(0, promptmax) =
                 lang(u8"誰でも座っていい"s, u8"It's free to use."s);
             promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = u8""s + 3;
+            promptl(2, promptmax) = ""s + 3;
             ++promptmax;
         }
         val(0) = promptx;
@@ -67007,7 +67007,7 @@ void label_2228()
                     u8"You start to keep an eye on "s + his(tc) +
                         u8" health."s));
                 if (cdata(8, tc) == 1) {
-                    txt(lang(u8""s + name(tc) + u8"は顔を赤らめた。"s,
+                    txt(lang(""s + name(tc) + u8"は顔を赤らめた。"s,
                         name(tc) + u8" blush"s + _s(tc, 1) + u8"."s));
                     txtmore();
                     txtef(4);
@@ -67548,9 +67548,9 @@ void label_2228()
         }
         txtnew();
         txtef(5);
-        txt(lang(u8""s + cdatan(0, rc) + u8"は"s + cdatan(0, tc) +
+        txt(lang(""s + cdatan(0, rc) + u8"は"s + cdatan(0, tc) +
                 u8"の遺伝子を受けついだ！"s,
-            u8""s + cdatan(0, rc) + u8" has inherited "s + cdatan(0, tc) +
+            ""s + cdatan(0, rc) + u8" has inherited "s + cdatan(0, tc) +
                 u8"'s gene!"s));
         animeid = 20;
         anic = rc;
@@ -67850,9 +67850,9 @@ void label_2232()
     if (val) {
         s = u8"畑に"s;
     } else {
-        s = u8""s;
+        s = "";
     }
-    s += lang(u8""s + itemname(ci, 1) + u8"を埋めた。"s,
+    s += lang(""s + itemname(ci, 1) + u8"を埋めた。"s,
         u8"You plant "s + itemname(ci, 1));
     txt(s);
     snd(55);
@@ -68160,7 +68160,7 @@ void label_2242()
         label_2252();
         return;
     }
-    buff = u8""s;
+    buff = "";
     label_2251();
     return;
 }
@@ -68544,7 +68544,7 @@ void label_2244()
             listmax = 0;
             buff = lang(skillname(csskill) + u8"は"s + _ore(3) +
                     u8"の得意なスキルの内の一つ"s + _da(),
-                u8""s + skillname(csskill) +
+                ""s + skillname(csskill) +
                     u8" is one of my favorite skills."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -68980,7 +68980,7 @@ void label_2244()
             screenupdate = -1;
             label_1419();
             cs = 0;
-            buff = u8""s;
+            buff = "";
             label_2244();
             return;
         }
@@ -68992,7 +68992,7 @@ void label_2244()
             screenupdate = -1;
             label_1419();
             cs = 0;
-            buff = u8""s;
+            buff = "";
             label_2244();
             return;
         }
@@ -69715,9 +69715,9 @@ void label_2257()
         }
     }
     keyrange = listmax;
-    key = u8""s;
-    objprm(0, u8""s);
-    keylog = u8""s;
+    key = "";
+    objprm(0, ""s);
+    keylog = "";
     label_2260();
 label_2258_internal:
     label_2261();
@@ -69852,7 +69852,7 @@ void label_22610()
     display_topic(lang(u8"興味"s, u8"Attract"s), wx + 28, wy + 215);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     color(20, 10, 5);
-    if (cdatan(1, tc) == u8""s) {
+    if (cdatan(1, tc) == ""s) {
         s = cdatan(0, tc) + u8" "s;
     } else {
         s = lang(cdatan(1, tc) + u8" "s + cdatan(0, tc) + u8" "s,
@@ -69863,7 +69863,7 @@ void label_22610()
     } else {
         s += cnven(strfemale);
     }
-    if (cdatan(1, tc) != u8""s) {
+    if (cdatan(1, tc) != ""s) {
         s += lang(u8" 名声 "s, u8" Fame: "s) + cdata(34, tc);
     }
     if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000 ||
@@ -69879,7 +69879,7 @@ void label_22610()
     if (chatval(2) == 1) {
         s = _impression(implevel(cdata(17, tc)));
         if (cdata(17, tc) < 150) {
-            s(1) = u8""s + cdata(17, tc);
+            s(1) = ""s + cdata(17, tc);
         } else {
             s(1) = u8"???"s;
         }
@@ -70464,7 +70464,7 @@ void label_2270()
     mapsubroutine = 1;
     label_17402();
     initeco = 0;
-    msgtemp = u8""s;
+    msgtemp = "";
     return;
 }
 void label_22712()
@@ -70515,7 +70515,7 @@ label_2272_internal:
     } else {
         display_topic(
             lang(mapname(adata(16, gdata(20))) + u8"のチャート"s,
-                u8""s + mapname(adata(16, gdata(20))) + u8" City Chart"s),
+                ""s + mapname(adata(16, gdata(20))) + u8" City Chart"s),
             wx + 40, wy + 34);
         {
             int cnt = 0;
@@ -70581,7 +70581,7 @@ label_2272_internal:
                 --curmenu;
                 if (curmenu < 0) { curmenu = 2; }
             }
-            key = u8""s;
+            key = "";
             if (p != curmenu) {
                 screenupdate = -1;
                 label_1419();
@@ -70624,7 +70624,7 @@ void showeconomy(int prm_1086, int prm_1087, const std::string& prm_1088,
     color(0, 0, 0);
     mes(prm_1088);
     pos(prm_1086 + 130, prm_1087);
-    mes(u8""s + prm_1089);
+    mes(""s + prm_1089);
     p_at_m195 = prm_1089 - prm_1090;
     if (p_at_m195 >= 0) {
         color(0, 0, 150);
@@ -70726,7 +70726,7 @@ label_2278_internal:
                 --curmenu;
                 if (curmenu < 0) { curmenu = 2; }
             }
-            key = u8""s;
+            key = "";
             if (p != curmenu) {
                 screenupdate = -1;
                 label_1419();
@@ -70759,7 +70759,7 @@ label_2278_internal:
             goto label_2277_internal;
         }
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         label_1419();
         return;
     }
@@ -70828,7 +70828,7 @@ label_2283_internal:
     mes(lang(u8"国法"s, u8"Global"s));
     if (mdata(6) == 3) {
         pos(wx + 285, wy + 52);
-        mes(lang(u8""s + mapname(gdata(20)) + u8"の法"s,
+        mes(lang(""s + mapname(gdata(20)) + u8"の法"s,
             u8"Law of "s + mapname(gdata(20)) + u8")"s));
     }
     pos(wx + 155, wy + 46);
@@ -70896,7 +70896,7 @@ label_2283_internal:
                 --curmenu;
                 if (curmenu < 0) { curmenu = 2; }
             }
-            key = u8""s;
+            key = "";
             if (p != curmenu) {
                 screenupdate = -1;
                 label_1419();
@@ -71275,7 +71275,7 @@ int label_2298()
         stat = 0;
         return stat;
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71336,7 +71336,7 @@ int label_2298()
             skillinit(168, rc, 5);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71394,7 +71394,7 @@ int label_2298()
             skillinit(170, rc, 4);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71451,7 +71451,7 @@ int label_2298()
             skillinit(172, rc, 5);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71508,7 +71508,7 @@ int label_2298()
             skillinit(177, rc, 5);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71526,7 +71526,7 @@ int label_2298()
         if (dbmode == 2) { classname = u8"プレデター"s; }
         if (dbmode == 11) {
             classname = u8"プレデター"s;
-            buff = lang(u8""s, u8""s);
+            buff = lang(""s, ""s);
             p(0) = 8;
             p(1) = 11;
             p(2) = 8;
@@ -71555,7 +71555,7 @@ int label_2298()
             skillinit(152, rc, 4);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71613,7 +71613,7 @@ int label_2298()
             skillinit(189, rc, 3);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71670,7 +71670,7 @@ int label_2298()
             skillinit(172, rc, 4);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71720,7 +71720,7 @@ int label_2298()
             skillinit(182, rc, 3);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71776,7 +71776,7 @@ int label_2298()
             skillinit(301, rc, 3);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71794,7 +71794,7 @@ int label_2298()
         if (dbmode == 2) { classname = u8"機工兵"s; }
         if (dbmode == 11) {
             classname = u8"機工兵"s;
-            buff = lang(u8""s, u8""s);
+            buff = lang(""s, ""s);
             p(0) = 0;
             p(1) = 2;
             p(2) = 5;
@@ -71827,7 +71827,7 @@ int label_2298()
             skillinit(189, rc, 3);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71884,7 +71884,7 @@ int label_2298()
             skillinit(172, rc, 5);
         }
     }
-    if (dbidn == u8""s) {
+    if (dbidn == ""s) {
         classname = u8"なし"s;
         cequipment = 0;
         stat = 0;
@@ -71947,8 +71947,8 @@ void label_2655()
 {
     maxnpcid = 356;
     DIM3(cbitorg, 30, maxnpcid);
-    filter_creature(2) = u8""s;
-    filter_creature(3) = u8""s;
+    filter_creature(2) = "";
+    filter_creature(3) = "";
     filter_creature(4) = u8"/man/"s;
     filter_creature(5) = u8"/man/"s;
     filter_creature(6) = u8"/man/"s;
@@ -71975,23 +71975,23 @@ void label_2655()
     filter_creature(27) = u8"/man/"s;
     HMMBITON(cbitorg(1, 351), 0);
     filter_creature(28) = u8"/man/"s;
-    filter_creature(29) = u8""s;
+    filter_creature(29) = "";
     filter_creature(30) = u8"/man/"s;
     filter_creature(31) = u8"/man/"s;
     filter_creature(32) = u8"/man/"s;
     filter_creature(33) = u8"/man/"s;
     filter_creature(34) = u8"/man/"s;
     filter_creature(35) = u8"/undead/god/"s;
-    filter_creature(36) = u8""s;
-    filter_creature(37) = u8""s;
-    filter_creature(38) = u8""s;
+    filter_creature(36) = "";
+    filter_creature(37) = "";
+    filter_creature(38) = "";
     filter_creature(39) = u8"/god/"s;
     filter_creature(40) = u8"/god/"s;
     filter_creature(41) = u8"/god/"s;
     filter_creature(42) = u8"/god/"s;
     filter_creature(43) = u8"/god/"s;
     filter_creature(44) = u8"/god/"s;
-    filter_creature(45) = u8""s;
+    filter_creature(45) = "";
     filter_creature(46) = u8"/slime/"s;
     HMMBITON(cbitorg(0, 3), 22);
     filter_creature(47) = u8"/fire/slime/"s;
@@ -72002,9 +72002,9 @@ void label_2655()
     HMMBITON(cbitorg(0, 286), 23);
     filter_creature(51) = u8"/slime/"s;
     HMMBITON(cbitorg(0, 285), 23);
-    filter_creature(52) = u8""s;
+    filter_creature(52) = "";
     HMMBITON(cbitorg(0, 287), 23);
-    filter_creature(53) = u8""s;
+    filter_creature(53) = "";
     HMMBITON(cbitorg(0, 327), 27);
     HMMBITON(cbitorg(0, 327), 26);
     filter_creature(54) = u8"/wild/"s;
@@ -72039,25 +72039,25 @@ void label_2655()
     filter_creature(79) = u8"/wild/"s;
     HMMBITON(cbitorg(0, 11), 5);
     filter_creature(80) = u8"/man/"s;
-    filter_creature(81) = u8""s;
+    filter_creature(81) = "";
     filter_creature(82) = u8"/yeek/"s;
     filter_creature(83) = u8"/yeek/"s;
     filter_creature(84) = u8"/yeek/"s;
     filter_creature(85) = u8"/yeek/"s;
     filter_creature(86) = u8"/yeek/"s;
     HMMBITON(cbitorg(0, 237), 18);
-    filter_creature(87) = u8""s;
+    filter_creature(87) = "";
     HMMBITON(cbitorg(0, 244), 18);
-    filter_creature(88) = u8""s;
+    filter_creature(88) = "";
     HMMBITON(cbitorg(0, 245), 18);
-    filter_creature(89) = u8""s;
+    filter_creature(89) = "";
     HMMBITON(cbitorg(0, 321), 18);
     filter_creature(90) = u8"/yeek/"s;
     filter_creature(91) = u8"/man/"s;
-    filter_creature(92) = u8""s;
-    filter_creature(93) = u8""s;
-    filter_creature(94) = u8""s;
-    filter_creature(95) = u8""s;
+    filter_creature(92) = "";
+    filter_creature(93) = "";
+    filter_creature(94) = "";
+    filter_creature(95) = "";
     filter_creature(96) = u8"/man/"s;
     filter_creature(97) = u8"/man/"s;
     filter_creature(98) = u8"/man/"s;
@@ -72067,7 +72067,7 @@ void label_2655()
     filter_creature(102) = u8"/man/"s;
     filter_creature(103) = u8"/man/"s;
     filter_creature(104) = u8"/man/"s;
-    filter_creature(105) = u8""s;
+    filter_creature(105) = "";
     filter_creature(106) = u8"/dragon/"s;
     HMMBITON(cbitorg(1, 281), 0);
     filter_creature(107) = u8"/mino/"s;
@@ -72076,7 +72076,7 @@ void label_2655()
     HMMBITON(cbitorg(1, 298), 0);
     filter_creature(110) = u8"/mino/"s;
     filter_creature(111) = u8"/mino/"s;
-    filter_creature(112) = u8""s;
+    filter_creature(112) = "";
     filter_creature(113) = u8"/man/"s;
     filter_creature(114) = u8"/man/"s;
     filter_creature(115) = u8"/god/"s;
@@ -72084,10 +72084,10 @@ void label_2655()
     filter_creature(117) = u8"/god/"s;
     filter_creature(118) = u8"/man/"s;
     filter_creature(119) = u8"/man/"s;
-    filter_creature(120) = u8""s;
-    filter_creature(121) = u8""s;
-    filter_creature(122) = u8""s;
-    filter_creature(123) = u8""s;
+    filter_creature(120) = "";
+    filter_creature(121) = "";
+    filter_creature(122) = "";
+    filter_creature(123) = "";
     HMMBITON(cbitorg(1, 25), 0);
     filter_creature(124) = u8"/undead/"s;
     filter_creature(125) = u8"/wild/"s;
@@ -72097,7 +72097,7 @@ void label_2655()
     filter_creature(127) = u8"/wild/fire/dragon/"s;
     HMMBITON(cbitorg(0, 44), 5);
     filter_creature(128) = u8"/fire/"s;
-    filter_creature(129) = u8""s;
+    filter_creature(129) = "";
     filter_creature(130) = u8"/undead/"s;
     filter_creature(131) = u8"/undead/"s;
     filter_creature(132) = u8"/undead/"s;
@@ -72133,44 +72133,44 @@ void label_2655()
     HMMBITON(cbitorg(0, 63), 5);
     filter_creature(149) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 64), 5);
-    filter_creature(150) = u8""s;
+    filter_creature(150) = "";
     HMMBITON(cbitorg(0, 312), 5);
-    filter_creature(151) = u8""s;
+    filter_creature(151) = "";
     HMMBITON(cbitorg(0, 313), 5);
-    filter_creature(152) = u8""s;
+    filter_creature(152) = "";
     HMMBITON(cbitorg(0, 65), 5);
     HMMBITON(cbitorg(0, 65), 10);
-    filter_creature(153) = u8""s;
+    filter_creature(153) = "";
     HMMBITON(cbitorg(0, 66), 5);
     HMMBITON(cbitorg(0, 66), 10);
-    filter_creature(154) = u8""s;
+    filter_creature(154) = "";
     HMMBITON(cbitorg(0, 67), 5);
     HMMBITON(cbitorg(0, 67), 10);
-    filter_creature(155) = u8""s;
+    filter_creature(155) = "";
     HMMBITON(cbitorg(0, 315), 5);
     HMMBITON(cbitorg(0, 315), 10);
-    filter_creature(156) = u8""s;
+    filter_creature(156) = "";
     HMMBITON(cbitorg(0, 316), 5);
     HMMBITON(cbitorg(0, 316), 10);
-    filter_creature(157) = u8""s;
+    filter_creature(157) = "";
     HMMBITON(cbitorg(0, 314), 5);
     HMMBITON(cbitorg(0, 314), 10);
     filter_creature(158) = u8"/dragon/"s;
     HMMBITON(cbitorg(0, 68), 5);
-    filter_creature(159) = u8""s;
-    filter_creature(160) = u8""s;
+    filter_creature(159) = "";
+    filter_creature(160) = "";
     HMMBITON(cbitorg(0, 81), 5);
     filter_creature(161) = u8"/fire/"s;
     HMMBITON(cbitorg(0, 82), 5);
-    filter_creature(162) = u8""s;
+    filter_creature(162) = "";
     HMMBITON(cbitorg(1, 83), 0);
-    filter_creature(163) = u8""s;
+    filter_creature(163) = "";
     HMMBITON(cbitorg(1, 84), 0);
     filter_creature(164) = u8"/fire/"s;
     HMMBITON(cbitorg(0, 85), 5);
     filter_creature(165) = u8"/god/"s;
     HMMBITON(cbitorg(0, 86), 5);
-    filter_creature(166) = u8""s;
+    filter_creature(166) = "";
     HMMBITON(cbitorg(0, 87), 5);
     filter_creature(167) = u8"/undead/"s;
     filter_creature(168) = u8"/undead/"s;
@@ -72179,8 +72179,8 @@ void label_2655()
     HMMBITON(cbitorg(0, 91), 5);
     filter_creature(171) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 92), 5);
-    filter_creature(172) = u8""s;
-    filter_creature(173) = u8""s;
+    filter_creature(172) = "";
+    filter_creature(173) = "";
     filter_creature(174) = u8"/wild/"s;
     filter_creature(175) = u8"/wild/"s;
     filter_creature(176) = u8"/fire/dragon/"s;
@@ -72191,10 +72191,10 @@ void label_2655()
     filter_creature(181) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 257), 19);
     filter_creature(182) = u8"/undead/"s;
-    filter_creature(183) = u8""s;
-    filter_creature(184) = u8""s;
-    filter_creature(185) = u8""s;
-    filter_creature(186) = u8""s;
+    filter_creature(183) = "";
+    filter_creature(184) = "";
+    filter_creature(185) = "";
+    filter_creature(186) = "";
     filter_creature(187) = u8"/undead/fire/"s;
     HMMBITON(cbitorg(0, 106), 10);
     filter_creature(188) = u8"/undead/"s;
@@ -72209,7 +72209,7 @@ void label_2655()
     HMMBITON(cbitorg(0, 111), 10);
     filter_creature(194) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 112), 10);
-    filter_creature(195) = u8""s;
+    filter_creature(195) = "";
     HMMBITON(cbitorg(0, 113), 10);
     filter_creature(196) = u8"/god/"s;
     filter_creature(197) = u8"/god/"s;
@@ -72220,7 +72220,7 @@ void label_2655()
     HMMBITON(cbitorg(0, 118), 5);
     HMMBITON(cbitorg(0, 118), 10);
     filter_creature(201) = u8"/dragon/"s;
-    filter_creature(202) = u8""s;
+    filter_creature(202) = "";
     filter_creature(203) = u8"/dragon/"s;
     filter_creature(204) = u8"/fire/dragon/"s;
     filter_creature(205) = u8"/dragon/"s;
@@ -72235,19 +72235,19 @@ void label_2655()
     filter_creature(214) = u8"/wild/"s;
     filter_creature(215) = u8"/wild/"s;
     filter_creature(216) = u8"/undead/"s;
-    filter_creature(217) = u8""s;
+    filter_creature(217) = "";
     HMMBITON(cbitorg(0, 132), 10);
     filter_creature(218) = u8"/fire/"s;
     HMMBITON(cbitorg(0, 133), 10);
     filter_creature(219) = u8"/fire/"s;
     HMMBITON(cbitorg(0, 134), 10);
-    filter_creature(220) = u8""s;
+    filter_creature(220) = "";
     HMMBITON(cbitorg(0, 135), 10);
-    filter_creature(221) = u8""s;
+    filter_creature(221) = "";
     HMMBITON(cbitorg(0, 136), 10);
-    filter_creature(222) = u8""s;
+    filter_creature(222) = "";
     HMMBITON(cbitorg(0, 137), 10);
-    filter_creature(223) = u8""s;
+    filter_creature(223) = "";
     HMMBITON(cbitorg(0, 138), 10);
     filter_creature(224) = u8"/fire/"s;
     filter_creature(225) = u8"/fire/"s;
@@ -72262,8 +72262,8 @@ void label_2655()
     filter_creature(231) = u8"/pawn/"s;
     filter_creature(232) = u8"/pawn/"s;
     filter_creature(233) = u8"/pawn/"s;
-    filter_creature(234) = u8""s;
-    filter_creature(235) = u8""s;
+    filter_creature(234) = "";
+    filter_creature(235) = "";
     filter_creature(236) = u8"/man/shopguard/"s;
     filter_creature(237) = u8"/man/shopguard/"s;
     filter_creature(238) = u8"/man/shopguard/"s;
@@ -72274,7 +72274,7 @@ void label_2655()
     filter_creature(243) = u8"/man/"s;
     filter_creature(244) = u8"/man/"s;
     filter_creature(245) = u8"/man/"s;
-    filter_creature(246) = u8""s;
+    filter_creature(246) = "";
     filter_creature(247) = u8"/man/"s;
     filter_creature(248) = u8"/man/"s;
     filter_creature(249) = u8"/man/"s;
@@ -72310,7 +72310,7 @@ void label_2655()
     filter_creature(271) = u8"/man/"s;
     filter_creature(272) = u8"/man/"s;
     filter_creature(273) = u8"/man/"s;
-    filter_creature(274) = u8""s;
+    filter_creature(274) = "";
     HMMBITON(cbitorg(0, 180), 22);
     filter_creature(275) = u8"/god/"s;
     filter_creature(276) = u8"/man/"s;
@@ -72319,22 +72319,22 @@ void label_2655()
     filter_creature(278) = u8"/man/"s;
     filter_creature(279) = u8"/man/"s;
     filter_creature(280) = u8"/man/"s;
-    filter_creature(281) = u8""s;
+    filter_creature(281) = "";
     HMMBITON(cbitorg(0, 186), 10);
-    filter_creature(282) = u8""s;
+    filter_creature(282) = "";
     HMMBITON(cbitorg(0, 187), 10);
-    filter_creature(283) = u8""s;
+    filter_creature(283) = "";
     HMMBITON(cbitorg(0, 188), 10);
-    filter_creature(284) = u8""s;
+    filter_creature(284) = "";
     HMMBITON(cbitorg(0, 345), 10);
     HMMBITON(cbitorg(0, 345), 22);
-    filter_creature(285) = u8""s;
+    filter_creature(285) = "";
     HMMBITON(cbitorg(0, 346), 10);
     HMMBITON(cbitorg(0, 346), 22);
-    filter_creature(286) = u8""s;
+    filter_creature(286) = "";
     HMMBITON(cbitorg(0, 341), 10);
     HMMBITON(cbitorg(0, 341), 31);
-    filter_creature(287) = u8""s;
+    filter_creature(287) = "";
     HMMBITON(cbitorg(0, 258), 10);
     filter_creature(288) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 189), 5);
@@ -72361,11 +72361,11 @@ void label_2655()
     filter_creature(299) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 200), 6);
     HMMBITON(cbitorg(0, 200), 10);
-    filter_creature(300) = u8""s;
+    filter_creature(300) = "";
     filter_creature(301) = u8"/man/"s;
     filter_creature(302) = u8"/man/"s;
     filter_creature(303) = u8"/god/"s;
-    filter_creature(304) = u8""s;
+    filter_creature(304) = "";
     filter_creature(305) = u8"/man/"s;
     filter_creature(306) = u8"/man/"s;
     filter_creature(307) = u8"/man/"s;
@@ -72384,14 +72384,14 @@ void label_2655()
     HMMBITON(cbitorg(0, 215), 17);
     filter_creature(318) = u8"/man/"s;
     HMMBITON(cbitorg(0, 217), 17);
-    filter_creature(319) = u8""s;
+    filter_creature(319) = "";
     HMMBITON(cbitorg(0, 216), 10);
-    filter_creature(320) = u8""s;
+    filter_creature(320) = "";
     HMMBITON(cbitorg(0, 218), 10);
-    filter_creature(321) = u8""s;
+    filter_creature(321) = "";
     filter_creature(322) = u8"/god/"s;
     HMMBITON(cbitorg(0, 220), 10);
-    filter_creature(323) = u8""s;
+    filter_creature(323) = "";
     HMMBITON(cbitorg(0, 250), 5);
     HMMBITON(cbitorg(0, 250), 17);
     filter_creature(324) = u8"/god/"s;
@@ -72421,7 +72421,7 @@ void label_2655()
     HMMBITON(cbitorg(0, 268), 22);
     filter_creature(335) = u8"/wild/horse/"s;
     HMMBITON(cbitorg(0, 277), 22);
-    filter_creature(336) = u8""s;
+    filter_creature(336) = "";
     filter_creature(337) = u8"/man/"s;
     filter_creature(338) = u8"/man/"s;
     filter_creature(339) = u8"/man/"s;
@@ -72434,26 +72434,26 @@ void label_2655()
     filter_creature(342) = u8"/man/"s;
     filter_creature(343) = u8"/man/"s;
     filter_creature(344) = u8"/man/"s;
-    filter_creature(345) = u8""s;
-    filter_creature(346) = u8""s;
+    filter_creature(345) = "";
+    filter_creature(346) = "";
     HMMBITON(cbitorg(0, 318), 10);
-    filter_creature(347) = u8""s;
+    filter_creature(347) = "";
     filter_creature(348) = u8"/man/"s;
     filter_creature(349) = u8"/man/"s;
     filter_creature(350) = u8"/undead/"s;
     HMMBITON(cbitorg(0, 323), 5);
-    filter_creature(351) = u8""s;
+    filter_creature(351) = "";
     HMMBITON(cbitorg(0, 324), 25);
     HMMBITON(cbitorg(0, 324), 26);
-    filter_creature(352) = u8""s;
+    filter_creature(352) = "";
     HMMBITON(cbitorg(0, 325), 25);
     HMMBITON(cbitorg(0, 325), 26);
-    filter_creature(353) = u8""s;
+    filter_creature(353) = "";
     HMMBITON(cbitorg(0, 328), 25);
     HMMBITON(cbitorg(0, 328), 28);
     HMMBITON(cbitorg(0, 328), 26);
     HMMBITON(cbitorg(0, 328), 5);
-    filter_creature(354) = u8""s;
+    filter_creature(354) = "";
     HMMBITON(cbitorg(0, 329), 25);
     HMMBITON(cbitorg(0, 329), 28);
     HMMBITON(cbitorg(0, 329), 26);
@@ -73416,7 +73416,7 @@ void label_2677()
             u8"あなたのチームは勝利した！"s, u8"Your team is victorious!"s));
         txtef(2);
         txtmore();
-        txt(lang(u8""s + gdata(74) + u8"の名声値を手に入れた。"s,
+        txt(lang(""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
         if (arenaimport == 1) {
             ++gdata(802);
@@ -73465,7 +73465,7 @@ void label_2678()
         txt(lang(u8"あなたは勝利した！"s, u8"You are victorious!"s));
         txtef(2);
         txtmore();
-        txt(lang(u8""s + gdata(74) + u8"の名声値を手に入れた。"s,
+        txt(lang(""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
         modrank(0, 100, 2);
         cdata(34, 0) += gdata(74);
@@ -73571,7 +73571,7 @@ void label_2679()
         u8"You have completed the quest taken from "s + qname(rq) + u8"."s));
     txtef(2);
     txtmore();
-    txt(lang(u8""s + gdata(74) + u8"の名声値を手に入れた。"s,
+    txt(lang(""s + gdata(74) + u8"の名声値を手に入れた。"s,
         u8"You gain "s + gdata(74) + u8" fame."s));
     cdata(34, 0) += gdata(74);
     txt(lang(
@@ -73727,7 +73727,7 @@ label_2684_internal:
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt) {
             noteget(s, p - cnt - 1);
-            if (s == u8""s) { notedel(p - cnt - 1); }
+            if (s == ""s) { notedel(p - cnt - 1); }
         }
     }
     redraw(0);
@@ -73833,7 +73833,7 @@ void label_2685()
     label_1443();
     scenemode = 0;
     msgtemp = msgtempprev;
-    msgtempprev = u8""s;
+    msgtempprev = "";
     return;
 }
 int ai_check()
@@ -74095,12 +74095,12 @@ void label_2687()
         }
     }
     tc = cdata(29, cc);
-    if (cdatan(4, cc) != u8""s) {
+    if (cdatan(4, cc) != ""s) {
         if (cbit(989, cc) == 0) {
             if (rnd(30) == 0) {
                 txtmore();
                 txtef(9);
-                txt(u8""s + cdatan(4, cc));
+                txt(""s + cdatan(4, cc));
                 goto label_2688_internal;
             }
         }
@@ -75123,7 +75123,7 @@ label_2698:
     if (page == -1) { page = 0; }
     if (page == 0) {
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
@@ -75139,7 +75139,7 @@ label_2698:
         listn(1, listmax) = key_charainfo;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
@@ -75147,21 +75147,21 @@ label_2698:
         listn(1, listmax) = key_journal;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
     }
     if (page == 1) {
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
@@ -75177,7 +75177,7 @@ label_2698:
         listn(1, listmax) = key_cast;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
@@ -75193,13 +75193,13 @@ label_2698:
         listn(1, listmax) = key_dig;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
     }
     if (page == 2) {
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
@@ -75215,7 +75215,7 @@ label_2698:
         listn(1, listmax) = key_interact;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
@@ -75223,15 +75223,15 @@ label_2698:
         listn(1, listmax) = key_bash;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = u8""s;
+        listn(0, listmax) = "";
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
     }
@@ -75332,14 +75332,14 @@ label_2699_internal:
     if (key == key_cancel) {
         cs = -1;
         snd(5);
-        key = u8""s;
+        key = "";
         goto label_2700_internal;
         return;
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         if (cs == -1) {
             snd(5);
-            key = u8""s;
+            key = "";
             goto label_2700_internal;
             return;
         }
@@ -75349,7 +75349,7 @@ label_2699_internal:
             return;
         }
     }
-    if (key == u8""s || cs == 1 || cs == 6 || cs == 2 || cs == 7) {
+    if (key == ""s || cs == 1 || cs == 6 || cs == 2 || cs == 7) {
         if (cs != -1) {
             key = listn(1, cs);
             goto label_2700_internal;
@@ -75440,7 +75440,7 @@ void label_2701()
                 for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt) {
                     noteget(s, page);
                     ++page;
-                    if (page > noteinfo(0) || s == u8""s) { break; }
+                    if (page > noteinfo(0) || s == ""s) { break; }
                     gmes(s);
                 }
             }
@@ -75625,8 +75625,8 @@ label_2705_internal:
         s(21) = key_dig;
         s(22) = u8"鍵を開ける(open)"s;
         s(23) = key_open;
-        s(24) = u8""s;
-        s(25) = u8""s;
+        s(24) = "";
+        s(25) = "";
         label_2702();
         {
             int cnt = 0;
@@ -75673,9 +75673,9 @@ label_2705_internal:
         s(7) = key_close;
         s(8) = u8"与える(give)"s;
         s(9) = key_give;
-        s(10) = u8""s;
-        s(11) = u8""s;
-        s(12) = u8""s;
+        s(10) = "";
+        s(11) = "";
+        s(12) = "";
         label_2702();
         {
             int cnt = 0;
@@ -75789,13 +75789,13 @@ void label_2707()
     s = lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s);
     showscroll(wx, wy, ww, wh);
     net_read();
-    buff = u8""s;
+    buff = "";
     notesel(buff);
     header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
     {
         int cnt = 0;
         for (;; ++cnt) {
-            s = u8""s;
+            s = "";
             tail = instr(netbuf, header, u8"%"s);
             if (tail == -1) { break; }
             header += tail + 1;
@@ -75808,7 +75808,7 @@ void label_2707()
             tail = instr(netbuf, header, u8"%"s);
             header += tail + 2;
             s += u8"\n"s;
-            buff += u8""s + s;
+            buff += ""s + s;
         }
     }
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
@@ -75820,7 +75820,7 @@ void label_2707()
             if (i >= 20) { break; }
             noteget(s, cnt);
             if (en) { cnv_str(s, u8"&quot;"s, u8"\""s); }
-            if (s == u8""s) {
+            if (s == ""s) {
                 if (cnt == 0) { s = u8"No new messages received."s; }
                 break;
             }
@@ -75847,7 +75847,7 @@ label_2708_internal:
                 --curmenu;
                 if (curmenu < 0) { curmenu = 2; }
             }
-            key = u8""s;
+            key = "";
             if (p != curmenu) {
                 screenupdate = -1;
                 label_1419();
@@ -75866,7 +75866,7 @@ label_2708_internal:
             }
         }
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         label_1419();
         label_2743(false);
     }
@@ -76005,7 +76005,7 @@ label_2711_internal:
                 --curmenu;
                 if (curmenu < 0) { curmenu = 2; }
             }
-            key = u8""s;
+            key = "";
             if (p != curmenu) {
                 screenupdate = -1;
                 label_1419();
@@ -76024,7 +76024,7 @@ label_2711_internal:
             }
         }
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         label_1419();
         label_2743(false);
     }
@@ -76060,7 +76060,7 @@ void label_2713()
             break;
         }
     }
-    if (f == 0) { noteadd(u8""s + valn + u8" \""s + valn(1) + u8"\""s); }
+    if (f == 0) { noteadd(""s + valn + u8" \""s + valn(1) + u8"\""s); }
     notesave(exedir + u8"\\config.txt"s);
     return;
 }
@@ -76545,8 +76545,8 @@ void label_2719()
 {
     notesel(note_buff);
     noteload(exedir + u8"\\user\\export.txt"s);
-    usertitle = u8""s;
-    usermsg = u8""s;
+    usertitle = "";
+    usermsg = "";
     userpassword = u8"nyaa"s;
     {
         int cnt = 0;
@@ -76636,9 +76636,9 @@ void label_2720()
 {
     notesel(headtemp);
     noteget(s, 1);
-    username = u8""s + s;
+    username = ""s + s;
     noteget(s, 5);
-    usermsg = u8""s + s;
+    usermsg = ""s + s;
     noteget(s, 6);
     userrelation = elona_int(s);
     return;
@@ -76815,17 +76815,17 @@ void label_2731()
         std::exit(1);
         return;
     }
-    if (defload != u8""s) {
+    if (defload != ""s) {
         exist(exedir + u8"save\\"s + defload + u8"\\header.txt"s);
         if (strsize == -1) {
             exist(exedir + u8"save\\sav_"s + defload + u8"\\header.txt"s);
             if (strsize != -1) {
                 defload = u8"sav_"s + defload;
             } else {
-                defload = u8""s;
+                defload = "";
             }
         }
-        if (defload == u8""s) {
+        if (defload == ""s) {
             dialog(u8"Invalid defLoadFolder. name"s);
         } else {
             playerid = defload;
@@ -77300,7 +77300,7 @@ label_2734_internal:
             if (gdata(87) > gdata(84) / 10) {
                 txtef(9);
                 txt(lang(u8"クエスト[残り"s + (gdata(84) + 1) + u8"分]"s,
-                    u8""s + (gdata(84) + 1) + u8" min left for the quest."s));
+                    ""s + (gdata(84) + 1) + u8" min left for the quest."s));
                 gdata(87) = gdata(84) / 10;
             }
             if (gdata(84) <= 0) {
@@ -78268,7 +78268,7 @@ void label_2743(bool label_2747_flg)
                         snd(5);
                         if (p > camera) {
                             camera = p;
-                            key = u8""s;
+                            key = "";
                             break;
                         }
                     }
@@ -78277,13 +78277,13 @@ void label_2743(bool label_2747_flg)
                         snd(5);
                         if (p < camera) {
                             camera = p;
-                            key = u8""s;
+                            key = "";
                             break;
                         }
                     }
                 }
             }
-            if (f == 1) { key = u8""s; }
+            if (f == 1) { key = ""s; }
             label_1419();
             if (key == key_goup || key_escape == 1) {
                 txt(lang(u8"試合を放棄する？"s,
@@ -78308,7 +78308,7 @@ void label_2743(bool label_2747_flg)
                 goto label_2744_internal;
             }
             if (key != key_cancel) {
-                if (key != u8""s) {
+                if (key != ""s) {
                     label_2742();
                     return;
                 }
@@ -78343,9 +78343,9 @@ void label_2743(bool label_2747_flg)
             }
         }
         t = 1;
-        keylog = u8""s;
-        key = u8""s;
-        objprm(0, u8""s);
+        keylog = "";
+        key = "";
+        objprm(0, ""s);
     }
 label_2747:
     if (firstturn == 1) {
@@ -78364,7 +78364,7 @@ label_2747:
     }
     if (cfg_net) {
         if (cfg_netwish) {
-            if (key == u8""s) {
+            if (key == ""s) {
                 ++chatturn;
                 if (chatturn % 250 == 1) {
                     net_read();
@@ -78381,7 +78381,7 @@ label_2747:
                             }
                             if (en) { cnv_str(s(1), u8"&quot;"s, u8"\""s); }
                             txtef(6);
-                            txt(u8""s + s(1));
+                            txt(""s + s(1));
                         }
                     }
                 }
@@ -78447,7 +78447,7 @@ label_2747:
                     flt(100);
                     fltn(u8"cnpc"s);
                     characreate(-1, 0, -3, 0);
-                    cdatan(0, rc) += u8""s + cdata(157, rc);
+                    cdatan(0, rc) += ""s + cdata(157, rc);
                 }
             }
         }
@@ -78537,7 +78537,7 @@ label_2747:
         label_2134();
         return;
     }
-    if (key == u8""s) { goto label_2747; }
+    if (key == ""s) { goto label_2747; }
     if (key == key_enter) {
         key = key_search;
         cell_featread(cdata(1, cc), cdata(2, cc));
@@ -78612,7 +78612,7 @@ label_2747:
         }
         await(100);
     }
-    if (key != u8""s) { label_2748(); }
+    if (key != ""s) { label_2748(); }
     if (key == key_quick) {
         label_2697();
         label_1419();
@@ -79010,7 +79010,7 @@ label_2747:
         label_1419();
         goto label_2747;
     }
-    if (key != u8""s) {
+    if (key != ""s) {
         if (key != key_cancel) {
             if (key != key_alter) {
                 ++msgdup;
@@ -79083,7 +79083,7 @@ label_27491:
         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt) {
             promptl(0, promptmax) = s(cnt);
             promptl(1, promptmax) = key_select(cnt);
-            promptl(2, promptmax) = u8""s + promptmax;
+            promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
         }
     }
@@ -79092,7 +79092,7 @@ label_27491:
     val(2) = 310;
     val(3) = 0;
     label_2131();
-    wincomment = u8""s + promptl(0, rtval);
+    wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
     label_1419();
@@ -79149,13 +79149,13 @@ label_27491:
     pos(0, 0);
     picload(exedir + u8"\\graphic\\g1.bmp"s, 1);
     gsel(0);
-    s = lang(u8""s + cdatan(1, 0) + cdatan(0, 0) +
+    s = lang(""s + cdatan(1, 0) + cdatan(0, 0) +
             u8"に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！"s,
         u8"Blessing to "s + cdatan(0, 0) + u8", "s + cdatan(1, 0) +
             u8"! You've finally aquired the codex!"s);
     label_1425();
     s(0) = lang(u8"*勝利*"s, u8"*Win*"s);
-    s(1) = u8""s + strhint3;
+    s(1) = ""s + strhint3;
     windowshadow = 1;
     display_window(60, 70, 680, 488);
     cmbg = 0;
@@ -79170,11 +79170,11 @@ label_27491:
     color(0, 0, 0);
     color(0, 0);
     pos(wx + 40, wy + 76);
-    mes(lang(u8""s + 517 + u8"年"s + 8 + u8"月"s + 12 +
+    mes(lang(""s + 517 + u8"年"s + 8 + u8"月"s + 12 +
             u8"日に、あなたはノースティリスに到着した。"s,
         u8"In the year "s + 517 + u8", "s + 12 + u8"/"s + 8 +
             u8", you arrived at North Tyris."s));
-    mes(u8""s);
+    mes(""s);
     mes(lang(u8"最深で"s + gdata(1) + u8"階相当まで到達し、"s + gdata(2) +
             u8"匹の敵を殺して、"s,
         u8"You've killed "s + gdata(2) +
@@ -79182,14 +79182,14 @@ label_27491:
             u8" level of dungeons."s));
     mes(lang(u8"現在"s + calcscore() + u8"点のスコアを叩き出している。"s,
         u8"Your score is "s + calcscore() + u8" points now."s));
-    mes(u8""s);
-    mes(lang(u8""s + gdata(10) + u8"年"s + gdata(11) + u8"月"s + gdata(12) +
+    mes(""s);
+    mes(lang(""s + gdata(10) + u8"年"s + gdata(11) + u8"月"s + gdata(12) +
             u8"日にレシマスを制覇して、"s,
         u8"In the year "s + gdata(10) + u8", "s + gdata(12) + u8"/"s +
             gdata(11) + u8", you conquered Lesimas."s));
     mes(lang(u8"あなたは「"s + wincomment + u8"」とコメントした。"s,
-        u8"Upon killing Zeome, you said, "s + cnvtalk((u8""s + wincomment))));
-    mes(u8""s);
+        u8"Upon killing Zeome, you said, "s + cnvtalk((""s + wincomment))));
+    mes(""s);
     mes(lang(
         u8"…あなたの旅はまだ終わらない。"s, u8"Your journey continues..."s));
     redraw(1);
@@ -79248,29 +79248,29 @@ void label_2752()
     val(2) = 16;
     val(3) = 1;
     val(4) = 0;
-    inputlog = u8""s;
+    inputlog = "";
     label_21262();
-    if (inputlog == u8""s) {
+    if (inputlog == ""s) {
         txtsetlastword();
     } else {
         lastword = lang(u8"「"s, u8"\""s) + inputlog + lang(u8"」"s, u8"\""s);
     }
-    buff = u8""s;
+    buff = "";
     notesel(buff);
     file = exedir + u8"save\\bone"s;
     exist(file + u8".txt"s);
     if (strsize != -1) { noteload(file + u8".txt"s); }
-    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + lang(u8""s, u8" "s) + lastword;
+    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + lang(""s, u8" "s) + lastword;
     lenfix(s, 60);
     s += lang(
-        u8""s + gdata(10) + u8"年"s + gdata(11) + u8"月"s + gdata(12) + u8"日"s,
-        u8""s + gdata(10) + u8"/"s + gdata(11) + u8"/"s + gdata(12));
-    noteadd(u8""s, 0);
+        ""s + gdata(10) + u8"年"s + gdata(11) + u8"月"s + gdata(12) + u8"日"s,
+        ""s + gdata(10) + u8"/"s + gdata(11) + u8"/"s + gdata(12));
+    noteadd(""s, 0);
     noteadd(s, 1);
     s = lang(mdatan(0) + u8"で"s + ndeathcause,
         cnven(ndeathcause) + u8" in "s + mdatan(0) + u8"."s);
     noteadd(s, 2);
-    s = u8""s + calcscore() + u8","s + cdata(7, cc);
+    s = ""s + calcscore() + u8","s + cdata(7, cc);
     noteadd(s, 3);
     if (noteinfo(0) >= 320) {
         {
@@ -79323,7 +79323,7 @@ void label_2752()
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0) / 4); cnt < cnt_end; ++cnt) {
             noteadd(
-                u8""s + cnvrank((cnt + 1)) + lang(u8"位"s, u8""s), cnt * 4, 1);
+                ""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
         }
     }
     notesave(file + u8".txt"s);
@@ -79338,11 +79338,11 @@ void label_2752()
     label_1425();
     promptl(0, promptmax) = lang(u8"這い上がる"s, u8"Crawl up"s);
     promptl(1, promptmax) = u8"a"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     promptl(0, promptmax) = lang(u8"埋まる"s, u8"Lie on your back"s);
     promptl(1, promptmax) = u8"b"s;
-    promptl(2, promptmax) = u8""s + promptmax;
+    promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
     val(0) = promptx;
     val(1) = 100;
@@ -79394,7 +79394,7 @@ void label_2753()
             if (cnt == page) {
                 s = u8"New!"s;
             } else {
-                s = u8" "s + cnvrank((cnt + 1)) + lang(u8"位"s, u8""s);
+                s = u8" "s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s);
             }
             pos(x - 80, y + 10);
             color(10, 10, 10);
@@ -79416,7 +79416,7 @@ void label_2753()
             csvsort(s, s(10), 44);
             pos(x + 480, y + 20);
             color(10, 10, 10);
-            mes(u8""s + s + lang(u8"点"s, u8""s));
+            mes(""s + s + lang(u8"点"s, ""s));
             p = elona_int(s(1)) % 1000;
             chara_preparepic(p);
             pos(x - 22, y + 12);
@@ -79683,7 +79683,7 @@ void label_2754()
         gdata(74) = calcfame(0, gdata(22) * 30 + 200);
         txtef(2);
         txtmore();
-        txt(lang(u8""s + gdata(74) + u8"の名声値を手に入れた。"s,
+        txt(lang(""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
         cdata(34, 0) += gdata(74);
         if (gdata(20) == 42) {
@@ -79778,7 +79778,7 @@ void label_2754()
     case 10: label_2673(); goto label_2755_internal;
     case 19:
         txtef(6);
-        txt(u8""s + usermsg);
+        txt(""s + usermsg);
         goto label_2755_internal;
     case 25:
         --gdata(814);

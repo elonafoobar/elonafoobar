@@ -23,7 +23,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -88,7 +88,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -2888,7 +2888,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -3603,7 +3603,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -3679,7 +3679,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -3756,7 +3756,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -4270,7 +4270,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -4827,7 +4827,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -4892,7 +4892,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -7582,7 +7582,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -7989,7 +7989,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -8059,7 +8059,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -8187,7 +8187,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -8463,7 +8463,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -8525,7 +8525,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -8593,7 +8593,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -8659,7 +8659,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -9639,7 +9639,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -10110,7 +10110,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -10667,7 +10667,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -10733,7 +10733,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -10798,7 +10798,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -10863,7 +10863,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -11268,7 +11268,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -12725,7 +12725,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -12793,7 +12793,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -12865,7 +12865,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -12935,7 +12935,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13005,7 +13005,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13075,7 +13075,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13149,7 +13149,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13222,7 +13222,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13360,7 +13360,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13430,7 +13430,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13561,7 +13561,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13642,7 +13642,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -13854,7 +13854,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -14280,7 +14280,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -14345,7 +14345,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -15036,7 +15036,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -15098,7 +15098,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -15163,7 +15163,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -15232,7 +15232,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -15862,7 +15862,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -16324,7 +16324,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -17392,7 +17392,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -17620,7 +17620,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -17698,7 +17698,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -17776,7 +17776,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -17854,7 +17854,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -18641,7 +18641,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -18715,7 +18715,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -19778,7 +19778,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -22602,7 +22602,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23309,7 +23309,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23376,7 +23376,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23446,7 +23446,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23566,7 +23566,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23691,7 +23691,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23766,7 +23766,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -23837,7 +23837,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -24772,7 +24772,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -24933,7 +24933,7 @@ int label_2654()
                     u8"メイドの熱い視線を感じる…"s);
                 return 1;
             } else {
-                txt(u8""s,
+                txt(""s,
                     u8"\"Oh Master, I don't do THOSE sorts of things♪...\""s,
                     u8"The maid looks good enough to touch"s);
                 return 1;
@@ -25144,7 +25144,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -26751,7 +26751,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -26823,7 +26823,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -26895,7 +26895,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -27039,7 +27039,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -28269,7 +28269,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29077,7 +29077,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29205,7 +29205,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29324,7 +29324,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29711,7 +29711,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29777,7 +29777,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29871,7 +29871,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;
@@ -29962,7 +29962,7 @@ int label_2654()
                 }
             }
             if (dbspec == 8) {
-                refstr = u8""s;
+                refstr = "";
                 return 0;
             }
             return 0;

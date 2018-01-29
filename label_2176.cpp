@@ -379,7 +379,7 @@ int label_2176()
                             txtmore();
                         } else {
                             txt(lang(name(cc) + u8"は"s + _cast(cdata(65, cc)),
-                                name(cc) + u8""s + _cast(cdata(65, cc))));
+                                name(cc) + ""s + _cast(cdata(65, cc))));
                             txtmore();
                         }
                     }
@@ -666,7 +666,7 @@ int label_2176()
                 if (ele) {
                     valn = skillname(ele) + lang(u8"の"s, u8" breath"s);
                 } else {
-                    valn = lang(u8""s, u8"breath"s);
+                    valn = lang(""s, u8"breath"s);
                 }
                 if (synccheck(cc, -1)) {
                     txt(lang(name(cc) + u8"は"s + valn + u8"ブレスを吐いた。"s,
@@ -1676,13 +1676,13 @@ label_2181_internal:
             goto label_2186_internal;
         }
         if (efstatus <= -1) {
-            artifactlocation = u8""s;
+            artifactlocation = "";
             txt(lang(
                 u8"何かがあなたの耳元でささやいたが、あなたは聞き取ることができなかった。"s,
                 u8"You hear a sepulchral whisper but the voice is too small to distinguish a word."s));
             goto label_2186_internal;
         }
-        if (artifactlocation == u8""s) {
+        if (artifactlocation == ""s) {
             txt(lang(u8"まだ特殊なアイテムは生成されていない。"s,
                 u8"No artifacts have been generated yet."s));
         } else {
@@ -1816,7 +1816,7 @@ label_2181_internal:
                     if (synccheck(tc, -1)) {
                         snd(24);
                         txtef(2);
-                        txt(lang(u8""s + name(tc) + u8"は"s + skillname(p) +
+                        txt(lang(""s + name(tc) + u8"は"s + skillname(p) +
                                 u8"の技術を獲得した！"s,
                             name(tc) + u8" gain"s + _s(tc) + u8" a skill of "s +
                                 skillname(p) + u8"!"s));
@@ -1894,7 +1894,7 @@ label_2181_internal:
                         if (sorg(p, tc) == 0) { continue; }
                         modgrowth(tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
                         if (cnt2 == 0) {
-                            s = lang(u8""s, u8"The "s);
+                            s = lang(""s, u8"The "s);
                         } else {
                             s = lang(u8"さらに"s, u8"Furthermore, the "s);
                         }
@@ -1902,7 +1902,7 @@ label_2181_internal:
                             if (synccheck(tc, -1)) {
                                 snd(24);
                                 txtef(2);
-                                txt(lang(s + u8""s + name(tc) + u8"の"s +
+                                txt(lang(s + ""s + name(tc) + u8"の"s +
                                         skillname(p) +
                                         u8"の技術の潜在能力が上昇した。"s,
                                     s + u8"potential of "s + name(tc) +
@@ -1913,7 +1913,7 @@ label_2181_internal:
                             if (synccheck(tc, -1)) {
                                 snd(117);
                                 txtef(3);
-                                txt(lang(u8""s + name(tc) + u8"の"s +
+                                txt(lang(""s + name(tc) + u8"の"s +
                                         skillname(p) +
                                         u8"の技術の潜在能力が減少した。"s,
                                     u8"The potential of "s + name(tc) +
@@ -2902,7 +2902,7 @@ label_2181_internal:
                         inv(12, ci) -= inv(12, ci) / 10 + 1 + (efstatus < 1);
                     }
                 }
-                txt(lang(u8""s + itemname(ci, 1) +
+                txt(lang(""s + itemname(ci, 1) +
                         u8"は羽が生えたように軽くなった。"s,
                     itemname(ci, 1) + u8" becomes light as a feather."s));
             } else {
@@ -2913,7 +2913,7 @@ label_2181_internal:
                 if (inv(12, ci) > 0) {
                     inv(12, ci) += limit(inv(12, ci) / 10, 1, 5);
                 }
-                txt(lang(u8""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
+                txt(lang(""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
                     itemname(ci, 1) + u8" becomes heavy."s));
             }
             label_1521();

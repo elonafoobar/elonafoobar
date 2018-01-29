@@ -69,7 +69,7 @@ void label_2723()
             s(4) = u8"ゲームパッド"s;
             s(5) = u8"メッセージとログ"s;
             s(6) = u8"言語(Language)"s;
-            s(7) = u8""s;
+            s(7) = "";
         }
         if (en) {
             q = u8"Option"s;
@@ -80,7 +80,7 @@ void label_2723()
             s(4) = u8"Game Pad"s;
             s(5) = u8"Message & Log"s;
             s(6) = u8"Language"s;
-            s(7) = u8""s;
+            s(7) = "";
         }
         dx = 370;
         dy = 270;
@@ -95,7 +95,7 @@ void label_2723()
             s(4) = u8"走り始める歩数"s;
             s(5) = u8"歩きの速さ"s;
             s(6) = u8"攻撃の間隔"s;
-            s(7) = u8""s;
+            s(7) = "";
         }
         if (en) {
             q = u8"Game Setting"s;
@@ -106,7 +106,7 @@ void label_2723()
             s(4) = u8"Start Running After"s;
             s(5) = u8"Walk Speed"s;
             s(6) = u8"Attack Interval"s;
-            s(7) = u8""s;
+            s(7) = "";
         }
         dx = 440;
         dy = 340;
@@ -125,7 +125,7 @@ void label_2723()
             s(8) = u8"天候エフェクト"s;
             s(9) = u8"光源の描写"s;
             s(10) = u8"アイテムの影描写"s;
-            s(11) = u8""s;
+            s(11) = "";
         }
         if (en) {
             q = u8"Screen & Sound"s;
@@ -140,7 +140,7 @@ void label_2723()
             s(8) = u8"Weather Effect"s;
             s(9) = u8"Lighting"s;
             s(10) = u8"object Shadow"s;
-            s(11) = u8""s;
+            s(11) = "";
         }
         dx = 440;
         dy = 370;
@@ -151,14 +151,14 @@ void label_2723()
             s(0) = u8"ネットの使用"s;
             s(1) = u8"定期的に接続"s;
             s(2) = u8"チャットをフィルタ"s;
-            s(3) = u8""s;
+            s(3) = "";
         }
         if (en) {
             q = u8"Network Setting"s;
             s(0) = u8"Use Network"s;
             s(1) = u8"Constantly Connect"s;
             s(2) = u8"Filter Chat"s;
-            s(3) = u8""s;
+            s(3) = "";
         }
         dx = 440;
         dy = 300;
@@ -173,7 +173,7 @@ void label_2723()
             s(4) = u8"走り時スクロール"s;
             s(5) = u8"オートターンの挙動"s;
             s(6) = u8"イベントの短縮"s;
-            s(7) = u8""s;
+            s(7) = "";
         }
         if (en) {
             q = u8"Detailed Setting"s;
@@ -184,7 +184,7 @@ void label_2723()
             s(4) = u8"Scroll When Run"s;
             s(5) = u8"Auto Turn Speed"s;
             s(6) = u8"Skip Random Events"s;
-            s(7) = u8""s;
+            s(7) = "";
         }
         dx = 440;
         dy = 300;
@@ -205,7 +205,7 @@ void label_2723()
             s(10) = u8"ヘルプ"s;
             s(11) = u8"キャラ情報"s;
             s(12) = u8"装填"s;
-            s(13) = u8""s;
+            s(13) = "";
         }
         if (en) {
             q = u8"Game Pad"s;
@@ -222,7 +222,7 @@ void label_2723()
             s(10) = u8"Help"s;
             s(11) = u8"Chara-sheet"s;
             s(12) = u8"Reload"s;
-            s(13) = u8""s;
+            s(13) = "";
         }
         dx = 440;
         dy = 430;
@@ -232,13 +232,13 @@ void label_2723()
             q = u8"メッセージとログ"s;
             s(0) = u8"ﾒｯｾｰｼﾞに分表示追加"s;
             s(1) = u8"過去のﾒｯｾｰｼﾞの透過"s;
-            s(2) = u8""s;
+            s(2) = "";
         }
         if (en) {
             q = u8"Message&Log"s;
             s(0) = u8"Add time info"s;
             s(1) = u8"Transparency"s;
-            s(2) = u8""s;
+            s(2) = "";
         }
         dx = 440;
         dy = 300;
@@ -247,12 +247,12 @@ void label_2723()
         if (jp) {
             q = u8"言語(Language)"s;
             s(0) = u8"言語*"s;
-            s(1) = u8""s;
+            s(1) = "";
         }
         if (en) {
             q = u8"Language"s;
             s(0) = u8"Language*"s;
-            s(1) = u8""s;
+            s(1) = "";
         }
         dx = 440;
         dy = 300;
@@ -260,7 +260,7 @@ void label_2723()
     {
         int cnt = 0;
         for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt) {
-            if (s(cnt) == u8""s) { break; }
+            if (s(cnt) == ""s) { break; }
             list(0, listmax) = cnt;
             listn(0, listmax) = s(cnt);
             ++listmax;
@@ -441,14 +441,14 @@ label_2725_internal:
                         }
                     } else {
                         if (jp) {
-                            mes(u8""s + (cfg_startrun + 1) + u8"歩目から"s);
+                            mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
                         } else {
                             mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
                         }
                     }
                 }
-                if (cnt == 5) { mes(u8""s + cfg_walkwait + u8" wait"s); }
-                if (cnt == 6) { mes(u8""s + cfg_attackwait + u8" wait"s); }
+                if (cnt == 5) { mes(""s + cfg_walkwait + u8" wait"s); }
+                if (cnt == 6) { mes(""s + cfg_attackwait + u8" wait"s); }
             }
             if (submenu == 2) {
                 if (cnt == 0) {
@@ -485,7 +485,7 @@ label_2725_internal:
                     }
                     mes(s(cfg_fullscreen2));
                 }
-                if (cnt == 3) { mes(u8""s + windoww2 + u8" * "s + windowh2); }
+                if (cnt == 3) { mes(""s + windoww2 + u8" * "s + windowh2); }
                 if (cnt == 4) {
                     if (jp) {
                         s(0) = u8"しない"s;
@@ -590,7 +590,7 @@ label_2725_internal:
                 }
             }
             if (submenu == 4) {
-                if (cnt == 0) { mes(u8""s + cfg_runwait + u8" wait"s); }
+                if (cnt == 0) { mes(""s + cfg_runwait + u8" wait"s); }
                 if (cnt == 1) {
                     if (jp) {
                         s(0) = u8"しない"s;
@@ -619,7 +619,7 @@ label_2725_internal:
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
-                    mes(u8""s + cfg_scrsync + u8" wait"s);
+                    mes(""s + cfg_scrsync + u8" wait"s);
                 }
                 if (cnt == 4) {
                     if (jp) {
@@ -683,7 +683,7 @@ label_2725_internal:
                     }
                     mes(s(cfg_msgaddtime));
                 }
-                if (cnt == 1) { mes(u8""s + cfg_msgtrans * 10 + u8" %"s); }
+                if (cnt == 1) { mes(""s + cfg_msgtrans * 10 + u8" %"s); }
             }
             if (submenu == 7) {
                 if (cnt == 0) {
@@ -750,12 +750,12 @@ label_2725_internal:
                     HMMBITCHECK(j, 4 + cnt);
                     if (stat) {
                         p = cnt;
-                        valn = u8""s;
+                        valn = "";
                         {
                             int cnt = 0;
                             for (int cnt_end = cnt + (12); cnt < cnt_end;
                                  ++cnt) {
-                                jkey(cnt) = u8""s;
+                                jkey(cnt) = "";
                             }
                         }
                         list(1, cs) = p;
@@ -772,75 +772,75 @@ label_2725_internal:
                         }
                         valn(0) = u8"key_enter."s;
                         valn(1) = key_enter;
-                        valn(2) = u8""s + list(1, 1);
-                        valn(3) = u8""s;
-                        jkey(list(1, 1)) = u8""s + key_enter;
+                        valn(2) = ""s + list(1, 1);
+                        valn(3) = "";
+                        jkey(list(1, 1)) = ""s + key_enter;
                         label_2713();
                         valn(0) = u8"key_cancel."s;
                         valn(1) = key_cancel;
-                        valn(2) = u8""s + list(1, 2);
-                        valn(3) = u8""s;
-                        jkey(list(1, 2)) = u8""s + key_cancel;
+                        valn(2) = ""s + list(1, 2);
+                        valn(3) = "";
+                        jkey(list(1, 2)) = ""s + key_cancel;
                         label_2713();
                         valn(0) = u8"key_quickinv."s;
                         valn(1) = key_quickinv;
-                        valn(2) = u8""s + list(1, 3);
-                        valn(3) = u8""s;
-                        jkey(list(1, 3)) = u8""s + key_quickinv;
+                        valn(2) = ""s + list(1, 3);
+                        valn(3) = "";
+                        jkey(list(1, 3)) = ""s + key_quickinv;
                         label_2713();
                         valn(0) = u8"key_quick."s;
                         valn(1) = key_quick;
-                        valn(2) = u8""s + list(1, 4);
-                        valn(3) = u8""s;
-                        jkey(list(1, 4)) = u8""s + key_quick;
+                        valn(2) = ""s + list(1, 4);
+                        valn(3) = "";
+                        jkey(list(1, 4)) = ""s + key_quick;
                         label_2713();
                         valn(0) = u8"key_alter."s;
                         valn(1) = key_alter;
-                        valn(2) = u8""s + list(1, 5);
-                        valn(3) = u8""s;
-                        jkey(list(1, 5)) = u8""s + key_alter;
+                        valn(2) = ""s + list(1, 5);
+                        valn(3) = "";
+                        jkey(list(1, 5)) = ""s + key_alter;
                         label_2713();
                         valn(0) = u8"key_get."s;
                         valn(1) = key_get;
-                        valn(2) = u8""s + list(1, 6);
-                        valn(3) = u8""s;
-                        jkey(list(1, 6)) = u8""s + key_get;
+                        valn(2) = ""s + list(1, 6);
+                        valn(3) = "";
+                        jkey(list(1, 6)) = ""s + key_get;
                         label_2713();
                         valn(0) = u8"key_fire."s;
                         valn(1) = key_fire;
-                        valn(2) = u8""s + list(1, 7);
-                        valn(3) = u8""s;
-                        jkey(list(1, 7)) = u8""s + key_fire;
+                        valn(2) = ""s + list(1, 7);
+                        valn(3) = "";
+                        jkey(list(1, 7)) = ""s + key_fire;
                         label_2713();
                         valn(0) = u8"key_target."s;
                         valn(1) = key_target;
-                        valn(2) = u8""s + list(1, 8);
-                        valn(3) = u8""s;
-                        jkey(list(1, 8)) = u8""s + key_target;
+                        valn(2) = ""s + list(1, 8);
+                        valn(3) = "";
+                        jkey(list(1, 8)) = ""s + key_target;
                         label_2713();
                         valn(0) = u8"key_esc."s;
                         valn(1) = key_esc;
-                        valn(2) = u8""s + list(1, 9);
-                        valn(3) = u8""s;
-                        jkey(list(1, 9)) = u8""s + key_esc;
+                        valn(2) = ""s + list(1, 9);
+                        valn(3) = "";
+                        jkey(list(1, 9)) = ""s + key_esc;
                         label_2713();
                         valn(0) = u8"key_help."s;
                         valn(1) = key_help;
-                        valn(2) = u8""s + list(1, 10);
-                        valn(3) = u8""s;
-                        jkey(list(1, 10)) = u8""s + key_help;
+                        valn(2) = ""s + list(1, 10);
+                        valn(3) = "";
+                        jkey(list(1, 10)) = ""s + key_help;
                         label_2713();
                         valn(0) = u8"key_charainfo."s;
                         valn(1) = key_charainfo;
-                        valn(2) = u8""s + list(1, 11);
-                        valn(3) = u8""s;
-                        jkey(list(1, 11)) = u8""s + key_charainfo;
+                        valn(2) = ""s + list(1, 11);
+                        valn(3) = "";
+                        jkey(list(1, 11)) = ""s + key_charainfo;
                         label_2713();
                         valn(0) = u8"key_ammo."s;
                         valn(1) = key_ammo;
-                        valn(2) = u8""s + list(1, 12);
-                        valn(3) = u8""s;
-                        jkey(list(1, 12)) = u8""s + key_ammo;
+                        valn(2) = ""s + list(1, 12);
+                        valn(3) = "";
+                        jkey(list(1, 12)) = ""s + key_ammo;
                         label_2713();
                         p(0) = 0;
                         p(1) = cnvjkey(key_enter);
@@ -1138,10 +1138,10 @@ label_2725_internal:
                 windoww2 = x(i);
                 windowh2 = y(i);
                 valn(0) = u8"windowW."s;
-                valn(1) = u8""s + windoww2;
+                valn(1) = ""s + windoww2;
                 label_2713();
                 valn(0) = u8"windowH."s;
-                valn(1) = u8""s + windowh2;
+                valn(1) = ""s + windowh2;
                 label_2713();
                 snd(20);
                 goto label_2724_internal;

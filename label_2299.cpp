@@ -21,7 +21,7 @@ void label_2299()
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2300_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2300_internal; }
     }
     if (filtermax != 0) {
@@ -47,7 +47,7 @@ label_2300_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2301_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2301_internal; }
     }
     if (filtermax != 0) {
@@ -73,7 +73,7 @@ label_2301_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2302_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2302_internal; }
     }
     if (filtermax != 0) {
@@ -99,7 +99,7 @@ label_2302_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2303_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2303_internal; }
     }
     if (filtermax != 0) {
@@ -125,7 +125,7 @@ label_2303_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2304_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2304_internal; }
     }
     if (filtermax != 0) {
@@ -151,7 +151,7 @@ label_2304_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2305_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2305_internal; }
     }
     if (filtermax != 0) {
@@ -177,7 +177,7 @@ label_2305_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2306_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2306_internal; }
     }
     if (filtermax != 0) {
@@ -203,7 +203,7 @@ label_2306_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2307_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2307_internal; }
     }
     if (filtermax != 0) {
@@ -229,7 +229,7 @@ label_2307_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2308_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2308_internal; }
     }
     if (filtermax != 0) {
@@ -255,7 +255,7 @@ label_2308_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2309_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2309_internal; }
     }
     if (filtermax != 0) {
@@ -281,7 +281,7 @@ label_2309_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2310_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2310_internal; }
     }
     if (filtermax != 0) {
@@ -307,7 +307,7 @@ label_2310_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2311_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2311_internal; }
     }
     if (filtermax != 0) {
@@ -333,7 +333,7 @@ label_2311_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2312_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2312_internal; }
     }
     if (filtermax != 0) {
@@ -359,7 +359,7 @@ label_2312_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2313_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2313_internal; }
     }
     if (filtermax != 0) {
@@ -385,7 +385,7 @@ label_2313_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2314_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2314_internal; }
     }
     if (filtermax != 0) {
@@ -411,7 +411,7 @@ label_2314_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2315_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"elea"s) { goto label_2315_internal; }
     }
     if (filtermax != 0) {
@@ -437,7 +437,7 @@ label_2315_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2316_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2316_internal; }
     }
     if (filtermax != 0) {
@@ -463,7 +463,7 @@ label_2316_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2317_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2317_internal; }
     }
     if (filtermax != 0) {
@@ -490,7 +490,7 @@ label_2317_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2318_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2318_internal; }
     }
     if (filtermax != 0) {
@@ -517,7 +517,7 @@ label_2318_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2319_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2319_internal; }
     }
     if (filtermax != 0) {
@@ -543,7 +543,7 @@ label_2319_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2320_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2320_internal; }
     }
     if (filtermax != 0) {
@@ -569,7 +569,7 @@ label_2320_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2321_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2321_internal; }
     }
     if (filtermax != 0) {
@@ -595,7 +595,7 @@ label_2321_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2322_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2322_internal; }
     }
     if (filtermax != 0) {
@@ -621,7 +621,7 @@ label_2322_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2323_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2323_internal; }
     }
     if (filtermax != 0) {
@@ -647,7 +647,7 @@ label_2323_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2324_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2324_internal; }
     }
     if (filtermax != 0) {
@@ -673,7 +673,7 @@ label_2324_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2325_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2325_internal; }
     }
     if (filtermax != 0) {
@@ -699,7 +699,7 @@ label_2325_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2326_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2326_internal; }
     }
     if (filtermax != 0) {
@@ -726,7 +726,7 @@ label_2326_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2327_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2327_internal; }
     }
     if (filtermax != 0) {
@@ -752,7 +752,7 @@ label_2327_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2328_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"elea"s) { goto label_2328_internal; }
     }
     if (filtermax != 0) {
@@ -778,7 +778,7 @@ label_2328_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2329_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"elea"s) { goto label_2329_internal; }
     }
     if (filtermax != 0) {
@@ -804,7 +804,7 @@ label_2329_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2330_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2330_internal; }
     }
     if (filtermax != 0) {
@@ -830,7 +830,7 @@ label_2330_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2331_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2331_internal; }
     }
     if (filtermax != 0) {
@@ -856,7 +856,7 @@ label_2331_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2332_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2332_internal; }
     }
     if (filtermax != 0) {
@@ -882,7 +882,7 @@ label_2332_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2333_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lich"s) { goto label_2333_internal; }
     }
     if (filtermax != 0) {
@@ -908,7 +908,7 @@ label_2333_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2334_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2334_internal; }
     }
     if (filtermax != 0) {
@@ -934,7 +934,7 @@ label_2334_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2335_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2335_internal; }
     }
     if (filtermax != 0) {
@@ -960,7 +960,7 @@ label_2335_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2336_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2336_internal; }
     }
     if (filtermax != 0) {
@@ -986,7 +986,7 @@ label_2336_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2337_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2337_internal; }
     }
     if (filtermax != 0) {
@@ -1012,7 +1012,7 @@ label_2337_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2338_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2338_internal; }
     }
     if (filtermax != 0) {
@@ -1038,7 +1038,7 @@ label_2338_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2339_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2339_internal; }
     }
     if (filtermax != 0) {
@@ -1064,7 +1064,7 @@ label_2339_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2340_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2340_internal; }
     }
     if (filtermax != 0) {
@@ -1090,7 +1090,7 @@ label_2340_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2341_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2341_internal; }
     }
     if (filtermax != 0) {
@@ -1116,7 +1116,7 @@ label_2341_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2342_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2342_internal; }
     }
     if (filtermax != 0) {
@@ -1142,7 +1142,7 @@ label_2342_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2343_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"god"s) { goto label_2343_internal; }
     }
     if (filtermax != 0) {
@@ -1168,7 +1168,7 @@ label_2343_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 3) { goto label_2344_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2344_internal; }
     }
     if (filtermax != 0) {
@@ -1194,7 +1194,7 @@ label_2344_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 3) { goto label_2345_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2345_internal; }
     }
     if (filtermax != 0) {
@@ -1220,7 +1220,7 @@ label_2345_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 3) { goto label_2346_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2346_internal; }
     }
     if (filtermax != 0) {
@@ -1246,7 +1246,7 @@ label_2346_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 3) { goto label_2347_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2347_internal; }
     }
     if (filtermax != 0) {
@@ -1272,7 +1272,7 @@ label_2347_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2348_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2348_internal; }
     }
     if (filtermax != 0) {
@@ -1298,7 +1298,7 @@ label_2348_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2349_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"slime"s) { goto label_2349_internal; }
     }
     if (filtermax != 0) {
@@ -1324,7 +1324,7 @@ label_2349_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2350_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"drake"s) { goto label_2350_internal; }
     }
     if (filtermax != 0) {
@@ -1350,7 +1350,7 @@ label_2350_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2351_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machine"s) { goto label_2351_internal; }
     }
     if (filtermax != 0) {
@@ -1376,7 +1376,7 @@ label_2351_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2352_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"rabbit"s) { goto label_2352_internal; }
     }
     if (filtermax != 0) {
@@ -1402,7 +1402,7 @@ label_2352_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2353_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"snail"s) { goto label_2353_internal; }
     }
     if (filtermax != 0) {
@@ -1428,7 +1428,7 @@ label_2353_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2354_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2354_internal; }
     }
     if (filtermax != 0) {
@@ -1454,7 +1454,7 @@ label_2354_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2355_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2355_internal; }
     }
     if (filtermax != 0) {
@@ -1480,7 +1480,7 @@ label_2355_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2356_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2356_internal; }
     }
     if (filtermax != 0) {
@@ -1506,7 +1506,7 @@ label_2356_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2357_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2357_internal; }
     }
     if (filtermax != 0) {
@@ -1532,7 +1532,7 @@ label_2357_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2358_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2358_internal; }
     }
     if (filtermax != 0) {
@@ -1558,7 +1558,7 @@ label_2358_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2359_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2359_internal; }
     }
     if (filtermax != 0) {
@@ -1584,7 +1584,7 @@ label_2359_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2360_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2360_internal; }
     }
     if (filtermax != 0) {
@@ -1610,7 +1610,7 @@ label_2360_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2361_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2361_internal; }
     }
     if (filtermax != 0) {
@@ -1636,7 +1636,7 @@ label_2361_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2362_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2362_internal; }
     }
     if (filtermax != 0) {
@@ -1662,7 +1662,7 @@ label_2362_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2363_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2363_internal; }
     }
     if (filtermax != 0) {
@@ -1688,7 +1688,7 @@ label_2363_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2364_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2364_internal; }
     }
     if (filtermax != 0) {
@@ -1714,7 +1714,7 @@ label_2364_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2365_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2365_internal; }
     }
     if (filtermax != 0) {
@@ -1740,7 +1740,7 @@ label_2365_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2366_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2366_internal; }
     }
     if (filtermax != 0) {
@@ -1766,7 +1766,7 @@ label_2366_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2367_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2367_internal; }
     }
     if (filtermax != 0) {
@@ -1792,7 +1792,7 @@ label_2367_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2368_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2368_internal; }
     }
     if (filtermax != 0) {
@@ -1818,7 +1818,7 @@ label_2368_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2369_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2369_internal; }
     }
     if (filtermax != 0) {
@@ -1844,7 +1844,7 @@ label_2369_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2370_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eulderna"s) { goto label_2370_internal; }
     }
     if (filtermax != 0) {
@@ -1870,7 +1870,7 @@ label_2370_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2371_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2371_internal; }
     }
     if (filtermax != 0) {
@@ -1896,7 +1896,7 @@ label_2371_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2372_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2372_internal; }
     }
     if (filtermax != 0) {
@@ -1922,7 +1922,7 @@ label_2372_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2373_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2373_internal; }
     }
     if (filtermax != 0) {
@@ -1948,7 +1948,7 @@ label_2373_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2374_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2374_internal; }
     }
     if (filtermax != 0) {
@@ -1974,7 +1974,7 @@ label_2374_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2375_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2375_internal; }
     }
     if (filtermax != 0) {
@@ -2000,7 +2000,7 @@ label_2375_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2376_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"sheep"s) { goto label_2376_internal; }
     }
     if (filtermax != 0) {
@@ -2026,7 +2026,7 @@ label_2376_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2377_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"frog"s) { goto label_2377_internal; }
     }
     if (filtermax != 0) {
@@ -2052,7 +2052,7 @@ label_2377_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2378_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2378_internal; }
     }
     if (filtermax != 0) {
@@ -2078,7 +2078,7 @@ label_2378_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 5) { goto label_2379_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"kobolt"s) { goto label_2379_internal; }
     }
     if (filtermax != 0) {
@@ -2104,7 +2104,7 @@ label_2379_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 7) { goto label_2380_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yeek"s) { goto label_2380_internal; }
     }
     if (filtermax != 0) {
@@ -2130,7 +2130,7 @@ label_2380_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 7) { goto label_2381_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yeek"s) { goto label_2381_internal; }
     }
     if (filtermax != 0) {
@@ -2156,7 +2156,7 @@ label_2381_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 7) { goto label_2382_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yeek"s) { goto label_2382_internal; }
     }
     if (filtermax != 0) {
@@ -2182,7 +2182,7 @@ label_2382_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 7) { goto label_2383_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yeek"s) { goto label_2383_internal; }
     }
     if (filtermax != 0) {
@@ -2208,7 +2208,7 @@ label_2383_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 12) { goto label_2384_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yeek"s) { goto label_2384_internal; }
     }
     if (filtermax != 0) {
@@ -2234,7 +2234,7 @@ label_2384_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 12) { goto label_2385_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2385_internal; }
     }
     if (filtermax != 0) {
@@ -2260,7 +2260,7 @@ label_2385_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2386_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"rock"s) { goto label_2386_internal; }
     }
     if (filtermax != 0) {
@@ -2286,7 +2286,7 @@ label_2386_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2387_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2387_internal; }
     }
     if (filtermax != 0) {
@@ -2312,7 +2312,7 @@ label_2387_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 7) { goto label_2388_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yeek"s) { goto label_2388_internal; }
     }
     if (filtermax != 0) {
@@ -2338,7 +2338,7 @@ label_2388_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2389_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2389_internal; }
     }
     if (filtermax != 0) {
@@ -2364,7 +2364,7 @@ label_2389_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2390_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"centipede"s) { goto label_2390_internal; }
     }
     if (filtermax != 0) {
@@ -2390,7 +2390,7 @@ label_2390_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2391_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mushroom"s) { goto label_2391_internal; }
     }
     if (filtermax != 0) {
@@ -2416,7 +2416,7 @@ label_2391_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2392_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mushroom"s) { goto label_2392_internal; }
     }
     if (filtermax != 0) {
@@ -2442,7 +2442,7 @@ label_2392_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2393_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mushroom"s) { goto label_2393_internal; }
     }
     if (filtermax != 0) {
@@ -2468,7 +2468,7 @@ label_2393_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2394_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2394_internal; }
     }
     if (filtermax != 0) {
@@ -2494,7 +2494,7 @@ label_2394_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2395_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2395_internal; }
     }
     if (filtermax != 0) {
@@ -2520,7 +2520,7 @@ label_2395_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2396_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2396_internal; }
     }
     if (filtermax != 0) {
@@ -2546,7 +2546,7 @@ label_2396_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2397_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2397_internal; }
     }
     if (filtermax != 0) {
@@ -2572,7 +2572,7 @@ label_2397_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2398_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2398_internal; }
     }
     if (filtermax != 0) {
@@ -2598,7 +2598,7 @@ label_2398_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2399_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2399_internal; }
     }
     if (filtermax != 0) {
@@ -2624,7 +2624,7 @@ label_2399_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2400_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2400_internal; }
     }
     if (filtermax != 0) {
@@ -2650,7 +2650,7 @@ label_2400_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2401_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2401_internal; }
     }
     if (filtermax != 0) {
@@ -2676,7 +2676,7 @@ label_2401_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2402_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2402_internal; }
     }
     if (filtermax != 0) {
@@ -2702,7 +2702,7 @@ label_2402_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 2) { goto label_2403_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"orc"s) { goto label_2403_internal; }
     }
     if (filtermax != 0) {
@@ -2728,7 +2728,7 @@ label_2403_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2404_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lizardman"s) { goto label_2404_internal; }
     }
     if (filtermax != 0) {
@@ -2754,7 +2754,7 @@ label_2404_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2405_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"minotaur"s) { goto label_2405_internal; }
     }
     if (filtermax != 0) {
@@ -2780,7 +2780,7 @@ label_2405_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2406_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"minotaur"s) { goto label_2406_internal; }
     }
     if (filtermax != 0) {
@@ -2806,7 +2806,7 @@ label_2406_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2407_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"minotaur"s) { goto label_2407_internal; }
     }
     if (filtermax != 0) {
@@ -2832,7 +2832,7 @@ label_2407_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2408_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"minotaur"s) { goto label_2408_internal; }
     }
     if (filtermax != 0) {
@@ -2858,7 +2858,7 @@ label_2408_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2409_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"minotaur"s) { goto label_2409_internal; }
     }
     if (filtermax != 0) {
@@ -2884,7 +2884,7 @@ label_2409_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 2) { goto label_2410_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"troll"s) { goto label_2410_internal; }
     }
     if (filtermax != 0) {
@@ -2910,7 +2910,7 @@ label_2410_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 4) { goto label_2411_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"elea"s) { goto label_2411_internal; }
     }
     if (filtermax != 0) {
@@ -2936,7 +2936,7 @@ label_2411_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 4) { goto label_2412_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"elea"s) { goto label_2412_internal; }
     }
     if (filtermax != 0) {
@@ -2962,7 +2962,7 @@ label_2412_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2413_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"asura"s) { goto label_2413_internal; }
     }
     if (filtermax != 0) {
@@ -2988,7 +2988,7 @@ label_2413_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2414_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"asura"s) { goto label_2414_internal; }
     }
     if (filtermax != 0) {
@@ -3014,7 +3014,7 @@ label_2414_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2415_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"asura"s) { goto label_2415_internal; }
     }
     if (filtermax != 0) {
@@ -3040,7 +3040,7 @@ label_2415_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2416_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2416_internal; }
     }
     if (filtermax != 0) {
@@ -3066,7 +3066,7 @@ label_2416_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2417_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2417_internal; }
     }
     if (filtermax != 0) {
@@ -3092,7 +3092,7 @@ label_2417_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2418_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2418_internal; }
     }
     if (filtermax != 0) {
@@ -3118,7 +3118,7 @@ label_2418_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2419_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"beetle"s) { goto label_2419_internal; }
     }
     if (filtermax != 0) {
@@ -3144,7 +3144,7 @@ label_2419_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 2) { goto label_2420_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"orc"s) { goto label_2420_internal; }
     }
     if (filtermax != 0) {
@@ -3171,7 +3171,7 @@ label_2420_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 2) { goto label_2421_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"orc"s) { goto label_2421_internal; }
     }
     if (filtermax != 0) {
@@ -3197,7 +3197,7 @@ label_2421_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 9) { goto label_2422_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"zombie"s) { goto label_2422_internal; }
     }
     if (filtermax != 0) {
@@ -3223,7 +3223,7 @@ label_2422_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2423_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bat"s) { goto label_2423_internal; }
     }
     if (filtermax != 0) {
@@ -3249,7 +3249,7 @@ label_2423_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2424_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bat"s) { goto label_2424_internal; }
     }
     if (filtermax != 0) {
@@ -3275,7 +3275,7 @@ label_2424_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2425_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bat"s) { goto label_2425_internal; }
     }
     if (filtermax != 0) {
@@ -3301,7 +3301,7 @@ label_2425_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2426_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ent"s) { goto label_2426_internal; }
     }
     if (filtermax != 0) {
@@ -3327,7 +3327,7 @@ label_2426_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2427_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ent"s) { goto label_2427_internal; }
     }
     if (filtermax != 0) {
@@ -3353,7 +3353,7 @@ label_2427_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2428_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lich"s) { goto label_2428_internal; }
     }
     if (filtermax != 0) {
@@ -3379,7 +3379,7 @@ label_2428_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2429_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lich"s) { goto label_2429_internal; }
     }
     if (filtermax != 0) {
@@ -3405,7 +3405,7 @@ label_2429_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2430_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lich"s) { goto label_2430_internal; }
     }
     if (filtermax != 0) {
@@ -3431,7 +3431,7 @@ label_2430_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2431_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lich"s) { goto label_2431_internal; }
     }
     if (filtermax != 0) {
@@ -3457,7 +3457,7 @@ label_2431_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2432_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"lich"s) { goto label_2432_internal; }
     }
     if (filtermax != 0) {
@@ -3483,7 +3483,7 @@ label_2432_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2433_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2433_internal; }
     }
     if (filtermax != 0) {
@@ -3509,7 +3509,7 @@ label_2433_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 14) { goto label_2434_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2434_internal; }
     }
     if (filtermax != 0) {
@@ -3535,7 +3535,7 @@ label_2434_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 15) { goto label_2435_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2435_internal; }
     }
     if (filtermax != 0) {
@@ -3561,7 +3561,7 @@ label_2435_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 16) { goto label_2436_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2436_internal; }
     }
     if (filtermax != 0) {
@@ -3587,7 +3587,7 @@ label_2436_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 17) { goto label_2437_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2437_internal; }
     }
     if (filtermax != 0) {
@@ -3613,7 +3613,7 @@ label_2437_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 18) { goto label_2438_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2438_internal; }
     }
     if (filtermax != 0) {
@@ -3639,7 +3639,7 @@ label_2438_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 19) { goto label_2439_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2439_internal; }
     }
     if (filtermax != 0) {
@@ -3665,7 +3665,7 @@ label_2439_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 20) { goto label_2440_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2440_internal; }
     }
     if (filtermax != 0) {
@@ -3691,7 +3691,7 @@ label_2440_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 21) { goto label_2441_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2441_internal; }
     }
     if (filtermax != 0) {
@@ -3717,7 +3717,7 @@ label_2441_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 22) { goto label_2442_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2442_internal; }
     }
     if (filtermax != 0) {
@@ -3743,7 +3743,7 @@ label_2442_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 23) { goto label_2443_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2443_internal; }
     }
     if (filtermax != 0) {
@@ -3769,7 +3769,7 @@ label_2443_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2444_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"rabbit"s) { goto label_2444_internal; }
     }
     if (filtermax != 0) {
@@ -3795,7 +3795,7 @@ label_2444_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2445_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"rabbit"s) { goto label_2445_internal; }
     }
     if (filtermax != 0) {
@@ -3821,7 +3821,7 @@ label_2445_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2446_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2446_internal; }
     }
     if (filtermax != 0) {
@@ -3847,7 +3847,7 @@ label_2446_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2447_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2447_internal; }
     }
     if (filtermax != 0) {
@@ -3873,7 +3873,7 @@ label_2447_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2448_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ent"s) { goto label_2448_internal; }
     }
     if (filtermax != 0) {
@@ -3899,7 +3899,7 @@ label_2448_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2449_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ent"s) { goto label_2449_internal; }
     }
     if (filtermax != 0) {
@@ -3925,7 +3925,7 @@ label_2449_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2450_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spirit"s) { goto label_2450_internal; }
     }
     if (filtermax != 0) {
@@ -3951,7 +3951,7 @@ label_2450_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2451_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spirit"s) { goto label_2451_internal; }
     }
     if (filtermax != 0) {
@@ -3977,7 +3977,7 @@ label_2451_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2452_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eye"s) { goto label_2452_internal; }
     }
     if (filtermax != 0) {
@@ -4003,7 +4003,7 @@ label_2452_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2453_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eye"s) { goto label_2453_internal; }
     }
     if (filtermax != 0) {
@@ -4029,7 +4029,7 @@ label_2453_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2454_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eye"s) { goto label_2454_internal; }
     }
     if (filtermax != 0) {
@@ -4055,7 +4055,7 @@ label_2454_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2455_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eye"s) { goto label_2455_internal; }
     }
     if (filtermax != 0) {
@@ -4081,7 +4081,7 @@ label_2455_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2456_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"wyvern"s) { goto label_2456_internal; }
     }
     if (filtermax != 0) {
@@ -4107,7 +4107,7 @@ label_2456_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2457_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eulderna"s) { goto label_2457_internal; }
     }
     if (filtermax != 0) {
@@ -4133,7 +4133,7 @@ label_2457_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2458_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"wasp"s) { goto label_2458_internal; }
     }
     if (filtermax != 0) {
@@ -4159,7 +4159,7 @@ label_2458_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2459_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"wasp"s) { goto label_2459_internal; }
     }
     if (filtermax != 0) {
@@ -4185,7 +4185,7 @@ label_2459_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2460_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"giant"s) { goto label_2460_internal; }
     }
     if (filtermax != 0) {
@@ -4211,7 +4211,7 @@ label_2460_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2461_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"giant"s) { goto label_2461_internal; }
     }
     if (filtermax != 0) {
@@ -4237,7 +4237,7 @@ label_2461_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2462_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"imp"s) { goto label_2462_internal; }
     }
     if (filtermax != 0) {
@@ -4263,7 +4263,7 @@ label_2462_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2463_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"imp"s) { goto label_2463_internal; }
     }
     if (filtermax != 0) {
@@ -4289,7 +4289,7 @@ label_2463_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2464_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"imp"s) { goto label_2464_internal; }
     }
     if (filtermax != 0) {
@@ -4315,7 +4315,7 @@ label_2464_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2465_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hand"s) { goto label_2465_internal; }
     }
     if (filtermax != 0) {
@@ -4341,7 +4341,7 @@ label_2465_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2466_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hand"s) { goto label_2466_internal; }
     }
     if (filtermax != 0) {
@@ -4367,7 +4367,7 @@ label_2466_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2467_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hand"s) { goto label_2467_internal; }
     }
     if (filtermax != 0) {
@@ -4393,7 +4393,7 @@ label_2467_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2468_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2468_internal; }
     }
     if (filtermax != 0) {
@@ -4419,7 +4419,7 @@ label_2468_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2469_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2469_internal; }
     }
     if (filtermax != 0) {
@@ -4445,7 +4445,7 @@ label_2469_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2470_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2470_internal; }
     }
     if (filtermax != 0) {
@@ -4471,7 +4471,7 @@ label_2470_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2471_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2471_internal; }
     }
     if (filtermax != 0) {
@@ -4497,7 +4497,7 @@ label_2471_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2472_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"snake"s) { goto label_2472_internal; }
     }
     if (filtermax != 0) {
@@ -4523,7 +4523,7 @@ label_2472_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2473_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"snake"s) { goto label_2473_internal; }
     }
     if (filtermax != 0) {
@@ -4549,7 +4549,7 @@ label_2473_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2474_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"drake"s) { goto label_2474_internal; }
     }
     if (filtermax != 0) {
@@ -4575,7 +4575,7 @@ label_2474_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2475_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"drake"s) { goto label_2475_internal; }
     }
     if (filtermax != 0) {
@@ -4601,7 +4601,7 @@ label_2475_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 13) { goto label_2476_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"zombie"s) { goto label_2476_internal; }
     }
     if (filtermax != 0) {
@@ -4627,7 +4627,7 @@ label_2476_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 13) { goto label_2477_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"zombie"s) { goto label_2477_internal; }
     }
     if (filtermax != 0) {
@@ -4653,7 +4653,7 @@ label_2477_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 13) { goto label_2478_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"zombie"s) { goto label_2478_internal; }
     }
     if (filtermax != 0) {
@@ -4679,7 +4679,7 @@ label_2478_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 13) { goto label_2479_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"zombie"s) { goto label_2479_internal; }
     }
     if (filtermax != 0) {
@@ -4705,7 +4705,7 @@ label_2479_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 13) { goto label_2480_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"zombie"s) { goto label_2480_internal; }
     }
     if (filtermax != 0) {
@@ -4731,7 +4731,7 @@ label_2480_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 1) { goto label_2481_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"goblin"s) { goto label_2481_internal; }
     }
     if (filtermax != 0) {
@@ -4757,7 +4757,7 @@ label_2481_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 1) { goto label_2482_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"goblin"s) { goto label_2482_internal; }
     }
     if (filtermax != 0) {
@@ -4783,7 +4783,7 @@ label_2482_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 1) { goto label_2483_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"goblin"s) { goto label_2483_internal; }
     }
     if (filtermax != 0) {
@@ -4809,7 +4809,7 @@ label_2483_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 1) { goto label_2484_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"goblin"s) { goto label_2484_internal; }
     }
     if (filtermax != 0) {
@@ -4835,7 +4835,7 @@ label_2484_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2485_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2485_internal; }
     }
     if (filtermax != 0) {
@@ -4861,7 +4861,7 @@ label_2485_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2486_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2486_internal; }
     }
     if (filtermax != 0) {
@@ -4887,7 +4887,7 @@ label_2486_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 11) { goto label_2487_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bear"s) { goto label_2487_internal; }
     }
     if (filtermax != 0) {
@@ -4913,7 +4913,7 @@ label_2487_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 11) { goto label_2488_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bear"s) { goto label_2488_internal; }
     }
     if (filtermax != 0) {
@@ -4939,7 +4939,7 @@ label_2488_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 11) { goto label_2489_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bear"s) { goto label_2489_internal; }
     }
     if (filtermax != 0) {
@@ -4965,7 +4965,7 @@ label_2489_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2490_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"armor"s) { goto label_2490_internal; }
     }
     if (filtermax != 0) {
@@ -4991,7 +4991,7 @@ label_2490_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2491_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"armor"s) { goto label_2491_internal; }
     }
     if (filtermax != 0) {
@@ -5017,7 +5017,7 @@ label_2491_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2492_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"armor"s) { goto label_2492_internal; }
     }
     if (filtermax != 0) {
@@ -5043,7 +5043,7 @@ label_2492_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2493_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"armor"s) { goto label_2493_internal; }
     }
     if (filtermax != 0) {
@@ -5069,7 +5069,7 @@ label_2493_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2494_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"medusa"s) { goto label_2494_internal; }
     }
     if (filtermax != 0) {
@@ -5095,7 +5095,7 @@ label_2494_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2495_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"medusa"s) { goto label_2495_internal; }
     }
     if (filtermax != 0) {
@@ -5121,7 +5121,7 @@ label_2495_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2496_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"medusa"s) { goto label_2496_internal; }
     }
     if (filtermax != 0) {
@@ -5147,7 +5147,7 @@ label_2496_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2497_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cupid"s) { goto label_2497_internal; }
     }
     if (filtermax != 0) {
@@ -5173,7 +5173,7 @@ label_2497_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2498_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"phantom"s) { goto label_2498_internal; }
     }
     if (filtermax != 0) {
@@ -5199,7 +5199,7 @@ label_2498_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2499_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dinosaur"s) { goto label_2499_internal; }
     }
     if (filtermax != 0) {
@@ -5225,7 +5225,7 @@ label_2499_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2500_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"harpy"s) { goto label_2500_internal; }
     }
     if (filtermax != 0) {
@@ -5251,7 +5251,7 @@ label_2500_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2501_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2501_internal; }
     }
     if (filtermax != 0) {
@@ -5277,7 +5277,7 @@ label_2501_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2502_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2502_internal; }
     }
     if (filtermax != 0) {
@@ -5303,7 +5303,7 @@ label_2502_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2503_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2503_internal; }
     }
     if (filtermax != 0) {
@@ -5329,7 +5329,7 @@ label_2503_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2504_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2504_internal; }
     }
     if (filtermax != 0) {
@@ -5355,7 +5355,7 @@ label_2504_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2505_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2505_internal; }
     }
     if (filtermax != 0) {
@@ -5381,7 +5381,7 @@ label_2505_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2506_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dragon"s) { goto label_2506_internal; }
     }
     if (filtermax != 0) {
@@ -5407,7 +5407,7 @@ label_2506_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2507_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cerberus"s) { goto label_2507_internal; }
     }
     if (filtermax != 0) {
@@ -5433,7 +5433,7 @@ label_2507_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2508_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"centipede"s) { goto label_2508_internal; }
     }
     if (filtermax != 0) {
@@ -5459,7 +5459,7 @@ label_2508_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2509_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"centipede"s) { goto label_2509_internal; }
     }
     if (filtermax != 0) {
@@ -5485,7 +5485,7 @@ label_2509_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 6) { goto label_2510_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spider"s) { goto label_2510_internal; }
     }
     if (filtermax != 0) {
@@ -5511,7 +5511,7 @@ label_2510_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 6) { goto label_2511_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spider"s) { goto label_2511_internal; }
     }
     if (filtermax != 0) {
@@ -5537,7 +5537,7 @@ label_2511_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 6) { goto label_2512_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spider"s) { goto label_2512_internal; }
     }
     if (filtermax != 0) {
@@ -5563,7 +5563,7 @@ label_2512_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 6) { goto label_2513_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spider"s) { goto label_2513_internal; }
     }
     if (filtermax != 0) {
@@ -5589,7 +5589,7 @@ label_2513_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 6) { goto label_2514_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"spider"s) { goto label_2514_internal; }
     }
     if (filtermax != 0) {
@@ -5615,7 +5615,7 @@ label_2514_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2515_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2515_internal; }
     }
     if (filtermax != 0) {
@@ -5641,7 +5641,7 @@ label_2515_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2516_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2516_internal; }
     }
     if (filtermax != 0) {
@@ -5667,7 +5667,7 @@ label_2516_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2517_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2517_internal; }
     }
     if (filtermax != 0) {
@@ -5693,7 +5693,7 @@ label_2517_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2518_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2518_internal; }
     }
     if (filtermax != 0) {
@@ -5719,7 +5719,7 @@ label_2518_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2519_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2519_internal; }
     }
     if (filtermax != 0) {
@@ -5745,7 +5745,7 @@ label_2519_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2520_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2520_internal; }
     }
     if (filtermax != 0) {
@@ -5771,7 +5771,7 @@ label_2520_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2521_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"golem"s) { goto label_2521_internal; }
     }
     if (filtermax != 0) {
@@ -5797,7 +5797,7 @@ label_2521_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2522_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"crab"s) { goto label_2522_internal; }
     }
     if (filtermax != 0) {
@@ -5823,7 +5823,7 @@ label_2522_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2523_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"centipede"s) { goto label_2523_internal; }
     }
     if (filtermax != 0) {
@@ -5849,7 +5849,7 @@ label_2523_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2524_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"goblin"s) { goto label_2524_internal; }
     }
     if (filtermax != 0) {
@@ -5875,7 +5875,7 @@ label_2524_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 9) { goto label_2525_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"skeleton"s) { goto label_2525_internal; }
     }
     if (filtermax != 0) {
@@ -5901,7 +5901,7 @@ label_2525_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 9) { goto label_2526_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"skeleton"s) { goto label_2526_internal; }
     }
     if (filtermax != 0) {
@@ -5927,7 +5927,7 @@ label_2526_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 9) { goto label_2527_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eulderna"s) { goto label_2527_internal; }
     }
     if (filtermax != 0) {
@@ -5953,7 +5953,7 @@ label_2527_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2528_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"piece"s) { goto label_2528_internal; }
     }
     if (filtermax != 0) {
@@ -5979,7 +5979,7 @@ label_2528_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2529_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"piece"s) { goto label_2529_internal; }
     }
     if (filtermax != 0) {
@@ -6005,7 +6005,7 @@ label_2529_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2530_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"piece"s) { goto label_2530_internal; }
     }
     if (filtermax != 0) {
@@ -6031,7 +6031,7 @@ label_2530_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2531_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"piece"s) { goto label_2531_internal; }
     }
     if (filtermax != 0) {
@@ -6057,7 +6057,7 @@ label_2531_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2532_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"piece"s) { goto label_2532_internal; }
     }
     if (filtermax != 0) {
@@ -6083,7 +6083,7 @@ label_2532_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2533_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"piece"s) { goto label_2533_internal; }
     }
     if (filtermax != 0) {
@@ -6109,7 +6109,7 @@ label_2533_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 8) { goto label_2534_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2534_internal; }
     }
     if (filtermax != 0) {
@@ -6135,7 +6135,7 @@ label_2534_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 8) { goto label_2535_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2535_internal; }
     }
     if (filtermax != 0) {
@@ -6161,7 +6161,7 @@ label_2535_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 8) { goto label_2536_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2536_internal; }
     }
     if (filtermax != 0) {
@@ -6187,7 +6187,7 @@ label_2536_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2537_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2537_internal; }
     }
     if (filtermax != 0) {
@@ -6213,7 +6213,7 @@ label_2537_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2538_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2538_internal; }
     }
     if (filtermax != 0) {
@@ -6239,7 +6239,7 @@ label_2538_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2539_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2539_internal; }
     }
     if (filtermax != 0) {
@@ -6265,7 +6265,7 @@ label_2539_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2540_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2540_internal; }
     }
     if (filtermax != 0) {
@@ -6291,7 +6291,7 @@ label_2540_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2541_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2541_internal; }
     }
     if (filtermax != 0) {
@@ -6317,7 +6317,7 @@ label_2541_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2542_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2542_internal; }
     }
     if (filtermax != 0) {
@@ -6343,7 +6343,7 @@ label_2542_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2543_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2543_internal; }
     }
     if (filtermax != 0) {
@@ -6369,7 +6369,7 @@ label_2543_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2544_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2544_internal; }
     }
     if (filtermax != 0) {
@@ -6395,7 +6395,7 @@ label_2544_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2545_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2545_internal; }
     }
     if (filtermax != 0) {
@@ -6421,7 +6421,7 @@ label_2545_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2546_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2546_internal; }
     }
     if (filtermax != 0) {
@@ -6447,7 +6447,7 @@ label_2546_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2547_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2547_internal; }
     }
     if (filtermax != 0) {
@@ -6473,7 +6473,7 @@ label_2547_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2548_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2548_internal; }
     }
     if (filtermax != 0) {
@@ -6499,7 +6499,7 @@ label_2548_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2549_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2549_internal; }
     }
     if (filtermax != 0) {
@@ -6525,7 +6525,7 @@ label_2549_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2550_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2550_internal; }
     }
     if (filtermax != 0) {
@@ -6551,7 +6551,7 @@ label_2550_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 10) { goto label_2551_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2551_internal; }
     }
     if (filtermax != 0) {
@@ -6577,7 +6577,7 @@ label_2551_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2552_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"catgod"s) { goto label_2552_internal; }
     }
     if (filtermax != 0) {
@@ -6603,7 +6603,7 @@ label_2552_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2553_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2553_internal; }
     }
     if (filtermax != 0) {
@@ -6629,7 +6629,7 @@ label_2553_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 10) { goto label_2554_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dog"s) { goto label_2554_internal; }
     }
     if (filtermax != 0) {
@@ -6655,7 +6655,7 @@ label_2554_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2555_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dog"s) { goto label_2555_internal; }
     }
     if (filtermax != 0) {
@@ -6681,7 +6681,7 @@ label_2555_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2556_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2556_internal; }
     }
     if (filtermax != 0) {
@@ -6707,7 +6707,7 @@ label_2556_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2557_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2557_internal; }
     }
     if (filtermax != 0) {
@@ -6733,7 +6733,7 @@ label_2557_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2558_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2558_internal; }
     }
     if (filtermax != 0) {
@@ -6759,7 +6759,7 @@ label_2558_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2559_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"rat"s) { goto label_2559_internal; }
     }
     if (filtermax != 0) {
@@ -6785,7 +6785,7 @@ label_2559_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2560_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"shell"s) { goto label_2560_internal; }
     }
     if (filtermax != 0) {
@@ -6811,7 +6811,7 @@ label_2560_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2561_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2561_internal; }
     }
     if (filtermax != 0) {
@@ -6837,7 +6837,7 @@ label_2561_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2562_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"catgod"s) { goto label_2562_internal; }
     }
     if (filtermax != 0) {
@@ -6863,7 +6863,7 @@ label_2562_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2563_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2563_internal; }
     }
     if (filtermax != 0) {
@@ -6889,7 +6889,7 @@ label_2563_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2564_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2564_internal; }
     }
     if (filtermax != 0) {
@@ -6915,7 +6915,7 @@ label_2564_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2565_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"catsister"s) { goto label_2565_internal; }
     }
     if (filtermax != 0) {
@@ -6941,7 +6941,7 @@ label_2565_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2566_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2566_internal; }
     }
     if (filtermax != 0) {
@@ -6967,7 +6967,7 @@ label_2566_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2567_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machinegod"s) { goto label_2567_internal; }
     }
     if (filtermax != 0) {
@@ -6993,7 +6993,7 @@ label_2567_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2568_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"undeadgod"s) { goto label_2568_internal; }
     }
     if (filtermax != 0) {
@@ -7019,7 +7019,7 @@ label_2568_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2569_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2569_internal; }
     }
     if (filtermax != 0) {
@@ -7045,7 +7045,7 @@ label_2569_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2570_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dwarf"s) { goto label_2570_internal; }
     }
     if (filtermax != 0) {
@@ -7071,7 +7071,7 @@ label_2570_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2571_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dwarf"s) { goto label_2571_internal; }
     }
     if (filtermax != 0) {
@@ -7097,7 +7097,7 @@ label_2571_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2572_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"cat"s) { goto label_2572_internal; }
     }
     if (filtermax != 0) {
@@ -7123,7 +7123,7 @@ label_2572_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2573_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"hound"s) { goto label_2573_internal; }
     }
     if (filtermax != 0) {
@@ -7149,7 +7149,7 @@ label_2573_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2574_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2574_internal; }
     }
     if (filtermax != 0) {
@@ -7175,7 +7175,7 @@ label_2574_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2575_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2575_internal; }
     }
     if (filtermax != 0) {
@@ -7201,7 +7201,7 @@ label_2575_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2576_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2576_internal; }
     }
     if (filtermax != 0) {
@@ -7227,7 +7227,7 @@ label_2576_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2577_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2577_internal; }
     }
     if (filtermax != 0) {
@@ -7253,7 +7253,7 @@ label_2577_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2578_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2578_internal; }
     }
     if (filtermax != 0) {
@@ -7279,7 +7279,7 @@ label_2578_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2579_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machine"s) { goto label_2579_internal; }
     }
     if (filtermax != 0) {
@@ -7305,7 +7305,7 @@ label_2579_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2580_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machine"s) { goto label_2580_internal; }
     }
     if (filtermax != 0) {
@@ -7331,7 +7331,7 @@ label_2580_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2581_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machine"s) { goto label_2581_internal; }
     }
     if (filtermax != 0) {
@@ -7357,7 +7357,7 @@ label_2581_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2582_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bike"s) { goto label_2582_internal; }
     }
     if (filtermax != 0) {
@@ -7383,7 +7383,7 @@ label_2582_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2583_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"bike"s) { goto label_2583_internal; }
     }
     if (filtermax != 0) {
@@ -7409,7 +7409,7 @@ label_2583_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2584_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machine"s) { goto label_2584_internal; }
     }
     if (filtermax != 0) {
@@ -7435,7 +7435,7 @@ label_2584_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2585_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machine"s) { goto label_2585_internal; }
     }
     if (filtermax != 0) {
@@ -7461,7 +7461,7 @@ label_2585_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2586_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eye"s) { goto label_2586_internal; }
     }
     if (filtermax != 0) {
@@ -7487,7 +7487,7 @@ label_2586_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2587_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"eye"s) { goto label_2587_internal; }
     }
     if (filtermax != 0) {
@@ -7513,7 +7513,7 @@ label_2587_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2588_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"wisp"s) { goto label_2588_internal; }
     }
     if (filtermax != 0) {
@@ -7539,7 +7539,7 @@ label_2588_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2589_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"crab"s) { goto label_2589_internal; }
     }
     if (filtermax != 0) {
@@ -7565,7 +7565,7 @@ label_2589_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2590_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"crab"s) { goto label_2590_internal; }
     }
     if (filtermax != 0) {
@@ -7591,7 +7591,7 @@ label_2590_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2591_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"chicken"s) { goto label_2591_internal; }
     }
     if (filtermax != 0) {
@@ -7617,7 +7617,7 @@ label_2591_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2592_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2592_internal; }
     }
     if (filtermax != 0) {
@@ -7643,7 +7643,7 @@ label_2592_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2593_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2593_internal; }
     }
     if (filtermax != 0) {
@@ -7669,7 +7669,7 @@ label_2593_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2594_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2594_internal; }
     }
     if (filtermax != 0) {
@@ -7695,7 +7695,7 @@ label_2594_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2595_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mandrake"s) { goto label_2595_internal; }
     }
     if (filtermax != 0) {
@@ -7721,7 +7721,7 @@ label_2595_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2596_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"stalker"s) { goto label_2596_internal; }
     }
     if (filtermax != 0) {
@@ -7747,7 +7747,7 @@ label_2596_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2597_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"stalker"s) { goto label_2597_internal; }
     }
     if (filtermax != 0) {
@@ -7773,7 +7773,7 @@ label_2597_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2598_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"giant"s) { goto label_2598_internal; }
     }
     if (filtermax != 0) {
@@ -7799,7 +7799,7 @@ label_2598_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2599_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2599_internal; }
     }
     if (filtermax != 0) {
@@ -7825,7 +7825,7 @@ label_2599_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2600_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2600_internal; }
     }
     if (filtermax != 0) {
@@ -7851,7 +7851,7 @@ label_2600_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2601_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"giant"s) { goto label_2601_internal; }
     }
     if (filtermax != 0) {
@@ -7877,7 +7877,7 @@ label_2601_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2602_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2602_internal; }
     }
     if (filtermax != 0) {
@@ -7903,7 +7903,7 @@ label_2602_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2603_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2603_internal; }
     }
     if (filtermax != 0) {
@@ -7929,7 +7929,7 @@ label_2603_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2604_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2604_internal; }
     }
     if (filtermax != 0) {
@@ -7955,7 +7955,7 @@ label_2604_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2605_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2605_internal; }
     }
     if (filtermax != 0) {
@@ -7981,7 +7981,7 @@ label_2605_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2606_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2606_internal; }
     }
     if (filtermax != 0) {
@@ -8007,7 +8007,7 @@ label_2606_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2607_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2607_internal; }
     }
     if (filtermax != 0) {
@@ -8033,7 +8033,7 @@ label_2607_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2608_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2608_internal; }
     }
     if (filtermax != 0) {
@@ -8059,7 +8059,7 @@ label_2608_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2609_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2609_internal; }
     }
     if (filtermax != 0) {
@@ -8085,7 +8085,7 @@ label_2609_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2610_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2610_internal; }
     }
     if (filtermax != 0) {
@@ -8111,7 +8111,7 @@ label_2610_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2611_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2611_internal; }
     }
     if (filtermax != 0) {
@@ -8137,7 +8137,7 @@ label_2611_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2612_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2612_internal; }
     }
     if (filtermax != 0) {
@@ -8163,7 +8163,7 @@ label_2612_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2613_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2613_internal; }
     }
     if (filtermax != 0) {
@@ -8189,7 +8189,7 @@ label_2613_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2614_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2614_internal; }
     }
     if (filtermax != 0) {
@@ -8215,7 +8215,7 @@ label_2614_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2615_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2615_internal; }
     }
     if (filtermax != 0) {
@@ -8241,7 +8241,7 @@ label_2615_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2616_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2616_internal; }
     }
     if (filtermax != 0) {
@@ -8267,7 +8267,7 @@ label_2616_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2617_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yith"s) { goto label_2617_internal; }
     }
     if (filtermax != 0) {
@@ -8293,7 +8293,7 @@ label_2617_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2618_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yith"s) { goto label_2618_internal; }
     }
     if (filtermax != 0) {
@@ -8319,7 +8319,7 @@ label_2618_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2619_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"orc"s) { goto label_2619_internal; }
     }
     if (filtermax != 0) {
@@ -8345,7 +8345,7 @@ label_2619_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2620_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yith"s) { goto label_2620_internal; }
     }
     if (filtermax != 0) {
@@ -8371,7 +8371,7 @@ label_2620_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2621_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"fairy"s) { goto label_2621_internal; }
     }
     if (filtermax != 0) {
@@ -8397,7 +8397,7 @@ label_2621_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2622_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2622_internal; }
     }
     if (filtermax != 0) {
@@ -8423,7 +8423,7 @@ label_2622_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2623_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2623_internal; }
     }
     if (filtermax != 0) {
@@ -8449,7 +8449,7 @@ label_2623_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2624_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2624_internal; }
     }
     if (filtermax != 0) {
@@ -8475,7 +8475,7 @@ label_2624_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2625_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2625_internal; }
     }
     if (filtermax != 0) {
@@ -8501,7 +8501,7 @@ label_2625_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2626_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2626_internal; }
     }
     if (filtermax != 0) {
@@ -8527,7 +8527,7 @@ label_2626_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2627_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2627_internal; }
     }
     if (filtermax != 0) {
@@ -8553,7 +8553,7 @@ label_2627_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2628_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"servant"s) { goto label_2628_internal; }
     }
     if (filtermax != 0) {
@@ -8579,7 +8579,7 @@ label_2628_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2629_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"horse"s) { goto label_2629_internal; }
     }
     if (filtermax != 0) {
@@ -8605,7 +8605,7 @@ label_2629_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2630_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"horse"s) { goto label_2630_internal; }
     }
     if (filtermax != 0) {
@@ -8631,7 +8631,7 @@ label_2630_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2631_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"horse"s) { goto label_2631_internal; }
     }
     if (filtermax != 0) {
@@ -8657,7 +8657,7 @@ label_2631_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2632_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"horse"s) { goto label_2632_internal; }
     }
     if (filtermax != 0) {
@@ -8683,7 +8683,7 @@ label_2632_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2633_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"horse"s) { goto label_2633_internal; }
     }
     if (filtermax != 0) {
@@ -8709,7 +8709,7 @@ label_2633_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2634_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mutant"s) { goto label_2634_internal; }
     }
     if (filtermax != 0) {
@@ -8735,7 +8735,7 @@ label_2634_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2635_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"yerles"s) { goto label_2635_internal; }
     }
     if (filtermax != 0) {
@@ -8761,7 +8761,7 @@ label_2635_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2636_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2636_internal; }
     }
     if (filtermax != 0) {
@@ -8787,7 +8787,7 @@ label_2636_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2637_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2637_internal; }
     }
     if (filtermax != 0) {
@@ -8813,7 +8813,7 @@ label_2637_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2638_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2638_internal; }
     }
     if (filtermax != 0) {
@@ -8839,7 +8839,7 @@ label_2638_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2639_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2639_internal; }
     }
     if (filtermax != 0) {
@@ -8865,7 +8865,7 @@ label_2639_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2640_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2640_internal; }
     }
     if (filtermax != 0) {
@@ -8891,7 +8891,7 @@ label_2640_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2641_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2641_internal; }
     }
     if (filtermax != 0) {
@@ -8917,7 +8917,7 @@ label_2641_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2642_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"norland"s) { goto label_2642_internal; }
     }
     if (filtermax != 0) {
@@ -8943,7 +8943,7 @@ label_2642_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2643_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2643_internal; }
     }
     if (filtermax != 0) {
@@ -8969,7 +8969,7 @@ label_2643_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2644_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"machinegod"s) { goto label_2644_internal; }
     }
     if (filtermax != 0) {
@@ -8995,7 +8995,7 @@ label_2644_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2645_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"mutant"s) { goto label_2645_internal; }
     }
     if (filtermax != 0) {
@@ -9021,7 +9021,7 @@ label_2645_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2646_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"roran"s) { goto label_2646_internal; }
     }
     if (filtermax != 0) {
@@ -9047,7 +9047,7 @@ label_2646_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2647_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"juere"s) { goto label_2647_internal; }
     }
     if (filtermax != 0) {
@@ -9073,7 +9073,7 @@ label_2647_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2648_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"ghost"s) { goto label_2648_internal; }
     }
     if (filtermax != 0) {
@@ -9099,7 +9099,7 @@ label_2648_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2649_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"quickling"s) { goto label_2649_internal; }
     }
     if (filtermax != 0) {
@@ -9125,7 +9125,7 @@ label_2649_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2650_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"quickling"s) { goto label_2650_internal; }
     }
     if (filtermax != 0) {
@@ -9151,7 +9151,7 @@ label_2650_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2651_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"metal"s) { goto label_2651_internal; }
     }
     if (filtermax != 0) {
@@ -9177,7 +9177,7 @@ label_2651_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2652_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"metal"s) { goto label_2652_internal; }
     }
     if (filtermax != 0) {
@@ -9203,7 +9203,7 @@ label_2652_internal:
     if (flttypemajor != 0) {
         if (flttypemajor != 0) { goto label_2653_internal; }
     }
-    if (fltnrace != u8""s) {
+    if (fltnrace != ""s) {
         if (fltnrace != u8"dinosaur"s) { goto label_2653_internal; }
     }
     if (filtermax != 0) {
@@ -9229,7 +9229,7 @@ label_2653_internal : {
         if (cmshade) { break; }
         if (fltselect != userdata(12, cnt)) { continue; }
         if (flttypemajor != 0) { continue; }
-        if (fltnrace != u8""s) {
+        if (fltnrace != ""s) {
             if (fltnrace != userdatan(2, cnt)) { continue; }
         }
         if (userdata(2, cnt) > objlv) { continue; }

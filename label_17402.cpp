@@ -30,7 +30,7 @@ label_17401:
             }
         }
     }
-    mid = u8""s + gdata(20) + u8"_"s + (100 + gdata(22));
+    mid = ""s + gdata(20) + u8"_"s + (100 + gdata(22));
     if (mode == 3) {
         fmode = 1;
         label_2107();
@@ -138,7 +138,7 @@ label_1741_internal:
     mdata(14) = adata(21, gdata(20));
     if (mapupdate) { randomize(gdata(8) + gdata(20) * 1000 + gdata(22)); }
     if (gdata(20) == 7) {
-        if (mdatan(0) == u8""s ||
+        if (mdatan(0) == ""s ||
             mdatan(0) == lang(u8"ノースティリス"s, u8"North Tyris"s)) {
             mdatan(0) = lang(u8"わが家"s, u8"Your Home"s);
         }
@@ -164,7 +164,7 @@ label_1741_internal:
         if (gdata(22) == adata(10, gdata(20))) { evadd(4); }
     }
     if (adata(16, gdata(20)) == 35) {
-        file = u8""s + userfile;
+        file = ""s + userfile;
         id = 0;
         label_2095();
         fmode = 19;
@@ -823,7 +823,7 @@ label_1741_internal:
         map_placeplayer();
         petarenawin = 0;
         if (arenaimport == 1) {
-            file = u8""s + userfile;
+            file = ""s + userfile;
             id = 0;
             label_2095();
             importmode = 1;
@@ -2113,7 +2113,7 @@ label_1741_internal:
                 }
             }
         }
-        mdatan(0) = u8""s;
+        mdatan(0) = "";
         if (4 <= gdata(62) && gdata(62) < 9) {
             mdatan(0) = lang(u8"森"s, u8"Forest"s);
             map_randomtile(8, 25);
@@ -2190,7 +2190,7 @@ label_1741_internal:
                 }
             }
         }
-        if (mdatan(0) == u8""s) {
+        if (mdatan(0) == ""s) {
             mdatan(0) = lang(u8"平地"s, u8"Plain Field"s);
             map_randomtile(1, 10);
             map_randomtile(2, 2);
@@ -3201,7 +3201,7 @@ label_1744_internal:
             txt(lang(cnvdate(gdata(181)) + u8"に"s + mapname(gdata(182)) +
                     u8"を発ってから、"s + p / 24 + u8"日と"s + p % 24 +
                     u8"時間の旅を終えた。"s,
-                u8""s + p / 24 + u8" days and "s + p % 24 +
+                ""s + p / 24 + u8" days and "s + p % 24 +
                     u8" hours have passed since you left "s +
                     mapname(gdata(182)) + u8"."s));
             p = 0;
@@ -3233,7 +3233,7 @@ label_1744_internal:
     if (gdata(20) == 13) {
         if (gdata(70) == 1009) {
             txtef(9);
-            txt(lang(u8""s + gdata(84) +
+            txt(lang(""s + gdata(84) +
                     u8"分間の間にパーティーを盛り上げよう。目標は"s +
                     qdata(12, gdata(72)) + u8"ポイント。"s,
                 u8"You have to warm up the party within "s + gdata(84) +
@@ -3246,7 +3246,7 @@ label_1744_internal:
                 qdata(6, gdata(72)) = 400;
             }
             txtef(9);
-            txt(lang(u8""s + gdata(84) + u8"分以内に、納入箱に"s +
+            txt(lang(""s + gdata(84) + u8"分以内に、納入箱に"s +
                     cnvweight(qdata(12, gdata(72))) + u8"の作物を納入しよう。"s,
                 u8"To complete the quest, you have to harvest "s +
                     cnvweight(qdata(12, gdata(72))) +
@@ -3255,7 +3255,7 @@ label_1744_internal:
         }
         if (gdata(70) == 1008) {
             txtef(9);
-            txt(lang(u8""s + gdata(84) + u8"分以内に、"s +
+            txt(lang(""s + gdata(84) + u8"分以内に、"s +
                     refchara_str(qdata(12, gdata(72)), 2) +
                     u8"を討伐しなければならない。"s,
                 u8"You have to slay "s + refchara_str(qdata(12, gdata(72)), 2) +

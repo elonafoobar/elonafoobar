@@ -1964,7 +1964,7 @@ void label_2716()
     label_2718_internal:
         cfg_language = p;
         valn(0) = u8"language."s;
-        valn(1) = u8""s + p;
+        valn(1) = ""s + p;
         label_2713();
         redraw(0);
     }
@@ -1977,17 +1977,17 @@ void label_2716()
     } else {
         en = 1;
     }
-    if (key_mode == u8""s) {
+    if (key_mode == ""s) {
         key_mode = u8"z"s;
         f = 1;
         noteadd(u8"key_mode.\t\"z\""s);
     }
-    if (key_mode2 == u8""s) {
+    if (key_mode2 == ""s) {
         key_mode2 = u8"*"s;
         f = 1;
         noteadd(u8"key_mode2.\t\"*\""s);
     }
-    if (key_ammo == u8""s) {
+    if (key_ammo == ""s) {
         key_ammo = u8"A"s;
         f = 1;
         noteadd(u8"key_ammo.\t\"A\""s);

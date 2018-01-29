@@ -16,96 +16,96 @@ void label_0034()
     sdataref(3, 2) = 0;
     sdataref(4, 2) = 0;
     skillname(2) = lang(u8"生命力"s, u8"Life"s);
-    skilldesc(2) = lang(u8""s, u8""s);
-    skillencdesc(2) = lang(u8""s, u8""s);
+    skilldesc(2) = lang(""s, ""s);
+    skillencdesc(2) = lang(""s, ""s);
     sdataref(0, 3) = 0;
     sdataref(1, 3) = 0;
     sdataref(2, 3) = 0;
     sdataref(3, 3) = 0;
     sdataref(4, 3) = 0;
     skillname(3) = lang(u8"マナ"s, u8"Mana"s);
-    skilldesc(3) = lang(u8""s, u8""s);
-    skillencdesc(3) = lang(u8""s, u8""s);
+    skilldesc(3) = lang(""s, ""s);
+    skillencdesc(3) = lang(""s, ""s);
     sdataref(0, 10) = 0;
     sdataref(1, 10) = 0;
     sdataref(2, 10) = 0;
     sdataref(3, 10) = 0;
     sdataref(4, 10) = 0;
     skillname(10) = lang(u8"筋力"s, u8"Strength"s);
-    skilldesc(10) = lang(u8""s, u8""s);
-    skillencdesc(10) = lang(u8""s, u8""s);
+    skilldesc(10) = lang(""s, ""s);
+    skillencdesc(10) = lang(""s, ""s);
     sdataref(0, 11) = 0;
     sdataref(1, 11) = 0;
     sdataref(2, 11) = 0;
     sdataref(3, 11) = 0;
     sdataref(4, 11) = 0;
     skillname(11) = lang(u8"耐久"s, u8"Constitution"s);
-    skilldesc(11) = lang(u8""s, u8""s);
-    skillencdesc(11) = lang(u8""s, u8""s);
+    skilldesc(11) = lang(""s, ""s);
+    skillencdesc(11) = lang(""s, ""s);
     sdataref(0, 12) = 0;
     sdataref(1, 12) = 0;
     sdataref(2, 12) = 0;
     sdataref(3, 12) = 0;
     sdataref(4, 12) = 0;
     skillname(12) = lang(u8"器用"s, u8"Dexterity"s);
-    skilldesc(12) = lang(u8""s, u8""s);
-    skillencdesc(12) = lang(u8""s, u8""s);
+    skilldesc(12) = lang(""s, ""s);
+    skillencdesc(12) = lang(""s, ""s);
     sdataref(0, 13) = 0;
     sdataref(1, 13) = 0;
     sdataref(2, 13) = 0;
     sdataref(3, 13) = 0;
     sdataref(4, 13) = 0;
     skillname(13) = lang(u8"感覚"s, u8"Perception"s);
-    skilldesc(13) = lang(u8""s, u8""s);
-    skillencdesc(13) = lang(u8""s, u8""s);
+    skilldesc(13) = lang(""s, ""s);
+    skillencdesc(13) = lang(""s, ""s);
     sdataref(0, 14) = 0;
     sdataref(1, 14) = 0;
     sdataref(2, 14) = 0;
     sdataref(3, 14) = 0;
     sdataref(4, 14) = 0;
     skillname(14) = lang(u8"習得"s, u8"Learning"s);
-    skilldesc(14) = lang(u8""s, u8""s);
-    skillencdesc(14) = lang(u8""s, u8""s);
+    skilldesc(14) = lang(""s, ""s);
+    skillencdesc(14) = lang(""s, ""s);
     sdataref(0, 15) = 0;
     sdataref(1, 15) = 0;
     sdataref(2, 15) = 0;
     sdataref(3, 15) = 0;
     sdataref(4, 15) = 0;
     skillname(15) = lang(u8"意思"s, u8"Will"s);
-    skilldesc(15) = lang(u8""s, u8""s);
-    skillencdesc(15) = lang(u8""s, u8""s);
+    skilldesc(15) = lang(""s, ""s);
+    skillencdesc(15) = lang(""s, ""s);
     sdataref(0, 16) = 0;
     sdataref(1, 16) = 0;
     sdataref(2, 16) = 0;
     sdataref(3, 16) = 0;
     sdataref(4, 16) = 0;
     skillname(16) = lang(u8"魔力"s, u8"Magic"s);
-    skilldesc(16) = lang(u8""s, u8""s);
-    skillencdesc(16) = lang(u8""s, u8""s);
+    skilldesc(16) = lang(""s, ""s);
+    skillencdesc(16) = lang(""s, ""s);
     sdataref(0, 17) = 0;
     sdataref(1, 17) = 0;
     sdataref(2, 17) = 0;
     sdataref(3, 17) = 0;
     sdataref(4, 17) = 0;
     skillname(17) = lang(u8"魅力"s, u8"Charisma"s);
-    skilldesc(17) = lang(u8""s, u8""s);
-    skillencdesc(17) = lang(u8""s, u8""s);
+    skilldesc(17) = lang(""s, ""s);
+    skillencdesc(17) = lang(""s, ""s);
     sdataref(0, 18) = 0;
     sdataref(1, 18) = 0;
     sdataref(2, 18) = 0;
     sdataref(3, 18) = 0;
     sdataref(4, 18) = 0;
     skillname(18) = lang(u8"速度"s, u8"Speed"s);
-    skilldesc(18) = lang(u8""s, u8""s);
-    skillencdesc(18) = lang(u8""s, u8""s);
+    skilldesc(18) = lang(""s, ""s);
+    skillencdesc(18) = lang(""s, ""s);
     sdataref(0, 19) = 0;
     sdataref(1, 19) = 0;
     sdataref(2, 19) = 0;
     sdataref(3, 19) = 0;
     sdataref(4, 19) = 0;
     skillname(19) = lang(u8"運勢"s, u8"Luck"s);
-    skilldesc(19) = lang(u8""s, u8""s);
-    skillencdesc(19) = lang(u8""s, u8""s);
+    skilldesc(19) = lang(""s, ""s);
+    skillencdesc(19) = lang(""s, ""s);
     sdataref(0, 100) = 10;
     sdataref(1, 100) = 0;
     sdataref(2, 100) = 0;
@@ -114,7 +114,7 @@ void label_0034()
     skillname(100) = lang(u8"長剣"s, u8"Long Sword"s);
     skilldesc(100) = lang(u8"刃渡りの長い剣を扱う技術"s,
         u8"Indicates your skill with long swords."s);
-    skillencdesc(100) = lang(u8""s, u8""s);
+    skillencdesc(100) = lang(""s, ""s);
     sdataref(0, 101) = 12;
     sdataref(1, 101) = 0;
     sdataref(2, 101) = 0;
@@ -123,7 +123,7 @@ void label_0034()
     skillname(101) = lang(u8"短剣"s, u8"Short Sword"s);
     skilldesc(101) = lang(u8"刃渡りの短い剣を扱う技術"s,
         u8"Indicates your skill with short swords."s);
-    skillencdesc(101) = lang(u8""s, u8""s);
+    skillencdesc(101) = lang(""s, ""s);
     sdataref(0, 102) = 10;
     sdataref(1, 102) = 0;
     sdataref(2, 102) = 0;
@@ -132,7 +132,7 @@ void label_0034()
     skillname(102) = lang(u8"斧"s, u8"Axe"s);
     skilldesc(102) =
         lang(u8"斧を扱う技術"s, u8"Indicates your skill with axes."s);
-    skillencdesc(102) = lang(u8""s, u8""s);
+    skillencdesc(102) = lang(""s, ""s);
     sdataref(0, 103) = 11;
     sdataref(1, 103) = 0;
     sdataref(2, 103) = 0;
@@ -141,7 +141,7 @@ void label_0034()
     skillname(103) = lang(u8"鈍器"s, u8"Blunt"s);
     skilldesc(103) = lang(
         u8"鈍器を扱う技術"s, u8"Indicates your skill with blunt weapons."s);
-    skillencdesc(103) = lang(u8""s, u8""s);
+    skillencdesc(103) = lang(""s, ""s);
     sdataref(0, 104) = 11;
     sdataref(1, 104) = 0;
     sdataref(2, 104) = 0;
@@ -150,7 +150,7 @@ void label_0034()
     skillname(104) = lang(u8"槍"s, u8"Polearm"s);
     skilldesc(104) =
         lang(u8"槍を扱う技術"s, u8"Indicates your skill with polearms."s);
-    skillencdesc(104) = lang(u8""s, u8""s);
+    skillencdesc(104) = lang(""s, ""s);
     sdataref(0, 105) = 11;
     sdataref(1, 105) = 0;
     sdataref(2, 105) = 0;
@@ -159,7 +159,7 @@ void label_0034()
     skillname(105) = lang(u8"杖"s, u8"Stave"s);
     skilldesc(105) =
         lang(u8"杖を扱う技術"s, u8"Indicates your skill with staves."s);
-    skillencdesc(105) = lang(u8""s, u8""s);
+    skillencdesc(105) = lang(""s, ""s);
     sdataref(0, 107) = 10;
     sdataref(1, 107) = 0;
     sdataref(2, 107) = 0;
@@ -168,7 +168,7 @@ void label_0034()
     skillname(107) = lang(u8"鎌"s, u8"Scythe"s);
     skilldesc(107) =
         lang(u8"鎌を扱う技術"s, u8"Indicates your skill with sycthes."s);
-    skillencdesc(107) = lang(u8""s, u8""s);
+    skillencdesc(107) = lang(""s, ""s);
     sdataref(0, 108) = 12;
     sdataref(1, 108) = 0;
     sdataref(2, 108) = 0;
@@ -177,7 +177,7 @@ void label_0034()
     skillname(108) = lang(u8"弓"s, u8"Bow"s);
     skilldesc(108) =
         lang(u8"弓を扱う技術"s, u8"Indicates your skill with bows."s);
-    skillencdesc(108) = lang(u8""s, u8""s);
+    skillencdesc(108) = lang(""s, ""s);
     sdataref(0, 109) = 12;
     sdataref(1, 109) = 0;
     sdataref(2, 109) = 0;
@@ -186,7 +186,7 @@ void label_0034()
     skillname(109) = lang(u8"クロスボウ"s, u8"Crossbow"s);
     skilldesc(109) = lang(
         u8"クロスボウを扱う技術"s, u8"Indicates your skill with cross bows"s);
-    skillencdesc(109) = lang(u8""s, u8""s);
+    skillencdesc(109) = lang(""s, ""s);
     sdataref(0, 110) = 13;
     sdataref(1, 110) = 0;
     sdataref(2, 110) = 0;
@@ -195,7 +195,7 @@ void label_0034()
     skillname(110) = lang(u8"銃器"s, u8"Firearm"s);
     skilldesc(110) =
         lang(u8"遠隔機装を扱う技術"s, u8"Indicates your skill with firearms."s);
-    skillencdesc(110) = lang(u8""s, u8""s);
+    skillencdesc(110) = lang(""s, ""s);
     sdataref(0, 111) = 12;
     sdataref(1, 111) = 0;
     sdataref(2, 111) = 0;
@@ -204,7 +204,7 @@ void label_0034()
     skillname(111) = lang(u8"投擲"s, u8"Throwing"s);
     skilldesc(111) = lang(u8"投擲道具を扱う技術"s,
         u8"Indicates your skill with throwing objects."s);
-    skillencdesc(111) = lang(u8""s, u8""s);
+    skillencdesc(111) = lang(""s, ""s);
     sdataref(0, 106) = 10;
     sdataref(1, 106) = 0;
     sdataref(2, 106) = 0;
@@ -213,7 +213,7 @@ void label_0034()
     skillname(106) = lang(u8"格闘"s, u8"Martial Arts"s);
     skilldesc(106) =
         lang(u8"格闘の技術"s, u8"Indicates your skill fighting unarmed."s);
-    skillencdesc(106) = lang(u8""s, u8""s);
+    skillencdesc(106) = lang(""s, ""s);
     sdataref(0, 168) = 11;
     sdataref(1, 168) = 0;
     sdataref(2, 168) = 0;
@@ -222,7 +222,7 @@ void label_0034()
     skillname(168) = lang(u8"盾"s, u8"Shield"s);
     skilldesc(168) = lang(
         u8"盾を扱う技術"s, u8"Increases the effectivness of using shields."s);
-    skillencdesc(168) = lang(u8""s, u8""s);
+    skillencdesc(168) = lang(""s, ""s);
     sdataref(0, 173) = 12;
     sdataref(1, 173) = 0;
     sdataref(2, 173) = 0;
@@ -231,7 +231,7 @@ void label_0034()
     skillname(173) = lang(u8"回避"s, u8"Evasion"s);
     skilldesc(173) = lang(u8"攻撃を回避する"s,
         u8"Increases your chance of evading enemy attacks."s);
-    skillencdesc(173) = lang(u8""s, u8""s);
+    skillencdesc(173) = lang(""s, ""s);
     sdataref(0, 166) = 12;
     sdataref(1, 166) = 0;
     sdataref(2, 166) = 0;
@@ -240,7 +240,7 @@ void label_0034()
     skillname(166) = lang(u8"二刀流"s, u8"Dual Wield"s);
     skilldesc(166) = lang(u8"複数の武器を扱う技術"s,
         u8"Used when wielding two weapoms at the same time."s);
-    skillencdesc(166) = lang(u8""s, u8""s);
+    skillencdesc(166) = lang(""s, ""s);
     sdataref(0, 167) = 10;
     sdataref(1, 167) = 0;
     sdataref(2, 167) = 0;
@@ -249,7 +249,7 @@ void label_0034()
     skillname(167) = lang(u8"両手持ち"s, u8"Two Hand"s);
     skilldesc(167) = lang(u8"両手で武器を扱う技術"s,
         u8"Used when wielding a weapon with both hands."s);
-    skillencdesc(167) = lang(u8""s, u8""s);
+    skillencdesc(167) = lang(""s, ""s);
     sdataref(0, 50) = 0;
     sdataref(1, 50) = 0;
     sdataref(2, 50) = 0;
@@ -257,7 +257,7 @@ void label_0034()
     sdataref(4, 50) = 0;
     skillname(50) = lang(u8"火炎"s, u8"fire"s);
     skilldesc(50) = lang(u8"熱や炎への耐性"s, u8"Resistance to fire."s);
-    skillencdesc(50) = lang(u8""s, u8""s);
+    skillencdesc(50) = lang(""s, ""s);
     sdataref(0, 51) = 0;
     sdataref(1, 51) = 0;
     sdataref(2, 51) = 0;
@@ -265,7 +265,7 @@ void label_0034()
     sdataref(4, 51) = 0;
     skillname(51) = lang(u8"冷気"s, u8"cold"s);
     skilldesc(51) = lang(u8"冷気や水への耐性"s, u8"Resistance to cold."s);
-    skillencdesc(51) = lang(u8""s, u8""s);
+    skillencdesc(51) = lang(""s, ""s);
     sdataref(0, 52) = 0;
     sdataref(1, 52) = 0;
     sdataref(2, 52) = 0;
@@ -273,7 +273,7 @@ void label_0034()
     sdataref(4, 52) = 0;
     skillname(52) = lang(u8"電撃"s, u8"lightning"s);
     skilldesc(52) = lang(u8"雷や電気への耐性"s, u8"Resistance to lightning."s);
-    skillencdesc(52) = lang(u8""s, u8""s);
+    skillencdesc(52) = lang(""s, ""s);
     sdataref(0, 53) = 0;
     sdataref(1, 53) = 0;
     sdataref(2, 53) = 0;
@@ -281,7 +281,7 @@ void label_0034()
     sdataref(4, 53) = 0;
     skillname(53) = lang(u8"暗黒"s, u8"darkness"s);
     skilldesc(53) = lang(u8"暗黒や盲目への耐性"s, u8"Resistance to darkness."s);
-    skillencdesc(53) = lang(u8""s, u8""s);
+    skillencdesc(53) = lang(""s, ""s);
     sdataref(0, 54) = 0;
     sdataref(1, 54) = 0;
     sdataref(2, 54) = 0;
@@ -289,7 +289,7 @@ void label_0034()
     sdataref(4, 54) = 0;
     skillname(54) = lang(u8"幻惑"s, u8"mind"s);
     skilldesc(54) = lang(u8"精神攻撃への抵抗力"s, u8"Resistance to mind."s);
-    skillencdesc(54) = lang(u8""s, u8""s);
+    skillencdesc(54) = lang(""s, ""s);
     sdataref(0, 56) = 0;
     sdataref(1, 56) = 0;
     sdataref(2, 56) = 0;
@@ -297,7 +297,7 @@ void label_0034()
     sdataref(4, 56) = 0;
     skillname(56) = lang(u8"地獄"s, u8"nether"s);
     skilldesc(56) = lang(u8"生命吸収への抵抗力"s, u8"Resistance to nether."s);
-    skillencdesc(56) = lang(u8""s, u8""s);
+    skillencdesc(56) = lang(""s, ""s);
     sdataref(0, 55) = 0;
     sdataref(1, 55) = 0;
     sdataref(2, 55) = 0;
@@ -305,7 +305,7 @@ void label_0034()
     sdataref(4, 55) = 0;
     skillname(55) = lang(u8"毒"s, u8"poison"s);
     skilldesc(55) = lang(u8"毒への耐性"s, u8"Resistance to poison."s);
-    skillencdesc(55) = lang(u8""s, u8""s);
+    skillencdesc(55) = lang(""s, ""s);
     sdataref(0, 57) = 0;
     sdataref(1, 57) = 0;
     sdataref(2, 57) = 0;
@@ -313,7 +313,7 @@ void label_0034()
     sdataref(4, 57) = 0;
     skillname(57) = lang(u8"音"s, u8"sound"s);
     skilldesc(57) = lang(u8"音波や轟音への耐性"s, u8"Resistance to sound."s);
-    skillencdesc(57) = lang(u8""s, u8""s);
+    skillencdesc(57) = lang(""s, ""s);
     sdataref(0, 59) = 0;
     sdataref(1, 59) = 0;
     sdataref(2, 59) = 0;
@@ -321,7 +321,7 @@ void label_0034()
     sdataref(4, 59) = 0;
     skillname(59) = lang(u8"混沌"s, u8"chaos"s);
     skilldesc(59) = lang(u8"混沌の効果への耐性"s, u8"Resistance to chaos."s);
-    skillencdesc(59) = lang(u8""s, u8""s);
+    skillencdesc(59) = lang(""s, ""s);
     sdataref(0, 58) = 0;
     sdataref(1, 58) = 0;
     sdataref(2, 58) = 0;
@@ -329,7 +329,7 @@ void label_0034()
     sdataref(4, 58) = 0;
     skillname(58) = lang(u8"神経"s, u8"nerve"s);
     skilldesc(58) = lang(u8"睡眠や麻痺への耐性"s, u8"Resistance to nerve."s);
-    skillencdesc(58) = lang(u8""s, u8""s);
+    skillencdesc(58) = lang(""s, ""s);
     sdataref(0, 60) = 0;
     sdataref(1, 60) = 0;
     sdataref(2, 60) = 0;
@@ -337,7 +337,7 @@ void label_0034()
     sdataref(4, 60) = 0;
     skillname(60) = lang(u8"魔法"s, u8"magic"s);
     skilldesc(60) = lang(u8"魔法攻撃への耐性"s, u8"Resistance to magic."s);
-    skillencdesc(60) = lang(u8""s, u8""s);
+    skillencdesc(60) = lang(""s, ""s);
     sdataref(0, 61) = 0;
     sdataref(1, 61) = 0;
     sdataref(2, 61) = 0;
@@ -345,7 +345,7 @@ void label_0034()
     sdataref(4, 61) = 0;
     skillname(61) = lang(u8"出血"s, u8"cut"s);
     skilldesc(61) = lang(u8"切り傷への耐性"s, u8"Resistance to cut."s);
-    skillencdesc(61) = lang(u8""s, u8""s);
+    skillencdesc(61) = lang(""s, ""s);
     sdataref(0, 153) = 10;
     sdataref(1, 153) = 0;
     sdataref(2, 153) = 0;
@@ -414,7 +414,7 @@ void label_0034()
     skillname(169) = lang(u8"重装備"s, u8"Heavy Armor"s);
     skilldesc(169) = lang(u8"重い装備を扱う技術"s,
         u8"Skill to effectively act while wearing heavy armor."s);
-    skillencdesc(169) = lang(u8"重装備の技術を上昇させる"s, u8""s);
+    skillencdesc(169) = lang(u8"重装備の技術を上昇させる"s, ""s);
     sdataref(0, 170) = 11;
     sdataref(1, 170) = 0;
     sdataref(2, 170) = 0;
@@ -423,7 +423,7 @@ void label_0034()
     skillname(170) = lang(u8"中装備"s, u8"Medium Armor"s);
     skilldesc(170) = lang(u8"普通の装備を扱う技術"s,
         u8"Skill to effectively act while wearing medium armor."s);
-    skillencdesc(170) = lang(u8"中装備の技術を上昇させる"s, u8""s);
+    skillencdesc(170) = lang(u8"中装備の技術を上昇させる"s, ""s);
     sdataref(0, 171) = 12;
     sdataref(1, 171) = 0;
     sdataref(2, 171) = 0;
@@ -432,7 +432,7 @@ void label_0034()
     skillname(171) = lang(u8"軽装備"s, u8"Light Armor"s);
     skilldesc(171) = lang(u8"軽い装備を扱う技術"s,
         u8"Skill to effectively act while wearing light armor."s);
-    skillencdesc(171) = lang(u8"軽装備の技術を上昇させる"s, u8""s);
+    skillencdesc(171) = lang(u8"軽装備の技術を上昇させる"s, ""s);
     sdataref(0, 158) = 12;
     sdataref(1, 158) = 0;
     sdataref(2, 158) = 0;
@@ -521,7 +521,7 @@ void label_0034()
     skillname(186) = lang(u8"心眼"s, u8"Eye of Mind"s);
     skilldesc(186) = lang(u8"クリティカル率を高める"s,
         u8"Increases your chance to deliver critical hits."s);
-    skillencdesc(186) = lang(u8"心眼の技術を上昇させる"s, u8""s);
+    skillencdesc(186) = lang(u8"心眼の技術を上昇させる"s, ""s);
     sdataref(0, 185) = 13;
     sdataref(1, 185) = 0;
     sdataref(2, 185) = 5;
@@ -540,7 +540,7 @@ void label_0034()
     skillname(187) = lang(u8"見切り"s, u8"Greater Evasion"s);
     skilldesc(187) = lang(u8"不正確な攻撃を確実に避ける"s,
         u8"Makes you able to evade inaccurate attacks."s);
-    skillencdesc(187) = lang(u8"見切りの腕をあげる"s, u8""s);
+    skillencdesc(187) = lang(u8"見切りの腕をあげる"s, ""s);
     sdataref(0, 161) = 14;
     sdataref(1, 161) = 0;
     sdataref(2, 161) = 0;
@@ -726,7 +726,7 @@ void label_0034()
     sdataref(4, 400) = 80;
     skillname(400) = lang(u8"軽傷治癒"s, u8"Heal Light"s);
     skilldesc(400) = lang(u8"体力回復"s, u8"Heal self"s);
-    skillencdesc(400) = lang(u8""s, u8""s);
+    skillencdesc(400) = lang(""s, ""s);
     sdataref(0, 401) = 15;
     sdataref(1, 401) = 4;
     sdataref(2, 401) = 15;
@@ -734,7 +734,7 @@ void label_0034()
     sdataref(4, 401) = 350;
     skillname(401) = lang(u8"致命傷治癒"s, u8"Heal Critical"s);
     skilldesc(401) = lang(u8"体力回復"s, u8"Heal self"s);
-    skillencdesc(401) = lang(u8""s, u8""s);
+    skillencdesc(401) = lang(""s, ""s);
     sdataref(0, 402) = 15;
     sdataref(1, 402) = 4;
     sdataref(2, 402) = 35;
@@ -742,7 +742,7 @@ void label_0034()
     sdataref(4, 402) = 800;
     skillname(402) = lang(u8"エリスの癒し"s, u8"Cure of Eris"s);
     skilldesc(402) = lang(u8"体力回復"s, u8"Heal self"s);
-    skillencdesc(402) = lang(u8""s, u8""s);
+    skillencdesc(402) = lang(""s, ""s);
     sdataref(0, 403) = 15;
     sdataref(1, 403) = 4;
     sdataref(2, 403) = 80;
@@ -750,7 +750,7 @@ void label_0034()
     sdataref(4, 403) = 1300;
     skillname(403) = lang(u8"ジュアの癒し"s, u8"Cure of Jua"s);
     skilldesc(403) = lang(u8"体力回復"s, u8"Heal self"s);
-    skillencdesc(403) = lang(u8""s, u8""s);
+    skillencdesc(403) = lang(""s, ""s);
     sdataref(0, 405) = 15;
     sdataref(1, 405) = 4;
     sdataref(2, 405) = 20;
@@ -758,7 +758,7 @@ void label_0034()
     sdataref(4, 405) = 400;
     skillname(405) = lang(u8"癒しの手"s, u8"Healing Touch"s);
     skilldesc(405) = lang(u8"体力回復"s, u8"Heal target"s);
-    skillencdesc(405) = lang(u8""s, u8""s);
+    skillencdesc(405) = lang(""s, ""s);
     sdataref(0, 406) = 15;
     sdataref(1, 406) = 0;
     sdataref(2, 406) = 15;
@@ -766,7 +766,7 @@ void label_0034()
     sdataref(4, 406) = 400;
     skillname(406) = lang(u8"清浄なる光"s, u8"Holy Light"s);
     skilldesc(406) = lang(u8"1つの呪い(hex)除去"s, u8"Remove one hex"s);
-    skillencdesc(406) = lang(u8""s, u8""s);
+    skillencdesc(406) = lang(""s, ""s);
     sdataref(0, 407) = 15;
     sdataref(1, 407) = 0;
     sdataref(2, 407) = 35;
@@ -774,7 +774,7 @@ void label_0034()
     sdataref(4, 407) = 850;
     skillname(407) = lang(u8"全浄化"s, u8"Vanquish Hex"s);
     skilldesc(407) = lang(u8"全ての呪い(hex)除去"s, u8"Remove all hexes"s);
-    skillencdesc(407) = lang(u8""s, u8""s);
+    skillencdesc(407) = lang(""s, ""s);
     sdataref(0, 409) = 16;
     sdataref(1, 409) = 5;
     sdataref(2, 409) = 10;
@@ -782,7 +782,7 @@ void label_0034()
     sdataref(4, 409) = 200;
     skillname(409) = lang(u8"テレポートアザー"s, u8"Teleport Other"s);
     skilldesc(409) = lang(u8"対象を瞬間移動させる"s, u8"Teleport target"s);
-    skillencdesc(409) = lang(u8""s, u8""s);
+    skillencdesc(409) = lang(""s, ""s);
     sdataref(0, 408) = 16;
     sdataref(1, 408) = 5;
     sdataref(2, 408) = 10;
@@ -790,7 +790,7 @@ void label_0034()
     sdataref(4, 408) = 400;
     skillname(408) = lang(u8"テレポート"s, u8"Teleport"s);
     skilldesc(408) = lang(u8"瞬間移動"s, u8"Teleport self"s);
-    skillencdesc(408) = lang(u8""s, u8""s);
+    skillencdesc(408) = lang(""s, ""s);
     sdataref(0, 410) = 16;
     sdataref(1, 410) = 5;
     sdataref(2, 410) = 8;
@@ -798,7 +798,7 @@ void label_0034()
     sdataref(4, 410) = 120;
     skillname(410) = lang(u8"ショートテレポート"s, u8"Short Teleport"s);
     skilldesc(410) = lang(u8"近くへの瞬間移動"s, u8"Teleport self"s);
-    skillencdesc(410) = lang(u8""s, u8""s);
+    skillencdesc(410) = lang(""s, ""s);
     sdataref(0, 411) = 13;
     sdataref(1, 411) = 0;
     sdataref(2, 411) = 28;
@@ -806,7 +806,7 @@ void label_0034()
     sdataref(4, 411) = 800;
     skillname(411) = lang(u8"鑑定"s, u8"Identify"s);
     skilldesc(411) = lang(u8"アイテム鑑定"s, u8"Identify one item"s);
-    skillencdesc(411) = lang(u8""s, u8""s);
+    skillencdesc(411) = lang(""s, ""s);
     sdataref(0, 412) = 15;
     sdataref(1, 412) = 0;
     sdataref(2, 412) = 35;
@@ -814,7 +814,7 @@ void label_0034()
     sdataref(4, 412) = 700;
     skillname(412) = lang(u8"解呪"s, u8"Uncurse"s);
     skilldesc(412) = lang(u8"アイテム解呪"s, u8"Uncurse items"s);
-    skillencdesc(412) = lang(u8""s, u8""s);
+    skillencdesc(412) = lang(""s, ""s);
     sdataref(0, 413) = 16;
     sdataref(1, 413) = 0;
     sdataref(2, 413) = 150;
@@ -822,7 +822,7 @@ void label_0034()
     sdataref(4, 413) = 1500;
     skillname(413) = lang(u8"神託"s, u8"Oracle"s);
     skilldesc(413) = lang(u8"アーティファクト感知"s, u8"Reveal artifacts"s);
-    skillencdesc(413) = lang(u8""s, u8""s);
+    skillencdesc(413) = lang(""s, ""s);
     sdataref(0, 414) = 16;
     sdataref(1, 414) = 2;
     sdataref(2, 414) = 5;
@@ -830,7 +830,7 @@ void label_0034()
     sdataref(4, 414) = 110;
     skillname(414) = lang(u8"魔法の矢"s, u8"Magic Dart"s);
     skilldesc(414) = lang(u8"無属性の矢"s, u8"Target(Magic)"s);
-    skillencdesc(414) = lang(u8""s, u8""s);
+    skillencdesc(414) = lang(""s, ""s);
     sdataref(0, 415) = 16;
     sdataref(1, 415) = 2;
     sdataref(2, 415) = 8;
@@ -838,7 +838,7 @@ void label_0034()
     sdataref(4, 415) = 400;
     skillname(415) = lang(u8"地獄の吐息"s, u8"Nether Arrow"s);
     skilldesc(415) = lang(u8"地獄の矢"s, u8"Target(Nether)"s);
-    skillencdesc(415) = lang(u8""s, u8""s);
+    skillencdesc(415) = lang(""s, ""s);
     sdataref(0, 417) = 16;
     sdataref(1, 417) = 2;
     sdataref(2, 417) = 10;
@@ -846,7 +846,7 @@ void label_0034()
     sdataref(4, 417) = 650;
     skillname(417) = lang(u8"混沌の瞳"s, u8"Chaos eye"s);
     skilldesc(417) = lang(u8"混沌の矢"s, u8"Target(Chaos)"s);
-    skillencdesc(417) = lang(u8""s, u8""s);
+    skillencdesc(417) = lang(""s, ""s);
     sdataref(0, 416) = 16;
     sdataref(1, 416) = 2;
     sdataref(2, 416) = 10;
@@ -854,7 +854,7 @@ void label_0034()
     sdataref(4, 416) = 400;
     skillname(416) = lang(u8"麻痺の矢"s, u8"Nerve Arrow"s);
     skilldesc(416) = lang(u8"神経の矢"s, u8"Target(Nerve)"s);
-    skillencdesc(416) = lang(u8""s, u8""s);
+    skillencdesc(416) = lang(""s, ""s);
     sdataref(0, 418) = 16;
     sdataref(1, 418) = 2;
     sdataref(2, 418) = 10;
@@ -862,7 +862,7 @@ void label_0034()
     sdataref(4, 418) = 200;
     skillname(418) = lang(u8"暗黒の矢"s, u8"Dark eye"s);
     skilldesc(418) = lang(u8"暗黒の矢"s, u8"Target(Darkness)"s);
-    skillencdesc(418) = lang(u8""s, u8""s);
+    skillencdesc(418) = lang(""s, ""s);
     sdataref(0, 459) = 16;
     sdataref(1, 459) = 2;
     sdataref(2, 459) = 24;
@@ -870,7 +870,7 @@ void label_0034()
     sdataref(4, 459) = 950;
     skillname(459) = lang(u8"魔力の集積"s, u8"Crystal Spear"s);
     skilldesc(459) = lang(u8"無属性の矢"s, u8"Target(Magic)"s);
-    skillencdesc(459) = lang(u8""s, u8""s);
+    skillencdesc(459) = lang(""s, ""s);
     sdataref(0, 419) = 16;
     sdataref(1, 419) = 1;
     sdataref(2, 419) = 10;
@@ -878,7 +878,7 @@ void label_0034()
     sdataref(4, 419) = 220;
     skillname(419) = lang(u8"アイスボルト"s, u8"Ice Bolt"s);
     skilldesc(419) = lang(u8"氷のボルト"s, u8"Line(Cold)"s);
-    skillencdesc(419) = lang(u8""s, u8""s);
+    skillencdesc(419) = lang(""s, ""s);
     sdataref(0, 420) = 16;
     sdataref(1, 420) = 1;
     sdataref(2, 420) = 10;
@@ -886,7 +886,7 @@ void label_0034()
     sdataref(4, 420) = 220;
     skillname(420) = lang(u8"ファイアボルト"s, u8"Fire Bolt"s);
     skilldesc(420) = lang(u8"火炎のボルト"s, u8"Line(Fire)"s);
-    skillencdesc(420) = lang(u8""s, u8""s);
+    skillencdesc(420) = lang(""s, ""s);
     sdataref(0, 421) = 16;
     sdataref(1, 421) = 1;
     sdataref(2, 421) = 10;
@@ -894,7 +894,7 @@ void label_0034()
     sdataref(4, 421) = 220;
     skillname(421) = lang(u8"ライトニングボルト"s, u8"Lightning Bolt"s);
     skilldesc(421) = lang(u8"雷のボルト"s, u8"Line(Lightning)"s);
-    skillencdesc(421) = lang(u8""s, u8""s);
+    skillencdesc(421) = lang(""s, ""s);
     sdataref(0, 422) = 16;
     sdataref(1, 422) = 1;
     sdataref(2, 422) = 12;
@@ -902,7 +902,7 @@ void label_0034()
     sdataref(4, 422) = 350;
     skillname(422) = lang(u8"暗黒の光線"s, u8"Darkness Bolt"s);
     skilldesc(422) = lang(u8"暗黒のボルト"s, u8"Line(Darkness)"s);
-    skillencdesc(422) = lang(u8""s, u8""s);
+    skillencdesc(422) = lang(""s, ""s);
     sdataref(0, 423) = 16;
     sdataref(1, 423) = 1;
     sdataref(2, 423) = 12;
@@ -910,7 +910,7 @@ void label_0034()
     sdataref(4, 423) = 350;
     skillname(423) = lang(u8"幻影の光線"s, u8"Mind Bolt"s);
     skilldesc(423) = lang(u8"幻惑のボルト"s, u8"Line(Mind)"s);
-    skillencdesc(423) = lang(u8""s, u8""s);
+    skillencdesc(423) = lang(""s, ""s);
     sdataref(0, 644) = 11;
     sdataref(1, 644) = 3;
     sdataref(2, 644) = 16;
@@ -925,7 +925,7 @@ void label_0034()
     sdataref(4, 431) = 450;
     skillname(431) = lang(u8"アイスボール"s, u8"Ice Ball"s);
     skilldesc(431) = lang(u8"氷の球"s, u8"Surround(Cold)"s);
-    skillencdesc(431) = lang(u8""s, u8""s);
+    skillencdesc(431) = lang(""s, ""s);
     sdataref(0, 432) = 16;
     sdataref(1, 432) = 3;
     sdataref(2, 432) = 16;
@@ -933,7 +933,7 @@ void label_0034()
     sdataref(4, 432) = 450;
     skillname(432) = lang(u8"ファイアボール"s, u8"Fire Ball"s);
     skilldesc(432) = lang(u8"炎の球"s, u8"Surround(Fire)"s);
-    skillencdesc(432) = lang(u8""s, u8""s);
+    skillencdesc(432) = lang(""s, ""s);
     sdataref(0, 433) = 16;
     sdataref(1, 433) = 3;
     sdataref(2, 433) = 20;
@@ -941,7 +941,7 @@ void label_0034()
     sdataref(4, 433) = 1000;
     skillname(433) = lang(u8"混沌の渦"s, u8"Chaos Ball"s);
     skilldesc(433) = lang(u8"混沌の球"s, u8"Surround(Chaos)"s);
-    skillencdesc(433) = lang(u8""s, u8""s);
+    skillencdesc(433) = lang(""s, ""s);
     sdataref(0, 434) = 16;
     sdataref(1, 434) = 3;
     sdataref(2, 434) = 18;
@@ -949,7 +949,7 @@ void label_0034()
     sdataref(4, 434) = 700;
     skillname(434) = lang(u8"轟音の波動"s, u8"Raging Roar"s);
     skilldesc(434) = lang(u8"轟音の球"s, u8"Surround(Sound)"s);
-    skillencdesc(434) = lang(u8""s, u8""s);
+    skillencdesc(434) = lang(""s, ""s);
     sdataref(0, 460) = 16;
     sdataref(1, 460) = 3;
     sdataref(2, 460) = 40;
@@ -957,7 +957,7 @@ void label_0034()
     sdataref(4, 460) = 1400;
     skillname(460) = lang(u8"魔力の嵐"s, u8"Magic Storm"s);
     skilldesc(460) = lang(u8"魔法の球"s, u8"Surround(Magic)"s);
-    skillencdesc(460) = lang(u8""s, u8""s);
+    skillencdesc(460) = lang(""s, ""s);
     sdataref(0, 404) = 15;
     sdataref(1, 404) = 3;
     sdataref(2, 404) = 38;
@@ -965,7 +965,7 @@ void label_0034()
     sdataref(4, 404) = 500;
     skillname(404) = lang(u8"治癒の雨"s, u8"Healing Rain"s);
     skilldesc(404) = lang(u8"体力回復の球"s, u8"Heal area"s);
-    skillencdesc(404) = lang(u8""s, u8""s);
+    skillencdesc(404) = lang(""s, ""s);
     sdataref(0, 637) = 15;
     sdataref(1, 637) = 3;
     sdataref(2, 637) = 50;
@@ -980,7 +980,7 @@ void label_0034()
     sdataref(4, 466) = 750;
     skillname(466) = lang(u8"グラビティ"s, u8"Gravity"s);
     skilldesc(466) = lang(u8"重力の発生"s, u8"Create gravity"s);
-    skillencdesc(466) = lang(u8""s, u8""s);
+    skillencdesc(466) = lang(""s, ""s);
     sdataref(0, 424) = 16;
     sdataref(1, 424) = 7;
     sdataref(2, 424) = 15;
@@ -989,7 +989,7 @@ void label_0034()
     skillname(424) = lang(u8"モンスター召喚"s, u8"Summon Monsters"s);
     skilldesc(424) =
         lang(u8"モンスターを召喚する"s, u8"Summon hostile creatures"s);
-    skillencdesc(424) = lang(u8""s, u8""s);
+    skillencdesc(424) = lang(""s, ""s);
     sdataref(0, 425) = 16;
     sdataref(1, 425) = 7;
     sdataref(2, 425) = 15;
@@ -998,7 +998,7 @@ void label_0034()
     skillname(425) = lang(u8"野生召喚"s, u8"Summon Wild"s);
     skilldesc(425) =
         lang(u8"野生の生き物を召喚する"s, u8"Summon wild creatures"s);
-    skillencdesc(425) = lang(u8""s, u8""s);
+    skillencdesc(425) = lang(""s, ""s);
     sdataref(0, 642) = 16;
     sdataref(1, 642) = 7;
     sdataref(2, 642) = 15;
@@ -1042,7 +1042,7 @@ void label_0034()
     sdataref(4, 435) = 2000;
     skillname(435) = lang(u8"支配"s, u8"Dominate"s);
     skilldesc(435) = lang(u8"対象を支配する"s, u8"Dominate target"s);
-    skillencdesc(435) = lang(u8""s, u8""s);
+    skillencdesc(435) = lang(""s, ""s);
     sdataref(0, 436) = 16;
     sdataref(1, 436) = 0;
     sdataref(2, 436) = 10;
@@ -1050,7 +1050,7 @@ void label_0034()
     sdataref(4, 436) = 150;
     skillname(436) = lang(u8"蜘蛛の巣"s, u8"Web"s);
     skilldesc(436) = lang(u8"蜘蛛の巣発生"s, u8"Create webs"s);
-    skillencdesc(436) = lang(u8""s, u8""s);
+    skillencdesc(436) = lang(""s, ""s);
     sdataref(0, 437) = 16;
     sdataref(1, 437) = 0;
     sdataref(2, 437) = 12;
@@ -1058,7 +1058,7 @@ void label_0034()
     sdataref(4, 437) = 320;
     skillname(437) = lang(u8"闇の霧"s, u8"Mist of Darkness"s);
     skilldesc(437) = lang(u8"霧の発生"s, u8"Create mist"s);
-    skillencdesc(437) = lang(u8""s, u8""s);
+    skillencdesc(437) = lang(""s, ""s);
     sdataref(0, 438) = 16;
     sdataref(1, 438) = 0;
     sdataref(2, 438) = 20;
@@ -1066,7 +1066,7 @@ void label_0034()
     sdataref(4, 438) = 250;
     skillname(438) = lang(u8"壁生成"s, u8"Wall Creation"s);
     skilldesc(438) = lang(u8"壁の生成"s, u8"Create walls"s);
-    skillencdesc(438) = lang(u8""s, u8""s);
+    skillencdesc(438) = lang(""s, ""s);
     sdataref(0, 457) = 16;
     sdataref(1, 457) = 0;
     sdataref(2, 457) = 15;
@@ -1074,7 +1074,7 @@ void label_0034()
     sdataref(4, 457) = 200;
     skillname(457) = lang(u8"ドア生成"s, u8"Door Creation"s);
     skilldesc(457) = lang(u8"ドアの生成"s, u8"Create doors"s);
-    skillencdesc(457) = lang(u8""s, u8""s);
+    skillencdesc(457) = lang(""s, ""s);
     sdataref(0, 455) = 16;
     sdataref(1, 455) = 0;
     sdataref(2, 455) = 18;
@@ -1082,7 +1082,7 @@ void label_0034()
     sdataref(4, 455) = 480;
     skillname(455) = lang(u8"酸の海"s, u8"Acid Ground"s);
     skilldesc(455) = lang(u8"酸の発生"s, u8"Create acid grounds"s);
-    skillencdesc(455) = lang(u8""s, u8""s);
+    skillencdesc(455) = lang(""s, ""s);
     sdataref(0, 634) = 16;
     sdataref(1, 634) = 0;
     sdataref(2, 634) = 18;
@@ -1097,7 +1097,7 @@ void label_0034()
     sdataref(4, 456) = 640;
     skillname(456) = lang(u8"炎の壁"s, u8"Fire Wall"s);
     skilldesc(456) = lang(u8"火柱の発生"s, u8"Create fire grounds"s);
-    skillencdesc(456) = lang(u8""s, u8""s);
+    skillencdesc(456) = lang(""s, ""s);
     sdataref(0, 645) = 16;
     sdataref(1, 645) = 0;
     sdataref(2, 645) = 10;
@@ -1112,7 +1112,7 @@ void label_0034()
     sdataref(4, 428) = 550;
     skillname(428) = lang(u8"帰還"s, u8"Return"s);
     skilldesc(428) = lang(u8"特定の場所への帰還"s, u8"Return"s);
-    skillencdesc(428) = lang(u8""s, u8""s);
+    skillencdesc(428) = lang(""s, ""s);
     sdataref(0, 463) = 13;
     sdataref(1, 463) = 0;
     sdataref(2, 463) = 60;
@@ -1121,7 +1121,7 @@ void label_0034()
     skillname(463) = lang(u8"四次元ポケット"s, u8"4-Dimensional Pocket"s);
     skilldesc(463) =
         lang(u8"四次元のポケットを召喚"s, u8"Summon 4-Dimensional Pocket"s);
-    skillencdesc(463) = lang(u8""s, u8""s);
+    skillencdesc(463) = lang(""s, ""s);
     sdataref(0, 429) = 13;
     sdataref(1, 429) = 0;
     sdataref(2, 429) = 30;
@@ -1129,7 +1129,7 @@ void label_0034()
     sdataref(4, 429) = 450;
     skillname(429) = lang(u8"魔法の地図"s, u8"Magic Map"s);
     skilldesc(429) = lang(u8"周囲の地形感知"s, u8"Reveal surround map"s);
-    skillencdesc(429) = lang(u8""s, u8""s);
+    skillencdesc(429) = lang(""s, ""s);
     sdataref(0, 464) = 17;
     sdataref(1, 464) = 0;
     sdataref(2, 464) = 45;
@@ -1137,7 +1137,7 @@ void label_0034()
     sdataref(4, 464) = 350;
     skillname(464) = lang(u8"魔術師の収穫"s, u8"Wizard's Harvest"s);
     skilldesc(464) = lang(u8"ランダムな収穫"s, u8"Random harvest"s);
-    skillencdesc(464) = lang(u8""s, u8""s);
+    skillencdesc(464) = lang(""s, ""s);
     sdataref(0, 430) = 13;
     sdataref(1, 430) = 0;
     sdataref(2, 430) = 22;
@@ -1145,7 +1145,7 @@ void label_0034()
     sdataref(4, 430) = 250;
     skillname(430) = lang(u8"物質感知"s, u8"Sense Object"s);
     skilldesc(430) = lang(u8"周囲の物質感知"s, u8"Reveal nearby objects"s);
-    skillencdesc(430) = lang(u8""s, u8""s);
+    skillencdesc(430) = lang(""s, ""s);
     sdataref(0, 439) = 15;
     sdataref(1, 439) = 0;
     sdataref(2, 439) = 18;
@@ -1153,7 +1153,7 @@ void label_0034()
     sdataref(4, 439) = 250;
     skillname(439) = lang(u8"肉体復活"s, u8"Restore Body"s);
     skilldesc(439) = lang(u8"肉体の弱体化の治療"s, u8"Restore phisical"s);
-    skillencdesc(439) = lang(u8""s, u8""s);
+    skillencdesc(439) = lang(""s, ""s);
     sdataref(0, 440) = 15;
     sdataref(1, 440) = 0;
     sdataref(2, 440) = 18;
@@ -1161,7 +1161,7 @@ void label_0034()
     sdataref(4, 440) = 250;
     skillname(440) = lang(u8"精神復活"s, u8"Restore Spirit"s);
     skilldesc(440) = lang(u8"精神の弱体化の治療"s, u8"Restore mind"s);
-    skillencdesc(440) = lang(u8""s, u8""s);
+    skillencdesc(440) = lang(""s, ""s);
     sdataref(0, 461) = 15;
     sdataref(1, 461) = 0;
     sdataref(2, 461) = 60;
@@ -1169,7 +1169,7 @@ void label_0034()
     sdataref(4, 461) = 1650;
     skillname(461) = lang(u8"復活"s, u8"Resurrection"s);
     skilldesc(461) = lang(u8"死者の蘇生"s, u8"Resurrect dead"s);
-    skillencdesc(461) = lang(u8""s, u8""s);
+    skillencdesc(461) = lang(""s, ""s);
     sdataref(0, 441) = 16;
     sdataref(1, 441) = 0;
     sdataref(2, 441) = 580;
@@ -1177,7 +1177,7 @@ void label_0034()
     sdataref(4, 441) = 5250;
     skillname(441) = lang(u8"願い"s, u8"Wish"s);
     skilldesc(441) = lang(u8"願いの効果"s, u8"Wish"s);
-    skillencdesc(441) = lang(u8""s, u8""s);
+    skillencdesc(441) = lang(""s, ""s);
     sdataref(0, 465) = 16;
     sdataref(1, 465) = 0;
     sdataref(2, 465) = 220;
@@ -1185,7 +1185,7 @@ void label_0034()
     sdataref(4, 465) = 1450;
     skillname(465) = lang(u8"メテオ"s, u8"Meteor"s);
     skilldesc(465) = lang(u8"全域攻撃"s, u8"Massive Attack"s);
-    skillencdesc(465) = lang(u8""s, u8""s);
+    skillencdesc(465) = lang(""s, ""s);
     sdataref(0, 454) = 13;
     sdataref(1, 454) = 0;
     sdataref(2, 454) = 70;
@@ -1193,147 +1193,147 @@ void label_0034()
     sdataref(4, 454) = 2250;
     skillname(454) = lang(u8"自己の変容"s, u8"Mutation"s);
     skilldesc(454) = lang(u8"突然変異"s, u8"Mutate self"s);
-    skillencdesc(454) = lang(u8""s, u8""s);
+    skillencdesc(454) = lang(""s, ""s);
     sdataref(0, 442) = 15;
     sdataref(1, 442) = 1001;
     sdataref(2, 442) = 8;
     sdataref(3, 442) = 3000;
     sdataref(4, 442) = 150;
     skillname(442) = lang(u8"聖なる盾"s, u8"Holy Shield"s);
-    skilldesc(442) = lang(u8"防御力強化"s, u8""s);
-    skillencdesc(442) = lang(u8""s, u8""s);
+    skilldesc(442) = lang(u8"防御力強化"s, ""s);
+    skillencdesc(442) = lang(""s, ""s);
     sdataref(0, 443) = 13;
     sdataref(1, 443) = 1002;
     sdataref(2, 443) = 24;
     sdataref(3, 443) = 2006;
     sdataref(4, 443) = 620;
     skillname(443) = lang(u8"沈黙の霧"s, u8"Mist of Silence"s);
-    skilldesc(443) = lang(u8"魔法使用不可"s, u8""s);
-    skillencdesc(443) = lang(u8""s, u8""s);
+    skilldesc(443) = lang(u8"魔法使用不可"s, ""s);
+    skillencdesc(443) = lang(""s, ""s);
     sdataref(0, 444) = 15;
     sdataref(1, 444) = 1003;
     sdataref(2, 444) = 16;
     sdataref(3, 444) = 3000;
     sdataref(4, 444) = 400;
     skillname(444) = lang(u8"リジェネレーション"s, u8"Regeneration"s);
-    skilldesc(444) = lang(u8""s, u8""s);
-    skillencdesc(444) = lang(u8""s, u8""s);
+    skilldesc(444) = lang(""s, ""s);
+    skillencdesc(444) = lang(""s, ""s);
     sdataref(0, 445) = 15;
     sdataref(1, 445) = 1004;
     sdataref(2, 445) = 14;
     sdataref(3, 445) = 3000;
     sdataref(4, 445) = 350;
     skillname(445) = lang(u8"元素保護"s, u8"Elemental Shield"s);
-    skilldesc(445) = lang(u8""s, u8""s);
-    skillencdesc(445) = lang(u8""s, u8""s);
+    skilldesc(445) = lang(""s, ""s);
+    skillencdesc(445) = lang(""s, ""s);
     sdataref(0, 446) = 15;
     sdataref(1, 446) = 1005;
     sdataref(2, 446) = 28;
     sdataref(3, 446) = 3000;
     sdataref(4, 446) = 1050;
     skillname(446) = lang(u8"加速"s, u8"Speed"s);
-    skilldesc(446) = lang(u8""s, u8""s);
-    skillencdesc(446) = lang(u8""s, u8""s);
+    skilldesc(446) = lang(""s, ""s);
+    skillencdesc(446) = lang(""s, ""s);
     sdataref(0, 447) = 16;
     sdataref(1, 447) = 1006;
     sdataref(2, 447) = 10;
     sdataref(3, 447) = 2006;
     sdataref(4, 447) = 450;
     skillname(447) = lang(u8"鈍足"s, u8"Slow"s);
-    skilldesc(447) = lang(u8""s, u8""s);
-    skillencdesc(447) = lang(u8""s, u8""s);
+    skilldesc(447) = lang(""s, ""s);
+    skillencdesc(447) = lang(""s, ""s);
     sdataref(0, 448) = 15;
     sdataref(1, 448) = 1007;
     sdataref(2, 448) = 12;
     sdataref(3, 448) = 3000;
     sdataref(4, 448) = 80;
     skillname(448) = lang(u8"英雄"s, u8"Hero"s);
-    skilldesc(448) = lang(u8""s, u8""s);
-    skillencdesc(448) = lang(u8""s, u8""s);
+    skilldesc(448) = lang(""s, ""s);
+    skillencdesc(448) = lang(""s, ""s);
     sdataref(0, 449) = 16;
     sdataref(1, 449) = 1008;
     sdataref(2, 449) = 8;
     sdataref(3, 449) = 2006;
     sdataref(4, 449) = 300;
     skillname(449) = lang(u8"脆弱の霧"s, u8"Mist of frailness"s);
-    skilldesc(449) = lang(u8""s, u8""s);
-    skillencdesc(449) = lang(u8""s, u8""s);
+    skilldesc(449) = lang(""s, ""s);
+    skillencdesc(449) = lang(""s, ""s);
     sdataref(0, 450) = 16;
     sdataref(1, 450) = 1009;
     sdataref(2, 450) = 15;
     sdataref(3, 450) = 2006;
     sdataref(4, 450) = 600;
     skillname(450) = lang(u8"元素の傷跡"s, u8"Element Scar"s);
-    skilldesc(450) = lang(u8""s, u8""s);
-    skillencdesc(450) = lang(u8""s, u8""s);
+    skilldesc(450) = lang(""s, ""s);
+    skillencdesc(450) = lang(""s, ""s);
     sdataref(0, 451) = 15;
     sdataref(1, 451) = 1010;
     sdataref(2, 451) = 20;
     sdataref(3, 451) = 3000;
     sdataref(4, 451) = 900;
     skillname(451) = lang(u8"ホーリーヴェイル"s, u8"Holy Veil"s);
-    skilldesc(451) = lang(u8""s, u8""s);
-    skillencdesc(451) = lang(u8""s, u8""s);
+    skilldesc(451) = lang(""s, ""s);
+    skillencdesc(451) = lang(""s, ""s);
     sdataref(0, 452) = 13;
     sdataref(1, 452) = 1011;
     sdataref(2, 452) = 15;
     sdataref(3, 452) = 2006;
     sdataref(4, 452) = 500;
     skillname(452) = lang(u8"ナイトメア"s, u8"Nightmare"s);
-    skilldesc(452) = lang(u8""s, u8""s);
-    skillencdesc(452) = lang(u8""s, u8""s);
+    skilldesc(452) = lang(""s, ""s);
+    skillencdesc(452) = lang(""s, ""s);
     sdataref(0, 453) = 14;
     sdataref(1, 453) = 1012;
     sdataref(2, 453) = 22;
     sdataref(3, 453) = 10000;
     sdataref(4, 453) = 350;
     skillname(453) = lang(u8"知者の加護"s, u8"Divine Wisdom"s);
-    skilldesc(453) = lang(u8""s, u8""s);
-    skillencdesc(453) = lang(u8""s, u8""s);
+    skilldesc(453) = lang(""s, ""s);
+    skillencdesc(453) = lang(""s, ""s);
     sdataref(0, 458) = 13;
     sdataref(1, 458) = 1015;
     sdataref(2, 458) = 38;
     sdataref(3, 458) = 10000;
     sdataref(4, 458) = 250;
     skillname(458) = lang(u8"インコグニート"s, u8"Incognito"s);
-    skilldesc(458) = lang(u8""s, u8""s);
-    skillencdesc(458) = lang(u8""s, u8""s);
+    skilldesc(458) = lang(""s, ""s);
+    skillencdesc(458) = lang(""s, ""s);
     sdataref(0, 462) = 15;
     sdataref(1, 462) = 1018;
     sdataref(2, 462) = 25;
     sdataref(3, 462) = 3000;
     sdataref(4, 462) = 1250;
     skillname(462) = lang(u8"契約"s, u8"Contingency"s);
-    skilldesc(462) = lang(u8""s, u8""s);
-    skillencdesc(462) = lang(u8""s, u8""s);
+    skilldesc(462) = lang(""s, ""s);
+    skillencdesc(462) = lang(""s, ""s);
     sdataref(0, 647) = 15;
     sdataref(1, 647) = 1017;
     sdataref(2, 647) = 50;
     sdataref(3, 647) = 10000;
     sdataref(4, 647) = 500;
     skillname(647) = lang(u8"ブースト"s, u8"Boost"s);
-    skilldesc(647) = lang(u8""s, u8""s);
+    skilldesc(647) = lang(""s, ""s);
     sdataref(0, 646) = 15;
     sdataref(1, 646) = 1016;
     sdataref(2, 646) = 15;
     sdataref(3, 646) = 2006;
     sdataref(4, 646) = 500;
     skillname(646) = lang(u8"死の宣告"s, u8"Death Word"s);
-    skilldesc(646) = lang(u8""s, u8""s);
+    skilldesc(646) = lang(""s, ""s);
     sdataref(0, 622) = 15;
     sdataref(1, 622) = 1013;
     sdataref(2, 622) = 15;
     sdataref(3, 622) = 2006;
     sdataref(4, 622) = 500;
     skillname(622) = lang(u8"神罰"s, u8"Punishment"s);
-    skilldesc(622) = lang(u8""s, u8""s);
+    skilldesc(622) = lang(""s, ""s);
     sdataref(0, 625) = 12;
     sdataref(1, 625) = 1014;
     sdataref(2, 625) = 20;
     sdataref(3, 625) = 10000;
     sdataref(4, 625) = 500;
     skillname(625) = lang(u8"ルルウィの憑依"s, u8"Lulwy's Trick"s);
-    skilldesc(625) = lang(u8""s, u8""s);
+    skilldesc(625) = lang(""s, ""s);
     sdataref(0, 621) = 16;
     sdataref(1, 621) = 0;
     sdataref(2, 621) = 10;
@@ -1592,14 +1592,14 @@ void label_0034()
     sdataref(3, 649) = 2004;
     sdataref(4, 649) = 0;
     skillname(649) = lang(u8"遠距離打撃"s, u8"Distant Attack"s);
-    skilldesc(649) = lang(u8"遠距離打撃"s, u8""s);
+    skilldesc(649) = lang(u8"遠距離打撃"s, ""s);
     sdataref(0, 650) = 10;
     sdataref(1, 650) = 10;
     sdataref(2, 650) = 10;
     sdataref(3, 650) = 2007;
     sdataref(4, 650) = 0;
     skillname(650) = lang(u8"遠距離打撃"s, u8"Distant Attack"s);
-    skilldesc(650) = lang(u8"遠距離打撃"s, u8""s);
+    skilldesc(650) = lang(u8"遠距離打撃"s, ""s);
     sdataref(0, 628) = 13;
     sdataref(1, 628) = 0;
     sdataref(2, 628) = 10;
