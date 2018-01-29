@@ -4,14 +4,10 @@
 #include "dup.hpp"
 
 
-
-int main()
-{
-    return elona::main();
-}
-
 namespace elona
 {
+
+
 std::string calcage(int);
 
 void label_0481();
@@ -63,5 +59,7 @@ void _fdialog(std::string& prm_710, int prm_711, std::string& prm_712,
 struct elona_turn_sequence {
 };
 
+
+}
 
 #define CNT cnt

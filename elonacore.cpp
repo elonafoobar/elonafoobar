@@ -3,6 +3,9 @@
 
 #include "main.hpp"
 
+namespace elona
+{
+
 int main()
 {
     SDIM3(proclist, 50, 4);
