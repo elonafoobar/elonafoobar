@@ -3825,4 +3825,116 @@ inline elona_vector1<int> voidboss;
 // prm_259 :: int
 // prm_0258 :: int
 // prm_0259 :: int
+
+
+template <typename T>
+void txt()
+{
+    static_assert(false_v<T>);
+}
+
+
+inline std::string txt_tostr(const std::string& s)
+{
+    return s;
+}
+
+
+inline std::string txt_tostr(elona_vector1<std::string>& v)
+{
+    return v(0);
+}
+
+
+template <typename... Args>
+void txt(Args&&... args)
+{
+    std::vector<std::string> text{txt_tostr(args)...};
+    txtvalid = 0;
+    if (hear != 0)
+    {
+        snd(hear);
+        hear = 0;
+    }
+    msgtemp = text[rnd(std::size(text))];
+    txt_conv();
+    tcol_at_txtfunc(0) = 255;
+    tcol_at_txtfunc(1) = 255;
+    tcol_at_txtfunc(2) = 255;
+}
+
+
+
+struct elona_fmode_t
+{
+    enum class Type
+    {
+        integer,
+        string,
+    } type;
+
+    // FIXME: Use union.
+    int i;
+    std::string s;
+
+    elona_fmode_t()
+        : type(Type::integer)
+        , i(0)
+    {
+    }
+
+    virtual ~elona_fmode_t() = default;
+
+    bool operator==(int i) const noexcept
+    {
+        return type == Type::integer && this->i == i;
+    }
+
+    bool operator==(const std::string& s) const noexcept
+    {
+        return type == Type::string && this->s == s;
+    }
+
+    elona_fmode_t& operator=(int i)
+    {
+        type = Type::integer;
+        this->i = i;
+        s.clear();
+        return *this;
+    }
+
+    elona_fmode_t& operator=(const std::string& s)
+    {
+        type = Type::string;
+        this->s = s;
+        i = 0;
+        return *this;
+    }
+
+
+    std::string to_string() const
+    {
+        switch (type)
+        {
+        case elona_fmode_t::Type::integer:
+            return std::to_string(i);
+        case elona_fmode_t::Type::string:
+            return s;
+        }
+        assert(0);
+    }
+};
+
+
+
+inline std::string operator+(const std::string& lhs, const elona_fmode_t& rhs)
+{
+    return lhs + rhs.to_string();
+}
+
+
+inline elona_fmode_t fmode;
+
+
+
 }
