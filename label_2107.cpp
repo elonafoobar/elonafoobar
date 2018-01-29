@@ -10,8 +10,6 @@ int label_2107()
     gdata(805) = gdata(805) + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
     if (fmode == 8 || fmode == 7) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile:game"s + fread + u8" ct:"s + ct;
         folder = exedir + u8"save\\"s + playerid + u8"\\"s;
         if (fmode == 8) { fread = 0; }
         if (fmode == 7) { fread = 1; }
@@ -23,9 +21,6 @@ int label_2107()
         {
             int cnt = 0;
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt) {
-                procid = (procid + 1) % 4;
-                proclist(procid) =
-                    u8"ctrlFile:game"s + fread + u8":"s + cnt + u8" ct:"s + ct;
                 file = folder;
                 if (cnt == 0) {
                     file += u8"gdata.s1"s;
@@ -160,9 +155,6 @@ int label_2107()
                 zClose(hgz);
             }
         }
-        procid = (procid + 1) % 4;
-        proclist(procid) =
-            u8"ctrlFile:game"s + fread + u8":logs"s + u8" ct:"s + ct;
         file = folder + u8"art.log"s;
         notesel(artifactlocation);
         if (fread == 0) { notesave(file); }
@@ -171,9 +163,6 @@ int label_2107()
         notesel(newsbuff);
         if (fread == 0) { notesave(file); }
         if (fread == 1) { noteload(file); }
-        procid = (procid + 1) % 4;
-        proclist(procid) =
-            u8"ctrlFile:game"s + fread + u8":array"s + u8" ct:"s + ct;
         file = folder + u8"cdatan.s1"s;
         fmode = u8"cdatan1"s;
         arrayfile();
@@ -183,9 +172,6 @@ int label_2107()
         file = folder + u8"gdatan.s1"s;
         fmode = u8"gdatan"s;
         arrayfile();
-        procid = (procid + 1) % 4;
-        proclist(procid) =
-            u8"ctrlFile:game"s + fread + u8":evs"s + u8" ct:"s + ct;
         if (fread == 0) {
             bsave(folder + u8"evnum.s1"s, evnum);
             bsave(folder + u8"evdata1.s1"s, evdata1);
@@ -201,13 +187,8 @@ int label_2107()
             exist(folder + u8"evlist.s1"s);
             if (strsize != -1) { bload(folder + u8"evlist.s1"s, evlist); }
         }
-        procid = (procid + 1) % 4;
-        proclist(procid) =
-            u8"ctrlFile:game"s + fread + u8":end"s + u8" ct:"s + ct;
     }
     if (fmode == 14 || fmode == 15) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         if (fmode == 14) {
             fread = 0;
             folder = exedir + u8"tmp\\"s;
@@ -310,8 +291,6 @@ int label_2107()
         }
     }
     if (fmode == 2 || fmode == 1) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         folder = exedir + u8"tmp\\"s;
         if (fmode == 2) { fread = 0; }
         if (fmode == 1) { fread = 1; }
@@ -400,8 +379,6 @@ int label_2107()
         arrayfile();
     }
     if (fmode == 20 || fmode == 19) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         folder = exedir + u8"user\\"s;
         if (fmode == 20) { fread = 0; }
         if (fmode == 19) { fread = 1; }
@@ -455,8 +432,6 @@ int label_2107()
         }
     }
     if (fmode == 22 || fmode == 21) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         folder = exedir + u8"user\\"s;
         if (fmode == 22) {
             fread = 0;
@@ -611,8 +586,6 @@ int label_2107()
         }
     }
     if (fmode == 16) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         DIM3(cmapdata, 5, 400);
         {
             int cnt = 0;
@@ -694,8 +667,6 @@ int label_2107()
         }
     }
     if (fmode == 4 || fmode == 3) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         folder = exedir + u8"tmp\\"s;
         if (fmode == 4) { fread = 0; }
         if (fmode == 3) { fread = 1; }
@@ -711,8 +682,6 @@ int label_2107()
         zClose(hgz);
     }
     if (fmode == 23 || fmode == 24) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         if (fmode == 23) { fread = 0; }
         if (fmode == 24) { fread = 1; }
         fsize = 4000;
@@ -726,8 +695,6 @@ int label_2107()
         zClose(hgz);
     }
     if (fmode == 18 || fmode == 17) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         folder = exedir + u8"tmp\\"s;
         if (fmode == 18) { fread = 0; }
         if (fmode == 17) { fread = 1; }
@@ -769,8 +736,6 @@ int label_2107()
         arrayfile();
     }
     if (fmode == 10) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         dirlist(buff, exedir + u8"tmp\\*.*"s);
         if (stat == 0) {
             stat = stat;
@@ -788,8 +753,6 @@ int label_2107()
         }
     }
     if (fmode == 9) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         folder = exedir + u8"save\\"s + playerid;
         dirlist(buff, folder + u8"\\*.*"s);
         if (stat != 0) {
@@ -805,8 +768,6 @@ int label_2107()
         RemoveDirectoryA(folder);
     }
     if (fmode == 11 || fmode == 12) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         if (fmode == 12) {
             exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
             if (strsize == -1) {
@@ -847,8 +808,6 @@ int label_2107()
         fileadd(file, 1);
     }
     if (fmode == 13) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"ctrlFile"s + fmode + u8" ct:"s + ct;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt) {
@@ -870,8 +829,6 @@ int label_2107()
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"ctrlFile"s + fmode + u8"/end"s + u8" ct:"s + ct;
     stat = 0;
     return stat;
 }

@@ -1953,8 +1953,6 @@ label_2181_internal:
         label_1477();
         goto label_2186_internal;
     case 1113:
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"efPotential:Begin ct:"s + ct;
         if (efstatus >= 1) {
             {
                 int cnt = 10;
@@ -1989,8 +1987,6 @@ label_2181_internal:
             }
         }
         autosave = 1 * (gdata(20) != 35);
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"efPotential:End ct:"s + ct;
         goto label_2186_internal;
     case 653:
         if (tc < 57) { goto label_2186_internal; }

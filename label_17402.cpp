@@ -10,8 +10,6 @@ void label_2743(bool = true);
 void label_17402()
 {
 label_17401:
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_init ct:"s + ct;
     mapupdate = 0;
     if (gdata(22) > adata(10, gdata(20))) { gdata(22) = adata(10, gdata(20)); }
     if (gdata(22) < adata(17, gdata(20))) { gdata(22) = adata(17, gdata(20)); }
@@ -73,11 +71,7 @@ label_17401:
         goto label_1742_internal;
     }
 label_1741_internal:
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_init_main ct:"s + ct;
     if (mapupdate == 1) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"map_init_mapUpdate ct:"s + ct;
         maxnpcbk = 0;
         DIM3(rolebk, 2, 245);
         {
@@ -2344,15 +2338,11 @@ label_1741_internal:
                     mdata(13) = 66;
                     mdatan(0) = lang(u8"レシマス最深層"s, u8"The Depth"s);
                     if (gdata(252) < 170) { evadd(3); }
-                    procid = (procid + 1) % 4;
-                    proclist(procid) = u8"lesimas1 ct:"s + ct;
                     x = 16;
                     y = 13;
                     cell_featset(x, y, tile_upstairs, 10);
                     mdata(5) = y * 1000 + x;
                     map_placeplayer();
-                    procid = (procid + 1) % 4;
-                    proclist(procid) = u8"lesimas2 ct:"s + ct;
                     if (npcmemory(0, 2) == 0) {
                         flt();
                         characreate(-1, 2, 16, 6);
@@ -2362,8 +2352,6 @@ label_1741_internal:
                             characreate(-1, 23, 16, 6);
                         }
                     }
-                    procid = (procid + 1) % 4;
-                    proclist(procid) = u8"lesimas3 ct:"s + ct;
                     break;
                 }
                 label_16952();
@@ -2492,8 +2480,6 @@ label_1741_internal:
     }
     if (gdata(20) == 26) { label_16952(); }
     map_setfog();
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_init:1 ct:"s + ct;
     if (gdata(20) == 40 || dbg_revealmap || gdata(20) == 6 || mdata(6) == 3 ||
         mdata(6) == 1 || mdata(6) == 5 || mdata(6) == 2 || gdata(20) == 30 ||
         gdata(20) == 32 || gdata(20) == 34 || gdata(20) == 35 ||
@@ -2634,8 +2620,6 @@ label_1741_internal:
     mdata(19) = gdata(184);
     mdata(21) = 1;
 label_1742_internal:
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_preBegin ct:"s + ct;
     if (gdata(20) == 4) {
         if (gdata(252) == 180) {
             cdata(1, 0) = adata(1, 11);
@@ -2826,11 +2810,7 @@ label_1744_internal:
         }
     }
     if (gdata(20) == 35) { label_2105(); }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Check renew ct:"s + ct;
     label_1745();
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Recaluculate crowd ct:"s + ct;
     gdata(3) = 0;
     {
         int cnt = 0;
@@ -2847,8 +2827,6 @@ label_1744_internal:
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Prepare tile ct:"s + ct;
     cdata(80, 0) = gdata(20);
     cdata(81, 0) = gdata(22);
     raderx = -1;
@@ -2861,12 +2839,8 @@ label_1744_internal:
     label_1746();
     label_1439();
     label_1428();
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Update quest ct:"s + ct;
     if (mdata(6) == 3) { label_2671(); }
     if (mode == 11) { return; }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Proc scene ct:"s + ct;
     if (gdata(252) == 9) {
         sceneid = 2;
         label_2680();
@@ -2987,8 +2961,6 @@ label_1744_internal:
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Area specific ct:"s + ct;
     if (adata(16, gdata(20)) == 33) {
         tc = findchara(222);
         if (tc != 0) {
@@ -3047,19 +3019,13 @@ label_1744_internal:
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Init music ct:"s + ct;
     label_0068();
     label_2088();
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Init world ct:"s + ct;
     noaggrorefresh = 0;
     if (adata(0, gdata(20)) == 1) {
         label_0200();
         label_1748();
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Continue ct:"s + ct;
     if (mode == 3) {
         mode = 0;
         if (mapsubroutine == 0) {
@@ -3078,8 +3044,6 @@ label_1744_internal:
             return;
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Update area ct:"s + ct;
     wake_up();
     pcattacker = 0;
     cdata(29, 0) = 0;
@@ -3152,8 +3116,6 @@ label_1744_internal:
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Init final ct:"s + ct;
     if (mdata(6) == 1) {
         if (cfg_extrahelp) {
             if (gdata(202) == 0) {
@@ -3228,8 +3190,6 @@ label_1744_internal:
             gdata(180) = 0;
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Map:Quest message ct:"s + ct;
     if (gdata(20) == 13) {
         if (gdata(70) == 1009) {
             txtef(9);

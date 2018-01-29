@@ -7,8 +7,6 @@ namespace elona
 {
 void label_2716()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Load config ct:"s + ct;
     notesel(note_buff);
     noteload(exedir + u8"\\config.txt"s);
     {
@@ -1968,8 +1966,6 @@ void label_2716()
         label_2713();
         redraw(0);
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Fix config ct:"s + ct;
     if (cfg_language == 0) {
         jp = 1;
         vfix = 0;

@@ -8,7 +8,6 @@ namespace elona
 
 int main()
 {
-    SDIM3(proclist, 50, 4);
     exedir = dirinfo(1) + u8"\\"s;
     devfile = "";
     randomize();
@@ -1810,8 +1809,6 @@ void label_0067()
 }
 void label_0068()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Music ct:"s + ct;
     env = 0;
     if (gdata(17) == 3) { env = 75; }
     if (gdata(17) == 4) { env = 76; }
@@ -9924,8 +9921,6 @@ void txtgod(int prm_407, int prm_408)
 {
     if (prm_407 == 0) { return; }
     txtef(5);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"god text ct:"s + ct;
     if (prm_408 == 12) {
         if (prm_407 == 1) {
             txt(lang(u8"「お前も体を機械化したらどうだ？」"s,
@@ -10398,8 +10393,6 @@ void label_0192()
     tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"system_init ct:"s + ct;
     exist(exedir + u8"config.txt"s);
     if (strsize == -1) {
         bcopy(exedir + u8"original\\"s + u8"config.txt"s,
@@ -10482,8 +10475,6 @@ void label_0192()
         }
         gsel(0);
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Init buffer ct:"s + ct;
     folder = exedir + u8"user\\graphic\\"s;
     buffer(1, 1584, 1200);
     picload(exedir + u8"\\graphic\\item"s + devfile + u8".bmp"s, 1);
@@ -10495,8 +10486,6 @@ void label_0192()
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
     buffer(7, 24, 24);
     buffer(9, 24, 24);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"dim ct:"s + ct;
     DIM3(initeq, 2, 50);
     dup(eqhelm, initeq(0, 0));
     dup(eqweapon1, initeq(0, 1));
@@ -24063,8 +24052,6 @@ void mapitem_cold(int prm_846, int prm_847)
 }
 int copy_chara(int prm_848)
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"copy_chara:Begin ct:"s + ct;
     c_at_m139 = 0;
     {
         int cnt = 57;
@@ -24101,8 +24088,6 @@ int copy_chara(int prm_848)
         stat = 0;
         return stat;
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"copy_chara:Proc ct:"s + ct;
     del_chara(c_at_m139);
     memcpy(sdata, 0, c_at_m139, sdata, 0, prm_848, 4800);
     memcpy(cdata, 0, c_at_m139, cdata, 0, prm_848, 2000);
@@ -24130,8 +24115,6 @@ int copy_chara(int prm_848)
     cbitmod(975, c_at_m139, 0);
     cbitmod(981, c_at_m139, 1);
     cbitmod(985, c_at_m139, 0);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"copy_chara:end ct:"s + ct;
     stat = 1;
     return stat;
 }
@@ -34296,8 +34279,6 @@ int label_1582()
     if (fixlv == 6) {
         if (mode != 6) {
             if (nooracle == 0) {
-                procid = (procid + 1) % 4;
-                proclist(procid) = u8"oracle ct:"s + ct;
                 ii_p = inv_getowner(ci);
                 if (ii_p != -1) {
                     if (cdata(150, ii_p) == 13) {
@@ -35826,8 +35807,6 @@ void map_converttile()
 }
 void map_tileset(int prm_933)
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_tileSet:Begin ct:"s + ct;
     tile_doorclosed = 726;
     tile_dooropen = 236;
     tile_trans = 999;
@@ -35984,8 +35963,6 @@ void map_tileset(int prm_933)
             tile_default = 45;
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_tileSet:End ct:"s + ct;
     return;
 }
 int dist_town()
@@ -36019,8 +35996,6 @@ void map_initcustom(const std::string& prm_934)
     label_2107();
     map_tileset(mdata(12));
     nooracle = 1;
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_initCuston:CmapItem ct:"s + ct;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (400); cnt < cnt_end; ++cnt) {
@@ -36055,8 +36030,6 @@ void map_initcustom(const std::string& prm_934)
     }
     nooracle = 0;
     mdata(15) = 1;
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_initCuston:End ct:"s + ct;
     return;
 }
 void map_reload(const std::string& prm_935)
@@ -36113,8 +36086,6 @@ void map_reload(const std::string& prm_935)
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_reload:End ct:"s + ct;
     return;
 }
 void map_initialize()
@@ -36130,8 +36101,6 @@ void map_initialize()
     DIM3(mapsync, mdata(0), mdata(1));
     DIM3(mef, 9, 200);
     map_tileset(mdata(12));
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_initialize:end ct:"s + ct;
     return;
 }
 void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
@@ -40281,8 +40250,6 @@ void label_1736()
 }
 void label_1737()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_exit ct:"s + ct;
     gdata(84) = 0;
     gdata(171) = 0;
     if (mdata(6) == 5) {
@@ -40613,8 +40580,6 @@ void label_1745()
     if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30 +
             gdata(10) * 24 * 30 * 12 >=
         mdata(3)) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"renew_major ct:"s + ct;
         if (mdata(17) == 0) {
             if (mdata(3) != 0) {
                 {
@@ -40688,8 +40653,6 @@ void label_1745()
     if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30 +
             gdata(10) * 24 * 30 * 12 >=
         mdata(16)) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"renew_minor ct:"s + ct;
         if (mdata(16) == 0) {
             renewmulti = 1;
         } else {
@@ -40789,8 +40752,6 @@ void label_1745()
 }
 void label_1746()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_prepareTile:begin ct:"s + ct;
     gsel(6);
     redraw(0);
     if (mdata(2) != mtilefilecur) {
@@ -40896,14 +40857,10 @@ void label_1746()
     gmode(0);
     gsel(0);
     gmode(2, 24, 24);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"map_prepareTile:end ct:"s + ct;
     return;
 }
 int label_1747()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"world_newRandArea ct:"s + ct;
     p = 0;
     {
         int cnt = 450;
@@ -40929,8 +40886,6 @@ int label_1747()
 }
 void label_1748()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"world_update ct:"s + ct;
     if (gdata(79) == 1) {
         label_1752();
         label_1749();
@@ -40952,8 +40907,6 @@ void label_1748()
         }
     }
     if (p <= 25 || rnd(150) == 0 || gdata(262) != 0 || gdata(79)) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"world_update_rand_dungeon ct:"s + ct;
         gdata(262) = 0;
         msgtemp += lang(u8"この大陸に大きな地殻変動が起こった。"s,
             u8"A sudden diastrophism hits the continent."s);
@@ -40981,8 +40934,6 @@ void label_1749()
 }
 void label_1750()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"world_setArea:building ct:"s + ct;
     label_0201();
     {
         int cnt = 0;
@@ -41004,9 +40955,6 @@ void label_1750()
     {
         int cnt = 0;
         for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt) {
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"world_setArea:fix:id"s + cnt + u8"/"s +
-                adata(16, cnt) + u8" ct:"s + ct;
             if (adata(16, cnt) == 0 || adata(15, cnt) == 0) { continue; }
             if (adata(30, cnt) != gdata(850)) { continue; }
             if (adata(16, cnt) == 900) {
@@ -41017,9 +40965,6 @@ void label_1750()
                 adata(16, cnt) -= 800;
                 continue;
             }
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"world_setArea:fix:begin"s + adata(1, cnt) +
-                u8"/"s + adata(2, cnt) + u8" ct:"s + ct;
             if (adata(1, cnt) <= 0 || adata(2, cnt) <= 0 ||
                 adata(1, cnt) >= mdata(0) || adata(2, cnt) >= mdata(1)) {
                 adata(1, cnt) = mdata(0) / 2;
@@ -41028,8 +40973,6 @@ void label_1750()
             p = cnt;
             if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) && 4 ||
                 map(adata(1, cnt), adata(2, cnt), 6) != 0) {
-                procid = (procid + 1) % 4;
-                proclist(procid) = u8"world_setArea:fix:loop ct:"s + ct;
                 {
                     int cnt = 0;
                     for (;; ++cnt) {
@@ -41053,12 +40996,6 @@ void label_1750()
                     }
                 }
             }
-            procid = (procid + 1) % 4;
-            proclist(procid) =
-                u8"world_setArea:fix:xy:"s + x + u8":"s + y + u8" ct:"s + ct;
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"world_setArea:fix:map:"s +
-                map(adata(1, cnt), adata(2, cnt), 0) + u8" ct:"s + ct;
             if (33 <= map(adata(1, cnt), adata(2, cnt), 0) &&
                     map(adata(1, cnt), adata(2, cnt), 0) < 66 ||
                 chipm(0, map(adata(1, cnt), adata(2, cnt), 0)) == 4 ||
@@ -41068,15 +41005,11 @@ void label_1750()
             }
             cell_featset(adata(1, cnt), adata(2, cnt), adata(15, cnt), 15,
                 cnt % 100, cnt / 100);
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"world_setArea:fix:' ct:"s + ct;
             if (adata(0, cnt) == 3 || adata(0, cnt) == 2) {
                 map(adata(1, cnt), adata(2, cnt), 9) = 11;
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"world_setArea:end ct:"s + ct;
     return;
 }
 void label_1751()
@@ -47470,8 +47403,6 @@ void label_1892()
 }
 int label_1893()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Random event ct:"s + ct;
     id(0) = 0;
     id(1) = 0;
     if (gspd < 10) {
@@ -47561,8 +47492,6 @@ int label_1893()
     if (rnd(25) == 0) { id = 10; }
     if (rnd(25) == 0) { id = 11; }
 label_1894_internal:
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"random_eventProc:"s + id + u8" ct:"s + ct;
     if (id == 0) {
         stat = 0;
         return stat;
@@ -47990,8 +47919,6 @@ label_1895_internal:
 }
 int label_1896()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"re_select ct:"s + ct;
     if (cfg_skiprandevents) {
         if (listmax <= 1) {
             snd(62);
@@ -49045,8 +48972,6 @@ void label_1921()
 }
 void label_1922()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"com_blend ct:"s + ct;
     step = -1;
     rpid = 0;
     gsel(3);
@@ -50491,8 +50416,6 @@ label_1948_internal:
 }
 void label_1951()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"com_target ct:"s + ct;
     page = 0;
     pagesize = 16;
     cs_bk = -1;
@@ -55911,8 +55834,6 @@ void label_2049()
 }
 void label_2050()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"com_wear ct:"s + ct;
     cc = 0;
     page = 0;
     pagesize = 14;
@@ -56506,8 +56427,6 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
 }
 void label_2068()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"com_identify ct:"s + ct;
     if (ci < 0) {
         dialog(
             u8"暫定エラー回避処置です。お手数ですが、どの持ち物メニュー(例えば飲む、振る、食べるなど）から調査(xキー)を押したか報告お願いします。"s);
@@ -57478,8 +57397,6 @@ void label_2084()
 }
 void label_2085()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:Init ct:"s + ct;
     cc = 0;
     dbidn = cdatan(2, 0);
     dbmode = 2;
@@ -57489,8 +57406,6 @@ void label_2085()
     label_2298();
     buff = "";
     notesel(buff);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:1 ct:"s + ct;
     noteadd(u8"Elona Version 1.22 キャラクター情報 "s + gdata(10) + u8"年"s +
         gdata(11) + u8"月"s + gdata(12) + u8"日 "s + gdata(13) + u8"時"s +
         gdata(14) + u8"分  "s + mdatan(0));
@@ -57505,22 +57420,16 @@ void label_2085()
         fixtxt((u8"所属      : "s + guildname()), 32));
     noteadd(fixtxt(u8"レベル     : "s + cdata(38, 0), 30) +
         fixtxt((u8"経過日数  : "s + gdata(7)), 32));
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:1-2 ct:"s + ct;
     noteadd(fixtxt(u8"残りBP     : "s + cdata(41, 0), 30) +
         fixtxt((u8"経過ターン: "s + gdata(4)), 32));
     noteadd(fixtxt(u8"金貨       : "s + cdata(30, 0), 30) +
         fixtxt((u8"殺害数    : "s + gdata(2)), 32));
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:1-3 ct:"s + ct;
     noteadd(fixtxt(u8"プラチナ   : "s + cdata(31, 0), 30) +
         fixtxt((u8"最深到達  : "s + gdata(1) + u8"階相当"s), 32));
     noteadd(fixtxt(u8"プレイ時間 : "s +
             cnvplaytime((gdata(805) + timeGetTime() / 1000 - time_begin)),
         30));
     noteadd(""s);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:2 ct:"s + ct;
     s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s + sorg(2, 0) + u8")"s;
     s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s + sorg(3, 0) + u8")"s;
     s(3) = u8"狂気度    : 0"s;
@@ -57530,8 +57439,6 @@ void label_2085()
     s(7) = u8"DV        : "s + cdata(71, 0);
     s(8) = u8"PV        : "s + cdata(70, 0);
     s(9) = "";
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:3 ct:"s + ct;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
@@ -57563,8 +57470,6 @@ void label_2085()
         }
     }
     noteadd(""s);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:4 ct:"s + ct;
     val = 1;
     label_2047();
     tc = 0;
@@ -57578,8 +57483,6 @@ void label_2085()
     noteadd(u8"------------------------------ 装備品 合計重量"s +
         cnvweight(cdata(64, cc)) + u8" "s + cnveqweight(cc));
     noteadd(""s);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:5 ct:"s + ct;
     listmax = 0;
     {
         int cnt = 100;
@@ -57621,8 +57524,6 @@ void label_2085()
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:6 ct:"s + ct;
     noteadd(u8"------------------------------ 特徴"s);
     noteadd(""s);
     dump_return = 1;
@@ -57637,8 +57538,6 @@ void label_2085()
         }
     }
     noteadd(""s);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:7 ct:"s + ct;
     noteadd(u8"------------------------------ 仲間"s);
     noteadd(""s);
     {
@@ -57662,8 +57561,6 @@ void label_2085()
             noteadd(""s);
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:8 ct:"s + ct;
     noteadd(u8"------------------------------ 称号"s);
     noteadd(""s);
     {
@@ -57685,8 +57582,6 @@ void label_2085()
             }
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Dump:9 ct:"s + ct;
     s = exedir + u8"\\save\\"s + playerid + u8".txt"s;
     notesave(s);
     exec(s, 16);
@@ -57783,8 +57678,6 @@ void label_2087()
 }
 void label_2088()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"fixOnMapEnter ct:"s + ct;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt) {
@@ -58331,8 +58224,6 @@ void label_2104()
 }
 void label_2105()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"userNpc_update ct:"s + ct;
     dirlist(buff, exedir + u8"user\\*.npc"s);
     notesel(buff);
     usernpcmax = noteinfo(0);
@@ -58347,20 +58238,14 @@ void label_2105()
     picload(exedir + u8"\\graphic\\character"s + devfile + u8".bmp"s, 1);
     gmode(0);
     fread = 1;
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"userNpc_update:1 ct:"s + ct;
     func_1(buff, 1);
     tg = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (usernpcmax); cnt < cnt_end; ++cnt) {
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:2 ct:"s + ct;
             noteget(s, cnt);
             cnt2 = tg;
             unzip2(exedir + u8"user\\"s, s);
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:2a ct:"s + ct;
             if (fread == 0) {
                 zOpen(hgz, exedir + u8"user\\npc1.t"s, 1, 3);
                 zWrite(userdata, hgz, 280, tg);
@@ -58372,8 +58257,6 @@ void label_2105()
             }
             DIM2(bmpbuff, userdata(0, tg));
             SDIM2(txtbuff, userdata(1, tg));
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:2c ct:"s + ct;
             if (fread == 0) {
                 zOpen(hgz, exedir + u8"user\\npc2.t"s, 1, 3);
                 zWrite(bmpbuff, hgz, userdata(0, tg));
@@ -58383,8 +58266,6 @@ void label_2105()
                 zRead(bmpbuff, hgz, userdata(0, tg));
                 zClose(hgz);
             }
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:2d ct:"s + ct;
             if (fread == 0) {
                 zOpen(hgz, exedir + u8"user\\npc3.t"s, 1, 3);
                 zWrite(txtbuff, hgz, userdata(1, tg));
@@ -58394,8 +58275,6 @@ void label_2105()
                 zRead(txtbuff, hgz, userdata(1, tg));
                 zClose(hgz);
             }
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:2e ct:"s + ct;
             s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
             csvstr2(s, s);
             userdatan(0, tg) = s;
@@ -58414,8 +58293,6 @@ void label_2105()
             }
             untaglist += u8"/"s + userdatan(0, tg) + u8"/"s;
             if (instr(s, 0, u8"_tmp_"s) != -1) { ++gdata(86); }
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:set info ct:"s + ct;
             userdatan(2, tg) = getnpctxt(u8"race."s, u8"slime"s);
             userdatan(3, tg) = getnpctxt(u8"class."s, u8"tourist"s);
             userdatan(4, tg) = getnpctxt(u8"filter."s, ""s);
@@ -58423,8 +58300,6 @@ void label_2105()
             s = getnpctxt(u8"meleeElem."s, u8"0,0"s);
             csvstr2(s, s);
             userdata(11, tg) = elona_int(s) * 100000 + elona_int(s(1));
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:set bits ct:"s + ct;
             s = getnpctxt(u8"bitOn."s, u8"0,0"s);
             csvstr2(s, s);
             {
@@ -58435,8 +58310,6 @@ void label_2105()
                     HMMBITON(userdata(40 + p / 32, cnt2), p % 32);
                 }
             }
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:set actions ct:"s + ct;
             s = getnpctxt(u8"aiAct."s, u8"0,0,0,0,0"s);
             csvstr2(s, s);
             {
@@ -58453,8 +58326,6 @@ void label_2105()
                     userdata(20 + cnt, cnt2) = elona_int(s(cnt));
                 }
             }
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:set ref ct:"s + ct;
             userdata(12, tg) = elona_int(getnpctxt(u8"select."s, u8"0"s));
             userdata(2, tg) = elona_int(getnpctxt(u8"level."s, u8"1"s));
             userdata(3, tg) = elona_int(getnpctxt(u8"sex."s, u8"-1"s));
@@ -58470,8 +58341,6 @@ void label_2105()
             p = instr(txtbuff, 0, u8"%txt"s);
             txtbuff = strmid(txtbuff, p, instr(txtbuff, 0, u8"%endTxt"s) - p);
             usertxt(tg) = strmid(txtbuff, 0, 7998);
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"userNpc_update:2.1 ct:"s + ct;
             gsel(9);
             memfile(bmpbuff);
             picload(u8"MEM:temp.bmp"s);
@@ -58494,12 +58363,8 @@ void label_2105()
             ++tg;
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"userNpc_update:3 ct:"s + ct;
     label_2111();
     label_2110();
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"userNpc_update:Replace bmp ct:"s + ct;
     gsel(5);
     folder = exedir + u8"user\\graphic\\"s;
     dirlist(buff, folder + u8"chara_*.bmp"s);
@@ -58680,8 +58545,6 @@ void label_2109()
 }
 void label_2110()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"del_userNpc ct:"s + ct;
     dirlist(buff, exedir + u8"user\\_tmp_*.npc"s);
     notesel(buff);
     {
@@ -58704,8 +58567,6 @@ void label_2110()
 }
 void label_2111()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"del_userTemp ct:"s + ct;
     dirlist(buff, exedir + u8"user\\*.t"s);
     notesel(buff);
     {
@@ -58763,8 +58624,6 @@ void label_2113()
         label_1419();
         return;
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"game_save ct:"s + ct;
     fmode = 2;
     label_2107();
     file = u8"inv_"s + mid + u8".s2"s;
@@ -62559,8 +62418,6 @@ int label_2168()
     }
     if (cc != 0) {
         if (sdataref(1, efid) == 7) {
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"skSummon ct:"s + ct;
             if (cdata(9, cc) == 10 || gdata(20) == 40) {
                 efsource = 0;
                 stat = 0;
@@ -65302,8 +65159,6 @@ void label_2213()
 }
 void label_2214()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift ct:"s + ct;
     snd(23);
     txt(lang(u8"あなたは"s + itemname(ci) + u8"を開けた。"s,
         u8"You open "s + itemname(ci) + u8"."s));
@@ -65313,12 +65168,8 @@ void label_2214()
     ri = ci;
     cc = 0;
     inv(25, ri) = 0;
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift1 ct:"s + ct;
     if (inv(27, ri) < 100) {
         if (rnd(3) == 0) {
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"new year gift1-1 ct:"s + ct;
             if (synccheck(cc, -1)) {
                 txt(lang(u8"悪意を持った何かが袋から飛び出してきた！"s,
                     u8"Something jumps out from the pack!"s));
@@ -65333,8 +65184,6 @@ void label_2214()
             return;
         }
         if (rnd(3) == 0) {
-            procid = (procid + 1) % 4;
-            proclist(procid) = u8"new year gift1-2 ct:"s + ct;
             if (synccheck(cc, -1)) {
                 txt(lang(u8"罠だ！お年玉袋は発火した。"s,
                     u8"It's trap! The gift ignites."s));
@@ -65364,8 +65213,6 @@ void label_2214()
         label_2176();
         return;
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift2 ct:"s + ct;
     if (inv(27, ri) < 200) {
         if (rnd(4) == 0) {
             if (synccheck(cc, -1)) {
@@ -65401,8 +65248,6 @@ void label_2214()
             cdata(2, 0), 1);
         return;
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift3 ct:"s + ct;
     if (rnd(3) == 0) {
         if (synccheck(cc, -1)) {
             txtef(5);
@@ -65423,8 +65268,6 @@ void label_2214()
         }
         return;
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift4 ct:"s + ct;
     if (rnd(50) == 0) {
         if (synccheck(cc, -1)) {
             txt(lang(u8"これは素晴らしい贈り物だ！"s,
@@ -65435,8 +65278,6 @@ void label_2214()
             cdata(2, 0), 1);
         return;
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift5 ct:"s + ct;
     if (synccheck(cc, -1)) {
         txt(lang(u8"何かが袋から出てきた。"s,
             u8"There's something inside the pack."s));
@@ -65444,8 +65285,6 @@ void label_2214()
     flt();
     itemcreate(-1, isetgiftmajor(rnd(length(isetgiftmajor))), cdata(1, 0),
         cdata(2, 0), 1);
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"new year gift end ct:"s + ct;
     return;
 }
 void label_2215()
@@ -66446,8 +66285,6 @@ void dipcursed(int prm_1078, int)
 }
 void label_2227()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"proc_dip ct:"s + ct;
     if (inv(3, cidip) == 617) {
         item_separate(ci);
         item_num(cidip, -1);
@@ -66650,8 +66487,6 @@ void label_2227()
 }
 void label_2228()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"act_use ct:"s + ct;
     screenupdate = -1;
     label_1419();
     tc = cc;
@@ -73587,8 +73422,6 @@ void label_2679()
 }
 void label_2680()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Scene:Init ct:"s + ct;
     if (gdata(36) < sceneid) { gdata(36) = sceneid; }
     if (cfg_story == 0 || en == 1 && sceneid != 0) { return; }
     scene_cut = 0;
@@ -73608,8 +73441,6 @@ void label_2680()
     }
     scidx += strlen(s);
 label_2681:
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Scene:Loop ct:"s + ct;
     await();
     stick(a, 128);
     if (a == 128) { scene_cut = 1; }
@@ -73827,8 +73658,6 @@ label_2684_internal:
 }
 void label_2685()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Scene:Exit ct:"s + ct;
     gsel(4);
     color(0, 0, 0);
     boxf();
@@ -77194,8 +77023,6 @@ void label_2733()
 {
 redo:
 
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"main_init:Begin ct:"s + ct;
     sound = 0;
     ct = 0;
     {
@@ -77318,8 +77145,6 @@ label_2734_internal:
             label_2736();
         }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"main_init:End ct:"s + ct;
     try {
         label_2737();
     } catch (elona_turn_sequence&) {
@@ -77351,8 +77176,6 @@ void label_2735()
 }
 void label_2736()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Advance_hour:Begin ct:"s + ct;
     if (adata(16, gdata(20)) == 101) { label_1728(); }
     if (gdata(20) == 7) { label_1730(); }
     if (mdata(6) == 1) {
@@ -77619,8 +77442,6 @@ void label_2736()
     if (gdata(20) != 30) {
         if (gdata(20) != 41) { label_1893(); }
     }
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"Advance_hour:End ct:"s + ct;
     return;
 }
 void label_2737(bool label_2738_flg)
@@ -78087,8 +77908,6 @@ void label_2742()
         }
         label_1519();
         refreshspeed(cc);
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"turn_end:pc ct:"s + ct;
     } else {
         if (mdata(6) != 1) {
             cdata(22, cc) -= 16;
@@ -78119,8 +77938,6 @@ void label_2742()
 void label_2743(bool label_2747_flg)
 {
     if (label_2747_flg) {
-        procid = (procid + 1) % 4;
-        proclist(procid) = u8"pc_turn_init ct:"s + ct;
         if (gdata(185)) {
             if (rnd(1000) == 0) { txtgod(cdata(61, 0), 12); }
         }
@@ -79432,8 +79249,6 @@ void label_2753()
 }
 void label_2754()
 {
-    procid = (procid + 1) % 4;
-    proclist(procid) = u8"event ct:"s + ct;
     switch (evid()) {
     case 8: label_2678(); goto label_2755_internal;
     case 14:

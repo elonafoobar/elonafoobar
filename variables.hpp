@@ -191,7 +191,6 @@ inline std::string refstr;
 // dup :: (T, T) -> void
 // main :: () -> int
 std::string randomname(int = 0);
-inline elona_vector1<std::string> proclist;
 inline std::string exedir;
 inline std::string devfile;
 inline int randseed;
@@ -365,7 +364,6 @@ inline elona_vector1<std::string> s;
 inline elona_vector1<std::string> buff;
 inline elona_vector1<std::string> musicfile;
 void label_0067();
-inline int procid;
 inline int ct;
 inline int env;
 inline int envwprev;

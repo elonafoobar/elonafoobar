@@ -15,9 +15,6 @@ void cs_list(int CNT, const std::string& prm_543, int prm_544 = 0,
 int label_20592()
 {
 label_20591:
-    procid = (procid + 1) % 4;
-    proclist(procid) =
-        u8"com_inventory"s + invctrl + u8"/"s + invctrl(1) + u8" ct:"s + ct;
     if (invctrl == 22) {
         if (invctrl(1) == 1) { label_2087(); }
     }
