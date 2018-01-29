@@ -1,0 +1,7 @@
+.DS_Store
+*.dump
+*.o
+bin/
+*.a
+a.out
+runtime/

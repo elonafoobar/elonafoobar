@@ -1,0 +1,39 @@
+#pragma once
+
+#include "lib/noncopyable.hpp"
+#include "renderer.hpp"
+
+
+namespace snail
+{
+
+
+class Node
+    : public lib::noncopyable
+{
+public:
+    int frame() const noexcept
+    {
+        return _frame;
+    }
+
+
+    Node() = default;
+    virtual ~Node() override = default;
+
+    virtual void update() = 0;
+    virtual void render(Renderer& renderer) = 0;
+
+    void _increase_frame()
+    {
+        ++_frame;
+    }
+
+
+private:
+    int _frame = 0;
+};
+
+
+
+}
