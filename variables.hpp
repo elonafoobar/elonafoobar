@@ -1389,7 +1389,8 @@ void delmef(int = 0);
 // prm_590 :: int
 // prm_591 :: int
 inline int p_at_m79;
-void addmef(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void addmef(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0,
+    int = 0, int = 0, int = 0);
 // prm_592 :: int
 // prm_593 :: int
 // prm_594 :: int
@@ -1686,9 +1687,12 @@ inline int p3_len_at_filedialog;
 inline std::string szappfilter_at_filedialog;
 inline int start_at_filedialog;
 inline int mutch_at_filedialog;
-// ofn_at_filedialog :: elona_vector1<int> | string | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int> | elona_vector1<int>
-// hinstance :: unknown
-// prm_715 :: string
+// ofn_at_filedialog :: elona_vector1<int> | string | elona_vector1<int> |
+// elona_vector1<int> | elona_vector1<int> | elona_vector1<int> |
+// elona_vector1<int> | elona_vector1<int> | elona_vector1<int> |
+// elona_vector1<int> | elona_vector1<int> | elona_vector1<int> |
+// elona_vector1<int> | elona_vector1<int> | elona_vector1<int> |
+// elona_vector1<int> hinstance :: unknown prm_715 :: string
 inline std::string m_at_m102;
 inline std::string msg_at_m102;
 inline int i_at_m102;
@@ -3851,8 +3855,7 @@ void txt(Args&&... args)
 {
     std::vector<std::string> text{txt_tostr(args)...};
     txtvalid = 0;
-    if (hear != 0)
-    {
+    if (hear != 0) {
         snd(hear);
         hear = 0;
     }
@@ -3865,10 +3868,8 @@ void txt(Args&&... args)
 
 
 
-struct elona_fmode_t
-{
-    enum class Type
-    {
+struct elona_fmode_t {
+    enum class Type {
         integer,
         string,
     } type;
@@ -3877,11 +3878,7 @@ struct elona_fmode_t
     int i;
     std::string s;
 
-    elona_fmode_t()
-        : type(Type::integer)
-        , i(0)
-    {
-    }
+    elona_fmode_t() : type(Type::integer), i(0) {}
 
     virtual ~elona_fmode_t() = default;
 
@@ -3914,12 +3911,9 @@ struct elona_fmode_t
 
     std::string to_string() const
     {
-        switch (type)
-        {
-        case elona_fmode_t::Type::integer:
-            return std::to_string(i);
-        case elona_fmode_t::Type::string:
-            return s;
+        switch (type) {
+        case elona_fmode_t::Type::integer: return std::to_string(i);
+        case elona_fmode_t::Type::string: return s;
         }
         assert(0);
     }
@@ -3937,4 +3931,4 @@ inline elona_fmode_t fmode;
 
 
 
-}
+} // namespace elona

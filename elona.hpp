@@ -1,8 +1,8 @@
+#include <algorithm>
 #include <cassert>
 #include <cctype>
 #include <cmath>
 #include <cstdint>
-#include <algorithm>
 #include <iterator>
 #include <memory>
 #include <random>
@@ -13,12 +13,10 @@
 
 namespace elona
 {
-
-
 int main();
 
 
-template <typename ...>
+template <typename...>
 constexpr bool false_v = false;
 
 
@@ -33,20 +31,13 @@ void allocate_and_clear_vector(std::vector<T>& v, int size)
 
 
 template <typename T>
-struct elona_vector1
-{
-    elona_vector1()
-        : storage(1)
-    {
-    }
+struct elona_vector1 {
+    elona_vector1() : storage(1) {}
 
 
     T& operator()(int i)
     {
-        if (i >= std::size(storage))
-        {
-            storage.resize(i + 1);
-        }
+        if (i >= std::size(storage)) { storage.resize(i + 1); }
         return storage.at(i);
     }
 
@@ -64,36 +55,25 @@ struct elona_vector1
     }
 
 
-    operator T&()
-    {
-        return storage.at(0);
-    }
+    operator T&() { return storage.at(0); }
 
 
     template <typename U>
     T& operator+=(const U& x)
     {
-        if constexpr (std::is_same_v<T, std::string> && std::is_same_v<U, int>)
-        {
+        if constexpr (std::is_same_v<T, std::string> &&
+            std::is_same_v<U, int>) {
             return storage.at(0) += std::to_string(x);
-        }
-        else
-        {
+        } else {
             return storage.at(0) += x;
         }
     }
 
 
-    T& operator+=(elona_vector1<T>& v)
-    {
-        return storage.at(0) += v(0);
-    }
+    T& operator+=(elona_vector1<T>& v) { return storage.at(0) += v(0); }
 
 
-    void clear()
-    {
-        std::fill(std::begin(storage), std::end(storage), T{});
-    }
+    void clear() { std::fill(std::begin(storage), std::end(storage), T{}); }
 
 
     void allocate_and_clear(int size)
@@ -102,10 +82,7 @@ struct elona_vector1
     }
 
 
-    size_t size() const noexcept
-    {
-        return std::size(storage);
-    }
+    size_t size() const noexcept { return std::size(storage); }
 
 
 
@@ -115,50 +92,34 @@ private:
 
 
 
-
-
-
-
 template <typename T>
-struct elona_vector2
-{
+struct elona_vector2 {
     T& operator()(int i, int j)
     {
-        if (j >= std::size(storage))
-        {
+        if (j >= std::size(storage)) {
             storage.resize(j + 1);
-            for (int j_ = 0; j_ < j+1; ++j_)
-            {
-                if (!storage.at(j_))
-                {
+            for (int j_ = 0; j_ < j + 1; ++j_) {
+                if (!storage.at(j_)) {
                     storage.at(j_) = std::make_unique<std::vector<T>>();
                 }
             }
         }
-        if (i >= std::size(*storage.at(j)))
-        {
-            storage.at(j)->resize(i + 1);
-        }
+        if (i >= std::size(*storage.at(j))) { storage.at(j)->resize(i + 1); }
         return (*storage.at(j))[i];
     }
 
 
     void clear()
     {
-        for (auto& v : storage)
-        {
-            for (auto& i : *v)
-            {
-                i = T{};
-            }
+        for (auto& v : storage) {
+            for (auto& i : *v) { i = T{}; }
         }
     }
 
 
     void clear(int j)
     {
-        if (j >= std::size(storage))
-            return;
+        if (j >= std::size(storage)) return;
 
         std::fill(std::begin(*storage.at(j)), std::end(*storage.at(j)), T{});
     }
@@ -166,11 +127,9 @@ struct elona_vector2
 
     void clear(int j, int i_begin, int i_length)
     {
-        if (j >= std::size(storage))
-            return;
+        if (j >= std::size(storage)) return;
 
-        if (i_begin + i_length >= std::size(*storage.at(j)))
-        {
+        if (i_begin + i_length >= std::size(*storage.at(j))) {
             storage.at(j)->resize(i_begin + i_length + 1);
         }
         std::fill_n(std::begin(*storage.at(j)) + i_begin, i_length, T{});
@@ -181,10 +140,8 @@ struct elona_vector2
     void allocate_and_clear(int i_size, int j_size)
     {
         storage.resize(j_size);
-        for (int j = 0; j < j_size; ++j)
-        {
-            if (!storage.at(j))
-            {
+        for (int j = 0; j < j_size; ++j) {
+            if (!storage.at(j)) {
                 storage.at(j) = std::make_unique<std::vector<T>>();
             }
             allocate_and_clear_vector(*storage.at(j), i_size);
@@ -192,10 +149,7 @@ struct elona_vector2
     }
 
 
-    size_t j_size() const noexcept
-    {
-        return std::size(storage);
-    }
+    size_t j_size() const noexcept { return std::size(storage); }
 
 
     size_t i_size() const noexcept
@@ -210,36 +164,28 @@ private:
 
 
 
-
 template <typename T>
-struct elona_vector3
-{
+struct elona_vector3 {
     T& operator()(int i, int j, int k)
     {
-        if (k >= std::size(storage))
-        {
+        if (k >= std::size(storage)) {
             storage.resize(k + 1);
-            for (int k_ = 0; k_ < k+1; ++k_)
-            {
-                if (!storage.at(k_))
-                {
-                    storage.at(k_) = std::make_unique<std::vector<std::unique_ptr<std::vector<T>>>>();
+            for (int k_ = 0; k_ < k + 1; ++k_) {
+                if (!storage.at(k_)) {
+                    storage.at(k_) = std::make_unique<
+                        std::vector<std::unique_ptr<std::vector<T>>>>();
                 }
             }
         }
-        if (j >= std::size(*storage.at(k)))
-        {
+        if (j >= std::size(*storage.at(k))) {
             storage.at(k)->resize(j + 1);
-            for (int j_ = 0; j_ < j+1; ++j_)
-            {
-                if (!(*storage.at(k))[j_])
-                {
+            for (int j_ = 0; j_ < j + 1; ++j_) {
+                if (!(*storage.at(k))[j_]) {
                     (*storage.at(k))[j_] = std::make_unique<std::vector<T>>();
                 }
             }
         }
-        if (i >= std::size(*(*storage.at(k))[j]))
-        {
+        if (i >= std::size(*(*storage.at(k))[j])) {
             (*storage.at(k))[j]->resize(i + 1);
         }
         return (*(*storage.at(k))[j])[i];
@@ -251,17 +197,14 @@ struct elona_vector3
     void allocate_and_clear(int i_size, int j_size, int k_size)
     {
         storage.resize(j_size);
-        for (int k = 0; k < k_size; ++k)
-        {
-            if (!storage.at(k))
-            {
-                storage.at(k) = std::make_unique<std::vector<std::unique_ptr<std::vector<T>>>>();
+        for (int k = 0; k < k_size; ++k) {
+            if (!storage.at(k)) {
+                storage.at(k) = std::make_unique<
+                    std::vector<std::unique_ptr<std::vector<T>>>>();
             }
             storage.at(k)->resize(j_size);
-            for (int j = 0; j < j_size; ++j)
-            {
-                if (!(*storage.at(k))[j])
-                {
+            for (int j = 0; j < j_size; ++j) {
+                if (!(*storage.at(k))[j]) {
                     (*storage.at(k))[j] = std::make_unique<std::vector<T>>();
                 }
                 allocate_and_clear_vector(*(*storage.at(k))[j], i_size);
@@ -270,10 +213,7 @@ struct elona_vector3
     }
 
 
-    size_t k_size() const noexcept
-    {
-        return std::size(storage);
-    }
+    size_t k_size() const noexcept { return std::size(storage); }
 
 
     size_t j_size() const noexcept
@@ -284,45 +224,45 @@ struct elona_vector3
 
     size_t i_size() const noexcept
     {
-        return std::empty(storage) ? 0 : std::empty(*storage.at(0)) ? 0 : std::size(*(*storage.at(0))[0]);
+        return std::empty(storage)
+            ? 0
+            : std::empty(*storage.at(0)) ? 0 : std::size(*(*storage.at(0))[0]);
     }
 
 
 
 private:
-    std::vector<std::unique_ptr<std::vector<std::unique_ptr<std::vector<T>>>>> storage;
+    std::vector<std::unique_ptr<std::vector<std::unique_ptr<std::vector<T>>>>>
+        storage;
 };
 
 
 
-
-
-
 std::string operator+(const std::string& lhs, int rhs);
-std::string operator+(elona_vector1<std::string>& lhs, elona_vector1<std::string>& rhs);
+std::string operator+(
+    elona_vector1<std::string>& lhs, elona_vector1<std::string>& rhs);
 std::string operator+(const std::string& lhs, elona_vector1<std::string>& rhs);
 std::string operator+(elona_vector1<std::string>& lhs, int rhs);
 std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs);
 
 
 
-
-#define DEFINE_CMP(op) \
-    template <typename T> \
-    bool operator op(elona_vector1<T>& lhs, const T& rhs) \
-    { \
-        return lhs(0) op rhs; \
-    } \
-    template <typename T> \
-    bool operator op(const T& lhs, elona_vector1<T>& rhs) \
-    { \
-        return lhs op rhs(0); \
-    } \
-    template <typename T> \
+#define DEFINE_CMP(op)                                             \
+    template <typename T>                                          \
+    bool operator op(elona_vector1<T>& lhs, const T& rhs)          \
+    {                                                              \
+        return lhs(0) op rhs;                                      \
+    }                                                              \
+    template <typename T>                                          \
+    bool operator op(const T& lhs, elona_vector1<T>& rhs)          \
+    {                                                              \
+        return lhs op rhs(0);                                      \
+    }                                                              \
+    template <typename T>                                          \
     bool operator op(elona_vector1<T>& lhs, elona_vector1<T>& rhs) \
-    { \
-        return lhs(0) op rhs(0); \
-    } \
+    {                                                              \
+        return lhs(0) op rhs(0);                                   \
+    }
 
 
 DEFINE_CMP(==)
@@ -411,24 +351,28 @@ double expf(double x);
 
 void font(const std::string& name, int size, int style);
 
-void gcopy(int window_id, int src_x, int src_y, int src_width = 0, int src_height = 0);
+void gcopy(
+    int window_id, int src_x, int src_y, int src_width = 0, int src_height = 0);
 
 void getkey(int& out, int key);
 
 std::string getpath(const std::string& source, int mode);
 
-void getstr(std::string& out, const std::string& source, int offset, char delimiter, int limit = 0);
+void getstr(std::string& out, const std::string& source, int offset,
+    char delimiter, int limit = 0);
 
 int ginfo(int type);
 
 
 void gmode(int mode, int width = -1, int height = -1, int alpha = 255);
 
-void grotate(int window_id, int src_x, int src_y, double angle, int dst_width = 0, int dst_height = 0);
+void grotate(int window_id, int src_x, int src_y, double angle,
+    int dst_width = 0, int dst_height = 0);
 
 void gsel(int window_id);
 
-void gzoom(int dst_width, int dst_height, int window_id, int src_x, int src_y, int src_width, int src_height, int mode = 0);
+void gzoom(int dst_width, int dst_height, int window_id, int src_x, int src_y,
+    int src_width, int src_height, int mode = 0);
 
 
 int instr(const std::string& str, size_t pos, const std::string pattern);
@@ -469,7 +413,8 @@ double logf(double x);
 
 
 
-void memcpy(elona_vector2<int>& src, int src_i, int src_j, elona_vector2<int>& dst, int dst_i, int dst_j, size_t size);
+void memcpy(elona_vector2<int>& src, int src_i, int src_j,
+    elona_vector2<int>& dst, int dst_i, int dst_j, size_t size);
 
 
 // void memexpand(void* memory, size_t size)
@@ -487,7 +432,8 @@ void mes(const std::string& text);
 
 void mes(int n);
 
-void mesbox(std::string& buffer, int width, int height, int style, int max_input_size = -1);
+void mesbox(std::string& buffer, int width, int height, int style,
+    int max_input_size = -1);
 
 void mkdir(const std::string& path);
 
@@ -583,12 +529,11 @@ void wpoke(int& x, size_t index, int y);
 
 
 
-
-
 // imported functions
 
 
-void exrand_randomize(std::random_device::result_type seed = std::random_device{}());
+void exrand_randomize(
+    std::random_device::result_type seed = std::random_device{}());
 
 void exrand_rnd(int& resul, int max);
 
@@ -764,10 +709,12 @@ void end();
 
 
 
-
-void bload(const std::string& filename, std::string& data, int size = 0, int = 0);
-void bload(const std::string& filename, int& data, int size = sizeof(int), int = 0);
-void bload(const std::string& filename, elona_vector1<int>& data, int size = 0, int = 0);
+void bload(
+    const std::string& filename, std::string& data, int size = 0, int = 0);
+void bload(
+    const std::string& filename, int& data, int size = sizeof(int), int = 0);
+void bload(const std::string& filename, elona_vector1<int>& data, int size = 0,
+    int = 0);
 
 
 void bsave(const std::string& filename, const std::string& data);
@@ -775,7 +722,8 @@ void bsave(const std::string& filename, int data);
 void bsave(const std::string& filename, elona_vector1<int>& data);
 
 
-void memcpy_(std::string& dst, std::string& src, int size, int dst_offset = 0, int src_offset = 0);
+void memcpy_(std::string& dst, std::string& src, int size, int dst_offset = 0,
+    int src_offset = 0);
 
 
 void zOpen(int& handle, const std::string& filename, int mode, int = 0);
@@ -800,7 +748,7 @@ void zClose(int);
 
 
 
-}
+} // namespace elona
 
 
 using namespace elona;
@@ -812,7 +760,11 @@ using namespace elona;
 #define DIM3(a, b, c) (a).allocate_and_clear(b, c)
 #define DIM4(a, b, c, d) (a).allocate_and_clear(b, c, d)
 #define SDIM1(a) (a).clear()
-#define SDIM2(a, b) do { (a).clear(); if ((b) > 0) (a)(0).resize(b); } while (0)
+#define SDIM2(a, b)                    \
+    do {                               \
+        (a).clear();                   \
+        if ((b) > 0) (a)(0).resize(b); \
+    } while (0)
 #define SDIM3(a, b, c) (a).allocate_and_clear(c)
 #define SDIM4(a, b, c, d) (a).allocate_and_clear(c, d)
 #define dup(a, b) /* Nothing */

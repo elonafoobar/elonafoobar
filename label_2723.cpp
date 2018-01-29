@@ -6,9 +6,9 @@
 
 namespace elona
 {
-
-
-void cs_list(int CNT, const std::string& prm_543, int prm_544 = 0, int prm_545 = 0, int prm_546 = 0, int prm_547 = 0, int prm_548 = 0, int prm_549 = 0);
+void cs_list(int CNT, const std::string& prm_543, int prm_544 = 0,
+    int prm_545 = 0, int prm_546 = 0, int prm_547 = 0, int prm_548 = 0,
+    int prm_549 = 0);
 
 void label_2743(bool = true);
 
@@ -34,10 +34,13 @@ void label_2723()
         sel = 4;
     }
     gsel(sel);
-    { int cnt = 0; for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
-    } }
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
+            pos(cnt % 4 * 180, cnt / 4 * 300);
+            picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+        }
+    }
     gsel(0);
     redraw(0);
     if (mode == 0) {
@@ -254,14 +257,15 @@ void label_2723()
         dx = 440;
         dy = 300;
     }
-    { int cnt = 0; for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt) {
-        if (s(cnt) == u8""s) {
-            break;
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt) {
+            if (s(cnt) == u8""s) { break; }
+            list(0, listmax) = cnt;
+            listn(0, listmax) = s(cnt);
+            ++listmax;
         }
-        list(0, listmax) = cnt;
-        listn(0, listmax) = s(cnt);
-        ++listmax;
-    } }
+    }
     windowshadow = 1;
 label_2724_internal:
     if (cfg_zkey == 0) {
@@ -288,9 +292,7 @@ label_2724_internal:
     if (page < 0) {
         page = pagemax;
     } else {
-        if (page > pagemax) {
-            page = 0;
-        }
+        if (page > pagemax) { page = 0; }
     }
 label_2725_internal:
     redraw(0);
@@ -298,9 +300,11 @@ label_2725_internal:
     s(1) = strhint3;
     pagesize = 0;
     if (mode == 1) {
-        display_window((windoww - dx) / 2 + inf_screenx, winposy(dy, 1), dx, dy);
+        display_window(
+            (windoww - dx) / 2 + inf_screenx, winposy(dy, 1), dx, dy);
     } else {
-        display_window((windoww - dx) / 2 + inf_screenx, winposy(dy) - 12, dx, dy);
+        display_window(
+            (windoww - dx) / 2 + inf_screenx, winposy(dy) - 12, dx, dy);
     }
     pagesize = listmax;
     display_topic(lang(u8"項目"s, u8"Menu"s), wx + 34, wy + 36);
@@ -316,20 +320,21 @@ label_2725_internal:
     grotate(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     keyrange = 0;
-    { int cnt = 0; for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt) {
-        p = pagesize * page + cnt;
-        if (p >= listmax) {
-            break;
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt) {
+            p = pagesize * page + cnt;
+            if (p >= listmax) { break; }
+            if (submenu == 0) {
+                key_list(cnt) = key_select(cnt);
+                ++keyrange;
+                display_key(wx + 32, wy + 66 + cnt * 19 - 2, cnt);
+            } else {
+                key_list(cnt) = key_cancel;
+                ++keyrange;
+            }
         }
-        if (submenu == 0) {
-            key_list(cnt) = key_select(cnt);
-            ++keyrange;
-            display_key(wx + 32, wy + 66 + cnt * 19 - 2, cnt);
-        } else {
-            key_list(cnt) = key_cancel;
-            ++keyrange;
-        }
-    } }
+    }
     if (submenu == 5) {
         p(0) = 0;
         p(1) = cnvjkey(key_enter);
@@ -344,359 +349,351 @@ label_2725_internal:
         p(10) = cnvjkey(key_help);
         p(11) = cnvjkey(key_charainfo);
         p(12) = cnvjkey(key_ammo);
-        { int cnt = 1; for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt) {
-            list(1, cnt) = p(cnt);
-        } }
+        {
+            int cnt = 1;
+            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt) {
+                list(1, cnt) = p(cnt);
+            }
+        }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     cs_listbk();
-    { int cnt = 0; for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt) {
-        p = pagesize * page + cnt;
-        if (p >= listmax) {
-            break;
-        }
-        i = list(0, p);
-        s = listn(0, p);
-        if (submenu == 0) {
-            x = 8;
-        } else {
-            x = 0;
-        }
-        if (submenu == 3) {
-            if (cfg_net == 0) {
-                if (cnt >= 1) {
-                    continue;
-                }
-            }
-        }
-        cs_list(cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 19, 0);
-        if (submenu == 5 && cnt > 0) {
-        } else {
-            if (submenu != 0) {
-                pos(wx + 220, wy + 66 + cnt * 19 - 5);
-                gcopy(3, 312, 336, 24, 24);
-                pos(wx + 358, wy + 66 + cnt * 19 - 5);
-                gcopy(3, 336, 336, 24, 24);
-            }
-        }
-        pos(wx + 250, wy + 66 + cnt * 19);
-        color(0, 0, 0);
-        if (submenu == 1) {
-            if (cnt == 0) {
-                if (jp) {
-                    s(0) = u8"なし"s;
-                    s(1) = u8"あり"s;
-                } else {
-                    s(0) = u8"Don't show"s;
-                    s(1) = u8"Show"s;
-                }
-                mes(s(cfg_extrahelp));
-            }
-            if (cnt == 1) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"Attack"s;
-                    s(1) = u8"Ignore"s;
-                }
-                mes(s(cfg_ignoredislike));
-            }
-            if (cnt == 2) {
-                if (jp) {
-                    s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
-                    s(1) = u8"道具を振る"s;
-                    s(2) = u8"割当なし"s;
-                } else {
-                    s(0) = u8"Quick menu"s;
-                    s(1) = u8"Zap"s;
-                    s(2) = u8"Don't assign"s;
-                }
-                mes(s(cfg_zkey));
-            }
-            if (cnt == 3) {
-                if (jp) {
-                    s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
-                    s(1) = u8"道具を調べる"s;
-                    s(2) = u8"割当なし"s;
-                } else {
-                    s(0) = u8"Quick Inv"s;
-                    s(1) = u8"Identify"s;
-                    s(2) = u8"Don't assign"s;
-                }
-                mes(s(cfg_xkey));
-            }
-            if (cnt == 4) {
-                if (cfg_startrun >= 20) {
-                    if (jp) {
-                        mes(u8"走らない"s);
-                    } else {
-                        mes(u8"Dont't run"s);
-                    }
-                } else {
-                    if (jp) {
-                        mes(u8""s + (cfg_startrun + 1) + u8"歩目から"s);
-                    } else {
-                        mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
-                    }
-                }
-            }
-            if (cnt == 5) {
-                mes(u8""s + cfg_walkwait + u8" wait"s);
-            }
-            if (cnt == 6) {
-                mes(u8""s + cfg_attackwait + u8" wait"s);
-            }
-        }
-        if (submenu == 2) {
-            if (cnt == 0) {
-                if (jp) {
-                    s(0) = u8"なし"s;
-                    s(1) = u8"direct sound"s;
-                    s(2) = u8"MCI"s;
-                } else {
-                    s(0) = u8"None"s;
-                    s(1) = u8"Direct sound"s;
-                    s(2) = u8"MCI"s;
-                }
-                mes(s(cfg_sound2));
-            }
-            if (cnt == 1) {
-                if (jp) {
-                    s(0) = u8"なし"s;
-                    s(1) = u8"direct music"s;
-                    s(2) = u8"MCI"s;
-                } else {
-                    s(0) = u8"None"s;
-                    s(1) = u8"Direct music"s;
-                    s(2) = u8"MCI"s;
-                }
-                mes(s(cfg_music2));
-            }
-            if (cnt == 2) {
-                if (jp) {
-                    s(0) = u8"ウィンドウ"s;
-                    s(1) = u8"フルスクリーン"s;
-                } else {
-                    s(0) = u8"Window mode"s;
-                    s(1) = u8"Full screen"s;
-                }
-                mes(s(cfg_fullscreen2));
-            }
-            if (cnt == 3) {
-                mes(u8""s + windoww2 + u8" * "s + windowh2);
-            }
-            if (cnt == 4) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_scroll));
-            }
-            if (cnt == 5) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_alwayscenter));
-            }
-            if (cnt == 6) {
-                if (jp) {
-                    s(0) = u8"再生しない"s;
-                    s(1) = u8"再生する"s;
-                } else {
-                    s(0) = u8"Don't play"s;
-                    s(1) = u8"Play"s;
-                }
-                mes(s(cfg_heart));
-            }
-            if (cnt == 7) {
-                if (jp) {
-                    s(0) = u8"アニメなし"s;
-                    s(1) = u8"アニメあり"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_attackanime));
-            }
-            if (cnt == 8) {
-                if (jp) {
-                    s(0) = u8"アニメなし"s;
-                    s(1) = u8"アニメあり"s;
-                } else {
-                    s(0) = u8"No animation"s;
-                    s(1) = u8"Always"s;
-                }
-                mes(s(cfg_env));
-            }
-            if (cnt == 9) {
-                if (jp) {
-                    s(0) = u8"高画質"s;
-                    s(1) = u8"低画質"s;
-                } else {
-                    s(0) = u8"High"s;
-                    s(1) = u8"Low"s;
-                }
-                mes(s(cfg_shadow));
-            }
-            if (cnt == 10) {
-                if (jp) {
-                    s(0) = u8"なし（高速）"s;
-                    s(1) = u8"あり（低速）"s;
-                } else {
-                    s(0) = u8"No(Slow)"s;
-                    s(1) = u8"Yes(Fast)"s;
-                }
-                mes(s(cfg_objectshadow));
-            }
-        }
-        if (submenu == 3) {
-            if (cnt == 0) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_net));
-            }
-            if (cnt == 1) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_netwish));
-            }
-            if (cnt == 2) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_netchat));
-            }
-        }
-        if (submenu == 4) {
-            if (cnt == 0) {
-                mes(u8""s + cfg_runwait + u8" wait"s);
-            }
-            if (cnt == 1) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_autonumlock));
-            }
-            if (cnt == 2) {
-                if (jp) {
-                    s(0) = u8"オフ"s;
-                    s(1) = u8"オン"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_titleeffect));
-            }
-            if (cnt == 3) {
-                if (jp) {
-                    s(0) = u8"オフ"s;
-                    s(1) = u8"オン"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(u8""s + cfg_scrsync + u8" wait"s);
-            }
-            if (cnt == 4) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_runscroll));
-            }
-            if (cnt == 5) {
-                if (jp) {
-                    s(0) = u8"普通"s;
-                    s(1) = u8"速め"s;
-                    s(2) = u8"省略"s;
-                } else {
-                    s(0) = u8"Normal"s;
-                    s(1) = u8"High"s;
-                    s(2) = u8"Highest"s;
-                }
-                mes(s(cfg_autoturn));
-            }
-            if (cnt == 6) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_skiprandevents));
-            }
-        }
-        if (submenu == 5) {
-            if (cnt == 0) {
-                if (jp) {
-                    s(0) = u8"使用しない"s;
-                    s(1) = u8"使用する"s;
-                } else {
-                    s(0) = u8"Don't use"s;
-                    s(1) = u8"Use"s;
-                }
-                mes(s(cfg_joypad));
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt) {
+            p = pagesize * page + cnt;
+            if (p >= listmax) { break; }
+            i = list(0, p);
+            s = listn(0, p);
+            if (submenu == 0) {
+                x = 8;
             } else {
-                if (list(1, cnt) == -1) {
-                    mes(lang(u8"未設定"s, u8"Unassigned"s));
+                x = 0;
+            }
+            if (submenu == 3) {
+                if (cfg_net == 0) {
+                    if (cnt >= 1) { continue; }
+                }
+            }
+            cs_list(cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 19, 0);
+            if (submenu == 5 && cnt > 0) {
+            } else {
+                if (submenu != 0) {
+                    pos(wx + 220, wy + 66 + cnt * 19 - 5);
+                    gcopy(3, 312, 336, 24, 24);
+                    pos(wx + 358, wy + 66 + cnt * 19 - 5);
+                    gcopy(3, 336, 336, 24, 24);
+                }
+            }
+            pos(wx + 250, wy + 66 + cnt * 19);
+            color(0, 0, 0);
+            if (submenu == 1) {
+                if (cnt == 0) {
+                    if (jp) {
+                        s(0) = u8"なし"s;
+                        s(1) = u8"あり"s;
+                    } else {
+                        s(0) = u8"Don't show"s;
+                        s(1) = u8"Show"s;
+                    }
+                    mes(s(cfg_extrahelp));
+                }
+                if (cnt == 1) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"Attack"s;
+                        s(1) = u8"Ignore"s;
+                    }
+                    mes(s(cfg_ignoredislike));
+                }
+                if (cnt == 2) {
+                    if (jp) {
+                        s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
+                        s(1) = u8"道具を振る"s;
+                        s(2) = u8"割当なし"s;
+                    } else {
+                        s(0) = u8"Quick menu"s;
+                        s(1) = u8"Zap"s;
+                        s(2) = u8"Don't assign"s;
+                    }
+                    mes(s(cfg_zkey));
+                }
+                if (cnt == 3) {
+                    if (jp) {
+                        s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
+                        s(1) = u8"道具を調べる"s;
+                        s(2) = u8"割当なし"s;
+                    } else {
+                        s(0) = u8"Quick Inv"s;
+                        s(1) = u8"Identify"s;
+                        s(2) = u8"Don't assign"s;
+                    }
+                    mes(s(cfg_xkey));
+                }
+                if (cnt == 4) {
+                    if (cfg_startrun >= 20) {
+                        if (jp) {
+                            mes(u8"走らない"s);
+                        } else {
+                            mes(u8"Dont't run"s);
+                        }
+                    } else {
+                        if (jp) {
+                            mes(u8""s + (cfg_startrun + 1) + u8"歩目から"s);
+                        } else {
+                            mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
+                        }
+                    }
+                }
+                if (cnt == 5) { mes(u8""s + cfg_walkwait + u8" wait"s); }
+                if (cnt == 6) { mes(u8""s + cfg_attackwait + u8" wait"s); }
+            }
+            if (submenu == 2) {
+                if (cnt == 0) {
+                    if (jp) {
+                        s(0) = u8"なし"s;
+                        s(1) = u8"direct sound"s;
+                        s(2) = u8"MCI"s;
+                    } else {
+                        s(0) = u8"None"s;
+                        s(1) = u8"Direct sound"s;
+                        s(2) = u8"MCI"s;
+                    }
+                    mes(s(cfg_sound2));
+                }
+                if (cnt == 1) {
+                    if (jp) {
+                        s(0) = u8"なし"s;
+                        s(1) = u8"direct music"s;
+                        s(2) = u8"MCI"s;
+                    } else {
+                        s(0) = u8"None"s;
+                        s(1) = u8"Direct music"s;
+                        s(2) = u8"MCI"s;
+                    }
+                    mes(s(cfg_music2));
+                }
+                if (cnt == 2) {
+                    if (jp) {
+                        s(0) = u8"ウィンドウ"s;
+                        s(1) = u8"フルスクリーン"s;
+                    } else {
+                        s(0) = u8"Window mode"s;
+                        s(1) = u8"Full screen"s;
+                    }
+                    mes(s(cfg_fullscreen2));
+                }
+                if (cnt == 3) { mes(u8""s + windoww2 + u8" * "s + windowh2); }
+                if (cnt == 4) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_scroll));
+                }
+                if (cnt == 5) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_alwayscenter));
+                }
+                if (cnt == 6) {
+                    if (jp) {
+                        s(0) = u8"再生しない"s;
+                        s(1) = u8"再生する"s;
+                    } else {
+                        s(0) = u8"Don't play"s;
+                        s(1) = u8"Play"s;
+                    }
+                    mes(s(cfg_heart));
+                }
+                if (cnt == 7) {
+                    if (jp) {
+                        s(0) = u8"アニメなし"s;
+                        s(1) = u8"アニメあり"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_attackanime));
+                }
+                if (cnt == 8) {
+                    if (jp) {
+                        s(0) = u8"アニメなし"s;
+                        s(1) = u8"アニメあり"s;
+                    } else {
+                        s(0) = u8"No animation"s;
+                        s(1) = u8"Always"s;
+                    }
+                    mes(s(cfg_env));
+                }
+                if (cnt == 9) {
+                    if (jp) {
+                        s(0) = u8"高画質"s;
+                        s(1) = u8"低画質"s;
+                    } else {
+                        s(0) = u8"High"s;
+                        s(1) = u8"Low"s;
+                    }
+                    mes(s(cfg_shadow));
+                }
+                if (cnt == 10) {
+                    if (jp) {
+                        s(0) = u8"なし（高速）"s;
+                        s(1) = u8"あり（低速）"s;
+                    } else {
+                        s(0) = u8"No(Slow)"s;
+                        s(1) = u8"Yes(Fast)"s;
+                    }
+                    mes(s(cfg_objectshadow));
+                }
+            }
+            if (submenu == 3) {
+                if (cnt == 0) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_net));
+                }
+                if (cnt == 1) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_netwish));
+                }
+                if (cnt == 2) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_netchat));
+                }
+            }
+            if (submenu == 4) {
+                if (cnt == 0) { mes(u8""s + cfg_runwait + u8" wait"s); }
+                if (cnt == 1) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_autonumlock));
+                }
+                if (cnt == 2) {
+                    if (jp) {
+                        s(0) = u8"オフ"s;
+                        s(1) = u8"オン"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_titleeffect));
+                }
+                if (cnt == 3) {
+                    if (jp) {
+                        s(0) = u8"オフ"s;
+                        s(1) = u8"オン"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(u8""s + cfg_scrsync + u8" wait"s);
+                }
+                if (cnt == 4) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_runscroll));
+                }
+                if (cnt == 5) {
+                    if (jp) {
+                        s(0) = u8"普通"s;
+                        s(1) = u8"速め"s;
+                        s(2) = u8"省略"s;
+                    } else {
+                        s(0) = u8"Normal"s;
+                        s(1) = u8"High"s;
+                        s(2) = u8"Highest"s;
+                    }
+                    mes(s(cfg_autoturn));
+                }
+                if (cnt == 6) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_skiprandevents));
+                }
+            }
+            if (submenu == 5) {
+                if (cnt == 0) {
+                    if (jp) {
+                        s(0) = u8"使用しない"s;
+                        s(1) = u8"使用する"s;
+                    } else {
+                        s(0) = u8"Don't use"s;
+                        s(1) = u8"Use"s;
+                    }
+                    mes(s(cfg_joypad));
                 } else {
-                    mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
+                    if (list(1, cnt) == -1) {
+                        mes(lang(u8"未設定"s, u8"Unassigned"s));
+                    } else {
+                        mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
+                    }
+                }
+            }
+            if (submenu == 6) {
+                if (cnt == 0) {
+                    if (jp) {
+                        s(0) = u8"しない"s;
+                        s(1) = u8"する"s;
+                    } else {
+                        s(0) = u8"No"s;
+                        s(1) = u8"Yes"s;
+                    }
+                    mes(s(cfg_msgaddtime));
+                }
+                if (cnt == 1) { mes(u8""s + cfg_msgtrans * 10 + u8" %"s); }
+            }
+            if (submenu == 7) {
+                if (cnt == 0) {
+                    s(0) = u8"Japanese"s;
+                    s(1) = u8"English"s;
+                    mes(s(cfg_language));
                 }
             }
         }
-        if (submenu == 6) {
-            if (cnt == 0) {
-                if (jp) {
-                    s(0) = u8"しない"s;
-                    s(1) = u8"する"s;
-                } else {
-                    s(0) = u8"No"s;
-                    s(1) = u8"Yes"s;
-                }
-                mes(s(cfg_msgaddtime));
-            }
-            if (cnt == 1) {
-                mes(u8""s + cfg_msgtrans * 10 + u8" %"s);
-            }
-        }
-        if (submenu == 7) {
-            if (cnt == 0) {
-                s(0) = u8"Japanese"s;
-                s(1) = u8"English"s;
-                mes(s(cfg_language));
-            }
-        }
-    } }
+    }
     if (submenu != 0) {
         if (submenu != 5) {
             pos(wx + 40, wy + wh - 70);
@@ -719,21 +716,22 @@ label_2725_internal:
             mes(u8"To assign a button, move the cursor to\nan item and press the button."s);
         }
     }
-    if (keyrange != 0) {
-        cs_bk = cs;
-    }
+    if (keyrange != 0) { cs_bk = cs; }
     redraw(1);
     await(cfg_wait1);
     key_check();
     cursor_check();
     p = -1;
-    { int cnt = 0; for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt) {
-        if (key == key_select(cnt)) {
-            p = list(0, pagesize * page + cnt);
-            cs = cnt;
-            break;
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt) {
+            if (key == key_select(cnt)) {
+                p = list(0, pagesize * page + cnt);
+                cs = cnt;
+                break;
+            }
         }
-    } }
+    }
     if (p != -1) {
         if (submenu == 0) {
             submenu = p + 1;
@@ -746,116 +744,129 @@ label_2725_internal:
         if (cs > 0) {
             DIGETJOYSTATE(j, 0);
             f = 0;
-            { int cnt = 0; for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt) {
-                HMMBITCHECK(j, 4 + cnt);
-                if (stat) {
-                    p = cnt;
-                    valn = u8""s;
-                    { int cnt = 0; for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt) {
-                        jkey(cnt) = u8""s;
-                    } }
-                    list(1, cs) = p;
-                    { int cnt = 1; for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt) {
-                        if (cs == cnt) {
-                            continue;
+            {
+                int cnt = 0;
+                for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt) {
+                    HMMBITCHECK(j, 4 + cnt);
+                    if (stat) {
+                        p = cnt;
+                        valn = u8""s;
+                        {
+                            int cnt = 0;
+                            for (int cnt_end = cnt + (12); cnt < cnt_end;
+                                 ++cnt) {
+                                jkey(cnt) = u8""s;
+                            }
                         }
-                        --list(1, cnt);
-                        if (list(1, cnt) == p || list(1, cnt) <= -1) {
-                            list(1, cnt) = 12;
+                        list(1, cs) = p;
+                        {
+                            int cnt = 1;
+                            for (int cnt_end = cnt + (19); cnt < cnt_end;
+                                 ++cnt) {
+                                if (cs == cnt) { continue; }
+                                --list(1, cnt);
+                                if (list(1, cnt) == p || list(1, cnt) <= -1) {
+                                    list(1, cnt) = 12;
+                                }
+                            }
                         }
-                    } }
-                    valn(0) = u8"key_enter."s;
-                    valn(1) = key_enter;
-                    valn(2) = u8""s + list(1, 1);
-                    valn(3) = u8""s;
-                    jkey(list(1, 1)) = u8""s + key_enter;
-                    label_2713();
-                    valn(0) = u8"key_cancel."s;
-                    valn(1) = key_cancel;
-                    valn(2) = u8""s + list(1, 2);
-                    valn(3) = u8""s;
-                    jkey(list(1, 2)) = u8""s + key_cancel;
-                    label_2713();
-                    valn(0) = u8"key_quickinv."s;
-                    valn(1) = key_quickinv;
-                    valn(2) = u8""s + list(1, 3);
-                    valn(3) = u8""s;
-                    jkey(list(1, 3)) = u8""s + key_quickinv;
-                    label_2713();
-                    valn(0) = u8"key_quick."s;
-                    valn(1) = key_quick;
-                    valn(2) = u8""s + list(1, 4);
-                    valn(3) = u8""s;
-                    jkey(list(1, 4)) = u8""s + key_quick;
-                    label_2713();
-                    valn(0) = u8"key_alter."s;
-                    valn(1) = key_alter;
-                    valn(2) = u8""s + list(1, 5);
-                    valn(3) = u8""s;
-                    jkey(list(1, 5)) = u8""s + key_alter;
-                    label_2713();
-                    valn(0) = u8"key_get."s;
-                    valn(1) = key_get;
-                    valn(2) = u8""s + list(1, 6);
-                    valn(3) = u8""s;
-                    jkey(list(1, 6)) = u8""s + key_get;
-                    label_2713();
-                    valn(0) = u8"key_fire."s;
-                    valn(1) = key_fire;
-                    valn(2) = u8""s + list(1, 7);
-                    valn(3) = u8""s;
-                    jkey(list(1, 7)) = u8""s + key_fire;
-                    label_2713();
-                    valn(0) = u8"key_target."s;
-                    valn(1) = key_target;
-                    valn(2) = u8""s + list(1, 8);
-                    valn(3) = u8""s;
-                    jkey(list(1, 8)) = u8""s + key_target;
-                    label_2713();
-                    valn(0) = u8"key_esc."s;
-                    valn(1) = key_esc;
-                    valn(2) = u8""s + list(1, 9);
-                    valn(3) = u8""s;
-                    jkey(list(1, 9)) = u8""s + key_esc;
-                    label_2713();
-                    valn(0) = u8"key_help."s;
-                    valn(1) = key_help;
-                    valn(2) = u8""s + list(1, 10);
-                    valn(3) = u8""s;
-                    jkey(list(1, 10)) = u8""s + key_help;
-                    label_2713();
-                    valn(0) = u8"key_charainfo."s;
-                    valn(1) = key_charainfo;
-                    valn(2) = u8""s + list(1, 11);
-                    valn(3) = u8""s;
-                    jkey(list(1, 11)) = u8""s + key_charainfo;
-                    label_2713();
-                    valn(0) = u8"key_ammo."s;
-                    valn(1) = key_ammo;
-                    valn(2) = u8""s + list(1, 12);
-                    valn(3) = u8""s;
-                    jkey(list(1, 12)) = u8""s + key_ammo;
-                    label_2713();
-                    p(0) = 0;
-                    p(1) = cnvjkey(key_enter);
-                    p(2) = cnvjkey(key_cancel);
-                    p(3) = cnvjkey(key_quickinv);
-                    p(4) = cnvjkey(key_quick);
-                    p(5) = cnvjkey(key_alter);
-                    p(6) = cnvjkey(key_get);
-                    p(7) = cnvjkey(key_fire);
-                    p(8) = cnvjkey(key_target);
-                    p(9) = cnvjkey(key_esc);
-                    p(10) = cnvjkey(key_help);
-                    p(11) = cnvjkey(key_charainfo);
-                    p(12) = cnvjkey(key_ammo);
-                    { int cnt = 1; for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt) {
-                        list(1, cnt) = p(cnt);
-                    } }
-                    f = 1;
-                    break;
+                        valn(0) = u8"key_enter."s;
+                        valn(1) = key_enter;
+                        valn(2) = u8""s + list(1, 1);
+                        valn(3) = u8""s;
+                        jkey(list(1, 1)) = u8""s + key_enter;
+                        label_2713();
+                        valn(0) = u8"key_cancel."s;
+                        valn(1) = key_cancel;
+                        valn(2) = u8""s + list(1, 2);
+                        valn(3) = u8""s;
+                        jkey(list(1, 2)) = u8""s + key_cancel;
+                        label_2713();
+                        valn(0) = u8"key_quickinv."s;
+                        valn(1) = key_quickinv;
+                        valn(2) = u8""s + list(1, 3);
+                        valn(3) = u8""s;
+                        jkey(list(1, 3)) = u8""s + key_quickinv;
+                        label_2713();
+                        valn(0) = u8"key_quick."s;
+                        valn(1) = key_quick;
+                        valn(2) = u8""s + list(1, 4);
+                        valn(3) = u8""s;
+                        jkey(list(1, 4)) = u8""s + key_quick;
+                        label_2713();
+                        valn(0) = u8"key_alter."s;
+                        valn(1) = key_alter;
+                        valn(2) = u8""s + list(1, 5);
+                        valn(3) = u8""s;
+                        jkey(list(1, 5)) = u8""s + key_alter;
+                        label_2713();
+                        valn(0) = u8"key_get."s;
+                        valn(1) = key_get;
+                        valn(2) = u8""s + list(1, 6);
+                        valn(3) = u8""s;
+                        jkey(list(1, 6)) = u8""s + key_get;
+                        label_2713();
+                        valn(0) = u8"key_fire."s;
+                        valn(1) = key_fire;
+                        valn(2) = u8""s + list(1, 7);
+                        valn(3) = u8""s;
+                        jkey(list(1, 7)) = u8""s + key_fire;
+                        label_2713();
+                        valn(0) = u8"key_target."s;
+                        valn(1) = key_target;
+                        valn(2) = u8""s + list(1, 8);
+                        valn(3) = u8""s;
+                        jkey(list(1, 8)) = u8""s + key_target;
+                        label_2713();
+                        valn(0) = u8"key_esc."s;
+                        valn(1) = key_esc;
+                        valn(2) = u8""s + list(1, 9);
+                        valn(3) = u8""s;
+                        jkey(list(1, 9)) = u8""s + key_esc;
+                        label_2713();
+                        valn(0) = u8"key_help."s;
+                        valn(1) = key_help;
+                        valn(2) = u8""s + list(1, 10);
+                        valn(3) = u8""s;
+                        jkey(list(1, 10)) = u8""s + key_help;
+                        label_2713();
+                        valn(0) = u8"key_charainfo."s;
+                        valn(1) = key_charainfo;
+                        valn(2) = u8""s + list(1, 11);
+                        valn(3) = u8""s;
+                        jkey(list(1, 11)) = u8""s + key_charainfo;
+                        label_2713();
+                        valn(0) = u8"key_ammo."s;
+                        valn(1) = key_ammo;
+                        valn(2) = u8""s + list(1, 12);
+                        valn(3) = u8""s;
+                        jkey(list(1, 12)) = u8""s + key_ammo;
+                        label_2713();
+                        p(0) = 0;
+                        p(1) = cnvjkey(key_enter);
+                        p(2) = cnvjkey(key_cancel);
+                        p(3) = cnvjkey(key_quickinv);
+                        p(4) = cnvjkey(key_quick);
+                        p(5) = cnvjkey(key_alter);
+                        p(6) = cnvjkey(key_get);
+                        p(7) = cnvjkey(key_fire);
+                        p(8) = cnvjkey(key_target);
+                        p(9) = cnvjkey(key_esc);
+                        p(10) = cnvjkey(key_help);
+                        p(11) = cnvjkey(key_charainfo);
+                        p(12) = cnvjkey(key_ammo);
+                        {
+                            int cnt = 1;
+                            for (int cnt_end = cnt + (19); cnt < cnt_end;
+                                 ++cnt) {
+                                list(1, cnt) = p(cnt);
+                            }
+                        }
+                        f = 1;
+                        break;
+                    }
                 }
-            } }
+            }
             if (f) {
                 snd(20);
                 await(200);
@@ -875,9 +886,7 @@ label_2725_internal:
                 if (cfg_extrahelp > 1) {
                     cfg_extrahelp = 1;
                 } else {
-                    if (cfg_extrahelp < 0) {
-                        cfg_extrahelp = 0;
-                    }
+                    if (cfg_extrahelp < 0) { cfg_extrahelp = 0; }
                 }
                 snd(20);
                 valn(0) = u8"extraHelp."s;
@@ -890,9 +899,7 @@ label_2725_internal:
                 if (cfg_ignoredislike > 1) {
                     cfg_ignoredislike = 1;
                 } else {
-                    if (cfg_ignoredislike < 0) {
-                        cfg_ignoredislike = 0;
-                    }
+                    if (cfg_ignoredislike < 0) { cfg_ignoredislike = 0; }
                 }
                 snd(20);
                 valn(0) = u8"ignoreDislike."s;
@@ -905,9 +912,7 @@ label_2725_internal:
                 if (cfg_zkey > 2) {
                     cfg_zkey = 2;
                 } else {
-                    if (cfg_zkey < 0) {
-                        cfg_zkey = 0;
-                    }
+                    if (cfg_zkey < 0) { cfg_zkey = 0; }
                 }
                 snd(20);
                 valn(0) = u8"zkey."s;
@@ -920,9 +925,7 @@ label_2725_internal:
                 if (cfg_xkey > 2) {
                     cfg_xkey = 2;
                 } else {
-                    if (cfg_xkey < 0) {
-                        cfg_xkey = 0;
-                    }
+                    if (cfg_xkey < 0) { cfg_xkey = 0; }
                 }
                 snd(20);
                 valn(0) = u8"xkey."s;
@@ -935,9 +938,7 @@ label_2725_internal:
                 if (cfg_startrun > 20) {
                     cfg_startrun = 20;
                 } else {
-                    if (cfg_startrun < 0) {
-                        cfg_startrun = 0;
-                    }
+                    if (cfg_startrun < 0) { cfg_startrun = 0; }
                 }
                 snd(20);
                 valn(0) = u8"startRun."s;
@@ -950,9 +951,7 @@ label_2725_internal:
                 if (cfg_walkwait > 10) {
                     cfg_walkwait = 10;
                 } else {
-                    if (cfg_walkwait < 1) {
-                        cfg_walkwait = 1;
-                    }
+                    if (cfg_walkwait < 1) { cfg_walkwait = 1; }
                 }
                 snd(20);
                 valn(0) = u8"walkWait."s;
@@ -965,9 +964,7 @@ label_2725_internal:
                 if (cfg_attackwait > 20) {
                     cfg_attackwait = 20;
                 } else {
-                    if (cfg_attackwait < 1) {
-                        cfg_attackwait = 1;
-                    }
+                    if (cfg_attackwait < 1) { cfg_attackwait = 1; }
                 }
                 snd(20);
                 valn(0) = u8"attackWait."s;
@@ -982,9 +979,7 @@ label_2725_internal:
                 if (cfg_sound2 > 2) {
                     cfg_sound2 = 2;
                 } else {
-                    if (cfg_sound2 < 0) {
-                        cfg_sound2 = 0;
-                    }
+                    if (cfg_sound2 < 0) { cfg_sound2 = 0; }
                 }
                 snd(20);
                 valn(0) = u8"sound."s;
@@ -997,9 +992,7 @@ label_2725_internal:
                 if (cfg_music2 > 2) {
                     cfg_music2 = 2;
                 } else {
-                    if (cfg_music2 < 0) {
-                        cfg_music2 = 0;
-                    }
+                    if (cfg_music2 < 0) { cfg_music2 = 0; }
                 }
                 snd(20);
                 valn(0) = u8"music."s;
@@ -1012,9 +1005,7 @@ label_2725_internal:
                 if (cfg_fullscreen2 > 1) {
                     cfg_fullscreen2 = 1;
                 } else {
-                    if (cfg_fullscreen2 < 0) {
-                        cfg_fullscreen2 = 0;
-                    }
+                    if (cfg_fullscreen2 < 0) { cfg_fullscreen2 = 0; }
                 }
                 snd(20);
                 valn(0) = u8"fullscreen."s;
@@ -1027,9 +1018,7 @@ label_2725_internal:
                 if (cfg_scroll > 1) {
                     cfg_scroll = 1;
                 } else {
-                    if (cfg_scroll < 0) {
-                        cfg_scroll = 0;
-                    }
+                    if (cfg_scroll < 0) { cfg_scroll = 0; }
                 }
                 snd(20);
                 valn(0) = u8"scroll."s;
@@ -1042,9 +1031,7 @@ label_2725_internal:
                 if (cfg_alwayscenter > 1) {
                     cfg_alwayscenter = 1;
                 } else {
-                    if (cfg_alwayscenter < 0) {
-                        cfg_alwayscenter = 0;
-                    }
+                    if (cfg_alwayscenter < 0) { cfg_alwayscenter = 0; }
                 }
                 snd(20);
                 valn(0) = u8"alwaysCenter."s;
@@ -1057,9 +1044,7 @@ label_2725_internal:
                 if (cfg_heart > 1) {
                     cfg_heart = 1;
                 } else {
-                    if (cfg_heart < 0) {
-                        cfg_heart = 0;
-                    }
+                    if (cfg_heart < 0) { cfg_heart = 0; }
                 }
                 snd(20);
                 valn(0) = u8"heartbeat."s;
@@ -1072,9 +1057,7 @@ label_2725_internal:
                 if (cfg_attackanime > 1) {
                     cfg_attackanime = 1;
                 } else {
-                    if (cfg_attackanime < 0) {
-                        cfg_attackanime = 0;
-                    }
+                    if (cfg_attackanime < 0) { cfg_attackanime = 0; }
                 }
                 snd(20);
                 valn(0) = u8"attackAnime."s;
@@ -1087,9 +1070,7 @@ label_2725_internal:
                 if (cfg_env > 1) {
                     cfg_env = 1;
                 } else {
-                    if (cfg_env < 0) {
-                        cfg_env = 0;
-                    }
+                    if (cfg_env < 0) { cfg_env = 0; }
                 }
                 snd(20);
                 valn(0) = u8"envEffect."s;
@@ -1102,9 +1083,7 @@ label_2725_internal:
                 if (cfg_shadow > 1) {
                     cfg_shadow = 1;
                 } else {
-                    if (cfg_shadow < 0) {
-                        cfg_shadow = 0;
-                    }
+                    if (cfg_shadow < 0) { cfg_shadow = 0; }
                 }
                 snd(20);
                 valn(0) = u8"shadow."s;
@@ -1117,9 +1096,7 @@ label_2725_internal:
                 if (cfg_objectshadow > 1) {
                     cfg_objectshadow = 1;
                 } else {
-                    if (cfg_objectshadow < 0) {
-                        cfg_objectshadow = 0;
-                    }
+                    if (cfg_objectshadow < 0) { cfg_objectshadow = 0; }
                 }
                 snd(20);
                 valn(0) = u8"objectShadow."s;
@@ -1141,21 +1118,22 @@ label_2725_internal:
                 y(4) = 768;
                 y(5) = 1024;
                 i = 0;
-                { int cnt = 0; for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
-                    if (windoww2 == x(cnt)) {
-                        if (windowh2 == y(cnt)) {
-                            i = cnt;
-                            break;
+                {
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
+                        if (windoww2 == x(cnt)) {
+                            if (windowh2 == y(cnt)) {
+                                i = cnt;
+                                break;
+                            }
                         }
                     }
-                } }
+                }
                 i += p;
                 if (i < 0) {
                     i = 0;
                 } else {
-                    if (i > 4) {
-                        i = 4;
-                    }
+                    if (i > 4) { i = 4; }
                 }
                 windoww2 = x(i);
                 windowh2 = y(i);
@@ -1175,9 +1153,7 @@ label_2725_internal:
                 if (cfg_net > 1) {
                     cfg_net = 1;
                 } else {
-                    if (cfg_net < 0) {
-                        cfg_net = 0;
-                    }
+                    if (cfg_net < 0) { cfg_net = 0; }
                 }
                 snd(20);
                 valn(0) = u8"net."s;
@@ -1190,9 +1166,7 @@ label_2725_internal:
                 if (cfg_netwish > 1) {
                     cfg_netwish = 1;
                 } else {
-                    if (cfg_netwish < 0) {
-                        cfg_netwish = 0;
-                    }
+                    if (cfg_netwish < 0) { cfg_netwish = 0; }
                 }
                 snd(20);
                 valn(0) = u8"netWish."s;
@@ -1205,9 +1179,7 @@ label_2725_internal:
                 if (cfg_netchat > 1) {
                     cfg_netchat = 1;
                 } else {
-                    if (cfg_netchat < 0) {
-                        cfg_netchat = 0;
-                    }
+                    if (cfg_netchat < 0) { cfg_netchat = 0; }
                 }
                 snd(20);
                 valn(0) = u8"netChat."s;
@@ -1222,9 +1194,7 @@ label_2725_internal:
                 if (cfg_runwait > 5) {
                     cfg_runwait = 5;
                 } else {
-                    if (cfg_runwait < 2) {
-                        cfg_runwait = 2;
-                    }
+                    if (cfg_runwait < 2) { cfg_runwait = 2; }
                 }
                 snd(20);
                 valn(0) = u8"runWait."s;
@@ -1237,9 +1207,7 @@ label_2725_internal:
                 if (cfg_autonumlock > 1) {
                     cfg_autonumlock = 1;
                 } else {
-                    if (cfg_autonumlock < 0) {
-                        cfg_autonumlock = 0;
-                    }
+                    if (cfg_autonumlock < 0) { cfg_autonumlock = 0; }
                 }
                 snd(20);
                 valn(0) = u8"autoNumlock."s;
@@ -1252,9 +1220,7 @@ label_2725_internal:
                 if (cfg_titleeffect > 1) {
                     cfg_titleeffect = 1;
                 } else {
-                    if (cfg_titleeffect < 0) {
-                        cfg_titleeffect = 0;
-                    }
+                    if (cfg_titleeffect < 0) { cfg_titleeffect = 0; }
                 }
                 snd(20);
                 valn(0) = u8"titleEffect."s;
@@ -1267,9 +1233,7 @@ label_2725_internal:
                 if (cfg_scrsync > 25) {
                     cfg_scrsync = 25;
                 } else {
-                    if (cfg_scrsync < 2) {
-                        cfg_scrsync = 2;
-                    }
+                    if (cfg_scrsync < 2) { cfg_scrsync = 2; }
                 }
                 snd(20);
                 valn(0) = u8"scr_sync."s;
@@ -1282,9 +1246,7 @@ label_2725_internal:
                 if (cfg_runscroll > 1) {
                     cfg_runscroll = 1;
                 } else {
-                    if (cfg_runscroll < 0) {
-                        cfg_runscroll = 0;
-                    }
+                    if (cfg_runscroll < 0) { cfg_runscroll = 0; }
                 }
                 snd(20);
                 valn(0) = u8"scroll_run."s;
@@ -1297,9 +1259,7 @@ label_2725_internal:
                 if (cfg_autoturn > 2) {
                     cfg_autoturn = 2;
                 } else {
-                    if (cfg_autoturn < 0) {
-                        cfg_autoturn = 0;
-                    }
+                    if (cfg_autoturn < 0) { cfg_autoturn = 0; }
                 }
                 snd(20);
                 valn(0) = u8"autoTurnType."s;
@@ -1312,9 +1272,7 @@ label_2725_internal:
                 if (cfg_skiprandevents > 1) {
                     cfg_skiprandevents = 1;
                 } else {
-                    if (cfg_skiprandevents < 0) {
-                        cfg_skiprandevents = 0;
-                    }
+                    if (cfg_skiprandevents < 0) { cfg_skiprandevents = 0; }
                 }
                 snd(20);
                 valn(0) = u8"skipRandEvents."s;
@@ -1329,9 +1287,7 @@ label_2725_internal:
                 if (cfg_joypad > 1) {
                     cfg_joypad = 1;
                 } else {
-                    if (cfg_joypad < 0) {
-                        cfg_joypad = 0;
-                    }
+                    if (cfg_joypad < 0) { cfg_joypad = 0; }
                 }
                 snd(20);
                 valn(0) = u8"joypad."s;
@@ -1346,9 +1302,7 @@ label_2725_internal:
                 if (cfg_msgaddtime > 1) {
                     cfg_msgaddtime = 1;
                 } else {
-                    if (cfg_msgaddtime < 0) {
-                        cfg_msgaddtime = 0;
-                    }
+                    if (cfg_msgaddtime < 0) { cfg_msgaddtime = 0; }
                 }
                 snd(20);
                 valn(0) = u8"msg_addTime."s;
@@ -1361,9 +1315,7 @@ label_2725_internal:
                 if (cfg_msgtrans > 5) {
                     cfg_msgtrans = 5;
                 } else {
-                    if (cfg_msgtrans < 0) {
-                        cfg_msgtrans = 0;
-                    }
+                    if (cfg_msgtrans < 0) { cfg_msgtrans = 0; }
                 }
                 snd(20);
                 valn(0) = u8"msg_trans."s;
@@ -1378,9 +1330,7 @@ label_2725_internal:
                 if (cfg_language > 1) {
                     cfg_language = 1;
                 } else {
-                    if (cfg_language < 0) {
-                        cfg_language = 0;
-                    }
+                    if (cfg_language < 0) { cfg_language = 0; }
                 }
                 snd(20);
                 valn(0) = u8"language."s;
@@ -1398,9 +1348,7 @@ label_2725_internal:
         }
         label_2716();
         if (mode == 0) {
-            if (cfg_net) {
-                label_1398();
-            }
+            if (cfg_net) { label_1398(); }
             label_1419();
             label_2743(false);
         } else {
@@ -1412,4 +1360,4 @@ label_2725_internal:
 }
 
 
-}
+} // namespace elona

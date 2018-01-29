@@ -6,21 +6,13 @@
 
 namespace elona
 {
-
-
 int label_2654()
 {
     if (dbid == 0) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"バグ"s;
@@ -83,15 +75,9 @@ int label_2654()
     }
     if (dbid == 343) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"user"s;
@@ -161,10 +147,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ガード！ガード！」"s, u8"「襲撃だ！」"s, u8"「強盗め！」"s);
+                txt(u8"「ガード！ガード！」"s, u8"「襲撃だ！」"s,
+                    u8"「強盗め！」"s);
                 return 1;
             } else {
-                txt(u8"\"Guard! Guard!\""s, u8"\"Ambush!\""s, u8"\"You thief!\""s);
+                txt(u8"\"Guard! Guard!\""s, u8"\"Ambush!\""s,
+                    u8"\"You thief!\""s);
                 return 1;
             }
         }
@@ -191,15 +179,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"店主"s;
@@ -249,7 +231,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"shopkeeper"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -261,9 +244,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 140;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 141;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 141; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -272,15 +253,9 @@ int label_2654()
     }
     if (dbid == 353) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"キャラバンの隊長"s;
@@ -327,7 +302,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"caravan master"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -350,10 +326,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"カクテルをシェイクする音が聞こえる。"s, u8"「一杯どうだい？」"s, u8"「年季物のクリムエールがあるよ」"s, u8"酒場は多くの人でにぎわっている。"s);
+                txt(u8"カクテルをシェイクする音が聞こえる。"s,
+                    u8"「一杯どうだい？」"s,
+                    u8"「年季物のクリムエールがあるよ」"s,
+                    u8"酒場は多くの人でにぎわっている。"s);
                 return 1;
             } else {
-                txt(u8"You hear the sound of cocktail shakers."s, u8"\"How 'bout a drink sir?\""s, u8"\"We got vintage crim ales.\""s, u8"The bar is crowded with people."s);
+                txt(u8"You hear the sound of cocktail shakers."s,
+                    u8"\"How 'bout a drink sir?\""s,
+                    u8"\"We got vintage crim ales.\""s,
+                    u8"The bar is crowded with people."s);
                 return 1;
             }
         }
@@ -364,7 +346,8 @@ int label_2654()
                 txt(u8"「この酔っ払いめ！」"s, u8"「悪酔いはいけませんよ」"s);
                 return 1;
             } else {
-                txt(u8"\"Hey, stop it drunkard.\""s, u8"\"Are you sick from drinking too much?\""s);
+                txt(u8"\"Hey, stop it drunkard.\""s,
+                    u8"\"Are you sick from drinking too much?\""s);
                 return 1;
             }
         }
@@ -375,7 +358,8 @@ int label_2654()
                 txt(u8"「酔っ払いごときに…」"s, u8"「ふざけた運命だ」"s);
                 return 1;
             } else {
-                txt(u8"\"I got killed by a drunkard.\""s, u8"\"This is ridiculous.\""s);
+                txt(u8"\"I got killed by a drunkard.\""s,
+                    u8"\"This is ridiculous.\""s);
                 return 1;
             }
         }
@@ -383,10 +367,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「お帰りですか。美味い酒を用意してありますよ」"s, u8"「お疲れだったでしょう。冷酒でもどうですか」"s);
+                txt(u8"「お帰りですか。美味い酒を用意してありますよ」"s,
+                    u8"「お疲れだったでしょう。冷酒でもどうですか」"s);
                 return 1;
             } else {
-                txt(u8"\"Welcome home. I've got some decent ales for you.\""s, u8"\"Are you tired? How'bout a drink?\""s);
+                txt(u8"\"Welcome home. I've got some decent ales for you.\""s,
+                    u8"\"Are you tired? How'bout a drink?\""s);
                 return 1;
             }
         }
@@ -402,15 +388,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"バーテンダー"s;
@@ -461,7 +441,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"bartender"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -473,9 +454,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 144;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 145;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 145; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -487,23 +466,22 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"情報屋"s;
@@ -551,7 +529,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"informer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -563,9 +542,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 15;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 16;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 16; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -577,23 +554,22 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"アリーナマスター"s;
@@ -641,7 +617,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"arena master"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -665,10 +642,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -676,10 +658,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「お怪我はありませんか？」"s, u8"「無事な姿で何よりです。おかえりなさい」"s);
+                txt(u8"「お怪我はありませんか？」"s,
+                    u8"「無事な姿で何よりです。おかえりなさい」"s);
                 return 1;
             } else {
-                txt(u8"\"Are you wonded?\""s, u8"\"Good to see you again. Welcome home.\""s);
+                txt(u8"\"Are you wonded?\""s,
+                    u8"\"Good to see you again. Welcome home.\""s);
                 return 1;
             }
         }
@@ -688,15 +672,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"癒し手"s;
@@ -744,7 +722,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"healer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -768,10 +747,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"誰かが祈りを捧げる声が聞こえる。"s, u8"「おお、この迷える子猫に道標の光を…」"s, u8"「祈りなさい。どんな時でも救いはあります」"s, u8"「他人を憎んではなりません」"s);
+                txt(u8"誰かが祈りを捧げる声が聞こえる。"s,
+                    u8"「おお、この迷える子猫に道標の光を…」"s,
+                    u8"「祈りなさい。どんな時でも救いはあります」"s,
+                    u8"「他人を憎んではなりません」"s);
                 return 1;
             } else {
-                txt(u8"You hear the chants of prayer in the distance."s, u8"\"Come hither stray kittens, I shall guide you to the light.\""s, u8"\"Pray hard. There's always chance for salvation.\""s, u8"\"Do unto others as you wish others to do unto you.\""s);
+                txt(u8"You hear the chants of prayer in the distance."s,
+                    u8"\"Come hither stray kittens, I shall guide you to the light.\""s,
+                    u8"\"Pray hard. There's always chance for salvation.\""s,
+                    u8"\"Do unto others as you wish others to do unto you.\""s);
                 return 1;
             }
         }
@@ -779,10 +764,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「償いなさい」"s, u8"「あなたには罰が必要なようですね」"s, u8"「てめー♪」"s, u8"「くそがーっ」"s);
+                txt(u8"「償いなさい」"s,
+                    u8"「あなたには罰が必要なようですね」"s, u8"「てめー♪」"s,
+                    u8"「くそがーっ」"s);
                 return 1;
             } else {
-                txt(u8"\"Atone for you sin.\""s, u8"\"Well, you need to be punished.\""s, u8"\"You sonova...\""s, u8"\"Shit!\""s);
+                txt(u8"\"Atone for you sin.\""s,
+                    u8"\"Well, you need to be punished.\""s,
+                    u8"\"You sonova...\""s, u8"\"Shit!\""s);
                 return 1;
             }
         }
@@ -801,10 +790,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「お怪我はありませんか？」"s, u8"「無事な姿で何よりです。おかえりなさい」"s);
+                txt(u8"「お怪我はありませんか？」"s,
+                    u8"「無事な姿で何よりです。おかえりなさい」"s);
                 return 1;
             } else {
-                txt(u8"\"Are you wonded?\""s, u8"\"Good to see you again. Welcome home.\""s);
+                txt(u8"\"Are you wonded?\""s,
+                    u8"\"Good to see you again. Welcome home.\""s);
                 return 1;
             }
         }
@@ -824,15 +815,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"シスター"s;
@@ -883,7 +868,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"sister"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -907,23 +893,22 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"長"s;
@@ -971,7 +956,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"elder"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -983,9 +969,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 142;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 143;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 143; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -997,10 +981,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -1013,15 +1002,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"トレイナー"s;
@@ -1069,7 +1052,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"trainer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -1081,9 +1065,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 7;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 10;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 10; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -1095,10 +1077,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -1111,15 +1098,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ギルドトレイナー"s;
@@ -1167,7 +1148,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"guild trainer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -1179,9 +1161,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 415;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 414;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 414; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -1193,10 +1173,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s, u8"「のこのこ現れるとはな！」"s, u8"「罪をつぐなってもらおう」"s);
+                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s,
+                    u8"「のこのこ現れるとはな！」"s,
+                    u8"「罪をつぐなってもらおう」"s);
                 return 1;
             } else {
-                txt(u8"\"Stop there criminal!\""s, u8"\"You scum! Stay there.\""s, u8"\"You are under arrest.\""s, u8"\"You will pay for your sin.\""s);
+                txt(u8"\"Stop there criminal!\""s,
+                    u8"\"You scum! Stay there.\""s,
+                    u8"\"You are under arrest.\""s,
+                    u8"\"You will pay for your sin.\""s);
                 return 1;
             }
         }
@@ -1204,10 +1189,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -1216,15 +1206,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ガード"s;
@@ -1273,7 +1257,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"guard"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -1285,9 +1270,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 363;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 363;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 363; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -1299,10 +1282,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s, u8"「のこのこ現れるとはな！」"s, u8"「罪をつぐなってもらおう」"s);
+                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s,
+                    u8"「のこのこ現れるとはな！」"s,
+                    u8"「罪をつぐなってもらおう」"s);
                 return 1;
             } else {
-                txt(u8"\"Stop there criminal!\""s, u8"\"You scum! Stay there.\""s, u8"\"You are under arrest.\""s, u8"\"You will pay for your sin.\""s);
+                txt(u8"\"Stop there criminal!\""s,
+                    u8"\"You scum! Stay there.\""s,
+                    u8"\"You are under arrest.\""s,
+                    u8"\"You will pay for your sin.\""s);
                 return 1;
             }
         }
@@ -1310,10 +1298,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -1322,15 +1315,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ガード"s;
@@ -1379,7 +1366,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"guard"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -1391,9 +1379,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 25;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 25;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 25; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -1405,10 +1391,19 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「どこの馬鹿がこいつを放った！」"s, u8"「撃て、撃て、撃ちまくれー！！」"s, u8"「こいつは、ちょっと無理です」"s, u8"「隊長！血が血がー！！」"s, u8"「くそっ。この化け物め！」"s, u8"「なんなんだこの怪物は！」"s, u8"「ひるむな、突撃しろ！」"s);
+                txt(u8"「どこの馬鹿がこいつを放った！」"s,
+                    u8"「撃て、撃て、撃ちまくれー！！」"s,
+                    u8"「こいつは、ちょっと無理です」"s,
+                    u8"「隊長！血が血がー！！」"s,
+                    u8"「くそっ。この化け物め！」"s,
+                    u8"「なんなんだこの怪物は！」"s,
+                    u8"「ひるむな、突撃しろ！」"s);
                 return 1;
             } else {
-                txt(u8"\"Who the hell released this monster!\""s, u8"\"Fire, fire, fire!\""s, u8"\"This is ridiculous.\""s, u8"\"Blood! My blooood!\""s, u8"\"Holy cow!\""s, u8"\"What is THIS?\""s, u8"\"Go go go!\""s);
+                txt(u8"\"Who the hell released this monster!\""s,
+                    u8"\"Fire, fire, fire!\""s, u8"\"This is ridiculous.\""s,
+                    u8"\"Blood! My blooood!\""s, u8"\"Holy cow!\""s,
+                    u8"\"What is THIS?\""s, u8"\"Go go go!\""s);
                 return 1;
             }
         }
@@ -1416,23 +1411,21 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「隊長！もうダメです…」"s, u8"「うぎゃぁぁぁぁぁぁ」"s, u8"「隊長！味方がまた一人やられました！」"s, u8"「ぐふっ」"s, u8"「ふばぼー」"s);
+                txt(u8"「隊長！もうダメです…」"s, u8"「うぎゃぁぁぁぁぁぁ」"s,
+                    u8"「隊長！味方がまた一人やられました！」"s,
+                    u8"「ぐふっ」"s, u8"「ふばぼー」"s);
                 return 1;
             } else {
-                txt(u8"\"Ok, I'm done.\""s, u8"\"Arrrrrggghhh!\""s, u8"\"Man down! Man down!\""s, u8"\"M-Medic!\""s, u8"\"We got another man killed!\""s);
+                txt(u8"\"Ok, I'm done.\""s, u8"\"Arrrrrggghhh!\""s,
+                    u8"\"Man down! Man down!\""s, u8"\"M-Medic!\""s,
+                    u8"\"We got another man killed!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パルミア特殊部隊"s;
@@ -1483,7 +1476,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"palmian elite soldier"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -1495,9 +1489,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 74;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 75;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 75; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -1550,15 +1542,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"偽りの預言者『ゼーム』"s;
@@ -1685,15 +1671,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＠"s;
@@ -1766,10 +1746,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"何かがクスクスと笑った。"s, u8"あなたは誰かに見つめられている感じがした。"s);
+                txt(u8"何かがクスクスと笑った。"s,
+                    u8"あなたは誰かに見つめられている感じがした。"s);
                 return 1;
             } else {
-                txt(u8"You hear childish laughter, only it's oddly distorted in some eldritch manner"s, u8"You have been looking for someone like this…"s);
+                txt(u8"You hear childish laughter, only it's oddly distorted in some eldritch manner"s,
+                    u8"You have been looking for someone like this…"s);
                 return 1;
             }
         }
@@ -1777,7 +1759,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"オルフェ 「お前がこうすることを、予期していなかったとでも？」"s, u8"オルフェ 「さあ、少しは楽しませてくれ」"s);
+                txt(u8"オルフェ 「お前がこうすることを、予期していなかったとでも？」"s,
+                    u8"オルフェ 「さあ、少しは楽しませてくれ」"s);
                 return 1;
             }
         }
@@ -1798,15 +1781,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"混沌の寵児『オルフェ』"s;
@@ -1881,15 +1858,9 @@ int label_2654()
     }
     if (dbid == 26) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『マッドサイエンティスト』"s;
@@ -1956,15 +1927,9 @@ int label_2654()
     }
     if (dbid == 27) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"堕天使『イスカ』"s;
@@ -2034,10 +1999,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"あなたはひどい無力感に襲われた。"s, u8"重たい空気が辺りに漂っている。しかし希望はまだ失われてはいない、とあなたは感じた。"s, u8"「エリシェ…なぜ……お前が…」"s);
+                txt(u8"あなたはひどい無力感に襲われた。"s,
+                    u8"重たい空気が辺りに漂っている。しかし希望はまだ失われてはいない、とあなたは感じた。"s,
+                    u8"「エリシェ…なぜ……お前が…」"s);
                 return 1;
             } else {
-                txt(u8"You have been struck by a terrible feeling of powerlessness. "s, u8"The air around here is heavy and sorrowful. But you somehow feel not all is lost."s, u8"\"Elishe...why did it have to be you...\""s);
+                txt(u8"You have been struck by a terrible feeling of powerlessness. "s,
+                    u8"The air around here is heavy and sorrowful. But you somehow feel not all is lost."s,
+                    u8"\"Elishe...why did it have to be you...\""s);
                 return 1;
             }
         }
@@ -2045,10 +2014,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"『虚空を這いずる者』はあなたに冷ややかな視線を送った。"s, u8"「くだらない…」と誰かが言った。"s, u8"あなたは死を覚悟した。"s);
+                txt(u8"『虚空を這いずる者』はあなたに冷ややかな視線を送った。"s,
+                    u8"「くだらない…」と誰かが言った。"s,
+                    u8"あなたは死を覚悟した。"s);
                 return 1;
             } else {
-                txt(u8"You are like a rabbit fascinated by a snake."s, u8"Someone mutters. \"Worthless.\""s, u8"You sense death."s);
+                txt(u8"You are like a rabbit fascinated by a snake."s,
+                    u8"Someone mutters. \"Worthless.\""s,
+                    u8"You sense death."s);
                 return 1;
             }
         }
@@ -2075,15 +2048,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『虚空を這いずる者』"s;
@@ -2161,10 +2128,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"ロイター「…情けないな！」"s, u8"誰かが呟く声が聞こえる。"s, u8"ロイター「まだあの男に未練があるのか？」"s);
+                txt(u8"ロイター「…情けないな！」"s,
+                    u8"誰かが呟く声が聞こえる。"s,
+                    u8"ロイター「まだあの男に未練があるのか？」"s);
                 return 1;
             } else {
-                txt(u8"Loyter grumbles incessantly. \"How he sounds so miserable...\""s, u8"You hear someone muttering sulfurously somewhere"s, u8"Loyter mutters to himself. \"Why are you still attached to him...\""s);
+                txt(u8"Loyter grumbles incessantly. \"How he sounds so miserable...\""s,
+                    u8"You hear someone muttering sulfurously somewhere"s,
+                    u8"Loyter mutters to himself. \"Why are you still attached to him...\""s);
                 return 1;
             }
         }
@@ -2175,7 +2146,8 @@ int label_2654()
                 txt(u8"「馬鹿な奴だ！」"s, u8"「身の程を思い知らせやる」"s);
                 return 1;
             } else {
-                txt(u8"\"Oh what a jerk.\""s, u8"\"Die like a maggot you are.\""s);
+                txt(u8"\"Oh what a jerk.\""s,
+                    u8"\"Die like a maggot you are.\""s);
                 return 1;
             }
         }
@@ -2202,15 +2174,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ザナンの紅の英雄『ロイター』"s;
@@ -2285,15 +2251,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"火炎竜『ヴェスダ』"s;
@@ -2364,10 +2324,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"小鳥のさえずりのような笑い声がする。"s, u8"「ねえ、君って面白い顔してるね」"s, u8"「旅は楽しい？」"s, u8"「退屈だよ。どこかに連れていって欲しいな」"s);
+                txt(u8"小鳥のさえずりのような笑い声がする。"s,
+                    u8"「ねえ、君って面白い顔してるね」"s,
+                    u8"「旅は楽しい？」"s,
+                    u8"「退屈だよ。どこかに連れていって欲しいな」"s);
                 return 1;
             } else {
-                txt(u8"You hear childish laughter nearby"s, u8"\"You know your face is funny looking. Were you born that way?\""s, u8"\"How are your travels? I'd love to go but I'm stuck here...\""s, u8"\"I'm so bored. Maybe we can play a game of Purits & Yeeks later.\""s);
+                txt(u8"You hear childish laughter nearby"s,
+                    u8"\"You know your face is funny looking. Were you born that way?\""s,
+                    u8"\"How are your travels? I'd love to go but I'm stuck here...\""s,
+                    u8"\"I'm so bored. Maybe we can play a game of Purits & Yeeks later.\""s);
                 return 1;
             }
         }
@@ -2405,15 +2371,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"見習い『ミシェス』"s;
@@ -2487,10 +2447,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「お酒いかが〜」"s, u8"「やだっ。どこ触ってるんですか」"s, u8" *ざわざわ* "s, u8"盃を交わす音が聞こえる。"s);
+                txt(u8"「お酒いかが〜」"s,
+                    u8"「やだっ。どこ触ってるんですか」"s, u8" *ざわざわ* "s,
+                    u8"盃を交わす音が聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"\"Come on in! The ale is flowing well tonight!\""s, u8"\"Hey! Keep yer stinking hands of the serving ladies!\""s, u8"The rowdy crowd is making a fair bit of noise tonight"s, u8"You hear the sound of tankerds striking in a toast "s);
+                txt(u8"\"Come on in! The ale is flowing well tonight!\""s,
+                    u8"\"Hey! Keep yer stinking hands of the serving ladies!\""s,
+                    u8"The rowdy crowd is making a fair bit of noise tonight"s,
+                    u8"You hear the sound of tankerds striking in a toast "s);
                 return 1;
             }
         }
@@ -2498,10 +2463,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ちょっと飲みすぎですよ！」"s, u8"「いい加減怒りますからね」"s);
+                txt(u8"「ちょっと飲みすぎですよ！」"s,
+                    u8"「いい加減怒りますからね」"s);
                 return 1;
             } else {
-                txt(u8"\"You are drinking too much!\""s, u8"\"Stop it before I get angry.\""s);
+                txt(u8"\"You are drinking too much!\""s,
+                    u8"\"Stop it before I get angry.\""s);
                 return 1;
             }
         }
@@ -2528,15 +2495,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"看板娘『シーナ』"s;
@@ -2610,10 +2571,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「暁の女神アウラ…その名をどうやら俺は知っているようだ」"s, u8"「俺はあなたが好きだ。あなたは俺のたったひとりの姫だ。可愛いシルヴィア」"s, u8"「子供たちよ戦え、そして希望しろ」"s, u8"「俺は自分が何者で、この仮面は何故かを、着き止めねばならん」"s, u8"「俺は…誰だ…？」"s, u8"「ヤーンがそう望むのなら」"s);
+                txt(u8"「暁の女神アウラ…その名をどうやら俺は知っているようだ」"s,
+                    u8"「俺はあなたが好きだ。あなたは俺のたったひとりの姫だ。可愛いシルヴィア」"s,
+                    u8"「子供たちよ戦え、そして希望しろ」"s,
+                    u8"「俺は自分が何者で、この仮面は何故かを、着き止めねばならん」"s,
+                    u8"「俺は…誰だ…？」"s, u8"「ヤーンがそう望むのなら」"s);
                 return 1;
             } else {
-                txt(u8"\"Aural...it seems I know that name\""s, u8"\"Lady Silvia, you are my only princess\""s);
+                txt(u8"\"Aural...it seems I know that name\""s,
+                    u8"\"Lady Silvia, you are my only princess\""s);
                 return 1;
             }
         }
@@ -2621,10 +2587,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ヤーンがそう望むならば仕方あるまい」"s, u8"「ガルルル」"s, u8"「ドールめ！」"s, u8"「追い詰められたトルクに噛まれぬよう、気をつけなければな」"s);
+                txt(u8"「ヤーンがそう望むならば仕方あるまい」"s,
+                    u8"「ガルルル」"s, u8"「ドールめ！」"s,
+                    u8"「追い詰められたトルクに噛まれぬよう、気をつけなければな」"s);
                 return 1;
             } else {
-                txt(u8"\"If Jarn wishes, then let it be done.\""s, u8"\"Grrrrrr!\""s, u8"\"Doal!\""s);
+                txt(u8"\"If Jarn wishes, then let it be done.\""s,
+                    u8"\"Grrrrrr!\""s, u8"\"Doal!\""s);
                 return 1;
             }
         }
@@ -2643,7 +2612,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ヤヌスのみ心のままに」"s, u8"「ヤーンは与えたまい、また奪いたまう」"s);
+                txt(u8"「ヤヌスのみ心のままに」"s,
+                    u8"「ヤーンは与えたまい、また奪いたまう」"s);
                 return 1;
             } else {
                 txt(u8"\"Let Janus decide your fate\""s);
@@ -2651,15 +2621,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『豹頭の戦士』"s;
@@ -2739,10 +2703,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「何よ、この、ばか豹！いじわるの、ばかの、何もわかってない唐変木のでくのぼう！」"s, u8"「触らないで！私に触らないでよ、この豹！」"s, u8"誰かが足で床を踏み鳴らす音が聞こえる。"s, u8"「どうせ私は姉さんとはメダカとクジラほど違う、ガリガリの痩せっぽっちで貧相なちびの妹よ。私の味方なんて、一人もいやしないんだわ！」"s, u8"「あんたが＊＊＊してくれないんなら、宮廷中の男をくわえこんで＊＊＊してやる！」"s);
+                txt(u8"「何よ、この、ばか豹！いじわるの、ばかの、何もわかってない唐変木のでくのぼう！」"s,
+                    u8"「触らないで！私に触らないでよ、この豹！」"s,
+                    u8"誰かが足で床を踏み鳴らす音が聞こえる。"s,
+                    u8"「どうせ私は姉さんとはメダカとクジラほど違う、ガリガリの痩せっぽっちで貧相なちびの妹よ。私の味方なんて、一人もいやしないんだわ！」"s,
+                    u8"「あんたが＊＊＊してくれないんなら、宮廷中の男をくわえこんで＊＊＊してやる！」"s);
                 return 1;
             } else {
-                txt(u8"\"Come on, you stupid leopard! You ignorant, mean, stupid, uncouth numbnut!\""s, u8"\"Don't touch! Don't touch me, leopard!\""s, u8"You hear someone stamps her feet."s);
+                txt(u8"\"Come on, you stupid leopard! You ignorant, mean, stupid, uncouth numbnut!\""s,
+                    u8"\"Don't touch! Don't touch me, leopard!\""s,
+                    u8"You hear someone stamps her feet."s);
                 return 1;
             }
         }
@@ -2750,10 +2720,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ムチをくれるわよ！」"s, u8"「こ、この、無礼者！お前なんか死刑にするわよ！」"s, u8"「よくも切ったな！よくも私を切ったな！」"s, u8"「アアアアア！ヒィィィィ！人殺し！お父様にいってやる！」"s, u8"「いまやっとわかったわ。あなたは私が死ねばいいと本気で思ってるのね！」"s);
+                txt(u8"「ムチをくれるわよ！」"s,
+                    u8"「こ、この、無礼者！お前なんか死刑にするわよ！」"s,
+                    u8"「よくも切ったな！よくも私を切ったな！」"s,
+                    u8"「アアアアア！ヒィィィィ！人殺し！お父様にいってやる！」"s,
+                    u8"「いまやっとわかったわ。あなたは私が死ねばいいと本気で思ってるのね！」"s);
                 return 1;
             } else {
-                txt(u8"\"I will beat you with a whip!\""s, u8"\"You...you insolent peasant! I will bring you to the scaffold!\""s);
+                txt(u8"\"I will beat you with a whip!\""s,
+                    u8"\"You...you insolent peasant! I will bring you to the scaffold!\""s);
                 return 1;
             }
         }
@@ -2761,10 +2736,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私なんか、生まれてこなければよかったんだわ！」"s, u8"「非人！悪魔！鬼！人殺し、人殺し、人殺し！」"s);
+                txt(u8"「私なんか、生まれてこなければよかったんだわ！」"s,
+                    u8"「非人！悪魔！鬼！人殺し、人殺し、人殺し！」"s);
                 return 1;
             } else {
-                txt(u8"\"To hell with me!\""s, u8"\"Villain! Devil! Fiend! Murderer, murderer murderer!\""s);
+                txt(u8"\"To hell with me!\""s,
+                    u8"\"Villain! Devil! Fiend! Murderer, murderer murderer!\""s);
                 return 1;
             }
         }
@@ -2780,15 +2757,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"皇女『シルヴィア』"s;
@@ -2865,7 +2836,8 @@ int label_2654()
                 txt(u8"*ぶ〜ん* "s, u8"何かが高速で回転している。"s);
                 return 1;
             } else {
-                txt(u8"*bzzzz*whirrrrrrr*click*"s, u8"Something is buffing the floor at an inhuman speed"s);
+                txt(u8"*bzzzz*whirrrrrrr*click*"s,
+                    u8"Something is buffing the floor at an inhuman speed"s);
                 return 1;
             }
         }
@@ -2903,15 +2875,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『ダンジョンクリーナー』"s;
@@ -2985,10 +2951,20 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「獣に変えられた王子の童話をしっているかしら？」"s, u8"痺れるほど美しいエレアの横顔にあなたは見とれた。"s, u8"「この世界は今、大きく変わろうとしているの」"s, u8"「ヴェルニースで見かけたあの男…まさか…」"s, u8"神秘的な古代の言葉で誰かが囁いた。"s, u8"「あなたはプライドが高すぎるのよ。ただでさえエレアは異端視されているのに」"s);
+                txt(u8"「獣に変えられた王子の童話をしっているかしら？」"s,
+                    u8"痺れるほど美しいエレアの横顔にあなたは見とれた。"s,
+                    u8"「この世界は今、大きく変わろうとしているの」"s,
+                    u8"「ヴェルニースで見かけたあの男…まさか…」"s,
+                    u8"神秘的な古代の言葉で誰かが囁いた。"s,
+                    u8"「あなたはプライドが高すぎるのよ。ただでさえエレアは異端視されているのに」"s);
                 return 1;
             } else {
-                txt(u8"\"You know the fairy tale where a wicked witch transforms a dashing prince into an monster?\""s, u8"The stunning beauty of Elea's face halts your step a moment."s, u8"\"The world is thrown into bedlam and chaos. We must remain strong in the face of it.\""s, u8"\"The man we saw in Vernis, he just might be...\""s, u8"Someone mutters in mysterious ancient language."s, u8"\"Eleas is already being regarded as a heretic, your lofty dignity isn't helping this.\""s);
+                txt(u8"\"You know the fairy tale where a wicked witch transforms a dashing prince into an monster?\""s,
+                    u8"The stunning beauty of Elea's face halts your step a moment."s,
+                    u8"\"The world is thrown into bedlam and chaos. We must remain strong in the face of it.\""s,
+                    u8"\"The man we saw in Vernis, he just might be...\""s,
+                    u8"Someone mutters in mysterious ancient language."s,
+                    u8"\"Eleas is already being regarded as a heretic, your lofty dignity isn't helping this.\""s);
                 return 1;
             }
         }
@@ -2996,10 +2972,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「なぜ戦わなければならないの？」"s, u8"「悪いけど、遊んでいる暇は無いの」"s, u8"エレアの少女は凍りつくような美しい瞳をとがらせた。"s);
+                txt(u8"「なぜ戦わなければならないの？」"s,
+                    u8"「悪いけど、遊んでいる暇は無いの」"s,
+                    u8"エレアの少女は凍りつくような美しい瞳をとがらせた。"s);
                 return 1;
             } else {
-                txt(u8"\"Do we really have to fight?\""s, u8"\"Sorry, I don't have time for this.\""s, u8"The Elean little girl has an angry look in her beautiful cold eyes."s);
+                txt(u8"\"Do we really have to fight?\""s,
+                    u8"\"Sorry, I don't have time for this.\""s,
+                    u8"The Elean little girl has an angry look in her beautiful cold eyes."s);
                 return 1;
             }
         }
@@ -3026,15 +3006,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"風を聴く者『ラーネイレ』"s;
@@ -3113,10 +3087,18 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「異形の森、か…。我等のもたらす真実を、彼らはどう受け止めるか」"s, u8"「この洞窟は、なかなか住み心地がよさそうじゃないか」"s, u8"「ヴェルニースの炭鉱街までは、子供の足でも一日でたどり着けるだろう」"s, u8"「あの酒場の娘にはまいったな！」"s, u8"誰かが弓矢を手入れする音が聞こえた。"s);
+                txt(u8"「異形の森、か…。我等のもたらす真実を、彼らはどう受け止めるか」"s,
+                    u8"「この洞窟は、なかなか住み心地がよさそうじゃないか」"s,
+                    u8"「ヴェルニースの炭鉱街までは、子供の足でも一日でたどり着けるだろう」"s,
+                    u8"「あの酒場の娘にはまいったな！」"s,
+                    u8"誰かが弓矢を手入れする音が聞こえた。"s);
                 return 1;
             } else {
-                txt(u8"\"Wait'll they hear the news we bring. And they think they have problems. Hah!\""s, u8"\"Hey... This is a fine looking cave. I oughta enquire about it sometime. Everyone needs a hideaway...\""s, u8"\"Pah! It would take a child less than a day to walk to Vernis, we won't be late.\""s, u8"\"Man, that girl at the pub... She could clean my glass if you know what I mean!\""s, u8"You hear someone testing the string of his bow."s);
+                txt(u8"\"Wait'll they hear the news we bring. And they think they have problems. Hah!\""s,
+                    u8"\"Hey... This is a fine looking cave. I oughta enquire about it sometime. Everyone needs a hideaway...\""s,
+                    u8"\"Pah! It would take a child less than a day to walk to Vernis, we won't be late.\""s,
+                    u8"\"Man, that girl at the pub... She could clean my glass if you know what I mean!\""s,
+                    u8"You hear someone testing the string of his bow."s);
                 return 1;
             }
         }
@@ -3124,10 +3106,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「恩を仇で返すとはこのことだ」"s, u8"「貴様、かの者の手先だったのか？」"s);
+                txt(u8"「恩を仇で返すとはこのことだ」"s,
+                    u8"「貴様、かの者の手先だったのか？」"s);
                 return 1;
             } else {
-                txt(u8"\"You repay kindness with ingratitude?\""s, u8"\"Do you really mean it?\""s);
+                txt(u8"\"You repay kindness with ingratitude?\""s,
+                    u8"\"Do you really mean it?\""s);
                 return 1;
             }
         }
@@ -3154,15 +3138,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"異形の森の使者『ロミアス』"s;
@@ -3244,23 +3222,20 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「…うぅ…」"s, u8"「誰か、誰かいないか？」"s, u8"何者かが助けを求める声が聞こえる。"s);
+                txt(u8"「…うぅ…」"s, u8"「誰か、誰かいないか？」"s,
+                    u8"何者かが助けを求める声が聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"\"H-help me… please...\""s, u8"\"Is someone there? Help me... The King must be forewarned!\""s, u8"You hear cries of help echoing off the walls. They sound quite weak...."s);
+                txt(u8"\"H-help me… please...\""s,
+                    u8"\"Is someone there? Help me... The King must be forewarned!\""s,
+                    u8"You hear cries of help echoing off the walls. They sound quite weak...."s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パルミアの影『スラン』"s;
@@ -3331,23 +3306,20 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「…不覚だった…」"s, u8"「こんな場所が墓場になるとは…」"s, u8"何者かのうめき声が聞こえる。"s);
+                txt(u8"「…不覚だった…」"s, u8"「こんな場所が墓場になるとは…」"s,
+                    u8"何者かのうめき声が聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"\"Curse my weakness! This shouldn't have happened.\""s, u8"\"This place will be the end of me I fear.\""s, u8"You hear a low moan of pain somewhere"s);
+                txt(u8"\"Curse my weakness! This shouldn't have happened.\""s,
+                    u8"\"This place will be the end of me I fear.\""s,
+                    u8"You hear a low moan of pain somewhere"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カルーンの孤狼『カラム』"s;
@@ -3418,10 +3390,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「この文はどういう意味かしら…」"s, u8"「興味深いわね」"s, u8"誰かが本を整理する音が聞こえる。"s);
+                txt(u8"「この文はどういう意味かしら…」"s, u8"「興味深いわね」"s,
+                    u8"誰かが本を整理する音が聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"\"I wonder what the runic translation of this is...\""s, u8"\"Hmm...interesting. Interesting indeed...\""s, u8"You hear someone arranging books on shelves."s);
+                txt(u8"\"I wonder what the runic translation of this is...\""s,
+                    u8"\"Hmm...interesting. Interesting indeed...\""s,
+                    u8"You hear someone arranging books on shelves."s);
                 return 1;
             }
         }
@@ -3429,10 +3404,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「やめてください！」"s, u8"「あなたは、そんな人だったのですね」"s);
+                txt(u8"「やめてください！」"s,
+                    u8"「あなたは、そんな人だったのですね」"s);
                 return 1;
             } else {
-                txt(u8"\"Stop it, please!\""s, u8"\"Why are you doing this?\""s);
+                txt(u8"\"Stop it, please!\""s,
+                    u8"\"Why are you doing this?\""s);
                 return 1;
             }
         }
@@ -3459,15 +3436,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"歴史を学ぶ『エリステア』"s;
@@ -3542,15 +3513,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"闇の奇形『イスシズル』"s;
@@ -3625,15 +3590,9 @@ int label_2654()
     }
     if (dbid == 143) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"古城の主『ワイナン』"s;
@@ -3707,15 +3666,9 @@ int label_2654()
     }
     if (dbid == 144) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"赤き義眼の『クルイツゥア』"s;
@@ -3790,15 +3743,9 @@ int label_2654()
     }
     if (dbid == 145) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"鋼鉄竜『コルゴン』"s;
@@ -3866,15 +3813,9 @@ int label_2654()
     }
     if (dbid == 306) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"《風のルルウィ》"s;
@@ -3943,15 +3884,9 @@ int label_2654()
     }
     if (dbid == 331) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"《幸運のエヘカトル》"s;
@@ -4019,15 +3954,9 @@ int label_2654()
     }
     if (dbid == 336) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"《エヘカトルの中の神》"s;
@@ -4103,15 +4032,9 @@ int label_2654()
     }
     if (dbid == 338) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"《地のオパートス》"s;
@@ -4184,15 +4107,9 @@ int label_2654()
     }
     if (dbid == 339) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"《収穫のクミロミ》"s;
@@ -4265,15 +4182,9 @@ int label_2654()
     }
     if (dbid == 342) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"《機械のマニ》"s;
@@ -4346,15 +4257,9 @@ int label_2654()
     }
     if (dbid == 340) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"_test"s;
@@ -4445,15 +4350,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 80;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 80; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"プチ"s;
@@ -4533,15 +4432,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ベスプチ"s;
@@ -4614,15 +4507,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"スライム"s;
@@ -4701,15 +4588,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 2;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 2; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"弱酸性スライム"s;
@@ -4790,15 +4671,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"バブル"s;
@@ -4873,15 +4748,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ブルーバブル"s;
@@ -4945,15 +4814,9 @@ int label_2654()
     }
     if (dbid == 287) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"塊の怪物"s;
@@ -5016,15 +4879,9 @@ int label_2654()
     }
     if (dbid == 327) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 15;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 15; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"キューブ"s;
@@ -5087,15 +4944,9 @@ int label_2654()
     }
     if (dbid == 5) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"野うさぎ"s;
@@ -5169,15 +5020,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"かたつむり"s;
@@ -5244,10 +5089,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「なにしやがる！」"s, u8"「この野郎」"s, u8"「今更謝っても遅いぞ」"s, u8"「なめやがって」"s, u8"「上等だ！」"s, u8"「かかってこい、おらぁ」"s, u8"「指一本触れて見やがれ」"s);
+                txt(u8"「なにしやがる！」"s, u8"「この野郎」"s,
+                    u8"「今更謝っても遅いぞ」"s, u8"「なめやがって」"s,
+                    u8"「上等だ！」"s, u8"「かかってこい、おらぁ」"s,
+                    u8"「指一本触れて見やがれ」"s);
                 return 1;
             } else {
-                txt(u8"\"What the hell!\""s, u8"\"You will regret this.\""s, u8"\"Ok, no turning back now.\""s, u8"\"Now you die!\""s, u8"\"Come on chicken.\""s, u8"\"Huh.\""s, u8"\"You touch me, you die.\""s);
+                txt(u8"\"What the hell!\""s, u8"\"You will regret this.\""s,
+                    u8"\"Ok, no turning back now.\""s, u8"\"Now you die!\""s,
+                    u8"\"Come on chicken.\""s, u8"\"Huh.\""s,
+                    u8"\"You touch me, you die.\""s);
                 return 1;
             }
         }
@@ -5255,10 +5106,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「貴様…覚えていろ」"s, u8"「うわぁぁ」"s, u8"「人殺し！」"s, u8"「やめろー」"s, u8"「次があるとは思うなよ」"s, u8"「ひぃー」"s, u8"「命だけは助けてくれー」"s);
+                txt(u8"「貴様…覚えていろ」"s, u8"「うわぁぁ」"s,
+                    u8"「人殺し！」"s, u8"「やめろー」"s,
+                    u8"「次があるとは思うなよ」"s, u8"「ひぃー」"s,
+                    u8"「命だけは助けてくれー」"s);
                 return 1;
             } else {
-                txt(u8"\"You....you will pay for this someday...\""s, u8"\"Nooo!\""s, u8"\"A murderer!\""s, u8"\"Stop it!\""s, u8"\"F-forgive me...\""s, u8"\"Arrr--rr...\""s, u8"\"D-don't!\""s);
+                txt(u8"\"You....you will pay for this someday...\""s,
+                    u8"\"Nooo!\""s, u8"\"A murderer!\""s, u8"\"Stop it!\""s,
+                    u8"\"F-forgive me...\""s, u8"\"Arrr--rr...\""s,
+                    u8"\"D-don't!\""s);
                 return 1;
             }
         }
@@ -5274,15 +5131,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"敗残兵"s;
@@ -5353,10 +5204,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「なにしやがる！」"s, u8"「この野郎」"s, u8"「今更謝っても遅いぞ」"s, u8"「なめやがって」"s, u8"「上等だ！」"s, u8"「かかってこい、おらぁ」"s, u8"「指一本触れて見やがれ」"s);
+                txt(u8"「なにしやがる！」"s, u8"「この野郎」"s,
+                    u8"「今更謝っても遅いぞ」"s, u8"「なめやがって」"s,
+                    u8"「上等だ！」"s, u8"「かかってこい、おらぁ」"s,
+                    u8"「指一本触れて見やがれ」"s);
                 return 1;
             } else {
-                txt(u8"\"What the hell!\""s, u8"\"You will regret this.\""s, u8"\"Ok, no turning back now.\""s, u8"\"Now you die!\""s, u8"\"Come on chicken.\""s, u8"\"Huh.\""s, u8"\"You touch me, you die.\""s);
+                txt(u8"\"What the hell!\""s, u8"\"You will regret this.\""s,
+                    u8"\"Ok, no turning back now.\""s, u8"\"Now you die!\""s,
+                    u8"\"Come on chicken.\""s, u8"\"Huh.\""s,
+                    u8"\"You touch me, you die.\""s);
                 return 1;
             }
         }
@@ -5364,10 +5221,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「貴様…覚えていろ」"s, u8"「うわぁぁ」"s, u8"「人殺し！」"s, u8"「やめろー」"s, u8"「次があるとは思うなよ」"s, u8"「ひぃー」"s, u8"「命だけは助けてくれー」"s);
+                txt(u8"「貴様…覚えていろ」"s, u8"「うわぁぁ」"s,
+                    u8"「人殺し！」"s, u8"「やめろー」"s,
+                    u8"「次があるとは思うなよ」"s, u8"「ひぃー」"s,
+                    u8"「命だけは助けてくれー」"s);
                 return 1;
             } else {
-                txt(u8"\"You....you will pay for this someday...\""s, u8"\"Nooo!\""s, u8"\"A murderer!\""s, u8"\"Stop it!\""s, u8"\"F-forgive me...\""s, u8"\"Arrr--rr...\""s, u8"\"D-don't!\""s);
+                txt(u8"\"You....you will pay for this someday...\""s,
+                    u8"\"Nooo!\""s, u8"\"A murderer!\""s, u8"\"Stop it!\""s,
+                    u8"\"F-forgive me...\""s, u8"\"Arrr--rr...\""s,
+                    u8"\"D-don't!\""s);
                 return 1;
             }
         }
@@ -5383,15 +5246,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"傭兵"s;
@@ -5451,9 +5308,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 139;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 178;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 178; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -5465,10 +5320,17 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「やめて下さい、旦那」"s, u8"「ひぃ！」"s, u8"「私を殺しても何の得にもならないよ」"s, u8"「馬鹿にするな！」"s, u8"「なぜこんなことを！」"s, u8"「暴力反対！」"s, u8"「ちょ、ちょっと…！」"s);
+                txt(u8"「やめて下さい、旦那」"s, u8"「ひぃ！」"s,
+                    u8"「私を殺しても何の得にもならないよ」"s,
+                    u8"「馬鹿にするな！」"s, u8"「なぜこんなことを！」"s,
+                    u8"「暴力反対！」"s, u8"「ちょ、ちょっと…！」"s);
                 return 1;
             } else {
-                txt(u8"\"P-please, no sir...\""s, u8"\"Waaaa!\""s, u8"\"You get nothing from killing me...\""s, u8"\"Don't make a fool of me!\""s, u8"\"Why are you doing this?\""s, u8"\"A violent revolution!\""s, u8"\"W-w-what...!\""s);
+                txt(u8"\"P-please, no sir...\""s, u8"\"Waaaa!\""s,
+                    u8"\"You get nothing from killing me...\""s,
+                    u8"\"Don't make a fool of me!\""s,
+                    u8"\"Why are you doing this?\""s,
+                    u8"\"A violent revolution!\""s, u8"\"W-w-what...!\""s);
                 return 1;
             }
         }
@@ -5476,10 +5338,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「殺生な！」"s, u8"「ぐわぁ」"s, u8"「なんでこんな目に…」"s, u8"「ひどい」"s, u8"「乞食だからって…」"s, u8"「私の人生っていったい」"s);
+                txt(u8"「殺生な！」"s, u8"「ぐわぁ」"s,
+                    u8"「なんでこんな目に…」"s, u8"「ひどい」"s,
+                    u8"「乞食だからって…」"s, u8"「私の人生っていったい」"s);
                 return 1;
             } else {
-                txt(u8"\"You are cruel.\""s, u8"\"Ahhhh!\""s, u8"\"I don't deserve this...\""s, u8"\"It's unfair.\""s, u8"\"Beggars always cry...\""s, u8"\"My life is pathetic.\""s);
+                txt(u8"\"You are cruel.\""s, u8"\"Ahhhh!\""s,
+                    u8"\"I don't deserve this...\""s, u8"\"It's unfair.\""s,
+                    u8"\"Beggars always cry...\""s,
+                    u8"\"My life is pathetic.\""s);
                 return 1;
             }
         }
@@ -5487,7 +5354,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「よわ！」"s, u8"「何がしたかったんだ？」"s, u8"「ははは！」"s);
+                txt(u8"「よわ！」"s, u8"「何がしたかったんだ？」"s,
+                    u8"「ははは！」"s);
                 return 1;
             } else {
                 txt(u8"\"Weak! Weak!\""s, u8"\"Huh?\""s, u8"\"Ha ha ha!\""s);
@@ -5495,15 +5363,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"乞食"s;
@@ -5553,7 +5415,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"beggar"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -5565,9 +5428,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 102;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 103;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 103; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -5587,7 +5448,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おらは…おらはー！」"s, u8"「田舎モンだからって…！」"s, u8"「食べ物を粗末にするな！」"s, u8"「はぐわ」"s);
+                txt(u8"「おらは…おらはー！」"s, u8"「田舎モンだからって…！」"s,
+                    u8"「食べ物を粗末にするな！」"s, u8"「はぐわ」"s);
                 return 1;
             }
         }
@@ -5603,15 +5465,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"農夫"s;
@@ -5661,7 +5517,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"farmer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -5673,9 +5530,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 179;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 180;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 180; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -5708,15 +5563,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"清掃員"s;
@@ -5767,7 +5616,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"cleaner"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -5791,7 +5641,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「炭鉱の毒にでもやられたか？」"s, u8"「この街の平和は俺が守る」"s);
+                txt(u8"「炭鉱の毒にでもやられたか？」"s,
+                    u8"「この街の平和は俺が守る」"s);
                 return 1;
             }
         }
@@ -5812,15 +5663,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"鉱夫"s;
@@ -5870,7 +5715,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"miner"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -5882,9 +5728,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 187;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 188;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 188; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -5896,10 +5740,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「タラララララー♪」"s, u8"「チキチキ♪」"s, u8"「ドナドナドナ〜♪」"s, u8"「ダバダ〜♪」"s);
+                txt(u8"「タラララララー♪」"s, u8"「チキチキ♪」"s,
+                    u8"「ドナドナドナ〜♪」"s, u8"「ダバダ〜♪」"s);
                 return 1;
             } else {
-                txt(u8"\"Oh I once heard of a place called Nantucket...\""s, u8"\"Ninety-nine Yeeks in a dank hole. Ninety-nine Yeeks in a Hole!\""s, u8"\"Crawling in my Robes! These wounds will need a Healer!\""s, u8"\"If you go down to the woods today. You're sure of a big surprise. If you go down to the woods today. You'd better go in disguise.\""s);
+                txt(u8"\"Oh I once heard of a place called Nantucket...\""s,
+                    u8"\"Ninety-nine Yeeks in a dank hole. Ninety-nine Yeeks in a Hole!\""s,
+                    u8"\"Crawling in my Robes! These wounds will need a Healer!\""s,
+                    u8"\"If you go down to the woods today. You're sure of a big surprise. If you go down to the woods today. You'd better go in disguise.\""s);
                 return 1;
             }
         }
@@ -5907,7 +5755,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「や、やめてくれたまえ」"s, u8"「そんなに耳障りな演奏だったかい？」"s);
+                txt(u8"「や、やめてくれたまえ」"s,
+                    u8"「そんなに耳障りな演奏だったかい？」"s);
                 return 1;
             } else {
                 txt(u8"\"S-Stop it..!\""s, u8"\"Was my music that bad?\""s);
@@ -5918,23 +5767,19 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「そんな馬鹿な…」"s, u8"「厳しい客だぜ」"s, u8"「下手で悪かったよ」"s);
+                txt(u8"「そんな馬鹿な…」"s, u8"「厳しい客だぜ」"s,
+                    u8"「下手で悪かったよ」"s);
                 return 1;
             } else {
-                txt(u8"\"No way!\""s, u8"\"It's a bitter tirade.\""s, u8"\"Did I suck that bad?\" "s);
+                txt(u8"\"No way!\""s, u8"\"It's a bitter tirade.\""s,
+                    u8"\"Did I suck that bad?\" "s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"吟遊詩人"s;
@@ -5984,7 +5829,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"bard"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6015,20 +5861,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「なんという悪」"s, u8"「大罪です…」"s, u8"「ふにゃー」"s);
+                txt(u8"「なんという悪」"s, u8"「大罪です…」"s,
+                    u8"「ふにゃー」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"修道女"s;
@@ -6077,7 +5918,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"sister"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6089,9 +5931,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 181;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 182;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 182; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6103,23 +5943,23 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「おめでたや。おめでたや」"s, u8"祭りは人で溢れかえり、太鼓や笛の音が絶え間なく聞こえる。"s, u8"「祭りじゃー」"s, u8"あなたはワクワクしてきた。"s, u8"祭りの熱気で雪も溶けてしまいそうだ！"s);
+                txt(u8"「おめでたや。おめでたや」"s,
+                    u8"祭りは人で溢れかえり、太鼓や笛の音が絶え間なく聞こえる。"s,
+                    u8"「祭りじゃー」"s, u8"あなたはワクワクしてきた。"s,
+                    u8"祭りの熱気で雪も溶けてしまいそうだ！"s);
                 return 1;
             } else {
-                txt(u8"\"Happy holy night!\""s, u8"The town is awash with people arriving at the festival and drums and whistles make a merry rhythm."s, u8"\"It's a festival!\""s, u8"You feel excited."s, u8"Fervor!"s);
+                txt(u8"\"Happy holy night!\""s,
+                    u8"The town is awash with people arriving at the festival and drums and whistles make a merry rhythm."s,
+                    u8"\"It's a festival!\""s, u8"You feel excited."s,
+                    u8"Fervor!"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"聖獣"s;
@@ -6188,23 +6028,23 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「今なら無料でジュア様の抱き枕が手に入るよ〜」"s, u8"「見てらっしゃい、よってらっしゃい」"s, u8"「そこの君、清楚で綺麗なお姉さんが君を待ってるよ」"s, u8"「この荒れすさんだ世に咲く一輪の花、気高く汚れを知らぬ純白の乙女、その名も癒しのジュア！」"s);
+                txt(u8"「今なら無料でジュア様の抱き枕が手に入るよ〜」"s,
+                    u8"「見てらっしゃい、よってらっしゃい」"s,
+                    u8"「そこの君、清楚で綺麗なお姉さんが君を待ってるよ」"s,
+                    u8"「この荒れすさんだ世に咲く一輪の花、気高く汚れを知らぬ純白の乙女、その名も癒しのジュア！」"s);
                 return 1;
             } else {
-                txt(u8"\"St.Jure's body pillow for FREE!\""s, u8"\"Step right up!\""s, u8"\"You there lucky one, a beautiful and sweet woman awaits for you!\""s, u8"\"A flower growing in the desert, fragile yet most noble. A maiden pure in heart with compassion and indomitable will to vanquish evil. Jure of Healing, our only Goddess!\""s);
+                txt(u8"\"St.Jure's body pillow for FREE!\""s,
+                    u8"\"Step right up!\""s,
+                    u8"\"You there lucky one, a beautiful and sweet woman awaits for you!\""s,
+                    u8"\"A flower growing in the desert, fragile yet most noble. A maiden pure in heart with compassion and indomitable will to vanquish evil. Jure of Healing, our only Goddess!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"着ぐるみのバイト"s;
@@ -6274,23 +6114,25 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ジュア様、ああ、ジュア様、罪深き私たちをどうかお許しください」"s, u8"「我々はあなた様のご光臨を強く願っております！」"s, u8"「ジュア様に栄光あれ！ジュア様に勝利を！」"s, u8"「さあ、あなたもジュア教に改宗しなさい」"s, u8"「異教徒に死を！ジュアの名を汚すものに裁きの鉄槌を！」"s);
+                txt(u8"「ジュア様、ああ、ジュア様、罪深き私たちをどうかお許しください」"s,
+                    u8"「我々はあなた様のご光臨を強く願っております！」"s,
+                    u8"「ジュア様に栄光あれ！ジュア様に勝利を！」"s,
+                    u8"「さあ、あなたもジュア教に改宗しなさい」"s,
+                    u8"「異教徒に死を！ジュアの名を汚すものに裁きの鉄槌を！」"s);
                 return 1;
             } else {
-                txt(u8"\"Jure, oh holy Jure, forgive our sins and purify us from all unrighteousness.\""s, u8"\"We're so ready to see you, Goddness Jure!\""s, u8"\"Glory to Jure! May the victory always be with Jure!\""s, u8"\"Come, become a new servant of Jure today.\""s, u8"\"Death to the heretic! Crack down those who bring shame to the name of Jure!\""s);
+                txt(u8"\"Jure, oh holy Jure, forgive our sins and purify us from all unrighteousness.\""s,
+                    u8"\"We're so ready to see you, Goddness Jure!\""s,
+                    u8"\"Glory to Jure! May the victory always be with Jure!\""s,
+                    u8"\"Come, become a new servant of Jure today.\""s,
+                    u8"\"Death to the heretic! Crack down those who bring shame to the name of Jure!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ジュアの狂信者"s;
@@ -6339,7 +6181,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"Jure fanatic"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6351,9 +6194,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 285;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 284;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 284; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6386,15 +6227,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ならずもの"s;
@@ -6445,7 +6280,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"rogue"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6457,9 +6293,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 183;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 184;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 184; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6492,15 +6326,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"娼婦"s;
@@ -6550,7 +6378,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"prostitue"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -6562,9 +6391,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 418;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 417;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 417; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6597,15 +6424,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"囚人"s;
@@ -6655,7 +6476,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"prisoner"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6667,9 +6489,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 419;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 420;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 420; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6689,7 +6509,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「これぞ芸術！」"s, u8"「争いとは無縁の世界に生きていたのに」"s, u8"「アートだー！」"s);
+                txt(u8"「これぞ芸術！」"s,
+                    u8"「争いとは無縁の世界に生きていたのに」"s,
+                    u8"「アートだー！」"s);
                 return 1;
             }
         }
@@ -6702,15 +6524,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"芸術家"s;
@@ -6760,7 +6576,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"artist"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6772,9 +6589,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 185;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 186;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 186; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6786,7 +6601,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「無礼者！」"s, u8"「ガード、とっととこのアホを捕まえろ」"s, u8"「ガード！きてくれー！」"s);
+                txt(u8"「無礼者！」"s,
+                    u8"「ガード、とっととこのアホを捕まえろ」"s,
+                    u8"「ガード！きてくれー！」"s);
                 return 1;
             }
         }
@@ -6794,7 +6611,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「パパにいいつけてやるんだ」"s, u8"「なんという！なんという…！」"s, u8"「や、やめて…」"s);
+                txt(u8"「パパにいいつけてやるんだ」"s,
+                    u8"「なんという！なんという…！」"s, u8"「や、やめて…」"s);
                 return 1;
             }
         }
@@ -6807,15 +6625,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"貴族"s;
@@ -6865,7 +6677,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"noble"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6877,9 +6690,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 189;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 190;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 190; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6891,7 +6702,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「侵入者か？」"s, u8"「ギルドメンバーを集めろ。敵襲だ！」"s);
+                txt(u8"「侵入者か？」"s,
+                    u8"「ギルドメンバーを集めろ。敵襲だ！」"s);
                 return 1;
             }
         }
@@ -6912,15 +6724,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"魔術士ギルド"s;
@@ -6973,7 +6779,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"mage guild member"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -6985,9 +6792,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 195;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 194;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 194; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -6999,7 +6804,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「侵入者か？」"s, u8"「ギルドメンバーを集めろ。敵襲だ！」"s);
+                txt(u8"「侵入者か？」"s,
+                    u8"「ギルドメンバーを集めろ。敵襲だ！」"s);
                 return 1;
             }
         }
@@ -7020,15 +6826,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊ギルド"s;
@@ -7078,7 +6878,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"thief guild member"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -7090,9 +6891,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 76;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 77;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 77; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -7104,7 +6903,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「侵入者か？」"s, u8"「ギルドメンバーを集めろ。敵襲だ！」"s);
+                txt(u8"「侵入者か？」"s,
+                    u8"「ギルドメンバーを集めろ。敵襲だ！」"s);
                 return 1;
             }
         }
@@ -7125,15 +6925,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"戦士ギルド"s;
@@ -7183,7 +6977,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"fighter guild member"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -7195,9 +6990,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 78;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 79;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 79; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -7209,10 +7002,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「たすけてー」"s, u8"「や、やめて」"s, u8"「悪の手先だ！」"s, u8"「変質者！」"s, u8"「わ、わわあ」"s, u8"「なんで叩くの？」"s, u8"「大人はこれだから」"s);
+                txt(u8"「たすけてー」"s, u8"「や、やめて」"s,
+                    u8"「悪の手先だ！」"s, u8"「変質者！」"s,
+                    u8"「わ、わわあ」"s, u8"「なんで叩くの？」"s,
+                    u8"「大人はこれだから」"s);
                 return 1;
             } else {
-                txt(u8"\"H-help-!\""s, u8"\"No no!\""s, u8"\"You are evil.\""s, u8"\"Pervert!\""s, u8"\"G-g-go away!\""s, u8"\"Why are you teasing me?\""s, u8"\"Adults.\""s);
+                txt(u8"\"H-help-!\""s, u8"\"No no!\""s, u8"\"You are evil.\""s,
+                    u8"\"Pervert!\""s, u8"\"G-g-go away!\""s,
+                    u8"\"Why are you teasing me?\""s, u8"\"Adults.\""s);
                 return 1;
             }
         }
@@ -7220,10 +7018,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「おかーさん…」"s, u8"「えーん」"s, u8"「地獄に落ちろ！」"s, u8"「わぁぁん」"s, u8"「うぐぅ！」"s, u8"「もっと…生きたかった…」"s, u8"「先立つ不幸をお許し下さい…」"s);
+                txt(u8"「おかーさん…」"s, u8"「えーん」"s,
+                    u8"「地獄に落ちろ！」"s, u8"「わぁぁん」"s,
+                    u8"「うぐぅ！」"s, u8"「もっと…生きたかった…」"s,
+                    u8"「先立つ不幸をお許し下さい…」"s);
                 return 1;
             } else {
-                txt(u8"\"Mom....\""s, u8"\"A---ahh-\""s, u8"\"Go to hell!\""s, u8"\"Waaaan!\""s, u8"\"Urghhh!\""s, u8"\"My life ends here.\""s, u8"\"Sorry, mom, dad....\""s);
+                txt(u8"\"Mom....\""s, u8"\"A---ahh-\""s, u8"\"Go to hell!\""s,
+                    u8"\"Waaaan!\""s, u8"\"Urghhh!\""s,
+                    u8"\"My life ends here.\""s, u8"\"Sorry, mom, dad....\""s);
                 return 1;
             }
         }
@@ -7239,15 +7042,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"街の子供"s;
@@ -7297,7 +7094,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"town child"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -7309,9 +7107,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 104;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 357;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 357; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -7323,10 +7119,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「止めてくだされ」"s, u8"「ご無体な」"s, u8"「なんと卑劣な」"s, u8"「たわけ！」"s, u8"「いまどきの若者は…」"s, u8"「老人をいたわれ！」"s, u8"「金などもっていないんじゃ」"s);
+                txt(u8"「止めてくだされ」"s, u8"「ご無体な」"s,
+                    u8"「なんと卑劣な」"s, u8"「たわけ！」"s,
+                    u8"「いまどきの若者は…」"s, u8"「老人をいたわれ！」"s,
+                    u8"「金などもっていないんじゃ」"s);
                 return 1;
             } else {
-                txt(u8"\"Stop it, please.\""s, u8"\"Unreasonable!\""s, u8"\"You foul scum.\""s, u8"\"Fool!\""s, u8"\"Youngsters.\""s, u8"\"Respect elders!\""s, u8"\"Leave me alone.\""s);
+                txt(u8"\"Stop it, please.\""s, u8"\"Unreasonable!\""s,
+                    u8"\"You foul scum.\""s, u8"\"Fool!\""s,
+                    u8"\"Youngsters.\""s, u8"\"Respect elders!\""s,
+                    u8"\"Leave me alone.\""s);
                 return 1;
             }
         }
@@ -7334,10 +7136,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「神様はみておるぞ！」"s, u8"「わしの老後が…」"s, u8"「鬼！」"s, u8"「ぐほぉ」"s, u8"「化けて出ちゃるぞ」"s, u8"「わしゃ死んだのか」"s);
+                txt(u8"「神様はみておるぞ！」"s, u8"「わしの老後が…」"s,
+                    u8"「鬼！」"s, u8"「ぐほぉ」"s, u8"「化けて出ちゃるぞ」"s,
+                    u8"「わしゃ死んだのか」"s);
                 return 1;
             } else {
-                txt(u8"\"God will punish you.\""s, u8"\"My remaining years...\""s, u8"\"Demon!\""s, u8"\"Grrhhh\""s, u8"\"I hate this planet.\""s, u8"\"Am I dead?\""s);
+                txt(u8"\"God will punish you.\""s,
+                    u8"\"My remaining years...\""s, u8"\"Demon!\""s,
+                    u8"\"Grrhhh\""s, u8"\"I hate this planet.\""s,
+                    u8"\"Am I dead?\""s);
                 return 1;
             }
         }
@@ -7345,7 +7152,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「なんとよわっちぃ奴じゃ」"s, u8"「いまどきの若者はなっとらんのぉ」"s);
+                txt(u8"「なんとよわっちぃ奴じゃ」"s,
+                    u8"「いまどきの若者はなっとらんのぉ」"s);
                 return 1;
             } else {
                 txt(u8"\"Holy...why are you so weak?\""s, u8"\"Muwahahaha!\""s);
@@ -7353,15 +7161,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"老人"s;
@@ -7411,7 +7213,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"old person"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -7423,9 +7226,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 106;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 107;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 107; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -7437,7 +7238,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「チキショー」"s, u8"「カモンベイベー」"s, u8"「ウラァ」"s, u8"「ヘドぶち吐きなッ！」"s, u8"「さあ、お仕置きの時間だよ」"s, u8"「コラー」"s);
+                txt(u8"「チキショー」"s, u8"「カモンベイベー」"s,
+                    u8"「ウラァ」"s, u8"「ヘドぶち吐きなッ！」"s,
+                    u8"「さあ、お仕置きの時間だよ」"s, u8"「コラー」"s);
                 return 1;
             }
         }
@@ -7445,7 +7248,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「逃げろぉぉ」"s, u8"「お前プッツンしてるぜ」"s, u8"「くそったれー」"s, u8"「やめてくれー」"s, u8"「うそだー」"s, u8"「俺は負けんのだぁ」"s);
+                txt(u8"「逃げろぉぉ」"s, u8"「お前プッツンしてるぜ」"s,
+                    u8"「くそったれー」"s, u8"「やめてくれー」"s,
+                    u8"「うそだー」"s, u8"「俺は負けんのだぁ」"s);
                 return 1;
             }
         }
@@ -7453,20 +7258,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「二度と俺を馬鹿にするな」"s, u8"「ギャハハハハ！」"s, u8"「ゴゥトゥヘル」"s);
+                txt(u8"「二度と俺を馬鹿にするな」"s, u8"「ギャハハハハ！」"s,
+                    u8"「ゴゥトゥヘル」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 0;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 0; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パンク"s;
@@ -7526,9 +7326,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 112;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 27;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 27; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -7537,15 +7335,9 @@ int label_2654()
     }
     if (dbid == 10) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"羊"s;
@@ -7608,15 +7400,9 @@ int label_2654()
     }
     if (dbid == 11) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"飛び蛙"s;
@@ -7682,7 +7468,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「チキショー」"s, u8"「カモンベイベー」"s, u8"「ウラァ」"s, u8"「ヘドぶち吐きなッ！」"s, u8"「さあ、お仕置きの時間だよ」"s, u8"「コラー」"s);
+                txt(u8"「チキショー」"s, u8"「カモンベイベー」"s,
+                    u8"「ウラァ」"s, u8"「ヘドぶち吐きなッ！」"s,
+                    u8"「さあ、お仕置きの時間だよ」"s, u8"「コラー」"s);
                 return 1;
             }
         }
@@ -7690,7 +7478,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「逃げろぉぉ」"s, u8"「お前プッツンしてるぜ」"s, u8"「くそったれー」"s, u8"「やめてくれー」"s, u8"「うそだー」"s, u8"「俺は負けんのだぁ」"s);
+                txt(u8"「逃げろぉぉ」"s, u8"「お前プッツンしてるぜ」"s,
+                    u8"「くそったれー」"s, u8"「やめてくれー」"s,
+                    u8"「うそだー」"s, u8"「俺は負けんのだぁ」"s);
                 return 1;
             }
         }
@@ -7698,20 +7488,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「二度と俺を馬鹿にするな」"s, u8"「ギャハハハハ！」"s, u8"「ゴゥトゥヘル」"s);
+                txt(u8"「二度と俺を馬鹿にするな」"s, u8"「ギャハハハハ！」"s,
+                    u8"「ゴゥトゥヘル」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ごろつき"s;
@@ -7761,7 +7546,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"gangster"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -7770,9 +7556,7 @@ int label_2654()
             dbmode = 3;
             label_2297();
             cdata(7, rc) = 31;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 36;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 36; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -7785,15 +7569,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"コボルト"s;
@@ -7856,15 +7634,9 @@ int label_2654()
     }
     if (dbid == 236) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イーク"s;
@@ -7924,15 +7696,9 @@ int label_2654()
     }
     if (dbid == 238) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イークの戦士"s;
@@ -7992,15 +7758,9 @@ int label_2654()
     }
     if (dbid == 241) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 2;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 2; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イークの射手"s;
@@ -8063,15 +7823,9 @@ int label_2654()
     }
     if (dbid == 240) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 8;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 8; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マスター・イーク"s;
@@ -8135,15 +7889,9 @@ int label_2654()
     }
     if (dbid == 237) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 150;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 150; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カミカゼ・イーク"s;
@@ -8206,7 +7954,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「武士とは死ぬこととみつけたり！」"s, u8"「玉砕じゃ！」"s, u8"「死なばもろとも」"s);
+                txt(u8"「武士とは死ぬこととみつけたり！」"s,
+                    u8"「玉砕じゃ！」"s, u8"「死なばもろとも」"s);
                 return 1;
             }
         }
@@ -8227,15 +7976,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"地雷侍"s;
@@ -8303,15 +8046,9 @@ int label_2654()
     }
     if (dbid == 245) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"爆弾岩"s;
@@ -8380,7 +8117,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s, u8"「フゥーーーー！」"s);
+                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s,
+                    u8"「フゥーーーー！」"s);
                 return 1;
             } else {
                 txt(u8"\"Foooooo!\""s, u8"\"Fooooo\""s, u8"\"Foooooo!\""s);
@@ -8391,7 +8129,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s, u8"「フゥーーーー！」"s);
+                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s,
+                    u8"「フゥーーーー！」"s);
                 return 1;
             } else {
                 txt(u8"\"Foooooo!\""s, u8"\"Fooooo\""s, u8"\"Foooooo!\""s);
@@ -8402,7 +8141,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s, u8"「フゥーーーー！」"s);
+                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s,
+                    u8"「フゥーーーー！」"s);
                 return 1;
             } else {
                 txt(u8"\"Foooooo!\""s, u8"\"Fooooo\""s, u8"\"Foooooo!\""s);
@@ -8413,7 +8153,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s, u8"「フゥーーーー！」"s);
+                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s,
+                    u8"「フゥーーーー！」"s);
                 return 1;
             } else {
                 txt(u8"\"Foooooo!\""s, u8"\"Fooooo\""s, u8"\"Foooooo!\""s);
@@ -8424,7 +8165,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s, u8"「フゥーーーー！」"s);
+                txt(u8"「フーーーーｰｰ！」"s, u8"「フーーー」"s,
+                    u8"「フゥーーーー！」"s);
                 return 1;
             } else {
                 txt(u8"\"Foooooo!\""s, u8"\"Fooooo\""s, u8"\"Foooooo!\""s);
@@ -8432,15 +8174,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 15;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 15; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ハードゲイ"s;
@@ -8513,7 +8249,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ケケケッ」"s, u8"「コロセ！」"s, u8"「愚か者に死を」"s);
+                txt(u8"「ケケケッ」"s, u8"「コロセ！」"s,
+                    u8"「愚か者に死を」"s);
                 return 1;
             }
         }
@@ -8534,15 +8271,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イークの首領『ルードルボ』"s;
@@ -8620,7 +8351,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s, u8"「私だって」"s);
+                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s,
+                    u8"「私だって」"s);
                 return 1;
             }
         }
@@ -8628,7 +8360,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             }
         }
@@ -8641,15 +8375,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"温泉マニア"s;
@@ -8699,7 +8427,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"citizen"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -8708,9 +8437,7 @@ int label_2654()
             dbmode = 3;
             label_2297();
             cdata(7, rc) = 379;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 380;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 380; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -8723,15 +8450,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ムカデ"s;
@@ -8791,15 +8512,9 @@ int label_2654()
     }
     if (dbid == 15) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"きのこ"s;
@@ -8865,15 +8580,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"胞子きのこ"s;
@@ -8937,15 +8646,9 @@ int label_2654()
     }
     if (dbid == 284) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 8;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 8; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"混沌きのこ"s;
@@ -9012,7 +8715,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s, u8"「私だって」"s);
+                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s,
+                    u8"「私だって」"s);
                 return 1;
             }
         }
@@ -9020,10 +8724,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -9036,15 +8745,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"市民"s;
@@ -9094,7 +8797,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"citizen"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9106,9 +8810,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 136;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 137;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 137; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -9120,7 +8822,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s, u8"「私だって」"s);
+                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s,
+                    u8"「私だって」"s);
                 return 1;
             }
         }
@@ -9128,10 +8831,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -9144,15 +8852,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"市民"s;
@@ -9202,7 +8904,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"citizen"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9214,9 +8917,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 134;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 135;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 135; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -9228,7 +8929,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s, u8"「私だって」"s);
+                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s,
+                    u8"「私だって」"s);
                 return 1;
             }
         }
@@ -9236,10 +8938,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -9252,15 +8959,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"サイバードームの住人"s;
@@ -9310,7 +9011,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"citizen of cyber dome"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9322,9 +9024,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 128;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 129;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 129; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -9336,7 +9036,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s, u8"「私だって」"s);
+                txt(u8"「何をするんですか！」"s, u8"「野蛮人！」"s,
+                    u8"「私だって」"s);
                 return 1;
             }
         }
@@ -9344,10 +9045,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
@@ -9360,15 +9066,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"サイバードームの住人"s;
@@ -9418,7 +9118,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"citizen of cyber dome"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9430,9 +9131,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 127;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 131;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 131; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -9444,7 +9143,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ガード！ガード！」"s, u8"「襲撃だ！」"s, u8"「強盗め！」"s);
+                txt(u8"「ガード！ガード！」"s, u8"「襲撃だ！」"s,
+                    u8"「強盗め！」"s);
                 return 1;
             }
         }
@@ -9465,15 +9165,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"セールスマン"s;
@@ -9523,7 +9217,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"sales person"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9535,9 +9230,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 146;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 147;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 147; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -9549,23 +9242,22 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"水夫"s;
@@ -9613,7 +9305,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"sailor"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9625,9 +9318,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 120;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 121;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 121; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -9639,23 +9330,22 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s, u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s, u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
+                txt(u8"「私は善良な市民だったのに」"s, u8"「くそめ」"s,
+                    u8"「まいった」"s, u8"「ぐえ」"s, u8"「嘘でしょ」"s,
+                    u8"「なぜなんだー」"s, u8"「何の冗談ですか」"s);
                 return 1;
             } else {
-                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s, u8"\"I give up.\""s, u8"\"Nooooo.....\""s, u8"\"Is it a joke?\""s, u8"\"Why me.\""s, u8"\"W-What have you done!\""s);
+                txt(u8"\"I was a good citizen.\""s, u8"\"Go to hell!\""s,
+                    u8"\"I give up.\""s, u8"\"Nooooo.....\""s,
+                    u8"\"Is it a joke?\""s, u8"\"Why me.\""s,
+                    u8"\"W-What have you done!\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"船長"s;
@@ -9703,7 +9393,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"captain"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -9727,10 +9418,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"荘厳な感じが漂っている。"s, u8"辺りは厳重に警備されている。"s, u8"宮廷から華麗な音楽の響きが聞こえる。"s);
+                txt(u8"荘厳な感じが漂っている。"s,
+                    u8"辺りは厳重に警備されている。"s,
+                    u8"宮廷から華麗な音楽の響きが聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"The quiet majesty of the room makes you feel small and grubby"s, u8"You note just how alert and well armed the guards are"s, u8"Somewhere, a harpsicord is playing a tune befitting nobility"s);
+                txt(u8"The quiet majesty of the room makes you feel small and grubby"s,
+                    u8"You note just how alert and well armed the guards are"s,
+                    u8"Somewhere, a harpsicord is playing a tune befitting nobility"s);
                 return 1;
             }
         }
@@ -9738,7 +9433,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おやめなさい！」"s, u8"「皆の者、この曲者をどうにかするのです」"s);
+                txt(u8"「おやめなさい！」"s,
+                    u8"「皆の者、この曲者をどうにかするのです」"s);
                 return 1;
             }
         }
@@ -9759,15 +9455,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パルミア王妃『スターシャ』"s;
@@ -9841,7 +9531,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おお、乱心者だ！」"s, u8"「近衛兵、何をしている。奴をとらえよ！」"s, u8"「血迷ったか！」"s);
+                txt(u8"「おお、乱心者だ！」"s,
+                    u8"「近衛兵、何をしている。奴をとらえよ！」"s,
+                    u8"「血迷ったか！」"s);
                 return 1;
             }
         }
@@ -9862,15 +9554,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パルミア王『ジャビ』"s;
@@ -9940,15 +9626,9 @@ int label_2654()
     }
     if (dbid == 17) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"オーク"s;
@@ -10008,15 +9688,9 @@ int label_2654()
     }
     if (dbid == 281) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"リザードマン"s;
@@ -10079,15 +9753,9 @@ int label_2654()
     }
     if (dbid == 282) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミノタウロス"s;
@@ -10150,15 +9818,9 @@ int label_2654()
     }
     if (dbid == 296) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミノタウロスの術士"s;
@@ -10225,15 +9887,9 @@ int label_2654()
     }
     if (dbid == 298) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミノタウロスの闘士"s;
@@ -10296,15 +9952,9 @@ int label_2654()
     }
     if (dbid == 299) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 8;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 8; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミノタウロスの戦士"s;
@@ -10371,15 +10021,9 @@ int label_2654()
     }
     if (dbid == 300) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 10;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 10; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミノタウロスの王『ウンガガ』"s;
@@ -10453,15 +10097,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"トロール"s;
@@ -10522,15 +10160,9 @@ int label_2654()
     }
     if (dbid == 18) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"エレアの戦士"s;
@@ -10585,9 +10217,7 @@ int label_2654()
             dbidn = u8"warrior"s;
             dbmode = 3;
             label_2298();
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 34;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 34; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -10596,15 +10226,9 @@ int label_2654()
     }
     if (dbid == 24) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"エレアの魔術士"s;
@@ -10664,9 +10288,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 47;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 42;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 42; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -10675,15 +10297,9 @@ int label_2654()
     }
     if (dbid == 309) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"阿修羅"s;
@@ -10750,15 +10366,9 @@ int label_2654()
     }
     if (dbid == 310) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 2;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 2; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミトラ"s;
@@ -10825,15 +10435,9 @@ int label_2654()
     }
     if (dbid == 311) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ヴァルナ"s;
@@ -10900,15 +10504,9 @@ int label_2654()
     }
     if (dbid == 41) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"魔術士"s;
@@ -10959,7 +10557,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"wizard"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -10971,9 +10570,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 13;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 14;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 14; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -10982,15 +10579,9 @@ int label_2654()
     }
     if (dbid == 75) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"戦士"s;
@@ -11037,7 +10628,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"warrior"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -11049,9 +10641,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 21;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 20;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 20; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -11064,15 +10654,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マンドレイク"s;
@@ -11136,15 +10720,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"かぶと虫"s;
@@ -11207,15 +10785,9 @@ int label_2654()
     }
     if (dbid == 20) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"オークの戦士"s;
@@ -11278,15 +10850,9 @@ int label_2654()
     }
     if (dbid == 25) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"オークの隊長『ゴダ』"s;
@@ -11354,15 +10920,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゾンビ"s;
@@ -11425,15 +10985,9 @@ int label_2654()
     }
     if (dbid == 42) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"コウモリ"s;
@@ -11493,15 +11047,9 @@ int label_2654()
     }
     if (dbid == 43) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"吸血コウモリ"s;
@@ -11566,15 +11114,9 @@ int label_2654()
     }
     if (dbid == 44) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ドラゴンバット"s;
@@ -11637,21 +11179,13 @@ int label_2654()
     }
     if (dbid == 45) {
         if (dbmode == 12) {
-            if (rnd(3) == 0) {
-                resistmod(cc, 50, 50);
-            }
+            if (rnd(3) == 0) { resistmod(cc, 50, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"火炎樹"s;
@@ -11717,21 +11251,13 @@ int label_2654()
     }
     if (dbid == 46) {
         if (dbmode == 12) {
-            if (rnd(3) == 0) {
-                resistmod(cc, 51, 50);
-            }
+            if (rnd(3) == 0) { resistmod(cc, 51, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"氷結樹"s;
@@ -11801,15 +11327,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"リッチ"s;
@@ -11880,15 +11400,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マスターリッチ"s;
@@ -11960,15 +11474,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"デミリッチ"s;
@@ -12035,15 +11543,9 @@ int label_2654()
     }
     if (dbid == 307) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"死刑執行人"s;
@@ -12117,15 +11619,9 @@ int label_2654()
     }
     if (dbid == 308) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"死神の使い"s;
@@ -12197,15 +11693,9 @@ int label_2654()
     }
     if (dbid == 50) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 80;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 80; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"猟犬"s;
@@ -12272,15 +11762,9 @@ int label_2654()
     }
     if (dbid == 51) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ファイアハウンド"s;
@@ -12346,15 +11830,9 @@ int label_2654()
     }
     if (dbid == 52) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 12;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 12; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"アイスハウンド"s;
@@ -12420,15 +11898,9 @@ int label_2654()
     }
     if (dbid == 53) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ライトニングハウンド"s;
@@ -12493,15 +11965,9 @@ int label_2654()
     }
     if (dbid == 54) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ダークハウンド"s;
@@ -12566,15 +12032,9 @@ int label_2654()
     }
     if (dbid == 55) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 10;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 10; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"幻惑ハウンド"s;
@@ -12639,15 +12099,9 @@ int label_2654()
     }
     if (dbid == 56) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 9;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 9; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"神経ハウンド"s;
@@ -12712,15 +12166,9 @@ int label_2654()
     }
     if (dbid == 57) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 2;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 2; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ポイズンハウンド"s;
@@ -12785,15 +12233,9 @@ int label_2654()
     }
     if (dbid == 58) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 11;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 11; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"轟音ハウンド"s;
@@ -12858,15 +12300,9 @@ int label_2654()
     }
     if (dbid == 59) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 15;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 15; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"地獄ハウンド"s;
@@ -12931,15 +12367,9 @@ int label_2654()
     }
     if (dbid == 60) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 18;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 18; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カオスハウンド"s;
@@ -13008,15 +12438,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"巨大リス"s;
@@ -13085,15 +12509,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"殺人リス"s;
@@ -13162,15 +12580,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"怨念"s;
@@ -13237,15 +12649,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 2;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 2; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"餓鬼"s;
@@ -13306,15 +12712,9 @@ int label_2654()
     }
     if (dbid == 312) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"大食いトド"s;
@@ -13380,15 +12780,9 @@ int label_2654()
     }
     if (dbid == 313) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"超大食いトド"s;
@@ -13454,21 +12848,13 @@ int label_2654()
     }
     if (dbid == 65) {
         if (dbmode == 12) {
-            if (rnd(4) == 0) {
-                resistmod(cc, 52, 50);
-            }
+            if (rnd(4) == 0) { resistmod(cc, 52, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"放電雲"s;
@@ -13532,21 +12918,13 @@ int label_2654()
     if (dbid == 66) {
         if (dbmode == 12) {
             label_1607();
-            if (rnd(5) == 0) {
-                resistmod(cc, 59, 50);
-            }
+            if (rnd(5) == 0) { resistmod(cc, 59, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 18;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 18; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"混沌の塊"s;
@@ -13610,21 +12988,13 @@ int label_2654()
     if (dbid == 67) {
         if (dbmode == 12) {
             label_1608();
-            if (rnd(3) == 0) {
-                resistmod(cc, 58, 50);
-            }
+            if (rnd(3) == 0) { resistmod(cc, 58, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 80;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 80; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"フローティングアイ"s;
@@ -13678,9 +13048,7 @@ int label_2654()
             label_2297();
             cdata(230, rc) = 5800250;
             sdata(54, rc) = 500;
-            if (nerve != 0) {
-                sdata(58, rc) = 500;
-            }
+            if (nerve != 0) { sdata(58, rc) = 500; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -13690,21 +13058,13 @@ int label_2654()
     if (dbid == 315) {
         if (dbmode == 12) {
             label_1608();
-            if (rnd(3) == 0) {
-                resistmod(cc, 59, 50);
-            }
+            if (rnd(3) == 0) { resistmod(cc, 59, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 8;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 8; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カオスアイ"s;
@@ -13762,9 +13122,7 @@ int label_2654()
             label_2298();
             cdata(230, rc) = 5900400;
             sdata(54, rc) = 500;
-            if (nerve != 0) {
-                sdata(58, rc) = 500;
-            }
+            if (nerve != 0) { sdata(58, rc) = 500; }
             cdata(7, rc) += 8000;
             cspecialeq = 0;
             return 0;
@@ -13774,21 +13132,13 @@ int label_2654()
     if (dbid == 316) {
         if (dbmode == 12) {
             label_1608();
-            if (rnd(3) == 0) {
-                resistmod(cc, 54, 50);
-            }
+            if (rnd(3) == 0) { resistmod(cc, 54, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マッドゲイズ"s;
@@ -13844,9 +13194,7 @@ int label_2654()
             label_2297();
             cdata(230, rc) = 5400300;
             sdata(54, rc) = 500;
-            if (nerve != 0) {
-                sdata(58, rc) = 500;
-            }
+            if (nerve != 0) { sdata(58, rc) = 500; }
             cdata(7, rc) = 407;
             cdata(7, rc) += 4000;
             cspecialeq = 0;
@@ -13857,21 +13205,13 @@ int label_2654()
     if (dbid == 314) {
         if (dbmode == 12) {
             label_1608();
-            if (rnd(3) == 0) {
-                resistmod(cc, 58, 50);
-            }
+            if (rnd(3) == 0) { resistmod(cc, 58, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"デスゲイズ"s;
@@ -13930,9 +13270,7 @@ int label_2654()
             label_2298();
             cdata(230, rc) = 5800450;
             sdata(54, rc) = 500;
-            if (nerve != 0) {
-                sdata(58, rc) = 500;
-            }
+            if (nerve != 0) { sdata(58, rc) = 500; }
             cdata(7, rc) = 407;
             cdata(7, rc) += 3000;
             cspecialeq = 0;
@@ -13942,15 +13280,9 @@ int label_2654()
     }
     if (dbid == 68) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 4;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 4; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ワイバーン"s;
@@ -14015,15 +13347,9 @@ int label_2654()
     }
     if (dbid == 78) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パペット"s;
@@ -14091,15 +13417,9 @@ int label_2654()
     }
     if (dbid == 81) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ワスプ"s;
@@ -14160,15 +13480,9 @@ int label_2654()
     }
     if (dbid == 82) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"レッドワスプ"s;
@@ -14234,15 +13548,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"サイクロプス"s;
@@ -14321,15 +13629,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"タイタン"s;
@@ -14398,15 +13700,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"インプ"s;
@@ -14475,15 +13771,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"冥界の使い"s;
@@ -14551,15 +13841,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 18;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 18; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カオスインプ"s;
@@ -14627,15 +13911,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"亡者の手"s;
@@ -14703,15 +13981,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 18;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 18; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"混沌の手"s;
@@ -14778,15 +14050,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"殺人鬼の手"s;
@@ -14860,15 +14126,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"亡霊"s;
@@ -14938,15 +14198,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ニンフ"s;
@@ -15013,15 +14267,9 @@ int label_2654()
     }
     if (dbid == 93) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"人食い花"s;
@@ -15084,15 +14332,9 @@ int label_2654()
     }
     if (dbid == 94) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 10;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 10; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カオスフラワー"s;
@@ -15156,21 +14398,13 @@ int label_2654()
     if (dbid == 95) {
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"コブラ"s;
@@ -15232,21 +14466,13 @@ int label_2654()
     if (dbid == 96) {
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"キングコブラ"s;
@@ -15307,15 +14533,9 @@ int label_2654()
     }
     if (dbid == 97) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 4;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 4; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ファイアドレイク"s;
@@ -15377,15 +14597,9 @@ int label_2654()
     }
     if (dbid == 98) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 4;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 4; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"アイスドレイク"s;
@@ -15451,15 +14665,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"レッサーマミー"s;
@@ -15527,15 +14735,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 10;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 10; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マミー"s;
@@ -15606,15 +14808,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"グレイターマミー"s;
@@ -15685,15 +14881,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 8;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 8; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ピラミッドの主『ツェン』"s;
@@ -15765,15 +14955,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"古代の棺"s;
@@ -15839,15 +15023,9 @@ int label_2654()
     }
     if (dbid == 102) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴブリン"s;
@@ -15907,15 +15085,9 @@ int label_2654()
     }
     if (dbid == 103) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴブリンの戦士"s;
@@ -15978,15 +15150,9 @@ int label_2654()
     }
     if (dbid == 104) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 18;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 18; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴブリンシャーマン"s;
@@ -16053,15 +15219,9 @@ int label_2654()
     }
     if (dbid == 105) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴブリンの魔法使い"s;
@@ -16125,15 +15285,9 @@ int label_2654()
     }
     if (dbid == 106) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"赤の洗礼者"s;
@@ -16201,15 +15355,9 @@ int label_2654()
     }
     if (dbid == 107) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"青の洗礼者"s;
@@ -16293,15 +15441,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ブラウンベア"s;
@@ -16349,7 +15491,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"brown bear"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -16365,15 +15508,9 @@ int label_2654()
     }
     if (dbid == 109) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"グリズリー"s;
@@ -16437,15 +15574,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マンモス"s;
@@ -16511,15 +15642,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"リビングアーマー"s;
@@ -16586,15 +15711,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"鉄塊"s;
@@ -16661,15 +15780,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴールデンアーマー"s;
@@ -16736,15 +15849,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"デスアーマー"s;
@@ -16808,15 +15915,9 @@ int label_2654()
     }
     if (dbid == 114) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"メデューサ"s;
@@ -16879,15 +15980,9 @@ int label_2654()
     }
     if (dbid == 115) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"エウリュアレ"s;
@@ -16950,15 +16045,9 @@ int label_2654()
     }
     if (dbid == 116) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ステンノ"s;
@@ -17025,15 +16114,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"恋のキューピット"s;
@@ -17097,15 +16180,9 @@ int label_2654()
     }
     if (dbid == 118) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"レッサーファントム"s;
@@ -17169,15 +16246,9 @@ int label_2654()
     }
     if (dbid == 248) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ティラノサウルス"s;
@@ -17240,15 +16311,9 @@ int label_2654()
     }
     if (dbid == 119) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ハーピー"s;
@@ -17308,15 +16373,9 @@ int label_2654()
     }
     if (dbid == 120) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 19;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 19; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"グリーンドラゴン"s;
@@ -17380,15 +16439,9 @@ int label_2654()
     }
     if (dbid == 121) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"レッドドラゴン"s;
@@ -17453,15 +16506,9 @@ int label_2654()
     }
     if (dbid == 122) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ホワイトドラゴン"s;
@@ -17526,15 +16573,9 @@ int label_2654()
     }
     if (dbid == 123) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"エレキドラゴン"s;
@@ -17599,15 +16640,9 @@ int label_2654()
     }
     if (dbid == 124) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"冥界ドラゴン"s;
@@ -17672,15 +16707,9 @@ int label_2654()
     }
     if (dbid == 125) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 5;
-            }
-            if (dbspec == 5) {
-                return 18;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 5; }
+            if (dbspec == 5) { return 18; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カオスドラゴン"s;
@@ -17745,15 +16774,9 @@ int label_2654()
     }
     if (dbid == 126) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 4;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 4; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ケルベロス"s;
@@ -17819,21 +16842,13 @@ int label_2654()
     if (dbid == 255) {
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"サソリ"s;
@@ -17898,21 +16913,13 @@ int label_2654()
     if (dbid == 256) {
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ダイオウサソリ"s;
@@ -17984,15 +16991,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"まだら蜘蛛"s;
@@ -18064,21 +17065,13 @@ int label_2654()
         }
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 19;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 19; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ブラックウィドウ"s;
@@ -18151,21 +17144,13 @@ int label_2654()
         }
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パラライザー"s;
@@ -18238,21 +17223,13 @@ int label_2654()
         }
         if (dbmode == 12) {
             label_1599();
-            if (rnd(6) == 0) {
-                resistmod(cc, 55, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 55, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"タランチュラ"s;
@@ -18324,15 +17301,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"吸血蜘蛛"s;
@@ -18408,15 +17379,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ウッドゴーレム"s;
@@ -18489,15 +17454,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ストーンゴーレム"s;
@@ -18570,15 +17529,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 15;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 15; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"スティールゴーレム"s;
@@ -18654,15 +17607,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴールドゴーレム"s;
@@ -18738,15 +17685,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミスリルゴーレム"s;
@@ -18822,15 +17763,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 9;
-            }
-            if (dbspec == 6) {
-                return 15;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 9; }
+            if (dbspec == 6) { return 15; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"スカイゴーレム"s;
@@ -18906,15 +17841,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 2;
-            }
-            if (dbspec == 6) {
-                return 15;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 2; }
+            if (dbspec == 6) { return 15; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"アダマンタイトゴーレム"s;
@@ -18979,21 +17908,13 @@ int label_2654()
     if (dbid == 147) {
         if (dbmode == 12) {
             label_1605();
-            if (rnd(5) == 0) {
-                resistmod(cc, 50, 50);
-            }
+            if (rnd(5) == 0) { resistmod(cc, 50, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"火蟹"s;
@@ -19055,21 +17976,13 @@ int label_2654()
     }
     if (dbid == 148) {
         if (dbmode == 12) {
-            if (rnd(5) == 0) {
-                resistmod(cc, 50, 50);
-            }
+            if (rnd(5) == 0) { resistmod(cc, 50, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"火炎ムカデ"s;
@@ -19133,15 +18046,9 @@ int label_2654()
     }
     if (dbid == 149) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"炎の信仰者"s;
@@ -19210,15 +18117,9 @@ int label_2654()
     }
     if (dbid == 150) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"骸骨戦士"s;
@@ -19281,15 +18182,9 @@ int label_2654()
     }
     if (dbid == 151) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"骸骨狂戦士"s;
@@ -19372,15 +18267,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"闇の宣教師"s;
@@ -19450,15 +18339,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＜ポーン＞"s;
@@ -19525,15 +18408,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＜ルーク＞"s;
@@ -19602,15 +18479,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＜ビショップ＞"s;
@@ -19682,15 +18553,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＜ナイト＞"s;
@@ -19763,15 +18628,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＜クィーン＞"s;
@@ -19843,15 +18702,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"＜キング＞"s;
@@ -19920,7 +18773,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s, u8"「のこのこ現れるとはな！」"s, u8"「罪をつぐなってもらおう」"s);
+                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s,
+                    u8"「のこのこ現れるとはな！」"s,
+                    u8"「罪をつぐなってもらおう」"s);
                 return 1;
             }
         }
@@ -19933,15 +18788,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"傭兵戦士"s;
@@ -19990,7 +18839,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"mercenary warrior"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -20002,9 +18852,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 159;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 159;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 159; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -20016,7 +18864,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s, u8"「のこのこ現れるとはな！」"s, u8"「罪をつぐなってもらおう」"s);
+                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s,
+                    u8"「のこのこ現れるとはな！」"s,
+                    u8"「罪をつぐなってもらおう」"s);
                 return 1;
             }
         }
@@ -20029,15 +18879,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"傭兵射手"s;
@@ -20086,7 +18930,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"mercenary archer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -20098,9 +18943,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 57;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 57;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 57; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -20112,7 +18955,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s, u8"「のこのこ現れるとはな！」"s, u8"「罪をつぐなってもらおう」"s);
+                txt(u8"「お尋ね者だ！」"s, u8"「犯罪者め、おとなしくしろ」"s,
+                    u8"「のこのこ現れるとはな！」"s,
+                    u8"「罪をつぐなってもらおう」"s);
                 return 1;
             }
         }
@@ -20125,15 +18970,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"傭兵魔術士"s;
@@ -20183,7 +19022,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"mercenary wizard"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -20195,9 +19035,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 100;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 100;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 100; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -20209,7 +19047,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s, u8"「かわいそうに、ウヒャ」"s, u8"「おまえさん、ついてないな」"s, u8"「馬鹿な選択をしたね」"s);
+                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s,
+                    u8"「かわいそうに、ウヒャ」"s,
+                    u8"「おまえさん、ついてないな」"s,
+                    u8"「馬鹿な選択をしたね」"s);
                 return 1;
             }
         }
@@ -20217,7 +19058,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s, u8"「命だけは！」"s);
+                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s,
+                    u8"「命だけは！」"s);
                 return 1;
             }
         }
@@ -20230,15 +19072,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊団の頭領"s;
@@ -20289,7 +19125,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"rogue boss"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -20301,9 +19138,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 150;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 150;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 150; }
             cdata(7, rc) += 0;
             fixlv = 6;
             cspecialeq = 0;
@@ -20316,7 +19151,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s, u8"「かわいそうに、ウヒャ」"s, u8"「おまえさん、ついてないな」"s, u8"「馬鹿な選択をしたね」"s);
+                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s,
+                    u8"「かわいそうに、ウヒャ」"s,
+                    u8"「おまえさん、ついてないな」"s,
+                    u8"「馬鹿な選択をしたね」"s);
                 return 1;
             }
         }
@@ -20324,7 +19162,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s, u8"「命だけは！」"s);
+                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s,
+                    u8"「命だけは！」"s);
                 return 1;
             }
         }
@@ -20337,15 +19176,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊団の用心棒"s;
@@ -20395,7 +19228,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"rogue warrior"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -20407,9 +19241,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 31;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 31;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 31; }
             cdata(7, rc) += 0;
             cspecialeq = 1;
             return 0;
@@ -20425,7 +19257,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s, u8"「かわいそうに、ウヒャ」"s, u8"「おまえさん、ついてないな」"s, u8"「馬鹿な選択をしたね」"s);
+                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s,
+                    u8"「かわいそうに、ウヒャ」"s,
+                    u8"「おまえさん、ついてないな」"s,
+                    u8"「馬鹿な選択をしたね」"s);
                 return 1;
             }
         }
@@ -20433,7 +19268,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s, u8"「命だけは！」"s);
+                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s,
+                    u8"「命だけは！」"s);
                 return 1;
             }
         }
@@ -20446,15 +19282,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊団の殺し屋"s;
@@ -20504,7 +19334,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"rogue archer"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -20516,9 +19347,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 158;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 158;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 158; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -20530,7 +19359,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s, u8"「かわいそうに、ウヒャ」"s, u8"「おまえさん、ついてないな」"s, u8"「馬鹿な選択をしたね」"s);
+                txt(u8"「イヒヒヒヒ」"s, u8"「もうすぐ殺してあげるよ」"s,
+                    u8"「かわいそうに、ウヒャ」"s,
+                    u8"「おまえさん、ついてないな」"s,
+                    u8"「馬鹿な選択をしたね」"s);
                 return 1;
             }
         }
@@ -20538,7 +19370,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s, u8"「命だけは！」"s);
+                txt(u8"「たちけて」"s, u8"「ひぃぃ、こいつ強い」"s,
+                    u8"「命だけは！」"s);
                 return 1;
             }
         }
@@ -20551,15 +19384,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊団の術士"s;
@@ -20612,7 +19439,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"rogue wizard"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -20624,9 +19452,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 157;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 157;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 157; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -20638,7 +19464,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「撃てぇ！」"s, u8"「弾が尽きるまで撃て！」"s, u8"「虫けらめェ！」"s);
+                txt(u8"「撃てぇ！」"s, u8"「弾が尽きるまで撃て！」"s,
+                    u8"「虫けらめェ！」"s);
                 return 1;
             }
         }
@@ -20646,7 +19473,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「隊長！もうだめです」"s, u8"「メディーック！！」"s, u8"「マンダウン！マンダウン！」"s);
+                txt(u8"「隊長！もうだめです」"s, u8"「メディーック！！」"s,
+                    u8"「マンダウン！マンダウン！」"s);
                 return 1;
             }
         }
@@ -20659,15 +19487,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イェルス機械兵"s;
@@ -20738,7 +19560,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「撃てぇ！」"s, u8"「弾が尽きるまで撃て！」"s, u8"「虫けらめェ！」"s);
+                txt(u8"「撃てぇ！」"s, u8"「弾が尽きるまで撃て！」"s,
+                    u8"「虫けらめェ！」"s);
                 return 1;
             }
         }
@@ -20746,7 +19569,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「隊長！もうだめです」"s, u8"「メディーック！！」"s, u8"「マンダウン！マンダウン！」"s);
+                txt(u8"「隊長！もうだめです」"s, u8"「メディーック！！」"s,
+                    u8"「マンダウン！マンダウン！」"s);
                 return 1;
             }
         }
@@ -20759,15 +19583,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イェルスエリート機械兵"s;
@@ -20838,10 +19656,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「困ったことになったぞ」"s, u8"「敬礼！」"s, u8"「新王国め…」"s, u8"「フハハハハッ」"s);
+                txt(u8"「困ったことになったぞ」"s, u8"「敬礼！」"s,
+                    u8"「新王国め…」"s, u8"「フハハハハッ」"s);
                 return 1;
             } else {
-                txt(u8"\"Help the helpless! Crush the vileness\""s, u8"\"Atten-TION! Salute!\""s, u8"\"For the Kingdom, we shall never fall!\""s, u8"\"Who's house? Mah House!\""s);
+                txt(u8"\"Help the helpless! Crush the vileness\""s,
+                    u8"\"Atten-TION! Salute!\""s,
+                    u8"\"For the Kingdom, we shall never fall!\""s,
+                    u8"\"Who's house? Mah House!\""s);
                 return 1;
             }
         }
@@ -20870,15 +19692,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"辺境の勇士『ギルバート大佐』"s;
@@ -20949,15 +19765,9 @@ int label_2654()
     }
     if (dbid == 232) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イェルス自走砲"s;
@@ -21025,7 +19835,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「イェルス兵を殺せ！」"s, u8"「突っ込め！」"s, u8"「突撃！突撃！」"s, u8"「ひるむな！」"s, u8"「ウォォォ」"s);
+                txt(u8"「イェルス兵を殺せ！」"s, u8"「突っ込め！」"s,
+                    u8"「突撃！突撃！」"s, u8"「ひるむな！」"s,
+                    u8"「ウォォォ」"s);
                 return 1;
             }
         }
@@ -21033,7 +19845,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ギャァァァァ」"s, u8"「衛生兵！！」"s, u8"「大佐、また一人死にました！」"s, u8"「仲間が戦闘不能です、大佐！」"s);
+                txt(u8"「ギャァァァァ」"s, u8"「衛生兵！！」"s,
+                    u8"「大佐、また一人死にました！」"s,
+                    u8"「仲間が戦闘不能です、大佐！」"s);
                 return 1;
             }
         }
@@ -21046,15 +19860,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ジューア歩兵"s;
@@ -21125,7 +19933,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「イェルス兵を殺せ！」"s, u8"「突っ込め！」"s, u8"「突撃！突撃！」"s, u8"「ひるむな！」"s, u8"「ウォォォ」"s);
+                txt(u8"「イェルス兵を殺せ！」"s, u8"「突っ込め！」"s,
+                    u8"「突撃！突撃！」"s, u8"「ひるむな！」"s,
+                    u8"「ウォォォ」"s);
                 return 1;
             }
         }
@@ -21133,7 +19943,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ギャァァァァ」"s, u8"「衛生兵！！」"s, u8"「大佐、また一人死にました！」"s, u8"「仲間が戦闘不能です、大佐！」"s);
+                txt(u8"「ギャァァァァ」"s, u8"「衛生兵！！」"s,
+                    u8"「大佐、また一人死にました！」"s,
+                    u8"「仲間が戦闘不能です、大佐！」"s);
                 return 1;
             }
         }
@@ -21146,15 +19958,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ジューア剣闘士"s;
@@ -21222,15 +20028,9 @@ int label_2654()
     }
     if (dbid == 163) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ロックスロアー"s;
@@ -21302,10 +20102,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ミャア」"s, u8"「にゃ」"s, u8"「ミャ」"s, u8"「にゅぅ」"s, u8"「ニャア」"s);
+                txt(u8"「ミャア」"s, u8"「にゃ」"s, u8"「ミャ」"s,
+                    u8"「にゅぅ」"s, u8"「ニャア」"s);
                 return 1;
             } else {
-                txt(u8"\"Meow.\""s, u8"\"Mew.\""s, u8"\"Mew mew.\""s, u8"\"Rowr!\""s, u8"\"Mewl.\""s);
+                txt(u8"\"Meow.\""s, u8"\"Mew.\""s, u8"\"Mew mew.\""s,
+                    u8"\"Rowr!\""s, u8"\"Mewl.\""s);
                 return 1;
             }
         }
@@ -21313,10 +20115,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ニャー！」"s, u8"「ニャウ！」"s, u8"「ニャン！」"s, u8"「ゥニャ！」"s);
+                txt(u8"「ニャー！」"s, u8"「ニャウ！」"s, u8"「ニャン！」"s,
+                    u8"「ゥニャ！」"s);
                 return 1;
             } else {
-                txt(u8"\"Meow!\""s, u8"\"Mew mew!\""s, u8"\"Mew!\""s, u8"\"Meow\""s);
+                txt(u8"\"Meow!\""s, u8"\"Mew mew!\""s, u8"\"Mew!\""s,
+                    u8"\"Meow\""s);
                 return 1;
             }
         }
@@ -21343,10 +20147,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"* ふしゅぅ * "s, u8"「ニャァー！」"s, u8"「にゃー」」"s, u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
+                txt(u8"* ふしゅぅ * "s, u8"「ニャァー！」"s, u8"「にゃー」」"s,
+                    u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"*hiss*"s, u8"\"Meoow!\""s, u8"\"Meew!\""s, u8"\"Mew!\""s, u8"\"Meow meow.\""s);
+                txt(u8"*hiss*"s, u8"\"Meoow!\""s, u8"\"Meew!\""s, u8"\"Mew!\""s,
+                    u8"\"Meow meow.\""s);
                 return 1;
             }
         }
@@ -21355,15 +20161,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"猫"s;
@@ -21413,7 +20213,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"cat"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -21432,10 +20233,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ミャア」"s, u8"「にゃ」"s, u8"「ミャ」"s, u8"「にゅぅ」"s, u8"「ニャア」"s);
+                txt(u8"「ミャア」"s, u8"「にゃ」"s, u8"「ミャ」"s,
+                    u8"「にゅぅ」"s, u8"「ニャア」"s);
                 return 1;
             } else {
-                txt(u8"\"Meow.\""s, u8"\"Mew.\""s, u8"\"Mew mew.\""s, u8"\"Mew!\""s, u8"\"Mewl.\""s);
+                txt(u8"\"Meow.\""s, u8"\"Mew.\""s, u8"\"Mew mew.\""s,
+                    u8"\"Mew!\""s, u8"\"Mewl.\""s);
                 return 1;
             }
         }
@@ -21443,10 +20246,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ニャー！」"s, u8"「ニャウ！」"s, u8"「ニャン！」"s, u8"「ゥニャ！」"s);
+                txt(u8"「ニャー！」"s, u8"「ニャウ！」"s, u8"「ニャン！」"s,
+                    u8"「ゥニャ！」"s);
                 return 1;
             } else {
-                txt(u8"\"Meow!\""s, u8"\"Mew mew!\""s, u8"\"Mew!\""s, u8"\"Meow\""s);
+                txt(u8"\"Meow!\""s, u8"\"Mew mew!\""s, u8"\"Mew!\""s,
+                    u8"\"Meow\""s);
                 return 1;
             }
         }
@@ -21473,10 +20278,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"* ふしゅぅ * "s, u8"「ニャァー！」"s, u8"「にゃー」」"s, u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
+                txt(u8"* ふしゅぅ * "s, u8"「ニャァー！」"s, u8"「にゃー」」"s,
+                    u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
                 return 1;
             } else {
-                txt(u8"*hiss*"s, u8"\"Meoow!\""s, u8"\"Meew!\""s, u8"\"Mew!\""s, u8"\"Meow meow.\""s);
+                txt(u8"*hiss*"s, u8"\"Meoow!\""s, u8"\"Meew!\""s, u8"\"Mew!\""s,
+                    u8"\"Meow meow.\""s);
                 return 1;
             }
         }
@@ -21485,15 +20292,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 1;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 1; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"シルバーキャット"s;
@@ -21544,7 +20345,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"silver cat"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -21564,10 +20366,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「おうちしってう？」"s, u8"「おうちかえう」"s, u8"「おうちかえう！」"s, u8"「ママどっち？おうちどっち？」"s, u8"「ニャア」"s);
+                txt(u8"「おうちしってう？」"s, u8"「おうちかえう」"s,
+                    u8"「おうちかえう！」"s,
+                    u8"「ママどっち？おうちどっち？」"s, u8"「ニャア」"s);
                 return 1;
             } else {
-                txt(u8"\"Do you know where my home is?\""s, u8"\"I'm going home.\""s, u8"\"I'm going home!\""s, u8"\"Momma? Where are you?\""s, u8"\"Home! Nyaow!\""s);
+                txt(u8"\"Do you know where my home is?\""s,
+                    u8"\"I'm going home.\""s, u8"\"I'm going home!\""s,
+                    u8"\"Momma? Where are you?\""s, u8"\"Home! Nyaow!\""s);
                 return 1;
             }
         }
@@ -21609,15 +20415,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"迷子の子猫"s;
@@ -21668,7 +20468,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"stray cat"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -21728,15 +20529,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ライオン"s;
@@ -21845,15 +20640,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"猫使い『ケシー』"s;
@@ -21927,7 +20716,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ミャア」"s, u8"「にゃ」"s, u8"「ミャ」"s, u8"「にゅぅ」"s, u8"「ニャア」"s);
+                txt(u8"「ミャア」"s, u8"「にゃ」"s, u8"「ミャ」"s,
+                    u8"「にゅぅ」"s, u8"「ニャア」"s);
                 return 1;
             }
         }
@@ -21959,20 +20749,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"* ふしゅぅ *"s, u8"「ニャァー！」"s, u8"「にゃー」」"s, u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
+                txt(u8"* ふしゅぅ *"s, u8"「ニャァー！」"s, u8"「にゃー」」"s,
+                    u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カーバンクル"s;
@@ -22067,15 +20852,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"犬"s;
@@ -22123,7 +20902,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"dog"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -22145,7 +20925,8 @@ int label_2654()
                 txt(u8"「くぅ〜」"s, u8"「ぁぅぁぅ」"s, u8"「ぅ〜」"s);
                 return 1;
             } else {
-                txt(u8"You hear the high pitched yips of a young dog"s, u8"A plaintive howl is heard in the distance"s, u8"Rowf!"s);
+                txt(u8"You hear the high pitched yips of a young dog"s,
+                    u8"A plaintive howl is heard in the distance"s, u8"Rowf!"s);
                 return 1;
             }
         }
@@ -22174,15 +20955,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"子犬の『ポピー』"s;
@@ -22292,15 +21067,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"犬好きの少女『リリアン』"s;
@@ -22370,10 +21139,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ひっ！」"s, u8"「猫はどうしてあんなに恐ろしいのだろう」"s, u8"「細い目が苦手です」"s);
+                txt(u8"「ひっ！」"s,
+                    u8"「猫はどうしてあんなに恐ろしいのだろう」"s,
+                    u8"「細い目が苦手です」"s);
                 return 1;
             } else {
-                txt(u8"\" hate those bloody cats!\""s, u8"\"Come closer kitty, I gotta present for ya!\""s, u8"\"I've got your number, mate. It's down to two for you. Ahh! There's a oner. Ha ha, yes. Not long for you now!\""s);
+                txt(u8"\" hate those bloody cats!\""s,
+                    u8"\"Come closer kitty, I gotta present for ya!\""s,
+                    u8"\"I've got your number, mate. It's down to two for you. Ahh! There's a oner. Ha ha, yes. Not long for you now!\""s);
                 return 1;
             }
         }
@@ -22394,15 +21167,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"猫嫌いの『タム』"s;
@@ -22494,23 +21261,22 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"少女は服のほこりをはらった。"s, u8"少女はあなたを見てにっこり笑った。"s, u8"あなたは少女に見とれた。"s, u8"「うふふ♪」"s);
+                txt(u8"少女は服のほこりをはらった。"s,
+                    u8"少女はあなたを見てにっこり笑った。"s,
+                    u8"あなたは少女に見とれた。"s, u8"「うふふ♪」"s);
                 return 1;
             } else {
-                txt(u8"The little girl brushes dust off her clothes."s, u8"The little girl smiles at you."s, u8"You look admiringly at the little girl."s, u8"\"Another death. *grin* \""s);
+                txt(u8"The little girl brushes dust off her clothes."s,
+                    u8"The little girl smiles at you."s,
+                    u8"You look admiringly at the little girl."s,
+                    u8"\"Another death. *grin* \""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"少女"s;
@@ -22559,7 +21325,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"little girl"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -22571,9 +21338,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 4;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 4;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 4; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -22590,15 +21355,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ネズミ"s;
@@ -22663,15 +21422,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"やどかり"s;
@@ -22758,15 +21511,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"大道芸人"s;
@@ -22853,15 +21600,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"猫の女王『フリージア』"s;
@@ -22929,7 +21670,13 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんー」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃ〜ん」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんっ」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん？」"s, u8"「"s + _onii(cdata(8, 0)) + u8"〜ちゃん」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s);
+                txt(u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんー」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃ〜ん」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんっ」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん？」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"〜ちゃん」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s);
                 return 1;
             }
         }
@@ -22945,7 +21692,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえり、"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s, u8"「おかえりなさーい、"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s, u8"「待ってたよ、"s + _onii(cdata(8, 0)) + u8"ちゃん」"s);
+                txt(u8"「おかえり、"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s,
+                    u8"「おかえりなさーい、"s + _onii(cdata(8, 0)) +
+                        u8"ちゃん♪」"s,
+                    u8"「待ってたよ、"s + _onii(cdata(8, 0)) + u8"ちゃん」"s);
                 return 1;
             }
         }
@@ -22953,20 +21703,16 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"あなたは妹の頭をなでた。"s, u8"あなたは妹の姿に目を細めた。"s, u8"妹は上目づかいにあなたの顔を覗いた。"s);
+                txt(u8"あなたは妹の頭をなでた。"s,
+                    u8"あなたは妹の姿に目を細めた。"s,
+                    u8"妹は上目づかいにあなたの顔を覗いた。"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"妹"s;
@@ -23016,7 +21762,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"younger sister"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -23039,7 +21786,13 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんー」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃ〜ん」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんっ」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん？」"s, u8"「"s + _onii(cdata(8, 0)) + u8"〜ちゃん」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s);
+                txt(u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんー」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃ〜ん」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんっ」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん？」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"〜ちゃん」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s);
                 return 1;
             }
         }
@@ -23055,7 +21808,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえり、"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s, u8"「おかえりなさーい、"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s, u8"「待ってたよ、"s + _onii(cdata(8, 0)) + u8"ちゃん」"s);
+                txt(u8"「おかえり、"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s,
+                    u8"「おかえりなさーい、"s + _onii(cdata(8, 0)) +
+                        u8"ちゃん♪」"s,
+                    u8"「待ってたよ、"s + _onii(cdata(8, 0)) + u8"ちゃん」"s);
                 return 1;
             }
         }
@@ -23063,20 +21819,16 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"あなたは妹の頭をなでた。"s, u8"あなたは妹の姿に目を細めた。"s, u8"妹は上目づかいにあなたの顔を覗いた。"s);
+                txt(u8"あなたは妹の頭をなでた。"s,
+                    u8"あなたは妹の姿に目を細めた。"s,
+                    u8"妹は上目づかいにあなたの顔を覗いた。"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"妹"s;
@@ -23127,7 +21879,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"younger sister"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -23150,7 +21903,13 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんー」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃ〜ん」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんっ」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん？」"s, u8"「"s + _onii(cdata(8, 0)) + u8"〜ちゃん」"s, u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s);
+                txt(u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんー」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃ〜ん」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃんっ」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん？」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"〜ちゃん」"s,
+                    u8"「"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s);
                 return 1;
             }
         }
@@ -23166,7 +21925,11 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえりにゃ、"s + _onii(cdata(8, 0)) + u8"ちゃん！」"s, u8"「おかえりなさいにゃー、"s + _onii(cdata(8, 0)) + u8"ちゃん♪」"s, u8"「待ってたにゃ、"s + _onii(cdata(8, 0)) + u8"ちゃん」"s);
+                txt(u8"「おかえりにゃ、"s + _onii(cdata(8, 0)) +
+                        u8"ちゃん！」"s,
+                    u8"「おかえりなさいにゃー、"s + _onii(cdata(8, 0)) +
+                        u8"ちゃん♪」"s,
+                    u8"「待ってたにゃ、"s + _onii(cdata(8, 0)) + u8"ちゃん」"s);
                 return 1;
             }
         }
@@ -23174,20 +21937,17 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"あなたは妹の頭をなでた。"s, u8"あなたは妹の姿に目を細めた。"s, u8"妹は上目づかいにあなたの顔を覗いた。"s, u8"「うにゃん」"s);
+                txt(u8"あなたは妹の頭をなでた。"s,
+                    u8"あなたは妹の姿に目を細めた。"s,
+                    u8"妹は上目づかいにあなたの顔を覗いた。"s,
+                    u8"「うにゃん」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"妹猫"s;
@@ -23236,7 +21996,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"younger cat sister"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -23274,20 +22035,16 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"嬢は服のほこりをはらった。"s, u8"嬢はあなたを見てにっこり笑った。"s, u8"あなたは嬢に見とれた。"s, u8"「うふふ♪」"s);
+                txt(u8"嬢は服のほこりをはらった。"s,
+                    u8"嬢はあなたを見てにっこり笑った。"s,
+                    u8"あなたは嬢に見とれた。"s, u8"「うふふ♪」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"嬢"s;
@@ -23340,7 +22097,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"young lady"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -23376,15 +22134,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゼイレン究極破壊兵器『ウティマ』"s;
@@ -23482,15 +22234,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 6;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 6; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"不浄なる者『アズラシズル』"s;
@@ -23564,15 +22310,9 @@ int label_2654()
     }
     if (dbid == 179) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ペットアリーナの主催者『ニノ』"s;
@@ -23640,23 +22380,26 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *トンカン*  "s, u8" *カーン*  "s, u8" *キン*  "s, u8"鉄を打つ音が響いている。"s, u8"「つまらんのう」"s, u8"「ミラルの奴め、何の役にも立たないものばかり作りおって」"s, u8"「宝の持ち腐れじゃ」"s);
+                txt(u8" *トンカン*  "s, u8" *カーン*  "s, u8" *キン*  "s,
+                    u8"鉄を打つ音が響いている。"s, u8"「つまらんのう」"s,
+                    u8"「ミラルの奴め、何の役にも立たないものばかり作りおって」"s,
+                    u8"「宝の持ち腐れじゃ」"s);
                 return 1;
             } else {
-                txt(u8"You hear the rhymthic clang of a hammer on steel"s, u8"You hear the whoosh of a bellows being pumped"s, u8"You hear the perfect ring of steel-on-steel. It makes your blood race"s, u8"\"And just what shall you be, oh noble ingot? A dagger perhaps, an axe blade by chance? Let us find out...\""s, u8"\"Ah! A good shipment of steel today. Oh, what to make, decisions, decisions...\""s, u8"\"With this, I have created half a legend. Your wielder will make the other half with you.\""s, u8"\"Let's just sit you on the shelf oh noble blade, for soon your brothers shall join you.\""s);
+                txt(u8"You hear the rhymthic clang of a hammer on steel"s,
+                    u8"You hear the whoosh of a bellows being pumped"s,
+                    u8"You hear the perfect ring of steel-on-steel. It makes your blood race"s,
+                    u8"\"And just what shall you be, oh noble ingot? A dagger perhaps, an axe blade by chance? Let us find out...\""s,
+                    u8"\"Ah! A good shipment of steel today. Oh, what to make, decisions, decisions...\""s,
+                    u8"\"With this, I have created half a legend. Your wielder will make the other half with you.\""s,
+                    u8"\"Let's just sit you on the shelf oh noble blade, for soon your brothers shall join you.\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"伝説の職人『ガロク』"s;
@@ -23727,23 +22470,24 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「今日のご飯はなんにしよう」"s, u8"「ガロクの作品には遊びがないね」"s, u8"「暇だぬ」"s, u8"「おお、客人かな？」"s, u8"「猫 イズ フリ〜ダ〜ム♪ 猫 イズ フリ〜ダ〜ム♪」"s);
+                txt(u8"「今日のご飯はなんにしよう」"s,
+                    u8"「ガロクの作品には遊びがないね」"s, u8"「暇だぬ」"s,
+                    u8"「おお、客人かな？」"s,
+                    u8"「猫 イズ フリ〜ダ〜ム♪ 猫 イズ フリ〜ダ〜ム♪」"s);
                 return 1;
             } else {
-                txt(u8"\"Oh, what to make for dinner.\""s, u8"\"All work and no play makes Miral a dull boy.\""s, u8"\"There's never enough time in the world to get everything done.\""s, u8"\"Guests? Goodness it has been a while indeed.\""s, u8"\"I've got a cat I wanna frame! And now nothing shall ever be the same.\""s);
+                txt(u8"\"Oh, what to make for dinner.\""s,
+                    u8"\"All work and no play makes Miral a dull boy.\""s,
+                    u8"\"There's never enough time in the world to get everything done.\""s,
+                    u8"\"Guests? Goodness it has been a while indeed.\""s,
+                    u8"\"I've got a cat I wanna frame! And now nothing shall ever be the same.\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"伝説の職人『ミラル』"s;
@@ -23814,10 +22558,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"辺りは神聖な雰囲気に包まれている。"s, u8"あなたは何者かの穏やかな視線を感じた。"s, u8"とても静かで、平和な場所だ。"s, u8"心の中で、奇妙な祈りの声がこだました。"s);
+                txt(u8"辺りは神聖な雰囲気に包まれている。"s,
+                    u8"あなたは何者かの穏やかな視線を感じた。"s,
+                    u8"とても静かで、平和な場所だ。"s,
+                    u8"心の中で、奇妙な祈りの声がこだました。"s);
                 return 1;
             } else {
-                txt(u8"All around you is the sensation of being in a sacred place"s, u8"You have seldom felt such an air of peace"s, u8"All around is very quiet, yet you aren't the least bit lonely"s, u8"In your mind you hear the strange echoes of a voice in prayer"s);
+                txt(u8"All around you is the sensation of being in a sacred place"s,
+                    u8"You have seldom felt such an air of peace"s,
+                    u8"All around is very quiet, yet you aren't the least bit lonely"s,
+                    u8"In your mind you hear the strange echoes of a voice in prayer"s);
                 return 1;
             }
         }
@@ -23833,20 +22583,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"* ふしゅぅ *"s, u8"「ニャァー！」"s, u8"「にゃー」」"s, u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
+                txt(u8"* ふしゅぅ *"s, u8"「ニャァー！」"s, u8"「にゃー」」"s,
+                    u8"「ゥニャ！」"s, u8"爪を研ぐ音が聞こえる。"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ツインテール"s;
@@ -23914,23 +22659,23 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"辺りは神聖な雰囲気に包まれている。"s, u8"あなたは何者かの穏やかな視線を感じた。"s, u8"とても静かで、平和な場所だ。"s, u8"心の中で、奇妙な祈りの声がこだました。"s);
+                txt(u8"辺りは神聖な雰囲気に包まれている。"s,
+                    u8"あなたは何者かの穏やかな視線を感じた。"s,
+                    u8"とても静かで、平和な場所だ。"s,
+                    u8"心の中で、奇妙な祈りの声がこだました。"s);
                 return 1;
             } else {
-                txt(u8"All around you is the sensation of being in a sacred place"s, u8"You have seldom felt such an air of peace"s, u8"All around is very quiet, yet you aren't the least bit lonely"s, u8"In your mind you hear the strange echoes of a voice in prayer"s);
+                txt(u8"All around you is the sensation of being in a sacred place"s,
+                    u8"You have seldom felt such an air of peace"s,
+                    u8"All around is very quiet, yet you aren't the least bit lonely"s,
+                    u8"In your mind you hear the strange echoes of a voice in prayer"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"銀狼"s;
@@ -24017,15 +22762,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"白衣のナース"s;
@@ -24074,7 +22813,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"nurse"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -24097,7 +22837,10 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「金か？金が欲しいのか？」"s, u8"「汚い手で触らないでくれるか」"s, u8"「周りの衆、見てないで助けぬか」"s, u8"「金の亡者め！」"s);
+                txt(u8"「金か？金が欲しいのか？」"s,
+                    u8"「汚い手で触らないでくれるか」"s,
+                    u8"「周りの衆、見てないで助けぬか」"s,
+                    u8"「金の亡者め！」"s);
                 return 1;
             }
         }
@@ -24105,7 +22848,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「貴様には一銭もやらん…」"s, u8"「なんとまあ」"s, u8"「下衆め」"s, u8"「まだ死にたくないー…ぐぉ」"s, u8"「遺言書いといてよかったわ」"s);
+                txt(u8"「貴様には一銭もやらん…」"s, u8"「なんとまあ」"s,
+                    u8"「下衆め」"s, u8"「まだ死にたくないー…ぐぉ」"s,
+                    u8"「遺言書いといてよかったわ」"s);
                 return 1;
             }
         }
@@ -24126,15 +22871,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"大富豪"s;
@@ -24184,7 +22923,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"rich person"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -24193,9 +22933,7 @@ int label_2654()
             dbmode = 3;
             label_2297();
             cdata(7, rc) = 71;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 70;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 70; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -24207,7 +22945,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「無礼者！」"s, u8"「お父上に言いつけてやる」"s, u8"「下郎め」"s, u8"「汚い！触るな！」"s, u8"「誰か！」"s, u8"「下がれ！」"s);
+                txt(u8"「無礼者！」"s, u8"「お父上に言いつけてやる」"s,
+                    u8"「下郎め」"s, u8"「汚い！触るな！」"s, u8"「誰か！」"s,
+                    u8"「下がれ！」"s);
                 return 1;
             }
         }
@@ -24215,7 +22955,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「うわぁ」"s, u8"「こ、殺さないで」"s, u8"「助、助けて…うぐ」"s, u8"「お父上ぇー」"s, u8"「む、無念」"s);
+                txt(u8"「うわぁ」"s, u8"「こ、殺さないで」"s,
+                    u8"「助、助けて…うぐ」"s, u8"「お父上ぇー」"s,
+                    u8"「む、無念」"s);
                 return 1;
             }
         }
@@ -24236,15 +22978,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"貴族の子供"s;
@@ -24294,7 +23030,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"noble child"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -24303,9 +23040,7 @@ int label_2654()
             dbmode = 3;
             label_2297();
             cdata(7, rc) = 73;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 72;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 72; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -24317,7 +23052,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「観光客だからって馬鹿にするな」"s, u8"「なんて治安の悪い国だ」"s, u8"「野蛮な土地だな」"s, u8"「金などもってないぞ」"s);
+                txt(u8"「観光客だからって馬鹿にするな」"s,
+                    u8"「なんて治安の悪い国だ」"s, u8"「野蛮な土地だな」"s,
+                    u8"「金などもってないぞ」"s);
                 return 1;
             }
         }
@@ -24325,7 +23062,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「こんな国二度とくるか」"s, u8"「無差別テロだー」"s, u8"「いやーん」"s);
+                txt(u8"「こんな国二度とくるか」"s, u8"「無差別テロだー」"s,
+                    u8"「いやーん」"s);
                 return 1;
             }
         }
@@ -24346,15 +23084,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"観光客"s;
@@ -24404,7 +23136,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"tourist"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -24416,9 +23149,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 122;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 129;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 129; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -24430,10 +23161,23 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「屋台でおいしいもの売ってるかな？」"s, u8"「今日ははじけるぜ」"s, u8"「なんとも騒々しいな」"s, u8"「これが噂の聖夜祭か…」"s, u8"「見て見て、子供が雪だるまをつくっているよ」"s, u8"「なんだあの巨人は！」"s, u8"「すげえ！」"s, u8"「もう今年も終わりなんだな」"s, u8"「見ろ人がゴミのようだ」"s);
+                txt(u8"「屋台でおいしいもの売ってるかな？」"s,
+                    u8"「今日ははじけるぜ」"s, u8"「なんとも騒々しいな」"s,
+                    u8"「これが噂の聖夜祭か…」"s,
+                    u8"「見て見て、子供が雪だるまをつくっているよ」"s,
+                    u8"「なんだあの巨人は！」"s, u8"「すげえ！」"s,
+                    u8"「もう今年も終わりなんだな」"s,
+                    u8"「見ろ人がゴミのようだ」"s);
                 return 1;
             } else {
-                txt(u8"\"Let's check the food stall.\""s, u8"\"No! I want to play a little longer!\""s, u8"\"What a noisy street.\""s, u8"\"So it's the holy night festival people were talking about...\""s, u8"\"Hey look, those children are making cute snowmen.\""s, u8"\"Where does the giant come from?\""s, u8"\"Holy cow!\""s, u8"\"It's that time of year again.\""s, u8"\"Aha, some human garbage.\""s);
+                txt(u8"\"Let's check the food stall.\""s,
+                    u8"\"No! I want to play a little longer!\""s,
+                    u8"\"What a noisy street.\""s,
+                    u8"\"So it's the holy night festival people were talking about...\""s,
+                    u8"\"Hey look, those children are making cute snowmen.\""s,
+                    u8"\"Where does the giant come from?\""s,
+                    u8"\"Holy cow!\""s, u8"\"It's that time of year again.\""s,
+                    u8"\"Aha, some human garbage.\""s);
                 return 1;
             }
         }
@@ -24441,7 +23185,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「観光客だからって馬鹿にするな」"s, u8"「なんて治安の悪い国だ」"s, u8"「野蛮な土地だな」"s, u8"「金などもってないぞ」"s);
+                txt(u8"「観光客だからって馬鹿にするな」"s,
+                    u8"「なんて治安の悪い国だ」"s, u8"「野蛮な土地だな」"s,
+                    u8"「金などもってないぞ」"s);
                 return 1;
             }
         }
@@ -24449,7 +23195,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「こんな国二度とくるか」"s, u8"「無差別テロだー」"s, u8"「いやーん」"s);
+                txt(u8"「こんな国二度とくるか」"s, u8"「無差別テロだー」"s,
+                    u8"「いやーん」"s);
                 return 1;
             }
         }
@@ -24470,15 +23217,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 1;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 1; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"祭りの観光客"s;
@@ -24529,7 +23270,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"festival tourist"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -24541,9 +23283,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 477;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 476;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 476; }
             cdata(7, rc) += 1000;
             cspecialeq = 0;
             return 0;
@@ -24556,15 +23296,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ブレイド"s;
@@ -24629,15 +23363,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ブレイドβ"s;
@@ -24705,15 +23433,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ブレイドΩ"s;
@@ -24791,10 +23513,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「てつぅぅぅうううおおおおおおお！！」"s, u8"「よう、どうした。揉め事か？」"s, u8"「やっとモーターのコイルが温まって来た所だぜ」"s);
+                txt(u8"「てつぅぅぅうううおおおおおおお！！」"s,
+                    u8"「よう、どうした。揉め事か？」"s,
+                    u8"「やっとモーターのコイルが温まって来た所だぜ」"s);
                 return 1;
             } else {
-                txt(u8"\"Teeee tsuuu oooooo!!.\""s, u8"\"Yo, what's up? A fight?\""s, u8"\"Relax, it's gonna take some time to warm my engine up.\""s);
+                txt(u8"\"Teeee tsuuu oooooo!!.\""s,
+                    u8"\"Yo, what's up? A fight?\""s,
+                    u8"\"Relax, it's gonna take some time to warm my engine up.\""s);
                 return 1;
             }
         }
@@ -24813,10 +23539,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ピーキーすぎてお前には無理だよ」"s, u8"「テツオ、まってろよ。俺が苦痛を終わらせてやる」"s);
+                txt(u8"「ピーキーすぎてお前には無理だよ」"s,
+                    u8"「テツオ、まってろよ。俺が苦痛を終わらせてやる」"s);
                 return 1;
             } else {
-                txt(u8"\"My body is too peaky for ya.\""s, u8"\"Just hold on Tetsuo. I'm gonna find you to end your pain.\""s);
+                txt(u8"\"My body is too peaky for ya.\""s,
+                    u8"\"Just hold on Tetsuo. I'm gonna find you to end your pain.\""s);
                 return 1;
             }
         }
@@ -24825,15 +23553,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『カネダのバイク』"s;
@@ -24920,7 +23642,8 @@ int label_2654()
                 txt(u8"「われぇ、いい度胸じゃぁ！」"s, u8"「おんどりゃぁ！」"s);
                 return 1;
             } else {
-                txt(u8"\"Craaaap! You are so dead!.\""s, u8"\"You dorf, get away get away!\""s);
+                txt(u8"\"Craaaap! You are so dead!.\""s,
+                    u8"\"You dorf, get away get away!\""s);
                 return 1;
             }
         }
@@ -24939,10 +23662,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「てつぅぅぅうううおおおおおおお！！」"s, u8"「よう、どうした。揉め事か？」"s, u8"「やっとモーターのコイルが温まって来た所だぜ」"s);
+                txt(u8"「てつぅぅぅうううおおおおおおお！！」"s,
+                    u8"「よう、どうした。揉め事か？」"s,
+                    u8"「やっとモーターのコイルが温まって来た所だぜ」"s);
                 return 1;
             } else {
-                txt(u8"\"Teeee tsuuu oooooo!!.\""s, u8"\"Yo, what's up? A fight?\""s, u8"\"Relax, it's gonna take some time to warm my engine up.\""s);
+                txt(u8"\"Teeee tsuuu oooooo!!.\""s,
+                    u8"\"Yo, what's up? A fight?\""s,
+                    u8"\"Relax, it's gonna take some time to warm my engine up.\""s);
                 return 1;
             }
         }
@@ -24951,15 +23678,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 5;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 5; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"カブ"s;
@@ -25032,15 +23753,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 25;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 25; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"地雷犬"s;
@@ -25109,15 +23824,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"鉄の処女"s;
@@ -25185,15 +23894,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"異形の目"s;
@@ -25260,15 +23963,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"不浄なる瞳"s;
@@ -25335,15 +24032,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ウィスプ"s;
@@ -25407,15 +24098,9 @@ int label_2654()
     }
     if (dbid == 192) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ハリねずみ"s;
@@ -25482,15 +24167,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"輝くハリねずみ"s;
@@ -25559,7 +24238,9 @@ int label_2654()
                 txt(u8" *クックッ* "s, u8"「コケー」"s, u8"「コッ」"s);
                 return 1;
             } else {
-                txt(u8"You hear something scratching for worms"s, u8"\"*Bwwwuuuuu-buk-buk-buk-buKAWK*\""s, u8"You hear poultry in the distance"s);
+                txt(u8"You hear something scratching for worms"s,
+                    u8"\"*Bwwwuuuuu-buk-buk-buk-buKAWK*\""s,
+                    u8"You hear poultry in the distance"s);
                 return 1;
             }
         }
@@ -25572,15 +24253,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"鶏"s;
@@ -25642,21 +24317,13 @@ int label_2654()
     }
     if (dbid == 196) {
         if (dbmode == 12) {
-            if (rnd(10) == 0) {
-                resistmod(cc, 54, 50);
-            }
+            if (rnd(10) == 0) { resistmod(cc, 54, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パンプキン"s;
@@ -25720,21 +24387,13 @@ int label_2654()
     }
     if (dbid == 201) {
         if (dbmode == 12) {
-            if (rnd(10) == 0) {
-                resistmod(cc, 54, 50);
-            }
+            if (rnd(10) == 0) { resistmod(cc, 54, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パピー"s;
@@ -25798,21 +24457,13 @@ int label_2654()
     }
     if (dbid == 197) {
         if (dbmode == 12) {
-            if (rnd(8) == 0) {
-                resistmod(cc, 54, 50);
-            }
+            if (rnd(8) == 0) { resistmod(cc, 54, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"南瓜の怪物"s;
@@ -25876,21 +24527,13 @@ int label_2654()
     }
     if (dbid == 198) {
         if (dbmode == 12) {
-            if (rnd(6) == 0) {
-                resistmod(cc, 54, 50);
-            }
+            if (rnd(6) == 0) { resistmod(cc, 54, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 2;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 60;
-            }
+            if (dbspec == 3) { return 2; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 60; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ハロウィンナイトメア"s;
@@ -25954,21 +24597,13 @@ int label_2654()
     }
     if (dbid == 199) {
         if (dbmode == 12) {
-            if (rnd(4) == 0) {
-                resistmod(cc, 53, 50);
-            }
+            if (rnd(4) == 0) { resistmod(cc, 53, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"闇子"s;
@@ -26033,21 +24668,13 @@ int label_2654()
     }
     if (dbid == 200) {
         if (dbmode == 12) {
-            if (rnd(4) == 0) {
-                resistmod(cc, 53, 50);
-            }
+            if (rnd(4) == 0) { resistmod(cc, 53, 50); }
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"闇の老師"s;
@@ -26126,20 +24753,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ウフハァ」"s, u8"「グゴガー」"s, u8"「ギャオース！」"s, u8" *どすん* "s, u8" *ドスッ* "s);
+                txt(u8"「ウフハァ」"s, u8"「グゴガー」"s, u8"「ギャオース！」"s,
+                    u8" *どすん* "s, u8" *ドスッ* "s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"火の巨人『エボン』"s;
@@ -26210,10 +24832,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"モイアー「さあ、寄った寄った！」"s, u8"モイアー「これなるは伝説の火の巨人、見なきゃ損だよ！」"s, u8"モイアー「他の店じゃ手に入らない珍品を見ていってくれ」"s);
+                txt(u8"モイアー「さあ、寄った寄った！」"s,
+                    u8"モイアー「これなるは伝説の火の巨人、見なきゃ損だよ！」"s,
+                    u8"モイアー「他の店じゃ手に入らない珍品を見ていってくれ」"s);
                 return 1;
             } else {
-                txt(u8"\"Hey now, I stopped, I stopped!\""s, u8"\"Behold! a Legendary Giant of Fire! Be careful you aren't burned now.\""s, u8"\"And if you think that's special, wait till you see what I got over here!\""s);
+                txt(u8"\"Hey now, I stopped, I stopped!\""s,
+                    u8"\"Behold! a Legendary Giant of Fire! Be careful you aren't burned now.\""s,
+                    u8"\"And if you think that's special, wait till you see what I got over here!\""s);
                 return 1;
             }
         }
@@ -26221,20 +24847,16 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「観光客だからって馬鹿にするな」"s, u8"「なんて治安の悪い国だ」"s, u8"「野蛮な土地だな」"s, u8"「金などもってないぞ」"s);
+                txt(u8"「観光客だからって馬鹿にするな」"s,
+                    u8"「なんて治安の悪い国だ」"s, u8"「野蛮な土地だな」"s,
+                    u8"「金などもってないぞ」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"見世物屋の『モイアー』"s;
@@ -26305,10 +24927,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「"s + _syujin(cdata(8, 0)) + u8"〜」"s, _syujin(cdata(8, 0)) + u8"〜"s, u8"「用事はありませんか♪」"s, u8"メイドの熱い視線を感じる…"s);
+                txt(u8"「"s + _syujin(cdata(8, 0)) + u8"〜」"s,
+                    _syujin(cdata(8, 0)) + u8"〜"s,
+                    u8"「用事はありませんか♪」"s,
+                    u8"メイドの熱い視線を感じる…"s);
                 return 1;
             } else {
-                txt(u8""s, u8"\"Oh Master, I don't do THOSE sorts of things♪...\""s, u8"The maid looks good enough to touch"s);
+                txt(u8""s,
+                    u8"\"Oh Master, I don't do THOSE sorts of things♪...\""s,
+                    u8"The maid looks good enough to touch"s);
                 return 1;
             }
         }
@@ -26324,7 +24951,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ダメぇ！」"s, u8"「"s + _syujin(cdata(8, 0)) + u8"ー！」"s);
+                txt(u8"「ダメぇ！」"s,
+                    u8"「"s + _syujin(cdata(8, 0)) + u8"ー！」"s);
                 return 1;
             }
         }
@@ -26332,20 +24960,16 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえりなさいませ、"s + _syujin(cdata(8, 0)) + u8"〜」"s, u8"「おかえりなさいまし〜」"s);
+                txt(u8"「おかえりなさいませ、"s + _syujin(cdata(8, 0)) +
+                        u8"〜」"s,
+                    u8"「おかえりなさいまし〜」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"メイド"s;
@@ -26395,7 +25019,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"maid"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = 0;
             cdata(69, rc) = 0;
@@ -26407,9 +25032,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             cdata(7, rc) = 104;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 105;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 105; }
             cdata(7, rc) += 0;
             cspecialeq = 0;
             return 0;
@@ -26432,20 +25055,15 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ウフハァ」"s, u8"「グゴガー」"s, u8"「ギャオース！」"s, u8" *どすん* "s, u8" *ドスッ* "s);
+                txt(u8"「ウフハァ」"s, u8"「グゴガー」"s, u8"「ギャオース！」"s,
+                    u8" *どすん* "s, u8" *ドスッ* "s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"火の巨人『エボン』"s;
@@ -26513,15 +25131,9 @@ int label_2654()
     }
     if (dbid == 212) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"実験台"s;
@@ -26595,10 +25207,21 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「あー…かわいいお花！」"s, u8"「ついていっていい？」"s, u8"「サンドラさんの赤いケープほしい…」"s, u8"「ざっつあぷりちーふらわー」"s, u8"「赤って好きな色なの〜」"s, u8"「この花の冠はお母さんに編んでもらったの」"s, u8"「るるる♪」"s);
+                txt(u8"「あー…かわいいお花！」"s, u8"「ついていっていい？」"s,
+                    u8"「サンドラさんの赤いケープほしい…」"s,
+                    u8"「ざっつあぷりちーふらわー」"s,
+                    u8"「赤って好きな色なの〜」"s,
+                    u8"「この花の冠はお母さんに編んでもらったの」"s,
+                    u8"「るるる♪」"s);
                 return 1;
             } else {
-                txt(u8"\"Oh my! Such pretty flowers♪\""s, u8"\"Can I tag along? I won't be a bother♪\""s, u8"\"I hope Sandra's red cape...♪\""s, u8"\"Eat flowers evil-doer!♪\""s, u8"\"Red is the color of love, of blood, and of roses♪\""s, u8"\"A crown of flowers did his mother weave with all her heart...♪\""s, u8"\"♪La, laaaah, la, la-la. Lah, la-la,, la la....♪\""s);
+                txt(u8"\"Oh my! Such pretty flowers♪\""s,
+                    u8"\"Can I tag along? I won't be a bother♪\""s,
+                    u8"\"I hope Sandra's red cape...♪\""s,
+                    u8"\"Eat flowers evil-doer!♪\""s,
+                    u8"\"Red is the color of love, of blood, and of roses♪\""s,
+                    u8"\"A crown of flowers did his mother weave with all her heart...♪\""s,
+                    u8"\"♪La, laaaah, la, la-la. Lah, la-la,, la la....♪\""s);
                 return 1;
             }
         }
@@ -26627,15 +25250,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"無邪気な少女『グウェン』"s;
@@ -26696,9 +25313,7 @@ int label_2654()
             label_2298();
             cdata(8, rc) = 1;
             cdata(7, rc) = 356;
-            if (cdata(8, rc) == 1) {
-                cdata(7, rc) = 356;
-            }
+            if (cdata(8, rc) == 1) { cdata(7, rc) = 356; }
             cdata(7, rc) += 0;
             fixlv = 6;
             cspecialeq = 0;
@@ -26711,10 +25326,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「おかあさん…」"s, u8"「ひとりにしないでよ」"s, u8"「みゅ…」"s);
+                txt(u8"「おかあさん…」"s, u8"「ひとりにしないでよ」"s,
+                    u8"「みゅ…」"s);
                 return 1;
             } else {
-                txt(u8"\"Mother…\""s, u8"\"Do not go alone.\""s, u8"\"Oh, look at you…\""s);
+                txt(u8"\"Mother…\""s, u8"\"Do not go alone.\""s,
+                    u8"\"Oh, look at you…\""s);
                 return 1;
             }
         }
@@ -26727,15 +25344,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ひとりぼっちの『パエル』"s;
@@ -26807,10 +25418,15 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「うふっ。パエルはいつまでも甘えん坊さんね」"s, u8"「あらあら。心配しないでも、私は平気よ」"s, u8"「けほっ。けほっ」"s, u8"「いい子ね」"s);
+                txt(u8"「うふっ。パエルはいつまでも甘えん坊さんね」"s,
+                    u8"「あらあら。心配しないでも、私は平気よ」"s,
+                    u8"「けほっ。けほっ」"s, u8"「いい子ね」"s);
                 return 1;
             } else {
-                txt(u8"\"Pael, such a spoiled child…dear oh dear.\""s, u8"\"Hush now, I've got you.\""s, u8"\"I hope Pael is not in trouble with the guards again…\""s, u8"\"Now you be good dear, understand?\""s);
+                txt(u8"\"Pael, such a spoiled child…dear oh dear.\""s,
+                    u8"\"Hush now, I've got you.\""s,
+                    u8"\"I hope Pael is not in trouble with the guards again…\""s,
+                    u8"\"Now you be good dear, understand?\""s);
                 return 1;
             }
         }
@@ -26823,15 +25439,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パエルの母『リリィ』"s;
@@ -26903,10 +25513,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「あんな極上の女はそうはいねえ」"s, u8"「俺の手に掛かれば、どんな女もイチコロよ」"s, u8" *レロレロレロ* "s, u8"「まったく罪な男に生まれちまったもんだ」"s);
+                txt(u8"「あんな極上の女はそうはいねえ」"s,
+                    u8"「俺の手に掛かれば、どんな女もイチコロよ」"s,
+                    u8" *レロレロレロ* "s,
+                    u8"「まったく罪な男に生まれちまったもんだ」"s);
                 return 1;
             } else {
-                txt(u8"\"Ladies! The line starts here!\""s, u8"\"No woman can resist my charms, be they my dashing good looks, my wit and charm, or even my coinpurse.\""s, u8"\"ero-ero-ero-ero, mushroom, mushroom!\""s, u8"\"I am the Gods gift to women. Come and get a memory you shall never forget!\""s);
+                txt(u8"\"Ladies! The line starts here!\""s,
+                    u8"\"No woman can resist my charms, be they my dashing good looks, my wit and charm, or even my coinpurse.\""s,
+                    u8"\"ero-ero-ero-ero, mushroom, mushroom!\""s,
+                    u8"\"I am the Gods gift to women. Come and get a memory you shall never forget!\""s);
                 return 1;
             }
         }
@@ -26935,15 +25551,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"女たらしの『ラファエロ』"s;
@@ -27017,10 +25627,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「イーック」"s, u8"「か、かみかぜ…」"s, u8"「ィィーック」"s, u8"「なんという生物だ」"s);
+                txt(u8"「イーック」"s, u8"「か、かみかぜ…」"s,
+                    u8"「ィィーック」"s, u8"「なんという生物だ」"s);
                 return 1;
             } else {
-                txt(u8"\"Let's roll!\""s, u8"\"I may be new to this whole knight gig, but I won't be for long!\""s, u8"\"Are my spurs polished enough you think? I'd just die if a senior thought they were sub-par.\""s, u8"You hear someone adjusting their armor for the umpteenth time"s);
+                txt(u8"\"Let's roll!\""s,
+                    u8"\"I may be new to this whole knight gig, but I won't be for long!\""s,
+                    u8"\"Are my spurs polished enough you think? I'd just die if a senior thought they were sub-par.\""s,
+                    u8"You hear someone adjusting their armor for the umpteenth time"s);
                 return 1;
             }
         }
@@ -27049,15 +25663,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"見習い騎士『アインク』"s;
@@ -27131,10 +25739,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「ヤ、ヤツらがくる！」"s, u8"「撃つのを止めるな…ヤツらを近づけるな！」"s, u8"「オーマイガッ！」"s, u8"「神よぉ…」"s);
+                txt(u8"「ヤ、ヤツらがくる！」"s,
+                    u8"「撃つのを止めるな…ヤツらを近づけるな！」"s,
+                    u8"「オーマイガッ！」"s, u8"「神よぉ…」"s);
                 return 1;
             } else {
-                txt(u8"\"Pah, a minor flesh wound…\""s, u8"\"Come closer… I got rounds for this thing still…\""s, u8"\"It's not a tumor!\""s, u8"\"I'll be back.\""s);
+                txt(u8"\"Pah, a minor flesh wound…\""s,
+                    u8"\"Come closer… I got rounds for this thing still…\""s,
+                    u8"\"It's not a tumor!\""s, u8"\"I'll be back.\""s);
                 return 1;
             }
         }
@@ -27163,15 +25775,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"負傷兵『アーノルド』"s;
@@ -27245,10 +25851,19 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「るんるんるん♪」"s, u8"「うみみゃ？」"s, u8"「にしし！」"s, u8"「ふ〜んふ〜んふ〜ん♪1」"s, u8"「きのこのこのこげんきのこぉ〜♪ 」"s, u8"「おー。えりんぎまいたけぶなしめじぃ〜」"s, u8"「フーン　フンフン　フーン　フンフン　ネコのフ〜ン♪　フーン　フンフン　フーン　フンフン　かたい♪」"s);
+                txt(u8"「るんるんるん♪」"s, u8"「うみみゃ？」"s,
+                    u8"「にしし！」"s, u8"「ふ〜んふ〜んふ〜ん♪1」"s,
+                    u8"「きのこのこのこげんきのこぉ〜♪ 」"s,
+                    u8"「おー。えりんぎまいたけぶなしめじぃ〜」"s,
+                    u8"「フーン　フンフン　フーン　フンフン　ネコのフ〜ン♪　フーン　フンフン　フーン　フンフン　かたい♪」"s);
                 return 1;
             } else {
-                txt(u8"\"I nyo talk funny, nyou talk funny♪\""s, u8"\"Nyah! Water! I hates it so.\""s, u8"\"Pug!\""s, u8"\"Nyo touching! No Bump-Bump for nyou.\""s, u8"\"♪Nyobody knyows the touble Mia's seen, nyobody knyows Mia's Tru-bull♪\""s, u8"You hear the oddest voice in the crowd, it is lilting and...cat-like?"s, u8"\"Meow♪1\""s);
+                txt(u8"\"I nyo talk funny, nyou talk funny♪\""s,
+                    u8"\"Nyah! Water! I hates it so.\""s, u8"\"Pug!\""s,
+                    u8"\"Nyo touching! No Bump-Bump for nyou.\""s,
+                    u8"\"♪Nyobody knyows the touble Mia's seen, nyobody knyows Mia's Tru-bull♪\""s,
+                    u8"You hear the oddest voice in the crowd, it is lilting and...cat-like?"s,
+                    u8"\"Meow♪1\""s);
                 return 1;
             }
         }
@@ -27269,15 +25884,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"猫かぶり『ミーア』"s;
@@ -27347,10 +25956,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「意味なんてものはないさ」"s, u8"「身体はまだ動くよ、油の切れた機械のように。だが心は…」"s, u8"「もし生まれ変われるのなら…」"s, u8"「もう死んでもいいかな？」"s);
+                txt(u8"「意味なんてものはないさ」"s,
+                    u8"「身体はまだ動くよ、油の切れた機械のように。だが心は…」"s,
+                    u8"「もし生まれ変われるのなら…」"s,
+                    u8"「もう死んでもいいかな？」"s);
                 return 1;
             } else {
-                txt(u8"\"I mean there's nothing in my soul but pain and misery. Oh and agony too, can't leave that out.\""s, u8"\"My body will keep moving, like a machine, but without the oils of love, my heart will not stop squeaking\""s, u8"You hear the shuffling step of a man who's world is nothing but pain and misery. With just an aftertase of agony, for good measure"s, u8"\"Will the kiss of Death bring an end to the cloying, double-plus-ungood that is my life?\""s);
+                txt(u8"\"I mean there's nothing in my soul but pain and misery. Oh and agony too, can't leave that out.\""s,
+                    u8"\"My body will keep moving, like a machine, but without the oils of love, my heart will not stop squeaking\""s,
+                    u8"You hear the shuffling step of a man who's world is nothing but pain and misery. With just an aftertase of agony, for good measure"s,
+                    u8"\"Will the kiss of Death bring an end to the cloying, double-plus-ungood that is my life?\""s);
                 return 1;
             }
         }
@@ -27379,15 +25994,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"悩める魔術士『レントン』"s;
@@ -27464,10 +26073,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「私に不可能はないのです」"s, u8"「捕まえられるものなら、どうぞいつでも」"s, u8"「そこらのコソ泥と、一緒にしないでください」"s);
+                txt(u8"「私に不可能はないのです」"s,
+                    u8"「捕まえられるものなら、どうぞいつでも」"s,
+                    u8"「そこらのコソ泥と、一緒にしないでください」"s);
                 return 1;
             } else {
-                txt(u8"\"Impossible? Bah, to you maybe.\""s, u8"\"You catch me? Ha! You'd have a better chance shackling your shadow!\""s, u8"You hear the swagger of a man of supreme confidence, only it's oh so quiet…"s);
+                txt(u8"\"Impossible? Bah, to you maybe.\""s,
+                    u8"\"You catch me? Ha! You'd have a better chance shackling your shadow!\""s,
+                    u8"You hear the swagger of a man of supreme confidence, only it's oh so quiet…"s);
                 return 1;
             }
         }
@@ -27496,15 +26109,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"稀代の泥棒『マークス』"s;
@@ -27579,10 +26186,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「もえちゃえ」"s, u8"「クズね。この世界は」"s, u8"「あたし、綺麗かしら？」"s);
+                txt(u8"「もえちゃえ」"s, u8"「クズね。この世界は」"s,
+                    u8"「あたし、綺麗かしら？」"s);
                 return 1;
             } else {
-                txt(u8"You hear a someone making ticking sounds, followed by a pantomimed 'Ka-BOOOOM', followed by manical laughter"s, u8"\"He says to me, he says to me, 'Baby I'm TIRED of workin' for the MAN!' I says, I says, WHY DON'T YOU BLOW HIM TO BITS?\""s, u8"\"You got STYLE, baby. But if you're going to be a real villain, you gotta get a gimmick.' And so I go I says YEAH, baby. A gimmick, that's it. High explosives.\""s);
+                txt(u8"You hear a someone making ticking sounds, followed by a pantomimed 'Ka-BOOOOM', followed by manical laughter"s,
+                    u8"\"He says to me, he says to me, 'Baby I'm TIRED of workin' for the MAN!' I says, I says, WHY DON'T YOU BLOW HIM TO BITS?\""s,
+                    u8"\"You got STYLE, baby. But if you're going to be a real villain, you gotta get a gimmick.' And so I go I says YEAH, baby. A gimmick, that's it. High explosives.\""s);
                 return 1;
             }
         }
@@ -27611,15 +26221,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"爆弾魔『ノエル』"s;
@@ -27694,10 +26298,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「うむうむ、精進せよ」"s, u8"「困ったことになったぞ」"s, u8"「軍人たるもの、常に身だしなみに気をつけねばならぬ」"s);
+                txt(u8"「うむうむ、精進せよ」"s, u8"「困ったことになったぞ」"s,
+                    u8"「軍人たるもの、常に身だしなみに気をつけねばならぬ」"s);
                 return 1;
             } else {
-                txt(u8"\"Kill a man, they put you in the gallows. Kill ten-thousand, they make you a General.\""s, u8"\"We're going to need all the help we can get, yes indeed.\""s, u8"\"You know what separates a soldier from a thug? The polish on his buttons, that's what.\""s);
+                txt(u8"\"Kill a man, they put you in the gallows. Kill ten-thousand, they make you a General.\""s,
+                    u8"\"We're going to need all the help we can get, yes indeed.\""s,
+                    u8"\"You know what separates a soldier from a thug? The polish on his buttons, that's what.\""s);
                 return 1;
             }
         }
@@ -27726,15 +26333,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"パルミア少将『コネリー』"s;
@@ -27812,10 +26413,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「やばいヤマだったぜ」"s, u8"「お、カモだ…」"s, u8"「ククク…」"s);
+                txt(u8"「やばいヤマだったぜ」"s, u8"「お、カモだ…」"s,
+                    u8"「ククク…」"s);
                 return 1;
             } else {
-                txt(u8"\"Heh, easy money…\""s, u8"\"Think I can get some good coin for those fancy bits you got on stranger?\""s, u8"\"Another one with a coinpurse just dangling there, like a bit of ripe fruit. Time to pluck it.\""s);
+                txt(u8"\"Heh, easy money…\""s,
+                    u8"\"Think I can get some good coin for those fancy bits you got on stranger?\""s,
+                    u8"\"Another one with a coinpurse just dangling there, like a bit of ripe fruit. Time to pluck it.\""s);
                 return 1;
             }
         }
@@ -27844,15 +26448,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"見習い盗賊"s;
@@ -27921,10 +26519,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「やばいヤマだったぜ」"s, u8"「お、カモだ…」"s, u8"「ククク…」"s);
+                txt(u8"「やばいヤマだったぜ」"s, u8"「お、カモだ…」"s,
+                    u8"「ククク…」"s);
                 return 1;
             } else {
-                txt(u8"\"Man, this one'll feed me for a week. Two even!\""s, u8"\"I was just sayin' we needed some coin, and look, it just came walkin' towards us.\""s, u8"\"Your GP or your HP good chum!\""s);
+                txt(u8"\"Man, this one'll feed me for a week. Two even!\""s,
+                    u8"\"I was just sayin' we needed some coin, and look, it just came walkin' towards us.\""s,
+                    u8"\"Your GP or your HP good chum!\""s);
                 return 1;
             }
         }
@@ -27953,15 +26554,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 3;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 3; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"強盗"s;
@@ -28033,10 +26628,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「やばいヤマだったぜ」"s, u8"「お、カモだ…」"s, u8"「ククク…」"s);
+                txt(u8"「やばいヤマだったぜ」"s, u8"「お、カモだ…」"s,
+                    u8"「ククク…」"s);
                 return 1;
             } else {
-                txt(u8"\"Like taking candy from a baby in armor.\""s, u8"You hear someone humming the *Money* tune while cracking their knuckles"s, u8"\"Another satisifying finance adjustment.\""s);
+                txt(u8"\"Like taking candy from a baby in armor.\""s,
+                    u8"You hear someone humming the *Money* tune while cracking their knuckles"s,
+                    u8"\"Another satisifying finance adjustment.\""s);
                 return 1;
             }
         }
@@ -28065,15 +26663,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 4;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 4; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"マスターシーフ"s;
@@ -28146,15 +26738,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 20;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 20; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"イスの偉大なる種族"s;
@@ -28224,15 +26810,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"シュブ＝ニグラス"s;
@@ -28302,15 +26882,9 @@ int label_2654()
     }
     if (dbid == 219) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 80;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 80; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ガグ"s;
@@ -28380,15 +26954,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 30;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 30; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"螺旋の王"s;
@@ -28458,15 +27026,9 @@ int label_2654()
     }
     if (dbid == 250) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"妖精"s;
@@ -28532,7 +27094,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「うみみゃ」"s, u8"「みゅー」"s, u8"「みゃ」"s, u8" *ごろごろ* "s);
+                txt(u8"「うみみゃ」"s, u8"「みゅー」"s, u8"「みゃ」"s,
+                    u8" *ごろごろ* "s);
                 return 1;
             }
         }
@@ -28569,15 +27132,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"黒猫"s;
@@ -28631,7 +27188,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"black cat"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -28658,20 +27216,16 @@ int label_2654()
                 txt(u8" *パタパタ*  "s, u8"「にひひ」"s, u8" *ハタハタ* "s);
                 return 1;
             } else {
-                txt(u8"You hear the fluttering of gossamer wings"s, u8"You hear tittering laughter like tiny crystal bells"s, u8"You smell what reminds you of sugerplums…"s);
+                txt(u8"You hear the fluttering of gossamer wings"s,
+                    u8"You hear tittering laughter like tiny crystal bells"s,
+                    u8"You smell what reminds you of sugerplums…"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"妖精さん"s;
@@ -28722,7 +27276,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"cute fairy"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -28743,15 +27298,9 @@ int label_2654()
     }
     if (dbid == 262) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"アンドロイド"s;
@@ -28799,7 +27348,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"android"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -28823,10 +27373,13 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *パタパタ*  "s, u8" * ばさっばさっ*"s, u8" *ハタハタ* "s);
+                txt(u8" *パタパタ*  "s, u8" * ばさっばさっ*"s,
+                    u8" *ハタハタ* "s);
                 return 1;
             } else {
-                txt(u8"You hear what sounds like wings of feather, but with grace and dignity somehow..."s, u8"You hear a quiet voice in prayer, but with a note of sadness..."s, u8"You smell Myrrh in the air, but with the faintest hints of charcoal…"s);
+                txt(u8"You hear what sounds like wings of feather, but with grace and dignity somehow..."s,
+                    u8"You hear a quiet voice in prayer, but with a note of sadness..."s,
+                    u8"You smell Myrrh in the air, but with the faintest hints of charcoal…"s);
                 return 1;
             }
         }
@@ -28847,15 +27400,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"黒天使"s;
@@ -28911,7 +27458,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"black angel"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -28933,15 +27481,9 @@ int label_2654()
     }
     if (dbid == 264) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"追放者"s;
@@ -28990,7 +27532,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"exile"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -29011,15 +27554,9 @@ int label_2654()
     }
     if (dbid == 265) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"黄金の騎士"s;
@@ -29069,7 +27606,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"golden knight"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -29091,15 +27629,9 @@ int label_2654()
     }
     if (dbid == 266) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"防衛者"s;
@@ -29149,7 +27681,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"defender"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -29174,7 +27707,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s, u8" *パコパコ*"s);
+                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s,
+                    u8" *パコパコ*"s);
                 return 1;
             } else {
                 txt(u8"You hear faltering hoofbeats in the distance"s);
@@ -29210,15 +27744,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"駄馬"s;
@@ -29267,7 +27795,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"lame horse"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -29286,7 +27815,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s, u8" *パコパコ*"s);
+                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s,
+                    u8" *パコパコ*"s);
                 return 1;
             } else {
                 txt(u8"You hear hoofbeats, but they are wild and free"s);
@@ -29322,15 +27852,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 6;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 6; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"野生馬"s;
@@ -29379,7 +27903,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"wild horse"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -29401,7 +27926,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s, u8" *パコパコ*"s);
+                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s,
+                    u8" *パコパコ*"s);
                 return 1;
             } else {
                 txt(u8"You hear hoofbeats, a trot that almost belongs on a parade"s);
@@ -29437,15 +27963,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 15;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 15; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ノイエル馬"s;
@@ -29494,7 +28014,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"Noyel horse"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -29516,7 +28037,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s, u8" *パコパコ*"s);
+                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s,
+                    u8" *パコパコ*"s);
                 return 1;
             } else {
                 txt(u8"You hear the crisp hoofbeats of a horse trained for war"s);
@@ -29552,15 +28074,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 16;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 16; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ヨウィン馬"s;
@@ -29609,7 +28125,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"Yowyn horse"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -29631,7 +28148,8 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s, u8" *パコパコ*"s);
+                txt(u8" *ぱかぱか* "s, u8" *ぱからっぱからっ*"s,
+                    u8" *パコパコ*"s);
                 return 1;
             } else {
                 txt(u8"You hear hoofbeats. You hope it's not zebras"s);
@@ -29667,15 +28185,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 10;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 10; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"サラブレッド"s;
@@ -29724,7 +28236,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"wild horse"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -1;
             cdata(69, rc) = -1;
@@ -29743,15 +28256,9 @@ int label_2654()
     }
     if (dbid == 278) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 70;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 70; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ミュータント"s;
@@ -29798,7 +28305,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"mutant"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -29821,10 +28329,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「これからの世界はカガクなのじゃ」"s, u8"「実験体が足りぬ」"s, u8"「ふむふむ…この遺伝子を猫に組み込めば…」"s);
+                txt(u8"「これからの世界はカガクなのじゃ」"s,
+                    u8"「実験体が足りぬ」"s,
+                    u8"「ふむふむ…この遺伝子を猫に組み込めば…」"s);
                 return 1;
             } else {
-                txt(u8"\"Science is it's own reward!\""s, u8"\"With a little bit of this, and a little bit of that, why, who knows what you are going to get?\""s, u8"\"I wonder if a black cat's genes are more or less lucky than a regular cat?\""s);
+                txt(u8"\"Science is it's own reward!\""s,
+                    u8"\"With a little bit of this, and a little bit of that, why, who knows what you are going to get?\""s,
+                    u8"\"I wonder if a black cat's genes are more or less lucky than a regular cat?\""s);
                 return 1;
             }
         }
@@ -29837,15 +28349,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"生化学者『イコール』"s;
@@ -29917,10 +28423,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「街の衛生は俺が守る！」"s, u8"「街道にゴミを捨てる奴はゆるさねえ」"s, u8"「俺はゴミの天敵だ」"s);
+                txt(u8"「街の衛生は俺が守る！」"s,
+                    u8"「街道にゴミを捨てる奴はゆるさねえ」"s,
+                    u8"「俺はゴミの天敵だ」"s);
                 return 1;
             } else {
-                txt(u8"\"This citie's health is my charge!\""s, u8"\"Those who DARE litter before me shall face my broom!\""s, u8"\"I am garbage's worst nightmare.\""s);
+                txt(u8"\"This citie's health is my charge!\""s,
+                    u8"\"Those who DARE litter before me shall face my broom!\""s,
+                    u8"\"I am garbage's worst nightmare.\""s);
                 return 1;
             }
         }
@@ -29941,15 +28451,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"掃除屋『バルザック』"s;
@@ -30019,10 +28523,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"魔法を詠唱する声が聞こえる。"s, u8"辺りはピリピリとした緊張で包まれている。"s, u8"部屋全体に魔力の波がただよっている。"s);
+                txt(u8"魔法を詠唱する声が聞こえる。"s,
+                    u8"辺りはピリピリとした緊張で包まれている。"s,
+                    u8"部屋全体に魔力の波がただよっている。"s);
                 return 1;
             } else {
-                txt(u8"\"Magic is not for the faint of heart, nor dull of mind.\""s, u8"You hear chants for spells you can't even begin to imagine the purpose of"s, u8"A pulse of arcane and raw eldritch energies nearly knocks you off your feet"s);
+                txt(u8"\"Magic is not for the faint of heart, nor dull of mind.\""s,
+                    u8"You hear chants for spells you can't even begin to imagine the purpose of"s,
+                    u8"A pulse of arcane and raw eldritch energies nearly knocks you off your feet"s);
                 return 1;
             }
         }
@@ -30051,15 +28559,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"魔術士ギルドマスター『レヴラス』"s;
@@ -30135,23 +28637,19 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「この先は魔術士ギルドの管轄だ」"s, u8"「止まれ…身分を照会させてもらう」"s);
+                txt(u8"「この先は魔術士ギルドの管轄だ」"s,
+                    u8"「止まれ…身分を照会させてもらう」"s);
                 return 1;
             } else {
-                txt(u8"\"I am an officer of the Mage Guild's jurisdiction. Beware the un-learn-ed.\""s, u8"\"Stop... Let me make sure you are on my lists.\""s);
+                txt(u8"\"I am an officer of the Mage Guild's jurisdiction. Beware the un-learn-ed.\""s,
+                    u8"\"Stop... Let me make sure you are on my lists.\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"魔術士ギルドの番人『レクサス』"s;
@@ -30221,15 +28719,9 @@ int label_2654()
     }
     if (dbid == 292) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊ギルドマスター『シン』"s;
@@ -30299,23 +28791,19 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「この先は盗賊ギルドの管轄だ」"s, u8"「止まれ…身分を照会させてもらう」"s);
+                txt(u8"「この先は盗賊ギルドの管轄だ」"s,
+                    u8"「止まれ…身分を照会させてもらう」"s);
                 return 1;
             } else {
-                txt(u8"\"I am an officer of the Thief Guild's jurisdiction. Beware the clumsy-fingered.\""s, u8"\"Stop… Let me make sure you are on my lists.\""s);
+                txt(u8"\"I am an officer of the Thief Guild's jurisdiction. Beware the clumsy-fingered.\""s,
+                    u8"\"Stop… Let me make sure you are on my lists.\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"盗賊ギルドの番人『アビス』"s;
@@ -30383,15 +28871,9 @@ int label_2654()
     }
     if (dbid == 291) {
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"戦士ギルドマスター『フレイ』"s;
@@ -30461,23 +28943,19 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「この先は戦士ギルドの管轄だ」"s, u8"「止まれ…身分を照会させてもらう」"s);
+                txt(u8"「この先は戦士ギルドの管轄だ」"s,
+                    u8"「止まれ…身分を照会させてもらう」"s);
                 return 1;
             } else {
-                txt(u8"\"I am an officer of the Fighter Guild's jurisdiction. Beware the weak-thewed.\""s, u8"\"Stop… Let me make sure you are on my lists.\""s);
+                txt(u8"\"I am an officer of the Fighter Guild's jurisdiction. Beware the weak-thewed.\""s,
+                    u8"\"Stop… Let me make sure you are on my lists.\""s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 100;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 100; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"戦士ギルドの番人『ドリア』"s;
@@ -30548,10 +29026,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「何故私に興味を持つ？怖くは無いのか？」 "s, u8"「やれやれ。ペットを持った気分だ」"s);
+                txt(u8"「何故私に興味を持つ？怖くは無いのか？」 "s,
+                    u8"「やれやれ。ペットを持った気分だ」"s);
                 return 1;
             } else {
-                txt(u8"\"What do I have to fear? You aren't an Abyssal One.\""s, u8"\"Good grief, is someone trying to cop a feel?\" "s);
+                txt(u8"\"What do I have to fear? You aren't an Abyssal One.\""s,
+                    u8"\"Good grief, is someone trying to cop a feel?\" "s);
                 return 1;
             }
         }
@@ -30559,7 +29039,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「オマエ…私と同じ目をしているな」"s, u8"「ついてこれるか？」"s);
+                txt(u8"「オマエ…私と同じ目をしているな」"s,
+                    u8"「ついてこれるか？」"s);
                 return 1;
             }
         }
@@ -30567,7 +29048,8 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「ふっ。人のまま死ねて嬉しいよ」"s, u8"「どうせすぐ忘れられる名だ」 "s);
+                txt(u8"「ふっ。人のまま死ねて嬉しいよ」"s,
+                    u8"「どうせすぐ忘れられる名だ」 "s);
                 return 1;
             }
         }
@@ -30575,20 +29057,16 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"「オマエ弱いな。ナンバーはいくつだ？」"s, u8"「優秀だが長く生きすぎたな」"s, u8"「金は要らん。後から取りに来る者がいるから金はその時に渡せばいい」"s);
+                txt(u8"「オマエ弱いな。ナンバーはいくつだ？」"s,
+                    u8"「優秀だが長く生きすぎたな」"s,
+                    u8"「金は要らん。後から取りに来る者がいるから金はその時に渡せばいい」"s);
                 return 1;
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"銀眼の斬殺者"s;
@@ -30640,7 +29118,8 @@ int label_2654()
             } else {
                 cdatan(0, rc) = u8"silver eyed witch"s;
             }
-            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(), randomname() + u8" the "s + cdatan(0, rc));
+            cdatan(0, rc) = lang(cdatan(0, rc) + u8"の"s + randomname(),
+                randomname() + u8" the "s + cdatan(0, rc));
             cbitmod(977, rc, 1);
             cdata(9, rc) = -3;
             cdata(69, rc) = -3;
@@ -30669,10 +29148,16 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8" *ドスン*  "s, u8"リトルシスター「見てMr Bubbles、天使がいるわ」"s, u8"リトルシスター「急いでMr Bubbles、空で天使が踊っているの！」"s, u8" *ドン*  "s);
+                txt(u8" *ドスン*  "s,
+                    u8"リトルシスター「見てMr Bubbles、天使がいるわ」"s,
+                    u8"リトルシスター「急いでMr Bubbles、空で天使が踊っているの！」"s,
+                    u8" *ドン*  "s);
                 return 1;
             } else {
-                txt(u8"You feel the ground tremble with the steps of a large, angry, Protector"s, u8"Little Sister: \"Look Mr. Bubbles, the angels.\""s, u8"Little Sister: \"Look Mr. Bubbles, the angels are dancing in the sky!\""s, u8"You hear the tread of something you do NOT want to anger. Ever."s);
+                txt(u8"You feel the ground tremble with the steps of a large, angry, Protector"s,
+                    u8"Little Sister: \"Look Mr. Bubbles, the angels.\""s,
+                    u8"Little Sister: \"Look Mr. Bubbles, the angels are dancing in the sky!\""s,
+                    u8"You hear the tread of something you do NOT want to anger. Ever."s);
                 return 1;
             }
         }
@@ -30680,7 +29165,9 @@ int label_2654()
             if (jp) {
                 txtmore();
                 txtef(9);
-                txt(u8"リトルシスター「殺せ！殺せ！」"s, u8"リトルシスター「粉々に砕いちゃいなさい！」"s, u8"リトルシスター「いけMr Bubbles、いけ！！」"s);
+                txt(u8"リトルシスター「殺せ！殺せ！」"s,
+                    u8"リトルシスター「粉々に砕いちゃいなさい！」"s,
+                    u8"リトルシスター「いけMr Bubbles、いけ！！」"s);
                 return 1;
             }
         }
@@ -30705,15 +29192,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『ビッグダディ』"s;
@@ -30794,10 +29275,14 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「Mr Bubbles、動いて…おねがい！」"s, u8"「来ないで！触わらないで！」"s, u8"「天使…天使に出会うまで、まだ死にたくないの…」"s);
+                txt(u8"「Mr Bubbles、動いて…おねがい！」"s,
+                    u8"「来ないで！触わらないで！」"s,
+                    u8"「天使…天使に出会うまで、まだ死にたくないの…」"s);
                 return 1;
             } else {
-                txt(u8"\"Mr. Bubbles, please stand up… Please!\""s, u8"You hear the sound of a frightened little girl somewhere"s, u8"\"Angel, angel, until we find the right one we don't dare die…\""s);
+                txt(u8"\"Mr. Bubbles, please stand up… Please!\""s,
+                    u8"You hear the sound of a frightened little girl somewhere"s,
+                    u8"\"Angel, angel, until we find the right one we don't dare die…\""s);
                 return 1;
             }
         }
@@ -30826,15 +29311,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『リトルシスター』"s;
@@ -30908,10 +29387,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「正しいことを行うのが時には難しいこともあるわ」"s, u8"「私の子供達を傷つけたらひどいわよ」"s);
+                txt(u8"「正しいことを行うのが時には難しいこともあるわ」"s,
+                    u8"「私の子供達を傷つけたらひどいわよ」"s);
                 return 1;
             } else {
-                txt(u8"\"The path of the righteous is not always easy, yes?\""s, u8"\"I'll not have him hurt my Little ones… I've worked far too long on them to see them fail now.\""s);
+                txt(u8"\"The path of the righteous is not always easy, yes?\""s,
+                    u8"\"I'll not have him hurt my Little ones… I've worked far too long on them to see them fail now.\""s);
                 return 1;
             }
         }
@@ -30949,15 +29430,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『謎の科学者』"s;
@@ -31031,10 +29506,12 @@ int label_2654()
             txtmore();
             txtef(9);
             if (jp) {
-                txt(u8"「正しいことを行うのが時には難しいこともあるわ」"s, u8"「私の子供達を傷つけたらひどいわよ」"s);
+                txt(u8"「正しいことを行うのが時には難しいこともあるわ」"s,
+                    u8"「私の子供達を傷つけたらひどいわよ」"s);
                 return 1;
             } else {
-                txt(u8"\"The problem is about choice. It is always about the choices we make.\""s, u8"\"While choices make the man, a pity most see only the shallowest ones to choose from.\""s);
+                txt(u8"\"The problem is about choice. It is always about the choices we make.\""s,
+                    u8"\"While choices make the man, a pity most see only the shallowest ones to choose from.\""s);
                 return 1;
             }
         }
@@ -31072,15 +29549,9 @@ int label_2654()
             }
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 50;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 50; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"『謎のプロデューサー』"s;
@@ -31156,15 +29627,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 10;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 10; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"シェイド"s;
@@ -31233,15 +29698,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 19;
-            }
-            if (dbspec == 6) {
-                return 15;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 19; }
+            if (dbspec == 6) { return 15; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"クイックリング"s;
@@ -31305,15 +29764,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 3;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 15;
-            }
+            if (dbspec == 3) { return 3; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 15; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"クイックリングの弓使い"s;
@@ -31405,15 +29858,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 0;
-            }
-            if (dbspec == 6) {
-                return 2;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 0; }
+            if (dbspec == 6) { return 2; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"シルバーベル"s;
@@ -31502,15 +29949,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 5;
-            }
-            if (dbspec == 6) {
-                return 5;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 5; }
+            if (dbspec == 6) { return 5; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"ゴールドベル"s;
@@ -31577,15 +30018,9 @@ int label_2654()
             return -1;
         }
         if (dbmode == 16) {
-            if (dbspec == 3) {
-                return 1;
-            }
-            if (dbspec == 5) {
-                return 17;
-            }
-            if (dbspec == 6) {
-                return 40;
-            }
+            if (dbspec == 3) { return 1; }
+            if (dbspec == 5) { return 17; }
+            if (dbspec == 6) { return 40; }
             if (dbspec == 2) {
                 if (jp) {
                     refstr = u8"エイリアン"s;
@@ -31654,4 +30089,4 @@ int label_2654()
 }
 
 
-}
+} // namespace elona

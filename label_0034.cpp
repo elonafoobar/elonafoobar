@@ -4,8 +4,6 @@
 
 namespace elona
 {
-
-
 void label_0034()
 {
     DIM3(sdataref, 7, 661);
@@ -114,7 +112,8 @@ void label_0034()
     sdataref(3, 100) = 0;
     sdataref(4, 100) = 0;
     skillname(100) = lang(u8"長剣"s, u8"Long Sword"s);
-    skilldesc(100) = lang(u8"刃渡りの長い剣を扱う技術"s, u8"Indicates your skill with long swords."s);
+    skilldesc(100) = lang(u8"刃渡りの長い剣を扱う技術"s,
+        u8"Indicates your skill with long swords."s);
     skillencdesc(100) = lang(u8""s, u8""s);
     sdataref(0, 101) = 12;
     sdataref(1, 101) = 0;
@@ -122,7 +121,8 @@ void label_0034()
     sdataref(3, 101) = 0;
     sdataref(4, 101) = 0;
     skillname(101) = lang(u8"短剣"s, u8"Short Sword"s);
-    skilldesc(101) = lang(u8"刃渡りの短い剣を扱う技術"s, u8"Indicates your skill with short swords."s);
+    skilldesc(101) = lang(u8"刃渡りの短い剣を扱う技術"s,
+        u8"Indicates your skill with short swords."s);
     skillencdesc(101) = lang(u8""s, u8""s);
     sdataref(0, 102) = 10;
     sdataref(1, 102) = 0;
@@ -130,7 +130,8 @@ void label_0034()
     sdataref(3, 102) = 0;
     sdataref(4, 102) = 0;
     skillname(102) = lang(u8"斧"s, u8"Axe"s);
-    skilldesc(102) = lang(u8"斧を扱う技術"s, u8"Indicates your skill with axes."s);
+    skilldesc(102) =
+        lang(u8"斧を扱う技術"s, u8"Indicates your skill with axes."s);
     skillencdesc(102) = lang(u8""s, u8""s);
     sdataref(0, 103) = 11;
     sdataref(1, 103) = 0;
@@ -138,7 +139,8 @@ void label_0034()
     sdataref(3, 103) = 0;
     sdataref(4, 103) = 0;
     skillname(103) = lang(u8"鈍器"s, u8"Blunt"s);
-    skilldesc(103) = lang(u8"鈍器を扱う技術"s, u8"Indicates your skill with blunt weapons."s);
+    skilldesc(103) = lang(
+        u8"鈍器を扱う技術"s, u8"Indicates your skill with blunt weapons."s);
     skillencdesc(103) = lang(u8""s, u8""s);
     sdataref(0, 104) = 11;
     sdataref(1, 104) = 0;
@@ -146,7 +148,8 @@ void label_0034()
     sdataref(3, 104) = 0;
     sdataref(4, 104) = 0;
     skillname(104) = lang(u8"槍"s, u8"Polearm"s);
-    skilldesc(104) = lang(u8"槍を扱う技術"s, u8"Indicates your skill with polearms."s);
+    skilldesc(104) =
+        lang(u8"槍を扱う技術"s, u8"Indicates your skill with polearms."s);
     skillencdesc(104) = lang(u8""s, u8""s);
     sdataref(0, 105) = 11;
     sdataref(1, 105) = 0;
@@ -154,7 +157,8 @@ void label_0034()
     sdataref(3, 105) = 0;
     sdataref(4, 105) = 0;
     skillname(105) = lang(u8"杖"s, u8"Stave"s);
-    skilldesc(105) = lang(u8"杖を扱う技術"s, u8"Indicates your skill with staves."s);
+    skilldesc(105) =
+        lang(u8"杖を扱う技術"s, u8"Indicates your skill with staves."s);
     skillencdesc(105) = lang(u8""s, u8""s);
     sdataref(0, 107) = 10;
     sdataref(1, 107) = 0;
@@ -162,7 +166,8 @@ void label_0034()
     sdataref(3, 107) = 0;
     sdataref(4, 107) = 0;
     skillname(107) = lang(u8"鎌"s, u8"Scythe"s);
-    skilldesc(107) = lang(u8"鎌を扱う技術"s, u8"Indicates your skill with sycthes."s);
+    skilldesc(107) =
+        lang(u8"鎌を扱う技術"s, u8"Indicates your skill with sycthes."s);
     skillencdesc(107) = lang(u8""s, u8""s);
     sdataref(0, 108) = 12;
     sdataref(1, 108) = 0;
@@ -170,7 +175,8 @@ void label_0034()
     sdataref(3, 108) = 0;
     sdataref(4, 108) = 0;
     skillname(108) = lang(u8"弓"s, u8"Bow"s);
-    skilldesc(108) = lang(u8"弓を扱う技術"s, u8"Indicates your skill with bows."s);
+    skilldesc(108) =
+        lang(u8"弓を扱う技術"s, u8"Indicates your skill with bows."s);
     skillencdesc(108) = lang(u8""s, u8""s);
     sdataref(0, 109) = 12;
     sdataref(1, 109) = 0;
@@ -178,7 +184,8 @@ void label_0034()
     sdataref(3, 109) = 0;
     sdataref(4, 109) = 0;
     skillname(109) = lang(u8"クロスボウ"s, u8"Crossbow"s);
-    skilldesc(109) = lang(u8"クロスボウを扱う技術"s, u8"Indicates your skill with cross bows"s);
+    skilldesc(109) = lang(
+        u8"クロスボウを扱う技術"s, u8"Indicates your skill with cross bows"s);
     skillencdesc(109) = lang(u8""s, u8""s);
     sdataref(0, 110) = 13;
     sdataref(1, 110) = 0;
@@ -186,7 +193,8 @@ void label_0034()
     sdataref(3, 110) = 0;
     sdataref(4, 110) = 0;
     skillname(110) = lang(u8"銃器"s, u8"Firearm"s);
-    skilldesc(110) = lang(u8"遠隔機装を扱う技術"s, u8"Indicates your skill with firearms."s);
+    skilldesc(110) =
+        lang(u8"遠隔機装を扱う技術"s, u8"Indicates your skill with firearms."s);
     skillencdesc(110) = lang(u8""s, u8""s);
     sdataref(0, 111) = 12;
     sdataref(1, 111) = 0;
@@ -194,7 +202,8 @@ void label_0034()
     sdataref(3, 111) = 0;
     sdataref(4, 111) = 0;
     skillname(111) = lang(u8"投擲"s, u8"Throwing"s);
-    skilldesc(111) = lang(u8"投擲道具を扱う技術"s, u8"Indicates your skill with throwing objects."s);
+    skilldesc(111) = lang(u8"投擲道具を扱う技術"s,
+        u8"Indicates your skill with throwing objects."s);
     skillencdesc(111) = lang(u8""s, u8""s);
     sdataref(0, 106) = 10;
     sdataref(1, 106) = 0;
@@ -202,7 +211,8 @@ void label_0034()
     sdataref(3, 106) = 0;
     sdataref(4, 106) = 0;
     skillname(106) = lang(u8"格闘"s, u8"Martial Arts"s);
-    skilldesc(106) = lang(u8"格闘の技術"s, u8"Indicates your skill fighting unarmed."s);
+    skilldesc(106) =
+        lang(u8"格闘の技術"s, u8"Indicates your skill fighting unarmed."s);
     skillencdesc(106) = lang(u8""s, u8""s);
     sdataref(0, 168) = 11;
     sdataref(1, 168) = 0;
@@ -210,7 +220,8 @@ void label_0034()
     sdataref(3, 168) = 0;
     sdataref(4, 168) = 0;
     skillname(168) = lang(u8"盾"s, u8"Shield"s);
-    skilldesc(168) = lang(u8"盾を扱う技術"s, u8"Increases the effectivness of using shields."s);
+    skilldesc(168) = lang(
+        u8"盾を扱う技術"s, u8"Increases the effectivness of using shields."s);
     skillencdesc(168) = lang(u8""s, u8""s);
     sdataref(0, 173) = 12;
     sdataref(1, 173) = 0;
@@ -218,7 +229,8 @@ void label_0034()
     sdataref(3, 173) = 0;
     sdataref(4, 173) = 0;
     skillname(173) = lang(u8"回避"s, u8"Evasion"s);
-    skilldesc(173) = lang(u8"攻撃を回避する"s, u8"Increases your chance of evading enemy attacks."s);
+    skilldesc(173) = lang(u8"攻撃を回避する"s,
+        u8"Increases your chance of evading enemy attacks."s);
     skillencdesc(173) = lang(u8""s, u8""s);
     sdataref(0, 166) = 12;
     sdataref(1, 166) = 0;
@@ -226,7 +238,8 @@ void label_0034()
     sdataref(3, 166) = 0;
     sdataref(4, 166) = 0;
     skillname(166) = lang(u8"二刀流"s, u8"Dual Wield"s);
-    skilldesc(166) = lang(u8"複数の武器を扱う技術"s, u8"Used when wielding two weapoms at the same time."s);
+    skilldesc(166) = lang(u8"複数の武器を扱う技術"s,
+        u8"Used when wielding two weapoms at the same time."s);
     skillencdesc(166) = lang(u8""s, u8""s);
     sdataref(0, 167) = 10;
     sdataref(1, 167) = 0;
@@ -234,7 +247,8 @@ void label_0034()
     sdataref(3, 167) = 0;
     sdataref(4, 167) = 0;
     skillname(167) = lang(u8"両手持ち"s, u8"Two Hand"s);
-    skilldesc(167) = lang(u8"両手で武器を扱う技術"s, u8"Used when wielding a weapon with both hands."s);
+    skilldesc(167) = lang(u8"両手で武器を扱う技術"s,
+        u8"Used when wielding a weapon with both hands."s);
     skillencdesc(167) = lang(u8""s, u8""s);
     sdataref(0, 50) = 0;
     sdataref(1, 50) = 0;
@@ -338,55 +352,68 @@ void label_0034()
     sdataref(3, 153) = 0;
     sdataref(4, 153) = 0;
     skillname(153) = lang(u8"重量挙げ"s, u8"Weight Lifting"s);
-    skilldesc(153) = lang(u8"重い荷物を持ち運ぶことを可能にする"s, u8"Allows you to carry more stuff."s);
-    skillencdesc(153) = lang(u8"より重い物の運搬を可能にする"s, u8"makes you better at weight lifting."s);
+    skilldesc(153) = lang(u8"重い荷物を持ち運ぶことを可能にする"s,
+        u8"Allows you to carry more stuff."s);
+    skillencdesc(153) = lang(u8"より重い物の運搬を可能にする"s,
+        u8"makes you better at weight lifting."s);
     sdataref(0, 152) = 10;
     sdataref(1, 152) = 0;
     sdataref(2, 152) = 0;
     sdataref(3, 152) = 0;
     sdataref(4, 152) = 0;
     skillname(152) = lang(u8"戦術"s, u8"Tactics"s);
-    skilldesc(152) = lang(u8"近接攻撃の威力をあげる"s, u8"Increases melee damage."s);
-    skillencdesc(152) = lang(u8"戦術の理解を深める"s, u8"makes you a better tactician."s);
+    skilldesc(152) =
+        lang(u8"近接攻撃の威力をあげる"s, u8"Increases melee damage."s);
+    skillencdesc(152) =
+        lang(u8"戦術の理解を深める"s, u8"makes you a better tactician."s);
     sdataref(0, 189) = 13;
     sdataref(1, 189) = 0;
     sdataref(2, 189) = 0;
     sdataref(3, 189) = 0;
     sdataref(4, 189) = 0;
     skillname(189) = lang(u8"射撃"s, u8"Marksman"s);
-    skilldesc(189) = lang(u8"射撃の威力をあげる"s, u8"Increases shooting damage."s);
-    skillencdesc(189) = lang(u8"射撃の理解を深める"s, u8"makes you a better marksman."s);
+    skilldesc(189) =
+        lang(u8"射撃の威力をあげる"s, u8"Increases shooting damage."s);
+    skillencdesc(189) =
+        lang(u8"射撃の理解を深める"s, u8"makes you a better marksman."s);
     sdataref(0, 154) = 11;
     sdataref(1, 154) = 0;
     sdataref(2, 154) = 0;
     sdataref(3, 154) = 0;
     sdataref(4, 154) = 0;
     skillname(154) = lang(u8"治癒"s, u8"Healing"s);
-    skilldesc(154) = lang(u8"怪我を自然に治癒する"s, u8"Gradually heals your wounds."s);
-    skillencdesc(154) = lang(u8"体力回復を強化する"s, u8"enhances your body metabolism."s);
+    skilldesc(154) =
+        lang(u8"怪我を自然に治癒する"s, u8"Gradually heals your wounds."s);
+    skillencdesc(154) =
+        lang(u8"体力回復を強化する"s, u8"enhances your body metabolism."s);
     sdataref(0, 163) = 11;
     sdataref(1, 163) = 0;
     sdataref(2, 163) = 0;
     sdataref(3, 163) = 0;
     sdataref(4, 163) = 0;
     skillname(163) = lang(u8"採掘"s, u8"Mining"s);
-    skilldesc(163) = lang(u8"壁を掘る効率をあげる"s, u8"Shows how good of a miner you are."s);
-    skillencdesc(163) = lang(u8"採掘能力を強化する"s, u8"enhances your mining skill."s);
+    skilldesc(163) = lang(
+        u8"壁を掘る効率をあげる"s, u8"Shows how good of a miner you are."s);
+    skillencdesc(163) =
+        lang(u8"採掘能力を強化する"s, u8"enhances your mining skill."s);
     sdataref(0, 176) = 11;
     sdataref(1, 176) = 0;
     sdataref(2, 176) = 0;
     sdataref(3, 176) = 0;
     sdataref(4, 176) = 0;
     skillname(176) = lang(u8"大工"s, u8"Carpentry"s);
-    skilldesc(176) = lang(u8"木を加工し、アイテムを作り出す"s, u8"Skill to cut trees and manufcture products."s);
-    skillencdesc(176) = lang(u8"大工の腕をあげる"s, u8"makes you a better carpenter."s);
+    skilldesc(176) = lang(u8"木を加工し、アイテムを作り出す"s,
+        u8"Skill to cut trees and manufcture products."s);
+    skillencdesc(176) =
+        lang(u8"大工の腕をあげる"s, u8"makes you a better carpenter."s);
     sdataref(0, 169) = 11;
     sdataref(1, 169) = 0;
     sdataref(2, 169) = 0;
     sdataref(3, 169) = 0;
     sdataref(4, 169) = 0;
     skillname(169) = lang(u8"重装備"s, u8"Heavy Armor"s);
-    skilldesc(169) = lang(u8"重い装備を扱う技術"s, u8"Skill to effectively act while wearing heavy armor."s);
+    skilldesc(169) = lang(u8"重い装備を扱う技術"s,
+        u8"Skill to effectively act while wearing heavy armor."s);
     skillencdesc(169) = lang(u8"重装備の技術を上昇させる"s, u8""s);
     sdataref(0, 170) = 11;
     sdataref(1, 170) = 0;
@@ -394,7 +421,8 @@ void label_0034()
     sdataref(3, 170) = 0;
     sdataref(4, 170) = 0;
     skillname(170) = lang(u8"中装備"s, u8"Medium Armor"s);
-    skilldesc(170) = lang(u8"普通の装備を扱う技術"s, u8"Skill to effectively act while wearing medium armor."s);
+    skilldesc(170) = lang(u8"普通の装備を扱う技術"s,
+        u8"Skill to effectively act while wearing medium armor."s);
     skillencdesc(170) = lang(u8"中装備の技術を上昇させる"s, u8""s);
     sdataref(0, 171) = 12;
     sdataref(1, 171) = 0;
@@ -402,7 +430,8 @@ void label_0034()
     sdataref(3, 171) = 0;
     sdataref(4, 171) = 0;
     skillname(171) = lang(u8"軽装備"s, u8"Light Armor"s);
-    skilldesc(171) = lang(u8"軽い装備を扱う技術"s, u8"Skill to effectively act while wearing light armor."s);
+    skilldesc(171) = lang(u8"軽い装備を扱う技術"s,
+        u8"Skill to effectively act while wearing light armor."s);
     skillencdesc(171) = lang(u8"軽装備の技術を上昇させる"s, u8""s);
     sdataref(0, 158) = 12;
     sdataref(1, 158) = 0;
@@ -410,71 +439,88 @@ void label_0034()
     sdataref(3, 158) = 0;
     sdataref(4, 158) = 0;
     skillname(158) = lang(u8"鍵開け"s, u8"Lock Picking"s);
-    skilldesc(158) = lang(u8"鍵を開ける"s, u8"Allows you to pick more difficult locks."s);
-    skillencdesc(158) = lang(u8"鍵開けの能力を強化する"s, u8"grants you the trick of lock picking."s);
+    skilldesc(158) =
+        lang(u8"鍵を開ける"s, u8"Allows you to pick more difficult locks."s);
+    skillencdesc(158) = lang(u8"鍵開けの能力を強化する"s,
+        u8"grants you the trick of lock picking."s);
     sdataref(0, 175) = 12;
     sdataref(1, 175) = 0;
     sdataref(2, 175) = 0;
     sdataref(3, 175) = 0;
     sdataref(4, 175) = 0;
     skillname(175) = lang(u8"罠解体"s, u8"Disarm Trap"s);
-    skilldesc(175) = lang(u8"複雑な罠の解体を可能にする"s, u8"Allows you to disarm harder traps."s);
-    skillencdesc(175) = lang(u8"罠の解体を容易にする"s, u8"grants you the trick of disarming traps."s);
+    skilldesc(175) = lang(u8"複雑な罠の解体を可能にする"s,
+        u8"Allows you to disarm harder traps."s);
+    skillencdesc(175) = lang(u8"罠の解体を容易にする"s,
+        u8"grants you the trick of disarming traps."s);
     sdataref(0, 177) = 12;
     sdataref(1, 177) = 0;
     sdataref(2, 177) = 0;
     sdataref(3, 177) = 0;
     sdataref(4, 177) = 0;
     skillname(177) = lang(u8"裁縫"s, u8"Tailoring"s);
-    skilldesc(177) = lang(u8"革や蔓を用い、アイテムを作り出す"s, u8"Skill to sew materials and manufucture products."s);
-    skillencdesc(177) = lang(u8"裁縫の腕をあげる"s, u8"makes you a better tailor."s);
+    skilldesc(177) = lang(u8"革や蔓を用い、アイテムを作り出す"s,
+        u8"Skill to sew materials and manufucture products."s);
+    skillencdesc(177) =
+        lang(u8"裁縫の腕をあげる"s, u8"makes you a better tailor."s);
     sdataref(0, 179) = 12;
     sdataref(1, 179) = 0;
     sdataref(2, 179) = 0;
     sdataref(3, 179) = 0;
     sdataref(4, 179) = 0;
     skillname(179) = lang(u8"宝石細工"s, u8"Jeweler"s);
-    skilldesc(179) = lang(u8"宝石を加工し、アイテムを作り出す"s, u8"Skill to process jewels and manufucture products."s);
-    skillencdesc(179) = lang(u8"宝石細工の腕をあげる"s, u8"makes you a better jeweler."s);
+    skilldesc(179) = lang(u8"宝石を加工し、アイテムを作り出す"s,
+        u8"Skill to process jewels and manufucture products."s);
+    skillencdesc(179) =
+        lang(u8"宝石細工の腕をあげる"s, u8"makes you a better jeweler."s);
     sdataref(0, 300) = 12;
     sdataref(1, 300) = 0;
     sdataref(2, 300) = 20;
     sdataref(3, 300) = 8000;
     sdataref(4, 300) = 0;
     skillname(300) = lang(u8"窃盗"s, u8"Pickpocket"s);
-    skilldesc(300) = lang(u8"貴重な物品を盗む"s, u8"Shows how good of a thief you are."s);
-    skillencdesc(300) = lang(u8"窃盗の腕をあげる"s, u8"grants you the trick of pickpocketing."s);
+    skilldesc(300) =
+        lang(u8"貴重な物品を盗む"s, u8"Shows how good of a thief you are."s);
+    skillencdesc(300) = lang(
+        u8"窃盗の腕をあげる"s, u8"grants you the trick of pickpocketing."s);
     sdataref(0, 157) = 13;
     sdataref(1, 157) = 0;
     sdataref(2, 157) = 0;
     sdataref(3, 157) = 0;
     sdataref(4, 157) = 0;
     skillname(157) = lang(u8"隠密"s, u8"Stealth"s);
-    skilldesc(157) = lang(u8"周囲に気づかれず行動する"s, u8"Allows you to move quietly."s);
-    skillencdesc(157) = lang(u8"隠密能力を強化する"s, u8"strengthens your ability to hide."s);
+    skilldesc(157) =
+        lang(u8"周囲に気づかれず行動する"s, u8"Allows you to move quietly."s);
+    skillencdesc(157) =
+        lang(u8"隠密能力を強化する"s, u8"strengthens your ability to hide."s);
     sdataref(0, 159) = 13;
     sdataref(1, 159) = 0;
     sdataref(2, 159) = 0;
     sdataref(3, 159) = 0;
     sdataref(4, 159) = 0;
     skillname(159) = lang(u8"探知"s, u8"Detection"s);
-    skilldesc(159) = lang(u8"隠された場所や罠を見つける"s, u8"It is used to search hidden locations and traps."s);
-    skillencdesc(159) = lang(u8"探知能力を強化する"s, u8"strengthens your ability to detect objects."s);
+    skilldesc(159) = lang(u8"隠された場所や罠を見つける"s,
+        u8"It is used to search hidden locations and traps."s);
+    skillencdesc(159) = lang(u8"探知能力を強化する"s,
+        u8"strengthens your ability to detect objects."s);
     sdataref(0, 162) = 13;
     sdataref(1, 162) = 0;
     sdataref(2, 162) = 0;
     sdataref(3, 162) = 0;
     sdataref(4, 162) = 0;
     skillname(162) = lang(u8"自然鑑定"s, u8"Sense Quality"s);
-    skilldesc(162) = lang(u8"アイテムの質や種類を感じ取る"s, u8"Allows you to sense the quality of stuff."s);
-    skillencdesc(162) = lang(u8"アイテムの質の判断を容易にする"s, u8"makes it easier to sense the quality of stuff."s);
+    skilldesc(162) = lang(u8"アイテムの質や種類を感じ取る"s,
+        u8"Allows you to sense the quality of stuff."s);
+    skillencdesc(162) = lang(u8"アイテムの質の判断を容易にする"s,
+        u8"makes it easier to sense the quality of stuff."s);
     sdataref(0, 186) = 13;
     sdataref(1, 186) = 0;
     sdataref(2, 186) = 0;
     sdataref(3, 186) = 0;
     sdataref(4, 186) = 0;
     skillname(186) = lang(u8"心眼"s, u8"Eye of Mind"s);
-    skilldesc(186) = lang(u8"クリティカル率を高める"s, u8"Increases your chance to deliver critical hits."s);
+    skilldesc(186) = lang(u8"クリティカル率を高める"s,
+        u8"Increases your chance to deliver critical hits."s);
     skillencdesc(186) = lang(u8"心眼の技術を上昇させる"s, u8""s);
     sdataref(0, 185) = 13;
     sdataref(1, 185) = 0;
@@ -482,15 +528,18 @@ void label_0034()
     sdataref(3, 185) = 10000;
     sdataref(4, 185) = 0;
     skillname(185) = lang(u8"釣り"s, u8"Fishing"s);
-    skilldesc(185) = lang(u8"釣りを可能にする"s, u8"Displays your fishing skill."s);
-    skillencdesc(185) = lang(u8"釣りの腕をあげる"s, u8"makes you better fisher."s);
+    skilldesc(185) =
+        lang(u8"釣りを可能にする"s, u8"Displays your fishing skill."s);
+    skillencdesc(185) =
+        lang(u8"釣りの腕をあげる"s, u8"makes you better fisher."s);
     sdataref(0, 187) = 13;
     sdataref(1, 187) = 0;
     sdataref(2, 187) = 0;
     sdataref(3, 187) = 0;
     sdataref(4, 187) = 0;
     skillname(187) = lang(u8"見切り"s, u8"Greater Evasion"s);
-    skilldesc(187) = lang(u8"不正確な攻撃を確実に避ける"s, u8"Makes you able to evade inaccurate attacks."s);
+    skilldesc(187) = lang(u8"不正確な攻撃を確実に避ける"s,
+        u8"Makes you able to evade inaccurate attacks."s);
     skillencdesc(187) = lang(u8"見切りの腕をあげる"s, u8""s);
     sdataref(0, 161) = 14;
     sdataref(1, 161) = 0;
@@ -498,15 +547,18 @@ void label_0034()
     sdataref(3, 161) = 0;
     sdataref(4, 161) = 0;
     skillname(161) = lang(u8"解剖学"s, u8"Anatomy"s);
-    skilldesc(161) = lang(u8"死体を残しやすくする"s, u8"Gives you a better chance of finding dead bodies."s);
-    skillencdesc(161) = lang(u8"死体を残しやすくする"s, u8"grants you knowledge of anatomy."s);
+    skilldesc(161) = lang(u8"死体を残しやすくする"s,
+        u8"Gives you a better chance of finding dead bodies."s);
+    skillencdesc(161) =
+        lang(u8"死体を残しやすくする"s, u8"grants you knowledge of anatomy."s);
     sdataref(0, 150) = 14;
     sdataref(1, 150) = 0;
     sdataref(2, 150) = 0;
     sdataref(3, 150) = 0;
     sdataref(4, 150) = 0;
     skillname(150) = lang(u8"読書"s, u8"Literacy"s);
-    skilldesc(150) = lang(u8"難解な本の解読を可能にする"s, u8"Allows you to read difficult books."s);
+    skilldesc(150) = lang(u8"難解な本の解読を可能にする"s,
+        u8"Allows you to read difficult books."s);
     skillencdesc(150) = lang(u8"本の理解を深める"s, u8"makes you literate."s);
     sdataref(0, 165) = 14;
     sdataref(1, 165) = 0;
@@ -514,87 +566,108 @@ void label_0034()
     sdataref(3, 165) = 0;
     sdataref(4, 165) = 0;
     skillname(165) = lang(u8"暗記"s, u8"Memorization"s);
-    skilldesc(165) = lang(u8"書物から得た知識を記憶する"s, u8"Helps you acquire additional spell stocks."s);
-    skillencdesc(165) = lang(u8"魔法の知識の忘却を防ぐ"s, u8"enhances your memory."s);
+    skilldesc(165) = lang(u8"書物から得た知識を記憶する"s,
+        u8"Helps you acquire additional spell stocks."s);
+    skillencdesc(165) =
+        lang(u8"魔法の知識の忘却を防ぐ"s, u8"enhances your memory."s);
     sdataref(0, 178) = 14;
     sdataref(1, 178) = 0;
     sdataref(2, 178) = 0;
     sdataref(3, 178) = 0;
     sdataref(4, 178) = 0;
     skillname(178) = lang(u8"錬金術"s, u8"Alchemy"s);
-    skilldesc(178) = lang(u8"様々な材料を調合し、ポーションを作り出す"s, u8"Enables you to perform alchemy."s);
-    skillencdesc(178) = lang(u8"錬金の腕をあげる"s, u8"grants you knowledge of alchemy."s);
+    skilldesc(178) = lang(u8"様々な材料を調合し、ポーションを作り出す"s,
+        u8"Enables you to perform alchemy."s);
+    skillencdesc(178) =
+        lang(u8"錬金の腕をあげる"s, u8"grants you knowledge of alchemy."s);
     sdataref(0, 180) = 14;
     sdataref(1, 180) = 0;
     sdataref(2, 180) = 0;
     sdataref(3, 180) = 0;
     sdataref(4, 180) = 0;
     skillname(180) = lang(u8"栽培"s, u8"Gardening"s);
-    skilldesc(180) = lang(u8"植物を育て、採取する"s, u8"Skill to plant seeds and gather harvests."s);
-    skillencdesc(180) = lang(u8"栽培の腕をあげる"s, u8"grants you knowledge of gardening."s);
+    skilldesc(180) = lang(u8"植物を育て、採取する"s,
+        u8"Skill to plant seeds and gather harvests."s);
+    skillencdesc(180) =
+        lang(u8"栽培の腕をあげる"s, u8"grants you knowledge of gardening."s);
     sdataref(0, 151) = 14;
     sdataref(1, 151) = 0;
     sdataref(2, 151) = 0;
     sdataref(3, 151) = 0;
     sdataref(4, 151) = 0;
     skillname(151) = lang(u8"遺伝子学"s, u8"Gene engineer"s);
-    skilldesc(151) = lang(u8"仲間合成の知識を高める"s, u8"Allows you to control genes."s);
-    skillencdesc(151) = lang(u8"遺伝子学の知識を深める"s, u8"makes you a better gene engineer."s);
+    skilldesc(151) =
+        lang(u8"仲間合成の知識を高める"s, u8"Allows you to control genes."s);
+    skillencdesc(151) = lang(
+        u8"遺伝子学の知識を深める"s, u8"makes you a better gene engineer."s);
     sdataref(0, 184) = 14;
     sdataref(1, 184) = 0;
     sdataref(2, 184) = 15;
     sdataref(3, 184) = 10000;
     sdataref(4, 184) = 0;
     skillname(184) = lang(u8"料理"s, u8"Cooking"s);
-    skilldesc(184) = lang(u8"料理の腕を上げる"s, u8"Improves your cooking skill."s);
-    skillencdesc(184) = lang(u8"料理の腕を上げる"s, u8"enhances your cooking skill."s);
+    skilldesc(184) =
+        lang(u8"料理の腕を上げる"s, u8"Improves your cooking skill."s);
+    skillencdesc(184) =
+        lang(u8"料理の腕を上げる"s, u8"enhances your cooking skill."s);
     sdataref(0, 155) = 16;
     sdataref(1, 155) = 0;
     sdataref(2, 155) = 0;
     sdataref(3, 155) = 0;
     sdataref(4, 155) = 0;
     skillname(155) = lang(u8"瞑想"s, u8"Meditation"s);
-    skilldesc(155) = lang(u8"消耗したマナを回復させる"s, u8"Gradually restores your magic points."s);
-    skillencdesc(155) = lang(u8"マナ回復を強化する"s, u8"enhances your meditation."s);
+    skilldesc(155) = lang(u8"消耗したマナを回復させる"s,
+        u8"Gradually restores your magic points."s);
+    skillencdesc(155) =
+        lang(u8"マナ回復を強化する"s, u8"enhances your meditation."s);
     sdataref(0, 174) = 16;
     sdataref(1, 174) = 0;
     sdataref(2, 174) = 0;
     sdataref(3, 174) = 0;
     sdataref(4, 174) = 0;
     skillname(174) = lang(u8"魔道具"s, u8"Magic Device"s);
-    skilldesc(174) = lang(u8"道具から魔力を効果的に引き出す"s, u8"Improves effectiveness of magic devices."s);
-    skillencdesc(174) = lang(u8"魔道具の効果をあげる"s, u8"enhances power of magical devices."s);
+    skilldesc(174) = lang(u8"道具から魔力を効果的に引き出す"s,
+        u8"Improves effectiveness of magic devices."s);
+    skillencdesc(174) = lang(
+        u8"魔道具の効果をあげる"s, u8"enhances power of magical devices."s);
     sdataref(0, 172) = 16;
     sdataref(1, 172) = 0;
     sdataref(2, 172) = 0;
     sdataref(3, 172) = 0;
     sdataref(4, 172) = 0;
     skillname(172) = lang(u8"詠唱"s, u8"Casting"s);
-    skilldesc(172) = lang(u8"魔法詠唱の成功率をあげる"s, u8"Reduces the chance of casting failure."s);
-    skillencdesc(172) = lang(u8"より高度な詠唱を可能にさせる"s, u8"enhances your casting ability."s);
+    skilldesc(172) = lang(u8"魔法詠唱の成功率をあげる"s,
+        u8"Reduces the chance of casting failure."s);
+    skillencdesc(172) = lang(
+        u8"より高度な詠唱を可能にさせる"s, u8"enhances your casting ability."s);
     sdataref(0, 188) = 16;
     sdataref(1, 188) = 0;
     sdataref(2, 188) = 0;
     sdataref(3, 188) = 0;
     sdataref(4, 188) = 0;
     skillname(188) = lang(u8"魔力制御"s, u8"Control Magic"s);
-    skilldesc(188) = lang(u8"魔法による仲間のまきこみを軽減する"s, u8"Prevents your allies to get hit by your spells."s);
-    skillencdesc(188) = lang(u8"より高度な魔力制御を可能にさせる"s, u8"enhances your ability to control magics."s);
+    skilldesc(188) = lang(u8"魔法による仲間のまきこみを軽減する"s,
+        u8"Prevents your allies to get hit by your spells."s);
+    skillencdesc(188) = lang(u8"より高度な魔力制御を可能にさせる"s,
+        u8"enhances your ability to control magics."s);
     sdataref(0, 164) = 15;
     sdataref(1, 164) = 0;
     sdataref(2, 164) = 0;
     sdataref(3, 164) = 0;
     sdataref(4, 164) = 0;
     skillname(164) = lang(u8"魔力の限界"s, u8"Magic Capacity"s);
-    skilldesc(164) = lang(u8"マナの反動から身を守る"s, u8"Reduces kickback damage from over casting."s);
-    skillencdesc(164) = lang(u8"マナの限界を上昇させる"s, u8"strengthens your magic capacity."s);
+    skilldesc(164) = lang(u8"マナの反動から身を守る"s,
+        u8"Reduces kickback damage from over casting."s);
+    skillencdesc(164) = lang(
+        u8"マナの限界を上昇させる"s, u8"strengthens your magic capacity."s);
     sdataref(0, 181) = 15;
     sdataref(1, 181) = 0;
     sdataref(2, 181) = 0;
     sdataref(3, 181) = 0;
     sdataref(4, 181) = 0;
     skillname(181) = lang(u8"信仰"s, u8"Faith"s);
-    skilldesc(181) = lang(u8"神との距離を近める"s, u8"Gets you closer to god."s);
+    skilldesc(181) =
+        lang(u8"神との距離を近める"s, u8"Gets you closer to god."s);
     skillencdesc(181) = lang(u8"信仰を深める"s, u8"makes you pious."s);
     sdataref(0, 182) = 15;
     sdataref(1, 182) = 0;
@@ -602,40 +675,50 @@ void label_0034()
     sdataref(3, 182) = 0;
     sdataref(4, 182) = 0;
     skillname(182) = lang(u8"旅歩き"s, u8"Traveling"s);
-    skilldesc(182) = lang(u8"旅の進行を早め経験を深める"s, u8"Allows you to receive more EXP from traveling."s);
-    skillencdesc(182) = lang(u8"旅の熟練をあげる"s, u8"makes you a better traveler."s);
+    skilldesc(182) = lang(u8"旅の進行を早め経験を深める"s,
+        u8"Allows you to receive more EXP from traveling."s);
+    skillencdesc(182) =
+        lang(u8"旅の熟練をあげる"s, u8"makes you a better traveler."s);
     sdataref(0, 301) = 15;
     sdataref(1, 301) = 0;
     sdataref(2, 301) = 20;
     sdataref(3, 301) = 8000;
     sdataref(4, 301) = 0;
     skillname(301) = lang(u8"乗馬"s, u8"Riding"s);
-    skilldesc(301) = lang(u8"上手に乗りこなす"s, u8"Allows you to ride creatures."s);
-    skillencdesc(301) = lang(u8"乗馬の腕をあげる"s, u8"enhances your ability to ride."s);
+    skilldesc(301) =
+        lang(u8"上手に乗りこなす"s, u8"Allows you to ride creatures."s);
+    skillencdesc(301) =
+        lang(u8"乗馬の腕をあげる"s, u8"enhances your ability to ride."s);
     sdataref(0, 156) = 17;
     sdataref(1, 156) = 0;
     sdataref(2, 156) = 0;
     sdataref(3, 156) = 0;
     sdataref(4, 156) = 0;
     skillname(156) = lang(u8"交渉"s, u8"Negotiation"s);
-    skilldesc(156) = lang(u8"交渉や商談を有利に進める"s, u8"Convinces someone to give you better deals."s);
-    skillencdesc(156) = lang(u8"交渉を有利に進めさせる"s, u8"grants you knowledge of negotiation."s);
+    skilldesc(156) = lang(u8"交渉や商談を有利に進める"s,
+        u8"Convinces someone to give you better deals."s);
+    skillencdesc(156) = lang(
+        u8"交渉を有利に進めさせる"s, u8"grants you knowledge of negotiation."s);
     sdataref(0, 160) = 17;
     sdataref(1, 160) = 0;
     sdataref(2, 160) = 0;
     sdataref(3, 160) = 0;
     sdataref(4, 160) = 0;
     skillname(160) = lang(u8"投資"s, u8"Investing"s);
-    skilldesc(160) = lang(u8"効果的に投資を行う"s, u8"Lowers the money needed to invest in shops."s);
-    skillencdesc(160) = lang(u8"より安い価格での投資を可能にする"s, u8"grants you knowledge of investing."s);
+    skilldesc(160) = lang(u8"効果的に投資を行う"s,
+        u8"Lowers the money needed to invest in shops."s);
+    skillencdesc(160) = lang(u8"より安い価格での投資を可能にする"s,
+        u8"grants you knowledge of investing."s);
     sdataref(0, 183) = 17;
     sdataref(1, 183) = 0;
     sdataref(2, 183) = 25;
     sdataref(3, 183) = 10000;
     sdataref(4, 183) = 0;
     skillname(183) = lang(u8"演奏"s, u8"Performer"s);
-    skilldesc(183) = lang(u8"質の高い演奏を可能にする"s, u8"Shows how good of a performer you are."s);
-    skillencdesc(183) = lang(u8"演奏の質をあげる"s, u8"makes your performance better."s);
+    skilldesc(183) = lang(u8"質の高い演奏を可能にする"s,
+        u8"Shows how good of a performer you are."s);
+    skillencdesc(183) =
+        lang(u8"演奏の質をあげる"s, u8"makes your performance better."s);
     sdataref(0, 400) = 15;
     sdataref(1, 400) = 4;
     sdataref(2, 400) = 6;
@@ -904,7 +987,8 @@ void label_0034()
     sdataref(3, 424) = 2006;
     sdataref(4, 424) = 200;
     skillname(424) = lang(u8"モンスター召喚"s, u8"Summon Monsters"s);
-    skilldesc(424) = lang(u8"モンスターを召喚する"s, u8"Summon hostile creatures"s);
+    skilldesc(424) =
+        lang(u8"モンスターを召喚する"s, u8"Summon hostile creatures"s);
     skillencdesc(424) = lang(u8""s, u8""s);
     sdataref(0, 425) = 16;
     sdataref(1, 425) = 7;
@@ -912,7 +996,8 @@ void label_0034()
     sdataref(3, 425) = 2006;
     sdataref(4, 425) = 200;
     skillname(425) = lang(u8"野生召喚"s, u8"Summon Wild"s);
-    skilldesc(425) = lang(u8"野生の生き物を召喚する"s, u8"Summon wild creatures"s);
+    skilldesc(425) =
+        lang(u8"野生の生き物を召喚する"s, u8"Summon wild creatures"s);
     skillencdesc(425) = lang(u8""s, u8""s);
     sdataref(0, 642) = 16;
     sdataref(1, 642) = 7;
@@ -920,7 +1005,8 @@ void label_0034()
     sdataref(3, 642) = 2006;
     sdataref(4, 642) = 200;
     skillname(642) = lang(u8"炎召喚"s, u8"Summon Fire"s);
-    skilldesc(642) = lang(u8"炎の生き物を召喚する"s, u8"Summon fire creatures"s);
+    skilldesc(642) =
+        lang(u8"炎の生き物を召喚する"s, u8"Summon fire creatures"s);
     sdataref(0, 641) = 16;
     sdataref(1, 641) = 7;
     sdataref(2, 641) = 15;
@@ -1033,7 +1119,8 @@ void label_0034()
     sdataref(3, 463) = 10000;
     sdataref(4, 463) = 750;
     skillname(463) = lang(u8"四次元ポケット"s, u8"4-Dimensional Pocket"s);
-    skilldesc(463) = lang(u8"四次元のポケットを召喚"s, u8"Summon 4-Dimensional Pocket"s);
+    skilldesc(463) =
+        lang(u8"四次元のポケットを召喚"s, u8"Summon 4-Dimensional Pocket"s);
     skillencdesc(463) = lang(u8""s, u8""s);
     sdataref(0, 429) = 13;
     sdataref(1, 429) = 0;
@@ -1580,4 +1667,4 @@ void label_0034()
 }
 
 
-}
+} // namespace elona

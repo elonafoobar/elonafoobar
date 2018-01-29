@@ -4,8 +4,6 @@
 
 namespace elona
 {
-
-
 void label_1277()
 {
     ilight(792) = 0;
@@ -10251,4 +10249,4 @@ void label_1277()
 }
 
 
-}
+} // namespace elona
