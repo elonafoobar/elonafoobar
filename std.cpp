@@ -41,7 +41,8 @@ void LOG(Args&&... args)
 
 Key hspkey2snailkey(int hsp_key)
 {
-    switch (hsp_key) {
+    switch (hsp_key)
+    {
     case 8: return Key::backspace;
     case 12: return Key::none; // Maybe one of the keypad keys.
     case 13: return Key::enter;
@@ -121,7 +122,8 @@ Key hspkey2snailkey(int hsp_key)
 
 char hspkey2char(int hsp_key)
 {
-    switch (hsp_key) {
+    switch (hsp_key)
+    {
     case 13: return '\n';
     case 32: return ' ';
     case 48: return '0';
@@ -213,7 +215,8 @@ namespace elona
 {
 namespace detail
 {
-struct TexBuffer {
+struct TexBuffer
+{
     ::SDL_Texture* texture = nullptr;
     int tex_width = 32;
     int tex_height = 32;
@@ -239,7 +242,8 @@ TexBuffer& current_tex_buffer()
 
 void set_blend_mode()
 {
-    switch (current_tex_buffer().mode) {
+    switch (current_tex_buffer().mode)
+    {
     case 0:
     case 1:
         Application::instance().renderer().set_blend_mode(BlendMode::none);
@@ -269,21 +273,30 @@ void set_blend_mode()
 
 namespace mesbox_detail
 {
-struct MessageBox {
-    MessageBox(std::string& buffer) : buffer(buffer) {}
+struct MessageBox
+{
+    MessageBox(std::string& buffer)
+        : buffer(buffer)
+    {
+    }
 
 
     void update()
     {
         auto c = to_char(Keyboard::instance().get_pressed_key());
-        if (c) {
+        if (c)
+        {
             // TODO capslock
-            if (Keyboard::instance().is_pressed_exactly(Key::shift)) {
+            if (Keyboard::instance().is_pressed_exactly(Key::shift))
+            {
                 c = std::toupper(c);
             }
-            if (c == '\n') {
+            if (c == '\n')
+            {
                 buffer += "\r\n";
-            } else {
+            }
+            else
+            {
                 buffer += c;
             }
         }
@@ -306,7 +319,8 @@ std::string operator+(const std::string& lhs, int rhs)
 }
 
 std::string operator+(
-    elona_vector1<std::string>& lhs, elona_vector1<std::string>& rhs)
+    elona_vector1<std::string>& lhs,
+    elona_vector1<std::string>& rhs)
 {
     return lhs(0) + rhs(0);
 }
@@ -350,39 +364,56 @@ uint32_t last_await;
 void await(int msec)
 {
     Application::instance().proc_event();
-    for (auto&& b : mesbox_detail::message_boxes) {
-        if (b) { b->update(); }
+    for (auto&& b : mesbox_detail::message_boxes)
+    {
+        if (b)
+        {
+            b->update();
+        }
     }
 
     const auto now = ::SDL_GetTicks();
-    if (await_detail::last_await == 0) { await_detail::last_await = now; }
+    if (await_detail::last_await == 0)
+    {
+        await_detail::last_await = now;
+    }
     const auto delta = now - await_detail::last_await;
-    if (msec > delta) { ::SDL_Delay(msec - delta); }
+    if (msec > delta)
+    {
+        ::SDL_Delay(msec - delta);
+    }
     await_detail::last_await = now;
 }
 
 
 // CANNOT BE IMPLEMENTED
-void axobj(int, const std::string&, int, int) {}
+void axobj(int, const std::string&, int, int)
+{
+}
 
 
 void bcopy(const std::string& from, const std::string& to)
 {
     LOG("copy", from, to);
-    fs::copy_file(to_unix_filename(from), to_unix_filename(to),
+    fs::copy_file(
+        to_unix_filename(from),
+        to_unix_filename(to),
         fs::copy_options::overwrite_existing);
 }
 
 // fullscreen
-void bgscr(int window_id, int width, int height, int, int) {}
+void bgscr(int window_id, int width, int height, int, int)
+{
+}
 
 
 
 void boxf(int x1, int y1, int x2, int y2)
 {
-    if (detail::current_tex_buffer().color.r == 0 &&
-        detail::current_tex_buffer().color.g == 0 &&
-        detail::current_tex_buffer().color.b == 0) {
+    if (detail::current_tex_buffer().color.r == 0
+        && detail::current_tex_buffer().color.g == 0
+        && detail::current_tex_buffer().color.b == 0)
+    {
         Application::instance().renderer().set_blend_mode(BlendMode::none);
         Application::instance().renderer().set_draw_color({0, 0, 0, 0});
     }
@@ -391,9 +422,10 @@ void boxf(int x1, int y1, int x2, int y2)
 
 void boxf()
 {
-    if (detail::current_tex_buffer().color.r == 0 &&
-        detail::current_tex_buffer().color.g == 0 &&
-        detail::current_tex_buffer().color.b == 0) {
+    if (detail::current_tex_buffer().color.r == 0
+        && detail::current_tex_buffer().color.g == 0
+        && detail::current_tex_buffer().color.b == 0)
+    {
         Application::instance().renderer().set_blend_mode(BlendMode::none);
         Application::instance().renderer().set_draw_color({0, 0, 0, 0});
     }
@@ -405,10 +437,14 @@ void bload(const std::string& filename, std::string& data, int size, int)
 {
     LOG("bload", filename);
 
-    if (size == 0) { size = data.size(); }
+    if (size == 0)
+    {
+        size = data.size();
+    }
     std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{to_unix_filename(filename), std::ios::binary};
-    if (!in) {
+    if (!in)
+    {
         LOG("Failed");
         throw 0;
     }
@@ -422,7 +458,8 @@ void bload(const std::string& filename, int& data, int size, int)
 
     std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{to_unix_filename(filename), std::ios::binary};
-    if (!in) {
+    if (!in)
+    {
         LOG("Failed");
         throw 0;
     }
@@ -434,18 +471,24 @@ void bload(const std::string& filename, elona_vector1<int>& data, int size, int)
 {
     LOG("bload", filename);
 
-    if (size == 0) { size = data.size() * sizeof(int); }
+    if (size == 0)
+    {
+        size = data.size() * sizeof(int);
+    }
     std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{to_unix_filename(filename), std::ios::binary};
-    if (!in) {
+    if (!in)
+    {
         LOG("Failed");
         throw 0;
     }
     size = in.readsome(buf.get(), size);
-    for (int i = 0; i < length(data); ++i) {
+    for (int i = 0; i < length(data); ++i)
+    {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
         size -= sizeof(int);
-        if (size == 0) return;
+        if (size == 0)
+            return;
     }
 }
 
@@ -455,7 +498,8 @@ void bsave(const std::string& filename, const std::string& data)
     LOG("bsave", filename);
 
     std::ofstream out{to_unix_filename(filename), std::ios::binary};
-    if (!out) {
+    if (!out)
+    {
         LOG("Failed");
         throw 0;
     }
@@ -478,7 +522,8 @@ void bsave(const std::string& filename, elona_vector1<int>& data)
     LOG("bsave", filename);
 
     std::ofstream out{to_unix_filename(filename), std::ios::binary};
-    for (int i = 0; i < std::size(data); ++i) {
+    for (int i = 0; i < std::size(data); ++i)
+    {
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
     }
 }
@@ -487,26 +532,34 @@ void bsave(const std::string& filename, elona_vector1<int>& data)
 void buffer(int window_id, int width, int height)
 {
     LOG("buffer", window_id, width, height);
-    if (window_id >= std::size(detail::tex_buffers)) {
+    if (window_id >= std::size(detail::tex_buffers))
+    {
         detail::tex_buffers.resize(window_id + 1);
     }
-    if (auto texture = detail::tex_buffers[window_id].texture) {
+    if (auto texture = detail::tex_buffers[window_id].texture)
+    {
         int img_width;
         int img_height;
         snail::detail::enforce_sdl(
             ::SDL_QueryTexture(texture, NULL, NULL, &img_width, &img_height));
-        if (width == img_width && height == img_height) {
+        if (width == img_width && height == img_height)
+        {
             gsel(window_id);
             Application::instance().renderer().clear();
             return;
-        } else {
+        }
+        else
+        {
             ::SDL_DestroyTexture(detail::tex_buffers[window_id].texture);
         }
     }
     detail::tex_buffers[window_id] = {
         snail::detail::enforce_sdl(::SDL_CreateTexture(
-            Application::instance().renderer().ptr(), SDL_PIXELFORMAT_ARGB8888,
-            SDL_TEXTUREACCESS_TARGET, width, height)),
+            Application::instance().renderer().ptr(),
+            SDL_PIXELFORMAT_ARGB8888,
+            SDL_TEXTUREACCESS_TARGET,
+            width,
+            height)),
         width,
         height,
     };
@@ -526,10 +579,14 @@ void buffer(int window_id, int width, int height)
     gsel(window_id);
 }
 
-void chgdisp(int, int width, int height) {}
+void chgdisp(int, int width, int height)
+{
+}
 
 
-void clrobj(int) {}
+void clrobj(int)
+{
+}
 
 
 // Shift-JIS -> Unicode
@@ -562,7 +619,9 @@ void color(int v)
 
 
 
-void delcom(int) {}
+void delcom(int)
+{
+}
 
 void elona_delete(const std::string& filename)
 {
@@ -570,7 +629,9 @@ void elona_delete(const std::string& filename)
     fs::remove_all(to_unix_filename(filename));
 }
 
-void dialog(const std::string& message, int) {}
+void dialog(const std::string& message, int)
+{
+}
 
 // TODO
 std::string dirinfo(int n)
@@ -600,7 +661,8 @@ namespace dirlist_detail
 void replace_str(std::string& s, const char* from, const char* to)
 {
     for (auto pos = s.find(from); pos != std::string::npos;
-         pos = s.find(from, pos + std::string::traits_type::length(to))) {
+         pos = s.find(from, pos + std::string::traits_type::length(to)))
+    {
         s.replace(pos, std::string::traits_type::length(from), to);
     }
 }
@@ -639,9 +701,11 @@ void dirlist(std::string& out, const std::string& glob, int attr)
         return appreciate_attribute && bang != match;
     };
 
-    for (const auto& dir : fs::directory_iterator(
-             fs::path{to_unix_filename(glob)}.parent_path())) {
-        if (cond(dir.path())) {
+    for (const auto& dir :
+         fs::directory_iterator(fs::path{to_unix_filename(glob)}.parent_path()))
+    {
+        if (cond(dir.path()))
+        {
             out += dir.path().string();
             out += '\n';
             ++stat;
@@ -665,15 +729,20 @@ double elona_double(int n)
 // {
 // }
 
-void exec(const std::string&, int) {}
+void exec(const std::string&, int)
+{
+}
 
 
 void exist(const std::string& filename)
 {
-    if (fs::exists(to_unix_filename(filename)) &&
-        !fs::is_directory(to_unix_filename(filename))) {
+    if (fs::exists(to_unix_filename(filename))
+        && !fs::is_directory(to_unix_filename(filename)))
+    {
         strsize = fs::file_size(to_unix_filename(filename));
-    } else {
+    }
+    else
+    {
         strsize = -1;
     }
 }
@@ -693,11 +762,15 @@ std::unordered_map<int, Font> font_cache;
 void font(const std::string& name, int size, int style)
 {
     if (auto i = font_detail::font_cache.find(size);
-        i != std::end(font_detail::font_cache)) {
+        i != std::end(font_detail::font_cache))
+    {
         Application::instance().renderer().set_font(i->second);
-    } else {
+    }
+    else
+    {
         const auto [i_, _] = font_detail::font_cache.emplace(
-            std::piecewise_construct, std::forward_as_tuple(size),
+            std::piecewise_construct,
+            std::forward_as_tuple(size),
             std::forward_as_tuple(
                 "font/APJapanesefontT.ttf", size, Font::Style::regular));
         Application::instance().renderer().set_font(i_->second);
@@ -707,21 +780,25 @@ void font(const std::string& name, int size, int style)
 void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
 {
     detail::set_blend_mode();
-    snail::detail::enforce_sdl(
-        ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture,
-            detail::current_tex_buffer().color.a));
+    snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+        detail::tex_buffers[window_id].texture,
+        detail::current_tex_buffer().color.a));
 
-    if (window_id == detail::current_buffer) {
+    if (window_id == detail::current_buffer)
+    {
         src_width =
             src_width == 0 ? detail::current_tex_buffer().width : src_width,
         src_height =
             src_height == 0 ? detail::current_tex_buffer().height : src_height,
         Application::instance().renderer().set_render_target(
             detail::tmp_buffer);
-        if (window_id < 10) {
+        if (window_id < 10)
+        {
             Application::instance().renderer().set_blend_mode(BlendMode::none);
             Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-        } else {
+        }
+        else
+        {
             const auto save = Application::instance().renderer().blend_mode();
             Application::instance().renderer().set_blend_mode(BlendMode::none);
             Application::instance().renderer().set_draw_color({0, 0, 0, 0});
@@ -729,20 +806,33 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
         }
         Application::instance().renderer().clear();
         Application::instance().renderer().render_image(
-            detail::tex_buffers[window_id].texture, src_x, src_y, src_width,
-            src_height, 0, 0);
+            detail::tex_buffers[window_id].texture,
+            src_x,
+            src_y,
+            src_width,
+            src_height,
+            0,
+            0);
         gsel(window_id);
-        Application::instance().renderer().render_image(detail::tmp_buffer, 0,
-            0, src_width, src_height, detail::current_tex_buffer().x,
+        Application::instance().renderer().render_image(
+            detail::tmp_buffer,
+            0,
+            0,
+            src_width,
+            src_height,
+            detail::current_tex_buffer().x,
             detail::current_tex_buffer().y);
         return;
     }
 
     Application::instance().renderer().render_image(
-        detail::tex_buffers[window_id].texture, src_x, src_y,
+        detail::tex_buffers[window_id].texture,
+        src_x,
+        src_y,
         src_width == 0 ? detail::current_tex_buffer().width : src_width,
         src_height == 0 ? detail::current_tex_buffer().height : src_height,
-        detail::current_tex_buffer().x, detail::current_tex_buffer().y);
+        detail::current_tex_buffer().x,
+        detail::current_tex_buffer().y);
 }
 
 void getkey(int& out, int key)
@@ -752,29 +842,50 @@ void getkey(int& out, int key)
 
 std::string getpath(const std::string& source, int mode)
 {
-    if (mode == 8) {
+    if (mode == 8)
+    {
         return fs::path(to_unix_filename(source)).filename();
-    } else if (mode == 16) {
+    }
+    else if (mode == 16)
+    {
         std::string ret;
-        std::transform(std::begin(source), std::end(source),
-            std::back_inserter(ret), [](char c) { return std::tolower(c); });
+        std::transform(
+            std::begin(source),
+            std::end(source),
+            std::back_inserter(ret),
+            [](char c) { return std::tolower(c); });
         return ret;
-    } else {
+    }
+    else
+    {
         assert(0);
     }
 }
 
-void getstr(std::string& out, const std::string& source, int offset,
-    char delimiter, int limit)
+void getstr(
+    std::string& out,
+    const std::string& source,
+    int offset,
+    char delimiter,
+    int limit)
 {
     auto pos = source.find(delimiter, offset);
-    if (pos == std::string::npos) { pos = source.find('\n', offset); }
-    if (pos == std::string::npos) { pos = source.length(); }
-    if (pos >= offset) {
+    if (pos == std::string::npos)
+    {
+        pos = source.find('\n', offset);
+    }
+    if (pos == std::string::npos)
+    {
+        pos = source.length();
+    }
+    if (pos >= offset)
+    {
         const auto length = pos - offset;
         strsize = length + 1; // Includes the delimiter.
         out = source.substr(offset, length);
-    } else {
+    }
+    else
+    {
         strsize = 0;
         out = "";
     }
@@ -782,7 +893,8 @@ void getstr(std::string& out, const std::string& source, int offset,
 
 int ginfo(int type)
 {
-    switch (type) {
+    switch (type)
+    {
     case 0: return 0; // mouse x
     case 1: return 0; // mouse y
     case 2: return 0; // active window id
@@ -824,21 +936,30 @@ void gmode(int mode, int width, int height, int alpha)
     detail::current_tex_buffer().color.a = std::clamp(alpha, 0, 255);
 }
 
-void grotate(int window_id, int src_x, int src_y, double angle, int dst_width,
+void grotate(
+    int window_id,
+    int src_x,
+    int src_y,
+    double angle,
+    int dst_width,
     int dst_height)
 {
     detail::set_blend_mode();
-    snail::detail::enforce_sdl(
-        ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture,
-            detail::current_tex_buffer().color.a));
+    snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+        detail::tex_buffers[window_id].texture,
+        detail::current_tex_buffer().color.a));
 
-    if (window_id == detail::current_buffer) {
+    if (window_id == detail::current_buffer)
+    {
         Application::instance().renderer().set_render_target(
             detail::tmp_buffer);
-        if (window_id < 10) {
+        if (window_id < 10)
+        {
             Application::instance().renderer().set_blend_mode(BlendMode::none);
             Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-        } else {
+        }
+        else
+        {
             const auto save = Application::instance().renderer().blend_mode();
             Application::instance().renderer().set_blend_mode(BlendMode::none);
             Application::instance().renderer().set_draw_color({0, 0, 0, 0});
@@ -846,25 +967,36 @@ void grotate(int window_id, int src_x, int src_y, double angle, int dst_width,
         }
         Application::instance().renderer().clear();
         Application::instance().renderer().render_image(
-            detail::tex_buffers[window_id].texture, src_x, src_y,
+            detail::tex_buffers[window_id].texture,
+            src_x,
+            src_y,
             detail::current_tex_buffer().width == -1
                 ? dst_width
                 : detail::current_tex_buffer().width,
             detail::current_tex_buffer().height == -1
                 ? dst_height
                 : detail::current_tex_buffer().height,
-            0, 0, dst_width, dst_height);
+            0,
+            0,
+            dst_width,
+            dst_height);
 
         gsel(window_id);
-        Application::instance().renderer().render_image(detail::tmp_buffer, 0,
-            0, dst_width, dst_height,
+        Application::instance().renderer().render_image(
+            detail::tmp_buffer,
+            0,
+            0,
+            dst_width,
+            dst_height,
             detail::current_tex_buffer().x - dst_width / 2,
             detail::current_tex_buffer().y - dst_height / 2);
         return;
     }
 
     Application::instance().renderer().render_image(
-        detail::tex_buffers[window_id].texture, src_x, src_y,
+        detail::tex_buffers[window_id].texture,
+        src_x,
+        src_y,
         detail::current_tex_buffer().width == -1
             ? dst_width
             : detail::current_tex_buffer().width,
@@ -872,7 +1004,9 @@ void grotate(int window_id, int src_x, int src_y, double angle, int dst_width,
             ? dst_height
             : detail::current_tex_buffer().height,
         detail::current_tex_buffer().x - dst_width / 2,
-        detail::current_tex_buffer().y - dst_height / 2, dst_width, dst_height);
+        detail::current_tex_buffer().y - dst_height / 2,
+        dst_width,
+        dst_height);
 }
 
 void gsel(int window_id)
@@ -882,20 +1016,31 @@ void gsel(int window_id)
         detail::current_tex_buffer().texture);
 }
 
-void gzoom(int dst_width, int dst_height, int window_id, int src_x, int src_y,
-    int src_width, int src_height, int mode)
+void gzoom(
+    int dst_width,
+    int dst_height,
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int mode)
 {
     Application::instance().renderer().set_blend_mode(BlendMode::none);
     snail::detail::enforce_sdl(
         ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture, 255));
 
-    if (window_id == detail::current_buffer) {
+    if (window_id == detail::current_buffer)
+    {
         Application::instance().renderer().set_render_target(
             detail::tmp_buffer);
-        if (window_id < 10) {
+        if (window_id < 10)
+        {
             Application::instance().renderer().set_blend_mode(BlendMode::none);
             Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-        } else {
+        }
+        else
+        {
             const auto save = Application::instance().renderer().blend_mode();
             Application::instance().renderer().set_blend_mode(BlendMode::none);
             Application::instance().renderer().set_draw_color({0, 0, 0, 0});
@@ -903,25 +1048,46 @@ void gzoom(int dst_width, int dst_height, int window_id, int src_x, int src_y,
         }
         Application::instance().renderer().clear();
         Application::instance().renderer().render_image(
-            detail::tex_buffers[window_id].texture, src_x, src_y, src_width,
-            src_height, 0, 0, dst_width, dst_height);
+            detail::tex_buffers[window_id].texture,
+            src_x,
+            src_y,
+            src_width,
+            src_height,
+            0,
+            0,
+            dst_width,
+            dst_height);
         gsel(window_id);
-        Application::instance().renderer().render_image(detail::tmp_buffer, 0,
-            0, dst_width, dst_height, detail::current_tex_buffer().x,
+        Application::instance().renderer().render_image(
+            detail::tmp_buffer,
+            0,
+            0,
+            dst_width,
+            dst_height,
+            detail::current_tex_buffer().x,
             detail::current_tex_buffer().y);
         return;
     }
 
     Application::instance().renderer().render_image(
-        detail::tex_buffers[window_id].texture, src_x, src_y, src_width,
-        src_height, detail::current_tex_buffer().x,
-        detail::current_tex_buffer().y, dst_width, dst_height);
+        detail::tex_buffers[window_id].texture,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        detail::current_tex_buffer().x,
+        detail::current_tex_buffer().y,
+        dst_width,
+        dst_height);
 }
 
 
 int instr(const std::string& str, size_t pos, const std::string pattern)
 {
-    if (pattern == "\n") { return instr(str, pos, "\r"); }
+    if (pattern == "\n")
+    {
+        return instr(str, pos, "\r");
+    }
     const auto ret = str.find(pattern, pos);
     return ret == std::string::npos ? -1 : static_cast<int>(ret - pos);
 }
@@ -933,9 +1099,12 @@ int elona_int(double x)
 
 int elona_int(const std::string& s)
 {
-    try {
+    try
+    {
         return std::stoi(s);
-    } catch (...) {
+    }
+    catch (...)
+    {
         return 0;
     }
 }
@@ -974,17 +1143,26 @@ double logf(double x)
 
 
 
-void memcpy(elona_vector2<int>& src, int src_i, int src_j,
-    elona_vector2<int>& dst, int dst_i, int dst_j, size_t size)
+void memcpy(
+    elona_vector2<int>& src,
+    int src_i,
+    int src_j,
+    elona_vector2<int>& dst,
+    int dst_i,
+    int dst_j,
+    size_t size)
 {
     const auto len = length(src);
     const auto len2 = length2(src);
     auto count = size;
-    for (int i = 0; i < len2; ++i) {
-        for (int j = 0; j < len; ++j) {
+    for (int i = 0; i < len2; ++i)
+    {
+        for (int j = 0; j < len; ++j)
+        {
             src(src_j + j, src_i + i) = dst(dst_j + j, dst_i + i);
             count -= sizeof(int);
-            if (count == 0) return;
+            if (count == 0)
+                return;
         }
     }
 }
@@ -1001,13 +1179,20 @@ void memcpy(elona_vector2<int>& src, int src_i, int src_j,
 
 void mes(const std::string& text)
 {
-    if (std::size(text) >= 25 /* TODO */) {
-        Application::instance().renderer().render_multiline_text(text,
-            detail::current_tex_buffer().x, detail::current_tex_buffer().y,
+    if (std::size(text) >= 25 /* TODO */)
+    {
+        Application::instance().renderer().render_multiline_text(
+            text,
+            detail::current_tex_buffer().x,
+            detail::current_tex_buffer().y,
             detail::current_tex_buffer().color);
-    } else {
-        Application::instance().renderer().render_text(text,
-            detail::current_tex_buffer().x, detail::current_tex_buffer().y,
+    }
+    else
+    {
+        Application::instance().renderer().render_text(
+            text,
+            detail::current_tex_buffer().x,
+            detail::current_tex_buffer().y,
             detail::current_tex_buffer().color);
     }
 }
@@ -1018,7 +1203,11 @@ void mes(int n)
 }
 
 void mesbox(
-    std::string& buffer, int width, int height, int style, int max_input_size)
+    std::string& buffer,
+    int width,
+    int height,
+    int style,
+    int max_input_size)
 {
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer));
@@ -1030,11 +1219,17 @@ void mkdir(const std::string& path)
     fs::create_directory(to_unix_filename(path));
 }
 
-void mmload(const std::string& file, int id, int mode) {}
+void mmload(const std::string& file, int id, int mode)
+{
+}
 
-void mmplay(int id) {}
+void mmplay(int id)
+{
+}
 
-void mmstop() {}
+void mmstop()
+{
+}
 
 
 // // Special function
@@ -1054,7 +1249,10 @@ std::vector<std::string> split_lines(const std::string& str)
     std::vector<std::string> lines;
     std::istringstream ss{str};
     std::string buf;
-    while (std::getline(ss, buf)) { lines.push_back(buf); }
+    while (std::getline(ss, buf))
+    {
+        lines.push_back(buf);
+    }
     return lines;
 }
 
@@ -1064,8 +1262,12 @@ size_t count(const std::string& str)
 }
 
 
-struct io_error : public std::runtime_error {
-    io_error(const std::string& message) : std::runtime_error(message) {}
+struct io_error : public std::runtime_error
+{
+    io_error(const std::string& message)
+        : std::runtime_error(message)
+    {
+    }
 };
 
 
@@ -1076,17 +1278,27 @@ void noteadd(const std::string& text, int index, int overwrite)
 {
     assert(overwrite == 0 || overwrite == 1);
 
-    if (!notemanip::buffer) return;
+    if (!notemanip::buffer)
+        return;
 
     auto lines = notemanip::split_lines(*notemanip::buffer);
 
-    if (index == -1) { index = std::size(lines); }
+    if (index == -1)
+    {
+        index = std::size(lines);
+    }
 
-    if (index >= std::size(lines)) { lines.resize(index + 1); }
+    if (index >= std::size(lines))
+    {
+        lines.resize(index + 1);
+    }
 
-    if (overwrite) {
+    if (overwrite)
+    {
         lines[index] = text;
-    } else {
+    }
+    else
+    {
         auto itr = std::begin(lines);
         std::advance(itr, index);
         lines.insert(itr, text);
@@ -1102,26 +1314,35 @@ void noteadd(const std::string& text, int index, int overwrite)
 
 void notedel(size_t index)
 {
-    if (!notemanip::buffer) return;
+    if (!notemanip::buffer)
+        return;
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
     notemanip::buffer->clear();
-    for (int i = 0; i < std::size(lines); ++i) {
-        if (i != index) { *notemanip::buffer += lines[i] + '\n'; }
+    for (int i = 0; i < std::size(lines); ++i)
+    {
+        if (i != index)
+        {
+            *notemanip::buffer += lines[i] + '\n';
+        }
     }
 }
 
 void noteget(std::string& out, size_t index)
 {
-    if (!notemanip::buffer) {
+    if (!notemanip::buffer)
+    {
         out = "";
         return;
     }
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
-    if (index >= std::size(lines)) {
+    if (index >= std::size(lines))
+    {
         out = "";
-    } else {
+    }
+    else
+    {
         out = lines[index];
     }
 }
@@ -1137,18 +1358,23 @@ void noteload(const std::string& filename)
     LOG("noteload", filename);
 
     std::ifstream in{to_unix_filename(filename)};
-    if (!in) throw notemanip::io_error{std::string{u8"Not found "} + filename};
+    if (!in)
+        throw notemanip::io_error{std::string{u8"Not found "} + filename};
 
     std::string str;
     notemanip::buffer->clear();
-    while (std::getline(in, str)) { *notemanip::buffer += str + '\n'; }
+    while (std::getline(in, str))
+    {
+        *notemanip::buffer += str + '\n';
+    }
 }
 
 void notesave(const std::string& filename)
 {
     LOG("notesave", filename);
 
-    if (!notemanip::buffer) return;
+    if (!notemanip::buffer)
+        return;
 
     std::ofstream out{to_unix_filename(filename)};
     if (!out)
@@ -1170,11 +1396,17 @@ void noteunsel()
 
 
 
-void objmode(int, int) {}
+void objmode(int, int)
+{
+}
 
-void objprm(int, const std::string&) {}
+void objprm(int, const std::string&)
+{
+}
 
-void objsel(int) {}
+void objsel(int)
+{
+}
 
 
 // Peek 1byte.
@@ -1190,31 +1422,43 @@ std::uint8_t peek(elona_vector1<int> v, size_t index)
 
 
 
-void pget(int x, int y) {}
+void pget(int x, int y)
+{
+}
 
 void picload(const std::string& filename, int mode)
 {
-    try {
+    try
+    {
         std::optional<Color> keycolor = Color{0, 0, 0};
-        if (filename.find("pcc") != std::string::npos) {
+        if (filename.find("pcc") != std::string::npos)
+        {
             keycolor = {43, 133, 133};
         }
-        if (filename.find("bg") != std::string::npos) {
+        if (filename.find("bg") != std::string::npos)
+        {
             keycolor = std::nullopt;
         }
         BasicImage img{to_unix_filename(filename), keycolor};
-        if (mode == 0) {
+        if (mode == 0)
+        {
             buffer(detail::current_buffer, img.width(), img.height());
             LOG("picload 0", filename);
-        } else {
+        }
+        else
+        {
             LOG("picload 1", filename);
         }
         const auto save = Application::instance().renderer().blend_mode();
         Application::instance().renderer().set_blend_mode(BlendMode::none);
-        Application::instance().renderer().render_image(img,
-            detail::current_tex_buffer().x, detail::current_tex_buffer().y);
+        Application::instance().renderer().render_image(
+            img,
+            detail::current_tex_buffer().x,
+            detail::current_tex_buffer().y);
         Application::instance().renderer().set_blend_mode(save);
-    } catch (...) {
+    }
+    catch (...)
+    {
         LOG("picload", "Failed to load", filename);
     }
 }
@@ -1252,8 +1496,8 @@ void randomize(std::random_device::result_type seed)
 
 int rnd(int n)
 {
-    std::uniform_int_distribution<> dist{
-        0, std::clamp(n - 1, 0, (1 << 16) - 1)};
+    std::uniform_int_distribution<> dist{0,
+                                         std::clamp(n - 1, 0, (1 << 16) - 1)};
     return dist(rnd_detail::random_engine);
 }
 
@@ -1261,7 +1505,8 @@ int rnd(int n)
 
 void redraw(int n)
 {
-    if (n != 1) return;
+    if (n != 1)
+        return;
     const auto save = Application::instance().renderer().get_render_target();
     Application::instance().renderer().set_render_target(nullptr);
     Application::instance().renderer().set_draw_color(Color{0, 0, 0, 255});
@@ -1272,7 +1517,9 @@ void redraw(int n)
     Application::instance().renderer().set_render_target(save);
 }
 
-void screen(int window_id, int width, int height, int mode, int x, int y) {}
+void screen(int window_id, int width, int height, int mode, int x, int y)
+{
+}
 
 double sqrt(double x)
 {
@@ -1283,12 +1530,15 @@ void stick(int& out, int allow_repeat_keys)
 {
     auto check_key_pressed = [allow_repeat_keys](
                                  int n, Key key, bool is_modifier) {
-        if ((1 << n) & allow_repeat_keys) {
+        if ((1 << n) & allow_repeat_keys)
+        {
             if (is_modifier)
                 return (1 << n) * Keyboard::instance().is_pressed_exactly(key);
             else
                 return (1 << n) * Keyboard::instance().is_pressed(key);
-        } else {
+        }
+        else
+        {
             return (1 << n) * Keyboard::instance().was_pressed_just_now(key);
         }
     };
@@ -1322,7 +1572,8 @@ size_t strlen(const std::string& str)
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
-    for (int i = 0; i < str.length();) {
+    for (int i = 0; i < str.length();)
+    {
         const auto byte = byte_count(static_cast<uint8_t>(str[i]));
         ret += byte == 1 ? 1 : 2;
         i += byte;
@@ -1333,15 +1584,22 @@ size_t strlen_u(const std::string& str)
 std::string strmid(const std::string& source, int pos, int length)
 {
     const auto src_len = std::size(source);
-    if (pos == -1) {
+    if (pos == -1)
+    {
         // n characters from right to left.
         length = std::min(static_cast<decltype(src_len)>(length), src_len);
         return source.substr(src_len - length, length);
-    } else if (pos >= src_len) {
+    }
+    else if (pos >= src_len)
+    {
         return "";
-    } else if (pos + length >= src_len) {
+    }
+    else if (pos + length >= src_len)
+    {
         return source.substr(pos, std::string::npos);
-    } else {
+    }
+    else
+    {
         return source.substr(pos, length);
     }
 }
@@ -1350,9 +1608,12 @@ void title(const std::string& title_str)
 {
     LOG("SDL_Init");
     Application::instance().initialize(800, 600, title_str);
-    detail::tmp_buffer = snail::detail::enforce_sdl(
-        ::SDL_CreateTexture(Application::instance().renderer().ptr(),
-            SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, 1000, 1000));
+    detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
+        Application::instance().renderer().ptr(),
+        SDL_PIXELFORMAT_ARGB8888,
+        SDL_TEXTUREACCESS_TARGET,
+        1000,
+        1000));
     Application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
     Keyboard::instance().set_key_repeat(5, 0);
@@ -1366,14 +1627,19 @@ void title(const std::string& title_str)
 // {
 // }
 
-void width(int width, int height, int, int) {}
+void width(int width, int height, int, int)
+{
+}
 
 
 int wpeek(int x, size_t index)
 {
-    if (index == 0) {
+    if (index == 0)
+    {
         return x >> 16;
-    } else {
+    }
+    else
+    {
         assert(index == 2);
         return x & 0xffff;
     }
@@ -1381,9 +1647,12 @@ int wpeek(int x, size_t index)
 
 void wpoke(int& x, size_t index, int y)
 {
-    if (index == 0) {
+    if (index == 0)
+    {
         x = wpeek(x, 2) + (y << 16);
-    } else {
+    }
+    else
+    {
         assert(index == 2);
         x = (wpeek(x, 0) << 16) + y;
     }
@@ -1401,20 +1670,29 @@ void exrand_randomize(std::random_device::result_type seed)
 
 void exrand_rnd(int& result, int max)
 {
-    if (max <= 0) {
+    if (max <= 0)
+    {
         result = 0;
-    } else {
-        result = std::uniform_int_distribution<>{0, max - 1}(
-            rnd_detail::random_engine2);
+    }
+    else
+    {
+        result = std::uniform_int_distribution<>{
+            0, max - 1}(rnd_detail::random_engine2);
     }
 }
 
-void func_1(const std::string&, int) {}
+void func_1(const std::string&, int)
+{
+}
 
-void xnotesel(std::string&) {}
+void xnotesel(std::string&)
+{
+}
 
 
-void xnoteadd(const std::string&) {}
+void xnoteadd(const std::string&)
+{
+}
 
 
 
@@ -1492,16 +1770,26 @@ void gfinc(int r, int g, int b)
     //     });
 }
 
-void ematan(int, int, int) {}
+void ematan(int, int, int)
+{
+}
 
 
-void aplsel(const std::string&) {}
+void aplsel(const std::string&)
+{
+}
 
-void aplobj(const std::string&, int) {}
+void aplobj(const std::string&, int)
+{
+}
 
-void apledit(int, int, int) {}
+void apledit(int, int, int)
+{
+}
 
-void func_2(int, int, int, int, int, int) {}
+void func_2(int, int, int, int, int, int)
+{
+}
 
 
 namespace gzip_detail
@@ -1511,10 +1799,15 @@ std::fstream file;
 
 
 
-void memcpy_(std::string& dst, std::string& src, int size, int dst_offset,
+void memcpy_(
+    std::string& dst,
+    std::string& src,
+    int size,
+    int dst_offset,
     int src_offset)
 {
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
+    {
         dst[i + dst_offset] = src[i + src_offset];
     }
 }
@@ -1528,13 +1821,15 @@ void zOpen(int&, const std::string& filename, int mode, int)
         LOG("zOpen/w", filename);
         gzip_detail::file.open(
             to_unix_filename(filename), std::ios::out | std::ios::binary);
-    } else // Read
+    }
+    else // Read
     {
         LOG("zOpen/r", filename);
         gzip_detail::file.open(
             to_unix_filename(filename), std::ios::in | std::ios::binary);
     }
-    if (!gzip_detail::file) {
+    if (!gzip_detail::file)
+    {
         LOG("Failed");
         throw 0;
     }
@@ -1546,11 +1841,13 @@ void zWrite(elona_vector1<int>& data, int, int size)
 {
     LOG("zWrite", size);
 
-    for (int i = 0; i < length(data); ++i) {
+    for (int i = 0; i < length(data); ++i)
+    {
         gzip_detail::file.write(
             reinterpret_cast<const char*>(&data(i)), sizeof(int));
         size -= sizeof(int);
-        if (size == 0) return;
+        if (size == 0)
+            return;
     }
 }
 
@@ -1559,12 +1856,15 @@ void zWrite(elona_vector2<int>& data, int, int size)
 {
     LOG("zWrite", size);
 
-    for (int j = 0; j < data.j_size(); ++j) {
-        for (int i = 0; i < data.i_size(); ++i) {
+    for (int j = 0; j < data.j_size(); ++j)
+    {
+        for (int i = 0; i < data.i_size(); ++i)
+        {
             gzip_detail::file.write(
                 reinterpret_cast<const char*>(&data(i, j)), sizeof(int));
             size -= sizeof(int);
-            if (size == 0) return;
+            if (size == 0)
+                return;
         }
     }
 }
@@ -1574,12 +1874,15 @@ void zWrite(elona_vector2<int>& data, int, int size, int offset)
 {
     LOG("zWrite", size);
 
-    for (int j = offset; j < data.j_size(); ++j) {
-        for (int i = 0; i < data.i_size(); ++i) {
+    for (int j = offset; j < data.j_size(); ++j)
+    {
+        for (int i = 0; i < data.i_size(); ++i)
+        {
             gzip_detail::file.write(
                 reinterpret_cast<const char*>(&data(i, j)), sizeof(int));
             size -= sizeof(int);
-            if (size == 0) return;
+            if (size == 0)
+                return;
         }
     }
 }
@@ -1589,13 +1892,17 @@ void zWrite(elona_vector3<int>& data, int, int size)
 {
     LOG("zWrite", size);
 
-    for (int k = 0; k < data.k_size(); ++k) {
-        for (int j = 0; j < data.j_size(); ++j) {
-            for (int i = 0; i < data.i_size(); ++i) {
+    for (int k = 0; k < data.k_size(); ++k)
+    {
+        for (int j = 0; j < data.j_size(); ++j)
+        {
+            for (int i = 0; i < data.i_size(); ++i)
+            {
                 gzip_detail::file.write(
                     reinterpret_cast<const char*>(&data(i, j, k)), sizeof(int));
                 size -= sizeof(int);
-                if (size == 0) return;
+                if (size == 0)
+                    return;
             }
         }
     }
@@ -1606,11 +1913,13 @@ void zWrite(elona_vector1<std::string>& data, int, int size)
 {
     LOG("zWrite", size);
 
-    for (int i = 0; i < length(data); ++i) {
+    for (int i = 0; i < length(data); ++i)
+    {
         gzip_detail::file.write(
             reinterpret_cast<const char*>(data(i).c_str()), std::size(data(i)));
         size -= std::size(data(i)) * sizeof(char);
-        if (size == 0) return;
+        if (size == 0)
+            return;
     }
 }
 
@@ -1622,10 +1931,12 @@ void zRead(elona_vector1<int>& data, int, int size)
 
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
-    for (int i = 0; i < length(data); ++i) {
+    for (int i = 0; i < length(data); ++i)
+    {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
         size -= sizeof(int);
-        if (size == 0) return;
+        if (size == 0)
+            return;
     }
 }
 
@@ -1635,12 +1946,15 @@ void zRead(elona_vector2<int>& data, int, int size)
     LOG("zRead/int[][]", size, data.j_size(), data.i_size());
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
-    for (int j = 0; j < data.j_size(); ++j) {
-        for (int i = 0; i < data.i_size(); ++i) {
+    for (int j = 0; j < data.j_size(); ++j)
+    {
+        for (int i = 0; i < data.i_size(); ++i)
+        {
             data(i, j) =
                 reinterpret_cast<int*>(buf.get())[i + j * data.i_size()];
             size -= sizeof(int);
-            if (size == 0) return;
+            if (size == 0)
+                return;
         }
     }
 }
@@ -1652,12 +1966,15 @@ void zRead(elona_vector2<int>& data, int, int size, int offset)
 
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
-    for (int j = offset; j < data.j_size(); ++j) {
-        for (int i = 0; i < data.i_size(); ++i) {
+    for (int j = offset; j < data.j_size(); ++j)
+    {
+        for (int i = 0; i < data.i_size(); ++i)
+        {
             data(i, j) = reinterpret_cast<int*>(
                 buf.get())[i + (j - offset) * data.i_size()];
             size -= sizeof(int);
-            if (size == 0) return;
+            if (size == 0)
+                return;
         }
     }
 }
@@ -1669,13 +1986,17 @@ void zRead(elona_vector3<int>& data, int, int size)
 
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
-    for (int k = 0; k < data.k_size(); ++k) {
-        for (int j = 0; j < data.j_size(); ++j) {
-            for (int i = 0; i < data.i_size(); ++i) {
-                data(i, j, k) = reinterpret_cast<int*>(buf.get())[i +
-                    j * data.i_size() + k * data.i_size() * data.j_size()];
+    for (int k = 0; k < data.k_size(); ++k)
+    {
+        for (int j = 0; j < data.j_size(); ++j)
+        {
+            for (int i = 0; i < data.i_size(); ++i)
+            {
+                data(i, j, k) = reinterpret_cast<int*>(buf.get())
+                    [i + j * data.i_size() + k * data.i_size() * data.j_size()];
                 size -= sizeof(int);
-                if (size == 0) return;
+                if (size == 0)
+                    return;
             }
         }
     }
@@ -1699,48 +2020,86 @@ void zClose(int)
     gzip_detail::file.close();
 }
 
-void GetOpenFileNameA() {}
+void GetOpenFileNameA()
+{
+}
 
 
-void GetSaveFileNameA() {}
+void GetSaveFileNameA()
+{
+}
 
-void DSINIT() {}
+void DSINIT()
+{
+}
 
-void DSEND() {}
+void DSEND()
+{
+}
 
-void DSRELEASE(int) {}
-
-
-void DSLOADFNAME(const std::string& filename, int id) {}
-
-void DSPLAY(int, int) {}
-
-void DSSTOP(int) {}
-
-void DSSETVOLUME(int, int) {}
-
-
-void DSGETMASTERVOLUME() {}
-
-void CHECKPLAY(int id) {}
-
-void DMINIT() {}
-
-void DMEND() {}
+void DSRELEASE(int)
+{
+}
 
 
-void DMLOADFNAME(const std::string&, int) {}
+void DSLOADFNAME(const std::string& filename, int id)
+{
+}
 
-void DMPLAY(int, int) {}
+void DSPLAY(int, int)
+{
+}
 
-void DMSTOP() {}
+void DSSTOP(int)
+{
+}
 
-void DIINIT() {}
+void DSSETVOLUME(int, int)
+{
+}
 
-void DIGETJOYNUM() {}
+
+void DSGETMASTERVOLUME()
+{
+}
+
+void CHECKPLAY(int id)
+{
+}
+
+void DMINIT()
+{
+}
+
+void DMEND()
+{
+}
 
 
-void DIGETJOYSTATE(int, int) {}
+void DMLOADFNAME(const std::string&, int)
+{
+}
+
+void DMPLAY(int, int)
+{
+}
+
+void DMSTOP()
+{
+}
+
+void DIINIT()
+{
+}
+
+void DIGETJOYNUM()
+{
+}
+
+
+void DIGETJOYSTATE(int, int)
+{
+}
 
 void HMMBITON(int& x, int n)
 {
@@ -1758,31 +2117,55 @@ void HMMBITCHECK(int x, int n)
 }
 
 
-void sockopen(int, const std::string&, int) {}
+void sockopen(int, const std::string&, int)
+{
+}
 
-void sockclose() {}
+void sockclose()
+{
+}
 
-void sockget(const std::string&, int) {}
+void sockget(const std::string&, int)
+{
+}
 
-void sockput(const std::string&) {}
+void sockput(const std::string&)
+{
+}
 
-void netinit() {}
-
-
-void netexec(int&) {}
-
-void neterror(const std::string&) {}
-
-void neturl(const std::string&) {}
-
-void netdlname(const std::string&) {}
-
-void netrequest(const std::string&) {}
+void netinit()
+{
+}
 
 
-void RemoveDirectoryA(const std::string&) {}
+void netexec(int&)
+{
+}
 
-void GetLastError() {}
+void neterror(const std::string&)
+{
+}
+
+void neturl(const std::string&)
+{
+}
+
+void netdlname(const std::string&)
+{
+}
+
+void netrequest(const std::string&)
+{
+}
+
+
+void RemoveDirectoryA(const std::string&)
+{
+}
+
+void GetLastError()
+{
+}
 
 void CreateMutexA(int, int, const std::string&)
 {
@@ -1790,7 +2173,9 @@ void CreateMutexA(int, int, const std::string&)
 }
 
 
-void CloseHandle(int) {}
+void CloseHandle(int)
+{
+}
 
 void func_3()
 {
@@ -1809,38 +2194,66 @@ int GetUserDefaultLCID()
     return 0;
 }
 
-void water_getimage() {}
+void water_getimage()
+{
+}
 
 
-void water_setripple(int, int, int, int) {}
+void water_setripple(int, int, int, int)
+{
+}
 
-void water_calc() {}
+void water_calc()
+{
+}
 
-void water_draw() {}
-
-
-void AppendMenuA() {}
-
-void CheckMenuRadioItem() {}
-
-void CreateMenu() {}
-
-
-void CreatePopupMenu() {}
-
-void DrawMenuBar() {}
-
-void SetMenu() {}
+void water_draw()
+{
+}
 
 
-void keybd_event(int, int, int) {}
+void AppendMenuA()
+{
+}
 
-void GetKeyboardState(elona_vector1<int>&) {}
+void CheckMenuRadioItem()
+{
+}
 
-void timeBeginPeriod(int) {}
+void CreateMenu()
+{
+}
 
 
-void timeEndPeriod() {}
+void CreatePopupMenu()
+{
+}
+
+void DrawMenuBar()
+{
+}
+
+void SetMenu()
+{
+}
+
+
+void keybd_event(int, int, int)
+{
+}
+
+void GetKeyboardState(elona_vector1<int>&)
+{
+}
+
+void timeBeginPeriod(int)
+{
+}
+
+
+void timeEndPeriod()
+{
+}
 
 int timeGetTime()
 {
@@ -1853,9 +2266,13 @@ int ImmGetContext(int)
 }
 
 
-void ImmReleaseContext(int, int) {}
+void ImmReleaseContext(int, int)
+{
+}
 
-void ImmSetOpenStatus(int, int) {}
+void ImmSetOpenStatus(int, int)
+{
+}
 
 
 int ImmGetOpenStatus(int)
@@ -1865,10 +2282,14 @@ int ImmGetOpenStatus(int)
 
 
 
-void onkey_0() {}
+void onkey_0()
+{
+}
 
 
-void onkey_1() {}
+void onkey_1()
+{
+}
 
 
 void end()
@@ -1885,17 +2306,21 @@ int talk_conv_jp(std::string& text, int max_line_length)
     std::string rest{text};
     text.clear();
 
-    while (1) {
+    while (1)
+    {
         const auto len = rest.length();
-        if (len < max_line_length) {
+        if (len < max_line_length)
+        {
             text += rest;
             stat = n;
             return stat;
         }
         size_t line_length = 0;
-        while (line_length <= len) {
+        while (line_length <= len)
+        {
             line_length += byte_count(static_cast<uint8_t>(rest[line_length]));
-            if (line_length > max_line_length) {
+            if (line_length > max_line_length)
+            {
                 // m = strmid(rest, line_length, 2);
                 // if (false
                 //         || m == u8"。"s
@@ -1910,9 +2335,12 @@ int talk_conv_jp(std::string& text, int max_line_length)
                 // }
                 text += rest.substr(0, line_length) + '\n';
                 ++n;
-                if (rest.length() > line_length) {
+                if (rest.length() > line_length)
+                {
                     rest = rest.substr(line_length);
-                } else {
+                }
+                else
+                {
                     rest = "";
                 }
                 break;
@@ -1928,16 +2356,20 @@ int talk_conv_en(std::string& text, int max_line_length)
 
     std::string rest{text};
     text.clear();
-    while (1) {
+    while (1)
+    {
         int line_length = 0;
-        while (1) {
+        while (1)
+        {
             const auto p = rest.find(' ');
-            if (p == std::string::npos) {
+            if (p == std::string::npos)
+            {
                 text += rest;
                 stat = n;
                 return stat;
             }
-            if (line_length + p + 1 > max_line_length) {
+            if (line_length + p + 1 > max_line_length)
+            {
                 text.back() = '\n';
                 ++n;
                 break;
@@ -1953,9 +2385,12 @@ int talk_conv_en(std::string& text, int max_line_length)
 
 int talk_conv(std::string& text, int max_line_length)
 {
-    if (jp) {
+    if (jp)
+    {
         return talk_conv_jp(text, max_line_length);
-    } else {
+    }
+    else
+    {
         return talk_conv_en(text, max_line_length);
     }
 }
@@ -1965,8 +2400,12 @@ int talk_conv(std::string& text, int max_line_length)
 void rm_crlf(std::string& str)
 {
     std::string ret;
-    for (const auto& c : str) {
-        if (c != '\n' && c != '\r') { ret += c; }
+    for (const auto& c : str)
+    {
+        if (c != '\n' && c != '\r')
+        {
+            ret += c;
+        }
     }
     str = ret;
 }

@@ -7,10 +7,7 @@
 
 namespace snail
 {
-
-
-class Scene
-    : public Node
+class Scene : public Node
 {
 public:
     std::shared_ptr<Scene> parent() noexcept
@@ -29,8 +26,7 @@ private:
 
 
 
-class SceneManager final
-    : public lib::noncopyable
+class SceneManager final : public lib::noncopyable
 {
 public:
     std::shared_ptr<Scene> current_scene();
@@ -51,4 +47,4 @@ private:
 };
 
 
-}
+} // namespace snail

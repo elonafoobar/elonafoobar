@@ -7,16 +7,14 @@
 
 namespace snail
 {
-
-
 struct Font
 {
     enum class Style
     {
-        regular       = TTF_STYLE_NORMAL,
-        bold          = TTF_STYLE_BOLD,
-        italic        = TTF_STYLE_ITALIC,
-        underline     = TTF_STYLE_UNDERLINE,
+        regular = TTF_STYLE_NORMAL,
+        bold = TTF_STYLE_BOLD,
+        italic = TTF_STYLE_ITALIC,
+        underline = TTF_STYLE_UNDERLINE,
         strikeThrough = TTF_STYLE_STRIKETHROUGH,
     };
 
@@ -64,4 +62,4 @@ private:
 };
 
 
-}
+} // namespace snail

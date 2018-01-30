@@ -1,6 +1,5 @@
 namespace elona
 {
-
 inline elona_vector1<int> _randcolor;
 inline elona_vector1<int> act_at_tcg;
 inline elona_vector1<int> anip;
@@ -1705,8 +1704,17 @@ std::string yourself(int = 0);
 void actionproc();
 void addbuilding(int = 0, int = 0, int = 0, int = 0);
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void addmef(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0,
-    int = 0, int = 0, int = 0);
+void addmef(
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0,
+    int = 0);
 void addnews(int = 0, int = 0);
 void addnews2(const std::string&, int = 0);
 void addnewstopic(const std::string&, const std::string&);
@@ -2443,7 +2451,8 @@ void txt(Args&&... args)
 {
     std::vector<std::string> text{txt_tostr(args)...};
     txtvalid = 0;
-    if (hear != 0) {
+    if (hear != 0)
+    {
         snd(hear);
         hear = 0;
     }
@@ -2456,8 +2465,10 @@ void txt(Args&&... args)
 
 
 
-struct elona_fmode_t {
-    enum class Type {
+struct elona_fmode_t
+{
+    enum class Type
+    {
         integer,
         string,
     } type;
@@ -2466,7 +2477,11 @@ struct elona_fmode_t {
     int i;
     std::string s;
 
-    elona_fmode_t() : type(Type::integer), i(0) {}
+    elona_fmode_t()
+        : type(Type::integer)
+        , i(0)
+    {
+    }
 
     virtual ~elona_fmode_t() = default;
 
@@ -2499,7 +2514,8 @@ struct elona_fmode_t {
 
     std::string to_string() const
     {
-        switch (type) {
+        switch (type)
+        {
         case elona_fmode_t::Type::integer: return std::to_string(i);
         case elona_fmode_t::Type::string: return s;
         }

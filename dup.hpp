@@ -1,17 +1,27 @@
 namespace elona
 {
 template <typename T>
-struct elona_dup1 {
-    elona_dup1(elona_vector1<T>& vector, int i) : vector(vector), i(i) {}
+struct elona_dup1
+{
+    elona_dup1(elona_vector1<T>& vector, int i)
+        : vector(vector)
+        , i(i)
+    {
+    }
 
 
     explicit operator bool()
     {
-        if constexpr (std::is_same_v<T, int>) {
+        if constexpr (std::is_same_v<T, int>)
+        {
             return static_cast<bool>(**this);
-        } else if constexpr (std::is_same_v<T, std::string>) {
+        }
+        else if constexpr (std::is_same_v<T, std::string>)
+        {
             return static_cast<bool>(std::stoi(**this));
-        } else {
+        }
+        else
+        {
             static_assert(false_v<T>);
         }
     }
@@ -23,11 +33,17 @@ struct elona_dup1 {
 
 
 
-    operator T&() { return **this; }
+    operator T&()
+    {
+        return **this;
+    }
 
 
 
-    T& operator*() { return vector(i); }
+    T& operator*()
+    {
+        return vector(i);
+    }
 
 
     elona_dup1& operator=(const T& v)
@@ -39,9 +55,12 @@ struct elona_dup1 {
 
     elona_dup1& operator=(int n)
     {
-        if constexpr (std::is_same_v<T, int>) {
+        if constexpr (std::is_same_v<T, int>)
+        {
             vector(i) = n;
-        } else {
+        }
+        else
+        {
             vector(i) = std::to_string(n);
         }
         return *this;
@@ -64,9 +83,12 @@ struct elona_dup1 {
 
     bool operator==(int other)
     {
-        if constexpr (std::is_same_v<T, int>) {
+        if constexpr (std::is_same_v<T, int>)
+        {
             return vector(i) == other;
-        } else {
+        }
+        else
+        {
             return vector(i) == std::to_string(other);
         }
     }
@@ -75,9 +97,12 @@ struct elona_dup1 {
 
     bool operator==(const std::string& s)
     {
-        if constexpr (std::is_same_v<T, std::string>) {
+        if constexpr (std::is_same_v<T, std::string>)
+        {
             return vector(i) == s;
-        } else {
+        }
+        else
+        {
             static_assert(false_v<T>);
         }
     }
@@ -118,7 +143,8 @@ bool operator!=(elona_vector1<T>& lhs, elona_dup1<T>& rhs)
 
 
 inline std::string operator+(
-    const std::string& lhs, elona_dup1<std::string>& rhs)
+    const std::string& lhs,
+    elona_dup1<std::string>& rhs)
 {
     return lhs + *rhs;
 }
@@ -126,9 +152,12 @@ inline std::string operator+(
 
 
 template <typename T>
-struct elona_dup2 {
+struct elona_dup2
+{
     elona_dup2(elona_vector2<T>& vector, int i, int j)
-        : vector(vector), i(i), j(j)
+        : vector(vector)
+        , i(i)
+        , j(j)
     {
     }
 
@@ -139,15 +168,24 @@ struct elona_dup2 {
 
 
 
-    operator T&() { return **this; }
+    operator T&()
+    {
+        return **this;
+    }
 
 
 
-    T& operator*() { return vector(i, j); }
+    T& operator*()
+    {
+        return vector(i, j);
+    }
 
 
 
-    T& operator()(int i_) { return vector(i + i_, j); }
+    T& operator()(int i_)
+    {
+        return vector(i + i_, j);
+    }
 
 
     elona_dup2& operator=(const T& other)

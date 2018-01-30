@@ -6,7 +6,8 @@ namespace elona
 {
 int label_1756()
 {
-    if (dbid == 0) {
+    if (dbid == 0)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -16,7 +17,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 343) {
+    if (dbid == 343)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -26,7 +28,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 1) {
+    if (dbid == 1)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -36,7 +39,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 353) {
+    if (dbid == 353)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -46,7 +50,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 70) {
+    if (dbid == 70)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -56,7 +61,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 69) {
+    if (dbid == 69)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -66,7 +72,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 73) {
+    if (dbid == 73)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -76,7 +83,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 74) {
+    if (dbid == 74)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -86,7 +94,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 206) {
+    if (dbid == 206)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -96,7 +105,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 38) {
+    if (dbid == 38)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -106,7 +116,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 40) {
+    if (dbid == 40)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -116,7 +127,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 333) {
+    if (dbid == 333)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -126,7 +138,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 76) {
+    if (dbid == 76)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -136,7 +149,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 77) {
+    if (dbid == 77)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -146,7 +160,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 204) {
+    if (dbid == 204)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -156,7 +171,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 2) {
+    if (dbid == 2)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -167,7 +183,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 37) {
+    if (dbid == 37)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -177,7 +194,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 23) {
+    if (dbid == 23)
+    {
         cardreftype = 0;
         cardrefrare = 1;
         cardrefcost = 0;
@@ -188,7 +206,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 26) {
+    if (dbid == 26)
+    {
         cardreftype = 0;
         cardrefrare = 1;
         cardrefcost = 0;
@@ -198,7 +217,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 27) {
+    if (dbid == 27)
+    {
         cardreftype = 0;
         cardrefrare = 1;
         cardrefcost = 0;
@@ -208,7 +228,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 28) {
+    if (dbid == 28)
+    {
         cardreftype = 10;
         cardrefdomain = 3;
         cardrefrare = 1;
@@ -222,18 +243,21 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 29) {
+    if (dbid == 29)
+    {
         cardreftype = 0;
         cardrefrare = 1;
         cardrefcost = 0;
-        cardrefn = lang(u8"ザナンの紅の英雄『ロイター』"s,
+        cardrefn = lang(
+            u8"ザナンの紅の英雄『ロイター』"s,
             u8"<Loyter> the crimson of Zanan"s);
         cardrefpic = 337;
         cardrefrace = u8"juere"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 140) {
+    if (dbid == 140)
+    {
         cardreftype = 0;
         cardrefrare = 1;
         cardrefcost = 0;
@@ -243,7 +267,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 30) {
+    if (dbid == 30)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -253,7 +278,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 31) {
+    if (dbid == 31)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -263,7 +289,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 351) {
+    if (dbid == 351)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -273,7 +300,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 352) {
+    if (dbid == 352)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -283,7 +311,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 32) {
+    if (dbid == 32)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -293,29 +322,34 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 33) {
+    if (dbid == 33)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"風を聴く者『ラーネイレ』"s,
+        cardrefn = lang(
+            u8"風を聴く者『ラーネイレ』"s,
             u8"<Larnneire> the listener of wind"s);
         cardrefpic = 345;
         cardrefrace = u8"elea"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 34) {
+    if (dbid == 34)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"異形の森の使者『ロミアス』"s,
+        cardrefn = lang(
+            u8"異形の森の使者『ロミアス』"s,
             u8"<Lomias> the messenger from Vindale"s);
         cardrefpic = 346;
         cardrefrace = u8"elea"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 139) {
+    if (dbid == 139)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -326,29 +360,34 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 146) {
+    if (dbid == 146)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"カルーンの孤狼『カラム』"s,
+        cardrefn = lang(
+            u8"カルーンの孤狼『カラム』"s,
             u8"<Karam> the lonely wolf of Karune"s);
         cardrefpic = 99;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 142) {
+    if (dbid == 142)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"歴史を学ぶ『エリステア』"s,
+        cardrefn = lang(
+            u8"歴史を学ぶ『エリステア』"s,
             u8"<Erystia> the scholar of history"s);
         cardrefpic = 340;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 141) {
+    if (dbid == 141)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -359,29 +398,34 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 143) {
+    if (dbid == 143)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"古城の主『ワイナン』"s,
+        cardrefn = lang(
+            u8"古城の主『ワイナン』"s,
             u8"<Wynan> the lord of the Ancient Castle"s);
         cardrefpic = 341;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 144) {
+    if (dbid == 144)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"赤き義眼の『クルイツゥア』"s,
+        cardrefn = lang(
+            u8"赤き義眼の『クルイツゥア』"s,
             u8"<Quruiza> the red-eyed Deceiver"s);
         cardrefpic = 343;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 145) {
+    if (dbid == 145)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -392,7 +436,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 306) {
+    if (dbid == 306)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -402,7 +447,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 331) {
+    if (dbid == 331)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -412,7 +458,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 336) {
+    if (dbid == 336)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -422,7 +469,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 338) {
+    if (dbid == 338)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -432,7 +480,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 339) {
+    if (dbid == 339)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -442,7 +491,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 342) {
+    if (dbid == 342)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -452,7 +502,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 340) {
+    if (dbid == 340)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -462,7 +513,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 3) {
+    if (dbid == 3)
+    {
         cardreftype = 10;
         cardrefdomain = 0;
         cardrefrare = 80;
@@ -475,7 +527,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 4) {
+    if (dbid == 4)
+    {
         cardreftype = 10;
         cardrefdomain = 0;
         cardrefrare = 70;
@@ -488,7 +541,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 169) {
+    if (dbid == 169)
+    {
         cardreftype = 10;
         cardrefskill = 1;
         cardrefdomain = 1;
@@ -503,7 +557,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 194) {
+    if (dbid == 194)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -513,7 +568,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 286) {
+    if (dbid == 286)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -523,7 +579,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 285) {
+    if (dbid == 285)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -533,7 +590,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 287) {
+    if (dbid == 287)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -543,7 +601,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 327) {
+    if (dbid == 327)
+    {
         cardreftype = 0;
         cardrefrare = 15;
         cardrefcost = 0;
@@ -553,7 +612,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 5) {
+    if (dbid == 5)
+    {
         cardreftype = 10;
         cardrefdomain = 2;
         cardrefrare = 100;
@@ -566,7 +626,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 6) {
+    if (dbid == 6)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -576,7 +637,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 7) {
+    if (dbid == 7)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -586,7 +648,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 8) {
+    if (dbid == 8)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -596,7 +659,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 9) {
+    if (dbid == 9)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -606,7 +670,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 269) {
+    if (dbid == 269)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -616,7 +681,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 320) {
+    if (dbid == 320)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -626,7 +692,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 273) {
+    if (dbid == 273)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -636,7 +703,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 326) {
+    if (dbid == 326)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -646,7 +714,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 270) {
+    if (dbid == 270)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -656,7 +725,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 349) {
+    if (dbid == 349)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -666,7 +736,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 348) {
+    if (dbid == 348)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -676,7 +747,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 347) {
+    if (dbid == 347)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -686,7 +758,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 271) {
+    if (dbid == 271)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -696,7 +769,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 335) {
+    if (dbid == 335)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -706,7 +780,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 337) {
+    if (dbid == 337)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -716,7 +791,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 272) {
+    if (dbid == 272)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -726,7 +802,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 274) {
+    if (dbid == 274)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -736,7 +813,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 289) {
+    if (dbid == 289)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -746,7 +824,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 293) {
+    if (dbid == 293)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -756,7 +835,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 295) {
+    if (dbid == 295)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -766,7 +846,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 35) {
+    if (dbid == 35)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -776,7 +857,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 36) {
+    if (dbid == 36)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -786,7 +868,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 174) {
+    if (dbid == 174)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -796,7 +879,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 10) {
+    if (dbid == 10)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -806,7 +890,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 11) {
+    if (dbid == 11)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -816,7 +901,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 12) {
+    if (dbid == 12)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -826,7 +912,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 13) {
+    if (dbid == 13)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -836,7 +923,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 236) {
+    if (dbid == 236)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -846,7 +934,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 238) {
+    if (dbid == 238)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -856,7 +945,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 241) {
+    if (dbid == 241)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -866,7 +956,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 240) {
+    if (dbid == 240)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -876,7 +967,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 237) {
+    if (dbid == 237)
+    {
         cardreftype = 0;
         cardrefrare = 150;
         cardrefcost = 0;
@@ -886,7 +978,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 244) {
+    if (dbid == 244)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -896,7 +989,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 245) {
+    if (dbid == 245)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -906,7 +1000,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 321) {
+    if (dbid == 321)
+    {
         cardreftype = 0;
         cardrefrare = 15;
         cardrefcost = 0;
@@ -916,7 +1011,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 242) {
+    if (dbid == 242)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -926,7 +1022,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 239) {
+    if (dbid == 239)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -936,7 +1033,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 14) {
+    if (dbid == 14)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -946,7 +1044,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 15) {
+    if (dbid == 15)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -956,7 +1055,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 283) {
+    if (dbid == 283)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -966,7 +1066,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 284) {
+    if (dbid == 284)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -976,7 +1077,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 16) {
+    if (dbid == 16)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -986,7 +1088,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 39) {
+    if (dbid == 39)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -996,7 +1099,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 171) {
+    if (dbid == 171)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1006,7 +1110,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 172) {
+    if (dbid == 172)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1016,7 +1121,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 173) {
+    if (dbid == 173)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1026,7 +1132,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 71) {
+    if (dbid == 71)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1036,7 +1143,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 72) {
+    if (dbid == 72)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1046,18 +1154,21 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 79) {
+    if (dbid == 79)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"パルミア王妃『スターシャ』"s,
+        cardrefn = lang(
+            u8"パルミア王妃『スターシャ』"s,
             u8"<Stersha> the queen of Palmia"s);
         cardrefpic = 117;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 80) {
+    if (dbid == 80)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1068,7 +1179,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 17) {
+    if (dbid == 17)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1078,7 +1190,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 281) {
+    if (dbid == 281)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1088,7 +1201,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 282) {
+    if (dbid == 282)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1098,7 +1212,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 296) {
+    if (dbid == 296)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1108,7 +1223,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 298) {
+    if (dbid == 298)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1118,7 +1234,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 299) {
+    if (dbid == 299)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1128,7 +1245,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 300) {
+    if (dbid == 300)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1139,7 +1257,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 251) {
+    if (dbid == 251)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1149,7 +1268,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 18) {
+    if (dbid == 18)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1159,7 +1279,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 24) {
+    if (dbid == 24)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1169,7 +1290,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 309) {
+    if (dbid == 309)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1179,7 +1301,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 310) {
+    if (dbid == 310)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1189,7 +1312,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 311) {
+    if (dbid == 311)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1199,7 +1323,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 41) {
+    if (dbid == 41)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1209,7 +1334,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 75) {
+    if (dbid == 75)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1219,7 +1345,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 19) {
+    if (dbid == 19)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1229,7 +1356,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 22) {
+    if (dbid == 22)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1239,7 +1367,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 20) {
+    if (dbid == 20)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1249,7 +1378,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 25) {
+    if (dbid == 25)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1260,7 +1390,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 21) {
+    if (dbid == 21)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1270,7 +1401,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 42) {
+    if (dbid == 42)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1280,7 +1412,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 43) {
+    if (dbid == 43)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1290,7 +1423,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 44) {
+    if (dbid == 44)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -1300,7 +1434,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 45) {
+    if (dbid == 45)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1310,7 +1445,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 46) {
+    if (dbid == 46)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1320,7 +1456,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 47) {
+    if (dbid == 47)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -1330,7 +1467,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 48) {
+    if (dbid == 48)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1340,7 +1478,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 49) {
+    if (dbid == 49)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1350,7 +1489,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 307) {
+    if (dbid == 307)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -1360,7 +1500,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 308) {
+    if (dbid == 308)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -1370,7 +1511,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 50) {
+    if (dbid == 50)
+    {
         cardreftype = 0;
         cardrefrare = 80;
         cardrefcost = 0;
@@ -1380,7 +1522,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 51) {
+    if (dbid == 51)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1390,7 +1533,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 52) {
+    if (dbid == 52)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1400,7 +1544,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 53) {
+    if (dbid == 53)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1410,7 +1555,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 54) {
+    if (dbid == 54)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1420,7 +1566,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 55) {
+    if (dbid == 55)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1430,7 +1577,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 56) {
+    if (dbid == 56)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1440,7 +1588,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 57) {
+    if (dbid == 57)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1450,7 +1599,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 58) {
+    if (dbid == 58)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1460,7 +1610,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 59) {
+    if (dbid == 59)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1470,7 +1621,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 60) {
+    if (dbid == 60)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1480,7 +1632,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 61) {
+    if (dbid == 61)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1490,7 +1643,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 62) {
+    if (dbid == 62)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1500,7 +1654,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 63) {
+    if (dbid == 63)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1510,7 +1665,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 64) {
+    if (dbid == 64)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -1520,7 +1676,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 312) {
+    if (dbid == 312)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1530,7 +1687,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 313) {
+    if (dbid == 313)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1540,7 +1698,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 65) {
+    if (dbid == 65)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1550,7 +1709,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 66) {
+    if (dbid == 66)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1560,7 +1720,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 67) {
+    if (dbid == 67)
+    {
         cardreftype = 0;
         cardrefrare = 80;
         cardrefcost = 0;
@@ -1570,7 +1731,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 315) {
+    if (dbid == 315)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -1580,7 +1742,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 316) {
+    if (dbid == 316)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -1590,7 +1753,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 314) {
+    if (dbid == 314)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -1600,7 +1764,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 68) {
+    if (dbid == 68)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1610,7 +1775,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 78) {
+    if (dbid == 78)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1620,7 +1786,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 81) {
+    if (dbid == 81)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1630,7 +1797,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 82) {
+    if (dbid == 82)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1640,7 +1808,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 83) {
+    if (dbid == 83)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -1650,7 +1819,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 84) {
+    if (dbid == 84)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1660,7 +1830,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 85) {
+    if (dbid == 85)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1670,7 +1841,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 86) {
+    if (dbid == 86)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1680,7 +1852,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 87) {
+    if (dbid == 87)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1690,7 +1863,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 88) {
+    if (dbid == 88)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1700,7 +1874,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 89) {
+    if (dbid == 89)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1710,7 +1885,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 90) {
+    if (dbid == 90)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1720,7 +1896,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 91) {
+    if (dbid == 91)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1730,7 +1907,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 92) {
+    if (dbid == 92)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1740,7 +1918,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 93) {
+    if (dbid == 93)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1750,7 +1929,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 94) {
+    if (dbid == 94)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1760,7 +1940,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 95) {
+    if (dbid == 95)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1770,7 +1951,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 96) {
+    if (dbid == 96)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1780,7 +1962,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 97) {
+    if (dbid == 97)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1790,7 +1973,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 98) {
+    if (dbid == 98)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1800,7 +1984,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 99) {
+    if (dbid == 99)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1810,7 +1995,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 100) {
+    if (dbid == 100)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1820,7 +2006,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 101) {
+    if (dbid == 101)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1830,18 +2017,21 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 257) {
+    if (dbid == 257)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"ピラミッドの主『ツェン』"s,
+        cardrefn = lang(
+            u8"ピラミッドの主『ツェン』"s,
             u8"<Tuwen> the master of the pyramid"s);
         cardrefpic = 8219;
         cardrefrace = u8"zombie"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 254) {
+    if (dbid == 254)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1851,7 +2041,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 102) {
+    if (dbid == 102)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1861,7 +2052,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 103) {
+    if (dbid == 103)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1871,7 +2063,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 104) {
+    if (dbid == 104)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1881,7 +2074,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 105) {
+    if (dbid == 105)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1891,7 +2085,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 106) {
+    if (dbid == 106)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1901,7 +2096,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 107) {
+    if (dbid == 107)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1911,7 +2107,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 108) {
+    if (dbid == 108)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1921,7 +2118,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 109) {
+    if (dbid == 109)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1931,7 +2129,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 344) {
+    if (dbid == 344)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -1941,7 +2140,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 110) {
+    if (dbid == 110)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -1951,7 +2151,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 111) {
+    if (dbid == 111)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -1961,7 +2162,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 112) {
+    if (dbid == 112)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -1971,7 +2173,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 113) {
+    if (dbid == 113)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -1981,7 +2184,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 114) {
+    if (dbid == 114)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -1991,7 +2195,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 115) {
+    if (dbid == 115)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2001,7 +2206,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 116) {
+    if (dbid == 116)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2011,7 +2217,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 117) {
+    if (dbid == 117)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2021,7 +2228,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 118) {
+    if (dbid == 118)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2031,7 +2239,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 248) {
+    if (dbid == 248)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -2041,7 +2250,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 119) {
+    if (dbid == 119)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2051,7 +2261,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 120) {
+    if (dbid == 120)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -2061,7 +2272,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 121) {
+    if (dbid == 121)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -2071,7 +2283,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 122) {
+    if (dbid == 122)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -2081,7 +2294,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 123) {
+    if (dbid == 123)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -2091,7 +2305,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 124) {
+    if (dbid == 124)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -2101,7 +2316,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 125) {
+    if (dbid == 125)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -2111,7 +2327,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 126) {
+    if (dbid == 126)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -2121,7 +2338,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 255) {
+    if (dbid == 255)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2131,7 +2349,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 256) {
+    if (dbid == 256)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2141,7 +2360,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 127) {
+    if (dbid == 127)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2151,7 +2371,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 128) {
+    if (dbid == 128)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2161,7 +2382,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 129) {
+    if (dbid == 129)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2171,7 +2393,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 130) {
+    if (dbid == 130)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2181,7 +2404,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 131) {
+    if (dbid == 131)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2191,7 +2415,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 132) {
+    if (dbid == 132)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -2201,7 +2426,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 133) {
+    if (dbid == 133)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -2211,7 +2437,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 134) {
+    if (dbid == 134)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -2221,7 +2448,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 135) {
+    if (dbid == 135)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -2231,7 +2459,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 136) {
+    if (dbid == 136)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -2241,7 +2470,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 137) {
+    if (dbid == 137)
+    {
         cardreftype = 0;
         cardrefrare = 15;
         cardrefcost = 0;
@@ -2251,7 +2481,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 138) {
+    if (dbid == 138)
+    {
         cardreftype = 0;
         cardrefrare = 15;
         cardrefcost = 0;
@@ -2261,7 +2492,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 147) {
+    if (dbid == 147)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2271,7 +2503,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 148) {
+    if (dbid == 148)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2281,7 +2514,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 149) {
+    if (dbid == 149)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2291,7 +2525,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 150) {
+    if (dbid == 150)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2301,7 +2536,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 151) {
+    if (dbid == 151)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2311,7 +2547,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 152) {
+    if (dbid == 152)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2321,7 +2558,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 153) {
+    if (dbid == 153)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2331,7 +2569,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 154) {
+    if (dbid == 154)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2341,7 +2580,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 155) {
+    if (dbid == 155)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2351,7 +2591,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 156) {
+    if (dbid == 156)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2361,7 +2602,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 157) {
+    if (dbid == 157)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2371,7 +2613,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 158) {
+    if (dbid == 158)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2381,7 +2624,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 159) {
+    if (dbid == 159)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2391,7 +2635,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 160) {
+    if (dbid == 160)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2401,7 +2646,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 161) {
+    if (dbid == 161)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2411,7 +2657,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 302) {
+    if (dbid == 302)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2421,7 +2668,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 303) {
+    if (dbid == 303)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2431,7 +2679,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 304) {
+    if (dbid == 304)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2441,7 +2690,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 305) {
+    if (dbid == 305)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2451,7 +2701,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 162) {
+    if (dbid == 162)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2461,7 +2712,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 234) {
+    if (dbid == 234)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2472,7 +2724,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 231) {
+    if (dbid == 231)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2483,7 +2736,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 232) {
+    if (dbid == 232)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2493,7 +2747,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 233) {
+    if (dbid == 233)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2503,7 +2758,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 235) {
+    if (dbid == 235)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2513,7 +2769,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 163) {
+    if (dbid == 163)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2523,7 +2780,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 164) {
+    if (dbid == 164)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2533,7 +2791,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 246) {
+    if (dbid == 246)
+    {
         cardreftype = 0;
         cardrefrare = 1;
         cardrefcost = 0;
@@ -2543,7 +2802,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 332) {
+    if (dbid == 332)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -2553,7 +2813,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 229) {
+    if (dbid == 229)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2563,7 +2824,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 230) {
+    if (dbid == 230)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2573,7 +2835,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 228) {
+    if (dbid == 228)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2583,7 +2846,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 165) {
+    if (dbid == 165)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2593,7 +2857,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 225) {
+    if (dbid == 225)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2603,7 +2868,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 226) {
+    if (dbid == 226)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2614,7 +2880,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 227) {
+    if (dbid == 227)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2624,7 +2891,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 166) {
+    if (dbid == 166)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2634,7 +2902,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 167) {
+    if (dbid == 167)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2644,7 +2913,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 168) {
+    if (dbid == 168)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2654,7 +2924,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 170) {
+    if (dbid == 170)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2664,7 +2935,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 175) {
+    if (dbid == 175)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2675,7 +2947,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 176) {
+    if (dbid == 176)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2685,7 +2958,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 249) {
+    if (dbid == 249)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2695,7 +2969,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 210) {
+    if (dbid == 210)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2705,7 +2980,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 211) {
+    if (dbid == 211)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2715,18 +2991,21 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 177) {
+    if (dbid == 177)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"ゼイレン究極破壊兵器『ウティマ』"s,
+        cardrefn = lang(
+            u8"ゼイレン究極破壊兵器『ウティマ』"s,
             u8"<Utima> the destroyer of Xeren"s);
         cardrefpic = 349;
         cardrefrace = u8"machinegod"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 178) {
+    if (dbid == 178)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2737,7 +3016,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 179) {
+    if (dbid == 179)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2748,7 +3028,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 208) {
+    if (dbid == 208)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2759,7 +3040,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 209) {
+    if (dbid == 209)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2770,7 +3052,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 180) {
+    if (dbid == 180)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2780,7 +3063,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 181) {
+    if (dbid == 181)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2790,7 +3074,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 182) {
+    if (dbid == 182)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2800,7 +3085,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 183) {
+    if (dbid == 183)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -2810,7 +3096,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 184) {
+    if (dbid == 184)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -2820,7 +3107,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 185) {
+    if (dbid == 185)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2830,7 +3118,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 350) {
+    if (dbid == 350)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2840,7 +3129,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 186) {
+    if (dbid == 186)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2850,7 +3140,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 187) {
+    if (dbid == 187)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2860,7 +3151,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 188) {
+    if (dbid == 188)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2870,7 +3162,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 345) {
+    if (dbid == 345)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2880,7 +3173,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 346) {
+    if (dbid == 346)
+    {
         cardreftype = 0;
         cardrefrare = 5;
         cardrefcost = 0;
@@ -2890,7 +3184,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 341) {
+    if (dbid == 341)
+    {
         cardreftype = 0;
         cardrefrare = 25;
         cardrefcost = 0;
@@ -2900,7 +3195,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 258) {
+    if (dbid == 258)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -2910,7 +3206,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 189) {
+    if (dbid == 189)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -2920,7 +3217,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 190) {
+    if (dbid == 190)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -2930,7 +3228,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 191) {
+    if (dbid == 191)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -2940,7 +3239,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 192) {
+    if (dbid == 192)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -2950,7 +3250,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 193) {
+    if (dbid == 193)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -2960,7 +3261,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 195) {
+    if (dbid == 195)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -2970,7 +3272,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 196) {
+    if (dbid == 196)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -2980,7 +3283,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 201) {
+    if (dbid == 201)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -2990,7 +3294,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 197) {
+    if (dbid == 197)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -3000,7 +3305,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 198) {
+    if (dbid == 198)
+    {
         cardreftype = 0;
         cardrefrare = 60;
         cardrefcost = 0;
@@ -3010,7 +3316,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 199) {
+    if (dbid == 199)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -3020,7 +3327,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 200) {
+    if (dbid == 200)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -3030,7 +3338,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 202) {
+    if (dbid == 202)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3040,7 +3349,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 203) {
+    if (dbid == 203)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3050,7 +3360,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 205) {
+    if (dbid == 205)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3060,7 +3371,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 207) {
+    if (dbid == 207)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3070,7 +3382,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 212) {
+    if (dbid == 212)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3080,7 +3393,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 213) {
+    if (dbid == 213)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3091,7 +3405,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 221) {
+    if (dbid == 221)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3101,7 +3416,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 222) {
+    if (dbid == 222)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3111,7 +3427,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 223) {
+    if (dbid == 223)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3122,7 +3439,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 224) {
+    if (dbid == 224)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3133,7 +3451,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 243) {
+    if (dbid == 243)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3144,7 +3463,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 247) {
+    if (dbid == 247)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3154,7 +3474,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 252) {
+    if (dbid == 252)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3165,7 +3486,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 253) {
+    if (dbid == 253)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3176,7 +3498,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 259) {
+    if (dbid == 259)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3186,7 +3509,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 301) {
+    if (dbid == 301)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3197,7 +3521,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 214) {
+    if (dbid == 214)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -3207,7 +3532,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 215) {
+    if (dbid == 215)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -3217,7 +3543,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 217) {
+    if (dbid == 217)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -3227,7 +3554,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 216) {
+    if (dbid == 216)
+    {
         cardreftype = 0;
         cardrefrare = 20;
         cardrefcost = 0;
@@ -3237,7 +3565,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 218) {
+    if (dbid == 218)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -3247,7 +3576,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 219) {
+    if (dbid == 219)
+    {
         cardreftype = 0;
         cardrefrare = 80;
         cardrefcost = 0;
@@ -3257,7 +3587,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 220) {
+    if (dbid == 220)
+    {
         cardreftype = 0;
         cardrefrare = 30;
         cardrefcost = 0;
@@ -3267,7 +3598,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 250) {
+    if (dbid == 250)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3277,7 +3609,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 260) {
+    if (dbid == 260)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3287,7 +3620,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 261) {
+    if (dbid == 261)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3297,7 +3631,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 262) {
+    if (dbid == 262)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3307,7 +3642,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 263) {
+    if (dbid == 263)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3317,7 +3653,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 264) {
+    if (dbid == 264)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3327,7 +3664,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 265) {
+    if (dbid == 265)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3337,7 +3675,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 266) {
+    if (dbid == 266)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3347,7 +3686,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 267) {
+    if (dbid == 267)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -3357,7 +3697,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 276) {
+    if (dbid == 276)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -3367,7 +3708,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 275) {
+    if (dbid == 275)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -3377,7 +3719,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 268) {
+    if (dbid == 268)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -3387,7 +3730,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 277) {
+    if (dbid == 277)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -3397,7 +3741,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 278) {
+    if (dbid == 278)
+    {
         cardreftype = 0;
         cardrefrare = 70;
         cardrefcost = 0;
@@ -3407,7 +3752,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 279) {
+    if (dbid == 279)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3417,7 +3763,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 280) {
+    if (dbid == 280)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3427,29 +3774,34 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 288) {
+    if (dbid == 288)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"魔術士ギルドマスター『レヴラス』"s,
+        cardrefn = lang(
+            u8"魔術士ギルドマスター『レヴラス』"s,
             u8"<Revlus> the mage guildmaster"s);
         cardrefpic = 193;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 290) {
+    if (dbid == 290)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"魔術士ギルドの番人『レクサス』"s,
+        cardrefn = lang(
+            u8"魔術士ギルドの番人『レクサス』"s,
             u8"<Lexus> the guild watchman"s);
         cardrefpic = 196;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 292) {
+    if (dbid == 292)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3460,7 +3812,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 294) {
+    if (dbid == 294)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3471,18 +3824,21 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 291) {
+    if (dbid == 291)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"戦士ギルドマスター『フレイ』"s,
+        cardrefn = lang(
+            u8"戦士ギルドマスター『フレイ』"s,
             u8"<Fray> the fighter guildmaster"s);
         cardrefpic = 80;
         cardrefrace = u8"norland"s;
         stat = 1;
         return stat;
     }
-    if (dbid == 297) {
+    if (dbid == 297)
+    {
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
@@ -3493,7 +3849,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 317) {
+    if (dbid == 317)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3503,7 +3860,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 318) {
+    if (dbid == 318)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3513,7 +3871,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 319) {
+    if (dbid == 319)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3523,7 +3882,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 322) {
+    if (dbid == 322)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3533,7 +3893,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 334) {
+    if (dbid == 334)
+    {
         cardreftype = 0;
         cardrefrare = 50;
         cardrefcost = 0;
@@ -3544,7 +3905,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 323) {
+    if (dbid == 323)
+    {
         cardreftype = 0;
         cardrefrare = 10;
         cardrefcost = 0;
@@ -3554,7 +3916,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 324) {
+    if (dbid == 324)
+    {
         cardreftype = 0;
         cardrefrare = 15;
         cardrefcost = 0;
@@ -3564,7 +3927,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 325) {
+    if (dbid == 325)
+    {
         cardreftype = 0;
         cardrefrare = 15;
         cardrefcost = 0;
@@ -3574,7 +3938,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 328) {
+    if (dbid == 328)
+    {
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
@@ -3584,7 +3949,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 329) {
+    if (dbid == 329)
+    {
         cardreftype = 0;
         cardrefrare = 5;
         cardrefcost = 0;
@@ -3594,7 +3960,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 330) {
+    if (dbid == 330)
+    {
         cardreftype = 0;
         cardrefrare = 40;
         cardrefcost = 0;
@@ -3604,7 +3971,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 502) {
+    if (dbid == 502)
+    {
         cardreftype = 30;
         cardrefdomain = 1;
         cardrefrare = 100;
@@ -3615,7 +3983,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 503) {
+    if (dbid == 503)
+    {
         cardreftype = 30;
         cardrefdomain = 1;
         cardrefrare = 100;
@@ -3626,7 +3995,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 500) {
+    if (dbid == 500)
+    {
         cardreftype = 30;
         cardrefdomain = 0;
         cardrefrare = 100;
@@ -3637,7 +4007,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 501) {
+    if (dbid == 501)
+    {
         cardreftype = 30;
         cardrefdomain = 0;
         cardrefrare = 100;
@@ -3648,7 +4019,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 504) {
+    if (dbid == 504)
+    {
         cardreftype = 30;
         cardrefdomain = 2;
         cardrefrare = 100;
@@ -3659,7 +4031,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 505) {
+    if (dbid == 505)
+    {
         cardreftype = 30;
         cardrefdomain = 2;
         cardrefrare = 100;
@@ -3670,7 +4043,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 506) {
+    if (dbid == 506)
+    {
         cardreftype = 30;
         cardrefdomain = 3;
         cardrefrare = 100;
@@ -3681,7 +4055,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 507) {
+    if (dbid == 507)
+    {
         cardreftype = 30;
         cardrefdomain = 3;
         cardrefrare = 100;
@@ -3692,7 +4067,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 508) {
+    if (dbid == 508)
+    {
         cardreftype = 20;
         cardrefskill = 2;
         cardrefdomain = 0;
@@ -3704,7 +4080,8 @@ int label_1756()
         stat = 1;
         return stat;
     }
-    if (dbid == 509) {
+    if (dbid == 509)
+    {
         cardreftype = 20;
         cardrefskill = 3;
         cardrefdomain = 0;

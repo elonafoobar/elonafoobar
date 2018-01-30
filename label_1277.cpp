@@ -9,9 +9,12 @@ void label_1277()
     ilight(792) = 0;
     ialphanameref(792) = "";
     iorgweight(792) = 200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(792) = u8"プチトロ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(792) = u8"putitoro"s;
         ioriginalnameref2(792) = "";
     }
@@ -21,25 +24,34 @@ void label_1277()
     ilight(791) = 0;
     ialphanameref(791) = "";
     iorgweight(791) = 22500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(791) = u8"《ドラゴンころし》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(791) = u8"<Dragon Slayer>"s;
         ioriginalnameref2(791) = "";
     }
     ipicref(791) = 697;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(791) = u8"両刃の大剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(791) = u8"two-edged great sword"s;
     }
     icolref(791) = 0;
     ilight(790) = 0;
     ialphanameref(790) = "";
     iorgweight(790) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(790) = u8"テスト用フライパン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(790) = u8"frying pan for testing"s;
         ioriginalnameref2(790) = "";
     }
@@ -49,9 +61,12 @@ void label_1277()
     ilight(789) = 0;
     ialphanameref(789) = "";
     iorgweight(789) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(789) = u8"テスト用ナベ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(789) = u8"pot for testing"s;
         ioriginalnameref2(789) = "";
     }
@@ -61,9 +76,12 @@ void label_1277()
     ilight(788) = 0;
     ialphanameref(788) = u8"スカルボウ"s;
     iorgweight(788) = 700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(788) = u8"骨弓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(788) = u8"skull bow"s;
         ioriginalnameref2(788) = "";
     }
@@ -73,9 +91,12 @@ void label_1277()
     ilight(787) = 0;
     ialphanameref(787) = "";
     iorgweight(787) = 350;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(787) = u8"ふかふかパン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(787) = u8"puff puff bread"s;
         ioriginalnameref2(787) = "";
     }
@@ -85,9 +106,12 @@ void label_1277()
     ilight(786) = 0;
     ialphanameref(786) = "";
     iorgweight(786) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(786) = u8"砂糖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(786) = u8"sugar"s;
         ioriginalnameref2(786) = u8"sack"s;
     }
@@ -97,9 +121,12 @@ void label_1277()
     ilight(785) = 0;
     ialphanameref(785) = "";
     iorgweight(785) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(785) = u8"塩"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(785) = u8"salt"s;
         ioriginalnameref2(785) = u8"bottle"s;
     }
@@ -109,9 +136,12 @@ void label_1277()
     ilight(784) = 0;
     ialphanameref(784) = "";
     iorgweight(784) = 550;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(784) = u8"レシピホルダー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(784) = u8"recipe holder"s;
         ioriginalnameref2(784) = "";
     }
@@ -121,9 +151,12 @@ void label_1277()
     ilight(783) = 0;
     ialphanameref(783) = "";
     iorgweight(783) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(783) = u8"レシピ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(783) = u8"recipe"s;
         ioriginalnameref2(783) = "";
     }
@@ -133,9 +166,12 @@ void label_1277()
     ilight(782) = 0;
     ialphanameref(782) = "";
     iorgweight(782) = 150;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(782) = u8"皿"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(782) = u8"dish"s;
         ioriginalnameref2(782) = "";
     }
@@ -145,9 +181,12 @@ void label_1277()
     ilight(781) = 0;
     ialphanameref(781) = u8"包丁"s;
     iorgweight(781) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(781) = u8"包丁"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(781) = u8"kitchen knife"s;
         ioriginalnameref2(781) = "";
     }
@@ -157,9 +196,12 @@ void label_1277()
     ilight(780) = 0;
     ialphanameref(780) = "";
     iorgweight(780) = 4200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(780) = u8"毛皮の敷物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(780) = u8"fur carpet"s;
         ioriginalnameref2(780) = "";
     }
@@ -169,9 +211,12 @@ void label_1277()
     ilight(779) = 0;
     ialphanameref(779) = "";
     iorgweight(779) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(779) = u8"鹿の剥製"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(779) = u8"deer head"s;
         ioriginalnameref2(779) = "";
     }
@@ -181,9 +226,12 @@ void label_1277()
     ilight(778) = 0;
     ialphanameref(778) = "";
     iorgweight(778) = 9000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(778) = u8"高級ソファー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(778) = u8"luxury sofa"s;
         ioriginalnameref2(778) = "";
     }
@@ -193,41 +241,56 @@ void label_1277()
     ilight(777) = 0;
     ialphanameref(777) = "";
     iorgweight(777) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(777) = u8"マニ像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(777) = u8"Mani"s;
         ioriginalnameref2(777) = u8"statue"s;
     }
     ipicref(777) = 682;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(777) = u8"神の彫像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(777) = u8"celestial statue"s;
     }
     icolref(777) = 0;
     ilight(776) = 0;
     ialphanameref(776) = "";
     iorgweight(776) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(776) = u8"クミロミ像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(776) = u8"Kumiromi"s;
         ioriginalnameref2(776) = u8"statue"s;
     }
     ipicref(776) = 681;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(776) = u8"神の彫像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(776) = u8"celestial statue"s;
     }
     icolref(776) = 0;
     ilight(775) = 0;
     ialphanameref(775) = "";
     iorgweight(775) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(775) = u8"特製肉まんじゅう"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(775) = u8"special steamed meat bun"s;
         ioriginalnameref2(775) = "";
     }
@@ -237,9 +300,12 @@ void label_1277()
     ilight(774) = 0;
     ialphanameref(774) = "";
     iorgweight(774) = 23800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(774) = u8"高級キャビネット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(774) = u8"luxury cabinet"s;
         ioriginalnameref2(774) = "";
     }
@@ -249,9 +315,12 @@ void label_1277()
     ilight(773) = 0;
     ialphanameref(773) = "";
     iorgweight(773) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(773) = u8"おっきな本棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(773) = u8"large bookshelf"s;
         ioriginalnameref2(773) = "";
     }
@@ -261,9 +330,12 @@ void label_1277()
     ilight(772) = 0;
     ialphanameref(772) = "";
     iorgweight(772) = 330;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(772) = u8"トマト"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(772) = u8"tomato"s;
         ioriginalnameref2(772) = "";
     }
@@ -273,41 +345,56 @@ void label_1277()
     ilight(771) = 0;
     ialphanameref(771) = "";
     iorgweight(771) = 100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(771) = u8"ブルーカプセルドラッグ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(771) = u8"blue capsule drag"s;
         ioriginalnameref2(771) = "";
     }
     ipicref(771) = 679;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(771) = u8"青いカプセル"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(771) = u8"blue capsule"s;
     }
     icolref(771) = 0;
     ilight(770) = 0;
     ialphanameref(770) = "";
     iorgweight(770) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(770) = u8"ラムネ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(770) = u8"soda"s;
         ioriginalnameref2(770) = u8"bottle"s;
     }
     ipicref(770) = 678;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(770) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(770) = u8"clear liquid"s;
     }
     icolref(770) = 0;
     ilight(769) = 0;
     ialphanameref(769) = "";
     iorgweight(769) = 530;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(769) = u8"ミニチュアツリー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(769) = u8"miniature tree"s;
         ioriginalnameref2(769) = "";
     }
@@ -317,9 +404,12 @@ void label_1277()
     ilight(768) = 0;
     ialphanameref(768) = "";
     iorgweight(768) = 150;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(768) = u8"正月飾り"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(768) = u8"new year's decoration"s;
         ioriginalnameref2(768) = "";
     }
@@ -329,9 +419,12 @@ void label_1277()
     ilight(767) = 0;
     ialphanameref(767) = "";
     iorgweight(767) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(767) = u8"ジュアの抱き枕"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(767) = u8"Jure's body pillow"s;
         ioriginalnameref2(767) = "";
     }
@@ -341,9 +434,12 @@ void label_1277()
     ilight(766) = 0;
     ialphanameref(766) = "";
     iorgweight(766) = 48500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(766) = u8"青い屋根の屋台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(766) = u8"blue stall"s;
         ioriginalnameref2(766) = "";
     }
@@ -353,9 +449,12 @@ void label_1277()
     ilight(765) = 0;
     ialphanameref(765) = "";
     iorgweight(765) = 48500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(765) = u8"赤い屋根の屋台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(765) = u8"red stall"s;
         ioriginalnameref2(765) = "";
     }
@@ -365,9 +464,12 @@ void label_1277()
     ilight(764) = 0;
     ialphanameref(764) = "";
     iorgweight(764) = 9900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(764) = u8"カウンター"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(764) = u8"counter"s;
         ioriginalnameref2(764) = "";
     }
@@ -377,9 +479,12 @@ void label_1277()
     ilight(763) = 0;
     ialphanameref(763) = "";
     iorgweight(763) = 85000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(763) = u8"台座"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(763) = u8"pedestal"s;
         ioriginalnameref2(763) = "";
     }
@@ -389,9 +494,12 @@ void label_1277()
     ilight(762) = 16;
     ialphanameref(762) = "";
     iorgweight(762) = 280;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(762) = u8"聖夜祭の花冠"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(762) = u8"festival wreath"s;
         ioriginalnameref2(762) = "";
     }
@@ -401,41 +509,56 @@ void label_1277()
     ilight(761) = 10;
     ialphanameref(761) = "";
     iorgweight(761) = 45000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(761) = u8"《グールドのピアノ》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(761) = u8"<Gould's Piano>"s;
         ioriginalnameref2(761) = "";
     }
     ipicref(761) = 76;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(761) = u8"何の変哲もないピアノ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(761) = u8"nondescriptive piano"s;
     }
     icolref(761) = 12;
     ilight(760) = 9;
     ialphanameref(760) = "";
     iorgweight(760) = 5000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(760) = u8"ガロクの槌"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(760) = u8"Garok's hammer"s;
         ioriginalnameref2(760) = "";
     }
     ipicref(760) = 629;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(760) = u8"名工の槌"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(760) = u8"master hammer"s;
     }
     icolref(760) = 0;
     ilight(759) = 9;
     ialphanameref(759) = u8"ライトセーバー"s;
     iorgweight(759) = 600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(759) = u8"ライトセーバー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(759) = u8"lightsabre"s;
         ioriginalnameref2(759) = "";
     }
@@ -445,41 +568,56 @@ void label_1277()
     ilight(758) = 9;
     ialphanameref(758) = "";
     iorgweight(758) = 950;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(758) = u8"《マウザーC96カスタム》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(758) = u8"<Mauser C96 Custom>"s;
         ioriginalnameref2(758) = "";
     }
     ipicref(758) = 419;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(758) = u8"錆びた銃"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(758) = u8"rusted pistol"s;
     }
     icolref(758) = 7;
     ilight(757) = 9;
     ialphanameref(757) = "";
     iorgweight(757) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(757) = u8"《五本角の兜》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(757) = u8"<Five Horned Helm>"s;
         ioriginalnameref2(757) = "";
     }
     ipicref(757) = 480;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(757) = u8"角の生えた兜"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(757) = u8"horned helmet"s;
     }
     icolref(757) = 4;
     ilight(756) = 0;
     ialphanameref(756) = "";
     iorgweight(756) = 350;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(756) = u8"もち"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(756) = u8"mochi"s;
         ioriginalnameref2(756) = "";
     }
@@ -489,9 +627,12 @@ void label_1277()
     ilight(755) = 0;
     ialphanameref(755) = "";
     iorgweight(755) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(755) = u8"鏡もち"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(755) = u8"kagami mochi"s;
         ioriginalnameref2(755) = "";
     }
@@ -501,9 +642,12 @@ void label_1277()
     ilight(754) = 0;
     ialphanameref(754) = "";
     iorgweight(754) = 720;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(754) = u8"だるま"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(754) = u8"daruma"s;
         ioriginalnameref2(754) = "";
     }
@@ -513,9 +657,12 @@ void label_1277()
     ilight(753) = 0;
     ialphanameref(753) = "";
     iorgweight(753) = 9800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(753) = u8"こたつ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(753) = u8"kotatsu"s;
         ioriginalnameref2(753) = "";
     }
@@ -525,9 +672,12 @@ void label_1277()
     ilight(752) = 0;
     ialphanameref(752) = "";
     iorgweight(752) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(752) = u8"お年玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(752) = u8"new year's gift"s;
         ioriginalnameref2(752) = "";
     }
@@ -537,9 +687,12 @@ void label_1277()
     ilight(751) = 0;
     ialphanameref(751) = "";
     iorgweight(751) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(751) = u8"降り階段"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(751) = u8"downstairs"s;
         ioriginalnameref2(751) = "";
     }
@@ -549,9 +702,12 @@ void label_1277()
     ilight(750) = 0;
     ialphanameref(750) = "";
     iorgweight(750) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(750) = u8"昇り階段"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(750) = u8"upstairs"s;
         ioriginalnameref2(750) = "";
     }
@@ -561,41 +717,56 @@ void label_1277()
     ilight(749) = 0;
     ialphanameref(749) = "";
     iorgweight(749) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(749) = u8"創造主の像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(749) = u8"Creator"s;
         ioriginalnameref2(749) = u8"statue"s;
     }
     ipicref(749) = 686;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(749) = u8"怪しい人物像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(749) = u8"fishy statue"s;
     }
     icolref(749) = 0;
     ilight(748) = 10;
     ialphanameref(748) = "";
     iorgweight(748) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(748) = u8"召喚石"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(748) = u8"summoning crystal"s;
         ioriginalnameref2(748) = "";
     }
     ipicref(748) = 662;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(748) = u8"見事な水晶"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(748) = u8"beautiful stone"s;
     }
     icolref(748) = 0;
     ilight(747) = 0;
     ialphanameref(747) = "";
     iorgweight(747) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(747) = u8"ボコノンの書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(747) = u8"Bokonon"s;
         ioriginalnameref2(747) = u8"book"s;
     }
@@ -605,9 +776,12 @@ void label_1277()
     ilight(746) = 0;
     ialphanameref(746) = "";
     iorgweight(746) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(746) = u8"調教鞭"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(746) = u8"tamer's whip"s;
         ioriginalnameref2(746) = "";
     }
@@ -617,9 +791,12 @@ void label_1277()
     ilight(745) = 0;
     ialphanameref(745) = "";
     iorgweight(745) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(745) = u8"こころ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(745) = u8"heart"s;
         ioriginalnameref2(745) = "";
     }
@@ -629,9 +806,12 @@ void label_1277()
     ilight(744) = 0;
     ialphanameref(744) = "";
     iorgweight(744) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(744) = u8"シュレディンガーの猫"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(744) = u8"Schrodinger's cat "s;
         ioriginalnameref2(744) = "";
     }
@@ -641,9 +821,12 @@ void label_1277()
     ilight(743) = 0;
     ialphanameref(743) = "";
     iorgweight(743) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(743) = u8"カルネアデスの板"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(743) = u8"Carneades"s;
         ioriginalnameref2(743) = u8"plank"s;
     }
@@ -653,73 +836,100 @@ void label_1277()
     ilight(742) = 0;
     ialphanameref(742) = "";
     iorgweight(742) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(742) = u8"すくつ探索許可証"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(742) = u8"the void explorer"s;
         ioriginalnameref2(742) = u8"license"s;
     }
     ipicref(742) = 308;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(742) = u8"謎の紙切れ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(742) = u8"strange paper"s;
     }
     icolref(742) = 0;
     ilight(741) = 9;
     ialphanameref(741) = "";
     iorgweight(741) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(741) = u8"《飛竜刀》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(741) = u8"<Hiryu-To>"s;
         ioriginalnameref2(741) = "";
     }
     ipicref(741) = 501;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(741) = u8"赤い装飾の刀"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(741) = u8"rutilant katana"s;
     }
     icolref(741) = 3;
     ilight(740) = 9;
     ialphanameref(740) = "";
     iorgweight(740) = 150;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(740) = u8"《謎の貝》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(740) = u8"<Unknown Shell>"s;
         ioriginalnameref2(740) = "";
     }
     ipicref(740) = 488;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(740) = u8"美しい貝"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(740) = u8"beautiful shell"s;
     }
     icolref(740) = 4;
     ilight(739) = 9;
     ialphanameref(739) = "";
     iorgweight(739) = 376500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(739) = u8"《フリージアの尻尾》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(739) = u8"<Frisia's Tail>"s;
         ioriginalnameref2(739) = "";
     }
     ipicref(739) = 425;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(739) = u8"猫の尻尾"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(739) = u8"cat's tail"s;
     }
     icolref(739) = 0;
     ilight(738) = 0;
     ialphanameref(738) = "";
     iorgweight(738) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(738) = u8"フォーチュンクッキー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(738) = u8"fortune cookie"s;
         ioriginalnameref2(738) = "";
     }
@@ -729,9 +939,12 @@ void label_1277()
     ilight(737) = 0;
     ialphanameref(737) = "";
     iorgweight(737) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(737) = u8"名前の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(737) = u8"name"s;
         ioriginalnameref2(737) = u8"scroll"s;
     }
@@ -743,9 +956,12 @@ void label_1277()
     ilight(736) = 0;
     ialphanameref(736) = "";
     iorgweight(736) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(736) = u8"耐熱コーティング液"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(736) = u8"fireproof liquid"s;
         ioriginalnameref2(736) = "";
     }
@@ -757,9 +973,12 @@ void label_1277()
     ilight(735) = 0;
     ialphanameref(735) = u8"サイズ"s;
     iorgweight(735) = 4000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(735) = u8"大鎌"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(735) = u8"scythe"s;
         ioriginalnameref2(735) = "";
     }
@@ -769,9 +988,12 @@ void label_1277()
     ilight(734) = 0;
     ialphanameref(734) = "";
     iorgweight(734) = 3400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(734) = u8"小さな宝くじ箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(734) = u8"small gamble chest"s;
         ioriginalnameref2(734) = "";
     }
@@ -781,9 +1003,12 @@ void label_1277()
     ilight(733) = 0;
     ialphanameref(733) = "";
     iorgweight(733) = 8500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(733) = u8"サンドバッグ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(733) = u8"sand bag"s;
         ioriginalnameref2(733) = "";
     }
@@ -793,9 +1018,12 @@ void label_1277()
     ilight(732) = 0;
     ialphanameref(732) = "";
     iorgweight(732) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(732) = u8"収穫の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(732) = u8"harvest"s;
         ioriginalnameref2(732) = u8"spellbook"s;
     }
@@ -807,9 +1035,12 @@ void label_1277()
     ilight(731) = 0;
     ialphanameref(731) = "";
     iorgweight(731) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(731) = u8"四次元ポケットの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(731) = u8"4 dimensional pocket"s;
         ioriginalnameref2(731) = u8"spellbook"s;
     }
@@ -821,25 +1052,34 @@ void label_1277()
     ilight(730) = 0;
     ialphanameref(730) = "";
     iorgweight(730) = 1;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(730) = u8"友情の証"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(730) = u8"friendship"s;
         ioriginalnameref2(730) = u8"token"s;
     }
     ipicref(730) = 538;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(730) = u8"ぼろぼろの紙切れ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(730) = u8"crumbling paper"s;
     }
     icolref(730) = 0;
     ilight(729) = 0;
     ialphanameref(729) = "";
     iorgweight(729) = 1000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(729) = u8"おみやげ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(729) = u8"gift"s;
         ioriginalnameref2(729) = "";
     }
@@ -849,137 +1089,188 @@ void label_1277()
     ilight(728) = 9;
     ialphanameref(728) = "";
     iorgweight(728) = 1250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(728) = u8"《紅凛》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(728) = u8"<Crimson Plate>"s;
         ioriginalnameref2(728) = "";
     }
     ipicref(728) = 474;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(728) = u8"赤い腰当"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(728) = u8"red girdle"s;
     }
     icolref(728) = 3;
     ilight(727) = 9;
     ialphanameref(727) = "";
     iorgweight(727) = 950;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(727) = u8"《棘の盾》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(727) = u8"<Shield ofThorn>"s;
         ioriginalnameref2(727) = "";
     }
     ipicref(727) = 453;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(727) = u8"チクチクする盾"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(727) = u8"tingling shield"s;
     }
     icolref(727) = 3;
     ilight(726) = 9;
     ialphanameref(726) = "";
     iorgweight(726) = 2850;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(726) = u8"《アル・ウード》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(726) = u8"<Al'ud>"s;
         ioriginalnameref2(726) = "";
     }
     ipicref(726) = 393;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(726) = u8"頑丈なリュート"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(726) = u8"tough lute"s;
     }
     icolref(726) = 6;
     ilight(725) = 9;
     ialphanameref(725) = "";
     iorgweight(725) = 75000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(725) = u8"《キルキルピアノ》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(725) = u8"<Kill Kill Piano>"s;
         ioriginalnameref2(725) = "";
     }
     ipicref(725) = 76;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(725) = u8"頑丈なピアノ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(725) = u8"heavy piano"s;
     }
     icolref(725) = 5;
     ilight(724) = 0;
     ialphanameref(724) = "";
     iorgweight(724) = 1;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(724) = u8"音楽チケット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(724) = u8"music ticket"s;
         ioriginalnameref2(724) = "";
     }
     ipicref(724) = 538;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(724) = u8"何かのチケット"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(724) = u8"some kind of ticket"s;
     }
     icolref(724) = 0;
     ilight(723) = 9;
     ialphanameref(723) = "";
     iorgweight(723) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(723) = u8"《ツインエッジ》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(723) = u8"<Twin Edge>"s;
         ioriginalnameref2(723) = "";
     }
     ipicref(723) = 486;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(723) = u8"黄色のネックレス"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(723) = u8"yellow necklace"s;
     }
     icolref(723) = 5;
     ilight(722) = 9;
     ialphanameref(722) = "";
     iorgweight(722) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(722) = u8"《アルバレスト》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(722) = u8"<Arbalest>"s;
         ioriginalnameref2(722) = "";
     }
     ipicref(722) = 486;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(722) = u8"紫のネックレス"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(722) = u8"purple necklace"s;
     }
     icolref(722) = 8;
     ilight(721) = 0;
     ialphanameref(721) = "";
     iorgweight(721) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(721) = u8"エヘカトル像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(721) = u8"Ehekatl"s;
         ioriginalnameref2(721) = u8"statue"s;
     }
     ipicref(721) = 687;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(721) = u8"女神の彫像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(721) = u8"celestial statue"s;
     }
     icolref(721) = 0;
     ilight(720) = 9;
     ialphanameref(720) = "";
     iorgweight(720) = 31000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(720) = u8"幸せのベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(720) = u8"happy bed"s;
         ioriginalnameref2(720) = "";
     }
@@ -989,89 +1280,122 @@ void label_1277()
     ilight(719) = 9;
     ialphanameref(719) = "";
     iorgweight(719) = 6500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(719) = u8"《クレイモア》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(719) = u8"<Claymore>"s;
         ioriginalnameref2(719) = "";
     }
     ipicref(719) = 698;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(719) = u8"粗野な剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(719) = u8"brutish sword"s;
     }
     icolref(719) = 0;
     ilight(718) = 9;
     ialphanameref(718) = "";
     iorgweight(718) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(718) = u8"《シーナのパンティー》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(718) = u8"<Shena's Panty>"s;
         ioriginalnameref2(718) = "";
     }
     ipicref(718) = 630;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(718) = u8"かぐわしいぱんつ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(718) = u8"scentful panty"s;
     }
     icolref(718) = 3;
     ilight(717) = 0;
     ialphanameref(717) = "";
     iorgweight(717) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(717) = u8"ロミアスの秘密の経験"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(717) = u8"Lomias"s;
         ioriginalnameref2(717) = u8"secret experience"s;
     }
     ipicref(717) = 657;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(717) = u8"怪しい宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(717) = u8"strange jewel"s;
     }
     icolref(717) = 9;
     ilight(716) = 9;
     ialphanameref(716) = "";
     iorgweight(716) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(716) = u8"《バニラロック》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(716) = u8"<Vanilla Rock>"s;
         ioriginalnameref2(716) = "";
     }
     ipicref(716) = 424;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(716) = u8"光る小石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(716) = u8"shining rock"s;
     }
     icolref(716) = 0;
     ilight(715) = 0;
     ialphanameref(715) = "";
     iorgweight(715) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(715) = u8"クミロミの秘密の経験"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(715) = u8"Kumiromi"s;
         ioriginalnameref2(715) = u8"secret experience"s;
     }
     ipicref(715) = 657;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(715) = u8"怪しい宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(715) = u8"strange jewel"s;
     }
     icolref(715) = 9;
     ilight(714) = 0;
     ialphanameref(714) = u8"グレネード"s;
     iorgweight(714) = 850;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(714) = u8"手榴弾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(714) = u8"grenade"s;
         ioriginalnameref2(714) = "";
     }
@@ -1081,9 +1405,12 @@ void label_1277()
     ilight(713) = 0;
     ialphanameref(713) = u8"スター"s;
     iorgweight(713) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(713) = u8"手裏剣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(713) = u8"shuriken"s;
         ioriginalnameref2(713) = "";
     }
@@ -1093,9 +1420,12 @@ void label_1277()
     ilight(712) = 0;
     ialphanameref(712) = "";
     iorgweight(712) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(712) = u8"ダンジョンの権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(712) = u8"dungeon"s;
         ioriginalnameref2(712) = u8"deed"s;
     }
@@ -1105,9 +1435,12 @@ void label_1277()
     ilight(711) = 0;
     ialphanameref(711) = "";
     iorgweight(711) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(711) = u8"進化のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(711) = u8"evolution"s;
         ioriginalnameref2(711) = u8"potion"s;
     }
@@ -1119,9 +1452,12 @@ void label_1277()
     ilight(710) = 0;
     ialphanameref(710) = "";
     iorgweight(710) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(710) = u8"契約の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(710) = u8"contingency"s;
         ioriginalnameref2(710) = u8"spellbook"s;
     }
@@ -1133,9 +1469,12 @@ void label_1277()
     ilight(709) = 0;
     ialphanameref(709) = "";
     iorgweight(709) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(709) = u8"契約の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(709) = u8"contingency"s;
         ioriginalnameref2(709) = u8"scroll"s;
     }
@@ -1147,9 +1486,12 @@ void label_1277()
     ilight(708) = 0;
     ialphanameref(708) = "";
     iorgweight(708) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(708) = u8"復活の書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(708) = u8"resurrection"s;
         ioriginalnameref2(708) = u8"book"s;
     }
@@ -1161,25 +1503,34 @@ void label_1277()
     ilight(707) = 9;
     ialphanameref(707) = "";
     iorgweight(707) = 4500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(707) = u8"《ストラディバリウス》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(707) = u8"<Stradivarius>"s;
         ioriginalnameref2(707) = "";
     }
     ipicref(707) = 699;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(707) = u8"艶やかな弦楽器"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(707) = u8"elegant string"s;
     }
     icolref(707) = 0;
     ilight(706) = 0;
     ialphanameref(706) = "";
     iorgweight(706) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(706) = u8"下落のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(706) = u8"descent"s;
         ioriginalnameref2(706) = u8"potion"s;
     }
@@ -1191,25 +1542,34 @@ void label_1277()
     ilight(705) = 9;
     ialphanameref(705) = "";
     iorgweight(705) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(705) = u8"《乞食のペンダント》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(705) = u8"<Begger's Pendant>"s;
         ioriginalnameref2(705) = "";
     }
     ipicref(705) = 486;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(705) = u8"うす汚れたペンダント"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(705) = u8"dirty pendant"s;
     }
     icolref(705) = 0;
     ilight(704) = 0;
     ialphanameref(704) = "";
     iorgweight(704) = 100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(704) = u8"ゲロゲロ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(704) = u8"vomit"s;
         ioriginalnameref2(704) = "";
     }
@@ -1219,9 +1579,12 @@ void label_1277()
     ilight(703) = 0;
     ialphanameref(703) = "";
     iorgweight(703) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(703) = u8"ホイッスル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(703) = u8"whistle"s;
         ioriginalnameref2(703) = "";
     }
@@ -1231,25 +1594,34 @@ void label_1277()
     ilight(702) = 0;
     ialphanameref(702) = "";
     iorgweight(702) = 150;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(702) = u8"うさぎのしっぽ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(702) = u8"rabbit's tail"s;
         ioriginalnameref2(702) = "";
     }
     ipicref(702) = 301;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(702) = u8"ふわふわな尻尾"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(702) = u8"fluffy tail"s;
     }
     icolref(702) = 3;
     ilight(701) = 0;
     ialphanameref(701) = "";
     iorgweight(701) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(701) = u8"デッキ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(701) = u8"deck"s;
         ioriginalnameref2(701) = "";
     }
@@ -1259,9 +1631,12 @@ void label_1277()
     ilight(700) = 0;
     ialphanameref(700) = "";
     iorgweight(700) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(700) = u8"タウンブック"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(700) = u8"town book"s;
         ioriginalnameref2(700) = "";
     }
@@ -1271,25 +1646,34 @@ void label_1277()
     ilight(699) = 9;
     ialphanameref(699) = "";
     iorgweight(699) = 3000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(699) = u8"リトル捕獲玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(699) = u8"little ball"s;
         ioriginalnameref2(699) = "";
     }
     ipicref(699) = 658;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(699) = u8"機械仕掛けの球"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(699) = u8"mechanical ball"s;
     }
     icolref(699) = 3;
     ilight(698) = 0;
     ialphanameref(698) = "";
     iorgweight(698) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(698) = u8"食塩水"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(698) = u8"salt solution"s;
         ioriginalnameref2(698) = u8"potion"s;
     }
@@ -1299,9 +1683,12 @@ void label_1277()
     ilight(697) = 0;
     ialphanameref(697) = "";
     iorgweight(697) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(697) = u8"魔力の集積の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(697) = u8"magic laser"s;
         ioriginalnameref2(697) = u8"spellbook"s;
     }
@@ -1313,9 +1700,12 @@ void label_1277()
     ilight(696) = 0;
     ialphanameref(696) = "";
     iorgweight(696) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(696) = u8"魔力の嵐の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(696) = u8"magic ball"s;
         ioriginalnameref2(696) = u8"spellbook"s;
     }
@@ -1327,25 +1717,34 @@ void label_1277()
     ilight(695) = 9;
     ialphanameref(695) = "";
     iorgweight(695) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(695) = u8"《破壊の斧》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(695) = u8"<Axe of Destruction>"s;
         ioriginalnameref2(695) = "";
     }
     ipicref(695) = 399;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(695) = u8"巨大な斧"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(695) = u8"giant axe"s;
     }
     icolref(695) = 3;
     ilight(694) = 0;
     ialphanameref(694) = "";
     iorgweight(694) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(694) = u8"間仕切り"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(694) = u8"eastern partition"s;
         ioriginalnameref2(694) = "";
     }
@@ -1355,9 +1754,12 @@ void label_1277()
     ilight(693) = 0;
     ialphanameref(693) = "";
     iorgweight(693) = 30000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(693) = u8"ハープ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(693) = u8"harp"s;
         ioriginalnameref2(693) = "";
     }
@@ -1367,9 +1769,12 @@ void label_1277()
     ilight(692) = 0;
     ialphanameref(692) = "";
     iorgweight(692) = 850;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(692) = u8"ハーモニカ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(692) = u8"harmonica"s;
         ioriginalnameref2(692) = "";
     }
@@ -1379,9 +1784,12 @@ void label_1277()
     ilight(691) = 0;
     ialphanameref(691) = "";
     iorgweight(691) = 8500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(691) = u8"リュート"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(691) = u8"lute"s;
         ioriginalnameref2(691) = "";
     }
@@ -1391,9 +1799,12 @@ void label_1277()
     ilight(690) = 0;
     ialphanameref(690) = "";
     iorgweight(690) = 18000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(690) = u8"パンフルート"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(690) = u8"pan flute"s;
         ioriginalnameref2(690) = "";
     }
@@ -1403,9 +1814,12 @@ void label_1277()
     ilight(689) = 0;
     ialphanameref(689) = "";
     iorgweight(689) = 22000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(689) = u8"ギロチン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(689) = u8"guillotine"s;
         ioriginalnameref2(689) = "";
     }
@@ -1415,9 +1829,12 @@ void label_1277()
     ilight(688) = 0;
     ialphanameref(688) = "";
     iorgweight(688) = 26000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(688) = u8"アイアンメイデン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(688) = u8"iron maiden"s;
         ioriginalnameref2(688) = "";
     }
@@ -1427,9 +1844,12 @@ void label_1277()
     ilight(687) = 0;
     ialphanameref(687) = "";
     iorgweight(687) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(687) = u8"古書物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(687) = u8"ancient book"s;
         ioriginalnameref2(687) = "";
     }
@@ -1439,25 +1859,34 @@ void label_1277()
     ilight(686) = 0;
     ialphanameref(686) = "";
     iorgweight(686) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(686) = u8"ジュア像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(686) = u8"Jure"s;
         ioriginalnameref2(686) = u8"statue"s;
     }
     ipicref(686) = 690;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(686) = u8"女神の彫像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(686) = u8"celestial statue"s;
     }
     icolref(686) = 0;
     ilight(685) = 0;
     ialphanameref(685) = "";
     iorgweight(685) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(685) = u8"モンスターボール"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(685) = u8"monster ball"s;
         ioriginalnameref2(685) = "";
     }
@@ -1467,233 +1896,320 @@ void label_1277()
     ilight(684) = 0;
     ialphanameref(684) = "";
     iorgweight(684) = 25000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(684) = u8"遺伝子複合機"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(684) = u8"gene machine"s;
         ioriginalnameref2(684) = "";
     }
     ipicref(684) = 691;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(684) = u8"見たこともない機械"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(684) = u8"freaky machine"s;
     }
     icolref(684) = 0;
     ilight(683) = 0;
     ialphanameref(683) = "";
     iorgweight(683) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(683) = u8"マニの再構築の宝玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(683) = u8"Mani"s;
         ioriginalnameref2(683) = u8"gem stone"s;
     }
     ipicref(683) = 657;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(683) = u8"怪しい宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(683) = u8"strange jewel"s;
     }
     icolref(683) = 3;
     ilight(682) = 0;
     ialphanameref(682) = "";
     iorgweight(682) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(682) = u8"クミロミの活性化の宝玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(682) = u8"rejuvenation"s;
         ioriginalnameref2(682) = u8"Kumiromi's gem stone"s;
     }
     ipicref(682) = 657;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(682) = u8"神々しい宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(682) = u8"heavenly jewel"s;
     }
     icolref(682) = 2;
     ilight(681) = 0;
     ialphanameref(681) = "";
     iorgweight(681) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(681) = u8"ジュアの聖なる雨の宝玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(681) = u8"holy rain"s;
         ioriginalnameref2(681) = u8"Juere's gem stone"s;
     }
     ipicref(681) = 657;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(681) = u8"神々しい宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(681) = u8"heavenly jewel"s;
     }
     icolref(681) = 17;
     ilight(680) = 0;
     ialphanameref(680) = "";
     iorgweight(680) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(680) = u8"ルルウィの神速の宝玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(680) = u8"god speed"s;
         ioriginalnameref2(680) = u8"Lulwy's gem stone"s;
     }
     ipicref(680) = 657;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(680) = u8"神々しい宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(680) = u8"heavenly jewel"s;
     }
     icolref(680) = 4;
     ilight(679) = 9;
     ialphanameref(679) = "";
     iorgweight(679) = 6500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(679) = u8"《大地の大槌》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(679) = u8"Gaia Hammer>"s;
         ioriginalnameref2(679) = "";
     }
     ipicref(679) = 504;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(679) = u8"巨大な槌"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(679) = u8"giant hammer"s;
     }
     icolref(679) = 5;
     ilight(678) = 9;
     ialphanameref(678) = "";
     iorgweight(678) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(678) = u8"《ラッキーダガー》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(678) = u8"<Lucky Dagger>"s;
         ioriginalnameref2(678) = "";
     }
     ipicref(678) = 400;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(678) = u8"細い短剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(678) = u8"thin dagger"s;
     }
     icolref(678) = 5;
     ilight(677) = 9;
     ialphanameref(677) = "";
     iorgweight(677) = 4400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(677) = u8"《ホーリーランス》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(677) = u8"<Holy Rance>"s;
         ioriginalnameref2(677) = "";
     }
     ipicref(677) = 415;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(677) = u8"聖なる槍"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(677) = u8"holy rance"s;
     }
     icolref(677) = 0;
     ilight(676) = 9;
     ialphanameref(676) = "";
     iorgweight(676) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(676) = u8"《エレメンタルスタッフ》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(676) = u8"<Elemental Staff)"s;
         ioriginalnameref2(676) = "";
     }
     ipicref(676) = 425;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(676) = u8"元素の杖"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(676) = u8"elemental staff"s;
     }
     icolref(676) = 19;
     ilight(675) = 9;
     ialphanameref(675) = "";
     iorgweight(675) = 850;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(675) = u8"《クミロミサイズ》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(675) = u8"<Kumiromi Sythe>"s;
         ioriginalnameref2(675) = "";
     }
     ipicref(675) = 421;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(675) = u8"収穫の鎌"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(675) = u8"harvest sythe"s;
     }
     icolref(675) = 2;
     ilight(674) = 9;
     ialphanameref(674) = "";
     iorgweight(674) = 2800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(674) = u8"《ウィンチェスター・プレミアム》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(674) = u8"<Winchester Premium>"s;
         ioriginalnameref2(674) = "";
     }
     ipicref(674) = 514;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(674) = u8"古の散弾銃"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(674) = u8"ancient shot gun"s;
     }
     icolref(674) = 3;
     ilight(673) = 9;
     ialphanameref(673) = "";
     iorgweight(673) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(673) = u8"《ウィンドボウ》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(673) = u8"<Wind Bow>"s;
         ioriginalnameref2(673) = "";
     }
     ipicref(673) = 404;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(673) = u8"風をまとった長弓"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(673) = u8"bow surrounded by wind"s;
     }
     icolref(673) = 17;
     ilight(672) = 0;
     ialphanameref(672) = "";
     iorgweight(672) = 1000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(672) = u8"秘宝"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(672) = u8"secret treasure"s;
         ioriginalnameref2(672) = "";
     }
     ipicref(672) = 656;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(672) = u8"謎の宝石"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(672) = u8"mysterious jewel"s;
     }
     icolref(672) = 0;
     ilight(671) = 0;
     ialphanameref(671) = "";
     iorgweight(671) = 120000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(671) = u8"原子爆弾『Cat's Cradle』"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(671) = u8"nuclear bomb"s;
         ioriginalnameref2(671) = "";
     }
     ipicref(671) = 632;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(671) = u8"とても危険な爆弾"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(671) = u8"very dangerous bomb"s;
     }
     icolref(671) = 0;
     ilight(670) = 0;
     ialphanameref(670) = "";
     iorgweight(670) = -7000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(670) = u8"お絵かきセット(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(670) = u8"canvas"s;
         ioriginalnameref2(670) = "";
     }
@@ -1703,9 +2219,12 @@ void label_1277()
     ilight(669) = 0;
     ialphanameref(669) = "";
     iorgweight(669) = -35000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(669) = u8"絵画(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(669) = u8"art"s;
         ioriginalnameref2(669) = "";
     }
@@ -1715,9 +2234,12 @@ void label_1277()
     ilight(668) = 0;
     ialphanameref(668) = "";
     iorgweight(668) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(668) = u8"レイチェルの絵本"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(668) = u8"book"s;
         ioriginalnameref2(668) = "";
     }
@@ -1727,9 +2249,12 @@ void label_1277()
     ilight(667) = 0;
     ialphanameref(667) = "";
     iorgweight(667) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(667) = u8"妹が愛を込めて作ったお弁当"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(667) = u8"sister's love fueled lunch"s;
         ioriginalnameref2(667) = "";
     }
@@ -1739,41 +2264,56 @@ void label_1277()
     ilight(666) = 0;
     ialphanameref(666) = "";
     iorgweight(666) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(666) = u8"ルルウィ像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(666) = u8"Lulwy"s;
         ioriginalnameref2(666) = u8"statue"s;
     }
     ipicref(666) = 692;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(666) = u8"女神の彫像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(666) = u8"celestial statue"s;
     }
     icolref(666) = 0;
     ilight(665) = 0;
     ialphanameref(665) = "";
     iorgweight(665) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(665) = u8"オパートス像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(665) = u8"Opartos"s;
         ioriginalnameref2(665) = u8"statue"s;
     }
     ipicref(665) = 680;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(665) = u8"神の彫像"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(665) = u8"celestial statue"s;
     }
     icolref(665) = 0;
     ilight(664) = 0;
     ialphanameref(664) = u8"スピードリング"s;
     iorgweight(664) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(664) = u8"スピードの指輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(664) = u8"speed ring"s;
         ioriginalnameref2(664) = "";
     }
@@ -1785,57 +2325,78 @@ void label_1277()
     ilight(663) = 9;
     ialphanameref(663) = "";
     iorgweight(663) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(663) = u8"モンスターハート"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(663) = u8"monster heart"s;
         ioriginalnameref2(663) = "";
     }
     ipicref(663) = 654;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(663) = u8"動いている心臓"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(663) = u8"beating heart"s;
     }
     icolref(663) = 0;
     ilight(662) = 0;
     ialphanameref(662) = "";
     iorgweight(662) = 440;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(662) = u8"マジックフルーツ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(662) = u8"magic fruit"s;
         ioriginalnameref2(662) = "";
     }
     ipicref(662) = 189;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(662) = u8"見たこともない果物"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(662) = u8"rare fruit"s;
     }
     icolref(662) = 3;
     ilight(661) = 9;
     ialphanameref(661) = "";
     iorgweight(661) = 650;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(661) = u8"《ダル=イ=サリオン》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(661) = u8"<Dal-i-thalion>"s;
         ioriginalnameref2(661) = "";
     }
     ipicref(661) = 459;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(661) = u8"軽やかな靴"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(661) = u8"light shoes"s;
     }
     icolref(661) = 3;
     ilight(660) = 0;
     ialphanameref(660) = "";
     iorgweight(660) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(660) = u8"暗黒の矢の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(660) = u8"darkness arrow"s;
         ioriginalnameref2(660) = u8"spellbook"s;
     }
@@ -1847,9 +2408,12 @@ void label_1277()
     ilight(659) = 0;
     ialphanameref(659) = "";
     iorgweight(659) = 1000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(659) = u8"パーティション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(659) = u8"partition"s;
         ioriginalnameref2(659) = "";
     }
@@ -1859,9 +2423,12 @@ void label_1277()
     ilight(658) = 19;
     ialphanameref(658) = "";
     iorgweight(658) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(658) = u8"提灯"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(658) = u8"chochin"s;
         ioriginalnameref2(658) = "";
     }
@@ -1871,9 +2438,12 @@ void label_1277()
     ilight(657) = 17;
     ialphanameref(657) = "";
     iorgweight(657) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(657) = u8"東洋の窓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(657) = u8"eastern window"s;
         ioriginalnameref2(657) = "";
     }
@@ -1883,9 +2453,12 @@ void label_1277()
     ilight(656) = 13;
     ialphanameref(656) = "";
     iorgweight(656) = 7900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(656) = u8"灯篭"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(656) = u8"eastern lamp"s;
         ioriginalnameref2(656) = "";
     }
@@ -1895,25 +2468,34 @@ void label_1277()
     ilight(655) = 0;
     ialphanameref(655) = "";
     iorgweight(655) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(655) = u8"英雄チーズ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(655) = u8"hero cheese"s;
         ioriginalnameref2(655) = "";
     }
     ipicref(655) = 168;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(655) = u8"不思議なチーズ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(655) = u8"mysterious cheese"s;
     }
     icolref(655) = 4;
     ilight(654) = 0;
     ialphanameref(654) = "";
     iorgweight(654) = 16000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(654) = u8"ダブルベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(654) = u8"double bed"s;
         ioriginalnameref2(654) = "";
     }
@@ -1923,9 +2505,12 @@ void label_1277()
     ilight(653) = 0;
     ialphanameref(653) = "";
     iorgweight(653) = 150000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(653) = u8"廃品"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(653) = u8"junk"s;
         ioriginalnameref2(653) = "";
     }
@@ -1935,9 +2520,12 @@ void label_1277()
     ilight(652) = 0;
     ialphanameref(652) = "";
     iorgweight(652) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(652) = u8"シンク"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(652) = u8"sink"s;
         ioriginalnameref2(652) = "";
     }
@@ -1947,9 +2535,12 @@ void label_1277()
     ilight(651) = 0;
     ialphanameref(651) = "";
     iorgweight(651) = 8400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(651) = u8"名工食器棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(651) = u8"craft cupboard"s;
         ioriginalnameref2(651) = "";
     }
@@ -1959,9 +2550,12 @@ void label_1277()
     ilight(650) = 0;
     ialphanameref(650) = "";
     iorgweight(650) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(650) = u8"トイレ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(650) = u8"toilet"s;
         ioriginalnameref2(650) = "";
     }
@@ -1971,9 +2565,12 @@ void label_1277()
     ilight(649) = 0;
     ialphanameref(649) = "";
     iorgweight(649) = 4000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(649) = u8"フェンス付き花壇"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(649) = u8"flowerbed"s;
         ioriginalnameref2(649) = "";
     }
@@ -1983,9 +2580,12 @@ void label_1277()
     ilight(648) = 0;
     ialphanameref(648) = "";
     iorgweight(648) = 5000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(648) = u8"ソファー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(648) = u8"sofa"s;
         ioriginalnameref2(648) = "";
     }
@@ -1995,9 +2595,12 @@ void label_1277()
     ilight(647) = 0;
     ialphanameref(647) = "";
     iorgweight(647) = 7800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(647) = u8"黒板"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(647) = u8"black board"s;
         ioriginalnameref2(647) = "";
     }
@@ -2007,9 +2610,12 @@ void label_1277()
     ilight(646) = 0;
     ialphanameref(646) = "";
     iorgweight(646) = 4500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(646) = u8"メニューボード"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(646) = u8"menu board"s;
         ioriginalnameref2(646) = "";
     }
@@ -2019,9 +2625,12 @@ void label_1277()
     ilight(645) = 0;
     ialphanameref(645) = "";
     iorgweight(645) = 11000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(645) = u8"王様箪笥"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(645) = u8"king drawer"s;
         ioriginalnameref2(645) = "";
     }
@@ -2031,9 +2640,12 @@ void label_1277()
     ilight(644) = 17;
     ialphanameref(644) = "";
     iorgweight(644) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(644) = u8"カーテン付きの窓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(644) = u8"decorated window"s;
         ioriginalnameref2(644) = "";
     }
@@ -2043,9 +2655,12 @@ void label_1277()
     ilight(643) = 0;
     ialphanameref(643) = "";
     iorgweight(643) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(643) = u8"布団"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(643) = u8"eastern bed"s;
         ioriginalnameref2(643) = "";
     }
@@ -2055,9 +2670,12 @@ void label_1277()
     ilight(642) = 0;
     ialphanameref(642) = "";
     iorgweight(642) = 4800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(642) = u8"米俵"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(642) = u8"rice barrel"s;
         ioriginalnameref2(642) = "";
     }
@@ -2067,25 +2685,34 @@ void label_1277()
     ilight(641) = 0;
     ialphanameref(641) = "";
     iorgweight(641) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(641) = u8"クーラーボックス"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(641) = u8"cooler box"s;
         ioriginalnameref2(641) = "";
     }
     ipicref(641) = 636;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(641) = u8"冷たい仕掛け箱"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(641) = u8"chilly box"s;
     }
     icolref(641) = 0;
     ilight(640) = 0;
     ialphanameref(640) = "";
     iorgweight(640) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(640) = u8"ユニコーンの角"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(640) = u8"unicorn horn"s;
         ioriginalnameref2(640) = "";
     }
@@ -2095,25 +2722,34 @@ void label_1277()
     ilight(639) = 0;
     ialphanameref(639) = "";
     iorgweight(639) = 720;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(639) = u8"幸運のリンゴ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(639) = u8"happy apple"s;
         ioriginalnameref2(639) = "";
     }
     ipicref(639) = 172;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(639) = u8"不思議なリンゴ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(639) = u8"mysterious apple"s;
     }
     icolref(639) = 17;
     ilight(638) = 0;
     ialphanameref(638) = "";
     iorgweight(638) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(638) = u8"脱出の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(638) = u8"escape"s;
         ioriginalnameref2(638) = u8"scroll"s;
     }
@@ -2125,25 +2761,34 @@ void label_1277()
     ilight(637) = 0;
     ialphanameref(637) = "";
     iorgweight(637) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(637) = u8"スケルトンキー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(637) = u8"skeleton key"s;
         ioriginalnameref2(637) = "";
     }
     ipicref(637) = 633;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(637) = u8"透き通った鍵"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(637) = u8"white key"s;
     }
     icolref(637) = 0;
     ilight(636) = 0;
     ialphanameref(636) = "";
     iorgweight(636) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(636) = u8"ロックピック"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(636) = u8"lockpick"s;
         ioriginalnameref2(636) = "";
     }
@@ -2153,9 +2798,12 @@ void label_1277()
     ilight(635) = 0;
     ialphanameref(635) = "";
     iorgweight(635) = 9800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(635) = u8"地雷"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(635) = u8"mine"s;
         ioriginalnameref2(635) = "";
     }
@@ -2165,9 +2813,12 @@ void label_1277()
     ilight(634) = 0;
     ialphanameref(634) = "";
     iorgweight(634) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(634) = u8"紐"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(634) = u8"leash"s;
         ioriginalnameref2(634) = "";
     }
@@ -2177,9 +2828,12 @@ void label_1277()
     ilight(633) = 0;
     ialphanameref(633) = u8"パンツ"s;
     iorgweight(633) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(633) = u8"ギャルのパンティー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(633) = u8"panty"s;
         ioriginalnameref2(633) = "";
     }
@@ -2189,9 +2843,12 @@ void label_1277()
     ilight(632) = 0;
     ialphanameref(632) = "";
     iorgweight(632) = 5;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(632) = u8"羽の生えた巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(632) = u8"flying scroll"s;
         ioriginalnameref2(632) = "";
     }
@@ -2203,9 +2860,12 @@ void label_1277()
     ilight(631) = 18;
     ialphanameref(631) = "";
     iorgweight(631) = 5000000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(631) = u8"ムーンゲート"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(631) = u8"moon gate"s;
         ioriginalnameref2(631) = "";
     }
@@ -2215,9 +2875,12 @@ void label_1277()
     ilight(630) = 0;
     ialphanameref(630) = "";
     iorgweight(630) = 5000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(630) = u8"素材槌"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(630) = u8"material kit"s;
         ioriginalnameref2(630) = "";
     }
@@ -2227,9 +2890,12 @@ void label_1277()
     ilight(629) = 0;
     ialphanameref(629) = "";
     iorgweight(629) = 3500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(629) = u8"変装セット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(629) = u8"disguise set"s;
         ioriginalnameref2(629) = "";
     }
@@ -2239,9 +2905,12 @@ void label_1277()
     ilight(628) = 0;
     ialphanameref(628) = "";
     iorgweight(628) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(628) = u8"インコグニートの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(628) = u8"incognito"s;
         ioriginalnameref2(628) = u8"spellbook"s;
     }
@@ -2253,25 +2922,34 @@ void label_1277()
     ilight(627) = 9;
     ialphanameref(627) = "";
     iorgweight(627) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(627) = u8"《賢者の兜》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(627) = u8"<Sage's Helm>"s;
         ioriginalnameref2(627) = "";
     }
     ipicref(627) = 480;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(627) = u8"眩しい兜"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(627) = u8"shining helm"s;
     }
     icolref(627) = 5;
     ilight(626) = 0;
     ialphanameref(626) = "";
     iorgweight(626) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(626) = u8"ヘルメスの血"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(626) = u8"hermes blood"s;
         ioriginalnameref2(626) = u8"bottle"s;
     }
@@ -2283,25 +2961,34 @@ void label_1277()
     ilight(625) = 0;
     ialphanameref(625) = "";
     iorgweight(625) = 8000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(625) = u8"鳥居"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(625) = u8"shrine gate"s;
         ioriginalnameref2(625) = "";
     }
     ipicref(625) = 627;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(625) = u8"異国の門"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(625) = u8"foreign gate"s;
     }
     icolref(625) = 0;
     ilight(624) = 0;
     ialphanameref(624) = "";
     iorgweight(624) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(624) = u8"お嬢様の日記"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(624) = u8"girl's diary"s;
         ioriginalnameref2(624) = "";
     }
@@ -2313,9 +3000,12 @@ void label_1277()
     ilight(623) = 0;
     ialphanameref(623) = "";
     iorgweight(623) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(623) = u8"妹の秘密の日記"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(623) = u8"cat sister's diary"s;
         ioriginalnameref2(623) = "";
     }
@@ -2327,57 +3017,78 @@ void label_1277()
     ilight(622) = 0;
     ialphanameref(622) = "";
     iorgweight(622) = 1;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(622) = u8"小さなメダル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(622) = u8"small medal"s;
         ioriginalnameref2(622) = "";
     }
     ipicref(622) = 165;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(622) = u8"銀貨"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(622) = u8"silver coin"s;
     }
     icolref(622) = 0;
     ilight(621) = 0;
     ialphanameref(621) = "";
     iorgweight(621) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(621) = u8"宝の地図"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(621) = u8"treasure map"s;
         ioriginalnameref2(621) = "";
     }
     ipicref(621) = 252;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(621) = u8"ぼろぼろの紙切れ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(621) = u8"crumbling paper"s;
     }
     icolref(621) = 0;
     ilight(620) = 0;
     ialphanameref(620) = "";
     iorgweight(620) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(620) = u8"媚薬"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(620) = u8"love potion"s;
         ioriginalnameref2(620) = "";
     }
     ipicref(620) = 354;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(620) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(620) = u8"clear liquid"s;
     }
     icolref(620) = 0;
     ilight(619) = 0;
     ialphanameref(619) = "";
     iorgweight(619) = 1250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(619) = "";
-    } else {
+    }
+    else
+    {
         ioriginalnameref(619) = "";
         ioriginalnameref2(619) = "";
     }
@@ -2387,9 +3098,12 @@ void label_1277()
     ilight(618) = 0;
     ialphanameref(618) = "";
     iorgweight(618) = 1250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(618) = "";
-    } else {
+    }
+    else
+    {
         ioriginalnameref(618) = "";
         ioriginalnameref2(618) = "";
     }
@@ -2399,9 +3113,12 @@ void label_1277()
     ilight(617) = 0;
     ialphanameref(617) = "";
     iorgweight(617) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(617) = "";
-    } else {
+    }
+    else
+    {
         ioriginalnameref(617) = u8"bait"s;
         ioriginalnameref2(617) = "";
     }
@@ -2411,41 +3128,56 @@ void label_1277()
     ilight(616) = 0;
     ialphanameref(616) = "";
     iorgweight(616) = 6500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(616) = u8"徴税士の納税箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(616) = u8"tax master's tax box"s;
         ioriginalnameref2(616) = "";
     }
     ipicref(616) = 384;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(616) = u8"納税箱"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(616) = u8"tax box"s;
     }
     icolref(616) = 0;
     ilight(615) = 0;
     ialphanameref(615) = "";
     iorgweight(615) = 100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(615) = u8"請求書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(615) = u8"bill"s;
         ioriginalnameref2(615) = "";
     }
     ipicref(615) = 383;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(615) = u8"いやな紙切れ"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(615) = u8"lousy paper"s;
     }
     icolref(615) = 0;
     ilight(614) = 0;
     ialphanameref(614) = "";
     iorgweight(614) = 8000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(614) = u8"フラワーアーチ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(614) = u8"flower arch"s;
         ioriginalnameref2(614) = "";
     }
@@ -2455,9 +3187,12 @@ void label_1277()
     ilight(613) = 0;
     ialphanameref(613) = "";
     iorgweight(613) = 24000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(613) = u8"王様ベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(613) = u8"king's bed"s;
         ioriginalnameref2(613) = "";
     }
@@ -2467,9 +3202,12 @@ void label_1277()
     ilight(612) = 17;
     ialphanameref(612) = "";
     iorgweight(612) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(612) = u8"アットホームな窓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(612) = u8"nice window"s;
         ioriginalnameref2(612) = "";
     }
@@ -2479,9 +3217,12 @@ void label_1277()
     ilight(611) = 0;
     ialphanameref(611) = "";
     iorgweight(611) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(611) = u8"ハウスボード"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(611) = u8"house board"s;
         ioriginalnameref2(611) = "";
     }
@@ -2491,9 +3232,12 @@ void label_1277()
     ilight(610) = 0;
     ialphanameref(610) = "";
     iorgweight(610) = 5600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(610) = u8"三角木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(610) = u8"triangle plant"s;
         ioriginalnameref2(610) = "";
     }
@@ -2503,9 +3247,12 @@ void label_1277()
     ilight(609) = 17;
     ialphanameref(609) = "";
     iorgweight(609) = 1600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(609) = u8"窓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(609) = u8"window"s;
         ioriginalnameref2(609) = "";
     }
@@ -2515,9 +3262,12 @@ void label_1277()
     ilight(608) = 17;
     ialphanameref(608) = "";
     iorgweight(608) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(608) = u8"格子窓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(608) = u8"square window"s;
         ioriginalnameref2(608) = "";
     }
@@ -2527,9 +3277,12 @@ void label_1277()
     ilight(607) = 0;
     ialphanameref(607) = "";
     iorgweight(607) = 4200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(607) = u8"巨大サボテン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(607) = u8"giant cactus"s;
         ioriginalnameref2(607) = "";
     }
@@ -2539,9 +3292,12 @@ void label_1277()
     ilight(606) = 0;
     ialphanameref(606) = "";
     iorgweight(606) = 8250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(606) = u8"バーベキューセット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(606) = u8"barbecue set"s;
         ioriginalnameref2(606) = "";
     }
@@ -2551,9 +3307,12 @@ void label_1277()
     ilight(605) = 0;
     ialphanameref(605) = "";
     iorgweight(605) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(605) = u8"パキラ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(605) = u8"money tree"s;
         ioriginalnameref2(605) = "";
     }
@@ -2563,9 +3322,12 @@ void label_1277()
     ilight(604) = 0;
     ialphanameref(604) = "";
     iorgweight(604) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(604) = u8"目に優しい植物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(604) = u8"green plant"s;
         ioriginalnameref2(604) = "";
     }
@@ -2575,25 +3337,34 @@ void label_1277()
     ilight(603) = 9;
     ialphanameref(603) = "";
     iorgweight(603) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(603) = u8"ボスチェア"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(603) = u8"president's chair"s;
         ioriginalnameref2(603) = "";
     }
     ipicref(603) = 373;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(603) = u8"威圧感のある椅子"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(603) = u8"glory chair"s;
     }
     icolref(603) = 0;
     ilight(602) = 9;
     ialphanameref(602) = "";
     iorgweight(602) = 350000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(602) = u8"聖なる井戸"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(602) = u8"holy well"s;
         ioriginalnameref2(602) = "";
     }
@@ -2603,41 +3374,56 @@ void label_1277()
     ilight(601) = 0;
     ialphanameref(601) = "";
     iorgweight(601) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(601) = u8"空き瓶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(601) = u8"empty bottle"s;
         ioriginalnameref2(601) = "";
     }
     ipicref(601) = 371;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(601) = u8"空き瓶"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(601) = u8"empty bottle"s;
     }
     icolref(601) = 0;
     ilight(600) = 9;
     ialphanameref(600) = "";
     iorgweight(600) = 150000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(600) = u8"巨人の足枷"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(600) = u8"giant's shackle"s;
         ioriginalnameref2(600) = "";
     }
     ipicref(600) = 370;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(600) = u8"足枷"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(600) = u8"shakle"s;
     }
     icolref(600) = 0;
     ilight(599) = 16;
     ialphanameref(599) = "";
     iorgweight(599) = 35000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(599) = u8"クリスマスツリー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(599) = u8"christmas tree"s;
         ioriginalnameref2(599) = "";
     }
@@ -2647,9 +3433,12 @@ void label_1277()
     ilight(598) = 9;
     ialphanameref(598) = "";
     iorgweight(598) = -11000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(598) = u8"スノーマン(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(598) = u8"snow man"s;
         ioriginalnameref2(598) = "";
     }
@@ -2659,9 +3448,12 @@ void label_1277()
     ilight(597) = 16;
     ialphanameref(597) = "";
     iorgweight(597) = -60000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(597) = u8"直送クリスマスツリー(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(597) = u8"christmas tree"s;
         ioriginalnameref2(597) = "";
     }
@@ -2671,9 +3463,12 @@ void label_1277()
     ilight(596) = 9;
     ialphanameref(596) = "";
     iorgweight(596) = 4800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(596) = u8"ステンドグラス"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(596) = u8"stained glass window"s;
         ioriginalnameref2(596) = "";
     }
@@ -2683,9 +3478,12 @@ void label_1277()
     ilight(595) = 0;
     ialphanameref(595) = "";
     iorgweight(595) = 16000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(595) = u8"扇形の柱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(595) = u8"pillar"s;
         ioriginalnameref2(595) = "";
     }
@@ -2695,9 +3493,12 @@ void label_1277()
     ilight(594) = 15;
     ialphanameref(594) = "";
     iorgweight(594) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(594) = u8"聖なる十字架"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(594) = u8"holy cross"s;
         ioriginalnameref2(594) = u8"statue"s;
     }
@@ -2707,9 +3508,12 @@ void label_1277()
     ilight(593) = 15;
     ialphanameref(593) = "";
     iorgweight(593) = 250000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(593) = u8"雪をかぶったモダンな街灯"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(593) = u8"modern lamp"s;
         ioriginalnameref2(593) = "";
     }
@@ -2719,9 +3523,12 @@ void label_1277()
     ilight(592) = 0;
     ialphanameref(592) = "";
     iorgweight(592) = 3400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(592) = u8"雪をかぶったタル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(592) = u8"snow barrel"s;
         ioriginalnameref2(592) = "";
     }
@@ -2731,9 +3538,12 @@ void label_1277()
     ilight(591) = 9;
     ialphanameref(591) = "";
     iorgweight(591) = 8500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(591) = u8"ミニ雪だるま"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(591) = u8"mini snow man"s;
         ioriginalnameref2(591) = "";
     }
@@ -2743,9 +3553,12 @@ void label_1277()
     ilight(590) = 0;
     ialphanameref(590) = "";
     iorgweight(590) = 4800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(590) = u8"雪かかし"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(590) = u8"snow scarecrow"s;
         ioriginalnameref2(590) = "";
     }
@@ -2755,9 +3568,12 @@ void label_1277()
     ilight(589) = 0;
     ialphanameref(589) = "";
     iorgweight(589) = 28000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(589) = u8"モミの木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(589) = u8"fir"s;
         ioriginalnameref2(589) = u8"tree"s;
     }
@@ -2767,9 +3583,12 @@ void label_1277()
     ilight(588) = 0;
     ialphanameref(588) = "";
     iorgweight(588) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(588) = u8"葉の散った木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(588) = u8"naked"s;
         ioriginalnameref2(588) = u8"tree"s;
     }
@@ -2779,9 +3598,12 @@ void label_1277()
     ilight(587) = 9;
     ialphanameref(587) = "";
     iorgweight(587) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(587) = u8"雪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(587) = u8"snow"s;
         ioriginalnameref2(587) = u8"handful"s;
     }
@@ -2791,9 +3613,12 @@ void label_1277()
     ilight(586) = 14;
     ialphanameref(586) = "";
     iorgweight(586) = 250000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(586) = u8"モダンな街灯"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(586) = u8"modern lamp"s;
         ioriginalnameref2(586) = "";
     }
@@ -2803,9 +3628,12 @@ void label_1277()
     ilight(585) = 3;
     ialphanameref(585) = "";
     iorgweight(585) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(585) = u8"奇抜なランプ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(585) = u8"fancy lamp"s;
         ioriginalnameref2(585) = "";
     }
@@ -2815,9 +3643,12 @@ void label_1277()
     ilight(584) = 12;
     ialphanameref(584) = "";
     iorgweight(584) = 200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(584) = u8"キャンドル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(584) = u8"candle"s;
         ioriginalnameref2(584) = "";
     }
@@ -2827,9 +3658,12 @@ void label_1277()
     ilight(583) = 1;
     ialphanameref(583) = "";
     iorgweight(583) = 150;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(583) = u8"松明"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(583) = u8"torch"s;
         ioriginalnameref2(583) = "";
     }
@@ -2839,9 +3673,12 @@ void label_1277()
     ilight(582) = 0;
     ialphanameref(582) = "";
     iorgweight(582) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(582) = u8"扉生成の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(582) = u8"make door"s;
         ioriginalnameref2(582) = u8"spellbook"s;
     }
@@ -2853,9 +3690,12 @@ void label_1277()
     ilight(581) = 0;
     ialphanameref(581) = "";
     iorgweight(581) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(581) = u8"扉生成の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(581) = u8"make door"s;
         ioriginalnameref2(581) = u8"rod"s;
     }
@@ -2867,9 +3707,12 @@ void label_1277()
     ilight(580) = 0;
     ialphanameref(580) = "";
     iorgweight(580) = 10200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(580) = u8"普通の棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(580) = u8"modern rack"s;
         ioriginalnameref2(580) = "";
     }
@@ -2879,9 +3722,12 @@ void label_1277()
     ilight(579) = 0;
     ialphanameref(579) = "";
     iorgweight(579) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(579) = u8"冷蔵庫"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(579) = u8"freezer"s;
         ioriginalnameref2(579) = "";
     }
@@ -2891,9 +3737,12 @@ void label_1277()
     ilight(578) = 9;
     ialphanameref(578) = "";
     iorgweight(578) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(578) = u8"貯金箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(578) = u8"kitty bank"s;
         ioriginalnameref2(578) = "";
     }
@@ -2903,9 +3752,12 @@ void label_1277()
     ilight(577) = 0;
     ialphanameref(577) = "";
     iorgweight(577) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(577) = u8"火炎瓶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(577) = u8"molotov"s;
         ioriginalnameref2(577) = "";
     }
@@ -2917,9 +3769,12 @@ void label_1277()
     ilight(576) = 9;
     ialphanameref(576) = "";
     iorgweight(576) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(576) = u8"ムービーディスク"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(576) = u8"playback disc"s;
         ioriginalnameref2(576) = "";
     }
@@ -2929,9 +3784,12 @@ void label_1277()
     ilight(575) = 0;
     ialphanameref(575) = "";
     iorgweight(575) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(575) = u8"フン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(575) = u8"shit"s;
         ioriginalnameref2(575) = "";
     }
@@ -2941,9 +3799,12 @@ void label_1277()
     ilight(574) = 0;
     ialphanameref(574) = "";
     iorgweight(574) = 300;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(574) = u8"乳"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(574) = u8"milk"s;
         ioriginalnameref2(574) = u8"bottle"s;
     }
@@ -2953,9 +3814,12 @@ void label_1277()
     ilight(573) = 0;
     ialphanameref(573) = "";
     iorgweight(573) = 300;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(573) = u8"卵"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(573) = u8"egg"s;
         ioriginalnameref2(573) = "";
     }
@@ -2965,9 +3829,12 @@ void label_1277()
     ilight(572) = 0;
     ialphanameref(572) = "";
     iorgweight(572) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(572) = u8"牧場の権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(572) = u8"ranch"s;
         ioriginalnameref2(572) = u8"deed"s;
     }
@@ -2977,9 +3844,12 @@ void label_1277()
     ilight(571) = 0;
     ialphanameref(571) = "";
     iorgweight(571) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(571) = u8"干し肉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(571) = u8"jerky"s;
         ioriginalnameref2(571) = "";
     }
@@ -2989,9 +3859,12 @@ void label_1277()
     ilight(570) = 0;
     ialphanameref(570) = "";
     iorgweight(570) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(570) = u8"炎の壁の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(570) = u8"fire wall"s;
         ioriginalnameref2(570) = u8"rod"s;
     }
@@ -3003,9 +3876,12 @@ void label_1277()
     ilight(569) = 0;
     ialphanameref(569) = "";
     iorgweight(569) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(569) = u8"炎の壁の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(569) = u8"fire wall"s;
         ioriginalnameref2(569) = u8"spellbook"s;
     }
@@ -3017,9 +3893,12 @@ void label_1277()
     ilight(568) = 0;
     ialphanameref(568) = "";
     iorgweight(568) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(568) = u8"耐冷ブランケット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(568) = u8"coldproof blanket"s;
         ioriginalnameref2(568) = "";
     }
@@ -3029,9 +3908,12 @@ void label_1277()
     ilight(567) = 0;
     ialphanameref(567) = "";
     iorgweight(567) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(567) = u8"耐火ブランケット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(567) = u8"fireproof blanket"s;
         ioriginalnameref2(567) = "";
     }
@@ -3041,9 +3923,12 @@ void label_1277()
     ilight(566) = 0;
     ialphanameref(566) = "";
     iorgweight(566) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(566) = u8"耐酸性コーティング液"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(566) = u8"acidproof liquid"s;
         ioriginalnameref2(566) = "";
     }
@@ -3055,9 +3940,12 @@ void label_1277()
     ilight(565) = 0;
     ialphanameref(565) = "";
     iorgweight(565) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(565) = u8"酸の滴る杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(565) = u8"acid ground"s;
         ioriginalnameref2(565) = u8"rod"s;
     }
@@ -3069,9 +3957,12 @@ void label_1277()
     ilight(564) = 0;
     ialphanameref(564) = "";
     iorgweight(564) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(564) = u8"酸の海の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(564) = u8"acid ground"s;
         ioriginalnameref2(564) = u8"spellbook"s;
     }
@@ -3083,25 +3974,34 @@ void label_1277()
     ilight(563) = 0;
     ialphanameref(563) = "";
     iorgweight(563) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(563) = u8"学習書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(563) = u8"textbook"s;
         ioriginalnameref2(563) = "";
     }
     ipicref(563) = 334;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(563) = u8"本"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(563) = u8"book"s;
     }
     icolref(563) = 0;
     ilight(562) = 0;
     ialphanameref(562) = "";
     iorgweight(562) = 20000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(562) = u8"レジスター"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(562) = u8"register"s;
         ioriginalnameref2(562) = "";
     }
@@ -3111,9 +4011,12 @@ void label_1277()
     ilight(561) = 0;
     ialphanameref(561) = "";
     iorgweight(561) = 20000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(561) = u8"店の金庫"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(561) = u8"shop strongbox"s;
         ioriginalnameref2(561) = "";
     }
@@ -3123,25 +4026,34 @@ void label_1277()
     ilight(560) = 0;
     ialphanameref(560) = "";
     iorgweight(560) = 20000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(560) = u8"主の納入箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(560) = u8"master's delivery chest"s;
         ioriginalnameref2(560) = "";
     }
     ipicref(560) = 331;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(560) = u8"納入箱"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(560) = u8"delivery chest"s;
     }
     icolref(560) = 0;
     ilight(559) = 0;
     ialphanameref(559) = "";
     iorgweight(559) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(559) = u8"エーテル抗体のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(559) = u8"cure corruption"s;
         ioriginalnameref2(559) = u8"potion"s;
     }
@@ -3153,9 +4065,12 @@ void label_1277()
     ilight(558) = 0;
     ialphanameref(558) = u8"オーロラリング"s;
     iorgweight(558) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(558) = u8"オーロラリング"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(558) = u8"aurora ring"s;
         ioriginalnameref2(558) = "";
     }
@@ -3167,9 +4082,12 @@ void label_1277()
     ilight(557) = 0;
     ialphanameref(557) = u8"ヴィンデールクローク"s;
     iorgweight(557) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(557) = u8"ヴィンデールクローク"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(557) = u8"vindale cloak"s;
         ioriginalnameref2(557) = "";
     }
@@ -3179,9 +4097,12 @@ void label_1277()
     ilight(556) = 0;
     ialphanameref(556) = u8"セブンリーグブーツ"s;
     iorgweight(556) = 300;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(556) = u8"セブンリーグブーツ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(556) = u8"seven league boots"s;
         ioriginalnameref2(556) = "";
     }
@@ -3191,9 +4112,12 @@ void label_1277()
     ilight(555) = 9;
     ialphanameref(555) = "";
     iorgweight(555) = 12500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(555) = u8"シェルター"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(555) = u8"shelter"s;
         ioriginalnameref2(555) = "";
     }
@@ -3203,9 +4127,12 @@ void label_1277()
     ilight(554) = 0;
     ialphanameref(554) = "";
     iorgweight(554) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(554) = u8"魔法の木の種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(554) = u8"magical seed"s;
         ioriginalnameref2(554) = "";
     }
@@ -3215,9 +4142,12 @@ void label_1277()
     ilight(553) = 0;
     ialphanameref(553) = "";
     iorgweight(553) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(553) = u8"宝石の種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(553) = u8"gem seed"s;
         ioriginalnameref2(553) = "";
     }
@@ -3227,9 +4157,12 @@ void label_1277()
     ilight(552) = 0;
     ialphanameref(552) = u8"フェザー"s;
     iorgweight(552) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(552) = u8"羽"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(552) = u8"feather"s;
         ioriginalnameref2(552) = "";
     }
@@ -3239,9 +4172,12 @@ void label_1277()
     ilight(551) = 0;
     ialphanameref(551) = "";
     iorgweight(551) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(551) = u8"癒しの手の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(551) = u8"healing hands"s;
         ioriginalnameref2(551) = u8"rod"s;
     }
@@ -3253,9 +4189,12 @@ void label_1277()
     ilight(550) = 0;
     ialphanameref(550) = "";
     iorgweight(550) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(550) = u8"癒しの手の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(550) = u8"healing hands"s;
         ioriginalnameref2(550) = u8"spellbook"s;
     }
@@ -3267,9 +4206,12 @@ void label_1277()
     ilight(549) = 0;
     ialphanameref(549) = "";
     iorgweight(549) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(549) = u8"治癒の雨の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(549) = u8"healing rain"s;
         ioriginalnameref2(549) = u8"scroll"s;
     }
@@ -3281,9 +4223,12 @@ void label_1277()
     ilight(548) = 0;
     ialphanameref(548) = "";
     iorgweight(548) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(548) = u8"治癒の雨の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(548) = u8"healing rain"s;
         ioriginalnameref2(548) = u8"spellbook"s;
     }
@@ -3295,9 +4240,12 @@ void label_1277()
     ilight(547) = 0;
     ialphanameref(547) = "";
     iorgweight(547) = 20000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(547) = u8"給料箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(547) = u8"salary chest"s;
         ioriginalnameref2(547) = "";
     }
@@ -3307,9 +4255,12 @@ void label_1277()
     ilight(546) = 0;
     ialphanameref(546) = "";
     iorgweight(546) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(546) = u8"壁生成の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(546) = u8"wall creation"s;
         ioriginalnameref2(546) = u8"spellbook"s;
     }
@@ -3321,9 +4272,12 @@ void label_1277()
     ilight(545) = 0;
     ialphanameref(545) = "";
     iorgweight(545) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(545) = u8"壁生成の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(545) = u8"wall creation"s;
         ioriginalnameref2(545) = u8"rod"s;
     }
@@ -3335,9 +4289,12 @@ void label_1277()
     ilight(544) = 9;
     ialphanameref(544) = "";
     iorgweight(544) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(544) = u8"ディスク"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(544) = u8"disc"s;
         ioriginalnameref2(544) = "";
     }
@@ -3347,9 +4304,12 @@ void label_1277()
     ilight(543) = 0;
     ialphanameref(543) = "";
     iorgweight(543) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(543) = u8"倉庫の権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(543) = u8"storage house"s;
         ioriginalnameref2(543) = u8"deed"s;
     }
@@ -3359,9 +4319,12 @@ void label_1277()
     ilight(542) = 0;
     ialphanameref(542) = "";
     iorgweight(542) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(542) = u8"畑の権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(542) = u8"farm"s;
         ioriginalnameref2(542) = u8"deed"s;
     }
@@ -3371,9 +4334,12 @@ void label_1277()
     ilight(541) = 9;
     ialphanameref(541) = "";
     iorgweight(541) = 8500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(541) = u8"雪だるま"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(541) = u8"snow man"s;
         ioriginalnameref2(541) = "";
     }
@@ -3383,9 +4349,12 @@ void label_1277()
     ilight(540) = 7;
     ialphanameref(540) = "";
     iorgweight(540) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(540) = u8"黒水晶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(540) = u8"black crystal"s;
         ioriginalnameref2(540) = "";
     }
@@ -3395,9 +4364,12 @@ void label_1277()
     ilight(539) = 0;
     ialphanameref(539) = "";
     iorgweight(539) = 48000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(539) = u8"猫の像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(539) = u8"cat"s;
         ioriginalnameref2(539) = u8"statue"s;
     }
@@ -3407,9 +4379,12 @@ void label_1277()
     ilight(538) = 0;
     ialphanameref(538) = "";
     iorgweight(538) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(538) = u8"絵画《ひまわり》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(538) = u8"sunflower"s;
         ioriginalnameref2(538) = u8"painting"s;
     }
@@ -3419,9 +4394,12 @@ void label_1277()
     ilight(537) = 0;
     ialphanameref(537) = "";
     iorgweight(537) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(537) = u8"絵画《風景》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(537) = u8"landscape"s;
         ioriginalnameref2(537) = u8"painting"s;
     }
@@ -3431,9 +4409,12 @@ void label_1277()
     ilight(536) = 0;
     ialphanameref(536) = "";
     iorgweight(536) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(536) = u8"絵画《マダム》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(536) = u8"madam"s;
         ioriginalnameref2(536) = u8"painting"s;
     }
@@ -3443,9 +4424,12 @@ void label_1277()
     ilight(535) = 0;
     ialphanameref(535) = "";
     iorgweight(535) = 5800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(535) = u8"巨大なテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(535) = u8"big table"s;
         ioriginalnameref2(535) = "";
     }
@@ -3455,9 +4439,12 @@ void label_1277()
     ilight(534) = 0;
     ialphanameref(534) = "";
     iorgweight(534) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(534) = u8"巨大な観葉植物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(534) = u8"giant foliage plant"s;
         ioriginalnameref2(534) = "";
     }
@@ -3467,9 +4454,12 @@ void label_1277()
     ilight(533) = 6;
     ialphanameref(533) = "";
     iorgweight(533) = 85000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(533) = u8"かまど"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(533) = u8"stove"s;
         ioriginalnameref2(533) = "";
     }
@@ -3479,9 +4469,12 @@ void label_1277()
     ilight(532) = 6;
     ialphanameref(532) = "";
     iorgweight(532) = 45000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(532) = u8"暖炉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(532) = u8"fireplace"s;
         ioriginalnameref2(532) = "";
     }
@@ -3491,9 +4484,12 @@ void label_1277()
     ilight(531) = 6;
     ialphanameref(531) = "";
     iorgweight(531) = 68000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(531) = u8"溶鉱炉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(531) = u8"furnance"s;
         ioriginalnameref2(531) = "";
     }
@@ -3503,9 +4499,12 @@ void label_1277()
     ilight(530) = 0;
     ialphanameref(530) = "";
     iorgweight(530) = 28000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(530) = u8"トネリコの木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(530) = u8"ash"s;
         ioriginalnameref2(530) = u8"tree"s;
     }
@@ -3515,9 +4514,12 @@ void label_1277()
     ilight(529) = 0;
     ialphanameref(529) = "";
     iorgweight(529) = 39000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(529) = u8"ヤシの木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(529) = u8"palm"s;
         ioriginalnameref2(529) = u8"tree"s;
     }
@@ -3527,9 +4529,12 @@ void label_1277()
     ilight(528) = 0;
     ialphanameref(528) = "";
     iorgweight(528) = 28000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(528) = u8"ケヤキの木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(528) = u8"zelkova"s;
         ioriginalnameref2(528) = u8"tree"s;
     }
@@ -3539,9 +4544,12 @@ void label_1277()
     ilight(527) = 0;
     ialphanameref(527) = "";
     iorgweight(527) = 20000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(527) = u8"枯れ木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(527) = u8"dead tree"s;
         ioriginalnameref2(527) = "";
     }
@@ -3551,9 +4559,12 @@ void label_1277()
     ilight(526) = 0;
     ialphanameref(526) = "";
     iorgweight(526) = 42000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(526) = u8"果実の木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(526) = u8"fruits"s;
         ioriginalnameref2(526) = u8"tree"s;
     }
@@ -3563,9 +4574,12 @@ void label_1277()
     ilight(525) = 0;
     ialphanameref(525) = "";
     iorgweight(525) = 35000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(525) = u8"果実のない木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(525) = u8"fruitless"s;
         ioriginalnameref2(525) = u8"tree"s;
     }
@@ -3575,9 +4589,12 @@ void label_1277()
     ilight(524) = 0;
     ialphanameref(524) = "";
     iorgweight(524) = 38000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(524) = u8"スギの木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(524) = u8"cedar"s;
         ioriginalnameref2(524) = u8"tree"s;
     }
@@ -3587,9 +4604,12 @@ void label_1277()
     ilight(523) = 0;
     ialphanameref(523) = "";
     iorgweight(523) = 45000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(523) = u8"ブナの木"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(523) = u8"beech"s;
         ioriginalnameref2(523) = u8"tree"s;
     }
@@ -3599,9 +4619,12 @@ void label_1277()
     ilight(522) = 0;
     ialphanameref(522) = "";
     iorgweight(522) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(522) = u8"店の権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(522) = u8"shop"s;
         ioriginalnameref2(522) = u8"deed"s;
     }
@@ -3611,9 +4634,12 @@ void label_1277()
     ilight(521) = 0;
     ialphanameref(521) = "";
     iorgweight(521) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(521) = u8"博物館の権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(521) = u8"museum"s;
         ioriginalnameref2(521) = u8"deed"s;
     }
@@ -3623,9 +4649,12 @@ void label_1277()
     ilight(520) = 0;
     ialphanameref(520) = u8"ウィング"s;
     iorgweight(520) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(520) = u8"翼"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(520) = u8"wing"s;
         ioriginalnameref2(520) = "";
     }
@@ -3635,9 +4664,12 @@ void label_1277()
     ilight(519) = 0;
     ialphanameref(519) = "";
     iorgweight(519) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(519) = u8"染料"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(519) = u8"dye"s;
         ioriginalnameref2(519) = u8"bottle"s;
     }
@@ -3649,9 +4681,12 @@ void label_1277()
     ilight(518) = 0;
     ialphanameref(518) = "";
     iorgweight(518) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(518) = u8"錬金術の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(518) = u8"alchemy"s;
         ioriginalnameref2(518) = u8"rod"s;
     }
@@ -3663,9 +4698,12 @@ void label_1277()
     ilight(517) = 0;
     ialphanameref(517) = "";
     iorgweight(517) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(517) = u8"変化の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(517) = u8"change creature"s;
         ioriginalnameref2(517) = u8"rod"s;
     }
@@ -3677,25 +4715,34 @@ void label_1277()
     ilight(516) = 0;
     ialphanameref(516) = "";
     iorgweight(516) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(516) = u8"水"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(516) = u8"water"s;
         ioriginalnameref2(516) = u8"bottle"s;
     }
     ipicref(516) = 354;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(516) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(516) = u8"clear liquid"s;
     }
     icolref(516) = 0;
     ilight(515) = 0;
     ialphanameref(515) = "";
     iorgweight(515) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(515) = u8"充填の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(515) = u8"recharge"s;
         ioriginalnameref2(515) = u8"scroll"s;
     }
@@ -3707,25 +4754,34 @@ void label_1277()
     ilight(514) = 9;
     ialphanameref(514) = "";
     iorgweight(514) = 8500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(514) = u8"《レールガン》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(514) = u8"<Rail Gun>"s;
         ioriginalnameref2(514) = "";
     }
     ipicref(514) = 520;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(514) = u8"虐殺の銃"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(514) = u8"gun of genocide"s;
     }
     icolref(514) = 0;
     ilight(513) = 0;
     ialphanameref(513) = u8"エネルギーセル"s;
     iorgweight(513) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(513) = u8"光子弾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(513) = u8"energy cell"s;
         ioriginalnameref2(513) = "";
     }
@@ -3735,9 +4791,12 @@ void label_1277()
     ilight(512) = 0;
     ialphanameref(512) = u8"レーザーガン"s;
     iorgweight(512) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(512) = u8"光子銃"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(512) = u8"laser gun"s;
         ioriginalnameref2(512) = "";
     }
@@ -3747,9 +4806,12 @@ void label_1277()
     ilight(511) = 0;
     ialphanameref(511) = "";
     iorgweight(511) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(511) = u8"遺産相続の権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(511) = u8"heirship"s;
         ioriginalnameref2(511) = u8"deed"s;
     }
@@ -3759,9 +4821,12 @@ void label_1277()
     ilight(510) = 0;
     ialphanameref(510) = "";
     iorgweight(510) = 20000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(510) = u8"形見のカバン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(510) = u8"heir trunk"s;
         ioriginalnameref2(510) = "";
     }
@@ -3771,9 +4836,12 @@ void label_1277()
     ilight(509) = 0;
     ialphanameref(509) = "";
     iorgweight(509) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(509) = u8"*防具強化*の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(509) = u8"greater enchant armor"s;
         ioriginalnameref2(509) = u8"scroll"s;
     }
@@ -3785,9 +4853,12 @@ void label_1277()
     ilight(508) = 0;
     ialphanameref(508) = "";
     iorgweight(508) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(508) = u8"防具強化の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(508) = u8"enchant armor"s;
         ioriginalnameref2(508) = u8"scroll"s;
     }
@@ -3799,9 +4870,12 @@ void label_1277()
     ilight(507) = 0;
     ialphanameref(507) = "";
     iorgweight(507) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(507) = u8"*武器強化*の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(507) = u8"greater enchant weapon"s;
         ioriginalnameref2(507) = u8"scroll"s;
     }
@@ -3813,9 +4887,12 @@ void label_1277()
     ilight(506) = 0;
     ialphanameref(506) = "";
     iorgweight(506) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(506) = u8"武器強化の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(506) = u8"enchant weapon"s;
         ioriginalnameref2(506) = u8"scroll"s;
     }
@@ -3827,9 +4904,12 @@ void label_1277()
     ilight(505) = 0;
     ialphanameref(505) = "";
     iorgweight(505) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(505) = u8"妹の日記"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(505) = u8"little sister's diary"s;
         ioriginalnameref2(505) = "";
     }
@@ -3841,9 +4921,12 @@ void label_1277()
     ilight(504) = 0;
     ialphanameref(504) = "";
     iorgweight(504) = 200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(504) = u8"カード"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(504) = u8"card"s;
         ioriginalnameref2(504) = "";
     }
@@ -3853,9 +4936,12 @@ void label_1277()
     ilight(503) = 0;
     ialphanameref(503) = "";
     iorgweight(503) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(503) = u8"はく製"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(503) = u8"figurine"s;
         ioriginalnameref2(503) = "";
     }
@@ -3865,9 +4951,12 @@ void label_1277()
     ilight(502) = 0;
     ialphanameref(502) = "";
     iorgweight(502) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(502) = u8"*素材変化*の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(502) = u8"superior material"s;
         ioriginalnameref2(502) = u8"scroll"s;
     }
@@ -3879,9 +4968,12 @@ void label_1277()
     ilight(501) = 0;
     ialphanameref(501) = "";
     iorgweight(501) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(501) = u8"素材変化の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(501) = u8"change material"s;
         ioriginalnameref2(501) = u8"scroll"s;
     }
@@ -3893,9 +4985,12 @@ void label_1277()
     ilight(500) = 0;
     ialphanameref(500) = "";
     iorgweight(500) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(500) = u8"劣悪素材の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(500) = u8"inferior material"s;
         ioriginalnameref2(500) = u8"scroll"s;
     }
@@ -3907,9 +5002,12 @@ void label_1277()
     ilight(499) = 0;
     ialphanameref(499) = "";
     iorgweight(499) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(499) = u8"サイバースナック"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(499) = u8"cyber snack"s;
         ioriginalnameref2(499) = "";
     }
@@ -3919,9 +5017,12 @@ void label_1277()
     ilight(498) = 0;
     ialphanameref(498) = "";
     iorgweight(498) = 180;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(498) = u8"フライドポテト"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(498) = u8"fried potato"s;
         ioriginalnameref2(498) = "";
     }
@@ -3931,9 +5032,12 @@ void label_1277()
     ilight(497) = 0;
     ialphanameref(497) = "";
     iorgweight(497) = 200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(497) = u8"ポップコーン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(497) = u8"pop corn"s;
         ioriginalnameref2(497) = "";
     }
@@ -3943,9 +5047,12 @@ void label_1277()
     ilight(496) = 0;
     ialphanameref(496) = u8"ショットガン"s;
     iorgweight(496) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(496) = u8"散弾銃"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(496) = u8"shot gun"s;
         ioriginalnameref2(496) = "";
     }
@@ -3955,9 +5062,12 @@ void label_1277()
     ilight(495) = 9;
     ialphanameref(495) = "";
     iorgweight(495) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(495) = u8"ブランクディスク"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(495) = u8"blank disc"s;
         ioriginalnameref2(495) = "";
     }
@@ -3967,9 +5077,12 @@ void label_1277()
     ilight(494) = 0;
     ialphanameref(494) = "";
     iorgweight(494) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(494) = u8"チップ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(494) = u8"chip"s;
         ioriginalnameref2(494) = "";
     }
@@ -3979,9 +5092,12 @@ void label_1277()
     ilight(493) = 0;
     ialphanameref(493) = "";
     iorgweight(493) = 8000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(493) = u8"トラッシュカン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(493) = u8"trash can"s;
         ioriginalnameref2(493) = "";
     }
@@ -3991,9 +5107,12 @@ void label_1277()
     ilight(492) = 0;
     ialphanameref(492) = "";
     iorgweight(492) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(492) = u8"ストレージ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(492) = u8"storage"s;
         ioriginalnameref2(492) = "";
     }
@@ -4003,9 +5122,12 @@ void label_1277()
     ilight(491) = 0;
     ialphanameref(491) = "";
     iorgweight(491) = 95000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(491) = u8"サーバー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(491) = u8"server"s;
         ioriginalnameref2(491) = "";
     }
@@ -4015,9 +5137,12 @@ void label_1277()
     ilight(490) = 0;
     ialphanameref(490) = "";
     iorgweight(490) = 150000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(490) = u8"レンジ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(490) = u8"microwave oven"s;
         ioriginalnameref2(490) = "";
     }
@@ -4027,9 +5152,12 @@ void label_1277()
     ilight(489) = 0;
     ialphanameref(489) = "";
     iorgweight(489) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(489) = u8"カメラ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(489) = u8"camera"s;
         ioriginalnameref2(489) = "";
     }
@@ -4039,9 +5167,12 @@ void label_1277()
     ilight(488) = 0;
     ialphanameref(488) = "";
     iorgweight(488) = 120000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(488) = u8"トレーニングマシーン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(488) = u8"training machine"s;
         ioriginalnameref2(488) = "";
     }
@@ -4051,9 +5182,12 @@ void label_1277()
     ilight(487) = 9;
     ialphanameref(487) = "";
     iorgweight(487) = 45000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(487) = u8"コンピューター"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(487) = u8"computer"s;
         ioriginalnameref2(487) = "";
     }
@@ -4063,9 +5197,12 @@ void label_1277()
     ilight(486) = 9;
     ialphanameref(486) = "";
     iorgweight(486) = 150000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(486) = u8"電子機械"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(486) = u8"machine"s;
         ioriginalnameref2(486) = "";
     }
@@ -4075,9 +5212,12 @@ void label_1277()
     ilight(485) = 0;
     ialphanameref(485) = "";
     iorgweight(485) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(485) = u8"蜘蛛の巣の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(485) = u8"web"s;
         ioriginalnameref2(485) = u8"rod"s;
     }
@@ -4089,9 +5229,12 @@ void label_1277()
     ilight(484) = 0;
     ialphanameref(484) = "";
     iorgweight(484) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(484) = u8"蜘蛛の巣の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(484) = u8"web"s;
         ioriginalnameref2(484) = u8"spellbook"s;
     }
@@ -4103,9 +5246,12 @@ void label_1277()
     ilight(483) = 0;
     ialphanameref(483) = u8"ボルト"s;
     iorgweight(483) = 3500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(483) = u8"クロスボウの矢束"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(483) = u8"bolt"s;
         ioriginalnameref2(483) = "";
     }
@@ -4115,9 +5261,12 @@ void label_1277()
     ilight(482) = 0;
     ialphanameref(482) = u8"クロスボウ"s;
     iorgweight(482) = 2800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(482) = u8"機械弓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(482) = u8"crossbow"s;
         ioriginalnameref2(482) = "";
     }
@@ -4127,9 +5276,12 @@ void label_1277()
     ilight(481) = 0;
     ialphanameref(481) = "";
     iorgweight(481) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(481) = u8"支配の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(481) = u8"domination"s;
         ioriginalnameref2(481) = u8"spellbook"s;
     }
@@ -4141,9 +5293,12 @@ void label_1277()
     ilight(480) = 0;
     ialphanameref(480) = "";
     iorgweight(480) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(480) = u8"支配の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(480) = u8"domination"s;
         ioriginalnameref2(480) = u8"rod"s;
     }
@@ -4155,9 +5310,12 @@ void label_1277()
     ilight(479) = 0;
     ialphanameref(479) = "";
     iorgweight(479) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(479) = u8"援軍の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(479) = u8"ally"s;
         ioriginalnameref2(479) = u8"scroll"s;
     }
@@ -4169,9 +5327,12 @@ void label_1277()
     ilight(478) = 0;
     ialphanameref(478) = "";
     iorgweight(478) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(478) = u8"聴診器"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(478) = u8"stethoscope"s;
         ioriginalnameref2(478) = "";
     }
@@ -4181,9 +5342,12 @@ void label_1277()
     ilight(477) = 0;
     ialphanameref(477) = u8"エンゲージリング"s;
     iorgweight(477) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(477) = u8"結婚指輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(477) = u8"engagement ring"s;
         ioriginalnameref2(477) = "";
     }
@@ -4195,9 +5359,12 @@ void label_1277()
     ilight(476) = 0;
     ialphanameref(476) = u8"リング"s;
     iorgweight(476) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(476) = u8"指輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(476) = u8"ring"s;
         ioriginalnameref2(476) = "";
     }
@@ -4209,9 +5376,12 @@ void label_1277()
     ilight(475) = 0;
     ialphanameref(475) = u8"ガードリング"s;
     iorgweight(475) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(475) = u8"指当て"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(475) = u8"armored ring"s;
         ioriginalnameref2(475) = "";
     }
@@ -4223,9 +5393,12 @@ void label_1277()
     ilight(474) = 0;
     ialphanameref(474) = u8"ハイリング"s;
     iorgweight(474) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(474) = u8"合金指輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(474) = u8"composite ring"s;
         ioriginalnameref2(474) = "";
     }
@@ -4237,9 +5410,12 @@ void label_1277()
     ilight(473) = 0;
     ialphanameref(473) = u8"ウェディングネックレス"s;
     iorgweight(473) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(473) = u8"結婚首輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(473) = u8"engagement amulet"s;
         ioriginalnameref2(473) = "";
     }
@@ -4251,9 +5427,12 @@ void label_1277()
     ilight(472) = 0;
     ialphanameref(472) = u8"ポリシュドネックレス"s;
     iorgweight(472) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(472) = u8"細工首輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(472) = u8"bejeweled amulet"s;
         ioriginalnameref2(472) = "";
     }
@@ -4265,9 +5444,12 @@ void label_1277()
     ilight(471) = 0;
     ialphanameref(471) = u8"チャーム"s;
     iorgweight(471) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(471) = u8"お守り"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(471) = u8"charm"s;
         ioriginalnameref2(471) = "";
     }
@@ -4279,9 +5461,12 @@ void label_1277()
     ilight(470) = 0;
     ialphanameref(470) = u8"ネックガード"s;
     iorgweight(470) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(470) = u8"首当て"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(470) = u8"neck guard"s;
         ioriginalnameref2(470) = "";
     }
@@ -4293,9 +5478,12 @@ void label_1277()
     ilight(469) = 0;
     ialphanameref(469) = u8"タリスマン"s;
     iorgweight(469) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(469) = u8"護符"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(469) = u8"talisman"s;
         ioriginalnameref2(469) = "";
     }
@@ -4307,9 +5495,12 @@ void label_1277()
     ilight(468) = 0;
     ialphanameref(468) = u8"ペリドット"s;
     iorgweight(468) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(468) = u8"ペリドット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(468) = u8"peridot"s;
         ioriginalnameref2(468) = "";
     }
@@ -4321,9 +5512,12 @@ void label_1277()
     ilight(467) = 0;
     ialphanameref(467) = u8"ハイヘルム"s;
     iorgweight(467) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(467) = u8"合金兜"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(467) = u8"composite helm"s;
         ioriginalnameref2(467) = "";
     }
@@ -4333,9 +5527,12 @@ void label_1277()
     ilight(466) = 0;
     ialphanameref(466) = u8"ヘルム"s;
     iorgweight(466) = 1600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(466) = u8"兜"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(466) = u8"helm"s;
         ioriginalnameref2(466) = "";
     }
@@ -4345,9 +5542,12 @@ void label_1277()
     ilight(465) = 0;
     ialphanameref(465) = u8"バーガネット"s;
     iorgweight(465) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(465) = u8"騎士兜"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(465) = u8"knight helm"s;
         ioriginalnameref2(465) = "";
     }
@@ -4357,9 +5557,12 @@ void label_1277()
     ilight(464) = 0;
     ialphanameref(464) = u8"ヘビーヘルム"s;
     iorgweight(464) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(464) = u8"重兜"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(464) = u8"heavy helm"s;
         ioriginalnameref2(464) = "";
     }
@@ -4369,9 +5572,12 @@ void label_1277()
     ilight(463) = 0;
     ialphanameref(463) = u8"ハット"s;
     iorgweight(463) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(463) = u8"羽帽子"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(463) = u8"feather hat"s;
         ioriginalnameref2(463) = "";
     }
@@ -4381,9 +5587,12 @@ void label_1277()
     ilight(462) = 0;
     ialphanameref(462) = u8"クローク"s;
     iorgweight(462) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(462) = u8"外套"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(462) = u8"cloak"s;
         ioriginalnameref2(462) = "";
     }
@@ -4393,9 +5602,12 @@ void label_1277()
     ilight(461) = 0;
     ialphanameref(461) = u8"コーテッドクローク"s;
     iorgweight(461) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(461) = u8"防護外套"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(461) = u8"armored cloak"s;
         ioriginalnameref2(461) = "";
     }
@@ -4405,9 +5617,12 @@ void label_1277()
     ilight(460) = 0;
     ialphanameref(460) = u8"ヘビーガードル"s;
     iorgweight(460) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(460) = u8"重層腰当"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(460) = u8"plate girdle"s;
         ioriginalnameref2(460) = "";
     }
@@ -4417,9 +5632,12 @@ void label_1277()
     ilight(459) = 0;
     ialphanameref(459) = u8"コンポジットガードル"s;
     iorgweight(459) = 650;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(459) = u8"合成腰当"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(459) = u8"composite girdle"s;
         ioriginalnameref2(459) = "";
     }
@@ -4429,9 +5647,12 @@ void label_1277()
     ilight(458) = 0;
     ialphanameref(458) = u8"アーマードブーツ"s;
     iorgweight(458) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(458) = u8"装甲靴"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(458) = u8"armored boots"s;
         ioriginalnameref2(458) = "";
     }
@@ -4441,9 +5662,12 @@ void label_1277()
     ilight(457) = 0;
     ialphanameref(457) = u8"タイトブーツ"s;
     iorgweight(457) = 650;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(457) = u8"厚靴"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(457) = u8"tight boots"s;
         ioriginalnameref2(457) = "";
     }
@@ -4453,9 +5677,12 @@ void label_1277()
     ilight(456) = 0;
     ialphanameref(456) = u8"ブーツ"s;
     iorgweight(456) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(456) = u8"靴"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(456) = u8"boots"s;
         ioriginalnameref2(456) = "";
     }
@@ -4465,9 +5692,12 @@ void label_1277()
     ilight(455) = 0;
     ialphanameref(455) = u8"サンダル"s;
     iorgweight(455) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(455) = u8"履物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(455) = u8"shoes"s;
         ioriginalnameref2(455) = "";
     }
@@ -4477,9 +5707,12 @@ void label_1277()
     ilight(454) = 0;
     ialphanameref(454) = u8"ヘビーシールド"s;
     iorgweight(454) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(454) = u8"重層盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(454) = u8"tower shield"s;
         ioriginalnameref2(454) = "";
     }
@@ -4489,9 +5722,12 @@ void label_1277()
     ilight(453) = 0;
     ialphanameref(453) = u8"タワーシールド"s;
     iorgweight(453) = 3500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(453) = u8"長盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(453) = u8"kite shield"s;
         ioriginalnameref2(453) = "";
     }
@@ -4501,9 +5737,12 @@ void label_1277()
     ilight(452) = 0;
     ialphanameref(452) = u8"コンポジットシールド"s;
     iorgweight(452) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(452) = u8"合成盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(452) = u8"large shield"s;
         ioriginalnameref2(452) = "";
     }
@@ -4513,9 +5752,12 @@ void label_1277()
     ilight(451) = 0;
     ialphanameref(451) = u8"シールド"s;
     iorgweight(451) = 1000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(451) = u8"盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(451) = u8"shield"s;
         ioriginalnameref2(451) = "";
     }
@@ -4525,9 +5767,12 @@ void label_1277()
     ilight(450) = 0;
     ialphanameref(450) = u8"ラウンドシールド"s;
     iorgweight(450) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(450) = u8"丸型盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(450) = u8"round shield"s;
         ioriginalnameref2(450) = "";
     }
@@ -4537,9 +5782,12 @@ void label_1277()
     ilight(449) = 0;
     ialphanameref(449) = u8"バックラー"s;
     iorgweight(449) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(449) = u8"小盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(449) = u8"small shield"s;
         ioriginalnameref2(449) = "";
     }
@@ -4549,9 +5797,12 @@ void label_1277()
     ilight(448) = 0;
     ialphanameref(448) = u8"ガントレット"s;
     iorgweight(448) = 1300;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(448) = u8"合成篭手"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(448) = u8"composite gauntlets"s;
         ioriginalnameref2(448) = "";
     }
@@ -4561,9 +5812,12 @@ void label_1277()
     ilight(447) = 0;
     ialphanameref(447) = u8"ライトグローブ"s;
     iorgweight(447) = 200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(447) = u8"軽手袋"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(447) = u8"light gloves"s;
         ioriginalnameref2(447) = "";
     }
@@ -4573,9 +5827,12 @@ void label_1277()
     ilight(446) = 0;
     ialphanameref(446) = u8"ヘビーガントレット"s;
     iorgweight(446) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(446) = u8"重層篭手"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(446) = u8"plate gauntlets"s;
         ioriginalnameref2(446) = "";
     }
@@ -4585,9 +5842,12 @@ void label_1277()
     ilight(445) = 0;
     ialphanameref(445) = u8"グローブ"s;
     iorgweight(445) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(445) = u8"手袋"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(445) = u8"gloves"s;
         ioriginalnameref2(445) = "";
     }
@@ -4597,9 +5857,12 @@ void label_1277()
     ilight(444) = 0;
     ialphanameref(444) = u8"コーテッドアーマ"s;
     iorgweight(444) = 1600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(444) = u8"防弾服"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(444) = u8"bulletproof jacket"s;
         ioriginalnameref2(444) = "";
     }
@@ -4609,9 +5872,12 @@ void label_1277()
     ilight(443) = 0;
     ialphanameref(443) = u8"ブレストプレート"s;
     iorgweight(443) = 2800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(443) = u8"胴衣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(443) = u8"breast plate"s;
         ioriginalnameref2(443) = "";
     }
@@ -4621,9 +5887,12 @@ void label_1277()
     ilight(442) = 0;
     ialphanameref(442) = u8"コート"s;
     iorgweight(442) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(442) = u8"防護服"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(442) = u8"coat"s;
         ioriginalnameref2(442) = "";
     }
@@ -4633,9 +5902,12 @@ void label_1277()
     ilight(441) = 0;
     ialphanameref(441) = u8"ライトアーマ"s;
     iorgweight(441) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(441) = u8"軽鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(441) = u8"light mail"s;
         ioriginalnameref2(441) = "";
     }
@@ -4645,9 +5917,12 @@ void label_1277()
     ilight(440) = 0;
     ialphanameref(440) = u8"ローブ"s;
     iorgweight(440) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(440) = u8"法王衣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(440) = u8"pope robe"s;
         ioriginalnameref2(440) = "";
     }
@@ -4657,9 +5932,12 @@ void label_1277()
     ilight(439) = 0;
     ialphanameref(439) = u8"スプリントメイル"s;
     iorgweight(439) = 5200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(439) = u8"綴り鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(439) = u8"chain mail"s;
         ioriginalnameref2(439) = "";
     }
@@ -4669,9 +5947,12 @@ void label_1277()
     ilight(438) = 0;
     ialphanameref(438) = u8"ブリガンダイン"s;
     iorgweight(438) = 5500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(438) = u8"合成鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(438) = u8"composite mail"s;
         ioriginalnameref2(438) = "";
     }
@@ -4681,9 +5962,12 @@ void label_1277()
     ilight(437) = 0;
     ialphanameref(437) = u8"ラメラーメイル"s;
     iorgweight(437) = 5000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(437) = u8"輪鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(437) = u8"ring mail"s;
         ioriginalnameref2(437) = "";
     }
@@ -4693,9 +5977,12 @@ void label_1277()
     ilight(436) = 0;
     ialphanameref(436) = u8"プレートメイル"s;
     iorgweight(436) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(436) = u8"重層鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(436) = u8"plate mail"s;
         ioriginalnameref2(436) = "";
     }
@@ -4705,9 +5992,12 @@ void label_1277()
     ilight(435) = 0;
     ialphanameref(435) = u8"ヘビーメイル"s;
     iorgweight(435) = 6500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(435) = u8"厚鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(435) = u8"banded mail"s;
         ioriginalnameref2(435) = "";
     }
@@ -4717,9 +6007,12 @@ void label_1277()
     ilight(434) = 0;
     ialphanameref(434) = "";
     iorgweight(434) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(434) = u8"自己変容の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(434) = u8"mutation"s;
         ioriginalnameref2(434) = u8"spellbook"s;
     }
@@ -4731,9 +6024,12 @@ void label_1277()
     ilight(433) = 0;
     ialphanameref(433) = "";
     iorgweight(433) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(433) = u8"変異治療のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(433) = u8"cure mutation"s;
         ioriginalnameref2(433) = u8"potion"s;
     }
@@ -4745,9 +6041,12 @@ void label_1277()
     ilight(432) = 0;
     ialphanameref(432) = "";
     iorgweight(432) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(432) = u8"突然変異のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(432) = u8"mutation"s;
         ioriginalnameref2(432) = u8"potion"s;
     }
@@ -4759,9 +6058,12 @@ void label_1277()
     ilight(431) = 0;
     ialphanameref(431) = "";
     iorgweight(431) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(431) = u8"信仰の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(431) = u8"faith"s;
         ioriginalnameref2(431) = u8"scroll"s;
     }
@@ -4773,9 +6075,12 @@ void label_1277()
     ilight(430) = 0;
     ialphanameref(430) = "";
     iorgweight(430) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(430) = u8"成長の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(430) = u8"growth"s;
         ioriginalnameref2(430) = u8"scroll"s;
     }
@@ -4787,9 +6092,12 @@ void label_1277()
     ilight(429) = 0;
     ialphanameref(429) = "";
     iorgweight(429) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(429) = u8"失耐性のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(429) = u8"weaken resistance"s;
         ioriginalnameref2(429) = u8"potion"s;
     }
@@ -4801,9 +6109,12 @@ void label_1277()
     ilight(428) = 0;
     ialphanameref(428) = "";
     iorgweight(428) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(428) = u8"寝袋"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(428) = u8"sleeping bag"s;
         ioriginalnameref2(428) = "";
     }
@@ -4813,9 +6124,12 @@ void label_1277()
     ilight(427) = 0;
     ialphanameref(427) = "";
     iorgweight(427) = 480;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(427) = u8"ストマフィリア"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(427) = u8"stomafillia"s;
         ioriginalnameref2(427) = "";
     }
@@ -4825,9 +6139,12 @@ void label_1277()
     ilight(426) = 0;
     ialphanameref(426) = "";
     iorgweight(426) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(426) = u8"アルローニア"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(426) = u8"alraunia"s;
         ioriginalnameref2(426) = "";
     }
@@ -4837,9 +6154,12 @@ void label_1277()
     ilight(425) = 0;
     ialphanameref(425) = "";
     iorgweight(425) = 260;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(425) = u8"キュラリア"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(425) = u8"curaria"s;
         ioriginalnameref2(425) = "";
     }
@@ -4849,9 +6169,12 @@ void label_1277()
     ilight(424) = 0;
     ialphanameref(424) = "";
     iorgweight(424) = 220;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(424) = u8"スペンスウィード"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(424) = u8"spenseweed"s;
         ioriginalnameref2(424) = "";
     }
@@ -4861,9 +6184,12 @@ void label_1277()
     ilight(423) = 0;
     ialphanameref(423) = "";
     iorgweight(423) = 210;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(423) = u8"マレイロン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(423) = u8"mareilon"s;
         ioriginalnameref2(423) = "";
     }
@@ -4873,9 +6199,12 @@ void label_1277()
     ilight(422) = 0;
     ialphanameref(422) = "";
     iorgweight(422) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(422) = u8"モージア"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(422) = u8"morgia"s;
         ioriginalnameref2(422) = "";
     }
@@ -4885,9 +6214,12 @@ void label_1277()
     ilight(421) = 0;
     ialphanameref(421) = "";
     iorgweight(421) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(421) = u8"アーティファクトの種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(421) = u8"artifact seed"s;
         ioriginalnameref2(421) = "";
     }
@@ -4897,9 +6229,12 @@ void label_1277()
     ilight(420) = 0;
     ialphanameref(420) = "";
     iorgweight(420) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(420) = u8"謎の種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(420) = u8"unknown seed"s;
         ioriginalnameref2(420) = "";
     }
@@ -4909,9 +6244,12 @@ void label_1277()
     ilight(419) = 0;
     ialphanameref(419) = "";
     iorgweight(419) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(419) = u8"ハーブの種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(419) = u8"herb seed"s;
         ioriginalnameref2(419) = "";
     }
@@ -4921,9 +6259,12 @@ void label_1277()
     ilight(418) = 0;
     ialphanameref(418) = "";
     iorgweight(418) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(418) = u8"果物の種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(418) = u8"fruit seed"s;
         ioriginalnameref2(418) = "";
     }
@@ -4933,9 +6274,12 @@ void label_1277()
     ilight(417) = 0;
     ialphanameref(417) = "";
     iorgweight(417) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(417) = u8"野菜の種"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(417) = u8"vegetable seed"s;
         ioriginalnameref2(417) = "";
     }
@@ -4945,9 +6289,12 @@ void label_1277()
     ilight(416) = 0;
     ialphanameref(416) = "";
     iorgweight(416) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(416) = u8"ガシャポンの玉(レア)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(416) = u8"rare treasure ball"s;
         ioriginalnameref2(416) = "";
     }
@@ -4957,9 +6304,12 @@ void label_1277()
     ilight(415) = 0;
     ialphanameref(415) = "";
     iorgweight(415) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(415) = u8"ガシャポンの玉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(415) = u8"treasure ball"s;
         ioriginalnameref2(415) = "";
     }
@@ -4969,9 +6319,12 @@ void label_1277()
     ilight(414) = 0;
     ialphanameref(414) = "";
     iorgweight(414) = 140000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(414) = u8"青のガシャポン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(414) = u8"blue treasure machine"s;
         ioriginalnameref2(414) = "";
     }
@@ -4981,9 +6334,12 @@ void label_1277()
     ilight(413) = 0;
     ialphanameref(413) = "";
     iorgweight(413) = 140000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(413) = u8"赤のガシャポン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(413) = u8"red treasure machine"s;
         ioriginalnameref2(413) = "";
     }
@@ -4993,9 +6349,12 @@ void label_1277()
     ilight(412) = 0;
     ialphanameref(412) = "";
     iorgweight(412) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(412) = u8"解呪の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(412) = u8"uncurse"s;
         ioriginalnameref2(412) = u8"rod"s;
     }
@@ -5007,9 +6366,12 @@ void label_1277()
     ilight(411) = 0;
     ialphanameref(411) = "";
     iorgweight(411) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(411) = u8"物質感知の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(411) = u8"detect objects"s;
         ioriginalnameref2(411) = u8"scroll"s;
     }
@@ -5021,9 +6383,12 @@ void label_1277()
     ilight(410) = 0;
     ialphanameref(410) = "";
     iorgweight(410) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(410) = u8"物質感知の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(410) = u8"detect objects"s;
         ioriginalnameref2(410) = u8"spellbook"s;
     }
@@ -5035,9 +6400,12 @@ void label_1277()
     ilight(409) = 0;
     ialphanameref(409) = "";
     iorgweight(409) = -1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(409) = u8"浮き輪(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(409) = u8"inner tube"s;
         ioriginalnameref2(409) = "";
     }
@@ -5047,9 +6415,12 @@ void label_1277()
     ilight(408) = 0;
     ialphanameref(408) = "";
     iorgweight(408) = -32000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(408) = u8"貴族の玩具(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(408) = u8"noble toy"s;
         ioriginalnameref2(408) = "";
     }
@@ -5059,9 +6430,12 @@ void label_1277()
     ilight(407) = 0;
     ialphanameref(407) = "";
     iorgweight(407) = -16000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(407) = u8"銘酒セット(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(407) = u8"whisky"s;
         ioriginalnameref2(407) = "";
     }
@@ -5071,9 +6445,12 @@ void label_1277()
     ilight(406) = 0;
     ialphanameref(406) = "";
     iorgweight(406) = -7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(406) = u8"ツナ(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(406) = u8"tuna fish"s;
         ioriginalnameref2(406) = "";
     }
@@ -5083,9 +6460,12 @@ void label_1277()
     ilight(405) = 0;
     ialphanameref(405) = "";
     iorgweight(405) = -48000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(405) = u8"墓(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(405) = u8"grave"s;
         ioriginalnameref2(405) = "";
     }
@@ -5095,9 +6475,12 @@ void label_1277()
     ilight(404) = 0;
     ialphanameref(404) = "";
     iorgweight(404) = -10000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(404) = u8"マンボー(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(404) = u8"manboo"s;
         ioriginalnameref2(404) = "";
     }
@@ -5107,9 +6490,12 @@ void label_1277()
     ilight(403) = 0;
     ialphanameref(403) = "";
     iorgweight(403) = -12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(403) = u8"棺桶(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(403) = u8"coffin"s;
         ioriginalnameref2(403) = "";
     }
@@ -5119,9 +6505,12 @@ void label_1277()
     ilight(402) = 0;
     ialphanameref(402) = "";
     iorgweight(402) = -4800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(402) = u8"ロープ(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(402) = u8"rope"s;
         ioriginalnameref2(402) = "";
     }
@@ -5131,9 +6520,12 @@ void label_1277()
     ilight(401) = 0;
     ialphanameref(401) = "";
     iorgweight(401) = -50000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(401) = u8"装飾ピアノ(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(401) = u8"piano"s;
         ioriginalnameref2(401) = "";
     }
@@ -5143,9 +6535,12 @@ void label_1277()
     ilight(400) = 0;
     ialphanameref(400) = "";
     iorgweight(400) = -10000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(400) = u8"匠のタル(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(400) = u8"barrel"s;
         ioriginalnameref2(400) = "";
     }
@@ -5155,9 +6550,12 @@ void label_1277()
     ilight(399) = 0;
     ialphanameref(399) = "";
     iorgweight(399) = -6500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(399) = u8"特産ぬいぐるみ(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(399) = u8"rag doll"s;
         ioriginalnameref2(399) = "";
     }
@@ -5167,9 +6565,12 @@ void label_1277()
     ilight(398) = 0;
     ialphanameref(398) = "";
     iorgweight(398) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(398) = u8"知恵の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(398) = u8"knowledge"s;
         ioriginalnameref2(398) = u8"scroll"s;
     }
@@ -5181,9 +6582,12 @@ void label_1277()
     ilight(397) = 0;
     ialphanameref(397) = "";
     iorgweight(397) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(397) = u8"知者の加護の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(397) = u8"knowledge"s;
         ioriginalnameref2(397) = u8"spellbook"s;
     }
@@ -5195,9 +6599,12 @@ void label_1277()
     ilight(396) = 0;
     ialphanameref(396) = "";
     iorgweight(396) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(396) = u8"ナイトメアの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(396) = u8"nightmare"s;
         ioriginalnameref2(396) = u8"spellbook"s;
     }
@@ -5209,9 +6616,12 @@ void label_1277()
     ilight(395) = 0;
     ialphanameref(395) = "";
     iorgweight(395) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(395) = u8"マテリアル生成の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(395) = u8"gain material"s;
         ioriginalnameref2(395) = u8"scroll"s;
     }
@@ -5223,9 +6633,12 @@ void label_1277()
     ilight(394) = 0;
     ialphanameref(394) = "";
     iorgweight(394) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(394) = u8"素材箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(394) = u8"material box"s;
         ioriginalnameref2(394) = "";
     }
@@ -5235,9 +6648,12 @@ void label_1277()
     ilight(393) = 0;
     ialphanameref(393) = "";
     iorgweight(393) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(393) = u8"宝石加工ツール"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(393) = u8"gem cutter"s;
         ioriginalnameref2(393) = "";
     }
@@ -5247,25 +6663,34 @@ void label_1277()
     ilight(392) = 0;
     ialphanameref(392) = "";
     iorgweight(392) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(392) = u8"硫酸"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(392) = u8"sulfuric"s;
         ioriginalnameref2(392) = u8"bottle"s;
     }
     ipicref(392) = 223;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(392) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(392) = u8"clear liquid"s;
     }
     icolref(392) = 0;
     ilight(391) = 0;
     ialphanameref(391) = "";
     iorgweight(391) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(391) = u8"魔力の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(391) = u8"mana"s;
         ioriginalnameref2(391) = u8"rod"s;
     }
@@ -5277,9 +6702,12 @@ void label_1277()
     ilight(390) = 0;
     ialphanameref(390) = "";
     iorgweight(390) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(390) = u8"魔力の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(390) = u8"mana"s;
         ioriginalnameref2(390) = u8"scroll"s;
     }
@@ -5291,9 +6719,12 @@ void label_1277()
     ilight(389) = 0;
     ialphanameref(389) = "";
     iorgweight(389) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(389) = u8"全浄化の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(389) = u8"holy rain"s;
         ioriginalnameref2(389) = u8"scroll"s;
     }
@@ -5305,9 +6736,12 @@ void label_1277()
     ilight(388) = 0;
     ialphanameref(388) = "";
     iorgweight(388) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(388) = u8"清浄なる光の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(388) = u8"holy light"s;
         ioriginalnameref2(388) = u8"scroll"s;
     }
@@ -5319,9 +6753,12 @@ void label_1277()
     ilight(387) = 0;
     ialphanameref(387) = "";
     iorgweight(387) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(387) = u8"全浄化の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(387) = u8"holy rain"s;
         ioriginalnameref2(387) = u8"spellbook"s;
     }
@@ -5333,9 +6770,12 @@ void label_1277()
     ilight(386) = 0;
     ialphanameref(386) = "";
     iorgweight(386) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(386) = u8"清浄なる光の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(386) = u8"holy light"s;
         ioriginalnameref2(386) = u8"spellbook"s;
     }
@@ -5347,9 +6787,12 @@ void label_1277()
     ilight(385) = 0;
     ialphanameref(385) = "";
     iorgweight(385) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(385) = u8"浄化の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(385) = u8"holy light"s;
         ioriginalnameref2(385) = u8"rod"s;
     }
@@ -5361,9 +6804,12 @@ void label_1277()
     ilight(384) = 0;
     ialphanameref(384) = "";
     iorgweight(384) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(384) = u8"ホーリーヴェイルの巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(384) = u8"holy veil"s;
         ioriginalnameref2(384) = u8"scroll"s;
     }
@@ -5375,9 +6821,12 @@ void label_1277()
     ilight(383) = 0;
     ialphanameref(383) = "";
     iorgweight(383) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(383) = u8"ホーリーヴェイルの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(383) = u8"holy veil"s;
         ioriginalnameref2(383) = u8"spellbook"s;
     }
@@ -5389,9 +6838,12 @@ void label_1277()
     ilight(382) = 0;
     ialphanameref(382) = "";
     iorgweight(382) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(382) = u8"脆弱のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(382) = u8"weakness"s;
         ioriginalnameref2(382) = u8"potion"s;
     }
@@ -5403,9 +6855,12 @@ void label_1277()
     ilight(381) = 0;
     ialphanameref(381) = "";
     iorgweight(381) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(381) = u8"元素の傷跡の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(381) = u8"elemental scar"s;
         ioriginalnameref2(381) = u8"spellbook"s;
     }
@@ -5417,9 +6872,12 @@ void label_1277()
     ilight(380) = 0;
     ialphanameref(380) = "";
     iorgweight(380) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(380) = u8"脆弱の霧の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(380) = u8"weakness"s;
         ioriginalnameref2(380) = u8"spellbook"s;
     }
@@ -5431,9 +6889,12 @@ void label_1277()
     ilight(379) = 0;
     ialphanameref(379) = "";
     iorgweight(379) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(379) = u8"英雄気分のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(379) = u8"hero"s;
         ioriginalnameref2(379) = u8"potion"s;
     }
@@ -5445,9 +6906,12 @@ void label_1277()
     ilight(378) = 0;
     ialphanameref(378) = "";
     iorgweight(378) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(378) = u8"英雄の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(378) = u8"hero"s;
         ioriginalnameref2(378) = u8"spellbook"s;
     }
@@ -5459,9 +6923,12 @@ void label_1277()
     ilight(377) = 0;
     ialphanameref(377) = "";
     iorgweight(377) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(377) = u8"加速の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(377) = u8"speed"s;
         ioriginalnameref2(377) = u8"rod"s;
     }
@@ -5473,9 +6940,12 @@ void label_1277()
     ilight(376) = 0;
     ialphanameref(376) = "";
     iorgweight(376) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(376) = u8"鈍足のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(376) = u8"slow"s;
         ioriginalnameref2(376) = u8"potion"s;
     }
@@ -5487,9 +6957,12 @@ void label_1277()
     ilight(375) = 0;
     ialphanameref(375) = "";
     iorgweight(375) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(375) = u8"加速のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(375) = u8"speed"s;
         ioriginalnameref2(375) = u8"potion"s;
     }
@@ -5501,9 +6974,12 @@ void label_1277()
     ilight(374) = 0;
     ialphanameref(374) = "";
     iorgweight(374) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(374) = u8"鈍足の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(374) = u8"slow"s;
         ioriginalnameref2(374) = u8"spellbook"s;
     }
@@ -5515,9 +6991,12 @@ void label_1277()
     ilight(373) = 0;
     ialphanameref(373) = "";
     iorgweight(373) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(373) = u8"加速の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(373) = u8"speed"s;
         ioriginalnameref2(373) = u8"spellbook"s;
     }
@@ -5529,9 +7008,12 @@ void label_1277()
     ilight(372) = 0;
     ialphanameref(372) = "";
     iorgweight(372) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(372) = u8"元素耐性のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(372) = u8"resistance"s;
         ioriginalnameref2(372) = u8"potion"s;
     }
@@ -5543,9 +7025,12 @@ void label_1277()
     ilight(371) = 0;
     ialphanameref(371) = "";
     iorgweight(371) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(371) = u8"元素保護の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(371) = u8"resistance"s;
         ioriginalnameref2(371) = u8"spellbook"s;
     }
@@ -5557,9 +7042,12 @@ void label_1277()
     ilight(370) = 0;
     ialphanameref(370) = "";
     iorgweight(370) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(370) = u8"トロールの血"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(370) = u8"troll blood"s;
         ioriginalnameref2(370) = u8"potion"s;
     }
@@ -5571,9 +7059,12 @@ void label_1277()
     ilight(369) = 0;
     ialphanameref(369) = "";
     iorgweight(369) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(369) = u8"リジェネレーションの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(369) = u8"regeneration"s;
         ioriginalnameref2(369) = u8"spellbook"s;
     }
@@ -5585,9 +7076,12 @@ void label_1277()
     ilight(368) = 0;
     ialphanameref(368) = "";
     iorgweight(368) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(368) = u8"沈黙のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(368) = u8"silence"s;
         ioriginalnameref2(368) = u8"potion"s;
     }
@@ -5599,9 +7093,12 @@ void label_1277()
     ilight(367) = 0;
     ialphanameref(367) = "";
     iorgweight(367) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(367) = u8"沈黙の霧の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(367) = u8"silence"s;
         ioriginalnameref2(367) = u8"spellbook"s;
     }
@@ -5613,9 +7110,12 @@ void label_1277()
     ilight(366) = 0;
     ialphanameref(366) = "";
     iorgweight(366) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(366) = u8"沈黙の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(366) = u8"silence"s;
         ioriginalnameref2(366) = u8"rod"s;
     }
@@ -5627,9 +7127,12 @@ void label_1277()
     ilight(365) = 0;
     ialphanameref(365) = "";
     iorgweight(365) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(365) = u8"聖なる盾の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(365) = u8"holy shield"s;
         ioriginalnameref2(365) = u8"spellbook"s;
     }
@@ -5641,9 +7144,12 @@ void label_1277()
     ilight(364) = 0;
     ialphanameref(364) = "";
     iorgweight(364) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(364) = u8"防衛者のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(364) = u8"defender"s;
         ioriginalnameref2(364) = u8"potion"s;
     }
@@ -5655,9 +7161,12 @@ void label_1277()
     ilight(363) = 0;
     ialphanameref(363) = "";
     iorgweight(363) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(363) = u8"*解呪*の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(363) = u8"vanish curse"s;
         ioriginalnameref2(363) = u8"scroll"s;
     }
@@ -5669,9 +7178,12 @@ void label_1277()
     ilight(362) = 0;
     ialphanameref(362) = "";
     iorgweight(362) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(362) = u8"*鑑定*の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(362) = u8"greater identify"s;
         ioriginalnameref2(362) = u8"scroll"s;
     }
@@ -5683,9 +7195,12 @@ void label_1277()
     ilight(361) = 0;
     ialphanameref(361) = "";
     iorgweight(361) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(361) = u8"商人のカバン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(361) = u8"shopkeeper's trunk"s;
         ioriginalnameref2(361) = "";
     }
@@ -5695,105 +7210,144 @@ void label_1277()
     ilight(360) = 9;
     ialphanameref(360) = "";
     iorgweight(360) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(360) = u8"《パルミア・プライド》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(360) = u8"<Palmia Pride>"s;
         ioriginalnameref2(360) = "";
     }
     ipicref(360) = 407;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(360) = u8"アクアマリンの指輪"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(360) = u8"blue ring"s;
     }
     icolref(360) = 0;
     ilight(359) = 9;
     ialphanameref(359) = "";
     iorgweight(359) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(359) = u8"《ランキス》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(359) = u8"<Rankis>"s;
         ioriginalnameref2(359) = "";
     }
     ipicref(359) = 426;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(359) = u8"地獄の槍斧"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(359) = u8"cursed halberd"s;
     }
     icolref(359) = 3;
     ilight(358) = 9;
     ialphanameref(358) = "";
     iorgweight(358) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(358) = u8"《狂気の杖》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(358) = u8"<Staff of Insanity>"s;
         ioriginalnameref2(358) = "";
     }
     ipicref(358) = 425;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(358) = u8"呻く杖"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(358) = u8"shivering staff"s;
     }
     icolref(358) = 0;
     ilight(357) = 9;
     ialphanameref(357) = "";
     iorgweight(357) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(357) = u8"《鋼鉄竜の指輪》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(357) = u8"<Ring of Steel Dragon>"s;
         ioriginalnameref2(357) = "";
     }
     ipicref(357) = 407;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(357) = u8"鋼鉄の指輪"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(357) = u8"steel ring"s;
     }
     icolref(357) = 0;
     ilight(356) = 9;
     ialphanameref(356) = "";
     iorgweight(356) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(356) = u8"《ブラッドムーン》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(356) = u8"<Blood Moon>"s;
         ioriginalnameref2(356) = "";
     }
     ipicref(356) = 427;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(356) = u8"血の滲むメイス"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(356) = u8"bloody mace"s;
     }
     icolref(356) = 3;
     ilight(355) = 9;
     ialphanameref(355) = "";
     iorgweight(355) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(355) = u8"《火炎竜ヴェスダの篭手》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(355) = u8"<Gloves of Vesda>"s;
         ioriginalnameref2(355) = "";
     }
     ipicref(355) = 414;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(355) = u8"燃える篭手"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(355) = u8"burning gloves"s;
     }
     icolref(355) = 3;
     ilight(354) = 0;
     ialphanameref(354) = "";
     iorgweight(354) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(354) = u8"サンドボーラー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(354) = u8"sandborer"s;
         ioriginalnameref2(354) = "";
     }
@@ -5803,9 +7357,12 @@ void label_1277()
     ilight(353) = 0;
     ialphanameref(353) = "";
     iorgweight(353) = 600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(353) = u8"カトラスフィッシュ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(353) = u8"cutlassfish"s;
         ioriginalnameref2(353) = "";
     }
@@ -5815,9 +7372,12 @@ void label_1277()
     ilight(352) = 0;
     ialphanameref(352) = "";
     iorgweight(352) = 700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(352) = u8"ツナ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(352) = u8"tuna"s;
         ioriginalnameref2(352) = "";
     }
@@ -5827,9 +7387,12 @@ void label_1277()
     ilight(351) = 0;
     ialphanameref(351) = "";
     iorgweight(351) = 550;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(351) = u8"グローブフィッシュ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(351) = u8"globefish"s;
         ioriginalnameref2(351) = "";
     }
@@ -5839,9 +7402,12 @@ void label_1277()
     ilight(350) = 0;
     ialphanameref(350) = "";
     iorgweight(350) = 600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(350) = u8"サーモン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(350) = u8"salmon"s;
         ioriginalnameref2(350) = "";
     }
@@ -5851,9 +7417,12 @@ void label_1277()
     ilight(349) = 0;
     ialphanameref(349) = "";
     iorgweight(349) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(349) = u8"シーブリーム"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(349) = u8"seabream"s;
         ioriginalnameref2(349) = "";
     }
@@ -5863,9 +7432,12 @@ void label_1277()
     ilight(348) = 0;
     ialphanameref(348) = "";
     iorgweight(348) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(348) = u8"マンボー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(348) = u8"manboo"s;
         ioriginalnameref2(348) = "";
     }
@@ -5875,9 +7447,12 @@ void label_1277()
     ilight(347) = 0;
     ialphanameref(347) = "";
     iorgweight(347) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(347) = u8"フラットフィッシュ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(347) = u8"flatfish"s;
         ioriginalnameref2(347) = "";
     }
@@ -5887,9 +7462,12 @@ void label_1277()
     ilight(346) = 0;
     ialphanameref(346) = "";
     iorgweight(346) = 1250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(346) = u8"サーディン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(346) = u8"sardine"s;
         ioriginalnameref2(346) = "";
     }
@@ -5899,9 +7477,12 @@ void label_1277()
     ilight(345) = 0;
     ialphanameref(345) = "";
     iorgweight(345) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(345) = u8"ムーンフィッシュ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(345) = u8"moonfish"s;
         ioriginalnameref2(345) = "";
     }
@@ -5911,9 +7492,12 @@ void label_1277()
     ilight(344) = 0;
     ialphanameref(344) = "";
     iorgweight(344) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(344) = u8"権利書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(344) = u8"deed"s;
         ioriginalnameref2(344) = "";
     }
@@ -5923,9 +7507,12 @@ void label_1277()
     ilight(343) = 7;
     ialphanameref(343) = "";
     iorgweight(343) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(343) = u8"懐かしいルーン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(343) = u8"rune"s;
         ioriginalnameref2(343) = "";
     }
@@ -5935,9 +7522,12 @@ void label_1277()
     ilight(342) = 0;
     ialphanameref(342) = "";
     iorgweight(342) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(342) = u8"釣竿"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(342) = u8"fishing pole"s;
         ioriginalnameref2(342) = "";
     }
@@ -5947,9 +7537,12 @@ void label_1277()
     ilight(341) = 0;
     ialphanameref(341) = "";
     iorgweight(341) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(341) = u8"骨片"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(341) = u8"bone"s;
         ioriginalnameref2(341) = "";
     }
@@ -5959,9 +7552,12 @@ void label_1277()
     ilight(340) = 0;
     ialphanameref(340) = "";
     iorgweight(340) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(340) = u8"心臓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(340) = u8"heart"s;
         ioriginalnameref2(340) = "";
     }
@@ -5971,9 +7567,12 @@ void label_1277()
     ilight(339) = 0;
     ialphanameref(339) = "";
     iorgweight(339) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(339) = u8"瞳"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(339) = u8"eye"s;
         ioriginalnameref2(339) = "";
     }
@@ -5983,9 +7582,12 @@ void label_1277()
     ilight(338) = 0;
     ialphanameref(338) = "";
     iorgweight(338) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(338) = u8"体液"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(338) = u8"blood"s;
         ioriginalnameref2(338) = "";
     }
@@ -5995,9 +7597,12 @@ void label_1277()
     ilight(337) = 0;
     ialphanameref(337) = "";
     iorgweight(337) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(337) = u8"皮"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(337) = u8"skin"s;
         ioriginalnameref2(337) = "";
     }
@@ -6007,9 +7612,12 @@ void label_1277()
     ilight(336) = 0;
     ialphanameref(336) = "";
     iorgweight(336) = 21000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(336) = u8"金の像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(336) = u8"golden statue"s;
         ioriginalnameref2(336) = "";
     }
@@ -6019,9 +7627,12 @@ void label_1277()
     ilight(335) = 3;
     ialphanameref(335) = "";
     iorgweight(335) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(335) = u8"金の飾台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(335) = u8"golden pedestal"s;
         ioriginalnameref2(335) = "";
     }
@@ -6031,9 +7642,12 @@ void label_1277()
     ilight(334) = 9;
     ialphanameref(334) = "";
     iorgweight(334) = 35000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(334) = u8"王座"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(334) = u8"throne"s;
         ioriginalnameref2(334) = "";
     }
@@ -6043,9 +7657,12 @@ void label_1277()
     ilight(333) = 0;
     ialphanameref(333) = "";
     iorgweight(333) = -2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(333) = u8"旅糧(荷車)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(333) = u8"traveler's food"s;
         ioriginalnameref2(333) = "";
     }
@@ -6055,9 +7672,12 @@ void label_1277()
     ilight(332) = 0;
     ialphanameref(332) = "";
     iorgweight(332) = 4900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(332) = u8"テーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(332) = u8"table"s;
         ioriginalnameref2(332) = "";
     }
@@ -6067,9 +7687,12 @@ void label_1277()
     ilight(331) = 0;
     ialphanameref(331) = "";
     iorgweight(331) = 1050;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(331) = u8"ドレス"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(331) = u8"dress"s;
         ioriginalnameref2(331) = "";
     }
@@ -6079,9 +7702,12 @@ void label_1277()
     ilight(330) = 0;
     ialphanameref(330) = "";
     iorgweight(330) = 3500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(330) = u8"切り株"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(330) = u8"stump"s;
         ioriginalnameref2(330) = "";
     }
@@ -6091,9 +7717,12 @@ void label_1277()
     ilight(329) = 10;
     ialphanameref(329) = "";
     iorgweight(329) = 15600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(329) = u8"十字架"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(329) = u8"cross"s;
         ioriginalnameref2(329) = u8"statue"s;
     }
@@ -6103,9 +7732,12 @@ void label_1277()
     ilight(328) = 10;
     ialphanameref(328) = "";
     iorgweight(328) = 29000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(328) = u8"アップライトピアノ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(328) = u8"upright piano"s;
         ioriginalnameref2(328) = "";
     }
@@ -6115,9 +7747,12 @@ void label_1277()
     ilight(327) = 0;
     ialphanameref(327) = "";
     iorgweight(327) = 6400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(327) = u8"長椅子"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(327) = u8"wide chair"s;
         ioriginalnameref2(327) = "";
     }
@@ -6127,9 +7762,12 @@ void label_1277()
     ilight(326) = 0;
     ialphanameref(326) = "";
     iorgweight(326) = 8900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(326) = u8"シンプルな棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(326) = u8"simple rack"s;
         ioriginalnameref2(326) = "";
     }
@@ -6139,9 +7777,12 @@ void label_1277()
     ilight(325) = 0;
     ialphanameref(325) = "";
     iorgweight(325) = 10000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(325) = u8"ふかふかのベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(325) = u8"comfortable bed"s;
         ioriginalnameref2(325) = "";
     }
@@ -6151,9 +7792,12 @@ void label_1277()
     ilight(324) = 7;
     ialphanameref(324) = "";
     iorgweight(324) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(324) = u8"神聖な祭壇"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(324) = u8"sacred altar"s;
         ioriginalnameref2(324) = "";
     }
@@ -6163,9 +7807,12 @@ void label_1277()
     ilight(323) = 0;
     ialphanameref(323) = "";
     iorgweight(323) = 8900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(323) = u8"大きい食器棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(323) = u8"big cupboard"s;
         ioriginalnameref2(323) = "";
     }
@@ -6175,9 +7822,12 @@ void label_1277()
     ilight(322) = 10;
     ialphanameref(322) = "";
     iorgweight(322) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(322) = u8"シンプルな鏡台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(322) = u8"simple dresser"s;
         ioriginalnameref2(322) = "";
     }
@@ -6187,9 +7837,12 @@ void label_1277()
     ilight(321) = 0;
     ialphanameref(321) = "";
     iorgweight(321) = 8800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(321) = u8"小奇麗な棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(321) = u8"neat rack"s;
         ioriginalnameref2(321) = "";
     }
@@ -6199,9 +7852,12 @@ void label_1277()
     ilight(320) = 0;
     ialphanameref(320) = "";
     iorgweight(320) = 6800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(320) = u8"でこぼこした机"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(320) = u8"cheap table"s;
         ioriginalnameref2(320) = "";
     }
@@ -6211,9 +7867,12 @@ void label_1277()
     ilight(319) = 0;
     ialphanameref(319) = "";
     iorgweight(319) = 2800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(319) = u8"簡易ベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(319) = u8"cheap bed"s;
         ioriginalnameref2(319) = "";
     }
@@ -6223,9 +7882,12 @@ void label_1277()
     ilight(318) = 0;
     ialphanameref(318) = "";
     iorgweight(318) = 8900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(318) = u8"古い本棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(318) = u8"old bookshelf"s;
         ioriginalnameref2(318) = "";
     }
@@ -6235,9 +7897,12 @@ void label_1277()
     ilight(317) = 0;
     ialphanameref(317) = "";
     iorgweight(317) = 7600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(317) = u8"古い棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(317) = u8"old shelf"s;
         ioriginalnameref2(317) = "";
     }
@@ -6247,9 +7912,12 @@ void label_1277()
     ilight(316) = 0;
     ialphanameref(316) = "";
     iorgweight(316) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(316) = u8"特大の観葉植物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(316) = u8"big foliage plant"s;
         ioriginalnameref2(316) = "";
     }
@@ -6259,9 +7927,12 @@ void label_1277()
     ilight(315) = 0;
     ialphanameref(315) = "";
     iorgweight(315) = 8900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(315) = u8"ダーツ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(315) = u8"darts board"s;
         ioriginalnameref2(315) = "";
     }
@@ -6271,9 +7942,12 @@ void label_1277()
     ilight(314) = 9;
     ialphanameref(314) = "";
     iorgweight(314) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(314) = u8"スロットマシーン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(314) = u8"slot machine"s;
         ioriginalnameref2(314) = "";
     }
@@ -6283,9 +7957,12 @@ void label_1277()
     ilight(313) = 0;
     ialphanameref(313) = "";
     iorgweight(313) = 24000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(313) = u8"カジノテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(313) = u8"casino table"s;
         ioriginalnameref2(313) = "";
     }
@@ -6295,9 +7972,12 @@ void label_1277()
     ilight(312) = 9;
     ialphanameref(312) = "";
     iorgweight(312) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(312) = u8"パチスロマシーン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(312) = u8"pachisuro machine"s;
         ioriginalnameref2(312) = "";
     }
@@ -6307,9 +7987,12 @@ void label_1277()
     ilight(311) = 9;
     ialphanameref(311) = "";
     iorgweight(311) = 28000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(311) = u8"風呂"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(311) = u8"bathtub"s;
         ioriginalnameref2(311) = "";
     }
@@ -6319,9 +8002,12 @@ void label_1277()
     ilight(310) = 0;
     ialphanameref(310) = "";
     iorgweight(310) = 9500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(310) = u8"清潔なベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(310) = u8"clean bed"s;
         ioriginalnameref2(310) = "";
     }
@@ -6331,9 +8017,12 @@ void label_1277()
     ilight(309) = 10;
     ialphanameref(309) = "";
     iorgweight(309) = 8000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(309) = u8"鏡台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(309) = u8"dresser"s;
         ioriginalnameref2(309) = "";
     }
@@ -6343,9 +8032,12 @@ void label_1277()
     ilight(308) = 0;
     ialphanameref(308) = "";
     iorgweight(308) = 9000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(308) = u8"簡易棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(308) = u8"cheap rack"s;
         ioriginalnameref2(308) = "";
     }
@@ -6355,9 +8047,12 @@ void label_1277()
     ilight(307) = 0;
     ialphanameref(307) = "";
     iorgweight(307) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(307) = u8"落ち着くベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(307) = u8"soft bed"s;
         ioriginalnameref2(307) = "";
     }
@@ -6367,9 +8062,12 @@ void label_1277()
     ilight(306) = 0;
     ialphanameref(306) = "";
     iorgweight(306) = 34000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(306) = u8"フードプロセッサー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(306) = u8"food processor"s;
         ioriginalnameref2(306) = "";
     }
@@ -6379,9 +8077,12 @@ void label_1277()
     ilight(305) = 0;
     ialphanameref(305) = "";
     iorgweight(305) = 8900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(305) = u8"棺桶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(305) = u8"coffin"s;
         ioriginalnameref2(305) = "";
     }
@@ -6391,9 +8092,12 @@ void label_1277()
     ilight(304) = 0;
     ialphanameref(304) = "";
     iorgweight(304) = 13000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(304) = u8"粗末なベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(304) = u8"plain bed"s;
         ioriginalnameref2(304) = "";
     }
@@ -6403,9 +8107,12 @@ void label_1277()
     ilight(303) = 0;
     ialphanameref(303) = "";
     iorgweight(303) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(303) = u8"巨大なベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(303) = u8"giant bed"s;
         ioriginalnameref2(303) = "";
     }
@@ -6415,9 +8122,12 @@ void label_1277()
     ilight(302) = 0;
     ialphanameref(302) = "";
     iorgweight(302) = 6800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(302) = u8"衣類箪笥"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(302) = u8"clothes"s;
         ioriginalnameref2(302) = u8"chest"s;
     }
@@ -6427,9 +8137,12 @@ void label_1277()
     ilight(301) = 0;
     ialphanameref(301) = "";
     iorgweight(301) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(301) = u8"大きな花束"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(301) = u8"large bouquet"s;
         ioriginalnameref2(301) = "";
     }
@@ -6439,9 +8152,12 @@ void label_1277()
     ilight(300) = 0;
     ialphanameref(300) = "";
     iorgweight(300) = 8500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(300) = u8"高収納バーテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(300) = u8"neat bar table"s;
         ioriginalnameref2(300) = "";
     }
@@ -6451,9 +8167,12 @@ void label_1277()
     ilight(299) = 8;
     ialphanameref(299) = "";
     iorgweight(299) = 9000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(299) = u8"高級ミラー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(299) = u8"high grade dresser"s;
         ioriginalnameref2(299) = "";
     }
@@ -6463,9 +8182,12 @@ void label_1277()
     ilight(298) = 10;
     ialphanameref(298) = "";
     iorgweight(298) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(298) = u8"高価な花瓶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(298) = u8"vase"s;
         ioriginalnameref2(298) = "";
     }
@@ -6475,9 +8197,12 @@ void label_1277()
     ilight(297) = 0;
     ialphanameref(297) = "";
     iorgweight(297) = 17500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(297) = u8"高級ベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(297) = u8"luxury bed"s;
         ioriginalnameref2(297) = "";
     }
@@ -6487,9 +8212,12 @@ void label_1277()
     ilight(296) = 0;
     ialphanameref(296) = "";
     iorgweight(296) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(296) = u8"お酒のキャビネット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(296) = u8"cabinet"s;
         ioriginalnameref2(296) = "";
     }
@@ -6499,9 +8227,12 @@ void label_1277()
     ilight(295) = 0;
     ialphanameref(295) = "";
     iorgweight(295) = 4500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(295) = u8"ぼろい机"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(295) = u8"ragged table"s;
         ioriginalnameref2(295) = "";
     }
@@ -6511,9 +8242,12 @@ void label_1277()
     ilight(294) = 0;
     ialphanameref(294) = "";
     iorgweight(294) = 1080;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(294) = u8"タオル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(294) = u8"towel"s;
         ioriginalnameref2(294) = "";
     }
@@ -6523,9 +8257,12 @@ void label_1277()
     ilight(293) = 0;
     ialphanameref(293) = "";
     iorgweight(293) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(293) = u8"装飾品の棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(293) = u8"accessaries"s;
         ioriginalnameref2(293) = u8"rack"s;
     }
@@ -6535,9 +8272,12 @@ void label_1277()
     ilight(292) = 0;
     ialphanameref(292) = "";
     iorgweight(292) = 6800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(292) = u8"日用品の棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(292) = u8"good"s;
         ioriginalnameref2(292) = u8"rack"s;
     }
@@ -6547,9 +8287,12 @@ void label_1277()
     ilight(291) = 0;
     ialphanameref(291) = "";
     iorgweight(291) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(291) = u8"整備された武具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(291) = u8"well kept armor"s;
         ioriginalnameref2(291) = "";
     }
@@ -6559,9 +8302,12 @@ void label_1277()
     ilight(290) = 0;
     ialphanameref(290) = "";
     iorgweight(290) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(290) = u8"願いの杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(290) = u8"wishing"s;
         ioriginalnameref2(290) = u8"rod"s;
     }
@@ -6573,9 +8319,12 @@ void label_1277()
     ilight(289) = 0;
     ialphanameref(289) = "";
     iorgweight(289) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(289) = u8"願いの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(289) = u8"wishing"s;
         ioriginalnameref2(289) = u8"spellbook"s;
     }
@@ -6587,9 +8336,12 @@ void label_1277()
     ilight(288) = 0;
     ialphanameref(288) = "";
     iorgweight(288) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(288) = u8"呪縛の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(288) = u8"curse"s;
         ioriginalnameref2(288) = u8"scroll"s;
     }
@@ -6601,9 +8353,12 @@ void label_1277()
     ilight(287) = 0;
     ialphanameref(287) = "";
     iorgweight(287) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(287) = u8"潜在能力のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(287) = u8"potential"s;
         ioriginalnameref2(287) = u8"potion"s;
     }
@@ -6615,9 +8370,12 @@ void label_1277()
     ilight(286) = 0;
     ialphanameref(286) = "";
     iorgweight(286) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(286) = u8"精神復活のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(286) = u8"restore spirit"s;
         ioriginalnameref2(286) = u8"potion"s;
     }
@@ -6629,9 +8387,12 @@ void label_1277()
     ilight(285) = 0;
     ialphanameref(285) = "";
     iorgweight(285) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(285) = u8"肉体復活のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(285) = u8"restore body"s;
         ioriginalnameref2(285) = u8"potion"s;
     }
@@ -6643,9 +8404,12 @@ void label_1277()
     ilight(284) = 0;
     ialphanameref(284) = "";
     iorgweight(284) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(284) = u8"財布(落し物)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(284) = u8"wallet"s;
         ioriginalnameref2(284) = "";
     }
@@ -6655,9 +8419,12 @@ void label_1277()
     ilight(283) = 0;
     ialphanameref(283) = "";
     iorgweight(283) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(283) = u8"カバン(落し物)"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(283) = u8"suitcase"s;
         ioriginalnameref2(283) = "";
     }
@@ -6667,9 +8434,12 @@ void label_1277()
     ilight(282) = 0;
     ialphanameref(282) = "";
     iorgweight(282) = 180;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(282) = u8"意味深な地図"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(282) = u8"mysterious map"s;
         ioriginalnameref2(282) = "";
     }
@@ -6679,9 +8449,12 @@ void label_1277()
     ilight(281) = 0;
     ialphanameref(281) = "";
     iorgweight(281) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(281) = u8"浮き輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(281) = u8"inner tube"s;
         ioriginalnameref2(281) = "";
     }
@@ -6691,9 +8464,12 @@ void label_1277()
     ilight(280) = 0;
     ialphanameref(280) = "";
     iorgweight(280) = 9800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(280) = u8"落ち着くテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(280) = u8"comfortable table"s;
         ioriginalnameref2(280) = "";
     }
@@ -6703,9 +8479,12 @@ void label_1277()
     ilight(279) = 0;
     ialphanameref(279) = "";
     iorgweight(279) = 300000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(279) = u8"水桶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(279) = u8"water tub"s;
         ioriginalnameref2(279) = "";
     }
@@ -6715,9 +8494,12 @@ void label_1277()
     ilight(278) = 5;
     ialphanameref(278) = "";
     iorgweight(278) = 300000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(278) = u8"街灯"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(278) = u8"street lamp"s;
         ioriginalnameref2(278) = "";
     }
@@ -6727,9 +8509,12 @@ void label_1277()
     ilight(277) = 0;
     ialphanameref(277) = "";
     iorgweight(277) = 300000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(277) = u8"折れた柱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(277) = u8"broken pillar"s;
         ioriginalnameref2(277) = "";
     }
@@ -6739,9 +8524,12 @@ void label_1277()
     ilight(276) = 0;
     ialphanameref(276) = "";
     iorgweight(276) = 350000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(276) = u8"長い柱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(276) = u8"long pillar"s;
         ioriginalnameref2(276) = "";
     }
@@ -6751,9 +8539,12 @@ void label_1277()
     ilight(275) = 0;
     ialphanameref(275) = "";
     iorgweight(275) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(275) = u8"ほうき"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(275) = u8"broom"s;
         ioriginalnameref2(275) = "";
     }
@@ -6763,9 +8554,12 @@ void label_1277()
     ilight(274) = 0;
     ialphanameref(274) = "";
     iorgweight(274) = 4800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(274) = u8"かかし"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(274) = u8"scarecrow"s;
         ioriginalnameref2(274) = "";
     }
@@ -6775,9 +8569,12 @@ void label_1277()
     ilight(273) = 0;
     ialphanameref(273) = "";
     iorgweight(273) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(273) = u8"薪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(273) = u8"fire wood"s;
         ioriginalnameref2(273) = "";
     }
@@ -6787,9 +8584,12 @@ void label_1277()
     ilight(272) = 0;
     ialphanameref(272) = "";
     iorgweight(272) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(272) = u8"混沌の渦の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(272) = u8"chaos ball"s;
         ioriginalnameref2(272) = u8"spellbook"s;
     }
@@ -6801,9 +8601,12 @@ void label_1277()
     ilight(271) = 0;
     ialphanameref(271) = "";
     iorgweight(271) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(271) = u8"轟音の波動の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(271) = u8"sound ball"s;
         ioriginalnameref2(271) = u8"spellbook"s;
     }
@@ -6815,9 +8618,12 @@ void label_1277()
     ilight(270) = 0;
     ialphanameref(270) = "";
     iorgweight(270) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(270) = u8"ファイアボールの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(270) = u8"fire ball"s;
         ioriginalnameref2(270) = u8"spellbook"s;
     }
@@ -6829,9 +8635,12 @@ void label_1277()
     ilight(269) = 0;
     ialphanameref(269) = "";
     iorgweight(269) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(269) = u8"アイスボールの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(269) = u8"ice ball"s;
         ioriginalnameref2(269) = u8"spellbook"s;
     }
@@ -6843,9 +8652,12 @@ void label_1277()
     ilight(268) = 0;
     ialphanameref(268) = "";
     iorgweight(268) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(268) = u8"幻影の光線の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(268) = u8"illusion beam"s;
         ioriginalnameref2(268) = u8"spellbook"s;
     }
@@ -6857,9 +8669,12 @@ void label_1277()
     ilight(267) = 0;
     ialphanameref(267) = "";
     iorgweight(267) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(267) = u8"暗黒の光線の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(267) = u8"darkness beam"s;
         ioriginalnameref2(267) = u8"spellbook"s;
     }
@@ -6871,9 +8686,12 @@ void label_1277()
     ilight(266) = 0;
     ialphanameref(266) = u8"ニンジャソード"s;
     iorgweight(266) = 700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(266) = u8"忍刀"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(266) = u8"wakizashi"s;
         ioriginalnameref2(266) = "";
     }
@@ -6883,9 +8701,12 @@ void label_1277()
     ilight(265) = 0;
     ialphanameref(265) = "";
     iorgweight(265) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(265) = u8"麻痺の矢の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(265) = u8"nerve eye"s;
         ioriginalnameref2(265) = u8"spellbook"s;
     }
@@ -6897,9 +8718,12 @@ void label_1277()
     ilight(264) = 0;
     ialphanameref(264) = "";
     iorgweight(264) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(264) = u8"混沌の瞳の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(264) = u8"chaos eye"s;
         ioriginalnameref2(264) = u8"spellbook"s;
     }
@@ -6911,9 +8735,12 @@ void label_1277()
     ilight(263) = 0;
     ialphanameref(263) = "";
     iorgweight(263) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(263) = u8"地獄の吐息の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(263) = u8"nether eye"s;
         ioriginalnameref2(263) = u8"spellbook"s;
     }
@@ -6925,9 +8752,12 @@ void label_1277()
     ilight(262) = 0;
     ialphanameref(262) = "";
     iorgweight(262) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(262) = u8"毒薬"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(262) = u8"poison"s;
         ioriginalnameref2(262) = "";
     }
@@ -6939,9 +8769,12 @@ void label_1277()
     ilight(261) = 0;
     ialphanameref(261) = "";
     iorgweight(261) = 350;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(261) = u8"はじけ魚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(261) = u8"bomb fish"s;
         ioriginalnameref2(261) = "";
     }
@@ -6951,9 +8784,12 @@ void label_1277()
     ilight(260) = 0;
     ialphanameref(260) = "";
     iorgweight(260) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(260) = u8"小麦粉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(260) = u8"flour"s;
         ioriginalnameref2(260) = u8"sack"s;
     }
@@ -6963,9 +8799,12 @@ void label_1277()
     ilight(259) = 0;
     ialphanameref(259) = "";
     iorgweight(259) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(259) = u8"生麺"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(259) = u8"raw noodle"s;
         ioriginalnameref2(259) = "";
     }
@@ -6975,9 +8814,12 @@ void label_1277()
     ilight(258) = 0;
     ialphanameref(258) = "";
     iorgweight(258) = 350;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(258) = u8"スティックパン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(258) = u8"stick bread"s;
         ioriginalnameref2(258) = "";
     }
@@ -6987,9 +8829,12 @@ void label_1277()
     ilight(257) = 0;
     ialphanameref(257) = "";
     iorgweight(257) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(257) = u8"魔法の矢の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(257) = u8"magic arrow"s;
         ioriginalnameref2(257) = u8"spellbook"s;
     }
@@ -7001,9 +8846,12 @@ void label_1277()
     ilight(256) = 0;
     ialphanameref(256) = "";
     iorgweight(256) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(256) = u8"携帯調理道具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(256) = u8"portable cooking tool"s;
         ioriginalnameref2(256) = "";
     }
@@ -7013,9 +8861,12 @@ void label_1277()
     ilight(255) = 1;
     ialphanameref(255) = "";
     iorgweight(255) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(255) = u8"焚き火"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(255) = u8"campfire"s;
         ioriginalnameref2(255) = "";
     }
@@ -7025,9 +8876,12 @@ void label_1277()
     ilight(254) = 0;
     ialphanameref(254) = "";
     iorgweight(254) = 6500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(254) = u8"ホーン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(254) = u8"horn"s;
         ioriginalnameref2(254) = "";
     }
@@ -7037,25 +8891,34 @@ void label_1277()
     ilight(253) = 0;
     ialphanameref(253) = "";
     iorgweight(253) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(253) = u8"ビア"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(253) = u8"beer"s;
         ioriginalnameref2(253) = u8"bottle"s;
     }
     ipicref(253) = 223;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(253) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(253) = u8"clear liquid"s;
     }
     icolref(253) = 0;
     ilight(252) = 0;
     ialphanameref(252) = "";
     iorgweight(252) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(252) = u8"ジュアの癒しの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(252) = u8"cure <Jure>"s;
         ioriginalnameref2(252) = u8"spellbook"s;
     }
@@ -7067,9 +8930,12 @@ void label_1277()
     ilight(251) = 0;
     ialphanameref(251) = "";
     iorgweight(251) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(251) = u8"エリスの癒しの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(251) = u8"cure <Eris>"s;
         ioriginalnameref2(251) = u8"spellbook"s;
     }
@@ -7081,9 +8947,12 @@ void label_1277()
     ilight(250) = 0;
     ialphanameref(250) = "";
     iorgweight(250) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(250) = u8"致命傷治癒の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(250) = u8"cure critical wound"s;
         ioriginalnameref2(250) = u8"spellbook"s;
     }
@@ -7095,9 +8964,12 @@ void label_1277()
     ilight(249) = 0;
     ialphanameref(249) = "";
     iorgweight(249) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(249) = u8"軽傷治癒の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(249) = u8"cure minor wound"s;
         ioriginalnameref2(249) = u8"spellbook"s;
     }
@@ -7109,9 +8981,12 @@ void label_1277()
     ilight(248) = 0;
     ialphanameref(248) = "";
     iorgweight(248) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(248) = u8"帰還の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(248) = u8"return"s;
         ioriginalnameref2(248) = u8"spellbook"s;
     }
@@ -7123,9 +8998,12 @@ void label_1277()
     ilight(247) = 0;
     ialphanameref(247) = "";
     iorgweight(247) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(247) = u8"神託の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(247) = u8"oracle"s;
         ioriginalnameref2(247) = u8"spellbook"s;
     }
@@ -7137,9 +9015,12 @@ void label_1277()
     ilight(246) = 0;
     ialphanameref(246) = "";
     iorgweight(246) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(246) = u8"魔法の地図の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(246) = u8"magic mapping"s;
         ioriginalnameref2(246) = u8"spellbook"s;
     }
@@ -7151,9 +9032,12 @@ void label_1277()
     ilight(245) = 0;
     ialphanameref(245) = "";
     iorgweight(245) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(245) = u8"ショートテレポートの巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(245) = u8"minor teleportation"s;
         ioriginalnameref2(245) = u8"scroll"s;
     }
@@ -7165,9 +9049,12 @@ void label_1277()
     ilight(244) = 0;
     ialphanameref(244) = "";
     iorgweight(244) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(244) = u8"不思議な巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(244) = u8"wonder"s;
         ioriginalnameref2(244) = u8"scroll"s;
     }
@@ -7179,9 +9066,12 @@ void label_1277()
     ilight(243) = 0;
     ialphanameref(243) = "";
     iorgweight(243) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(243) = u8"能力獲得の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(243) = u8"gain attribute"s;
         ioriginalnameref2(243) = u8"scroll"s;
     }
@@ -7193,9 +9083,12 @@ void label_1277()
     ilight(242) = 0;
     ialphanameref(242) = "";
     iorgweight(242) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(242) = u8"魔法の地図"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(242) = u8"magical map"s;
         ioriginalnameref2(242) = u8"scroll"s;
     }
@@ -7207,9 +9100,12 @@ void label_1277()
     ilight(241) = 9;
     ialphanameref(241) = "";
     iorgweight(241) = 300000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(241) = u8"金庫"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(241) = u8"safe"s;
         ioriginalnameref2(241) = "";
     }
@@ -7219,9 +9115,12 @@ void label_1277()
     ilight(240) = 9;
     ialphanameref(240) = "";
     iorgweight(240) = 300000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(240) = u8"宝箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(240) = u8"chest"s;
         ioriginalnameref2(240) = "";
     }
@@ -7231,9 +9130,12 @@ void label_1277()
     ilight(239) = 9;
     ialphanameref(239) = "";
     iorgweight(239) = 3000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(239) = u8"宝石で飾られた宝箱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(239) = u8"bejeweled chest"s;
         ioriginalnameref2(239) = "";
     }
@@ -7243,9 +9145,12 @@ void label_1277()
     ilight(238) = 0;
     ialphanameref(238) = "";
     iorgweight(238) = 240;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(238) = u8"フィギア『伝説の剣』"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(238) = u8"sword"s;
         ioriginalnameref2(238) = u8"figurine"s;
     }
@@ -7255,9 +9160,12 @@ void label_1277()
     ilight(237) = 0;
     ialphanameref(237) = "";
     iorgweight(237) = 240;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(237) = u8"フィギア『狂戦士』"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(237) = u8"warrior"s;
         ioriginalnameref2(237) = u8"figurine"s;
     }
@@ -7267,9 +9175,12 @@ void label_1277()
     ilight(236) = 0;
     ialphanameref(236) = "";
     iorgweight(236) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(236) = u8"帰還の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(236) = u8"return"s;
         ioriginalnameref2(236) = u8"scroll"s;
     }
@@ -7281,9 +9192,12 @@ void label_1277()
     ilight(235) = 0;
     ialphanameref(235) = u8"ハルバード"s;
     iorgweight(235) = 3800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(235) = u8"鉾槍"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(235) = u8"halberd"s;
         ioriginalnameref2(235) = "";
     }
@@ -7293,9 +9207,12 @@ void label_1277()
     ilight(234) = 0;
     ialphanameref(234) = u8"バルディッシュ"s;
     iorgweight(234) = 3500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(234) = u8"大斧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(234) = u8"bardish"s;
         ioriginalnameref2(234) = "";
     }
@@ -7305,9 +9222,12 @@ void label_1277()
     ilight(233) = 0;
     ialphanameref(233) = "";
     iorgweight(233) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(233) = u8"兵糧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(233) = u8"ration"s;
         ioriginalnameref2(233) = "";
     }
@@ -7317,9 +9237,12 @@ void label_1277()
     ilight(232) = 0;
     ialphanameref(232) = u8"クレイモア"s;
     iorgweight(232) = 4000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(232) = u8"大剣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(232) = u8"claymore"s;
         ioriginalnameref2(232) = "";
     }
@@ -7329,9 +9252,12 @@ void label_1277()
     ilight(231) = 0;
     ialphanameref(231) = u8"マシンガン"s;
     iorgweight(231) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(231) = u8"機関銃"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(231) = u8"machine gun"s;
         ioriginalnameref2(231) = "";
     }
@@ -7341,9 +9267,12 @@ void label_1277()
     ilight(230) = 0;
     ialphanameref(230) = u8"ショートボウ"s;
     iorgweight(230) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(230) = u8"短弓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(230) = u8"short bow"s;
         ioriginalnameref2(230) = "";
     }
@@ -7353,9 +9282,12 @@ void label_1277()
     ilight(229) = 0;
     ialphanameref(229) = u8"ロッド"s;
     iorgweight(229) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(229) = u8"長棒"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(229) = u8"long staff"s;
         ioriginalnameref2(229) = "";
     }
@@ -7365,9 +9297,12 @@ void label_1277()
     ilight(228) = 0;
     ialphanameref(228) = u8"トライデント"s;
     iorgweight(228) = 1800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(228) = u8"三叉槍"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(228) = u8"trident"s;
         ioriginalnameref2(228) = "";
     }
@@ -7377,9 +9312,12 @@ void label_1277()
     ilight(227) = 0;
     ialphanameref(227) = u8"ハンマー"s;
     iorgweight(227) = 4200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(227) = u8"大槌"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(227) = u8"hammer"s;
         ioriginalnameref2(227) = "";
     }
@@ -7389,9 +9327,12 @@ void label_1277()
     ilight(226) = 0;
     ialphanameref(226) = u8"バトルアクス"s;
     iorgweight(226) = 3700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(226) = u8"戦斧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(226) = u8"battle axe"s;
         ioriginalnameref2(226) = "";
     }
@@ -7401,9 +9342,12 @@ void label_1277()
     ilight(225) = 0;
     ialphanameref(225) = u8"カットラス"s;
     iorgweight(225) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(225) = u8"海賊刀"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(225) = u8"scimitar"s;
         ioriginalnameref2(225) = "";
     }
@@ -7413,9 +9357,12 @@ void label_1277()
     ilight(224) = 0;
     ialphanameref(224) = u8"カタナ"s;
     iorgweight(224) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(224) = u8"刀"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(224) = u8"katana"s;
         ioriginalnameref2(224) = "";
     }
@@ -7425,9 +9372,12 @@ void label_1277()
     ilight(223) = 0;
     ialphanameref(223) = "";
     iorgweight(223) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(223) = u8"鍋"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(223) = u8"pot"s;
         ioriginalnameref2(223) = "";
     }
@@ -7437,9 +9387,12 @@ void label_1277()
     ilight(222) = 0;
     ialphanameref(222) = "";
     iorgweight(222) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(222) = u8"動物の骨"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(222) = u8"animal bone"s;
         ioriginalnameref2(222) = "";
     }
@@ -7449,9 +9402,12 @@ void label_1277()
     ilight(221) = 0;
     ialphanameref(221) = "";
     iorgweight(221) = 70;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(221) = u8"藁"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(221) = u8"straw"s;
         ioriginalnameref2(221) = "";
     }
@@ -7461,9 +9417,12 @@ void label_1277()
     ilight(220) = 0;
     ialphanameref(220) = "";
     iorgweight(220) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(220) = u8"魚の死骸"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(220) = u8"dead fish"s;
         ioriginalnameref2(220) = "";
     }
@@ -7473,9 +9432,12 @@ void label_1277()
     ilight(219) = 0;
     ialphanameref(219) = "";
     iorgweight(219) = 340;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(219) = u8"頑丈なロープ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(219) = u8"tight rope"s;
         ioriginalnameref2(219) = "";
     }
@@ -7485,9 +9447,12 @@ void label_1277()
     ilight(218) = 0;
     ialphanameref(218) = "";
     iorgweight(218) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(218) = u8"鉢"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(218) = u8"bowl"s;
         ioriginalnameref2(218) = "";
     }
@@ -7497,9 +9462,12 @@ void label_1277()
     ilight(217) = 0;
     ialphanameref(217) = "";
     iorgweight(217) = 90;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(217) = u8"空っぽの鉢"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(217) = u8"empty bowl"s;
         ioriginalnameref2(217) = "";
     }
@@ -7509,9 +9477,12 @@ void label_1277()
     ilight(216) = 0;
     ialphanameref(216) = "";
     iorgweight(216) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(216) = u8"バスケット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(216) = u8"basket"s;
         ioriginalnameref2(216) = "";
     }
@@ -7521,9 +9492,12 @@ void label_1277()
     ilight(215) = 0;
     ialphanameref(215) = "";
     iorgweight(215) = 220;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(215) = u8"たくさんの空のビン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(215) = u8"empty bottles"s;
         ioriginalnameref2(215) = u8"lot"s;
     }
@@ -7533,9 +9507,12 @@ void label_1277()
     ilight(214) = 0;
     ialphanameref(214) = "";
     iorgweight(214) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(214) = u8"鉱石の欠片"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(214) = u8"ore piece"s;
         ioriginalnameref2(214) = "";
     }
@@ -7545,9 +9522,12 @@ void label_1277()
     ilight(213) = 0;
     ialphanameref(213) = u8"スピア"s;
     iorgweight(213) = 2500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(213) = u8"長槍"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(213) = u8"spear"s;
         ioriginalnameref2(213) = "";
     }
@@ -7557,9 +9537,12 @@ void label_1277()
     ilight(212) = 0;
     ialphanameref(212) = u8"スタッフ"s;
     iorgweight(212) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(212) = u8"杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(212) = u8"staff"s;
         ioriginalnameref2(212) = "";
     }
@@ -7569,9 +9552,12 @@ void label_1277()
     ilight(211) = 0;
     ialphanameref(211) = u8"シックル"s;
     iorgweight(211) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(211) = u8"鎌"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(211) = u8"sickle"s;
         ioriginalnameref2(211) = "";
     }
@@ -7581,9 +9567,12 @@ void label_1277()
     ilight(210) = 0;
     ialphanameref(210) = u8"ストーン"s;
     iorgweight(210) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(210) = u8"小石"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(210) = u8"stone"s;
         ioriginalnameref2(210) = "";
     }
@@ -7593,9 +9582,12 @@ void label_1277()
     ilight(209) = 0;
     ialphanameref(209) = "";
     iorgweight(209) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(209) = u8"解呪の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(209) = u8"uncurse"s;
         ioriginalnameref2(209) = u8"scroll"s;
     }
@@ -7607,73 +9599,100 @@ void label_1277()
     ilight(208) = 0;
     ialphanameref(208) = "";
     iorgweight(208) = 1;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(208) = u8"途方も価値のない錆びた偽物の金塊"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(208) = u8"worthless fake gold bar"s;
         ioriginalnameref2(208) = "";
     }
     ipicref(208) = 33;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(208) = u8"途方もない価値の金塊"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(208) = u8"valuable gold bar"s;
     }
     icolref(208) = 0;
     ilight(207) = 9;
     ialphanameref(207) = "";
     iorgweight(207) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(207) = u8"《異形の森の弓》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(207) = u8"<Bow of Vinderre>"s;
         ioriginalnameref2(207) = "";
     }
     ipicref(207) = 404;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(207) = u8"波動を放つ弓"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(207) = u8"shaking bow"s;
     }
     icolref(207) = 7;
     ilight(206) = 9;
     ialphanameref(206) = "";
     iorgweight(206) = 600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(206) = u8"《エーテルダガー》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(206) = u8"<Ether Dagger>"s;
         ioriginalnameref2(206) = "";
     }
     ipicref(206) = 400;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(206) = u8"風をまとった短剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(206) = u8"dagger surrounded by wind"s;
     }
     icolref(206) = 4;
     ilight(205) = 0;
     ialphanameref(205) = "";
     iorgweight(205) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(205) = u8"ウィスキー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(205) = u8"whisky"s;
         ioriginalnameref2(205) = u8"bottle"s;
     }
     ipicref(205) = 210;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(205) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(205) = u8"clear liquid"s;
     }
     icolref(205) = 0;
     ilight(204) = 0;
     ialphanameref(204) = "";
     iorgweight(204) = 2000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(204) = u8"死体"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(204) = u8"corpse"s;
         ioriginalnameref2(204) = "";
     }
@@ -7683,9 +9702,12 @@ void label_1277()
     ilight(203) = 0;
     ialphanameref(203) = "";
     iorgweight(203) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(203) = u8"癒しの杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(203) = u8"cure"s;
         ioriginalnameref2(203) = u8"rod"s;
     }
@@ -7697,9 +9719,12 @@ void label_1277()
     ilight(202) = 0;
     ialphanameref(202) = "";
     iorgweight(202) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(202) = u8"千里眼の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(202) = u8"magic mapping"s;
         ioriginalnameref2(202) = u8"rod"s;
     }
@@ -7711,9 +9736,12 @@ void label_1277()
     ilight(201) = 0;
     ialphanameref(201) = "";
     iorgweight(201) = 550;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(201) = u8"レッチョ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(201) = u8"leccho"s;
         ioriginalnameref2(201) = "";
     }
@@ -7723,9 +9751,12 @@ void label_1277()
     ilight(200) = 0;
     ialphanameref(200) = "";
     iorgweight(200) = 840;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(200) = u8"ウリ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(200) = u8"melon"s;
         ioriginalnameref2(200) = "";
     }
@@ -7735,9 +9766,12 @@ void label_1277()
     ilight(199) = 0;
     ialphanameref(199) = "";
     iorgweight(199) = 970;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(199) = u8"カボチ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(199) = u8"cbocchi"s;
         ioriginalnameref2(199) = "";
     }
@@ -7747,9 +9781,12 @@ void label_1277()
     ilight(198) = 0;
     ialphanameref(198) = "";
     iorgweight(198) = 360;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(198) = u8"グリーンピース"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(198) = u8"green pea"s;
         ioriginalnameref2(198) = "";
     }
@@ -7759,9 +9796,12 @@ void label_1277()
     ilight(197) = 0;
     ialphanameref(197) = "";
     iorgweight(197) = 440;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(197) = u8"レモン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(197) = u8"lemon"s;
         ioriginalnameref2(197) = "";
     }
@@ -7771,9 +9811,12 @@ void label_1277()
     ilight(196) = 0;
     ialphanameref(196) = "";
     iorgweight(196) = 880;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(196) = u8"夏ミカン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(196) = u8"tangerine"s;
         ioriginalnameref2(196) = "";
     }
@@ -7783,9 +9826,12 @@ void label_1277()
     ilight(195) = 0;
     ialphanameref(195) = "";
     iorgweight(195) = 560;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(195) = u8"クッチェ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(195) = u8"qucche"s;
         ioriginalnameref2(195) = "";
     }
@@ -7795,9 +9841,12 @@ void label_1277()
     ilight(194) = 0;
     ialphanameref(194) = "";
     iorgweight(194) = 1070;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(194) = u8"万色フルーツ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(194) = u8"rainbow fruit"s;
         ioriginalnameref2(194) = "";
     }
@@ -7807,9 +9856,12 @@ void label_1277()
     ilight(193) = 0;
     ialphanameref(193) = "";
     iorgweight(193) = 90;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(193) = u8"薬草"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(193) = u8"healthy leaf"s;
         ioriginalnameref2(193) = "";
     }
@@ -7819,9 +9871,12 @@ void label_1277()
     ilight(192) = 0;
     ialphanameref(192) = "";
     iorgweight(192) = 720;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(192) = u8"苺"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(192) = u8"strawberry"s;
         ioriginalnameref2(192) = "";
     }
@@ -7831,9 +9886,12 @@ void label_1277()
     ilight(191) = 0;
     ialphanameref(191) = "";
     iorgweight(191) = 40;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(191) = u8"アピの実"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(191) = u8"api nut"s;
         ioriginalnameref2(191) = "";
     }
@@ -7843,9 +9901,12 @@ void label_1277()
     ilight(190) = 0;
     ialphanameref(190) = "";
     iorgweight(190) = 650;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(190) = u8"イーモ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(190) = u8"imo"s;
         ioriginalnameref2(190) = "";
     }
@@ -7855,9 +9916,12 @@ void label_1277()
     ilight(189) = 0;
     ialphanameref(189) = "";
     iorgweight(189) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(189) = u8"食器の山"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(189) = u8"dish"s;
         ioriginalnameref2(189) = "";
     }
@@ -7867,9 +9931,12 @@ void label_1277()
     ilight(188) = 0;
     ialphanameref(188) = "";
     iorgweight(188) = 650;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(188) = u8"レタス"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(188) = u8"lettuce"s;
         ioriginalnameref2(188) = "";
     }
@@ -7879,9 +9946,12 @@ void label_1277()
     ilight(187) = 0;
     ialphanameref(187) = "";
     iorgweight(187) = 790;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(187) = u8"さつまいも"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(187) = u8"sweet potato"s;
         ioriginalnameref2(187) = "";
     }
@@ -7891,9 +9961,12 @@ void label_1277()
     ilight(186) = 0;
     ialphanameref(186) = "";
     iorgweight(186) = 950;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(186) = u8"大根"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(186) = u8"radish"s;
         ioriginalnameref2(186) = "";
     }
@@ -7903,9 +9976,12 @@ void label_1277()
     ilight(185) = 0;
     ialphanameref(185) = "";
     iorgweight(185) = 420;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(185) = u8"キャロット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(185) = u8"carrot"s;
         ioriginalnameref2(185) = "";
     }
@@ -7915,9 +9991,12 @@ void label_1277()
     ilight(184) = 0;
     ialphanameref(184) = "";
     iorgweight(184) = 620;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(184) = u8"グアバ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(184) = u8"guava"s;
         ioriginalnameref2(184) = "";
     }
@@ -7927,9 +10006,12 @@ void label_1277()
     ilight(183) = 0;
     ialphanameref(183) = "";
     iorgweight(183) = 220;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(183) = u8"さくらんぼ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(183) = u8"cherry"s;
         ioriginalnameref2(183) = "";
     }
@@ -7939,9 +10021,12 @@ void label_1277()
     ilight(182) = 0;
     ialphanameref(182) = "";
     iorgweight(182) = 440;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(182) = u8"キウイ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(182) = u8"kiwi"s;
         ioriginalnameref2(182) = "";
     }
@@ -7951,9 +10036,12 @@ void label_1277()
     ilight(181) = 0;
     ialphanameref(181) = "";
     iorgweight(181) = 510;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(181) = u8"ブドウ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(181) = u8"grape"s;
         ioriginalnameref2(181) = "";
     }
@@ -7963,9 +10051,12 @@ void label_1277()
     ilight(180) = 0;
     ialphanameref(180) = "";
     iorgweight(180) = 720;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(180) = u8"リンゴ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(180) = u8"apple"s;
         ioriginalnameref2(180) = "";
     }
@@ -7975,9 +10066,12 @@ void label_1277()
     ilight(179) = 0;
     ialphanameref(179) = "";
     iorgweight(179) = 100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(179) = u8"山菜"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(179) = u8"edible wild plant"s;
         ioriginalnameref2(179) = "";
     }
@@ -7987,9 +10081,12 @@ void label_1277()
     ilight(178) = 0;
     ialphanameref(178) = "";
     iorgweight(178) = 170;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(178) = u8"アロエ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(178) = u8"aloe"s;
         ioriginalnameref2(178) = "";
     }
@@ -7999,9 +10096,12 @@ void label_1277()
     ilight(177) = 0;
     ialphanameref(177) = "";
     iorgweight(177) = 160;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(177) = u8"クワパナ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(177) = u8"quwapana"s;
         ioriginalnameref2(177) = "";
     }
@@ -8011,9 +10111,12 @@ void label_1277()
     ilight(176) = 0;
     ialphanameref(176) = "";
     iorgweight(176) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(176) = u8"鈍足の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(176) = u8"slow"s;
         ioriginalnameref2(176) = u8"rod"s;
     }
@@ -8025,9 +10128,12 @@ void label_1277()
     ilight(175) = 0;
     ialphanameref(175) = "";
     iorgweight(175) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(175) = u8"稲妻の軌跡の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(175) = u8"lightning bolt"s;
         ioriginalnameref2(175) = u8"rod"s;
     }
@@ -8039,9 +10145,12 @@ void label_1277()
     ilight(174) = 0;
     ialphanameref(174) = "";
     iorgweight(174) = 12400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(174) = u8"二段ベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(174) = u8"bunk bed"s;
         ioriginalnameref2(174) = "";
     }
@@ -8051,9 +10160,12 @@ void label_1277()
     ilight(173) = 0;
     ialphanameref(173) = "";
     iorgweight(173) = 600000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(173) = u8"噴水"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(173) = u8"fountain"s;
         ioriginalnameref2(173) = "";
     }
@@ -8063,9 +10175,12 @@ void label_1277()
     ilight(172) = 13;
     ialphanameref(172) = "";
     iorgweight(172) = 500000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(172) = u8"儀式用の祭壇"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(172) = u8"ceremony altar"s;
         ioriginalnameref2(172) = "";
     }
@@ -8075,9 +10190,12 @@ void label_1277()
     ilight(171) = 13;
     ialphanameref(171) = "";
     iorgweight(171) = 500000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(171) = u8"祭壇"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(171) = u8"altar"s;
         ioriginalnameref2(171) = "";
     }
@@ -8087,9 +10205,12 @@ void label_1277()
     ilight(170) = 0;
     ialphanameref(170) = "";
     iorgweight(170) = 650000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(170) = u8"古めかしい墓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(170) = u8"old grave"s;
         ioriginalnameref2(170) = "";
     }
@@ -8099,9 +10220,12 @@ void label_1277()
     ilight(169) = 0;
     ialphanameref(169) = "";
     iorgweight(169) = 650000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(169) = u8"古墳"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(169) = u8"ancient tomb"s;
         ioriginalnameref2(169) = "";
     }
@@ -8111,9 +10235,12 @@ void label_1277()
     ilight(168) = 0;
     ialphanameref(168) = "";
     iorgweight(168) = 650000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(168) = u8"荘厳な墓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(168) = u8"solemn tomb"s;
         ioriginalnameref2(168) = "";
     }
@@ -8123,9 +10250,12 @@ void label_1277()
     ilight(167) = 0;
     ialphanameref(167) = "";
     iorgweight(167) = 650000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(167) = u8"新品の墓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(167) = u8"brand new grave"s;
         ioriginalnameref2(167) = "";
     }
@@ -8135,9 +10265,12 @@ void label_1277()
     ilight(166) = 0;
     ialphanameref(166) = "";
     iorgweight(166) = 650000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(166) = u8"花で飾られた墓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(166) = u8"ornamented with flowers"s;
         ioriginalnameref2(166) = u8"grave"s;
     }
@@ -8147,9 +10280,12 @@ void label_1277()
     ilight(165) = 0;
     ialphanameref(165) = "";
     iorgweight(165) = 400000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(165) = u8"崩れた墓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(165) = u8"crumbled grave"s;
         ioriginalnameref2(165) = "";
     }
@@ -8159,9 +10295,12 @@ void label_1277()
     ilight(164) = 0;
     ialphanameref(164) = "";
     iorgweight(164) = 400000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(164) = u8"風化した墓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(164) = u8"collapsed grave"s;
         ioriginalnameref2(164) = "";
     }
@@ -8171,9 +10310,12 @@ void label_1277()
     ilight(163) = 0;
     ialphanameref(163) = "";
     iorgweight(163) = 340;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(163) = u8"絹の生地"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(163) = u8"silk cloth"s;
         ioriginalnameref2(163) = "";
     }
@@ -8183,9 +10325,12 @@ void label_1277()
     ilight(162) = 0;
     ialphanameref(162) = "";
     iorgweight(162) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(162) = u8"散らばった衣類"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(162) = u8"messy cloth"s;
         ioriginalnameref2(162) = "";
     }
@@ -8195,9 +10340,12 @@ void label_1277()
     ilight(161) = 0;
     ialphanameref(161) = "";
     iorgweight(161) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(161) = u8"大工道具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(161) = u8"carpenter's tool"s;
         ioriginalnameref2(161) = "";
     }
@@ -8207,9 +10355,12 @@ void label_1277()
     ilight(160) = 0;
     ialphanameref(160) = "";
     iorgweight(160) = 500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(160) = u8"裁縫セット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(160) = u8"sewing kit"s;
         ioriginalnameref2(160) = "";
     }
@@ -8219,9 +10370,12 @@ void label_1277()
     ilight(159) = 0;
     ialphanameref(159) = "";
     iorgweight(159) = 11000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(159) = u8"単なる棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(159) = u8"simple shelf"s;
         ioriginalnameref2(159) = "";
     }
@@ -8231,9 +10385,12 @@ void label_1277()
     ilight(158) = 3;
     ialphanameref(158) = "";
     iorgweight(158) = 860;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(158) = u8"絢爛な燭台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(158) = u8"gorgeous candlestick"s;
         ioriginalnameref2(158) = "";
     }
@@ -8243,9 +10400,12 @@ void label_1277()
     ilight(157) = 0;
     ialphanameref(157) = "";
     iorgweight(157) = 8600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(157) = u8"上品なテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(157) = u8"elegant table"s;
         ioriginalnameref2(157) = "";
     }
@@ -8255,9 +10415,12 @@ void label_1277()
     ilight(156) = 0;
     ialphanameref(156) = "";
     iorgweight(156) = 9700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(156) = u8"狭い食卓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(156) = u8"narrow dining table"s;
         ioriginalnameref2(156) = "";
     }
@@ -8267,9 +10430,12 @@ void label_1277()
     ilight(155) = 0;
     ialphanameref(155) = "";
     iorgweight(155) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(155) = u8"コンロ付き調理台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(155) = u8"kitchen oven"s;
         ioriginalnameref2(155) = "";
     }
@@ -8279,9 +10445,12 @@ void label_1277()
     ilight(154) = 0;
     ialphanameref(154) = "";
     iorgweight(154) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(154) = u8"流し台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(154) = u8"sink"s;
         ioriginalnameref2(154) = "";
     }
@@ -8291,9 +10460,12 @@ void label_1277()
     ilight(153) = 0;
     ialphanameref(153) = "";
     iorgweight(153) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(153) = u8"調理台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(153) = u8"kitchen"s;
         ioriginalnameref2(153) = "";
     }
@@ -8303,9 +10475,12 @@ void label_1277()
     ilight(152) = 0;
     ialphanameref(152) = "";
     iorgweight(152) = 320;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(152) = u8"飲みきれないほどの酒"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(152) = u8"alcohols"s;
         ioriginalnameref2(152) = u8"lot"s;
     }
@@ -8315,9 +10490,12 @@ void label_1277()
     ilight(151) = 0;
     ialphanameref(151) = "";
     iorgweight(151) = 8600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(151) = u8"名工本棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(151) = u8"craft book shelf"s;
         ioriginalnameref2(151) = "";
     }
@@ -8327,9 +10505,12 @@ void label_1277()
     ilight(150) = 0;
     ialphanameref(150) = "";
     iorgweight(150) = 8700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(150) = u8"名工箪笥"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(150) = u8"craft rack"s;
         ioriginalnameref2(150) = "";
     }
@@ -8339,9 +10520,12 @@ void label_1277()
     ilight(149) = 0;
     ialphanameref(149) = "";
     iorgweight(149) = 940;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(149) = u8"本の山"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(149) = u8"books"s;
         ioriginalnameref2(149) = u8"lot"s;
     }
@@ -8351,9 +10535,12 @@ void label_1277()
     ilight(148) = 0;
     ialphanameref(148) = "";
     iorgweight(148) = 830;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(148) = u8"散らかった本"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(148) = u8"disorderly book"s;
         ioriginalnameref2(148) = "";
     }
@@ -8363,9 +10550,12 @@ void label_1277()
     ilight(147) = 0;
     ialphanameref(147) = "";
     iorgweight(147) = 7500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(147) = u8"鎧の像"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(147) = u8"armor"s;
         ioriginalnameref2(147) = u8"statue"s;
     }
@@ -8375,9 +10565,12 @@ void label_1277()
     ilight(146) = 0;
     ialphanameref(146) = "";
     iorgweight(146) = 4400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(146) = u8"飾られた鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(146) = u8"decorated armor"s;
         ioriginalnameref2(146) = "";
     }
@@ -8387,9 +10580,12 @@ void label_1277()
     ilight(145) = 0;
     ialphanameref(145) = "";
     iorgweight(145) = 860;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(145) = u8"飾られた服"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(145) = u8"decorated cloth"s;
         ioriginalnameref2(145) = "";
     }
@@ -8399,9 +10595,12 @@ void label_1277()
     ilight(144) = 0;
     ialphanameref(144) = "";
     iorgweight(144) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(144) = u8"武器の束"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(144) = u8"weapons"s;
         ioriginalnameref2(144) = u8"bundle"s;
     }
@@ -8411,9 +10610,12 @@ void label_1277()
     ilight(143) = 0;
     ialphanameref(143) = "";
     iorgweight(143) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(143) = u8"たくさんの弓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(143) = u8"bows"s;
         ioriginalnameref2(143) = u8"bundle"s;
     }
@@ -8423,9 +10625,12 @@ void label_1277()
     ilight(142) = 0;
     ialphanameref(142) = "";
     iorgweight(142) = 17400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(142) = u8"調理機"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(142) = u8"food maker"s;
         ioriginalnameref2(142) = "";
     }
@@ -8435,9 +10640,12 @@ void label_1277()
     ilight(141) = 0;
     ialphanameref(141) = "";
     iorgweight(141) = 240;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(141) = u8"地図"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(141) = u8"map"s;
         ioriginalnameref2(141) = "";
     }
@@ -8447,9 +10655,12 @@ void label_1277()
     ilight(140) = 0;
     ialphanameref(140) = "";
     iorgweight(140) = 1100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(140) = u8"絵描き道具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(140) = u8"canvas"s;
         ioriginalnameref2(140) = "";
     }
@@ -8459,9 +10670,12 @@ void label_1277()
     ilight(139) = 0;
     ialphanameref(139) = "";
     iorgweight(139) = 32000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(139) = u8"花で飾られた柱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(139) = u8"statue ornamented with flowers"s;
         ioriginalnameref2(139) = "";
     }
@@ -8471,9 +10685,12 @@ void label_1277()
     ilight(138) = 0;
     ialphanameref(138) = "";
     iorgweight(138) = 32000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(138) = u8"植物で飾られた柱"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(138) = u8"statue ornamented with plants"s;
         ioriginalnameref2(138) = "";
     }
@@ -8483,9 +10700,12 @@ void label_1277()
     ilight(137) = 0;
     ialphanameref(137) = "";
     iorgweight(137) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(137) = u8"カーネーションの花"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(137) = u8"carnation"s;
         ioriginalnameref2(137) = "";
     }
@@ -8495,9 +10715,12 @@ void label_1277()
     ilight(136) = 0;
     ialphanameref(136) = "";
     iorgweight(136) = 240;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(136) = u8"猫じゃらし"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(136) = u8"foxtail grass"s;
         ioriginalnameref2(136) = "";
     }
@@ -8507,9 +10730,12 @@ void label_1277()
     ilight(135) = 0;
     ialphanameref(135) = "";
     iorgweight(135) = 300;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(135) = u8"アネモネの花"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(135) = u8"anemos"s;
         ioriginalnameref2(135) = "";
     }
@@ -8519,9 +10745,12 @@ void label_1277()
     ilight(134) = 0;
     ialphanameref(134) = "";
     iorgweight(134) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(134) = u8"ネリネの花"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(134) = u8"nerine"s;
         ioriginalnameref2(134) = "";
     }
@@ -8531,9 +10760,12 @@ void label_1277()
     ilight(133) = 0;
     ialphanameref(133) = "";
     iorgweight(133) = 350;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(133) = u8"ガザニアの花"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(133) = u8"gazania"s;
         ioriginalnameref2(133) = "";
     }
@@ -8543,9 +10775,12 @@ void label_1277()
     ilight(132) = 0;
     ialphanameref(132) = "";
     iorgweight(132) = 320;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(132) = u8"サルビアの花"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(132) = u8"sage"s;
         ioriginalnameref2(132) = "";
     }
@@ -8555,9 +10790,12 @@ void label_1277()
     ilight(131) = 0;
     ialphanameref(131) = "";
     iorgweight(131) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(131) = u8"大きい観葉植物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(131) = u8"large foliage plant"s;
         ioriginalnameref2(131) = "";
     }
@@ -8567,9 +10805,12 @@ void label_1277()
     ilight(130) = 0;
     ialphanameref(130) = "";
     iorgweight(130) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(130) = u8"木香薔薇"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(130) = u8"rose"s;
         ioriginalnameref2(130) = "";
     }
@@ -8579,9 +10820,12 @@ void label_1277()
     ilight(129) = 0;
     ialphanameref(129) = "";
     iorgweight(129) = 420;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(129) = u8"小さい観葉植物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(129) = u8"small foliage plant"s;
         ioriginalnameref2(129) = "";
     }
@@ -8591,9 +10835,12 @@ void label_1277()
     ilight(128) = 9;
     ialphanameref(128) = "";
     iorgweight(128) = 1840;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(128) = u8"魔法陣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(128) = u8"pentagram"s;
         ioriginalnameref2(128) = "";
     }
@@ -8603,9 +10850,12 @@ void label_1277()
     ilight(127) = 0;
     ialphanameref(127) = "";
     iorgweight(127) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(127) = u8"錬金術の道具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(127) = u8"alchemy kit"s;
         ioriginalnameref2(127) = "";
     }
@@ -8615,9 +10865,12 @@ void label_1277()
     ilight(126) = 0;
     ialphanameref(126) = "";
     iorgweight(126) = 210;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(126) = u8"ビーカー"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(126) = u8"beaker"s;
         ioriginalnameref2(126) = "";
     }
@@ -8627,9 +10880,12 @@ void label_1277()
     ilight(125) = 0;
     ialphanameref(125) = "";
     iorgweight(125) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(125) = u8"生命の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(125) = u8"heal"s;
         ioriginalnameref2(125) = u8"rod"s;
     }
@@ -8641,9 +10897,12 @@ void label_1277()
     ilight(124) = 0;
     ialphanameref(124) = "";
     iorgweight(124) = 7800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(124) = u8"パンの陳列棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(124) = u8"breads"s;
         ioriginalnameref2(124) = u8"show case"s;
     }
@@ -8653,9 +10912,12 @@ void label_1277()
     ilight(123) = 0;
     ialphanameref(123) = "";
     iorgweight(123) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(123) = u8"炎の衝撃の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(123) = u8"fire bolt"s;
         ioriginalnameref2(123) = u8"rod"s;
     }
@@ -8667,9 +10929,12 @@ void label_1277()
     ilight(122) = 0;
     ialphanameref(122) = "";
     iorgweight(122) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(122) = u8"氷の視線の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(122) = u8"ice bolt"s;
         ioriginalnameref2(122) = u8"rod"s;
     }
@@ -8681,9 +10946,12 @@ void label_1277()
     ilight(121) = 0;
     ialphanameref(121) = "";
     iorgweight(121) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(121) = u8"サモンモンスターの杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(121) = u8"summon monsters"s;
         ioriginalnameref2(121) = u8"rod"s;
     }
@@ -8695,9 +10963,12 @@ void label_1277()
     ilight(120) = 0;
     ialphanameref(120) = "";
     iorgweight(120) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(120) = u8"マジックミサイルの杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(120) = u8"magic missile"s;
         ioriginalnameref2(120) = u8"rod"s;
     }
@@ -8709,9 +10980,12 @@ void label_1277()
     ilight(119) = 0;
     ialphanameref(119) = "";
     iorgweight(119) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(119) = u8"軽傷治療の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(119) = u8"cure minor wound"s;
         ioriginalnameref2(119) = u8"rod"s;
     }
@@ -8723,9 +10997,12 @@ void label_1277()
     ilight(118) = 0;
     ialphanameref(118) = "";
     iorgweight(118) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(118) = u8"モンスター召喚の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(118) = u8"summon monsters"s;
         ioriginalnameref2(118) = u8"spellbook"s;
     }
@@ -8737,9 +11014,12 @@ void label_1277()
     ilight(117) = 0;
     ialphanameref(117) = "";
     iorgweight(117) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(117) = u8"空のバスケット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(117) = u8"empty basket"s;
         ioriginalnameref2(117) = "";
     }
@@ -8749,9 +11029,12 @@ void label_1277()
     ilight(116) = 0;
     ialphanameref(116) = "";
     iorgweight(116) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(116) = u8"ショートテレポートの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(116) = u8"minor teleportation"s;
         ioriginalnameref2(116) = u8"spellbook"s;
     }
@@ -8763,9 +11046,12 @@ void label_1277()
     ilight(115) = 0;
     ialphanameref(115) = "";
     iorgweight(115) = 9500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(115) = u8"掲示板"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(115) = u8"board"s;
         ioriginalnameref2(115) = "";
     }
@@ -8775,9 +11061,12 @@ void label_1277()
     ilight(114) = 0;
     ialphanameref(114) = "";
     iorgweight(114) = 3500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(114) = u8"道標"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(114) = u8"crossroad sign"s;
         ioriginalnameref2(114) = "";
     }
@@ -8787,9 +11076,12 @@ void label_1277()
     ilight(113) = 0;
     ialphanameref(113) = "";
     iorgweight(113) = 3200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(113) = u8"標識"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(113) = u8"sign"s;
         ioriginalnameref2(113) = "";
     }
@@ -8799,9 +11091,12 @@ void label_1277()
     ilight(112) = 0;
     ialphanameref(112) = "";
     iorgweight(112) = 14000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(112) = u8"オーブン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(112) = u8"oven"s;
         ioriginalnameref2(112) = "";
     }
@@ -8811,9 +11106,12 @@ void label_1277()
     ilight(111) = 2;
     ialphanameref(111) = "";
     iorgweight(111) = 45800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(111) = u8"溶解炉"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(111) = u8"furnace"s;
         ioriginalnameref2(111) = "";
     }
@@ -8823,9 +11121,12 @@ void label_1277()
     ilight(110) = 0;
     ialphanameref(110) = "";
     iorgweight(110) = 950;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(110) = u8"いろんな洋服"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(110) = u8"clothes"s;
         ioriginalnameref2(110) = u8"variety"s;
     }
@@ -8835,9 +11136,12 @@ void label_1277()
     ilight(109) = 9;
     ialphanameref(109) = "";
     iorgweight(109) = 350000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(109) = u8"井戸"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(109) = u8"well"s;
         ioriginalnameref2(109) = "";
     }
@@ -8847,9 +11151,12 @@ void label_1277()
     ilight(108) = 0;
     ialphanameref(108) = "";
     iorgweight(108) = 820;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(108) = u8"いろんな雑貨"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(108) = u8"goods"s;
         ioriginalnameref2(108) = u8"variety"s;
     }
@@ -8859,9 +11166,12 @@ void label_1277()
     ilight(107) = 0;
     ialphanameref(107) = "";
     iorgweight(107) = 750;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(107) = u8"いろんな道具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(107) = u8"tools"s;
         ioriginalnameref2(107) = u8"variety"s;
     }
@@ -8871,9 +11181,12 @@ void label_1277()
     ilight(106) = 0;
     ialphanameref(106) = "";
     iorgweight(106) = 6800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(106) = u8"収納棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(106) = u8"closet"s;
         ioriginalnameref2(106) = "";
     }
@@ -8883,9 +11196,12 @@ void label_1277()
     ilight(105) = 0;
     ialphanameref(105) = "";
     iorgweight(105) = 7600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(105) = u8"本たてつきの棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(105) = u8"neat shelf"s;
         ioriginalnameref2(105) = "";
     }
@@ -8895,9 +11211,12 @@ void label_1277()
     ilight(104) = 0;
     ialphanameref(104) = "";
     iorgweight(104) = 8200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(104) = u8"物置"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(104) = u8"barn"s;
         ioriginalnameref2(104) = "";
     }
@@ -8907,9 +11226,12 @@ void label_1277()
     ilight(103) = 0;
     ialphanameref(103) = "";
     iorgweight(103) = 7300;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(103) = u8"食器棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(103) = u8"cupboard"s;
         ioriginalnameref2(103) = "";
     }
@@ -8919,9 +11241,12 @@ void label_1277()
     ilight(102) = 0;
     ialphanameref(102) = "";
     iorgweight(102) = 6800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(102) = u8"安物の椅子"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(102) = u8"cheap chair"s;
         ioriginalnameref2(102) = "";
     }
@@ -8931,9 +11256,12 @@ void label_1277()
     ilight(101) = 0;
     ialphanameref(101) = "";
     iorgweight(101) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(101) = u8"四角い椅子"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(101) = u8"square chair"s;
         ioriginalnameref2(101) = "";
     }
@@ -8943,9 +11271,12 @@ void label_1277()
     ilight(100) = 0;
     ialphanameref(100) = "";
     iorgweight(100) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(100) = u8"ポーションの棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(100) = u8"potions"s;
         ioriginalnameref2(100) = u8"rack"s;
     }
@@ -8955,9 +11286,12 @@ void label_1277()
     ilight(99) = 0;
     ialphanameref(99) = "";
     iorgweight(99) = 4200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(99) = u8"勉強机"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(99) = u8"academic table"s;
         ioriginalnameref2(99) = "";
     }
@@ -8967,9 +11301,12 @@ void label_1277()
     ilight(98) = 0;
     ialphanameref(98) = "";
     iorgweight(98) = 540;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(98) = u8"開いているつぼ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(98) = u8"open pot"s;
         ioriginalnameref2(98) = "";
     }
@@ -8979,9 +11316,12 @@ void label_1277()
     ilight(97) = 0;
     ialphanameref(97) = "";
     iorgweight(97) = 420;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(97) = u8"密封されたつぼ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(97) = u8"closed pot"s;
         ioriginalnameref2(97) = "";
     }
@@ -8991,9 +11331,12 @@ void label_1277()
     ilight(96) = 0;
     ialphanameref(96) = "";
     iorgweight(96) = 9500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(96) = u8"金床"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(96) = u8"anvil"s;
         ioriginalnameref2(96) = "";
     }
@@ -9003,9 +11346,12 @@ void label_1277()
     ilight(95) = 0;
     ialphanameref(95) = "";
     iorgweight(95) = 3800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(95) = u8"飾り物の鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(95) = u8"decorative armor"s;
         ioriginalnameref2(95) = "";
     }
@@ -9015,9 +11361,12 @@ void label_1277()
     ilight(94) = 4;
     ialphanameref(94) = "";
     iorgweight(94) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(94) = u8"ランタン"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(94) = u8"lantern"s;
         ioriginalnameref2(94) = "";
     }
@@ -9027,9 +11376,12 @@ void label_1277()
     ilight(93) = 0;
     ialphanameref(93) = "";
     iorgweight(93) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(93) = u8"つるはし"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(93) = u8"pick"s;
         ioriginalnameref2(93) = "";
     }
@@ -9039,9 +11391,12 @@ void label_1277()
     ilight(92) = 0;
     ialphanameref(92) = "";
     iorgweight(92) = 1100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(92) = u8"お洒落な椅子"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(92) = u8"modern chair"s;
         ioriginalnameref2(92) = "";
     }
@@ -9051,9 +11406,12 @@ void label_1277()
     ilight(91) = 0;
     ialphanameref(91) = "";
     iorgweight(91) = 3400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(91) = u8"タル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(91) = u8"barrel"s;
         ioriginalnameref2(91) = "";
     }
@@ -9063,9 +11421,12 @@ void label_1277()
     ilight(90) = 0;
     ialphanameref(90) = "";
     iorgweight(90) = 7900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(90) = u8"バーテーブルβ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(90) = u8"bar table beta"s;
         ioriginalnameref2(90) = "";
     }
@@ -9075,9 +11436,12 @@ void label_1277()
     ilight(89) = 0;
     ialphanameref(89) = "";
     iorgweight(89) = 7900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(89) = u8"バーテーブルα"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(89) = u8"bar table alpha"s;
         ioriginalnameref2(89) = "";
     }
@@ -9087,9 +11451,12 @@ void label_1277()
     ilight(88) = 10;
     ialphanameref(88) = "";
     iorgweight(88) = 45000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(88) = u8"グランドピアノ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(88) = u8"grand piano"s;
         ioriginalnameref2(88) = "";
     }
@@ -9099,9 +11466,12 @@ void label_1277()
     ilight(87) = 0;
     ialphanameref(87) = "";
     iorgweight(87) = 750;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(87) = u8"色とりどりの装飾品"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(87) = u8"accessories"s;
         ioriginalnameref2(87) = u8"lot"s;
     }
@@ -9111,9 +11481,12 @@ void label_1277()
     ilight(86) = 0;
     ialphanameref(86) = "";
     iorgweight(86) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(86) = u8"たくさんの雑貨"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(86) = u8"goods"s;
         ioriginalnameref2(86) = u8"lot"s;
     }
@@ -9123,9 +11496,12 @@ void label_1277()
     ilight(85) = 0;
     ialphanameref(85) = "";
     iorgweight(85) = 8400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(85) = u8"様々な鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(85) = u8"armor"s;
         ioriginalnameref2(85) = "";
     }
@@ -9135,9 +11511,12 @@ void label_1277()
     ilight(84) = 0;
     ialphanameref(84) = "";
     iorgweight(84) = 7000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(84) = u8"ダイニングテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(84) = u8"dining table"s;
         ioriginalnameref2(84) = "";
     }
@@ -9147,9 +11526,12 @@ void label_1277()
     ilight(83) = 9;
     ialphanameref(83) = "";
     iorgweight(83) = 6800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(83) = u8"モダンテーブル"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(83) = u8"modern table"s;
         ioriginalnameref2(83) = "";
     }
@@ -9159,9 +11541,12 @@ void label_1277()
     ilight(82) = 0;
     ialphanameref(82) = "";
     iorgweight(82) = 320;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(82) = u8"玩具"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(82) = u8"toy"s;
         ioriginalnameref2(82) = "";
     }
@@ -9171,9 +11556,12 @@ void label_1277()
     ilight(81) = 0;
     ialphanameref(81) = "";
     iorgweight(81) = 350;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(81) = u8"ぬいぐるみ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(81) = u8"rag doll"s;
         ioriginalnameref2(81) = "";
     }
@@ -9183,9 +11571,12 @@ void label_1277()
     ilight(80) = 0;
     ialphanameref(80) = "";
     iorgweight(80) = 15000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(80) = u8"安物ベッド"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(80) = u8"boring bed"s;
         ioriginalnameref2(80) = "";
     }
@@ -9195,9 +11586,12 @@ void label_1277()
     ilight(79) = 0;
     ialphanameref(79) = "";
     iorgweight(79) = 8900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(79) = u8"高級箪笥"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(79) = u8"luxury drawer"s;
         ioriginalnameref2(79) = "";
     }
@@ -9207,9 +11601,12 @@ void label_1277()
     ilight(78) = 0;
     ialphanameref(78) = "";
     iorgweight(78) = 10200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(78) = u8"普通の本棚"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(78) = u8"bookshelf"s;
         ioriginalnameref2(78) = "";
     }
@@ -9219,9 +11616,12 @@ void label_1277()
     ilight(77) = 0;
     ialphanameref(77) = "";
     iorgweight(77) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(77) = u8"丸椅子"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(77) = u8"round chair"s;
         ioriginalnameref2(77) = "";
     }
@@ -9231,9 +11631,12 @@ void label_1277()
     ilight(76) = 0;
     ialphanameref(76) = "";
     iorgweight(76) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(76) = u8"聖なる癒し手ジュアのポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(76) = u8"healer <Jure>"s;
         ioriginalnameref2(76) = u8"potion"s;
     }
@@ -9245,9 +11648,12 @@ void label_1277()
     ilight(75) = 0;
     ialphanameref(75) = "";
     iorgweight(75) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(75) = u8"白き癒し手エリスのポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(75) = u8"healer <Eris>"s;
         ioriginalnameref2(75) = u8"potion"s;
     }
@@ -9259,9 +11665,12 @@ void label_1277()
     ilight(74) = 0;
     ialphanameref(74) = "";
     iorgweight(74) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(74) = u8"癒し手オディナのポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(74) = u8"healer <Odina>"s;
         ioriginalnameref2(74) = u8"potion"s;
     }
@@ -9273,25 +11682,34 @@ void label_1277()
     ilight(73) = 9;
     ialphanameref(73) = "";
     iorgweight(73) = 4200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(73) = u8"《ラグナロク》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(73) = u8"<Ragnarok>"s;
         ioriginalnameref2(73) = "";
     }
     ipicref(73) = 405;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(73) = u8"全てを終結させる剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(73) = u8"sword that ends all"s;
     }
     icolref(73) = 7;
     ilight(72) = 0;
     ialphanameref(72) = "";
     iorgweight(72) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(72) = u8"癒し手のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(72) = u8"healer"s;
         ioriginalnameref2(72) = u8"potion"s;
     }
@@ -9303,9 +11721,12 @@ void label_1277()
     ilight(71) = 0;
     ialphanameref(71) = "";
     iorgweight(71) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(71) = u8"体力回復のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(71) = u8"healing"s;
         ioriginalnameref2(71) = u8"potion"s;
     }
@@ -9317,9 +11738,12 @@ void label_1277()
     ilight(70) = 0;
     ialphanameref(70) = "";
     iorgweight(70) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(70) = u8"致命傷治癒のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(70) = u8"cure critical wound"s;
         ioriginalnameref2(70) = u8"potion"s;
     }
@@ -9331,9 +11755,12 @@ void label_1277()
     ilight(69) = 0;
     ialphanameref(69) = "";
     iorgweight(69) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(69) = u8"重傷治癒のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(69) = u8"cure major wound"s;
         ioriginalnameref2(69) = u8"potion"s;
     }
@@ -9345,9 +11772,12 @@ void label_1277()
     ilight(68) = 0;
     ialphanameref(68) = "";
     iorgweight(68) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(68) = u8"軽傷治癒のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(68) = u8"cure minor wound"s;
         ioriginalnameref2(68) = u8"potion"s;
     }
@@ -9359,9 +11789,12 @@ void label_1277()
     ilight(67) = 0;
     ialphanameref(67) = u8"ネックレス"s;
     iorgweight(67) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(67) = u8"装飾首輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(67) = u8"decorative amulet"s;
         ioriginalnameref2(67) = "";
     }
@@ -9373,9 +11806,12 @@ void label_1277()
     ilight(66) = 0;
     ialphanameref(66) = u8"ガードル"s;
     iorgweight(66) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(66) = u8"腰当"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(66) = u8"girdle"s;
         ioriginalnameref2(66) = "";
     }
@@ -9385,9 +11821,12 @@ void label_1277()
     ilight(65) = 0;
     ialphanameref(65) = u8"マント"s;
     iorgweight(65) = 700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(65) = u8"軽外套"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(65) = u8"light cloak"s;
         ioriginalnameref2(65) = "";
     }
@@ -9397,41 +11836,56 @@ void label_1277()
     ilight(64) = 9;
     ialphanameref(64) = "";
     iorgweight(64) = 4000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(64) = u8"《モーンブレイド》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(64) = u8"<Mournblade>"s;
         ioriginalnameref2(64) = "";
     }
     ipicref(64) = 405;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(64) = u8"黒き混沌の剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(64) = u8"chaotic sword"s;
     }
     icolref(64) = 4;
     ilight(63) = 9;
     ialphanameref(63) = "";
     iorgweight(63) = 9000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(63) = u8"《虚無の大鎌》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(63) = u8"<Scythe of Void>"s;
         ioriginalnameref2(63) = "";
     }
     ipicref(63) = 421;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(63) = u8"死を奏でる大鎌"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(63) = u8"sythe that sings death"s;
     }
     icolref(63) = 3;
     ilight(62) = 0;
     ialphanameref(62) = u8"バレット"s;
     iorgweight(62) = 2400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(62) = u8"弾丸"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(62) = u8"bullet"s;
         ioriginalnameref2(62) = "";
     }
@@ -9441,9 +11895,12 @@ void label_1277()
     ilight(61) = 0;
     ialphanameref(61) = u8"アロー"s;
     iorgweight(61) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(61) = u8"矢束"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(61) = u8"arrow"s;
         ioriginalnameref2(61) = "";
     }
@@ -9453,9 +11910,12 @@ void label_1277()
     ilight(60) = 0;
     ialphanameref(60) = u8"リボルバー"s;
     iorgweight(60) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(60) = u8"拳銃"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(60) = u8"pistol"s;
         ioriginalnameref2(60) = "";
     }
@@ -9465,9 +11925,12 @@ void label_1277()
     ilight(59) = 0;
     ialphanameref(59) = u8"カイトシールド"s;
     iorgweight(59) = 2200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(59) = u8"騎士盾"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(59) = u8"knight shield"s;
         ioriginalnameref2(59) = "";
     }
@@ -9477,9 +11940,12 @@ void label_1277()
     ilight(58) = 0;
     ialphanameref(58) = u8"ロングボウ"s;
     iorgweight(58) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(58) = u8"長弓"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(58) = u8"long bow"s;
         ioriginalnameref2(58) = "";
     }
@@ -9489,41 +11955,56 @@ void label_1277()
     ilight(57) = 9;
     ialphanameref(57) = "";
     iorgweight(57) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(57) = u8"《斬鉄剣》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(57) = u8"<Zantetsu>"s;
         ioriginalnameref2(57) = "";
     }
     ipicref(57) = 501;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(57) = u8"白銀の刀"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(57) = u8"shining silver katana"s;
     }
     icolref(57) = 4;
     ilight(56) = 9;
     ialphanameref(56) = "";
     iorgweight(56) = 2200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(56) = u8"《ディアボロス》"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(56) = u8"<Diablo>"s;
         ioriginalnameref2(56) = "";
     }
     ipicref(56) = 405;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(56) = u8"漆黒の剣"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(56) = u8"pure black sword"s;
     }
     icolref(56) = 7;
     ilight(55) = 0;
     ialphanameref(55) = "";
     iorgweight(55) = 1;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(55) = u8"プラチナ硬貨"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(55) = u8"platinum coin"s;
         ioriginalnameref2(55) = "";
     }
@@ -9533,9 +12014,12 @@ void label_1277()
     ilight(54) = 0;
     ialphanameref(54) = "";
     iorgweight(54) = 0;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(54) = u8"金貨"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(54) = u8"gold piece"s;
         ioriginalnameref2(54) = "";
     }
@@ -9545,9 +12029,12 @@ void label_1277()
     ilight(53) = 0;
     ialphanameref(53) = "";
     iorgweight(53) = 12000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(53) = u8"石碑"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(53) = u8"tombstone"s;
         ioriginalnameref2(53) = "";
     }
@@ -9557,9 +12044,12 @@ void label_1277()
     ilight(52) = 0;
     ialphanameref(52) = "";
     iorgweight(52) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(52) = u8"骸"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(52) = u8"skeleton"s;
         ioriginalnameref2(52) = "";
     }
@@ -9569,9 +12059,12 @@ void label_1277()
     ilight(51) = 0;
     ialphanameref(51) = "";
     iorgweight(51) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(51) = u8"骨"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(51) = u8"bone fragment"s;
         ioriginalnameref2(51) = "";
     }
@@ -9581,9 +12074,12 @@ void label_1277()
     ilight(50) = 0;
     ialphanameref(50) = "";
     iorgweight(50) = 1050;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(50) = u8"折れた刃"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(50) = u8"broken sword"s;
         ioriginalnameref2(50) = "";
     }
@@ -9593,9 +12089,12 @@ void label_1277()
     ilight(49) = 0;
     ialphanameref(49) = "";
     iorgweight(49) = 1400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(49) = u8"旗"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(49) = u8"flag"s;
         ioriginalnameref2(49) = "";
     }
@@ -9605,9 +12104,12 @@ void label_1277()
     ilight(48) = 2;
     ialphanameref(48) = "";
     iorgweight(48) = 3200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(48) = u8"かがり台"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(48) = u8"bonfire"s;
         ioriginalnameref2(48) = "";
     }
@@ -9617,9 +12119,12 @@ void label_1277()
     ilight(47) = 0;
     ialphanameref(47) = "";
     iorgweight(47) = 250;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(47) = u8"洗物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(47) = u8"washing"s;
         ioriginalnameref2(47) = "";
     }
@@ -9629,9 +12134,12 @@ void label_1277()
     ilight(46) = 0;
     ialphanameref(46) = "";
     iorgweight(46) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(46) = u8"割れたつぼ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(46) = u8"broken vase"s;
         ioriginalnameref2(46) = "";
     }
@@ -9641,9 +12149,12 @@ void label_1277()
     ilight(45) = 0;
     ialphanameref(45) = "";
     iorgweight(45) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(45) = u8"クズ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(45) = u8"garbage"s;
         ioriginalnameref2(45) = "";
     }
@@ -9653,9 +12164,12 @@ void label_1277()
     ilight(44) = 0;
     ialphanameref(44) = "";
     iorgweight(44) = 450;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(44) = u8"クズ石"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(44) = u8"junk stone"s;
         ioriginalnameref2(44) = "";
     }
@@ -9665,9 +12179,12 @@ void label_1277()
     ilight(43) = 0;
     ialphanameref(43) = "";
     iorgweight(43) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(43) = u8"木片"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(43) = u8"wood piece"s;
         ioriginalnameref2(43) = "";
     }
@@ -9677,9 +12194,12 @@ void label_1277()
     ilight(42) = 7;
     ialphanameref(42) = "";
     iorgweight(42) = 320;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(42) = u8"ダイヤモンドの原石"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(42) = u8"diamond"s;
         ioriginalnameref2(42) = u8"raw ore"s;
     }
@@ -9689,9 +12209,12 @@ void label_1277()
     ilight(41) = 7;
     ialphanameref(41) = "";
     iorgweight(41) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(41) = u8"エメラルドの原石"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(41) = u8"emerald"s;
         ioriginalnameref2(41) = u8"raw ore"s;
     }
@@ -9701,9 +12224,12 @@ void label_1277()
     ilight(40) = 0;
     ialphanameref(40) = "";
     iorgweight(40) = 70;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(40) = u8"ミカ"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(40) = u8"mika"s;
         ioriginalnameref2(40) = u8"raw ore"s;
     }
@@ -9713,9 +12239,12 @@ void label_1277()
     ilight(39) = 7;
     ialphanameref(39) = "";
     iorgweight(39) = 240;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(39) = u8"ルビナスの原石"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(39) = u8"rubynus"s;
         ioriginalnameref2(39) = u8"raw ore"s;
     }
@@ -9725,9 +12254,12 @@ void label_1277()
     ilight(38) = 7;
     ialphanameref(38) = "";
     iorgweight(38) = 1100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(38) = u8"金塊"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(38) = u8"gold bar"s;
         ioriginalnameref2(38) = "";
     }
@@ -9737,9 +12269,12 @@ void label_1277()
     ilight(37) = 7;
     ialphanameref(37) = "";
     iorgweight(37) = 1200;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(37) = u8"太陽の結晶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(37) = u8"sun crystal"s;
         ioriginalnameref2(37) = "";
     }
@@ -9749,9 +12284,12 @@ void label_1277()
     ilight(36) = 0;
     ialphanameref(36) = "";
     iorgweight(36) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(36) = u8"魔力の結晶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(36) = u8"mana crystal"s;
         ioriginalnameref2(36) = "";
     }
@@ -9761,9 +12299,12 @@ void label_1277()
     ilight(35) = 0;
     ialphanameref(35) = "";
     iorgweight(35) = 1600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(35) = u8"大地の結晶"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(35) = u8"earth crystal"s;
         ioriginalnameref2(35) = "";
     }
@@ -9773,9 +12314,12 @@ void label_1277()
     ilight(34) = 0;
     ialphanameref(34) = "";
     iorgweight(34) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(34) = u8"ライトニングボルトの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(34) = u8"lightning bolt"s;
         ioriginalnameref2(34) = u8"spellbook"s;
     }
@@ -9787,9 +12331,12 @@ void label_1277()
     ilight(33) = 0;
     ialphanameref(33) = "";
     iorgweight(33) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(33) = u8"ファイアボルトの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(33) = u8"fire bolt"s;
         ioriginalnameref2(33) = u8"spellbook"s;
     }
@@ -9801,9 +12348,12 @@ void label_1277()
     ilight(32) = 0;
     ialphanameref(32) = "";
     iorgweight(32) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(32) = u8"アイスボルトの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(32) = u8"ice bolt"s;
         ioriginalnameref2(32) = u8"spellbook"s;
     }
@@ -9815,25 +12365,34 @@ void label_1277()
     ilight(31) = 0;
     ialphanameref(31) = "";
     iorgweight(31) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(31) = u8"クリムエール"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(31) = u8"crim ale"s;
         ioriginalnameref2(31) = u8"bottle"s;
     }
     ipicref(31) = 354;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(31) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(31) = u8"clear liquid"s;
     }
     icolref(31) = 0;
     ilight(30) = 0;
     ialphanameref(30) = "";
     iorgweight(30) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(30) = u8"睡眠薬"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(30) = u8"sleeping drug"s;
         ioriginalnameref2(30) = "";
     }
@@ -9845,9 +12404,12 @@ void label_1277()
     ilight(29) = 0;
     ialphanameref(29) = "";
     iorgweight(29) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(29) = u8"麻痺のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(29) = u8"paralysis"s;
         ioriginalnameref2(29) = u8"potion"s;
     }
@@ -9859,9 +12421,12 @@ void label_1277()
     ilight(28) = 0;
     ialphanameref(28) = "";
     iorgweight(28) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(28) = u8"混乱のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(28) = u8"confusion"s;
         ioriginalnameref2(28) = u8"potion"s;
     }
@@ -9873,9 +12438,12 @@ void label_1277()
     ilight(27) = 0;
     ialphanameref(27) = "";
     iorgweight(27) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(27) = u8"盲目のポーション"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(27) = u8"blindness"s;
         ioriginalnameref2(27) = u8"potion"s;
     }
@@ -9887,73 +12455,100 @@ void label_1277()
     ilight(26) = 0;
     ialphanameref(26) = "";
     iorgweight(26) = 120;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(26) = u8"汚水"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(26) = u8"dirty water"s;
         ioriginalnameref2(26) = u8"bottle"s;
     }
     ipicref(26) = 354;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(26) = u8"透明なポーション"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(26) = u8"clear liquid"s;
     }
     icolref(26) = 0;
     ilight(25) = 0;
     ialphanameref(25) = "";
     iorgweight(25) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(25) = u8"バグの本"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(25) = u8"bugged book"s;
         ioriginalnameref2(25) = "";
     }
     ipicref(25) = 333;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(25) = u8"バグの本"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(25) = u8"book"s;
     }
     icolref(25) = 0;
     ilight(24) = 0;
     ialphanameref(24) = "";
     iorgweight(24) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(24) = u8"本"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(24) = u8"book"s;
         ioriginalnameref2(24) = "";
     }
     ipicref(24) = 333;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(24) = u8"本"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(24) = u8"book"s;
     }
     icolref(24) = 0;
     ilight(23) = 0;
     ialphanameref(23) = "";
     iorgweight(23) = 80;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(23) = u8"本"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(23) = u8"book"s;
         ioriginalnameref2(23) = "";
     }
     ipicref(23) = 333;
-    if (jp) {
+    if (jp)
+    {
         iknownnameref(23) = u8"本"s;
-    } else {
+    }
+    else
+    {
         iknownnameref(23) = u8"book"s;
     }
     icolref(23) = 0;
     ilight(22) = 0;
     ialphanameref(22) = "";
     iorgweight(22) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(22) = u8"解呪の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(22) = u8"uncurse"s;
         ioriginalnameref2(22) = u8"spellbook"s;
     }
@@ -9965,9 +12560,12 @@ void label_1277()
     ilight(21) = 0;
     ialphanameref(21) = "";
     iorgweight(21) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(21) = u8"鑑定の魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(21) = u8"identify"s;
         ioriginalnameref2(21) = u8"spellbook"s;
     }
@@ -9979,9 +12577,12 @@ void label_1277()
     ilight(20) = 0;
     ialphanameref(20) = "";
     iorgweight(20) = 380;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(20) = u8"テレポートの魔法書"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(20) = u8"teleportation"s;
         ioriginalnameref2(20) = u8"spellbook"s;
     }
@@ -9993,9 +12594,12 @@ void label_1277()
     ilight(19) = 0;
     ialphanameref(19) = "";
     iorgweight(19) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(19) = u8"テレポートの杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(19) = u8"teleportation"s;
         ioriginalnameref2(19) = u8"rod"s;
     }
@@ -10007,9 +12611,12 @@ void label_1277()
     ilight(18) = 0;
     ialphanameref(18) = "";
     iorgweight(18) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(18) = u8"鑑定の杖"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(18) = u8"identify"s;
         ioriginalnameref2(18) = u8"rod"s;
     }
@@ -10021,9 +12628,12 @@ void label_1277()
     ilight(17) = 0;
     ialphanameref(17) = "";
     iorgweight(17) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(17) = u8"インコグニートの巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(17) = u8"incognito"s;
         ioriginalnameref2(17) = u8"scroll"s;
     }
@@ -10035,9 +12645,12 @@ void label_1277()
     ilight(16) = 0;
     ialphanameref(16) = "";
     iorgweight(16) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(16) = u8"テレポートの巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(16) = u8"teleportation"s;
         ioriginalnameref2(16) = u8"scroll"s;
     }
@@ -10049,9 +12662,12 @@ void label_1277()
     ilight(15) = 0;
     ialphanameref(15) = "";
     iorgweight(15) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(15) = u8"神託の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(15) = u8"oracle"s;
         ioriginalnameref2(15) = u8"scroll"s;
     }
@@ -10063,9 +12679,12 @@ void label_1277()
     ilight(14) = 0;
     ialphanameref(14) = "";
     iorgweight(14) = 20;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(14) = u8"鑑定の巻物"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(14) = u8"identify"s;
         ioriginalnameref2(14) = u8"scroll"s;
     }
@@ -10077,9 +12696,12 @@ void label_1277()
     ilight(13) = 0;
     ialphanameref(13) = u8"デコレートリング"s;
     iorgweight(13) = 50;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(13) = u8"装飾の指輪"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(13) = u8"decorative ring"s;
         ioriginalnameref2(13) = "";
     }
@@ -10091,9 +12713,12 @@ void label_1277()
     ilight(12) = 0;
     ialphanameref(12) = u8"コンポジットブーツ"s;
     iorgweight(12) = 720;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(12) = u8"合成靴"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(12) = u8"composite boots"s;
         ioriginalnameref2(12) = "";
     }
@@ -10103,9 +12728,12 @@ void label_1277()
     ilight(11) = 0;
     ialphanameref(11) = u8"ヘビーブーツ"s;
     iorgweight(11) = 950;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(11) = u8"重靴"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(11) = u8"heavy boots"s;
         ioriginalnameref2(11) = "";
     }
@@ -10115,9 +12743,12 @@ void label_1277()
     ilight(10) = 0;
     ialphanameref(10) = u8"ライトガントレット"s;
     iorgweight(10) = 1100;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(10) = u8"厚篭手"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(10) = u8"thick gauntlets"s;
         ioriginalnameref2(10) = "";
     }
@@ -10127,9 +12758,12 @@ void label_1277()
     ilight(9) = 0;
     ialphanameref(9) = u8"シニアグローブ"s;
     iorgweight(9) = 700;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(9) = u8"細工篭手"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(9) = u8"decorated gloves"s;
         ioriginalnameref2(9) = "";
     }
@@ -10139,9 +12773,12 @@ void label_1277()
     ilight(8) = 0;
     ialphanameref(8) = u8"ローブ"s;
     iorgweight(8) = 800;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(8) = u8"法衣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(8) = u8"robe"s;
         ioriginalnameref2(8) = "";
     }
@@ -10151,9 +12788,12 @@ void label_1277()
     ilight(7) = 0;
     ialphanameref(7) = u8"メイル"s;
     iorgweight(7) = 4500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(7) = u8"鎧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(7) = u8"breastplate"s;
         ioriginalnameref2(7) = "";
     }
@@ -10163,9 +12803,12 @@ void label_1277()
     ilight(6) = 0;
     ialphanameref(6) = u8"フェアリーハット"s;
     iorgweight(6) = 400;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(6) = u8"フェアリーハット"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(6) = u8"fairy hat"s;
         ioriginalnameref2(6) = "";
     }
@@ -10175,9 +12818,12 @@ void label_1277()
     ilight(5) = 0;
     ialphanameref(5) = u8"マジックハット"s;
     iorgweight(5) = 600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(5) = u8"魔法帽"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(5) = u8"magic hat"s;
         ioriginalnameref2(5) = "";
     }
@@ -10187,9 +12833,12 @@ void label_1277()
     ilight(4) = 0;
     ialphanameref(4) = u8"クラブ"s;
     iorgweight(4) = 1000;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(4) = u8"棍棒"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(4) = u8"club"s;
         ioriginalnameref2(4) = "";
     }
@@ -10199,9 +12848,12 @@ void label_1277()
     ilight(3) = 0;
     ialphanameref(3) = u8"ハンドアクス"s;
     iorgweight(3) = 900;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(3) = u8"手斧"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(3) = u8"hand axe"s;
         ioriginalnameref2(3) = "";
     }
@@ -10211,9 +12863,12 @@ void label_1277()
     ilight(2) = 0;
     ialphanameref(2) = u8"ダガー"s;
     iorgweight(2) = 600;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(2) = u8"短剣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(2) = u8"dagger"s;
         ioriginalnameref2(2) = "";
     }
@@ -10223,9 +12878,12 @@ void label_1277()
     ilight(1) = 0;
     ialphanameref(1) = u8"ロングソード"s;
     iorgweight(1) = 1500;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(1) = u8"長剣"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(1) = u8"long sword"s;
         ioriginalnameref2(1) = "";
     }
@@ -10235,9 +12893,12 @@ void label_1277()
     ilight(0) = 9;
     ialphanameref(0) = "";
     iorgweight(0) = 1;
-    if (jp) {
+    if (jp)
+    {
         ioriginalnameref(0) = u8"黄金"s;
-    } else {
+    }
+    else
+    {
         ioriginalnameref(0) = u8"gold bar"s;
         ioriginalnameref2(0) = "";
     }

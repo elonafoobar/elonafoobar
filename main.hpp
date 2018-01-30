@@ -6,8 +6,6 @@
 
 namespace elona
 {
-
-
 std::string calcage(int);
 
 void label_0481();
@@ -44,8 +42,12 @@ void label_2737(bool = true);
 int label_2654();
 
 
-void _fdialog(std::string& prm_710, int prm_711, std::string& prm_712,
-    const std::string& prm_713, const std::string& prm_714)
+void _fdialog(
+    std::string& prm_710,
+    int prm_711,
+    std::string& prm_712,
+    const std::string& prm_713,
+    const std::string& prm_714)
 {
     (void)prm_710;
     (void)prm_711;
@@ -56,10 +58,11 @@ void _fdialog(std::string& prm_710, int prm_711, std::string& prm_712,
 
 
 
-struct elona_turn_sequence {
+struct elona_turn_sequence
+{
 };
 
 
-}
+} // namespace elona
 
 #define CNT cnt

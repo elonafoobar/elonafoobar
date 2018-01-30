@@ -3,19 +3,15 @@
 #include <stdexcept>
 #include <string>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "../lib/noncopyable.hpp"
 
 
 
 namespace snail::detail
 {
-
-
-
-class SDLError
-    : public std::runtime_error
+class SDLError : public std::runtime_error
 {
 public:
     explicit SDLError(const std::string& message)
@@ -33,21 +29,21 @@ void enforce_img(int result);
 
 
 
-template<typename T>
+template <typename T>
 T* enforce_sdl(T* result)
 {
     return result ? result : throw SDLError(::SDL_GetError());
 }
 
 
-template<typename T>
+template <typename T>
 T* enforce_ttf(T* result)
 {
     return result ? result : throw SDLError(::TTF_GetError());
 }
 
 
-template<typename T>
+template <typename T>
 T* enforce_img(T* result)
 {
     return result ? result : throw SDLError(::IMG_GetError());
@@ -63,8 +59,7 @@ T* enforce_img(T* result)
 
 
 // For RAII
-class SDLCore final
-    : public lib::noncopyable
+class SDLCore final : public lib::noncopyable
 {
 public:
     SDLCore();
@@ -74,8 +69,7 @@ public:
 
 
 // For RAII
-class SDLTTF final
-    : public lib::noncopyable
+class SDLTTF final : public lib::noncopyable
 {
 public:
     SDLTTF();
@@ -85,8 +79,7 @@ public:
 
 
 // For RAII
-class SDLImage final
-    : public lib::noncopyable
+class SDLImage final : public lib::noncopyable
 {
 public:
     SDLImage();
@@ -96,8 +89,7 @@ public:
 
 
 // For RAII
-class SDLMixer final
-    : public lib::noncopyable
+class SDLMixer final : public lib::noncopyable
 {
 public:
     SDLMixer();
@@ -105,4 +97,4 @@ public:
 };
 
 
-}
+} // namespace snail::detail

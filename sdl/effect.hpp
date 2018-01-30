@@ -5,10 +5,7 @@
 
 namespace snail
 {
-
-
-class Effect
-    : public Node
+class Effect : public Node
 {
 public:
     bool alive() const noexcept
@@ -32,4 +29,4 @@ private:
 
 
 
-}
+} // namespace snail

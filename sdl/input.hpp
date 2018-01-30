@@ -8,9 +8,6 @@
 
 namespace snail
 {
-
-
-
 struct Button
 {
     bool is_pressed() const noexcept
@@ -235,8 +232,7 @@ char to_char(Key key);
 
 
 
-class Keyboard final
-    : public lib::noncopyable
+class Keyboard final : public lib::noncopyable
 {
 public:
     bool is_pressed(Key key) const;
@@ -270,4 +266,4 @@ private:
 
 
 
-}
+} // namespace snail

@@ -6,8 +6,6 @@
 
 namespace snail
 {
-
-
 enum MessageBox
 {
     error = SDL_MESSAGEBOX_ERROR,
@@ -16,8 +14,11 @@ enum MessageBox
 };
 
 
-void show_message_box(MessageBox flag, const std::string& title, const std::string& message);
+void show_message_box(
+    MessageBox flag,
+    const std::string& title,
+    const std::string& message);
 
 
 
-}
+} // namespace snail

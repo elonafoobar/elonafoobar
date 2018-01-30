@@ -6,10 +6,7 @@
 
 namespace snail
 {
-
-
-class Node
-    : public lib::noncopyable
+class Node : public lib::noncopyable
 {
 public:
     int frame() const noexcept
@@ -36,4 +33,4 @@ private:
 
 
 
-}
+} // namespace snail

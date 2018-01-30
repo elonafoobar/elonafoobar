@@ -4,9 +4,6 @@
 
 namespace lib
 {
-
-
-
 /*
  * Used for static_assert.
  * Example:
@@ -15,7 +12,7 @@ namespace lib
  *     static_assert(false_v<T>, "error message");
  * }
  */
-template <typename ...>
+template <typename...>
 constexpr bool false_v = false;
 
 
@@ -43,11 +40,8 @@ detail::loop_s loop(T end)
 
 
 
-
 namespace detail
 {
-
-
 template <typename Container>
 struct indexed_container
 {
@@ -62,7 +56,7 @@ struct indexed_container
 
         std::pair<size_t, decltype(*_it)> operator*()
         {
-            return std:make_pair(_index, *_it);
+            return std : make_pair(_index, *_it);
         }
 
 
@@ -84,7 +78,7 @@ struct indexed_container
 
         std::pair<size_t, decltype(*_it)> operator*()
         {
-            return std:make_pair(_index, *_it);
+            return std : make_pair(_index, *_it);
         }
 
 
@@ -139,7 +133,6 @@ struct indexed_container
 private:
     Container& container;
 };
-
 
 
 
@@ -222,12 +215,11 @@ private:
 };
 
 
-}
+} // namespace detail
 
 
 lib::indexed(hoge)
 
 
 
-
-}
+} // namespace lib

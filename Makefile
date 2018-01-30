@@ -9,6 +9,11 @@ OBJECTS := $(foreach i, $(SOURCES), $(BIN_DIR)/$(basename $(i)).o)
 PROGRAM := ./runtime/elonafoobar
 
 
+FORMAT := clang-format
+FIND := find
+XARGS := xargs
+
+
 .PHONY: FORCE clean
 
 
@@ -33,6 +38,11 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 clean:
 	-@$(RM) -f $(PROGRAM)
 	-@$(RM) -f $(BIN_DIR)/*.d $(BIN_DIR)/*.o
+
+
+format: FORCE
+	$(FIND) $(SRC_DIR) \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
+
 
 
 rebuild: clean build

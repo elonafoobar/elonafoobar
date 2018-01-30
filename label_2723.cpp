@@ -6,8 +6,14 @@
 
 namespace elona
 {
-void cs_list(int CNT, const std::string& prm_543, int prm_544 = 0,
-    int prm_545 = 0, int prm_546 = 0, int prm_547 = 0, int prm_548 = 0,
+void cs_list(
+    int CNT,
+    const std::string& prm_543,
+    int prm_544 = 0,
+    int prm_545 = 0,
+    int prm_546 = 0,
+    int prm_547 = 0,
+    int prm_548 = 0,
     int prm_549 = 0);
 
 void label_2743(bool = true);
@@ -28,26 +34,32 @@ void label_2723()
     cfg_fullscreen2 = cfg_fullscreen;
     windoww2 = windoww;
     windowh2 = windowh;
-    if (mode == 10) {
+    if (mode == 10)
+    {
         sel = 2;
-    } else {
+    }
+    else
+    {
         sel = 4;
     }
     gsel(sel);
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt) {
+        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+        {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
         }
     }
     gsel(0);
     redraw(0);
-    if (mode == 0) {
+    if (mode == 0)
+    {
         screenupdate = -1;
         label_1419();
     }
-    if (mode == 10) {
+    if (mode == 10)
+    {
         gsel(4);
         gmode(0);
         pos(0, 0);
@@ -59,8 +71,10 @@ void label_2723()
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
     }
-    if (submenu == 0) {
-        if (jp) {
+    if (submenu == 0)
+    {
+        if (jp)
+        {
             q = u8"オプション"s;
             s(0) = u8"ゲームの設定"s;
             s(1) = u8"画面と音の設定"s;
@@ -71,7 +85,8 @@ void label_2723()
             s(6) = u8"言語(Language)"s;
             s(7) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Option"s;
             s(0) = u8"Game Setting"s;
             s(1) = u8"Screen & Sound"s;
@@ -85,8 +100,10 @@ void label_2723()
         dx = 370;
         dy = 270;
     }
-    if (submenu == 1) {
-        if (jp) {
+    if (submenu == 1)
+    {
+        if (jp)
+        {
             q = u8"ゲームの設定"s;
             s(0) = u8"ノルンの冒険ガイド"s;
             s(1) = u8"非好戦的NPCを無視"s;
@@ -97,7 +114,8 @@ void label_2723()
             s(6) = u8"攻撃の間隔"s;
             s(7) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Game Setting"s;
             s(0) = u8"Extra Help"s;
             s(1) = u8"Neutral Npcs"s;
@@ -111,8 +129,10 @@ void label_2723()
         dx = 440;
         dy = 340;
     }
-    if (submenu == 2) {
-        if (jp) {
+    if (submenu == 2)
+    {
+        if (jp)
+        {
             q = u8"画面と音の設定"s;
             s(0) = u8"サウンドの再生*"s;
             s(1) = u8"midiの再生*"s;
@@ -127,7 +147,8 @@ void label_2723()
             s(10) = u8"アイテムの影描写"s;
             s(11) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Screen & Sound"s;
             s(0) = u8"Sound*"s;
             s(1) = u8"Music*"s;
@@ -145,15 +166,18 @@ void label_2723()
         dx = 440;
         dy = 370;
     }
-    if (submenu == 3) {
-        if (jp) {
+    if (submenu == 3)
+    {
+        if (jp)
+        {
             q = u8"ネット機能の設定"s;
             s(0) = u8"ネットの使用"s;
             s(1) = u8"定期的に接続"s;
             s(2) = u8"チャットをフィルタ"s;
             s(3) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Network Setting"s;
             s(0) = u8"Use Network"s;
             s(1) = u8"Constantly Connect"s;
@@ -163,8 +187,10 @@ void label_2723()
         dx = 440;
         dy = 300;
     }
-    if (submenu == 4) {
-        if (jp) {
+    if (submenu == 4)
+    {
+        if (jp)
+        {
             q = u8"詳細な設定"s;
             s(0) = u8"走りの速さ"s;
             s(1) = u8"numlockを自動制御"s;
@@ -175,7 +201,8 @@ void label_2723()
             s(6) = u8"イベントの短縮"s;
             s(7) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Detailed Setting"s;
             s(0) = u8"Run Speed"s;
             s(1) = u8"Auto Numlock"s;
@@ -189,8 +216,10 @@ void label_2723()
         dx = 440;
         dy = 300;
     }
-    if (submenu == 5) {
-        if (jp) {
+    if (submenu == 5)
+    {
+        if (jp)
+        {
             q = u8"ゲームパッド"s;
             s(0) = u8"ゲームパッド"s;
             s(1) = u8"決定キー"s;
@@ -207,7 +236,8 @@ void label_2723()
             s(12) = u8"装填"s;
             s(13) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Game Pad"s;
             s(0) = u8"Game Pad"s;
             s(1) = u8"Enter/Ok"s;
@@ -227,14 +257,17 @@ void label_2723()
         dx = 440;
         dy = 430;
     }
-    if (submenu == 6) {
-        if (jp) {
+    if (submenu == 6)
+    {
+        if (jp)
+        {
             q = u8"メッセージとログ"s;
             s(0) = u8"ﾒｯｾｰｼﾞに分表示追加"s;
             s(1) = u8"過去のﾒｯｾｰｼﾞの透過"s;
             s(2) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Message&Log"s;
             s(0) = u8"Add time info"s;
             s(1) = u8"Transparency"s;
@@ -243,13 +276,16 @@ void label_2723()
         dx = 440;
         dy = 300;
     }
-    if (submenu == 7) {
-        if (jp) {
+    if (submenu == 7)
+    {
+        if (jp)
+        {
             q = u8"言語(Language)"s;
             s(0) = u8"言語*"s;
             s(1) = "";
         }
-        if (en) {
+        if (en)
+        {
             q = u8"Language"s;
             s(0) = u8"Language*"s;
             s(1) = "";
@@ -259,8 +295,12 @@ void label_2723()
     }
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt) {
-            if (s(cnt) == ""s) { break; }
+        for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+        {
+            if (s(cnt) == ""s)
+            {
+                break;
+            }
             list(0, listmax) = cnt;
             listn(0, listmax) = s(cnt);
             ++listmax;
@@ -268,20 +308,28 @@ void label_2723()
     }
     windowshadow = 1;
 label_2724_internal:
-    if (cfg_zkey == 0) {
+    if (cfg_zkey == 0)
+    {
         key_quick = u8"z"s;
         key_zap = u8"Z"s;
-    } else {
-        if (cfg_zkey == 1) {
+    }
+    else
+    {
+        if (cfg_zkey == 1)
+        {
             key_zap = u8"z"s;
             key_quick = u8"Z"s;
         }
     }
-    if (cfg_xkey == 0) {
+    if (cfg_xkey == 0)
+    {
         key_quickinv = u8"x"s;
         key_inventory = u8"X"s;
-    } else {
-        if (cfg_xkey == 1) {
+    }
+    else
+    {
+        if (cfg_xkey == 1)
+        {
             key_inventory = u8"x"s;
             key_quickinv = u8"X"s;
         }
@@ -289,28 +337,40 @@ label_2724_internal:
     redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
-    if (page < 0) {
+    if (page < 0)
+    {
         page = pagemax;
-    } else {
-        if (page > pagemax) { page = 0; }
+    }
+    else
+    {
+        if (page > pagemax)
+        {
+            page = 0;
+        }
     }
 label_2725_internal:
     redraw(0);
     s(0) = q;
     s(1) = strhint3;
     pagesize = 0;
-    if (mode == 1) {
+    if (mode == 1)
+    {
         display_window(
             (windoww - dx) / 2 + inf_screenx, winposy(dy, 1), dx, dy);
-    } else {
+    }
+    else
+    {
         display_window(
             (windoww - dx) / 2 + inf_screenx, winposy(dy) - 12, dx, dy);
     }
     pagesize = listmax;
     display_topic(lang(u8"項目"s, u8"Menu"s), wx + 34, wy + 36);
-    if (mode == 10) {
+    if (mode == 10)
+    {
         p = 2;
-    } else {
+    }
+    else
+    {
         p = 4;
     }
     x = ww / 5 * 3;
@@ -322,20 +382,28 @@ label_2725_internal:
     keyrange = 0;
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt) {
+        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        {
             p = pagesize * page + cnt;
-            if (p >= listmax) { break; }
-            if (submenu == 0) {
+            if (p >= listmax)
+            {
+                break;
+            }
+            if (submenu == 0)
+            {
                 key_list(cnt) = key_select(cnt);
                 ++keyrange;
                 display_key(wx + 32, wy + 66 + cnt * 19 - 2, cnt);
-            } else {
+            }
+            else
+            {
                 key_list(cnt) = key_cancel;
                 ++keyrange;
             }
         }
     }
-    if (submenu == 5) {
+    if (submenu == 5)
+    {
         p(0) = 0;
         p(1) = cnvjkey(key_enter);
         p(2) = cnvjkey(key_cancel);
@@ -351,7 +419,8 @@ label_2725_internal:
         p(12) = cnvjkey(key_ammo);
         {
             int cnt = 1;
-            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt) {
+            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
+            {
                 list(1, cnt) = p(cnt);
             }
         }
@@ -360,25 +429,41 @@ label_2725_internal:
     cs_listbk();
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt) {
+        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        {
             p = pagesize * page + cnt;
-            if (p >= listmax) { break; }
+            if (p >= listmax)
+            {
+                break;
+            }
             i = list(0, p);
             s = listn(0, p);
-            if (submenu == 0) {
+            if (submenu == 0)
+            {
                 x = 8;
-            } else {
+            }
+            else
+            {
                 x = 0;
             }
-            if (submenu == 3) {
-                if (cfg_net == 0) {
-                    if (cnt >= 1) { continue; }
+            if (submenu == 3)
+            {
+                if (cfg_net == 0)
+                {
+                    if (cnt >= 1)
+                    {
+                        continue;
+                    }
                 }
             }
             cs_list(cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 19, 0);
-            if (submenu == 5 && cnt > 0) {
-            } else {
-                if (submenu != 0) {
+            if (submenu == 5 && cnt > 0)
+            {
+            }
+            else
+            {
+                if (submenu != 0)
+                {
                     pos(wx + 220, wy + 66 + cnt * 19 - 5);
                     gcopy(3, 312, 336, 24, 24);
                     pos(wx + 358, wy + 66 + cnt * 19 - 5);
@@ -387,306 +472,444 @@ label_2725_internal:
             }
             pos(wx + 250, wy + 66 + cnt * 19);
             color(0, 0, 0);
-            if (submenu == 1) {
-                if (cnt == 0) {
-                    if (jp) {
+            if (submenu == 1)
+            {
+                if (cnt == 0)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"なし"s;
                         s(1) = u8"あり"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Don't show"s;
                         s(1) = u8"Show"s;
                     }
                     mes(s(cfg_extrahelp));
                 }
-                if (cnt == 1) {
-                    if (jp) {
+                if (cnt == 1)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Attack"s;
                         s(1) = u8"Ignore"s;
                     }
                     mes(s(cfg_ignoredislike));
                 }
-                if (cnt == 2) {
-                    if (jp) {
+                if (cnt == 2)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
                         s(1) = u8"道具を振る"s;
                         s(2) = u8"割当なし"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Quick menu"s;
                         s(1) = u8"Zap"s;
                         s(2) = u8"Don't assign"s;
                     }
                     mes(s(cfg_zkey));
                 }
-                if (cnt == 3) {
-                    if (jp) {
+                if (cnt == 3)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
                         s(1) = u8"道具を調べる"s;
                         s(2) = u8"割当なし"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Quick Inv"s;
                         s(1) = u8"Identify"s;
                         s(2) = u8"Don't assign"s;
                     }
                     mes(s(cfg_xkey));
                 }
-                if (cnt == 4) {
-                    if (cfg_startrun >= 20) {
-                        if (jp) {
+                if (cnt == 4)
+                {
+                    if (cfg_startrun >= 20)
+                    {
+                        if (jp)
+                        {
                             mes(u8"走らない"s);
-                        } else {
+                        }
+                        else
+                        {
                             mes(u8"Dont't run"s);
                         }
-                    } else {
-                        if (jp) {
+                    }
+                    else
+                    {
+                        if (jp)
+                        {
                             mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
-                        } else {
+                        }
+                        else
+                        {
                             mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
                         }
                     }
                 }
-                if (cnt == 5) { mes(""s + cfg_walkwait + u8" wait"s); }
-                if (cnt == 6) { mes(""s + cfg_attackwait + u8" wait"s); }
+                if (cnt == 5)
+                {
+                    mes(""s + cfg_walkwait + u8" wait"s);
+                }
+                if (cnt == 6)
+                {
+                    mes(""s + cfg_attackwait + u8" wait"s);
+                }
             }
-            if (submenu == 2) {
-                if (cnt == 0) {
-                    if (jp) {
+            if (submenu == 2)
+            {
+                if (cnt == 0)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"なし"s;
                         s(1) = u8"direct sound"s;
                         s(2) = u8"MCI"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"None"s;
                         s(1) = u8"Direct sound"s;
                         s(2) = u8"MCI"s;
                     }
                     mes(s(cfg_sound2));
                 }
-                if (cnt == 1) {
-                    if (jp) {
+                if (cnt == 1)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"なし"s;
                         s(1) = u8"direct music"s;
                         s(2) = u8"MCI"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"None"s;
                         s(1) = u8"Direct music"s;
                         s(2) = u8"MCI"s;
                     }
                     mes(s(cfg_music2));
                 }
-                if (cnt == 2) {
-                    if (jp) {
+                if (cnt == 2)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"ウィンドウ"s;
                         s(1) = u8"フルスクリーン"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Window mode"s;
                         s(1) = u8"Full screen"s;
                     }
                     mes(s(cfg_fullscreen2));
                 }
-                if (cnt == 3) { mes(""s + windoww2 + u8" * "s + windowh2); }
-                if (cnt == 4) {
-                    if (jp) {
+                if (cnt == 3)
+                {
+                    mes(""s + windoww2 + u8" * "s + windowh2);
+                }
+                if (cnt == 4)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_scroll));
                 }
-                if (cnt == 5) {
-                    if (jp) {
+                if (cnt == 5)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_alwayscenter));
                 }
-                if (cnt == 6) {
-                    if (jp) {
+                if (cnt == 6)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"再生しない"s;
                         s(1) = u8"再生する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Don't play"s;
                         s(1) = u8"Play"s;
                     }
                     mes(s(cfg_heart));
                 }
-                if (cnt == 7) {
-                    if (jp) {
+                if (cnt == 7)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"アニメなし"s;
                         s(1) = u8"アニメあり"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_attackanime));
                 }
-                if (cnt == 8) {
-                    if (jp) {
+                if (cnt == 8)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"アニメなし"s;
                         s(1) = u8"アニメあり"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No animation"s;
                         s(1) = u8"Always"s;
                     }
                     mes(s(cfg_env));
                 }
-                if (cnt == 9) {
-                    if (jp) {
+                if (cnt == 9)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"高画質"s;
                         s(1) = u8"低画質"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"High"s;
                         s(1) = u8"Low"s;
                     }
                     mes(s(cfg_shadow));
                 }
-                if (cnt == 10) {
-                    if (jp) {
+                if (cnt == 10)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"なし（高速）"s;
                         s(1) = u8"あり（低速）"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No(Slow)"s;
                         s(1) = u8"Yes(Fast)"s;
                     }
                     mes(s(cfg_objectshadow));
                 }
             }
-            if (submenu == 3) {
-                if (cnt == 0) {
-                    if (jp) {
+            if (submenu == 3)
+            {
+                if (cnt == 0)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_net));
                 }
-                if (cnt == 1) {
-                    if (jp) {
+                if (cnt == 1)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_netwish));
                 }
-                if (cnt == 2) {
-                    if (jp) {
+                if (cnt == 2)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_netchat));
                 }
             }
-            if (submenu == 4) {
-                if (cnt == 0) { mes(""s + cfg_runwait + u8" wait"s); }
-                if (cnt == 1) {
-                    if (jp) {
+            if (submenu == 4)
+            {
+                if (cnt == 0)
+                {
+                    mes(""s + cfg_runwait + u8" wait"s);
+                }
+                if (cnt == 1)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_autonumlock));
                 }
-                if (cnt == 2) {
-                    if (jp) {
+                if (cnt == 2)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"オフ"s;
                         s(1) = u8"オン"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_titleeffect));
                 }
-                if (cnt == 3) {
-                    if (jp) {
+                if (cnt == 3)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"オフ"s;
                         s(1) = u8"オン"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(""s + cfg_scrsync + u8" wait"s);
                 }
-                if (cnt == 4) {
-                    if (jp) {
+                if (cnt == 4)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_runscroll));
                 }
-                if (cnt == 5) {
-                    if (jp) {
+                if (cnt == 5)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"普通"s;
                         s(1) = u8"速め"s;
                         s(2) = u8"省略"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Normal"s;
                         s(1) = u8"High"s;
                         s(2) = u8"Highest"s;
                     }
                     mes(s(cfg_autoturn));
                 }
-                if (cnt == 6) {
-                    if (jp) {
+                if (cnt == 6)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_skiprandevents));
                 }
             }
-            if (submenu == 5) {
-                if (cnt == 0) {
-                    if (jp) {
+            if (submenu == 5)
+            {
+                if (cnt == 0)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"使用しない"s;
                         s(1) = u8"使用する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"Don't use"s;
                         s(1) = u8"Use"s;
                     }
                     mes(s(cfg_joypad));
-                } else {
-                    if (list(1, cnt) == -1) {
+                }
+                else
+                {
+                    if (list(1, cnt) == -1)
+                    {
                         mes(lang(u8"未設定"s, u8"Unassigned"s));
-                    } else {
+                    }
+                    else
+                    {
                         mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
                     }
                 }
             }
-            if (submenu == 6) {
-                if (cnt == 0) {
-                    if (jp) {
+            if (submenu == 6)
+            {
+                if (cnt == 0)
+                {
+                    if (jp)
+                    {
                         s(0) = u8"しない"s;
                         s(1) = u8"する"s;
-                    } else {
+                    }
+                    else
+                    {
                         s(0) = u8"No"s;
                         s(1) = u8"Yes"s;
                     }
                     mes(s(cfg_msgaddtime));
                 }
-                if (cnt == 1) { mes(""s + cfg_msgtrans * 10 + u8" %"s); }
+                if (cnt == 1)
+                {
+                    mes(""s + cfg_msgtrans * 10 + u8" %"s);
+                }
             }
-            if (submenu == 7) {
-                if (cnt == 0) {
+            if (submenu == 7)
+            {
+                if (cnt == 0)
+                {
                     s(0) = u8"Japanese"s;
                     s(1) = u8"English"s;
                     mes(s(cfg_language));
@@ -694,29 +917,41 @@ label_2725_internal:
             }
         }
     }
-    if (submenu != 0) {
-        if (submenu != 5) {
+    if (submenu != 0)
+    {
+        if (submenu != 5)
+        {
             pos(wx + 40, wy + wh - 70);
             font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
             color(0, 0, 0);
-            if (jp) {
+            if (jp)
+            {
                 mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
-            } else {
+            }
+            else
+            {
                 mes(u8"Items marked with * require restart to apply changes."s);
             }
         }
     }
-    if (submenu == 5) {
+    if (submenu == 5)
+    {
         pos(wx + 40, wy + wh - 110);
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
         color(0, 0, 0);
-        if (jp) {
+        if (jp)
+        {
             mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);
-        } else {
+        }
+        else
+        {
             mes(u8"To assign a button, move the cursor to\nan item and press the button."s);
         }
     }
-    if (keyrange != 0) { cs_bk = cs; }
+    if (keyrange != 0)
+    {
+        cs_bk = cs;
+    }
     redraw(1);
     await(cfg_wait1);
     key_check();
@@ -724,48 +959,60 @@ label_2725_internal:
     p = -1;
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt) {
-            if (key == key_select(cnt)) {
+        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
+            {
                 p = list(0, pagesize * page + cnt);
                 cs = cnt;
                 break;
             }
         }
     }
-    if (p != -1) {
-        if (submenu == 0) {
+    if (p != -1)
+    {
+        if (submenu == 0)
+        {
             submenu = p + 1;
             snd(20);
             label_2723();
             return;
         }
     }
-    if (submenu == 5) {
-        if (cs > 0) {
+    if (submenu == 5)
+    {
+        if (cs > 0)
+        {
             DIGETJOYSTATE(j, 0);
             f = 0;
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt) {
+                for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+                {
                     HMMBITCHECK(j, 4 + cnt);
-                    if (stat) {
+                    if (stat)
+                    {
                         p = cnt;
                         valn = "";
                         {
                             int cnt = 0;
-                            for (int cnt_end = cnt + (12); cnt < cnt_end;
-                                 ++cnt) {
+                            for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+                            {
                                 jkey(cnt) = "";
                             }
                         }
                         list(1, cs) = p;
                         {
                             int cnt = 1;
-                            for (int cnt_end = cnt + (19); cnt < cnt_end;
-                                 ++cnt) {
-                                if (cs == cnt) { continue; }
+                            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
+                            {
+                                if (cs == cnt)
+                                {
+                                    continue;
+                                }
                                 --list(1, cnt);
-                                if (list(1, cnt) == p || list(1, cnt) <= -1) {
+                                if (list(1, cnt) == p || list(1, cnt) <= -1)
+                                {
                                     list(1, cnt) = 12;
                                 }
                             }
@@ -857,8 +1104,8 @@ label_2725_internal:
                         p(12) = cnvjkey(key_ammo);
                         {
                             int cnt = 1;
-                            for (int cnt_end = cnt + (19); cnt < cnt_end;
-                                 ++cnt) {
+                            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
+                            {
                                 list(1, cnt) = p(cnt);
                             }
                         }
@@ -867,26 +1114,39 @@ label_2725_internal:
                     }
                 }
             }
-            if (f) {
+            if (f)
+            {
                 snd(20);
                 await(200);
                 goto label_2724_internal;
             }
         }
     }
-    if (key == key_pageup || key == key_pagedown) {
-        if (key == key_pageup) {
+    if (key == key_pageup || key == key_pagedown)
+    {
+        if (key == key_pageup)
+        {
             p = 1;
-        } else {
+        }
+        else
+        {
             p = -1;
         }
-        if (submenu == 1) {
-            if (cs == 0) {
+        if (submenu == 1)
+        {
+            if (cs == 0)
+            {
                 cfg_extrahelp += p;
-                if (cfg_extrahelp > 1) {
+                if (cfg_extrahelp > 1)
+                {
                     cfg_extrahelp = 1;
-                } else {
-                    if (cfg_extrahelp < 0) { cfg_extrahelp = 0; }
+                }
+                else
+                {
+                    if (cfg_extrahelp < 0)
+                    {
+                        cfg_extrahelp = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"extraHelp."s;
@@ -894,12 +1154,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 1) {
+            if (cs == 1)
+            {
                 cfg_ignoredislike += p;
-                if (cfg_ignoredislike > 1) {
+                if (cfg_ignoredislike > 1)
+                {
                     cfg_ignoredislike = 1;
-                } else {
-                    if (cfg_ignoredislike < 0) { cfg_ignoredislike = 0; }
+                }
+                else
+                {
+                    if (cfg_ignoredislike < 0)
+                    {
+                        cfg_ignoredislike = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"ignoreDislike."s;
@@ -907,12 +1174,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 2) {
+            if (cs == 2)
+            {
                 cfg_zkey += p;
-                if (cfg_zkey > 2) {
+                if (cfg_zkey > 2)
+                {
                     cfg_zkey = 2;
-                } else {
-                    if (cfg_zkey < 0) { cfg_zkey = 0; }
+                }
+                else
+                {
+                    if (cfg_zkey < 0)
+                    {
+                        cfg_zkey = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"zkey."s;
@@ -920,12 +1194,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 3) {
+            if (cs == 3)
+            {
                 cfg_xkey += p;
-                if (cfg_xkey > 2) {
+                if (cfg_xkey > 2)
+                {
                     cfg_xkey = 2;
-                } else {
-                    if (cfg_xkey < 0) { cfg_xkey = 0; }
+                }
+                else
+                {
+                    if (cfg_xkey < 0)
+                    {
+                        cfg_xkey = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"xkey."s;
@@ -933,12 +1214,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 4) {
+            if (cs == 4)
+            {
                 cfg_startrun += p;
-                if (cfg_startrun > 20) {
+                if (cfg_startrun > 20)
+                {
                     cfg_startrun = 20;
-                } else {
-                    if (cfg_startrun < 0) { cfg_startrun = 0; }
+                }
+                else
+                {
+                    if (cfg_startrun < 0)
+                    {
+                        cfg_startrun = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"startRun."s;
@@ -946,12 +1234,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 5) {
+            if (cs == 5)
+            {
                 cfg_walkwait += p;
-                if (cfg_walkwait > 10) {
+                if (cfg_walkwait > 10)
+                {
                     cfg_walkwait = 10;
-                } else {
-                    if (cfg_walkwait < 1) { cfg_walkwait = 1; }
+                }
+                else
+                {
+                    if (cfg_walkwait < 1)
+                    {
+                        cfg_walkwait = 1;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"walkWait."s;
@@ -959,12 +1254,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 6) {
+            if (cs == 6)
+            {
                 cfg_attackwait += p;
-                if (cfg_attackwait > 20) {
+                if (cfg_attackwait > 20)
+                {
                     cfg_attackwait = 20;
-                } else {
-                    if (cfg_attackwait < 1) { cfg_attackwait = 1; }
+                }
+                else
+                {
+                    if (cfg_attackwait < 1)
+                    {
+                        cfg_attackwait = 1;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"attackWait."s;
@@ -973,13 +1275,21 @@ label_2725_internal:
                 goto label_2724_internal;
             }
         }
-        if (submenu == 2) {
-            if (cs == 0) {
+        if (submenu == 2)
+        {
+            if (cs == 0)
+            {
                 cfg_sound2 += p;
-                if (cfg_sound2 > 2) {
+                if (cfg_sound2 > 2)
+                {
                     cfg_sound2 = 2;
-                } else {
-                    if (cfg_sound2 < 0) { cfg_sound2 = 0; }
+                }
+                else
+                {
+                    if (cfg_sound2 < 0)
+                    {
+                        cfg_sound2 = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"sound."s;
@@ -987,12 +1297,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 1) {
+            if (cs == 1)
+            {
                 cfg_music2 += p;
-                if (cfg_music2 > 2) {
+                if (cfg_music2 > 2)
+                {
                     cfg_music2 = 2;
-                } else {
-                    if (cfg_music2 < 0) { cfg_music2 = 0; }
+                }
+                else
+                {
+                    if (cfg_music2 < 0)
+                    {
+                        cfg_music2 = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"music."s;
@@ -1000,12 +1317,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 2) {
+            if (cs == 2)
+            {
                 cfg_fullscreen2 += p;
-                if (cfg_fullscreen2 > 1) {
+                if (cfg_fullscreen2 > 1)
+                {
                     cfg_fullscreen2 = 1;
-                } else {
-                    if (cfg_fullscreen2 < 0) { cfg_fullscreen2 = 0; }
+                }
+                else
+                {
+                    if (cfg_fullscreen2 < 0)
+                    {
+                        cfg_fullscreen2 = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"fullscreen."s;
@@ -1013,12 +1337,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 4) {
+            if (cs == 4)
+            {
                 cfg_scroll += p;
-                if (cfg_scroll > 1) {
+                if (cfg_scroll > 1)
+                {
                     cfg_scroll = 1;
-                } else {
-                    if (cfg_scroll < 0) { cfg_scroll = 0; }
+                }
+                else
+                {
+                    if (cfg_scroll < 0)
+                    {
+                        cfg_scroll = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"scroll."s;
@@ -1026,12 +1357,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 5) {
+            if (cs == 5)
+            {
                 cfg_alwayscenter += p;
-                if (cfg_alwayscenter > 1) {
+                if (cfg_alwayscenter > 1)
+                {
                     cfg_alwayscenter = 1;
-                } else {
-                    if (cfg_alwayscenter < 0) { cfg_alwayscenter = 0; }
+                }
+                else
+                {
+                    if (cfg_alwayscenter < 0)
+                    {
+                        cfg_alwayscenter = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"alwaysCenter."s;
@@ -1039,12 +1377,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 6) {
+            if (cs == 6)
+            {
                 cfg_heart += p;
-                if (cfg_heart > 1) {
+                if (cfg_heart > 1)
+                {
                     cfg_heart = 1;
-                } else {
-                    if (cfg_heart < 0) { cfg_heart = 0; }
+                }
+                else
+                {
+                    if (cfg_heart < 0)
+                    {
+                        cfg_heart = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"heartbeat."s;
@@ -1052,12 +1397,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 7) {
+            if (cs == 7)
+            {
                 cfg_attackanime += p;
-                if (cfg_attackanime > 1) {
+                if (cfg_attackanime > 1)
+                {
                     cfg_attackanime = 1;
-                } else {
-                    if (cfg_attackanime < 0) { cfg_attackanime = 0; }
+                }
+                else
+                {
+                    if (cfg_attackanime < 0)
+                    {
+                        cfg_attackanime = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"attackAnime."s;
@@ -1065,12 +1417,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 8) {
+            if (cs == 8)
+            {
                 cfg_env += p;
-                if (cfg_env > 1) {
+                if (cfg_env > 1)
+                {
                     cfg_env = 1;
-                } else {
-                    if (cfg_env < 0) { cfg_env = 0; }
+                }
+                else
+                {
+                    if (cfg_env < 0)
+                    {
+                        cfg_env = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"envEffect."s;
@@ -1078,12 +1437,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 9) {
+            if (cs == 9)
+            {
                 cfg_shadow += p;
-                if (cfg_shadow > 1) {
+                if (cfg_shadow > 1)
+                {
                     cfg_shadow = 1;
-                } else {
-                    if (cfg_shadow < 0) { cfg_shadow = 0; }
+                }
+                else
+                {
+                    if (cfg_shadow < 0)
+                    {
+                        cfg_shadow = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"shadow."s;
@@ -1091,12 +1457,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 10) {
+            if (cs == 10)
+            {
                 cfg_objectshadow += p;
-                if (cfg_objectshadow > 1) {
+                if (cfg_objectshadow > 1)
+                {
                     cfg_objectshadow = 1;
-                } else {
-                    if (cfg_objectshadow < 0) { cfg_objectshadow = 0; }
+                }
+                else
+                {
+                    if (cfg_objectshadow < 0)
+                    {
+                        cfg_objectshadow = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"objectShadow."s;
@@ -1104,7 +1477,8 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 3) {
+            if (cs == 3)
+            {
                 x(0) = 800;
                 x(1) = 800;
                 x(2) = 1024;
@@ -1120,9 +1494,12 @@ label_2725_internal:
                 i = 0;
                 {
                     int cnt = 0;
-                    for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt) {
-                        if (windoww2 == x(cnt)) {
-                            if (windowh2 == y(cnt)) {
+                    for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+                    {
+                        if (windoww2 == x(cnt))
+                        {
+                            if (windowh2 == y(cnt))
+                            {
                                 i = cnt;
                                 break;
                             }
@@ -1130,10 +1507,16 @@ label_2725_internal:
                     }
                 }
                 i += p;
-                if (i < 0) {
+                if (i < 0)
+                {
                     i = 0;
-                } else {
-                    if (i > 4) { i = 4; }
+                }
+                else
+                {
+                    if (i > 4)
+                    {
+                        i = 4;
+                    }
                 }
                 windoww2 = x(i);
                 windowh2 = y(i);
@@ -1147,13 +1530,21 @@ label_2725_internal:
                 goto label_2724_internal;
             }
         }
-        if (submenu == 3) {
-            if (cs == 0) {
+        if (submenu == 3)
+        {
+            if (cs == 0)
+            {
                 cfg_net += p;
-                if (cfg_net > 1) {
+                if (cfg_net > 1)
+                {
                     cfg_net = 1;
-                } else {
-                    if (cfg_net < 0) { cfg_net = 0; }
+                }
+                else
+                {
+                    if (cfg_net < 0)
+                    {
+                        cfg_net = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"net."s;
@@ -1161,12 +1552,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 1) {
+            if (cs == 1)
+            {
                 cfg_netwish += p;
-                if (cfg_netwish > 1) {
+                if (cfg_netwish > 1)
+                {
                     cfg_netwish = 1;
-                } else {
-                    if (cfg_netwish < 0) { cfg_netwish = 0; }
+                }
+                else
+                {
+                    if (cfg_netwish < 0)
+                    {
+                        cfg_netwish = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"netWish."s;
@@ -1174,12 +1572,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 2) {
+            if (cs == 2)
+            {
                 cfg_netchat += p;
-                if (cfg_netchat > 1) {
+                if (cfg_netchat > 1)
+                {
                     cfg_netchat = 1;
-                } else {
-                    if (cfg_netchat < 0) { cfg_netchat = 0; }
+                }
+                else
+                {
+                    if (cfg_netchat < 0)
+                    {
+                        cfg_netchat = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"netChat."s;
@@ -1188,13 +1593,21 @@ label_2725_internal:
                 goto label_2724_internal;
             }
         }
-        if (submenu == 4) {
-            if (cs == 0) {
+        if (submenu == 4)
+        {
+            if (cs == 0)
+            {
                 cfg_runwait += p;
-                if (cfg_runwait > 5) {
+                if (cfg_runwait > 5)
+                {
                     cfg_runwait = 5;
-                } else {
-                    if (cfg_runwait < 2) { cfg_runwait = 2; }
+                }
+                else
+                {
+                    if (cfg_runwait < 2)
+                    {
+                        cfg_runwait = 2;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"runWait."s;
@@ -1202,12 +1615,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 1) {
+            if (cs == 1)
+            {
                 cfg_autonumlock += p;
-                if (cfg_autonumlock > 1) {
+                if (cfg_autonumlock > 1)
+                {
                     cfg_autonumlock = 1;
-                } else {
-                    if (cfg_autonumlock < 0) { cfg_autonumlock = 0; }
+                }
+                else
+                {
+                    if (cfg_autonumlock < 0)
+                    {
+                        cfg_autonumlock = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"autoNumlock."s;
@@ -1215,12 +1635,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 2) {
+            if (cs == 2)
+            {
                 cfg_titleeffect += p;
-                if (cfg_titleeffect > 1) {
+                if (cfg_titleeffect > 1)
+                {
                     cfg_titleeffect = 1;
-                } else {
-                    if (cfg_titleeffect < 0) { cfg_titleeffect = 0; }
+                }
+                else
+                {
+                    if (cfg_titleeffect < 0)
+                    {
+                        cfg_titleeffect = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"titleEffect."s;
@@ -1228,12 +1655,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 3) {
+            if (cs == 3)
+            {
                 cfg_scrsync += p;
-                if (cfg_scrsync > 25) {
+                if (cfg_scrsync > 25)
+                {
                     cfg_scrsync = 25;
-                } else {
-                    if (cfg_scrsync < 2) { cfg_scrsync = 2; }
+                }
+                else
+                {
+                    if (cfg_scrsync < 2)
+                    {
+                        cfg_scrsync = 2;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"scr_sync."s;
@@ -1241,12 +1675,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 4) {
+            if (cs == 4)
+            {
                 cfg_runscroll += p;
-                if (cfg_runscroll > 1) {
+                if (cfg_runscroll > 1)
+                {
                     cfg_runscroll = 1;
-                } else {
-                    if (cfg_runscroll < 0) { cfg_runscroll = 0; }
+                }
+                else
+                {
+                    if (cfg_runscroll < 0)
+                    {
+                        cfg_runscroll = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"scroll_run."s;
@@ -1254,12 +1695,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 5) {
+            if (cs == 5)
+            {
                 cfg_autoturn += p;
-                if (cfg_autoturn > 2) {
+                if (cfg_autoturn > 2)
+                {
                     cfg_autoturn = 2;
-                } else {
-                    if (cfg_autoturn < 0) { cfg_autoturn = 0; }
+                }
+                else
+                {
+                    if (cfg_autoturn < 0)
+                    {
+                        cfg_autoturn = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"autoTurnType."s;
@@ -1267,12 +1715,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 6) {
+            if (cs == 6)
+            {
                 cfg_skiprandevents += p;
-                if (cfg_skiprandevents > 1) {
+                if (cfg_skiprandevents > 1)
+                {
                     cfg_skiprandevents = 1;
-                } else {
-                    if (cfg_skiprandevents < 0) { cfg_skiprandevents = 0; }
+                }
+                else
+                {
+                    if (cfg_skiprandevents < 0)
+                    {
+                        cfg_skiprandevents = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"skipRandEvents."s;
@@ -1281,13 +1736,21 @@ label_2725_internal:
                 goto label_2724_internal;
             }
         }
-        if (submenu == 5) {
-            if (cs == 0) {
+        if (submenu == 5)
+        {
+            if (cs == 0)
+            {
                 cfg_joypad += p;
-                if (cfg_joypad > 1) {
+                if (cfg_joypad > 1)
+                {
                     cfg_joypad = 1;
-                } else {
-                    if (cfg_joypad < 0) { cfg_joypad = 0; }
+                }
+                else
+                {
+                    if (cfg_joypad < 0)
+                    {
+                        cfg_joypad = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"joypad."s;
@@ -1296,13 +1759,21 @@ label_2725_internal:
                 goto label_2724_internal;
             }
         }
-        if (submenu == 6) {
-            if (cs == 0) {
+        if (submenu == 6)
+        {
+            if (cs == 0)
+            {
                 cfg_msgaddtime += p;
-                if (cfg_msgaddtime > 1) {
+                if (cfg_msgaddtime > 1)
+                {
                     cfg_msgaddtime = 1;
-                } else {
-                    if (cfg_msgaddtime < 0) { cfg_msgaddtime = 0; }
+                }
+                else
+                {
+                    if (cfg_msgaddtime < 0)
+                    {
+                        cfg_msgaddtime = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"msg_addTime."s;
@@ -1310,12 +1781,19 @@ label_2725_internal:
                 label_2713();
                 goto label_2724_internal;
             }
-            if (cs == 1) {
+            if (cs == 1)
+            {
                 cfg_msgtrans += p;
-                if (cfg_msgtrans > 5) {
+                if (cfg_msgtrans > 5)
+                {
                     cfg_msgtrans = 5;
-                } else {
-                    if (cfg_msgtrans < 0) { cfg_msgtrans = 0; }
+                }
+                else
+                {
+                    if (cfg_msgtrans < 0)
+                    {
+                        cfg_msgtrans = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"msg_trans."s;
@@ -1324,13 +1802,21 @@ label_2725_internal:
                 goto label_2724_internal;
             }
         }
-        if (submenu == 7) {
-            if (cs == 0) {
+        if (submenu == 7)
+        {
+            if (cs == 0)
+            {
                 cfg_language += p;
-                if (cfg_language > 1) {
+                if (cfg_language > 1)
+                {
                     cfg_language = 1;
-                } else {
-                    if (cfg_language < 0) { cfg_language = 0; }
+                }
+                else
+                {
+                    if (cfg_language < 0)
+                    {
+                        cfg_language = 0;
+                    }
                 }
                 snd(20);
                 valn(0) = u8"language."s;
@@ -1340,18 +1826,26 @@ label_2725_internal:
             }
         }
     }
-    if (key == key_cancel) {
-        if (submenu != 0) {
+    if (key == key_cancel)
+    {
+        if (submenu != 0)
+        {
             submenu = 0;
             label_2723();
             return;
         }
         label_2716();
-        if (mode == 0) {
-            if (cfg_net) { label_1398(); }
+        if (mode == 0)
+        {
+            if (cfg_net)
+            {
+                label_1398();
+            }
             label_1419();
             label_2743(false);
-        } else {
+        }
+        else
+        {
             label_2115();
             return;
         }

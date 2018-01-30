@@ -1,16 +1,13 @@
 #pragma once
 
 #include <vector>
-#include "lib/noncopyable.hpp"
 #include "detail/sdl.hpp"
+#include "lib/noncopyable.hpp"
 
 
 namespace snail
 {
-
-
-class FPSManager final
-    : private lib::noncopyable
+class FPSManager final : private lib::noncopyable
 {
 public:
     int fps() const noexcept
@@ -41,4 +38,4 @@ private:
 };
 
 
-}
+} // namespace snail

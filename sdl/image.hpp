@@ -2,16 +2,14 @@
 
 #include <memory>
 #include <string>
-#include "lib/optional.hpp"
-#include "detail/sdl.hpp"
 #include "blendmode.hpp"
 #include "color.hpp"
+#include "detail/sdl.hpp"
+#include "lib/optional.hpp"
 
 
 namespace snail
 {
-
-
 class Image
 {
 public:
@@ -46,9 +44,16 @@ public:
 
 
     virtual void _render(
-        ::SDL_Renderer* renderer, BlendMode blend_mode,
-        int src_x, int src_y, int src_width, int src_height,
-        int dst_x, int dst_y, int dst_width, int dst_height) = 0;
+        ::SDL_Renderer* renderer,
+        BlendMode blend_mode,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height) = 0;
 
 
 protected:
@@ -59,25 +64,24 @@ protected:
 
 
 
-class NullImage
-    : public Image
+class NullImage : public Image
 {
 public:
-    NullImage() {}
+    NullImage()
+    {
+    }
 
 
-    virtual void _render(
-        ::SDL_Renderer*, BlendMode,
-        int, int, int, int,
-        int, int, int, int) override
+    virtual void
+    _render(::SDL_Renderer*, BlendMode, int, int, int, int, int, int, int, int)
+        override
     {
     }
 };
 
 
 
-class BasicImage
-    : public Image
+class BasicImage : public Image
 {
 public:
     explicit BasicImage(
@@ -90,15 +94,21 @@ public:
 
 
     virtual void _render(
-        ::SDL_Renderer* renderer, BlendMode blend_mode,
-        int src_x, int src_y, int src_width, int src_height,
-        int dst_x, int dst_y, int dst_width, int dst_height) override;
+        ::SDL_Renderer* renderer,
+        BlendMode blend_mode,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height) override;
 };
 
 
 
-class FrameImage
-    : public Image
+class FrameImage : public Image
 {
     int offset_x() const noexcept
     {
@@ -112,13 +122,25 @@ class FrameImage
     }
 
 
-    FrameImage(BasicImage& source, int offset_x, int offset_y, int width, int height);
+    FrameImage(
+        BasicImage& source,
+        int offset_x,
+        int offset_y,
+        int width,
+        int height);
 
 
     virtual void _render(
-        ::SDL_Renderer* renderer, BlendMode blend_mode,
-        int src_x, int src_y, int src_width, int src_height,
-        int dst_x, int dst_y, int dst_width, int dst_height) override;
+        ::SDL_Renderer* renderer,
+        BlendMode blend_mode,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height) override;
 
 
 private:
@@ -127,4 +149,4 @@ private:
 };
 
 
-}
+} // namespace snail

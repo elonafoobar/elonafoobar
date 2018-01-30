@@ -37,8 +37,7 @@ void Application::initialize(int width, int height, const std::string& title)
         height,
         Window::shown));
     _renderer.reset(new Renderer(
-        *_window,
-        Renderer::accelerated | Renderer::present_vsync));
+        *_window, Renderer::accelerated | Renderer::present_vsync));
 }
 
 
@@ -119,8 +118,8 @@ void Application::main_loop()
                 user_input_blocked = true;
             }
         }
-        // Even if the current scene was popped from the scene stack in updating,
-        // it will be rendered.
+        // Even if the current scene was popped from the scene stack in
+        // updating, it will be rendered.
         auto current_scene = _scene_manager.current_scene();
         if (!user_input_blocked)
         {
@@ -140,12 +139,13 @@ void Application::main_loop()
                 effect->render(*_renderer);
             }
         }
-        std::remove_if(std::begin(_effects), std::end(_effects),
-                [](const auto& effect) {
-                    return !effect->alive();
-                });
+        std::remove_if(
+            std::begin(_effects), std::end(_effects), [](const auto& effect) {
+                return !effect->alive();
+            });
 
-        // _renderer->render_text(std::to_string(_fps_manager.actual_fps()), 0, 0);
+        // _renderer->render_text(std::to_string(_fps_manager.actual_fps()), 0,
+        // 0);
 
         _renderer->present();
 
@@ -170,19 +170,14 @@ void Application::handle_event(const ::SDL_Event& event)
 {
     switch (event.type)
     {
-    case SDL_QUIT:
-        quit();
-        break;
+    case SDL_QUIT: quit(); break;
     case SDL_MOUSEMOTION:
     case SDL_MOUSEBUTTONUP:
     case SDL_MOUSEBUTTONDOWN:
         // Mouse::instance()._handle_event(event.button);
         break;
     case SDL_KEYUP:
-    case SDL_KEYDOWN:
-        Keyboard::instance()._handle_event(event.key);
-        break;
-    default:
-        break;
+    case SDL_KEYDOWN: Keyboard::instance()._handle_event(event.key); break;
+    default: break;
     }
 }

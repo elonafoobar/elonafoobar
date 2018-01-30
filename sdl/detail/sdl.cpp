@@ -5,8 +5,6 @@ using namespace snail::detail;
 
 namespace snail::detail
 {
-
-
 void enforce_sdl(int result)
 {
     if (result != 0)
@@ -44,7 +42,7 @@ void enforce_image(int result)
 // }
 
 
-}
+} // namespace snail::detail
 
 
 SDLCore::SDLCore()

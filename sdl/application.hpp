@@ -4,20 +4,17 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "lib/noncopyable.hpp"
+#include "detail/sdl.hpp"
 #include "effect.hpp"
 #include "fpsmanager.hpp"
+#include "lib/noncopyable.hpp"
 #include "renderer.hpp"
 #include "scene.hpp"
 #include "window.hpp"
-#include "detail/sdl.hpp"
 
 
 namespace snail
 {
-
-
-
 namespace detail
 {
 struct scope_guard
@@ -48,11 +45,10 @@ struct scope_guard
 private:
     std::function<void()> finalizer;
 };
-}
+} // namespace detail
 
 
-class Application final
-    : public lib::noncopyable
+class Application final : public lib::noncopyable
 {
 public:
     int frame() const noexcept
@@ -149,4 +145,4 @@ private:
 
 
 
-}
+} // namespace snail

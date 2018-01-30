@@ -7,7 +7,8 @@ namespace elona
 void label_2246()
 {
     listmax = 0;
-    switch (chatval(1)) {
+    switch (chatval(1))
+    {
     case 2:
         listmax = 0;
         buff = lang(
@@ -19,8 +20,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -29,8 +32,10 @@ void label_2246()
         label_2256();
         return;
     case 23:
-        if (evid() == 1) {
-            if (jp) {
+        if (evid() == 1)
+        {
+            if (jp)
+            {
                 listmax = 0;
                 buff =
                     u8"ああ、聡明なるレシマスの常闇の眼よ！ 新しい主は、どうやらお前の本当の価値を知らないようだぞ。…だが、心配しなくてもいい。この"s +
@@ -42,8 +47,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -57,8 +64,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -72,8 +81,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -87,8 +98,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -102,8 +115,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -117,13 +132,17 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 listmax = 0;
                 buff = u8"Most impressive."s;
                 tc = tc * 1 + 0;
@@ -132,8 +151,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -152,8 +173,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -161,7 +184,8 @@ void label_2246()
         label_2256();
         return;
     case 29:
-        if (cdata(34, 0) < 20000) {
+        if (cdata(34, 0) < 20000)
+        {
             listmax = 0;
             buff =
                 lang(u8"邪魔だ。話しかけるな。"s, u8"Who the hell are you?"s);
@@ -171,8 +195,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -180,9 +206,11 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(452) == 1000) {
+        if (gdata(452) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"気安く声をかけるな。"s,
+            buff = lang(
+                u8"気安く声をかけるな。"s,
                 u8"You have the money, now get lost."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -190,8 +218,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -199,7 +229,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(452) == 0) {
+        if (gdata(452) == 0)
+        {
             listmax = 0;
             buff = lang(u8"おい、ちょっと待て。貴様の面には見覚えがある…"s +
                     cdatan(1, 0) +
@@ -213,8 +244,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -230,9 +263,11 @@ void label_2246()
                 u8"貴様に金になる仕事をやろう。ザナンのある機関からの要望で、実験のデータをとるために被験者が必要なのだ。俺に言わせれば、被験者というより『生贄』だがな。生き延びて戻ってくれば、老後を遊んで暮らせるだけの報酬はくれてやる。どうするかこの場で決めろ。"s,
                 u8"You wanna make some quick cash? I've got a request from the organization of Zanan. They need a test subject in order to get some experimental data. Or perhaps \"sacrifice\" would be a more appropriate term. *If* you survive, I'll pay you enough to party until you waste away. Make your decision quickly."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"骨のないやつだ。うせろ。"s,
+                buff = lang(
+                    u8"骨のないやつだ。うせろ。"s,
                     u8"Fine then, piss off you spineless coward."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -240,8 +275,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -251,7 +288,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -263,8 +301,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -273,17 +313,20 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(452) == 1 || gdata(452) == 2) {
+        if (gdata(452) == 1 || gdata(452) == 2)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
             ++listmax;
             list(0, listmax) = 0;
             listn(0, listmax) = lang(u8"だめ"s, u8"No."s);
             ++listmax;
-            buff = lang(u8"フッ。よく逃げ出さずに戻ってきたな。準備はいいか。"s,
+            buff = lang(
+                u8"フッ。よく逃げ出さずに戻ってきたな。準備はいいか。"s,
                 u8"So, are you ready?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"早くしろ。"s, u8"Be quick."s);
                 tc = tc * 1 + 0;
@@ -292,8 +335,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -303,7 +348,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(u8"よし…付いて来い。"s, u8"Follow me."s);
@@ -313,8 +359,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -328,7 +376,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(452) == 3) {
+        if (gdata(452) == 3)
+        {
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata(1, 0), cdata(2, 0), 0);
@@ -341,11 +390,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -357,8 +408,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -370,9 +423,11 @@ void label_2246()
         label_2256();
         return;
     case 30:
-        if (gdata(450) == 1000) {
+        if (gdata(450) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"あら、冒険者さん♪ お茶でもいかが？"s,
+            buff = lang(
+                u8"あら、冒険者さん♪ お茶でもいかが？"s,
                 u8"Hi there adventurer! Would you like some tea?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -380,8 +435,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -389,7 +446,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(450) == 0) {
+        if (gdata(450) == 0)
+        {
             listmax = 0;
             buff = lang(
                 u8"あら、冒険者さん。ちょうどいいところに来てくれたわ。"s,
@@ -400,8 +458,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -416,9 +476,11 @@ void label_2246()
                 u8"最近、朝起きると私のぬいぐるみがぼろぼろになっているの。夜中に起きてこっそり見張ってたらね、なんとプチ…プチがぬいぐるみ食べてるのよ！どうも隣の家の窓を伝って、私の家に入ってくるみたいなの。冒険者さん、お願いだから、ちょっと行って退治してきてくれない？"s,
                 u8"Recently, when I wake in the morning my stuffed toys are always chewed up. So I stayed up last night and secretly watched. You know what I found? Putits were chewing up my stuffed animals! I'm pretty sure they're getting into my house through the window to the neighbor's place. I beg of you adventurer, won't you eradicate the Putits for me?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"気が変わったら、また来てね。"s,
+                buff = lang(
+                    u8"気が変わったら、また来てね。"s,
                     u8"Okay... but... if you change your mind please come back."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -426,8 +488,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -437,7 +501,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -449,8 +514,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -459,7 +526,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(450) == 1) {
+        if (gdata(450) == 1)
+        {
             listmax = 0;
             buff = lang(
                 u8"やだ！このぬいぐるみもプチに食べられてる。冒険者さん、はやく退治お願いね。"s,
@@ -470,8 +538,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -479,7 +549,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(450) == 2) {
+        if (gdata(450) == 2)
+        {
             flt(calcobjlv(10), calcfixlv(3));
             itemcreate(-1, 449, cdata(1, 0), cdata(2, 0), 0);
             flt(calcobjlv(10), calcfixlv(3));
@@ -492,11 +563,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -508,8 +581,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -520,9 +595,11 @@ void label_2246()
         }
         goto label_2247_internal;
     case 31:
-        if (gdata(451) == 1000) {
+        if (gdata(451) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"いらっしゃいませ〜♪その節はどうもです。"s,
+            buff = lang(
+                u8"いらっしゃいませ〜♪その節はどうもです。"s,
                 u8"Oh it's you, our hero."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -530,8 +607,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -539,8 +618,10 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(451) == 0) {
-            if (jp) {
+        if (gdata(451) == 0)
+        {
+            if (jp)
+            {
                 listmax = 0;
                 buff = u8"いらっしゃいませ〜♪"s;
                 tc = tc * 1 + 0;
@@ -549,8 +630,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -567,9 +650,11 @@ void label_2246()
                 u8"ちょっとお時間いいですか？バーの酒樽が度々盗まれて、店長困ってるんです。もし手が空いていたら、助けてくださいな。盗みを働いている輩の目星はついています。きっと、ヴェルニースを拠点に活動している、こそ泥の集団です！拠点は確か墓の方にあったはずですよ。"s,
                 u8"Excuse me, do you have a moment? The kegs from the bar have been stolen, and the manager is really put out. If you're not busy, could you help out? It was those thugs, I'm sure of it. They've certainly set up a base inside Vernis. With all the mud they leave behind, they're most likely hanging out near the gravesite."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"そうですか…残念です。"s,
+                buff = lang(
+                    u8"そうですか…残念です。"s,
                     u8"Alright, but please... think about it."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -577,8 +662,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -588,10 +675,12 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
-            buff = lang(u8"あ…ありがとうございます！よろしくお願いしますね！"s,
+            buff = lang(
+                u8"あ…ありがとうございます！よろしくお願いしますね！"s,
                 u8"Really? Thanks, we really appreciate it."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -599,8 +688,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -610,7 +701,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(451) == 1) {
+        if (gdata(451) == 1)
+        {
             listmax = 0;
             buff = lang(
                 u8"いらっしゃいませ〜♪盗賊団の拠点はみつかりましたか？墓の近くにあるみたいですよ。"s,
@@ -621,8 +713,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -630,7 +724,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(451) == 2) {
+        if (gdata(451) == 2)
+        {
             flt();
             itemcreate(-1, 18, cdata(1, 0), cdata(2, 0), 0);
             inv(9, ci) = 12;
@@ -646,11 +741,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -662,8 +759,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -692,9 +791,11 @@ void label_2246()
             u8"無事に意識が戻ってよかったわ。あなたを最初に見たときは、もう手遅れかと思ったほどだもの。"s,
             u8"I'm glad you got well again. I thought you were a goner until just a few minutes ago."s);
         label_2257();
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             listmax = 0;
-            buff = lang(u8"あなたは、こんな話を聞いたことがあるかしら。"s,
+            buff = lang(
+                u8"あなたは、こんな話を聞いたことがあるかしら。"s,
                 u8"You may have heard of this story before..."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -702,8 +803,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -718,8 +821,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -734,8 +839,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -750,8 +857,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -766,8 +875,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -782,8 +893,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -791,7 +904,8 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 2) {
+        if (chatval == 2)
+        {
             listmax = 0;
             buff = lang(
                 u8"アセリア大陸から大洋を隔たち、ティリス大陸の北に位置するのがノースティリスよ。自由と平和の国パルミアの統治の下、古代の遺跡群ネフィアを巡り、多くの旅人や商人がこの地を訪れるの。あなたも、そんな旅人の一人かしら？"s,
@@ -802,8 +916,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -818,8 +934,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -827,7 +945,8 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 3) {
+        if (chatval == 3)
+        {
             listmax = 0;
             buff = lang(
                 u8"私達はヴィンデールの森からの使者。公正なるジャビ王と会見し、森とエレアの民に降りかかる嫌疑を晴らすために、王都パルミアに向かっているの。"s,
@@ -838,8 +957,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -850,13 +971,16 @@ void label_2246()
         label_2256();
         return;
     case 34:
-        if (chatflag == 0) {
-            if (gdata(250) == 0) {
+        if (chatflag == 0)
+        {
+            if (gdata(250) == 0)
+            {
                 buff = lang(
                     u8"見たところ君はノースティリスの人間ではないようだ。余計な世話でなければ、我々が旅を再開する前に、この土地での生活の知恵を授ける程度の時間は割けるのだが。"s,
                     u8"It looks like you aren't familiar with this land. Before we leave, I can spare a moment to teach you a few lessons."s);
                 list(0, listmax) = 1;
-                listn(0, listmax) = lang(u8"チュートリアルを開始する"s,
+                listn(0, listmax) = lang(
+                    u8"チュートリアルを開始する"s,
                     u8"I would like to play the tutorial."s);
                 ++listmax;
                 list(0, listmax) = 0;
@@ -864,7 +988,8 @@ void label_2246()
                     lang(u8"余計な世話だ"s, u8"I can take care of myself."s);
                 ++listmax;
             }
-            if (gdata(250) == 1) {
+            if (gdata(250) == 1)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"移動方法はもうわかっているだろうが、もしカーソルキーを使っているのならば、できるだけテンキーでの移動に変えたほうがいいだろう。テンキーの周りには、床のアイテムを取得する0キー、その場で足踏みする5キー、そして射撃などのターゲットを指定できる*キーがあるからな。"s,
@@ -875,8 +1000,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -891,8 +1018,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -907,8 +1036,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -923,7 +1054,8 @@ void label_2246()
                 listn(0, listmax) = lang(u8"食べた"s, u8"I ate it."s);
                 ++listmax;
             }
-            if (gdata(250) == 2) {
+            if (gdata(250) == 2)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"zキーでは、魔法やスキルを使用したり、体当たりや採掘など、やや特殊な行動を行うことができる。体当たりは、鍵のかかったドアを壊したり、果実を木から落としたい時に実行するといい。"s,
@@ -934,8 +1066,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -950,8 +1084,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -963,14 +1099,17 @@ void label_2246()
                 listn(0, listmax) = lang(u8"わかった"s, u8"Okay."s);
                 ++listmax;
             }
-            if (gdata(250) == 3) {
-                txt(lang(u8"何かが足元に転がってきた。"s,
+            if (gdata(250) == 3)
+            {
+                txt(lang(
+                    u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 flt();
                 itemcreate(-1, 14, cdata(1, 0), cdata(2, 0), 0);
                 inv(8, ci) = 3;
                 listmax = 0;
-                buff = lang(u8"どうやら何かを掘り当てたようだな。"s,
+                buff = lang(
+                    u8"どうやら何かを掘り当てたようだな。"s,
                     u8"Looks like you found something."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -978,15 +1117,18 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
                 gdata(250) = 4;
             }
-            if (gdata(250) == 4) {
+            if (gdata(250) == 4)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"多くのアイテムは、その本当の価値を知るためには「鑑定」をする必要がある。街にいる鑑定者に頼んだり、鑑定の巻物や、魔法を唱えることで鑑定はできる。未鑑定の品は店での売価が低くなり、中には呪われた装備、危険な効果のポーションや巻物もあるので注意が必要だ。"s,
@@ -997,8 +1139,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1013,8 +1157,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1023,14 +1169,16 @@ void label_2246()
                     u8"では、今足元に置いた鑑定の巻物をxキーで読み、その金塊を鑑定してみるんだ。"s,
                     u8"Now I'll give you a scroll of identify. Read it by using [x] and identify the gold bar you just found."s);
                 list(0, listmax) = 0;
-                listn(0, listmax) = lang(u8"結果は想像がつくが、やってみるか…"s,
+                listn(0, listmax) = lang(
+                    u8"結果は想像がつくが、やってみるか…"s,
                     u8"Alright, I will try."s);
                 ++listmax;
                 list(0, listmax) = 4;
                 listn(0, listmax) = lang(u8"鑑定した"s, u8"Done..."s);
                 ++listmax;
             }
-            if (gdata(250) == 5) {
+            if (gdata(250) == 5)
+            {
                 buff = lang(
                     u8"アイテムを装備するには、cキーから装備画面を呼び出せばいい。呪われたアイテムを装備してしまうと、装備が外せなくなるだけではなく、様々な悪い効果が発生する。その弓も呪われているので、解呪の巻物で呪いをといてくれ。"s,
                     u8"To equip weapons or armor, press [c] and press [9] to select [Wear]. Note that if you wear cursed equipment, they can't be removed normally and cause some unwelcome effects. That bow is cursed. Use this scroll of uncurse to uncurse it."s);
@@ -1042,21 +1190,25 @@ void label_2246()
                     lang(u8"装備も解呪も終わった"s, u8"All done."s);
                 ++listmax;
             }
-            if (gdata(250) == 6) {
+            if (gdata(250) == 6)
+            {
                 p = findchara(3);
-                if (p != 0) {
+                if (p != 0)
+                {
                     listmax = 0;
-                    buff =
-                        lang(u8"どうした？ まだ全てのプチを倒していないぞ。"s,
-                            u8"Kill them all."s);
+                    buff = lang(
+                        u8"どうした？ まだ全てのプチを倒していないぞ。"s,
+                        u8"Kill them all."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = strbye;
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -1072,15 +1224,18 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
                 gdata(250) = 7;
             }
-            if (gdata(250) == 7) {
+            if (gdata(250) == 7)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"ノースティリスの地理について少し説明しよう。シエラ・テールには幾多の国が存在するが、ノースティリスはどの国の支配も受けておらず、《ネフィア》と呼ばれる迷宮群が存在する特殊な場所だ。この地では、地殻変動とともに新しい迷宮がしばしば生成される。"s,
@@ -1091,8 +1246,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1107,8 +1264,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1119,7 +1278,8 @@ void label_2246()
                 inv(26, ci) = 25;
                 flt();
                 itemcreate(-1, 636, cdata(1, 0), cdata(2, 0), 2);
-                txt(lang(u8"何かが足元に転がってきた。"s,
+                txt(lang(
+                    u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 listmax = 0;
                 buff = lang(
@@ -1131,8 +1291,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1141,7 +1303,8 @@ void label_2246()
                 label_2256();
                 return;
             }
-            if (gdata(250) == 8) {
+            if (gdata(250) == 8)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"鍵が掛かっているだろう？宝箱の鍵は、ロックピックを所持していて、鍵開けの技術が開錠に必要な値に達していないと、解除することはできない。君の技量では、おそらくその宝箱を開けることはできないな。宝箱はダンジョンに落ちていることもあるが、生憎と重い代物なので、開けられない時は諦めるしかないだろう。気をつけろ…宝箱に押しつぶされて無様な死をさらした冒険者を、私は何度となく見てきている。"s,
@@ -1152,8 +1315,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1168,8 +1333,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1184,8 +1351,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1200,15 +1369,18 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
                 gdata(250) = 99;
             }
-            if (gdata(250) == 99) {
+            if (gdata(250) == 99)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"よくやった。これでノースティリスで生活するための、基本的な知識は身に付いたわけだ。自分の状態を把握し、慎重に行動すれば、瀕死の状態を高慢なエレアに拾われ、講釈をたれられることも、もうないだろう（ロミアスはニヤリと笑った）。"s,
@@ -1219,8 +1391,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1235,8 +1409,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1245,13 +1421,15 @@ void label_2246()
                 label_2256();
                 return;
             }
-            if (gdata(250) == -1) {
+            if (gdata(250) == -1)
+            {
                 buff = lang(u8"まだ、何か用があるのか？"s, u8"What?"s);
                 list(0, listmax) = 0;
                 listn(0, listmax) = lang(u8"何も"s, u8"Nothing."s);
                 ++listmax;
             }
-            if (gdata(250) == 0 || gdata(250) == -1) {
+            if (gdata(250) == 0 || gdata(250) == -1)
+            {
                 list(0, listmax) = 2;
                 listn(0, listmax) = lang(
                     u8"わが家から出て行ってほしい"s, u8"Get out of my house!"s);
@@ -1259,19 +1437,22 @@ void label_2246()
             }
             label_2257();
         }
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             listmax = 0;
-            buff =
-                lang(u8"賢明な判断だな。まずは最も基本的な動作から教えよう。"s,
-                    u8"A wise choice. I will start from the beginning."s);
+            buff = lang(
+                u8"賢明な判断だな。まずは最も基本的な動作から教えよう。"s,
+                u8"A wise choice. I will start from the beginning."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strmore;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1280,18 +1461,22 @@ void label_2246()
             itemcreate(-1, 204, cdata(1, 0), cdata(2, 0), 0);
             inv(23, ci) = 9;
             inv(8, ci) = 3;
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata(250) = 1;
             label_2246();
             return;
         }
-        if (chatval == 2) {
+        if (chatval == 2)
+        {
             tc = findchara(33);
-            if (tc == 0) {
+            if (tc == 0)
+            {
                 tc = findchara(34);
                 listmax = 0;
-                buff = lang(u8"ラーネイレ…？ どこにいったんだ？ まさか貴様！"s,
+                buff = lang(
+                    u8"ラーネイレ…？ どこにいったんだ？ まさか貴様！"s,
                     u8"You...you scum!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -1299,8 +1484,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                         hostileaction(0, tc);
@@ -1320,8 +1507,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1330,57 +1519,67 @@ void label_2246()
             buff = lang(
                 u8"ああ、わかった。パルミアまでは長い旅路だ。一時であれ休息をとれて良かったのかも知れないな。"s,
                 u8"Yes. Palmia is still far away. Perhaps, It was fortunate that we could have a little rest before everything begins."s);
-            tc = tc * (findchara(34) == 0) +
-                (findchara(34) != 0) * findchara(34);
+            tc = tc * (findchara(34) == 0)
+                + (findchara(34) != 0) * findchara(34);
             list(0, listmax) = 0;
             listn(0, listmax) = strmore;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             listmax = 0;
-            buff = lang(u8"また巡り会う時まで、"s + cdatan(1, 0) +
-                    u8"、あなたに風の加護のあらんことを。"s,
+            buff = lang(
+                u8"また巡り会う時まで、"s + cdatan(1, 0)
+                    + u8"、あなたに風の加護のあらんことを。"s,
                 u8"Farewell..until we meet again. May the blessing of Lulwy be with you."s);
-            tc = tc * (findchara(33) == 0) +
-                (findchara(33) != 0) * findchara(33);
+            tc = tc * (findchara(33) == 0)
+                + (findchara(33) != 0) * findchara(33);
             list(0, listmax) = 0;
             listn(0, listmax) = strbye;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             chara_vanquish(findchara(33));
             chara_vanquish(findchara(34));
-            txt(lang(u8"二人は荷物をまとめ洞窟を後にした。"s,
+            txt(lang(
+                u8"二人は荷物をまとめ洞窟を後にした。"s,
                 u8"Lomias and Larnneire leave the cave."s));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt) {
+                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                {
                     flt();
                     flttypemajor = 60000;
                     itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
                 }
             }
         }
-        if (chatval == 3) {
+        if (chatval == 3)
+        {
             listmax = 0;
-            buff = lang(u8"…本当に食べてしまったのか？"s,
+            buff = lang(
+                u8"…本当に食べてしまったのか？"s,
                 u8"...err..you really ate that thing? Oh well.."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -1388,8 +1587,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1404,13 +1605,16 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
-            if (jp) {
+            if (jp)
+            {
                 listmax = 0;
                 buff = lang(u8"次はzキーでの行動について説明しよう。"s, ""s);
                 tc = tc * 1 + 0;
@@ -1419,8 +1623,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1430,7 +1636,8 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 4) {
+        if (chatval == 4)
+        {
             listmax = 0;
             buff = lang(
                 u8"（ロミアスはにやりと笑った。どうやら、この偽物の金塊は彼がいつの間にか埋めたらしい…）"s,
@@ -1441,8 +1648,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1457,8 +1666,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1473,15 +1684,18 @@ void label_2246()
             itemcreate(-1, 363, cdata(1, 0), cdata(2, 0), 0);
             inv(8, ci) = 3;
             inv(17, ci) = 1;
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata(250) = 5;
             label_2246();
             return;
         }
-        if (chatval == 5) {
+        if (chatval == 5)
+        {
             listmax = 0;
-            buff = lang(u8"…よし、いよいよ戦闘の説明だ。"s,
+            buff = lang(
+                u8"…よし、いよいよ戦闘の説明だ。"s,
                 u8"Good. Now listen carefully."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -1489,8 +1703,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1505,8 +1721,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1521,18 +1739,22 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             txtef(9);
-            txt(lang(u8"ロミアスは隠し持っていたプチを放った。"s,
+            txt(lang(
+                u8"ロミアスは隠し持っていたプチを放った。"s,
                 u8"Lomias releases tiny cute creatures."s));
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt) {
+                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                {
                     flt();
                     characreate(-1, 3, cdata(1, 0), cdata(2, 0));
                     cbitmod(979, rc, 1);
@@ -1541,14 +1763,16 @@ void label_2246()
             flt();
             itemcreate(-1, 68, cdata(1, 0), cdata(2, 0), 0);
             inv(8, ci) = 3;
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata(250) = 6;
         }
         label_2256();
         return;
     case 79:
-        if (gdata(252) == 200) {
+        if (gdata(252) == 200)
+        {
             listmax = 0;
             buff = lang(
                 u8"王の死に続き、世界の崩壊の始まり…パルミアは…シエラ・テールは困難な時代にいます。このまま、イルヴァは最後を迎えてしまうのでしょうか。"s,
@@ -1559,8 +1783,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1568,7 +1794,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(252) < 90) {
+        if (gdata(252) < 90)
+        {
             listmax = 0;
             buff = lang(
                 u8"パルミアは歴史ある自由と文化の国。大アセリア大陸の戦乱から離れ、静かに育ってきた国です。王制政治が廃止された今でも、この平和を培った代々の王と夫であるジャビ王に、民は忠誠を尽くしてくれています。"s,
@@ -1579,13 +1806,17 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
-        } else {
+        }
+        else
+        {
             listmax = 0;
             buff = lang(
                 u8"王の悲報にパルミアは衝撃を受けています。あの方のいない王座は、なんと冷たく感じられることでしょう…"s,
@@ -1596,8 +1827,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1606,9 +1839,11 @@ void label_2246()
         label_2256();
         return;
     case 80:
-        if (gdata(252) >= 60) {
+        if (gdata(252) >= 60)
+        {
             listmax = 0;
-            buff = lang(u8"汝の活躍を楽しみにしておるぞ。"s,
+            buff = lang(
+                u8"汝の活躍を楽しみにしておるぞ。"s,
                 u8"Any assistance you provide to us will be most welcome."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -1616,8 +1851,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1625,7 +1862,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(252) == 50) {
+        if (gdata(252) == 50)
+        {
             listmax = 0;
             buff = lang(
                 u8"今の時勢、信頼に足る者の剣を遊ばせておくのは惜しい。もしパルミアの元で働く意志があるのなら、城の図書室にいるエリステアを訪ねるがよい。十分な報酬と名誉を約束しよう。"s,
@@ -1636,8 +1874,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1645,7 +1885,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(252) == 40) {
+        if (gdata(252) == 40)
+        {
             gdata(252) = 50;
             listmax = 0;
             buff = lang(
@@ -1657,8 +1898,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1684,8 +1927,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1698,18 +1943,21 @@ void label_2246()
             itemcreate(-1, 559, cdata(1, 0), cdata(2, 0), 0);
             flt();
             itemcreate(-1, 621, cdata(1, 0), cdata(2, 0), 0);
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             label_2246();
             return;
         }
         goto label_2247_internal;
     case 139:
-        if (gdata(252) == 20) {
+        if (gdata(252) == 20)
+        {
             gdata(252) = 30;
             listmax = 0;
             buff = lang(
@@ -1721,8 +1969,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1737,8 +1987,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1753,15 +2005,18 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt) {
+                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                {
                     flt(calcobjlv(gdata(22)), calcfixlv(2));
                     flttypemajor = fltsetdungeon();
                     itemcreate(-1, 0, cdata(1, tc), cdata(2, tc), 0);
@@ -1779,7 +2034,8 @@ void label_2246()
             txt(lang(
                 u8"ジャビ王への書簡を受け取った。ジャーナルが更新された。"s,
                 u8"You recive a letter to the king Xabi. Your journal has been updated."s));
-            txt(lang(cdatan(0, tc) + u8"は静かに息絶えた…"s,
+            txt(lang(
+                cdatan(0, tc) + u8"は静かに息絶えた…"s,
                 cdatan(0, tc) + u8" dies silently..."s));
             chara_vanquish(tc);
             label_2256();
@@ -1787,8 +2043,10 @@ void label_2246()
         }
         goto label_2247_internal;
     case 142:
-        if (gdata(252) == 200) {
-            if (jp) {
+        if (gdata(252) == 200)
+        {
+            if (jp)
+            {
                 listmax = 0;
                 buff =
                     u8"私達は…失敗してしまったのですね、サイモアの陰謀を止めることに。あなたが《常闇の眼》を入手するために冒した危険も、カラムの命も、今となっては何の意味があったのでしょう。"s;
@@ -1798,8 +2056,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1813,30 +2073,36 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
                 listmax = 0;
                 buff =
-                    u8"ごめんなさい、つまらないことを聞かせてしまって。あなたは…あなたの目には…まだ希望の光が宿っている。"s +
-                    cdatan(1, 0) + cdatan(0, 0) +
-                    u8"、あなたはその運命の先に何を見ているの？"s;
+                    u8"ごめんなさい、つまらないことを聞かせてしまって。あなたは…あなたの目には…まだ希望の光が宿っている。"s
+                    + cdatan(1, 0) + cdatan(0, 0)
+                    + u8"、あなたはその運命の先に何を見ているの？"s;
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = strmore;
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 listmax = 0;
                 buff = u8"You've done well."s;
                 tc = tc * 1 + 0;
@@ -1845,8 +2111,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -1855,7 +2123,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(252) == 120) {
+        if (gdata(252) == 120)
+        {
             listmax = 0;
             buff = lang(cdatan(0, 0) +
                     u8"、遂に三つの魔石を揃えたのですね。私達の調査によれば、魔石はレシマスの秘宝の間への扉を開く鍵となるはず。しかし、レシマスの奥深くには恐ろしい魔物が巣食い、その場所が何階にあるかまでは判明していません。"s,
@@ -1868,8 +2137,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1884,8 +2155,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1900,8 +2173,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1909,16 +2184,18 @@ void label_2246()
             listmax = 0;
             buff = lang(
                 u8"あなたの働きには、感謝の言葉だけでは報いきれません。この指輪は、スターシャ様からの贈り物です。あなたの冒険の成功を祈っています。"s,
-                u8": Words alone are not enough to express our gratitude for all that you have done. This ring is a gift from Queen Stersha. We are praying for your success, "s +
-                    cdatan(0, 0) + u8"."s);
+                u8": Words alone are not enough to express our gratitude for all that you have done. This ring is a gift from Queen Stersha. We are praying for your success, "s
+                    + cdatan(0, 0) + u8"."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strbye;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1930,13 +2207,15 @@ void label_2246()
                 u8"You receive a key of Lesimas 25th level. Your journal has been updated."s));
             flt();
             itemcreate(-1, 360, cdata(1, 0), cdata(2, 0), 0);
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata(252) = 125;
             label_2256();
             return;
         }
-        if (gdata(252) == 105) {
+        if (gdata(252) == 105)
+        {
             listmax = 0;
             buff = lang(cdatan(0, 0) +
                     u8"、あなたの帰還を待っていました。カラムは無事に…いえ、その顔を見れば想像はつきます。私達の救助は遅すぎたのですね…。"s,
@@ -1948,8 +2227,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1971,8 +2252,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -1987,8 +2270,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2003,8 +2288,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2019,8 +2306,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2034,7 +2323,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(252) >= 60) {
+        if (gdata(252) >= 60)
+        {
             buff = lang(u8"あら、"s + cdatan(0, 0) +
                     u8"。レシマスの調査は進んでいるかしら？ 何か必要な情報があれば、何でも聞いてください。"s,
                 ""s + cdatan(0, 0) +
@@ -2047,17 +2337,20 @@ void label_2246()
             listn(0, listmax) =
                 lang(u8"任務について"s, u8"Tell me about the mission again."s);
             ++listmax;
-            if (gdata(252) >= 100 && gdata(252) <= 120) {
+            if (gdata(252) >= 100 && gdata(252) <= 120)
+            {
                 list(0, listmax) = 3;
                 listn(0, listmax) = lang(
                     u8"古城について"s, u8"Tell me about the ancient castle."s);
                 ++listmax;
                 list(0, listmax) = 2;
-                listn(0, listmax) = lang(u8"灼熱の塔について"s,
+                listn(0, listmax) = lang(
+                    u8"灼熱の塔について"s,
                     u8"Tell me about the tower of infernos."s);
                 ++listmax;
                 list(0, listmax) = 1;
-                listn(0, listmax) = lang(u8"死者の洞窟について"s,
+                listn(0, listmax) = lang(
+                    u8"死者の洞窟について"s,
                     u8"Tell me about the crypt of the damned."s);
                 ++listmax;
             }
@@ -2066,7 +2359,8 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (chatval == 6) {
+            if (chatval == 6)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"ネフィアの迷宮群の一つレシマスは、パルミアの歴史と大きな関わりがあります。エウダーナがネフィアの秘宝の一つにより繁栄を約束されたように、第三代の王ザシムと従弟ゼームもレシマスの秘宝を求め、調査隊を繰り出していました。"s,
@@ -2077,8 +2371,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2093,8 +2389,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2109,8 +2407,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2125,8 +2425,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2141,8 +2443,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2150,8 +2454,10 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 5) {
-                if (gdata(252) >= 125) {
+            if (chatval == 5)
+            {
+                if (gdata(252) >= 125)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"レシマスの探索を進め、秘宝の間を見つけてください。あなたの任務は、《常闇の眼》を地上に持ち帰ることです。"s,
@@ -2162,8 +2468,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -2178,8 +2486,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -2187,7 +2497,8 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(252) >= 110) {
+                if (gdata(252) >= 110)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"あなたの任務は、三つの魔石の入手です。魔石には、レシマスの秘密を解く何らかの力が秘められていると伝えられています。魔石の所在は判明していますが、どこも危険な場所ばかり。まずは、各地を探索し、経験を積んでから臨んだほうがいいでしょう。"s,
@@ -2198,8 +2509,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -2210,17 +2523,19 @@ void label_2246()
                 listmax = 0;
                 buff = lang(
                     u8"あなたの任務は、レシマスに赴き、冒険者カラムとの接触を試みることです。彼から最後に連絡があったのは、レシマスの16階。おそらくは、より深層に探索の手を広げているでしょう。彼の足取りをつかみ、私に報告してください。"s,
-                    u8"Your duty will be to penetrate into Lesimas and make contact with <Karam>. In the last report we received from him, he told us he was on the 16th floor. If you can find him, perhaps we can get this excavation back on track. Godspeed, "s +
-                        cdatan(0, 0) +
-                        u8", find out what happened to <Karam>."s);
+                    u8"Your duty will be to penetrate into Lesimas and make contact with <Karam>. In the last report we received from him, he told us he was on the 16th floor. If you can find him, perhaps we can get this excavation back on track. Godspeed, "s
+                        + cdatan(0, 0)
+                        + u8", find out what happened to <Karam>."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = strmore;
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2228,7 +2543,8 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 3) {
+            if (chatval == 3)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"古城の宝物庫には、数々の財宝とともに《覇者の魔石》が眠っていると伝えられています。ヴェルニースを南に下った閑静な森の中に佇むこの城は、古の王族により建てられました。しかし王都がパルミアに移り、廃墟となった城は、長らくならず者の拠点として使われるように…"s,
@@ -2239,8 +2555,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2255,8 +2573,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2271,8 +2591,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2280,7 +2602,8 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 2) {
+            if (chatval == 2)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"パルミアを出て北の未開の地を越えていくと、真紅に燃え盛る灼熱の塔が見えます。この塔の守護者、《赤き義眼のクルイツゥア》と呼ばれる魔女が、《賢者の魔石》を所持しているはずです。"s,
@@ -2291,8 +2614,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2307,8 +2632,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2323,8 +2650,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2332,7 +2661,8 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 1) {
+            if (chatval == 1)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"《愚者の魔石》が眠っているとされる死者の洞窟は、最も危険な場所です。多くの名のある冒険者が命を落とし、不死者となりこの洞窟の中をさ迷っています。"s,
@@ -2343,8 +2673,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2359,8 +2691,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2375,8 +2709,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2387,14 +2723,16 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(252) == 50) {
+        if (gdata(252) == 50)
+        {
             listmax = 0;
             buff = lang(u8"あなたが"s + cdatan(0, 0) +
                     u8"ですね。使いの者から聞いています。私はエリステア、ネフィア迷宮群の歴史の研究に携わって来ました。今は王の命によりレシマス調査隊の副長を務めていますが、洞窟に眠る多くの謎と危険な魔物の存在のために、調査は思わしく進んでいません。あなたのような冒険者に力になってもらえると心強いです。"s,
                 u8"You must be "s + cdatan(0, 0) +
                     u8". I've already heard some of the soldiers talking about you. My name is Erystia, and I came to Nefia in order to research the history behind the various labyrinths here. The King has placed me in charge of the expedition to investigate Lesimas. Unfortunately, due to numerous obstacles and an abundance of hostile monsters residing in the caverns, our investigation has made little, if any, progress. It would be very reassuring if we had the strength of adventurers like you backing us up."s);
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"力になる"s,
+            listn(0, listmax) = lang(
+                u8"力になる"s,
                 u8"I will gladly pledge my strength to Palmia."s);
             ++listmax;
             list(0, listmax) = 0;
@@ -2402,7 +2740,8 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (chatval == 0) {
+            if (chatval == 0)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"わかりました。考えが変わったら、また声をかけてください。"s,
@@ -2413,8 +2752,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2432,8 +2773,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2448,8 +2791,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2464,8 +2809,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2473,30 +2820,34 @@ void label_2246()
             listmax = 0;
             buff = lang(
                 u8"あなたの任務は、レシマスに赴き、《カラム》との接触を試みることです。彼から最後に連絡があったのは、レシマスの16階。おそらくは、より深層に探索の手を広げているでしょう。彼の足取りをつかみ、私に報告してください。"s,
-                u8"Your duty will be to penetrate into Lesimas and make contact with <Karam>. In the last report we received from him, he told us he was on the 16th floor. If you can find him, perhaps we can get this excavation back on track. Godspeed, "s +
-                    cdatan(0, 0) + u8", find out what happened to <Karam>."s);
+                u8"Your duty will be to penetrate into Lesimas and make contact with <Karam>. In the last report we received from him, he told us he was on the 16th floor. If you can find him, perhaps we can get this excavation back on track. Godspeed, "s
+                    + cdatan(0, 0) + u8", find out what happened to <Karam>."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strbye;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"レシマス4階の鍵を受け取った。ジャーナルが更新された。"s,
+            txt(lang(
+                u8"レシマス4階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 4th level. Your journal has been updated."s));
             gdata(252) = 60;
             label_2256();
             return;
         }
     case 146:
-        if (gdata(252) == 90) {
+        if (gdata(252) == 90)
+        {
             gdata(252) = 100;
             listmax = 0;
             buff = lang(
@@ -2508,8 +2859,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2524,8 +2877,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2540,8 +2895,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2556,8 +2913,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2572,8 +2931,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2588,15 +2949,18 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt) {
+                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                {
                     flt(calcobjlv(gdata(22)), calcfixlv(2));
                     flttypemajor = fltsetdungeon();
                     itemcreate(-1, 0, cdata(1, tc), cdata(2, tc), 0);
@@ -2611,9 +2975,11 @@ void label_2246()
             inv(26, ci) = 0;
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
-            txt(lang(cdatan(0, tc) + u8"は自ら命を絶った…"s,
+            txt(lang(
+                cdatan(0, tc) + u8"は自ら命を絶った…"s,
                 cdatan(0, tc) + u8" kills himself..."s));
             chara_vanquish(tc);
             label_2256();
@@ -2628,7 +2994,8 @@ void label_2246()
             u8"見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"s,
             u8"Don't you see I'm busy!"s);
         label_2257();
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             invctrl = 1;
             snd(26);
             label_18552();
@@ -2653,7 +3020,8 @@ void label_2246()
             u8"ほほう、客人とはこれまた珍しい。暖かい飯でも馳走してさしあげたいが、あいにくと今日の飯番はガロクでの。あやつの作る料理は自らの作品に似て、なんとも無骨で味気ない。とても客人に楽しんでもらえる代物じゃないのう。まぁ、せっかくこんな辺境の地にまで、やって来なさったんだ。何か用件があれば、話だけは聞こうじゃないか。"s,
             u8"Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"s);
         label_2257();
-        if (chatval == 2) {
+        if (chatval == 2)
+        {
             listmax = 0;
             buff = lang(
                 u8"おお、小さなメダルを持っておるのか？メダルの収集は、わしの生きがいなんじゃよ！これまでに生産してきた自慢の品の数々と交換せぬか？"s,
@@ -2664,8 +3032,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2679,18 +3049,22 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 3) {
+        if (chatval == 3)
+        {
             listmax = 0;
             buff = lang(
-                u8"荷車の改造とな。たいして気乗りのする仕事ではないが、そうじゃの、小さなメダル"s +
-                    calccargoupdatecost() + u8"枚をくれるならやらんでもない。"s,
-                u8"Upgrade your cart? It's not something I get excited about but if you can give me "s +
-                    calccargoupdatecost() +
-                    u8" small medals, I'll think about it."s);
+                u8"荷車の改造とな。たいして気乗りのする仕事ではないが、そうじゃの、小さなメダル"s
+                    + calccargoupdatecost()
+                    + u8"枚をくれるならやらんでもない。"s,
+                u8"Upgrade your cart? It's not something I get excited about but if you can give me "s
+                    + calccargoupdatecost()
+                    + u8" small medals, I'll think about it."s);
             item_find(622, 3, 1);
-            if (stat != -1) {
+            if (stat != -1)
+            {
                 ci = stat;
-                if (inv(0, ci) >= calccargoupdatecost()) {
+                if (inv(0, ci) >= calccargoupdatecost())
+                {
                     list(0, listmax) = 1;
                     listn(0, listmax) =
                         lang(u8"メダルを渡す"s, u8"Here, take these medals."s);
@@ -2702,7 +3076,8 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"ふぅん。"s, u8"Huh."s);
                 tc = tc * 1 + 0;
@@ -2711,8 +3086,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2721,10 +3098,11 @@ void label_2246()
                 return;
             }
             txtnew();
-            txt(lang(u8"荷車の重量の限界が"s + cnvweight(calccargoupdate()) +
-                    u8"上昇した。"s,
-                u8"Your cart's weight limit has increased by "s +
-                    cnvweight(calccargoupdate()) + u8"."s));
+            txt(lang(
+                u8"荷車の重量の限界が"s + cnvweight(calccargoupdate())
+                    + u8"上昇した。"s,
+                u8"Your cart's weight limit has increased by "s
+                    + cnvweight(calccargoupdate()) + u8"."s));
             snd(58);
             inv(0, ci) -= calccargoupdatecost();
             gdata(82) += calccargoupdate();
@@ -2737,8 +3115,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2749,8 +3129,10 @@ void label_2246()
         label_2256();
         return;
     case 221:
-        if (gdata(453) == 1000) {
-            if (gdata(20) == 33 && adata(29, gdata(20))) {
+        if (gdata(453) == 1000)
+        {
+            if (gdata(20) == 33 && adata(29, gdata(20)))
+            {
                 listmax = 0;
                 buff = lang(
                     u8"おかあさん、なんだか今日はいつもより元気そう！お祭りは人がたくさん来るから嫌いだけど、おかあさんにもジュア様の加護があるといいな。"s,
@@ -2761,8 +3143,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -2780,8 +3164,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2789,9 +3175,11 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 1001) {
+        if (gdata(453) == 1001)
+        {
             listmax = 0;
-            buff = lang(u8"消えて！二度と顔をみせないで！！ばかぁ！"s,
+            buff = lang(
+                u8"消えて！二度と顔をみせないで！！ばかぁ！"s,
                 u8"Go away! Never come back again! Bastard!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -2799,8 +3187,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2808,9 +3198,11 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 1002) {
+        if (gdata(453) == 1002)
+        {
             listmax = 0;
-            buff = lang(u8"おかあさん…どこにいっちゃったのぉ…"s,
+            buff = lang(
+                u8"おかあさん…どこにいっちゃったのぉ…"s,
                 u8"Mommy... where have you gone mommy?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -2818,8 +3210,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2827,26 +3221,31 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 0) {
+        if (gdata(453) == 0)
+        {
             buff = lang(
                 u8"おかあさんがひどい病気で…お医者さんはエーテル病だから手に負えないって…"s,
                 u8"Mommy is really sick... but the doctor said she has the ether plague and he can't do anything..."s);
             label_2248();
-            if (stat == 0) {
+            if (stat == 0)
+            {
                 label_2256();
                 return;
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(453) = 1;
             label_2256();
             return;
         }
-        if (gdata(453) == 1 || gdata(453) == 3) {
+        if (gdata(453) == 1 || gdata(453) == 3)
+        {
             listmax = 0;
-            buff = lang(u8"おかあさん、はやく良くなるといいな♪"s,
+            buff = lang(
+                u8"おかあさん、はやく良くなるといいな♪"s,
                 u8"I hope mommy gets better soon!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -2854,8 +3253,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2863,7 +3264,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 5 || gdata(453) == 7) {
+        if (gdata(453) == 5 || gdata(453) == 7)
+        {
             listmax = 0;
             buff = lang(""s + cdatan(0, 0) +
                     u8"さん、大好き〜。おかあさん、どんどん元気になってるよ♪"s,
@@ -2875,8 +3277,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2884,62 +3288,73 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 2 || gdata(453) == 4) {
+        if (gdata(453) == 2 || gdata(453) == 4)
+        {
             buff = lang(u8"あ…"s + cdatan(0, 0) +
                     u8"さん。おかげで、おかあさんの身体も良くなっています。でもまだ、もとどおりに元気になるには時間がかかるみたいなの…"s,
                 u8"Ah, hi "s + cdatan(0, 0) +
                     u8". Thanks to you Mommy's been getting better! But... it still looks like she needs more time before she's really healthy."s);
             label_2248();
-            if (stat == 0) {
+            if (stat == 0)
+            {
                 label_2256();
                 return;
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata(453);
             label_2256();
             return;
         }
-        if (gdata(453) == 6) {
+        if (gdata(453) == 6)
+        {
             buff = lang(
                 u8"おかあさん、最近すごく調子いいの！お医者さんも、もう大丈夫だろうって。最近は、近所の子供達もお見舞いに来てくれるんだよ。はやく、おかあさんやみんなと遊びたいな〜。"s,
                 u8"Mommy looks a lot better these days! The doctor said she's gonna be okay. Even the other kids have come to visit her in the past few weeks. I want mommy to be able to play with us soon..."s);
             label_2248();
-            if (stat == 0) {
+            if (stat == 0)
+            {
                 label_2256();
                 return;
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata(453);
             label_2256();
             return;
         }
-        if (gdata(453) == 8) {
+        if (gdata(453) == 8)
+        {
             buff = lang(""s + cdatan(0, 0) +
                     u8"さん…おかあさんが…！おかあさんが…急に具合が悪くなって…身体がおかしくなって…あぁ…神様…"s,
                 ""s + cdatan(0, 0) +
                     u8"! It's mommy... something's wrong! Suddenly she started acting strange and... now her body is changing and... oh gods..."s);
             label_2248();
-            if (stat == 0) {
+            if (stat == 0)
+            {
                 label_2256();
                 return;
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata(453);
             label_2256();
             return;
         }
-        if (gdata(453) == 9) {
+        if (gdata(453) == 9)
+        {
             listmax = 0;
-            buff = lang(u8"おかあさん…大丈夫？…大丈夫？…あぁぁ…"s,
+            buff = lang(
+                u8"おかあさん…大丈夫？…大丈夫？…あぁぁ…"s,
                 u8"Mommy! Mommy are you okay? Mommy?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -2947,8 +3362,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2956,20 +3373,22 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 10) {
+        if (gdata(453) == 10)
+        {
             listmax = 0;
             buff = lang(
                 u8"おかあさんが…"s + cdatan(0, 0) + u8"さんにお話があるって…"s,
-                ""s + cdatan(0, 0) +
-                    u8", mommy has something to say to you."s);
+                ""s + cdatan(0, 0) + u8", mommy has something to say to you."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strbye;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2979,7 +3398,8 @@ void label_2246()
         }
         goto label_2247_internal;
     case 222:
-        if (gdata(453) == 1002) {
+        if (gdata(453) == 1002)
+        {
             listmax = 0;
             buff = lang(u8"ひどいわ。"s, u8"You are cruel."s);
             tc = tc * 1 + 0;
@@ -2988,8 +3408,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -2997,7 +3419,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) == 10) {
+        if (gdata(453) == 10)
+        {
             listmax = 0;
             buff = lang(""s + cdatan(0, 0) +
                     u8"さん…こんな姿でごめんなさい…どうか、怖がらないで…逃げないで…。私の病気は、もう手遅れだったようです。この醜い身体が元に戻ることは…もうないでしょう。"s,
@@ -3009,8 +3432,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3025,8 +3450,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3042,11 +3469,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -3058,8 +3487,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3067,15 +3498,19 @@ void label_2246()
             gdata(453) = 1000;
             cbitmod(965, tc, 1);
         }
-        if (gdata(453) == 1000) {
-            if (gdata(20) == 33 && adata(29, gdata(20))) {
+        if (gdata(453) == 1000)
+        {
+            if (gdata(20) == 33 && adata(29, gdata(20)))
+            {
                 buff = lang(
                     u8"ああ、もうこんな時期になったのね。パエルったら、私のことなんか気にせずお祭りを楽しんでくればいいのに。元気な頃は、よく二人でジュア様の像にお参りしていたのよ。"s,
                     u8"Oh, it's already this time of the year. Poor Pael, she should stop worring about me and go to the festival. We used to visit the St.Jure's statue and pray together around this time."s);
                 inv_find(559, 0);
-                if (stat != -1) {
+                if (stat != -1)
+                {
                     list(0, listmax) = 2;
-                    listn(0, listmax) = lang(u8"エーテル抗体を1本渡す"s,
+                    listn(0, listmax) = lang(
+                        u8"エーテル抗体を1本渡す"s,
                         u8"(Give her a potion of cure corruption.)"s);
                     ++listmax;
                 }
@@ -3084,10 +3519,12 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (chatval == 2) {
+                if (chatval == 2)
+                {
                     inv_find(559, 0);
                     --inv(0, stat);
-                    txt(lang(u8"エーテル抗体を1本渡した。"s,
+                    txt(lang(
+                        u8"エーテル抗体を1本渡した。"s,
                         u8"You hand her a potion."s));
                     snd(13);
                     modkarma(0, 20);
@@ -3101,8 +3538,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -3120,8 +3559,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3130,7 +3571,8 @@ void label_2246()
                 return;
             }
         }
-        if (gdata(453) == 1000) {
+        if (gdata(453) == 1000)
+        {
             listmax = 0;
             buff = lang(u8"…"s + cdatan(0, 0) +
                     u8"さん、あなたに最後のお願いがあります。この短剣で、私の胸を貫いてください。うふふ、だって、この姿がばれてしまったら、せっかくできたパエルの友達が逃げてしまうじゃない。あの子が幸せになれるなら、私は…"s,
@@ -3142,8 +3584,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3152,9 +3596,11 @@ void label_2246()
                 u8"こんなこと、あなたにだから頼めるのよ。どうか、この苦しみを終わらせてください…"s,
                 u8"Please, I'm begging you. Please put me out of my misery..."s);
             inv_find(559, 0);
-            if (stat != -1) {
+            if (stat != -1)
+            {
                 list(0, listmax) = 2;
-                listn(0, listmax) = lang(u8"エーテル抗体を1本渡す"s,
+                listn(0, listmax) = lang(
+                    u8"エーテル抗体を1本渡す"s,
                     u8"(Give her a potion of cure corruption.)"s);
                 ++listmax;
             }
@@ -3167,9 +3613,11 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (chatval == 1) {
+            if (chatval == 1)
+            {
                 listmax = 0;
-                buff = lang(u8"あぁ…ありがとう。ありがとう…"s,
+                buff = lang(
+                    u8"あぁ…ありがとう。ありがとう…"s,
                     u8"Th-thank you... thank..."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -3177,8 +3625,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3187,10 +3637,12 @@ void label_2246()
                 label_2256();
                 return;
             }
-            if (chatval == 2) {
+            if (chatval == 2)
+            {
                 inv_find(559, 0);
                 --inv(0, stat);
-                txt(lang(u8"エーテル抗体を1本渡した。"s,
+                txt(lang(
+                    u8"エーテル抗体を1本渡した。"s,
                     u8"You hand her a potion."s));
                 snd(13);
                 modkarma(0, 20);
@@ -3204,8 +3656,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3223,8 +3677,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3232,7 +3688,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) > 7) {
+        if (gdata(453) > 7)
+        {
             listmax = 0;
             buff = lang(
                 u8"う…けほっ、けほっ。ごめん…なさい…気分が悪いの…はぁ…はぁ…"s,
@@ -3243,8 +3700,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3252,7 +3711,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) > 5) {
+        if (gdata(453) > 5)
+        {
             listmax = 0;
             buff = lang(""s + cdatan(0, 0) +
                     u8"さん、いらっしゃい。え？嬉しそうな顔をしてる？…うふふ、この前ね、パエルが家の外に大きな雪だるまを作ってくれたのよ。「お友達と一緒に作ったの」って、あんな嬉しそうな顔は、あの子の父親が死んでしまって以来見ていないわ。あのパエルの作った雪だるまを窓から見てるとね、とても幸せな気分になるのよ。"s,
@@ -3264,8 +3724,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3273,7 +3735,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(453) > 3) {
+        if (gdata(453) > 3)
+        {
             listmax = 0;
             buff = lang(
                 u8"いつもありがとうございます。薬のおかげで、だいぶ痛みも引いてきました。身体が元気になったら、あの子と思う存分遊んであげたいわ…そうそう、最近では、近所の子供達が何人か見舞いに来てくれるの。パエルも、最初は恥ずかしがっていたけど、だんだんと話をするようになって。パエル、いいお友達ができるといいわね。"s,
@@ -3284,8 +3747,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3303,8 +3768,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -3312,7 +3779,8 @@ void label_2246()
         label_2256();
         return;
     case 223:
-        if (gdata(454) == 0) {
+        if (gdata(454) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"こんな嫁でよければ"s, u8"Sure."s);
             ++listmax;
@@ -3324,9 +3792,11 @@ void label_2246()
                 u8"俺を誰だか知らないだと？この街で一番の色男、ラファエロ様だよ。俺が狙った女は、例えパルミアの王妃だろうとイチコロさ。だがな、最近はどうも恋の駆け引きみたいなのに、飽き飽きしちまった。本音をいや、無条件で俺に仕えてくれる女が欲しいんだよ。で、お前の嫁を俺によこさないか？礼はするぜ。"s,
                 u8"Don't you know who I am? I am, by far, without question, doubtlessly and unabashedly, the sexiest man in this town -- if not the whole of North Tyris. I can have any woman I desire. I could even take the princess of Palmia if I wanted. Yet, strange as it sounds, lately I've grown tired of the game. Honestly, I want a woman who will serve me unconditionally and never complain. Why don't you let me keep one of your wives? You'd have my thanks. "s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"まあ、そんな上手い話はないよな。"s,
+                buff = lang(
+                    u8"まあ、そんな上手い話はないよな。"s,
                     u8"Pah, it's not that important anyhow."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -3334,8 +3804,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3345,7 +3817,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -3357,8 +3830,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3367,17 +3842,20 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(454) == 1 || gdata(454) == 1000) {
+        if (gdata(454) == 1 || gdata(454) == 1000)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"嫁を見せる"s, u8"How's this one?"s);
             ++listmax;
             list(0, listmax) = 0;
             listn(0, listmax) = lang(u8"ふざけるな"s, u8"Forget it."s);
             ++listmax;
-            buff = lang(u8"どれどれ、お前さんの嫁を吟味させてもらおうか！"s,
+            buff = lang(
+                u8"どれどれ、お前さんの嫁を吟味させてもらおうか！"s,
                 u8"Which one? Who have you brought for me to inspect?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"はやくしてくれよ。"s, u8"Bring me your wife!"s);
                 tc = tc * 1 + 0;
@@ -3386,8 +3864,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3397,7 +3877,8 @@ void label_2246()
             }
             allyctrl = 1;
             label_1959();
-            if (stat == -1) {
+            if (stat == -1)
+            {
                 listmax = 0;
                 buff = lang(u8"じらすなよ。"s, u8"Huh?"s);
                 tc = tc * 1 + 0;
@@ -3406,8 +3887,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3416,9 +3899,11 @@ void label_2246()
                 return;
             }
             rc = stat;
-            if (cbit(961, rc) == 0) {
+            if (cbit(961, rc) == 0)
+            {
                 listmax = 0;
-                buff = lang(u8"嫁だ。嫁じゃなきゃだめだ！"s,
+                buff = lang(
+                    u8"嫁だ。嫁じゃなきゃだめだ！"s,
                     u8"I want your wife, it's pointless if you aren't married!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -3426,8 +3911,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3436,18 +3923,21 @@ void label_2246()
                 return;
             }
             listmax = 0;
-            buff = lang(u8"ほう、これがお前さんの嫁か。"s + cdatan(0, rc) +
-                    u8"ちゃんというのだな？恥ずかしがらずこっちに来なさい。"s,
-                u8"So... this is your wife eh? "s + cdatan(0, rc) +
-                    u8" is her name? Don't be embarassed, come along!"s);
+            buff = lang(
+                u8"ほう、これがお前さんの嫁か。"s + cdatan(0, rc)
+                    + u8"ちゃんというのだな？恥ずかしがらずこっちに来なさい。"s,
+                u8"So... this is your wife eh? "s + cdatan(0, rc)
+                    + u8" is her name? Don't be embarassed, come along!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strmore;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3455,16 +3945,20 @@ void label_2246()
             tcbk = tc;
             tc = rc;
             s = refchara_str(cdata(27, tc), 8);
-            if (instr(s, 0, u8"/man/"s) == -1) {
+            if (instr(s, 0, u8"/man/"s) == -1)
+            {
                 dmgcon(tcbk, 11, 1000);
                 f = 1;
                 modkarma(0, 2);
-            } else {
+            }
+            else
+            {
                 f = 0;
                 modkarma(0, -15);
             }
             listmax = 0;
-            buff = lang(u8"いやん、おじさまったら♪"s,
+            buff = lang(
+                u8"いやん、おじさまったら♪"s,
                 u8"Ick, you're leaving me with him!?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -3472,16 +3966,20 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
             tc = tcbk;
-            if (f == 1) {
+            if (f == 1)
+            {
                 listmax = 0;
-                buff = lang(u8"な、おま…ぎぎ…の嫁さ…ぎぎ…は人間じゃ…ぎぎ"s,
+                buff = lang(
+                    u8"な、おま…ぎぎ…の嫁さ…ぎぎ…は人間じゃ…ぎぎ"s,
                     u8"She's...she's not--hiii--She's not even hu--huuuuu--human.."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -3489,26 +3987,33 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
             }
-            if (gdata(454) == 1) {
+            if (gdata(454) == 1)
+            {
                 flt();
                 itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 5000);
-                txt(lang(u8"クエストを達成した！"s,
+                txt(lang(
+                    u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
                 snd(44);
                 txtef(2);
-                txt(lang(u8"ジャーナルが更新された。"s,
+                txt(lang(
+                    u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 txtmore();
                 gdata(454) = 1000;
-            } else {
+            }
+            else
+            {
             }
             chara_vanquish(rc);
             snd(51);
@@ -3516,7 +4021,8 @@ void label_2246()
             itemcreate(-1, 640, cdata(1, 0), cdata(2, 0), 2);
             flt();
             itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 2);
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             listmax = 0;
             buff = lang(
@@ -3528,8 +4034,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3539,10 +4047,12 @@ void label_2246()
         }
         goto label_2247_internal;
     case 224:
-        if (gdata(458) == 1000) {
+        if (gdata(458) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"イィッック！！イィーック！ハ…これは、"s +
-                    cdatan(0, 0) + u8"さん、その節はお世話になりました。"s,
+            buff = lang(
+                u8"イィッック！！イィーック！ハ…これは、"s + cdatan(0, 0)
+                    + u8"さん、その節はお世話になりました。"s,
                 u8"Yeeeeck! Yeee-eeeck! Oh, it's you again."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -3550,8 +4060,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3559,7 +4071,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(458) == 0) {
+        if (gdata(458) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"まかせて"s, u8"I'll do it for you."s);
             ++listmax;
@@ -3570,7 +4083,8 @@ void label_2246()
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…失礼しました。あなた…見たところ強そうですね。私に力を貸してくれませんか？騎士昇格のための試験で、イークの首領を討伐しなければならないんです。私には、荷が重い使命ですよ…イーク…うわあああ…ダメだ…思い出しただけでも膝が震える…お願いです。私の代わりに倒してきてください。"s,
                 u8"Yeeeck! Nooo! Don't!! Get away from me!! Yeeeee-eeeck! Hump, oh....excuse me. You...you look like a skilled adventurer. Could you give me your hand? I need to slay the head of Yeek to be promoted to the rank of knight. The duty is too heavy for me....yeeee-eeck! No...! Hump...I don't want to recall anything anymore. Please do this duty for me."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"イィッック！"s, u8"Yeeeeck!"s);
                 tc = tc * 1 + 0;
@@ -3579,8 +4093,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3590,7 +4106,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -3602,8 +4119,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3612,7 +4131,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(458) == 1) {
+        if (gdata(458) == 1)
+        {
             listmax = 0;
             buff = lang(
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…あなたでしたか…"s,
@@ -3623,8 +4143,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3632,7 +4154,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(458) == 2) {
+        if (gdata(458) == 2)
+        {
             listmax = 0;
             buff = lang(
                 u8"おお、無事にイークの首領を討伐してくれたのですね。これで晴れて立派な騎士になれます。本当にありがとうございました。"s,
@@ -3643,8 +4166,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3659,11 +4184,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(458) = 1000;
             label_2256();
@@ -3671,7 +4198,8 @@ void label_2246()
         }
         goto label_2247_internal;
     case 225:
-        if (gdata(455) == 1000) {
+        if (gdata(455) == 1000)
+        {
             listmax = 0;
             buff = lang(u8"くぅぅぅぅん！"s, u8"Ruff-ruff!"s);
             tc = tc * 1 + 0;
@@ -3680,8 +4208,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3689,7 +4219,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (get_freeally() != 0) {
+        if (get_freeally() != 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"連れて行く"s, u8"I'll take you"s);
             ++listmax;
@@ -3699,8 +4230,10 @@ void label_2246()
         ++listmax;
         buff = lang(u8"くぅうううん。"s, u8"Woof!"s);
         label_2257();
-        if (chatval == 1) {
-            txt(lang(name(tc) + u8"を保護した。無事に連れて帰らなければ。"s,
+        if (chatval == 1)
+        {
+            txt(lang(
+                name(tc) + u8"を保護した。無事に連れて帰らなければ。"s,
                 u8"You must return the puppy safely."s));
             rc = tc;
             label_2659();
@@ -3709,13 +4242,16 @@ void label_2246()
             label_1477();
             label_2256();
             return;
-        } else {
+        }
+        else
+        {
             label_2256();
             return;
         }
         goto label_2247_internal;
     case 226:
-        if (gdata(455) == 1000) {
+        if (gdata(455) == 1000)
+        {
             listmax = 0;
             buff = lang(
                 u8"あ、冒険者さんだ〜。こんにちわん！"s, u8"Hello there!"s);
@@ -3725,8 +4261,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3734,7 +4272,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(455) == 0) {
+        if (gdata(455) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"まかせて"s, u8"I'll get your puppy."s);
             ++listmax;
@@ -3745,7 +4284,8 @@ void label_2246()
                 u8"はうっ。ポピーがいなくなっちゃった…また、あの洞窟に迷い込んじゃったのかな？どうしよう、お父さんは今いそがしくて相手にしてもらえないし…あ、冒険者さん、ポピーを探してきてよ〜。ポピー？ポピーは子犬だよ。私の一番のお友達なの。"s,
                 u8"Oh no, Poppy has disappeared again... He probably got lost in that cave again. Now what do I do, Papa is too busy to deal with this... Oh, Adventurer, go and find Poppy for me. Poppy? He's my puppy, and my best friend."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"ポピー…。"s, u8"Poppy..."s);
                 tc = tc * 1 + 0;
@@ -3754,8 +4294,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3765,7 +4307,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -3777,8 +4320,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3787,8 +4332,10 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(455) == 1) {
-            if (findally(225) == -1) {
+        if (gdata(455) == 1)
+        {
+            if (findally(225) == -1)
+            {
                 listmax = 0;
                 buff = lang(u8"ポピーまだ〜？"s, u8"Where's poppy?"s);
                 tc = tc * 1 + 0;
@@ -3797,8 +4344,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3816,8 +4365,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3832,11 +4383,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(455) = 1000;
             chara_vanquish(findally(225));
@@ -3848,7 +4401,8 @@ void label_2246()
         }
         goto label_2247_internal;
     case 227:
-        if (gdata(456) == 1000) {
+        if (gdata(456) == 1000)
+        {
             listmax = 0;
             buff = lang(
                 u8"いや〜。おかげさまで家は猫から解放されたんですが、宿屋のほうが快適でね。つい、こっちで寝泊りしてしまいますよ。ははは。"s,
@@ -3859,8 +4413,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3868,7 +4424,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(456) == 0) {
+        if (gdata(456) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"引き受ける"s, u8"No problem."s);
             ++listmax;
@@ -3879,7 +4436,8 @@ void label_2246()
                 u8"あなた、猫は大丈夫ですか？いえね、私は猫が大の苦手なんですが、こともあろうに、私の家に大量の猫が住み着いてしまったんですよ。そこで冒険者さん達に猫の退治を依頼しているものの、何故か誰も帰ってこない…いったい、家の中はどうなってるんでしょうか。あなた、もしよかったら見てきてくれませんか？"s,
                 u8"Hey you, are you..uh...alright with cats? Well, those filthy...they creatures took over my house. I've been asking adventurers to clean up the cats from my house ever since but none returned. What's happening in my house? You...can you take a look inside my house?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"そうですか…残念です。"s, u8"Uh...fine..."s);
                 tc = tc * 1 + 0;
@@ -3888,8 +4446,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -3899,7 +4459,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -3911,8 +4472,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3922,9 +4485,11 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(456) == 1) {
+        if (gdata(456) == 1)
+        {
             listmax = 0;
-            buff = lang(u8"どうです？猫はもういなくなりましたか？"s,
+            buff = lang(
+                u8"どうです？猫はもういなくなりましたか？"s,
                 u8"Is my home safe from the cats?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -3932,8 +4497,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3941,7 +4508,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(456) == 2) {
+        if (gdata(456) == 2)
+        {
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata(1, 0), cdata(2, 0), 0);
@@ -3954,11 +4522,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -3970,8 +4540,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -3982,9 +4554,11 @@ void label_2246()
         }
         goto label_2247_internal;
     case 231:
-        if (gdata(457) == 1000) {
+        if (gdata(457) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"おお、勇者よ！酒でも飲み交わさぬか？フハハハア！"s,
+            buff = lang(
+                u8"おお、勇者よ！酒でも飲み交わさぬか？フハハハア！"s,
                 u8"Ah, the bravest of the brave. Care for a drink? Muwahaha!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -3992,8 +4566,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4001,7 +4577,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (cdata(34, 0) < 5000) {
+        if (cdata(34, 0) < 5000)
+        {
             listmax = 0;
             buff = lang(
                 u8"なんだ、ぬしは。私は弱いものには興味がないのだ。フハハハハ！"s,
@@ -4012,8 +4589,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4021,7 +4600,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(457) == 0) {
+        if (gdata(457) == 0)
+        {
             listmax = 0;
             buff = lang(u8"オパートスの名にかけて！貴殿はかの有名な"s +
                     cdatan(1, 0) +
@@ -4034,8 +4614,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4051,9 +4633,11 @@ void label_2246()
                 u8"私はジューアの解放軍の大佐、ギルバートと申す。軍といっても国軍ではないが、イェルスの犬に占拠された各地のジューア自治区を、解放してまわっておるのだ。その我が軍が、パルミア国境でイェルスの強力な防衛線の前に苦戦しておる。最新鋭の武装を持つ奴らに対し、我らは剣に頼るのみ。このままでは、全滅する恐れさえあるのだ。どうか、貴殿の力、貸してもらえぬか？"s,
                 u8"I am colonel of the Juere Liberation Army, Gilbert. We're not the true national army, but even so we fully intend to free the Juere Territories from their occupation by those Yerles dogs. However, our army is having a hard time breaking through their strong front lines on the Palmia border. We only have our swords against their advanced weapons, after all. If things go on like they are, our army might be totally annihalated. So I ask you, will you lend us your power?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"フハハハハッ。腰抜けめ。"s,
+                buff = lang(
+                    u8"フハハハハッ。腰抜けめ。"s,
                     u8"Mwahahaha! You damn coward!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -4061,8 +4645,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4072,7 +4658,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4084,8 +4671,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4094,17 +4683,20 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(457) == 1 || gdata(457) == 2) {
+        if (gdata(457) == 1 || gdata(457) == 2)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"いい"s, u8"They are."s);
             ++listmax;
             list(0, listmax) = 0;
             listn(0, listmax) = lang(u8"だめ"s, u8"Not yet."s);
             ++listmax;
-            buff = lang(u8"準備はいいかな？"s,
+            buff = lang(
+                u8"準備はいいかな？"s,
                 u8"Are your preparations complete, then?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"待っておるぞ。"s, u8"We're waiting on you."s);
                 tc = tc * 1 + 0;
@@ -4113,8 +4705,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4124,7 +4718,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4136,8 +4731,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4151,7 +4748,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(457) == 3) {
+        if (gdata(457) == 3)
+        {
             flt();
             itemcreate(-1, 655, cdata(1, 0), cdata(2, 0), 0);
             flt();
@@ -4162,11 +4760,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4178,8 +4778,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4191,20 +4793,24 @@ void label_2246()
         label_2256();
         return;
     case 243:
-        if (gdata(459) == 1000) {
+        if (gdata(459) == 1000)
+        {
             listmax = 0;
-            buff = lang(""s + cdatan(0, 0) +
-                    u8"さん、あなたとまた会話できるとは光栄です！"s,
-                u8"I hope we can talk again sometime, "s + cdatan(0, 0) +
-                    u8"!"s);
+            buff = lang(
+                ""s + cdatan(0, 0)
+                    + u8"さん、あなたとまた会話できるとは光栄です！"s,
+                u8"I hope we can talk again sometime, "s + cdatan(0, 0)
+                    + u8"!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strbye;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4212,7 +4818,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(459) == 0) {
+        if (gdata(459) == 0)
+        {
             buff = lang(
                 u8"パルミア軍第十連隊は、カミカゼ特攻隊の猛攻により大苦戦中です！敵は弾幕の雨の中を潜り抜け、戦死を前提とした自爆攻撃を繰り返しています。このままでは、我が部隊は全滅の恐れもあります。どうか、援軍に向かってください！"s,
                 u8"Right now, the 10th regiment of the Palmian army is entrenched in battle with the suicide squadron! The enemy has broken through our suppression fire and now they're assaulting us with suicide bombers. The enemy know they're going to die and they're trying to take us with them. How can we fight an enemy with no regard for his own life! At this rate it looks like we'll be totally annihilated! We need you to lend us your hand and lead the reinforcements."s);
@@ -4224,7 +4831,8 @@ void label_2246()
                 u8"やめておこう"s, u8"That sounds... dangerous. No thanks."s);
             ++listmax;
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"無念です！"s, u8"I'm sorry to hear that."s);
                 tc = tc * 1 + 0;
@@ -4233,8 +4841,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4244,7 +4854,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4256,8 +4867,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4266,7 +4879,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(459) == 1 || gdata(459) == 2) {
+        if (gdata(459) == 1 || gdata(459) == 2)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"いい"s, u8"Okay, let's roll."s);
             ++listmax;
@@ -4277,7 +4891,8 @@ void label_2246()
                 u8"準備はよろしいですか？あなたは、パルミア軍が撤退するまでの間、どうにかカミカゼ特攻隊の猛撃に耐え、時間稼ぎをして下さい。"s,
                 u8"Are you ready to go? We need you to hold off the suicide squadron's onslaught and buy time for the Palmian army to retreat."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"早くしてください！"s, u8"Hurry up!"s);
                 tc = tc * 1 + 0;
@@ -4286,8 +4901,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4297,7 +4914,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4309,8 +4927,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4324,7 +4944,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(459) == 3) {
+        if (gdata(459) == 3)
+        {
             flt();
             itemcreate(-1, 662, cdata(1, 0), cdata(2, 0), 0);
             flt();
@@ -4335,11 +4956,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4351,8 +4974,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4364,9 +4989,11 @@ void label_2246()
         label_2256();
         return;
     case 247:
-        if (gdata(460) == 1000) {
+        if (gdata(460) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"あ、冒険者さん！お仕事お疲れでありますぅ♪"s,
+            buff = lang(
+                u8"あ、冒険者さん！お仕事お疲れでありますぅ♪"s,
                 u8"Mia's happy happy nyah!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -4374,8 +5001,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4383,7 +5012,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(460) == 0) {
+        if (gdata(460) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) =
                 lang(u8"捕ってくる"s, u8"I'll find one for you!"s);
@@ -4395,9 +5025,11 @@ void label_2246()
                 u8"るんるんるん♪ねっこねっここっねこっ♪ふ〜んふ〜ん♪お〜冒険者さんだ〜。お仕事お疲れ様でありますぅ。冒険者さんは、シルバーキャット見たことありますかぁ？シルバーにゃんことお風呂できゃっきゃするのが、ミーアの夢なんですっ！う〜。ねっこねっここっねこ♪ふ〜んふ〜ん♪"s,
                 u8"Nyobody knyows the touble Mia's seen, nyobody knyows Mia's Tru-bull. Nuah? Adventurer? Nyou find silver cat for me?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"はーい♪さよ〜なら〜♪"s,
+                buff = lang(
+                    u8"はーい♪さよ〜なら〜♪"s,
                     u8"Nyo? Mia can wait nyou. Mia have goood mannyah!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -4405,8 +5037,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4416,7 +5050,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -4428,8 +5063,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4438,8 +5075,10 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(460) == 1) {
-            if (findally(246) == -1) {
+        if (gdata(460) == 1)
+        {
+            if (findally(246) == -1)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"ふ〜んふ〜ん♪ねっこねっこ〜ま〜だかな〜♪にししし！"s,
@@ -4450,8 +5089,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4459,7 +5100,8 @@ void label_2246()
                 label_2256();
                 return;
             }
-            if (jp) {
+            if (jp)
+            {
                 listmax = 0;
                 buff =
                     u8"はわわ？それはっ！シルバーキャット！お〜♪ミーアうれしぃであります！こっちにおいで〜だっこだっこっ♪にしし！"s;
@@ -4469,8 +5111,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4486,8 +5130,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4502,11 +5148,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(460) = 1000;
             relocate_chara(findally(246), -1);
@@ -4518,9 +5166,11 @@ void label_2246()
         }
         goto label_2247_internal;
     case 252:
-        if (gdata(461) == 1000) {
+        if (gdata(461) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"私は…生きている価値があるのかな？"s,
+            buff = lang(
+                u8"私は…生きている価値があるのかな？"s,
                 u8"I wonder... does my life really have any value?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -4528,8 +5178,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4537,7 +5189,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(461) == 0 || gdata(461) == 1) {
+        if (gdata(461) == 0 || gdata(461) == 1)
+        {
             listmax = 0;
             buff = lang(
                 u8"才能のある者の努力とない者の努力は、果たして同じなのだろうか？私の妹は、このルミエストの都で絵描きを目指していた。彼女は美しいものを愛したが、画家としての才能には恵まれてなかった。自分の限界に気付いた彼女は精神を病み、周りの者に当たり散らかした。罵られ、蔑まれ、誰からも理解されないまま、冬のある日、湖に身を投げて死んでしまった。"s,
@@ -4548,8 +5201,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4564,8 +5219,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4580,8 +5237,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4596,16 +5255,20 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
-            if (gdata(461) == 0) {
+            if (gdata(461) == 0)
+            {
                 snd(44);
                 txtef(2);
-                txt(lang(u8"ジャーナルが更新された。"s,
+                txt(lang(
+                    u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 gdata(461) = 1;
                 label_2256();
@@ -4620,19 +5283,29 @@ void label_2246()
             inv_getheader(0);
             {
                 int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt) {
-                    if (inv(0, cnt) == 0) { continue; }
-                    if (inv(3, cnt) == 668) { p(inv(26, cnt)) = 1; }
+                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                {
+                    if (inv(0, cnt) == 0)
+                    {
+                        continue;
+                    }
+                    if (inv(3, cnt) == 668)
+                    {
+                        p(inv(26, cnt)) = 1;
+                    }
                 }
             }
             {
                 int cnt = 1;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt) {
+                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                {
                     p += p(cnt);
                 }
             }
-            if (p != 0) {
-                if (p != 4) {
+            if (p != 0)
+            {
+                if (p != 4)
+                {
                     listmax = 0;
                     buff = lang(u8"私のために、絵本を"s + p +
                             u8"冊集めた…？感謝するよ。絵本は第4巻まであるみたいだ。もし全部集めて持ってきてくれれば、何か礼をしよう。"s,
@@ -4644,8 +5317,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -4662,10 +5337,16 @@ void label_2246()
                 inv_getheader(0);
                 {
                     int cnt = invhead;
-                    for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt) {
-                        if (inv(0, cnt) == 0) { continue; }
-                        if (inv(3, cnt) == 668) {
-                            if (p(inv(26, cnt)) == 0) {
+                    for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                    {
+                        if (inv(0, cnt) == 0)
+                        {
+                            continue;
+                        }
+                        if (inv(3, cnt) == 668)
+                        {
+                            if (p(inv(26, cnt)) == 0)
+                            {
                                 --inv(0, cnt);
                                 p(inv(26, cnt)) = 1;
                             }
@@ -4682,13 +5363,16 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
-                if (jp) {
+                if (jp)
+                {
                     listmax = 0;
                     buff = u8"…"s;
                     tc = tc * 1 + 0;
@@ -4697,8 +5381,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -4711,8 +5397,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -4725,8 +5413,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -4742,8 +5432,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4760,8 +5452,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4774,15 +5468,18 @@ void label_2246()
                 itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 20000);
                 flt();
                 itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 5);
-                txt(lang(u8"クエストを達成した！"s,
+                txt(lang(
+                    u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
                 txtmore();
-                txt(lang(u8"何かが足元に転がってきた。"s,
+                txt(lang(
+                    u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 snd(44);
                 txtef(2);
-                txt(lang(u8"ジャーナルが更新された。"s,
+                txt(lang(
+                    u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 gdata(461) = 1000;
             }
@@ -4791,7 +5488,8 @@ void label_2246()
         }
         goto label_2247_internal;
     case 253:
-        if (gdata(462) != 0) {
+        if (gdata(462) != 0)
+        {
             listmax = 0;
             buff = lang(
                 u8"フッ。安心してください。あなたの家に侵入したりはしませんよ。"s,
@@ -4802,8 +5500,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4811,9 +5511,11 @@ void label_2246()
             label_2256();
             return;
         }
-        if (cdata(34, 0) < 3000) {
+        if (cdata(34, 0) < 3000)
+        {
             listmax = 0;
-            buff = lang(u8"私に気安く話しかけないでもらえますか？"s,
+            buff = lang(
+                u8"私に気安く話しかけないでもらえますか？"s,
                 u8"Leave me alone, please."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -4821,8 +5523,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4830,7 +5534,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(462) == 0) {
+        if (gdata(462) == 0)
+        {
             listmax = 0;
             buff = lang(u8"ああ、あなたがかの有名な"s + cdatan(1, 0) +
                     u8"ですね。いい所に来てくれました。カプールの北にある謎のピラミッドを、あなたはご存知ですか？ネフィアがまだ草の根も生えない砂漠だった頃から存在し、古代の秘宝が眠っているといわれている。しかし、入り口は奇妙な魔法に保護され、誰も手をつけることができない。いや…できなかった。"s,
@@ -4842,13 +5547,16 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
-            if (cdata(30, 0) >= 20000) {
+            if (cdata(30, 0) >= 20000)
+            {
                 list(0, listmax) = 1;
                 listn(0, listmax) =
                     lang(u8"購入する"s, u8"Alright, I'll pay."s);
@@ -4861,7 +5569,8 @@ void label_2246()
                 u8"私宛にね、面白い手紙が届いたんですよ。送り主はピラミッドの主『ツェン』。そして、内容は私にピラミッドへの挑戦権を与えると。…しかし、私は危険な罠に自ら陥るほど愚かではない。あなたにこの挑戦状を譲りましょう。むろん、タダではない。金貨20000枚でいかがですか？"s,
                 u8"I have received a very strange letter. The sender calls himself Tsen, lord of the Pyramid. He has sent me an invitation to enter his pyramid... However, I am not foolish enough to barge into such a trap. I'll turn this invitation over to you. Of course, I won't let you have it for nothing. 20,000 gold and it's yours."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"フッ。お金が用意できたら、いつでも取引に応じますよ。"s,
@@ -4872,8 +5581,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -4883,10 +5594,12 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             cdata(30, 0) -= 20000;
             snd(12);
@@ -4903,8 +5616,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -4915,9 +5630,11 @@ void label_2246()
         }
         goto label_2247_internal;
     case 259:
-        if (gdata(463) == 1000) {
+        if (gdata(463) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"あなた、生きてたのね。ヒトゴロシくん。"s,
+            buff = lang(
+                u8"あなた、生きてたのね。ヒトゴロシくん。"s,
                 u8"You're still alive I see. Good luck glorious murderer."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -4925,14 +5642,17 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
         }
-        if (gdata(463) == 1) {
+        if (gdata(463) == 1)
+        {
             listmax = 0;
             buff = lang(
                 u8"パルミアの街に、真っ赤な花が咲くのを楽しみにしているわ。"s,
@@ -4943,14 +5663,17 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
         }
-        if (gdata(463) == 2) {
+        if (gdata(463) == 2)
+        {
             flt();
             nostack = 1;
             itemcreate(-1, 672, cdata(1, 0), cdata(2, 0), 0);
@@ -4961,11 +5684,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(463) = 1000;
             listmax = 0;
@@ -4978,14 +5703,17 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
         }
-        if (gdata(463) == 0) {
+        if (gdata(463) == 0)
+        {
             listmax = 0;
             buff = lang(
                 u8"ねえ、あなたはこの街の人じゃないでしょ？匂いで分かるのよ、外の人間は。外の…世界があたしに教えてくれたのは、力のない生物はただ利用され、弄ばれ、最後には食べられてしまうっていうことだけ。同情や慈悲さえ勝ち取れない人間が、この街には大勢いる。そんな者達がどうやって生活しているか、あなたは知りたいと思うわない？"s,
@@ -4996,8 +5724,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5012,9 +5742,11 @@ void label_2246()
                 u8"あたし達は他人の血を吸って生きるのよ。憎しみや妬み、執着、悪意が、この街では力になる。外の世界では疎まれ軽蔑される弱き者達が、自分に与えられた能力をはじめて認めてもらえる、ダルフィはそんな街。ねえ、あなたもこっちの世界に来る気はない？"s,
                 u8"It's so simple, we live by feeding off of others. Spite, hatred, wickedness, and unrelenting cutthroat vigor are the only strengths you can rely on in this town. The outside world looks down on our lot, so we will make the outside world recognize our might. Say, stranger, why don't you join me in my world?"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"どっかにいきなさい、イクジナシくん。"s,
+                buff = lang(
+                    u8"どっかにいきなさい、イクジナシくん。"s,
                     u8"Then find somewhere else to stand, coward."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5022,8 +5754,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5033,7 +5767,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(463) = 1;
             listmax = 0;
@@ -5046,14 +5781,17 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
             }
         }
-        if (cdata(30, 0) >= 12000) {
+        if (cdata(30, 0) >= 12000)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"購入する"s, u8"I'll buy."s);
             ++listmax;
@@ -5061,10 +5799,12 @@ void label_2246()
         list(0, listmax) = 0;
         listn(0, listmax) = strbye;
         ++listmax;
-        buff = lang(u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
+        buff = lang(
+            u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
             u8"Here, you need a nuke. Only 12000 gold pices."s);
         label_2257();
-        if (chatval != 1) {
+        if (chatval != 1)
+        {
             listmax = 0;
             buff = lang(u8"あら、そう。"s, u8"Then go away."s);
             tc = tc * 1 + 0;
@@ -5073,8 +5813,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5083,14 +5825,16 @@ void label_2246()
             return;
         }
         txtmore();
-        txt(lang(u8"何かが足元に転がってきた。"s,
+        txt(lang(
+            u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
         cdata(30, 0) -= 12000;
         snd(12);
         flt();
         itemcreate(-1, 671, cdata(1, 0), cdata(2, 0), 0);
         listmax = 0;
-        buff = lang(u8"さあ、真っ赤な花を咲かせなさい。"s,
+        buff = lang(
+            u8"さあ、真っ赤な花を咲かせなさい。"s,
             u8"Go, make the brilliant blood red roses bloom."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
@@ -5098,8 +5842,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -5107,9 +5853,11 @@ void label_2246()
         label_2256();
         return;
     case 279:
-        if (gdata(464) >= 1000) {
+        if (gdata(464) >= 1000)
+        {
             listmax = 0;
-            buff = lang(u8"なんじゃ、話しかけるでにゃー。実験で忙しいのじゃ！"s,
+            buff = lang(
+                u8"なんじゃ、話しかけるでにゃー。実験で忙しいのじゃ！"s,
                 u8"I don't have time to talk, I'm busy conducting experiments. Out of the way!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -5117,8 +5865,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5126,7 +5876,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(464) == 0) {
+        if (gdata(464) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) =
                 lang(u8"手伝う"s, u8"Alright, I'll see what I can do."s);
@@ -5138,9 +5889,11 @@ void label_2246()
                 u8"おうおう、良いところに来た。猫の手も借りたいほど忙しいのじゃ。今わしは遺伝子操作の研究をしておってな、成功すればなんと、二体の生物を合成させて、より強力な種を造りだすことができるのじゃ！最後の段階として、5体の実験体が必要じゃが、ちょっと取ってきてはくれまいか？報酬として、今使っている試作機をくれてやってもよいぞ。"s,
                 u8"Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"とんだ愚か者じゃ！"s,
+                buff = lang(
+                    u8"とんだ愚か者じゃ！"s,
                     u8"Then get out of my way you fool!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5148,8 +5901,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5163,10 +5918,12 @@ void label_2246()
             inv(26, ci) = 5;
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             listmax = 0;
             buff = lang(
@@ -5178,8 +5935,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5188,16 +5947,24 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(464) >= 1 && gdata(464) <= 5) {
+        if (gdata(464) >= 1 && gdata(464) <= 5)
+        {
             inv_getheader(0);
             f = 0;
             {
                 int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt) {
-                    if (gdata(464) >= 6) { break; }
-                    if (inv(0, cnt) > 0) {
-                        if (inv(3, cnt) == 685) {
-                            if (inv(23, cnt) != 0) {
+                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                {
+                    if (gdata(464) >= 6)
+                    {
+                        break;
+                    }
+                    if (inv(0, cnt) > 0)
+                    {
+                        if (inv(3, cnt) == 685)
+                        {
+                            if (inv(23, cnt) != 0)
+                            {
                                 --inv(0, cnt);
                                 ++gdata(464);
                                 f = 1;
@@ -5209,7 +5976,8 @@ void label_2246()
                     }
                 }
             }
-            if (f) {
+            if (f)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"おうおう、例の品を持ってきてくれたか。これで実験が進むわい。"s,
@@ -5220,16 +5988,20 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
             }
-            if (f == 0) {
+            if (f == 0)
+            {
                 listmax = 0;
-                buff = lang(u8"さあ、実験体を集めてくるのじゃ。"s,
+                buff = lang(
+                    u8"さあ、実験体を集めてくるのじゃ。"s,
                     u8"Let's go over this one last time... I need five samples to proceed. FIVE."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5237,8 +6009,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5246,7 +6020,8 @@ void label_2246()
             }
             label_1521();
         }
-        if (gdata(464) >= 6) {
+        if (gdata(464) >= 6)
+        {
             listmax = 0;
             buff = lang(
                 u8"成功じゃ！実験は大成功じゃ！おぬしの働きに感謝して、記念すべき遺伝子複合機第一号をくれてやろう。大事に使うのじゃぞ！"s,
@@ -5257,8 +6032,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5273,20 +6050,24 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(464) = 1000;
         }
         label_2256();
         return;
     case 280:
-        if (gdata(465) == 1000) {
+        if (gdata(465) == 1000)
+        {
             listmax = 0;
-            buff = lang(u8"ルミエストの街道は今日も清潔だぞ！"s,
+            buff = lang(
+                u8"ルミエストの街道は今日も清潔だぞ！"s,
                 u8"Clean! The roads are clean in Lumiest today!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -5294,8 +6075,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5303,7 +6086,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(465) == 0) {
+        if (gdata(465) == 0)
+        {
             listmax = 0;
             buff = lang(u8"待て待て待てーい！"s, u8"Wait there! Wait!"s);
             tc = tc * 1 + 0;
@@ -5312,8 +6096,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5328,7 +6114,8 @@ void label_2246()
                 u8"俺はルミエストの清掃を生涯の使命とし、この道十年のベテラン掃除屋バルザックだ。街道に落ちているどんな小さなゴミも見逃さないプロ魂を持つが、そんなプライドも傷つけられちまった。下水道にとんでもない化け物が住みついて、もう俺の手には負えないぜ。お前なら、俺の気持ちを汲み取って、退治に出向いてくれるな？"s,
                 u8"I'm Balzak, a well known pro garage man who has been cleaning the roads of Lumiest for 10 years. I've never missed a single garbage that messes the beautiful town of Lumiest. But my days are over. Foul creatures now nest in the sewer and sick smells spread everywhere. Adventurer, you are my only hope. Kill them, kill them for my sake!"s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
                 buff = lang(u8"そうか…冷たい奴だな…"s, u8"Ok. You are cruel."s);
                 tc = tc * 1 + 0;
@@ -5337,8 +6124,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5348,7 +6137,8 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -5360,8 +6150,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5371,9 +6163,11 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(465) == 1) {
+        if (gdata(465) == 1)
+        {
             listmax = 0;
-            buff = lang(u8"おう、お前か。下水道の掃除は進んでいるか？"s,
+            buff = lang(
+                u8"おう、お前か。下水道の掃除は進んでいるか？"s,
                 u8"Oh, it's you. What about the task I asked you?"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -5381,8 +6175,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5390,7 +6186,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(465) == 2) {
+        if (gdata(465) == 2)
+        {
             flt();
             itemcreate(-1, 686, cdata(1, 0), cdata(2, 0), 0);
             flt();
@@ -5405,11 +6202,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -5421,8 +6220,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5433,13 +6234,15 @@ void label_2246()
         }
         goto label_2247_internal;
     case 290:
-        if (gdata(263) == 0) {
+        if (gdata(263) == 0)
+        {
             list(0, listmax) = 2;
             listn(0, listmax) = lang(
                 u8"魔術士ギルドとは？"s, u8"Tell me about the Mages Guild."s);
             ++listmax;
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"魔術士ギルドに加入したい"s,
+            listn(0, listmax) = lang(
+                u8"魔術士ギルドに加入したい"s,
                 u8"I want to join the Mages Guild."s);
             ++listmax;
             list(0, listmax) = 0;
@@ -5449,7 +6252,8 @@ void label_2246()
                 u8"止まれ…この階段の先は魔術士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Mages Guild office. Only the members of the guild are allowed to enter."s);
             label_2257();
-            if (chatval == 2) {
+            if (chatval == 2)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"魔術士ギルドは、各地の魔術士を管轄する組合だ。組合員には規律の厳守と一定のノルマを求める代わりに、援助を施し特定の仕事を斡旋している。魔術士ギルドのメンバーには、魔法書の予約、全店舗での魔法書の割引、魔術スキルの習得と訓練などの特典がある。ギルドに加入するには、厳しい審査を通らなければならない。"s,
@@ -5460,8 +6264,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5469,8 +6275,10 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 1) {
-                if (gdata(466) == 0) {
+            if (chatval == 1)
+            {
+                if (gdata(466) == 0)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"ギルドに加入したいというのか…我々が求めているのは有能な魔術士だ。お前がギルドのメンバーにふさわしいか試させてもらおう。"s,
@@ -5481,8 +6289,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5497,8 +6307,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5507,7 +6319,8 @@ void label_2246()
                     gdata(266) = 30;
                     snd(44);
                     txtef(2);
-                    txt(lang(u8"ジャーナルが更新された。"s,
+                    txt(lang(
+                        u8"ジャーナルが更新された。"s,
                         u8"Your journal has been updated."s));
                     listmax = 0;
                     buff = lang(
@@ -5519,8 +6332,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5528,7 +6343,8 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(266) > 0) {
+                if (gdata(266) > 0)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"まだノルマが残っているじゃないか…ギルドに加入するには、審査を通らなければならないぞ。"s,
@@ -5539,8 +6355,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5549,7 +6367,8 @@ void label_2246()
                     return;
                 }
                 listmax = 0;
-                buff = lang(u8"ほう…どうやらノルマを見事に達成したようだな。"s,
+                buff = lang(
+                    u8"ほう…どうやらノルマを見事に達成したようだな。"s,
                     u8"Quite impressive...you have accomplished the task."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5557,8 +6376,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5575,17 +6396,20 @@ void label_2246()
                 gdata(470) = 0;
                 gdata(469) = 0;
                 gdata(471) = 0;
-                txt(lang(u8"クエストを達成した！"s,
+                txt(lang(
+                    u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
                 txtmore();
                 snd(44);
                 txtef(2);
-                txt(lang(u8"ジャーナルが更新された。"s,
+                txt(lang(
+                    u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 txtmore();
                 txtef(5);
-                txt(lang(u8"魔術士ギルドに加入した！"s,
+                txt(lang(
+                    u8"魔術士ギルドに加入した！"s,
                     u8"You have joined the Mages Guild!"s));
                 listmax = 0;
                 buff = lang(
@@ -5597,8 +6421,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5613,12 +6439,15 @@ void label_2246()
         cell_movechara(tc, 4, 20);
         cdata(171, tc) = 4;
         cdata(172, tc) = 20;
-        if (gdata(469) == 0) {
+        if (gdata(469) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) =
                 lang(u8"ノルマを貰う"s, u8"Do you have any tasks for me?"s);
             ++listmax;
-        } else {
+        }
+        else
+        {
             list(0, listmax) = 2;
             listn(0, listmax) =
                 lang(u8"ノルマを報告する"s, u8"About my task."s);
@@ -5627,17 +6456,20 @@ void label_2246()
         list(0, listmax) = 0;
         listn(0, listmax) = strbye;
         ++listmax;
-        buff = lang(u8"ようこそ魔術士ギルドへ、"s + ranktitle(8) + u8"の"s +
-                cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
-            u8"Welcome to the Mages Guild, "s + ranktitle(8) + u8" "s +
-                cdatan(0, 0) + u8"... Please come in."s);
+        buff = lang(
+            u8"ようこそ魔術士ギルドへ、"s + ranktitle(8) + u8"の"s
+                + cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
+            u8"Welcome to the Mages Guild, "s + ranktitle(8) + u8" "s
+                + cdatan(0, 0) + u8"... Please come in."s);
         label_2257();
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             gdata(469) = 1;
             gdata(266) = 75 - gdata(128) / 200;
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -5653,8 +6485,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5662,10 +6496,13 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 2) {
-            if (gdata(266) > 0) {
+        if (chatval == 2)
+        {
+            if (gdata(266) > 0)
+            {
                 listmax = 0;
-                buff = lang(u8"どうしました？まだノルマが残っていますよ。"s,
+                buff = lang(
+                    u8"どうしました？まだノルマが残っていますよ。"s,
                     u8"You have your task to complete."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5673,8 +6510,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5690,17 +6529,23 @@ void label_2246()
             itemcreate(
                 -1, 54, cdata(1, 0), cdata(2, 0), 10000 - gdata(128) + 1000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0),
+            itemcreate(
+                -1,
+                55,
+                cdata(1, 0),
+                cdata(2, 0),
                 limit(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             modrank(8, 500, 8);
             listmax = 0;
@@ -5713,8 +6558,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5725,13 +6572,15 @@ void label_2246()
         label_2256();
         return;
     case 294:
-        if (gdata(265) == 0) {
+        if (gdata(265) == 0)
+        {
             list(0, listmax) = 2;
             listn(0, listmax) = lang(
                 u8"盗賊ギルドとは？"s, u8"Tell me about the Thieves Guild."s);
             ++listmax;
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"盗賊ギルドに加入したい"s,
+            listn(0, listmax) = lang(
+                u8"盗賊ギルドに加入したい"s,
                 u8"I want to join the Thieves Guild."s);
             ++listmax;
             list(0, listmax) = 0;
@@ -5741,7 +6590,8 @@ void label_2246()
                 u8"止まれ…この階段の先は盗賊ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Thieves Guild office. Only the members of the guild are allowed to enter."s);
             label_2257();
-            if (chatval == 2) {
+            if (chatval == 2)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"盗賊ギルドは、各地の盗賊を管轄する組合だ。組合員には規律の厳守と一定のノルマを求める代わりに、援助を施し特定の仕事を斡旋している。盗賊ギルドのメンバーには、盗品の高値での売却、ブラックマーケットでの割引、盗賊スキルの習得と訓練などの特典がある。ギルドに加入するには、厳しい審査を通らなければならない。"s,
@@ -5752,8 +6602,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5761,8 +6613,10 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 1) {
-                if (gdata(468) == 0) {
+            if (chatval == 1)
+            {
+                if (gdata(468) == 0)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"盗賊ギルドに加入したいというのか…我々は知ってのとおり闇の世界に身を置いている。まずは、お前が信頼に足る者かどうか試させてもらおう。"s,
@@ -5773,8 +6627,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5782,7 +6638,8 @@ void label_2246()
                     gdata(468) = 1;
                     snd(44);
                     txtef(2);
-                    txt(lang(u8"ジャーナルが更新された。"s,
+                    txt(lang(
+                        u8"ジャーナルが更新された。"s,
                         u8"Your journal has been updated."s));
                     listmax = 0;
                     buff = lang(
@@ -5794,8 +6651,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5803,7 +6662,8 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(179) <= 4 && 1) {
+                if (gdata(179) <= 4 && 1)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"どうした？試験の内容は伝えたはずだ。税金を4ヶ月以上滞納してからまた来るがいい。"s,
@@ -5814,8 +6674,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -5824,7 +6686,8 @@ void label_2246()
                     return;
                 }
                 listmax = 0;
-                buff = lang(u8"ほう…どうやらノルマを見事に達成したようだな。"s,
+                buff = lang(
+                    u8"ほう…どうやらノルマを見事に達成したようだな。"s,
                     u8"Quite impressive...you have accomplished the task."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5832,8 +6695,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5850,17 +6715,20 @@ void label_2246()
                 gdata(470) = 0;
                 gdata(469) = 0;
                 gdata(471) = 0;
-                txt(lang(u8"クエストを達成した！"s,
+                txt(lang(
+                    u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
                 txtmore();
                 snd(44);
                 txtef(2);
-                txt(lang(u8"ジャーナルが更新された。"s,
+                txt(lang(
+                    u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 txtmore();
                 txtef(5);
-                txt(lang(u8"盗賊ギルドに加入した！"s,
+                txt(lang(
+                    u8"盗賊ギルドに加入した！"s,
                     u8"You have joined the Thieves Guild!"s));
                 listmax = 0;
                 buff = lang(
@@ -5872,8 +6740,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5888,12 +6758,15 @@ void label_2246()
         cell_movechara(tc, 17, 17);
         cdata(171, tc) = 17;
         cdata(172, tc) = 17;
-        if (gdata(471) == 0) {
+        if (gdata(471) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) =
                 lang(u8"ノルマを貰う"s, u8"Do you have any tasks for me?"s);
             ++listmax;
-        } else {
+        }
+        else
+        {
             list(0, listmax) = 2;
             listn(0, listmax) =
                 lang(u8"ノルマを報告する"s, u8"About my task."s);
@@ -5902,17 +6775,20 @@ void label_2246()
         list(0, listmax) = 0;
         listn(0, listmax) = strbye;
         ++listmax;
-        buff = lang(u8"ようこそ盗賊ギルドへ、"s + ranktitle(8) + u8"の"s +
-                cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
-            u8"Welcome to the Thieves Guild, "s + ranktitle(8) + u8" "s +
-                cdatan(0, 0) + u8"... Please come in."s);
+        buff = lang(
+            u8"ようこそ盗賊ギルドへ、"s + ranktitle(8) + u8"の"s + cdatan(0, 0)
+                + u8"…どうぞ中にお入り下さい。"s,
+            u8"Welcome to the Thieves Guild, "s + ranktitle(8) + u8" "s
+                + cdatan(0, 0) + u8"... Please come in."s);
         label_2257();
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             gdata(471) = 1;
             gdata(269) = (10000 - gdata(128)) * 6 + 1000;
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -5928,8 +6804,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -5937,10 +6815,13 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 2) {
-            if (gdata(269) > 0) {
+        if (chatval == 2)
+        {
+            if (gdata(269) > 0)
+            {
                 listmax = 0;
-                buff = lang(u8"どうしました？まだノルマが残っていますよ。"s,
+                buff = lang(
+                    u8"どうしました？まだノルマが残っていますよ。"s,
                     u8"You have your task to complete."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -5948,8 +6829,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -5965,17 +6848,23 @@ void label_2246()
             itemcreate(
                 -1, 54, cdata(1, 0), cdata(2, 0), 10000 - gdata(128) + 1000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0),
+            itemcreate(
+                -1,
+                55,
+                cdata(1, 0),
+                cdata(2, 0),
                 limit(3 - gdata(128) / 3000, 1, 3));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             modrank(8, 500, 8);
             listmax = 0;
@@ -5988,8 +6877,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6000,13 +6891,15 @@ void label_2246()
         label_2256();
         return;
     case 297:
-        if (gdata(264) == 0) {
+        if (gdata(264) == 0)
+        {
             list(0, listmax) = 2;
             listn(0, listmax) = lang(
                 u8"戦士ギルドとは？"s, u8"Tell me about the Fighters Guild."s);
             ++listmax;
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"戦士ギルドに加入したい"s,
+            listn(0, listmax) = lang(
+                u8"戦士ギルドに加入したい"s,
                 u8"I want to join the Fighters Guild."s);
             ++listmax;
             list(0, listmax) = 0;
@@ -6016,7 +6909,8 @@ void label_2246()
                 u8"止まれ…この階段の先は戦士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Fighters Guild office. Only the members of the guild are allowed to enter."s);
             label_2257();
-            if (chatval == 2) {
+            if (chatval == 2)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"戦士ギルドは、各地の戦士を管轄する組合だ。組合員には規律の厳守と一定のノルマを求める代わりに、援助を施し特定の仕事を斡旋している。戦士ギルドのメンバーには、能力復元価格の割引、鑑定価格の割引、戦士スキルの習得と訓練などの特典がある。ギルドに加入するには、厳しい審査を通らなければならない。"s,
@@ -6027,8 +6921,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6036,8 +6932,10 @@ void label_2246()
                 label_2246();
                 return;
             }
-            if (chatval == 1) {
-                if (gdata(467) == 0) {
+            if (chatval == 1)
+            {
+                if (gdata(467) == 0)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"戦士ギルドに加入したいというのか…我々が求めているのは、どんな強敵にも怯まず、与えられた指令を確実にこなす真のハンターだ。いる。お前が信頼に足る者かどうか試させてもらおう。"s,
@@ -6048,8 +6946,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -6057,16 +6957,27 @@ void label_2246()
                     gdata(467) = 1;
                     snd(44);
                     txtef(2);
-                    txt(lang(u8"ジャーナルが更新された。"s,
+                    txt(lang(
+                        u8"ジャーナルが更新された。"s,
                         u8"Your journal has been updated."s));
                     {
                         int cnt = 0;
-                        for (;; ++cnt) {
+                        for (;; ++cnt)
+                        {
                             flt(10);
                             characreate(56, 0, -3, 0);
-                            if (refchara(cdata(27, 56), 6) < 70) { continue; }
-                            if (cdata(9, 56) != -3) { continue; }
-                            if (cdata(25, 56) >= 4) { continue; }
+                            if (refchara(cdata(27, 56), 6) < 70)
+                            {
+                                continue;
+                            }
+                            if (cdata(9, 56) != -3)
+                            {
+                                continue;
+                            }
+                            if (cdata(25, 56) >= 4)
+                            {
+                                continue;
+                            }
                             break;
                         }
                     }
@@ -6086,8 +6997,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -6095,21 +7008,25 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(267) > 0 && 1) {
+                if (gdata(267) > 0 && 1)
+                {
                     listmax = 0;
-                    buff = lang(u8"どうした？試験の内容は伝えたはずだ。"s +
-                            refchara_str(gdata(268), 2) + u8"をあと"s +
-                            gdata(267) + u8"匹討伐してからまた来なさい。"s,
-                        u8"You still need to slay "s + gdata(267) +
-                            u8" more "s + refchara_str(gdata(268), 2) + u8"."s);
+                    buff = lang(
+                        u8"どうした？試験の内容は伝えたはずだ。"s
+                            + refchara_str(gdata(268), 2) + u8"をあと"s
+                            + gdata(267) + u8"匹討伐してからまた来なさい。"s,
+                        u8"You still need to slay "s + gdata(267) + u8" more "s
+                            + refchara_str(gdata(268), 2) + u8"."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = strmore;
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -6118,7 +7035,8 @@ void label_2246()
                     return;
                 }
                 listmax = 0;
-                buff = lang(u8"ほう…どうやらノルマを見事に達成したようだな。"s,
+                buff = lang(
+                    u8"ほう…どうやらノルマを見事に達成したようだな。"s,
                     u8"Quite impressive...you have accomplished the task."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -6126,8 +7044,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6144,17 +7064,20 @@ void label_2246()
                 gdata(470) = 0;
                 gdata(469) = 0;
                 gdata(471) = 0;
-                txt(lang(u8"クエストを達成した！"s,
+                txt(lang(
+                    u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
                 txtmore();
                 snd(44);
                 txtef(2);
-                txt(lang(u8"ジャーナルが更新された。"s,
+                txt(lang(
+                    u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 txtmore();
                 txtef(5);
-                txt(lang(u8"戦士ギルドに加入した！"s,
+                txt(lang(
+                    u8"戦士ギルドに加入した！"s,
                     u8"You have joined the Fighters Guild!"s));
                 listmax = 0;
                 buff = lang(
@@ -6166,8 +7089,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6175,7 +7100,9 @@ void label_2246()
                 cell_movechara(tc, 29, 2);
                 cdata(171, tc) = 29;
                 cdata(172, tc) = 2;
-            } else {
+            }
+            else
+            {
             }
             label_2256();
             return;
@@ -6183,12 +7110,15 @@ void label_2246()
         cell_movechara(tc, 29, 2);
         cdata(171, tc) = 29;
         cdata(172, tc) = 2;
-        if (gdata(470) == 0) {
+        if (gdata(470) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) =
                 lang(u8"ノルマを貰う"s, u8"Do you have any tasks for me?"s);
             ++listmax;
-        } else {
+        }
+        else
+        {
             list(0, listmax) = 2;
             listn(0, listmax) =
                 lang(u8"ノルマを報告する"s, u8"About my task."s);
@@ -6197,20 +7127,32 @@ void label_2246()
         list(0, listmax) = 0;
         listn(0, listmax) = strbye;
         ++listmax;
-        buff = lang(u8"ようこそ戦士ギルドへ、"s + ranktitle(8) + u8"の"s +
-                cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
-            u8"Welcome to the Fighters Guild, "s + ranktitle(8) + u8" "s +
-                cdatan(0, 0) + u8"... Please come in."s);
+        buff = lang(
+            u8"ようこそ戦士ギルドへ、"s + ranktitle(8) + u8"の"s + cdatan(0, 0)
+                + u8"…どうぞ中にお入り下さい。"s,
+            u8"Welcome to the Fighters Guild, "s + ranktitle(8) + u8" "s
+                + cdatan(0, 0) + u8"... Please come in."s);
         label_2257();
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             {
                 int cnt = 0;
-                for (;; ++cnt) {
+                for (;; ++cnt)
+                {
                     flt(cdata(38, 0) + 10);
                     characreate(56, 0, -3, 0);
-                    if (refchara(cdata(27, 56), 6) < 70) { continue; }
-                    if (cdata(9, 56) != -3) { continue; }
-                    if (cdata(25, 56) >= 4) { continue; }
+                    if (refchara(cdata(27, 56), 6) < 70)
+                    {
+                        continue;
+                    }
+                    if (cdata(9, 56) != -3)
+                    {
+                        continue;
+                    }
+                    if (cdata(25, 56) >= 4)
+                    {
+                        continue;
+                    }
                     break;
                 }
             }
@@ -6220,7 +7162,8 @@ void label_2246()
             gdata(470) = 1;
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
@@ -6236,8 +7179,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6245,10 +7190,13 @@ void label_2246()
             label_2246();
             return;
         }
-        if (chatval == 2) {
-            if (gdata(267) > 0 && 1) {
+        if (chatval == 2)
+        {
+            if (gdata(267) > 0 && 1)
+            {
                 listmax = 0;
-                buff = lang(u8"どうしました？まだノルマが残っていますよ。"s,
+                buff = lang(
+                    u8"どうしました？まだノルマが残っていますよ。"s,
                     u8"You have your task to complete."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -6256,8 +7204,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6273,17 +7223,23 @@ void label_2246()
             itemcreate(
                 -1, 54, cdata(1, 0), cdata(2, 0), 10000 - gdata(128) + 1000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0),
+            itemcreate(
+                -1,
+                55,
+                cdata(1, 0),
+                cdata(2, 0),
                 limit(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             modrank(8, 500, 8);
             listmax = 0;
@@ -6296,8 +7252,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6308,7 +7266,8 @@ void label_2246()
         label_2256();
         return;
     case 301:
-        if (gdata(472) == 1000) {
+        if (gdata(472) == 1000)
+        {
             listmax = 0;
             buff = lang(
                 u8"おお、おぬしか。先の依頼の件、恩に着るぞ。どうだ、わしの部下になる気はないか？"s,
@@ -6319,8 +7278,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6328,7 +7289,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(472) == 0) {
+        if (gdata(472) == 0)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"まかせて"s, u8"Leave it to me!"s);
             ++listmax;
@@ -6339,9 +7301,11 @@ void label_2246()
                 u8"困った…困ったぞ。そこのおぬし、良いところに来た。実はヨウィンがミノタウロスの軍による侵攻の危機にさらされておるのだ。ヨウィンの村長とは親しくしておって、一軍を討伐に向かわせたいのだが、今は何やら不穏な空気がパルミアを包んでいる。城から離れるわけにはいかないのだ。そこで、冒険者のおぬしに依頼したい。ミノタウロスを退治してきてはくれぬか？報酬はもちろん用意しよう。"s,
                 u8"What do I do about this... You, over there... You couldn't have gotten here a moment too soon. Yowyn is in great danger of being destroyed by the minotaur legion. The mayor of Yowyn is a close friend of mine and I don't want to leave him out in the cold. I want to send a detachment to reinforce him but I can't. The current political climate in Palmia is too volatile and the troops must remain in the castle. That's why I'm asking an adventurer like you. Will you attack the minotaur's camp for me? I will reward you handsomely if you do this."s);
             label_2257();
-            if (chatval != 1) {
+            if (chatval != 1)
+            {
                 listmax = 0;
-                buff = lang(u8"やはり、おぬしには無理か…"s,
+                buff = lang(
+                    u8"やはり、おぬしには無理か…"s,
                     u8"I knew you'd refuse... and after all, why wouldn't you?"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -6349,8 +7313,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6360,21 +7326,24 @@ void label_2246()
             }
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             listmax = 0;
             buff = lang(
                 u8"なに、真か！では早々にミノタウロスの巣窟に向かい、首領を退治して来てもらいたい。場所は確かヨウィンの南と聞いておる。頼むぞ！"s,
-                u8"What? You will? Great... Head to the Minotaur's Nest south of Yowyn and take the head of the minotaurs' king. Godspeed, "s +
-                    cdatan(0, 0) + u8"."s);
+                u8"What? You will? Great... Head to the Minotaur's Nest south of Yowyn and take the head of the minotaurs' king. Godspeed, "s
+                    + cdatan(0, 0) + u8"."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strbye;
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6383,7 +7352,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(472) == 1) {
+        if (gdata(472) == 1)
+        {
             listmax = 0;
             buff = lang(
                 u8"どうした？おぬしが早くせんと、ヨウィンが危ないのだ。頼むぞ。"s,
@@ -6394,8 +7364,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6403,7 +7375,8 @@ void label_2246()
             label_2256();
             return;
         }
-        if (gdata(472) == 2) {
+        if (gdata(472) == 2)
+        {
             listmax = 0;
             buff = lang(
                 u8"おぬしか、待っておったぞ。報告はいい。すでに、ミノタウロスの王を倒した英雄のことは、この耳に伝わっておるわい。わしの感謝の印だ、受け取ってくれ。"s,
@@ -6414,8 +7387,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6432,11 +7407,13 @@ void label_2246()
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
             txtmore();
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(472) = 1000;
             label_2256();
@@ -6444,10 +7421,12 @@ void label_2246()
         }
         goto label_2247_internal;
     case 302:
-        if (cdata(30, 0) <= 10) {
+        if (cdata(30, 0) <= 10)
+        {
             listmax = 0;
-            buff = lang(u8"チッ、一文無しの乞食"s + _ka() +
-                    u8"とっとといっちまい"s + _na(),
+            buff = lang(
+                u8"チッ、一文無しの乞食"s + _ka() + u8"とっとといっちまい"s
+                    + _na(),
                 u8"Bah, a begger without a penny. What a waste of time! Just go away!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
@@ -6455,8 +7434,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6481,17 +7462,22 @@ void label_2246()
                 u8" gold pices and your cargos. Quite fortunate indeed."s);
         chatesc = 0;
         label_2257();
-        if (chatval == 0) {
+        if (chatval == 0)
+        {
             snd(12);
             cdata(30, 0) -= cdata(30, 0) / 5;
             inv_getheader(0);
             {
                 int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt) {
-                    if (inv(0, cnt) > 0) {
-                        if (refitem(inv(3, cnt), 10) == 1) {
+                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                {
+                    if (inv(0, cnt) > 0)
+                    {
+                        if (refitem(inv(3, cnt), 10) == 1)
+                        {
                             txtmore();
-                            txt(lang(itemname(cnt) + u8"を渡した。"s,
+                            txt(lang(
+                                itemname(cnt) + u8"を渡した。"s,
                                 u8"You hand over "s + itemname(cnt) + u8"."s));
                             inv(0, cnt) = 0;
                         }
@@ -6507,8 +7493,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6520,8 +7508,9 @@ void label_2246()
             return;
         }
         listmax = 0;
-        buff = lang(u8"いい度胸"s + _da() + u8"…しかし、賢い選択とは言えない"s +
-                _na() + u8"ここがおまえさんの墓場"s + _da(2),
+        buff = lang(
+            u8"いい度胸"s + _da() + u8"…しかし、賢い選択とは言えない"s + _na()
+                + u8"ここがおまえさんの墓場"s + _da(2),
             u8"You've got some guts. But your decision sure ain't a wise one. This will be your grave, kid."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
@@ -6529,8 +7518,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -6538,7 +7529,8 @@ void label_2246()
         label_2256();
         return;
     case 322:
-        if (gdata(473) == 0) {
+        if (gdata(473) == 0)
+        {
             listmax = 0;
             buff = lang(
                 u8"よく聞きなさい。もしあなたがいつかリトルシスターに出会ったら、あの子達に救いの手を差し伸べてあげて。見た目こそ化け物のように映るかもしれないけど、彼女たちがまた元の可愛らしい笑顔を取り戻せるように、私は研究を続けている。だから、お願い。この道具を使ってリトルたちを私の元に運んで。あなたへのお礼は、いつか必ず。"s,
@@ -6549,8 +7541,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6558,28 +7552,35 @@ void label_2246()
             gdata(473) = 0;
             flt();
             itemcreate(-1, 699, cdata(1, 0), cdata(2, 0), 0);
-            txt(lang(u8"何かが足元に転がってきた。"s,
+            txt(lang(
+                u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             snd(44);
             txtef(2);
-            txt(lang(u8"ジャーナルが更新された。"s,
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata(473) = 1;
             label_2256();
             return;
         }
-        if (gdata(473) > 0) {
+        if (gdata(473) > 0)
+        {
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"約束のお礼は？"s,
+            listn(0, listmax) = lang(
+                u8"約束のお礼は？"s,
                 u8"What about the reward you promised me?"s);
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = lang(u8"捕獲玉を補充したい"s,
+            listn(0, listmax) = lang(
+                u8"捕獲玉を補充したい"s,
                 u8"I need to replenish my supply of little balls."s);
             ++listmax;
-            if (findally(319) != -1) {
+            if (findally(319) != -1)
+            {
                 list(0, listmax) = 3;
-                listn(0, listmax) = lang(u8"リトルシスターを引き渡す"s,
+                listn(0, listmax) = lang(
+                    u8"リトルシスターを引き渡す"s,
                     u8"(Turn over the little sister.)"s);
                 ++listmax;
             }
@@ -6590,16 +7591,19 @@ void label_2246()
                 u8"リトルたちを、終わりのない苦痛から解放するべきだという人もいる。でも、大抵の人間はあの子達の力が欲しくて殺すのよ。そう、確かにリトルの肉は人の肉体を進化させる。それでも、私はあの子たちを救う別の道があることを信じているの。…そして覚えておいて。もしあなたがリトルの命を奪うようなことがあれば、いつかその酬いを受ける時がくるから。"s,
                 u8"Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "s);
             label_2257();
-            if (chatval == 1) {
+            if (chatval == 1)
+            {
                 p = gdata(810);
                 {
                     int cnt = 1;
                     for (int cnt_end = cnt + (gdata(812) + 1); cnt < cnt_end;
-                         ++cnt) {
+                         ++cnt)
+                    {
                         p += cnt;
                     }
                 }
-                if (gdata(811) >= p || 0) {
+                if (gdata(811) >= p || 0)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"報酬、そうね。リトルたちが、あなたのために街で落し物を集めてきたのよ。好きなものを選んでちょうだい。あなたが貴重なものを無くした時のために、保留しておいてもいいわ。"s,
@@ -6610,8 +7614,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -6624,31 +7630,56 @@ void label_2246()
                     itemcreate(-1, 284, -1, -1, 0);
                     {
                         int cnt = 0;
-                        for (int cnt_end = cnt + (800); cnt < cnt_end; ++cnt) {
-                            if (cnt == 672) { continue; }
+                        for (int cnt_end = cnt + (800); cnt < cnt_end; ++cnt)
+                        {
+                            if (cnt == 672)
+                            {
+                                continue;
+                            }
                             randomize(gdata(12) + cnt);
                             f = 0;
-                            if (itemmemory(0, cnt)) { f = 1; }
-                            if (cnt == 662) {
-                                if (gdata(459) >= 1000) { f = 1; }
+                            if (itemmemory(0, cnt))
+                            {
+                                f = 1;
                             }
-                            if (cnt == 655) {
-                                if (gdata(461) >= 1000) { f = 1; }
+                            if (cnt == 662)
+                            {
+                                if (gdata(459) >= 1000)
+                                {
+                                    f = 1;
+                                }
                             }
-                            if (cnt == 639) {
-                                if (gdata(453) >= 1000) { f = 1; }
+                            if (cnt == 655)
+                            {
+                                if (gdata(461) >= 1000)
+                                {
+                                    f = 1;
+                                }
                             }
-                            if (f) {
+                            if (cnt == 639)
+                            {
+                                if (gdata(453) >= 1000)
+                                {
+                                    f = 1;
+                                }
+                            }
+                            if (f)
+                            {
                                 flt(cdata(38, 0) * 3 / 2, calcfixlv(3));
                                 itemcreate(-1, cnt, -1, -1, 0);
-                                if (stat == 1) {
-                                    if (inv(4, ci) < 4) { inv(0, ci) = 0; }
+                                if (stat == 1)
+                                {
+                                    if (inv(4, ci) < 4)
+                                    {
+                                        inv(0, ci) = 0;
+                                    }
                                 }
                             }
                             randomize();
                         }
                     }
-                    txt(lang(u8"落し物をひとつ貰える。"s,
+                    txt(lang(
+                        u8"落し物をひとつ貰える。"s,
                         u8"You can choose 1 item."s));
                     invsubroutine = 1;
                     invctrl(0) = 22;
@@ -6657,7 +7688,8 @@ void label_2246()
                     exittempinv();
                     mode = 0;
                     listmax = 0;
-                    buff = lang(u8"お目当てのものはあったかしら？"s,
+                    buff = lang(
+                        u8"お目当てのものはあったかしら？"s,
                         u8"Did you find what you were looking for?"s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
@@ -6665,13 +7697,17 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
                     }
-                } else {
+                }
+                else
+                {
                     listmax = 0;
                     buff = lang(
                         u8"あなたにまだその資格はない。リトルたちを連れてきて。報酬はそのあと考えるわ。"s,
@@ -6682,8 +7718,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -6692,7 +7730,8 @@ void label_2246()
                 label_2256();
                 return;
             }
-            if (chatval == 2) {
+            if (chatval == 2)
+            {
                 listmax = 0;
                 buff = lang(
                     u8"さあ、これを持っていきなさい。重いから注意して。"s,
@@ -6703,28 +7742,34 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
                 flt();
                 itemcreate(-1, 699, cdata(1, 0), cdata(2, 0), 0);
-                txt(lang(u8"何かが足元に転がってきた。"s,
+                txt(lang(
+                    u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 label_2256();
                 return;
             }
-            if (chatval == 3) {
-                txt(lang(u8"リトルシスターを謎の科学者に手渡した。"s,
+            if (chatval == 3)
+            {
+                txt(lang(
+                    u8"リトルシスターを謎の科学者に手渡した。"s,
                     u8"You turn over the little sister."s));
                 ++gdata(811);
                 txtef(2);
-                txt(lang(u8"リトルシスター殺害"s + gdata(810) + u8"回、救出"s +
-                        gdata(811) + u8"回。"s,
-                    u8"You have saved little sister "s + gdata(811) +
-                        u8" times and killed "s + gdata(810) + u8" times."s));
+                txt(lang(
+                    u8"リトルシスター殺害"s + gdata(810) + u8"回、救出"s
+                        + gdata(811) + u8"回。"s,
+                    u8"You have saved little sister "s + gdata(811)
+                        + u8" times and killed "s + gdata(810) + u8" times."s));
                 chara_vanquish(findally(319));
                 snd(51);
                 listmax = 0;
@@ -6737,8 +7782,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6749,8 +7796,10 @@ void label_2246()
         }
         goto label_2247_internal;
     case 345:
-        if (gdata(474) >= 3) {
-            buff = lang(u8"どうだい、俺に乗ってみたいかい？"s,
+        if (gdata(474) >= 3)
+        {
+            buff = lang(
+                u8"どうだい、俺に乗ってみたいかい？"s,
                 u8"So, you wanted to ride me right?"s);
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"乗りたい"s, u8"Yes!"s);
@@ -6760,9 +7809,11 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (chatval == 1) {
+            if (chatval == 1)
+            {
                 f = get_freeally();
-                if (f == 0) {
+                if (f == 0)
+                {
                     listmax = 0;
                     buff = lang(
                         u8"おっと、これ以上仲間を連れて行けないようだぜ。"s,
@@ -6773,8 +7824,10 @@ void label_2246()
                     ++listmax;
                     chatesc = 1;
                     label_2257();
-                    if (scenemode) {
-                        if (scene_cut == 1) {
+                    if (scenemode)
+                    {
+                        if (scene_cut == 1)
+                        {
                             label_2256();
                             return;
                         }
@@ -6788,8 +7841,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6808,8 +7863,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6818,7 +7875,8 @@ void label_2246()
             return;
         }
         inv_find(771, 0);
-        if (stat != -1) {
+        if (stat != -1)
+        {
             buff = lang(
                 u8"それはカプセル・ドラッグ！…なあ、それ譲ってくれよ。"s,
                 u8"That-that's a capsule drag! ...hey, you want to give it to me?"s);
@@ -6830,10 +7888,12 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (chatval == 1) {
+            if (chatval == 1)
+            {
                 inv_find(771, 0);
                 --inv(0, stat);
-                txt(lang(u8"カプセルドラッグを1錠渡した。"s,
+                txt(lang(
+                    u8"カプセルドラッグを1錠渡した。"s,
                     u8"You hand him a capsule drag."s));
                 snd(13);
                 listmax = 0;
@@ -6844,8 +7904,10 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
@@ -6864,8 +7926,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -6873,10 +7937,12 @@ void label_2246()
         label_2256();
         return;
     case 348:
-        if (gdata(20) != 33 || adata(29, gdata(20)) == 0) {
+        if (gdata(20) != 33 || adata(29, gdata(20)) == 0)
+        {
             goto label_2247_internal;
         }
-        if (cdata(61, 0) == 6) {
+        if (cdata(61, 0) == 6)
+        {
             listmax = 0;
             buff = lang(
                 u8"ああ、あなた既に信者さんでしょ？悪いけど、新規契約しか受け付けてないからさ。"s,
@@ -6887,8 +7953,10 @@ void label_2246()
             ++listmax;
             chatesc = 1;
             label_2257();
-            if (scenemode) {
-                if (scene_cut == 1) {
+            if (scenemode)
+            {
+                if (scene_cut == 1)
+                {
                     label_2256();
                     return;
                 }
@@ -6897,7 +7965,8 @@ void label_2246()
             return;
         }
         list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ジュア教に改宗する"s,
+        listn(0, listmax) = lang(
+            u8"ジュア教に改宗する"s,
             u8"I will become a faithful servant of Jure."s);
         ++listmax;
         list(0, listmax) = 0;
@@ -6908,20 +7977,24 @@ void label_2246()
             u8"We are running a special campagin to help you join our religion! Be a brother of Jure today and win free body pillow of Jure! During the festival, you won't have to pay penalty to convert your religion neither. So what are you waiting? Sign up now!"s);
         chatesc = 1;
         label_2257();
-        if (chatval == 1) {
+        if (chatval == 1)
+        {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"はい"s, u8"Yes."s);
             ++listmax;
             list(0, listmax) = 0;
             listn(0, listmax) = lang(u8"いいえ"s, u8"No."s);
             ++listmax;
-            buff = lang(u8"よし、本当に改宗していいね？"s,
+            buff = lang(
+                u8"よし、本当に改宗していいね？"s,
                 u8"Okie, just making sure. Do you really want to convert your religion?"s);
             chatesc = 1;
             label_2257();
-            if (chatval == 1) {
+            if (chatval == 1)
+            {
                 listmax = 0;
-                buff = lang(u8"あざーっす！やっと今日のノルマが達成できたよ。"s,
+                buff = lang(
+                    u8"あざーっす！やっと今日のノルマが達成できたよ。"s,
                     u8"Thanks, bro! I just filled my daily quota."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -6929,13 +8002,16 @@ void label_2246()
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode) {
-                    if (scene_cut == 1) {
+                if (scenemode)
+                {
+                    if (scene_cut == 1)
+                    {
                         label_2256();
                         return;
                     }
                 }
-                txt(lang(u8"何かが足元に転がってきた。"s,
+                txt(lang(
+                    u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 flt();
                 itemcreate(-1, 767, cdata(1, 0), cdata(2, 0), 0);
@@ -6953,8 +8029,10 @@ void label_2246()
         ++listmax;
         chatesc = 1;
         label_2257();
-        if (scenemode) {
-            if (scene_cut == 1) {
+        if (scenemode)
+        {
+            if (scene_cut == 1)
+            {
                 label_2256();
                 return;
             }
@@ -6972,8 +8050,10 @@ label_2247_internal:
     ++listmax;
     chatesc = 1;
     label_2257();
-    if (scenemode) {
-        if (scene_cut == 1) {
+    if (scenemode)
+    {
+        if (scene_cut == 1)
+        {
             label_2256();
             return;
         }

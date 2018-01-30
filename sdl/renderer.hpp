@@ -1,21 +1,17 @@
 #pragma once
 
-#include "lib/noncopyable.hpp"
-#include "detail/sdl.hpp"
 #include "blendmode.hpp"
 #include "color.hpp"
+#include "detail/sdl.hpp"
 #include "font.hpp"
 #include "image.hpp"
+#include "lib/noncopyable.hpp"
 #include "window.hpp"
 
 
 namespace snail
 {
-
-
-
-class Renderer
-    : public lib::noncopyable
+class Renderer : public lib::noncopyable
 {
 public:
     struct Rect
@@ -36,10 +32,10 @@ public:
 
     enum Flag
     {
-        none           = 0,
-        software       = SDL_RENDERER_SOFTWARE,
-        accelerated    = SDL_RENDERER_ACCELERATED,
-        present_vsync  = SDL_RENDERER_PRESENTVSYNC,
+        none = 0,
+        software = SDL_RENDERER_SOFTWARE,
+        accelerated = SDL_RENDERER_ACCELERATED,
+        present_vsync = SDL_RENDERER_PRESENTVSYNC,
         target_texture = SDL_RENDERER_TARGETTEXTURE,
     };
 
@@ -132,40 +128,73 @@ public:
     void render_point(int x, int y);
     void fill_rect(int x, int y, int width, int height);
     Rect render_text(
-            const std::string& text,
-            int x, int y,
-            const Color& color = Palette::black);
+        const std::string& text,
+        int x,
+        int y,
+        const Color& color = Palette::black);
     Rect render_text_with_shadow(
-            const std::string& text,
-            int x, int y,
-            const Color& text_color = Palette::white,
-            const Color& shadow_color = Palette::black);
+        const std::string& text,
+        int x,
+        int y,
+        const Color& text_color = Palette::white,
+        const Color& shadow_color = Palette::black);
     Rect render_multiline_text(
-            const std::string& text,
-            int x, int y,
-            const Color& color = Palette::black);
+        const std::string& text,
+        int x,
+        int y,
+        const Color& color = Palette::black);
     Size calculate_text_size(const std::string& text);
     void render_line(int start_x, int start_y, int end_x, int end_y);
-    void render_image(Image& image,
-            int dst_x, int dst_y);
-    void render_image(Image& image,
-            int dst_x, int dst_y, int dst_width, int dst_height);
-    void render_image(Image& image,
-            int src_x, int src_y, int src_width, int src_height,
-            int dst_x, int dst_y);
-    void render_image(Image& image,
-            int src_x, int src_y, int src_width, int src_height,
-            int dst_x, int dst_y, int dst_width, int dst_height);
-    void render_image(::SDL_Texture* image,
-            int dst_x, int dst_y);
-    void render_image(::SDL_Texture* image,
-            int dst_x, int dst_y, int dst_width, int dst_height);
-    void render_image(::SDL_Texture* image,
-            int src_x, int src_y, int src_width, int src_height,
-            int dst_x, int dst_y);
-    void render_image(::SDL_Texture* image,
-            int src_x, int src_y, int src_width, int src_height,
-            int dst_x, int dst_y, int dst_width, int dst_height);
+    void render_image(Image& image, int dst_x, int dst_y);
+    void render_image(
+        Image& image,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height);
+    void render_image(
+        Image& image,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y);
+    void render_image(
+        Image& image,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height);
+    void render_image(::SDL_Texture* image, int dst_x, int dst_y);
+    void render_image(
+        ::SDL_Texture* image,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height);
+    void render_image(
+        ::SDL_Texture* image,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y);
+    void render_image(
+        ::SDL_Texture* image,
+        int src_x,
+        int src_y,
+        int src_width,
+        int src_height,
+        int dst_x,
+        int dst_y,
+        int dst_width,
+        int dst_height);
 
 
 private:
@@ -173,18 +202,19 @@ private:
     TextBaseline _text_baseline = TextBaseline::top;
     Font _font;
     BlendMode _blend_mode = BlendMode::blend;
-    std::unique_ptr<::SDL_Renderer, std::decay_t<decltype(::SDL_DestroyRenderer)>> _ptr;
+    std::unique_ptr<
+        ::SDL_Renderer,
+        std::decay_t<decltype(::SDL_DestroyRenderer)>>
+        _ptr;
 };
 
 
 
 namespace detail
 {
-
 inline Renderer* current_renderer;
-
 }
 
 
 
-}
+} // namespace snail

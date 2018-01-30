@@ -3,29 +3,27 @@
 
 #if __has_include(<optional>)
 
-# include <optional>
-# define ELONA_LIB_NAMESPACE_OPTIONAL std
+#include <optional>
+#define ELONA_LIB_NAMESPACE_OPTIONAL std
 
 #elif __has_include(<experimental/optional>)
 
-# include <experimental/optional>
-# define ELONA_LIB_NAMESPACE_OPTIONAL std::experimental
+#include <experimental/optional>
+#define ELONA_LIB_NAMESPACE_OPTIONAL std::experimental
 
 #else
-# error "Not found <optional> and <experimental/optional>"
+#error "Not found <optional> and <experimental/optional>"
 #endif
 
 
 namespace lib
 {
-
-
-using ELONA_LIB_NAMESPACE_OPTIONAL::optional;
 using ELONA_LIB_NAMESPACE_OPTIONAL::make_optional;
 using ELONA_LIB_NAMESPACE_OPTIONAL::nullopt;
+using ELONA_LIB_NAMESPACE_OPTIONAL::optional;
 
 
-}
+} // namespace lib
 
 
 
