@@ -6,6 +6,36 @@ namespace elona
 {
 void cell_draw()
 {
+    int syfix_at_m85 = 0;
+    int sxfix_at_m85 = 0;
+    int scrturn_at_m85 = 0;
+    int scrturnbk_at_m85 = 0;
+    int scrturnnew_at_m85 = 0;
+    int light_at_m85 = 0;
+    int flick_at_m85 = 0;
+    int dy_at_m85 = 0;
+    int ly_at_m85 = 0;
+    int y_at_m85 = 0;
+    int dx_at_m85 = 0;
+    int lx_at_m85 = 0;
+    int sx_at_m85 = 0;
+    elona_vector1<int> p_at_m85;
+    int x_at_m85 = 0;
+    int px_at_m85 = 0;
+    int py_at_m85 = 0;
+    int ground_at_m85 = 0;
+    int ani_at_m85 = 0;
+    int sel_at_m85 = 0;
+    int wall_at_m85 = 0;
+    int p2_at_m85 = 0;
+    int i_at_m85 = 0;
+    elona_vector1<int> flooritem_at_m85;
+    int stackh_at_m85 = 0;
+    int cnt2_at_m85 = 0;
+    int c_at_m85 = 0;
+    int col_at_m85 = 0;
+    int h_at_m85 = 0;
+    int f_at_m85 = 0;
     syfix_at_m85 = (scy != scybk) * syfix;
     sxfix_at_m85 = (scx != scxbk) * sxfix;
     scrturn_at_m85 = scrturn / 5;

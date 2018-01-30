@@ -20,6 +20,8 @@ int main()
 }
 void netload(const std::string& prm_194)
 {
+    int res_at_m0 = 0;
+    std::string estr_at_m0;
     netrequest(prm_194);
     {
         int cnt = 0;
@@ -90,6 +92,8 @@ std::string cnvitemname(int prm_251)
 }
 std::string cnven(const std::string& prm_252)
 {
+    std::string s_at_m1;
+    int p_at_m1 = 0;
     if (jp) { return prm_252; }
     s_at_m1 = prm_252;
     p_at_m1 = peek(s_at_m1, 0);
@@ -140,6 +144,7 @@ int refrace(const std::string& prm_263, int prm_264)
 }
 std::string ranktitle(int prm_265)
 {
+    int p_at_m6 = 0;
     p_at_m6 = gdata((prm_265 + 120)) / 100;
     if (p_at_m6 == 1) { return rankn(0, prm_265); }
     if (p_at_m6 <= 5) { return rankn(1, prm_265); }
@@ -338,6 +343,7 @@ void label_0026()
 }
 std::string guildname()
 {
+    std::string s_at_m7;
     s_at_m7 = lang(u8"なし"s, u8"None"s);
     if (gdata(263) != 0) {
         s_at_m7 = lang(u8"魔術士ギルド"s, u8"Mages Guild"s);
@@ -571,6 +577,7 @@ void label_0031()
 }
 void calcbuff(int prm_266, int prm_267, int prm_268)
 {
+    elona_vector1<int> p_at_m8;
     if (prm_267 >= 20 && prm_267 <= 28) {
         dur = 10 + prm_268 / 10;
         p_at_m8 = prm_268;
@@ -900,6 +907,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
 }
 int calcskill(int prm_269, int prm_270, int prm_271)
 {
+    int rs_at_m9 = 0;
     rs_at_m9 = sdata(sdataref(0, prm_269), prm_270);
     ele = 0;
     elep = 0;
@@ -1449,6 +1457,7 @@ int refitem(int prm_279, int prm_280)
 }
 int iequiploc(int prm_281)
 {
+    int p_at_m13 = 0;
     p_at_m13 = refitem(inv(3, prm_281), 5);
     if (p_at_m13 == 12000) {
         stat = 1;
@@ -1568,6 +1577,7 @@ int evid()
 }
 int evfind(int prm_288)
 {
+    int f_at_m17 = 0;
     f_at_m17 = 0;
     {
         int cnt = 0;
@@ -1609,6 +1619,8 @@ void sndload(const std::string& prm_292, int prm_293)
 }
 void snd(int prm_296, int prm_297, int prm_298)
 {
+    int sound_at_m18 = 0;
+    int f_at_m18 = 0;
     if (cfg_sound == 0) { return; }
     sound_at_m18 = prm_296;
     if (sound_at_m18 > 7) {
@@ -1928,6 +1940,14 @@ void label_0068()
 }
 void key_check(int prm_299)
 {
+    int p_at_m19 = 0;
+    int a_at_m19 = 0;
+    int f_at_m19 = 0;
+    int j_at_m19 = 0;
+    int prevjoy_at_m19 = 0;
+    int b_at_m19 = 0;
+    std::string keyactive_at_m19;
+    int scon_at_m19 = 0;
     if (ginfo(2) == 0) {
         objsel(0);
     } else {
@@ -2243,6 +2263,7 @@ void key_check(int prm_299)
 }
 void keyrelease()
 {
+    int a_at_m20 = 0;
     {
         int cnt = 0;
         for (;; ++cnt) {
@@ -2276,6 +2297,10 @@ void press(int prm_300)
 }
 void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
 {
+    int pos_x_at_m21 = 0;
+    int pos_y_at_m21 = 0;
+    elona_vector1<int> mes_color_at_m21;
+    int mes_y_at_m21 = 0;
     pos_x_at_m21 = ginfo(22);
     pos_y_at_m21 = ginfo(23);
     mes_color_at_m21(0) = prm_302;
@@ -2301,6 +2326,8 @@ void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
 }
 void msg_write(std::string& prm_307)
 {
+    int mp_at_txtfunc = 0;
+    int mark_at_txtfunc = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
@@ -2333,6 +2360,7 @@ void msg_write(std::string& prm_307)
 }
 void txtmore()
 {
+    int tmore_at_txtfunc = 0;
     tmore_at_txtfunc = 1;
     return;
 }
@@ -2473,6 +2501,11 @@ void msg_clear()
 }
 void txt_conv()
 {
+    int len_at_txtfunc = 0;
+    int p2_at_txtfunc = 0;
+    std::string m_at_txtfunc;
+    int b_at_txtfunc = 0;
+    std::string mst_at_txtfunc;
     redraw(0);
     if (msgtemp == ""s) { return; }
     if (tcopy) {
@@ -2622,6 +2655,7 @@ void txt_conv()
 }
 std::string name(int prm_309)
 {
+    std::string s_at_m23;
     if (prm_309 == 0) { return lang(u8"あなた"s, u8"you"s); }
     if (synccheck(prm_309, -1) == 0) { return lang(u8"何か"s, u8"something"s); }
     if (cdata(253, 0) != 0 ||
@@ -2852,6 +2886,12 @@ void stxt(int prm_340, const std::string& prm_341)
 }
 std::string cnvdate(int prm_342, int prm_343)
 {
+    int p_at_m27 = 0;
+    int hour_at_m27 = 0;
+    int day_at_m27 = 0;
+    int month_at_m27 = 0;
+    int year_at_m27 = 0;
+    std::string s_at_m27;
     p_at_m27 = prm_342;
     hour_at_m27 = prm_342 % 24;
     day_at_m27 = prm_342 / 24 % 30;
@@ -4147,6 +4187,8 @@ std::string mapname(int prm_366, int prm_367)
 }
 std::string txtbuilding(int prm_368, int prm_369)
 {
+    int p_at_m32 = 0;
+    std::string s_at_m32;
     p_at_m32 = bddata(0, prm_368, prm_369);
     s_at_m32 = lang(
         bdrefn(p_at_m32) + u8"がある。"s, u8"You see "s + bdrefn(p_at_m32));
@@ -4284,6 +4326,9 @@ std::string txtskillchange(int prm_370, int prm_371, int prm_372)
 std::string foodname(
     int prm_373, const std::string& prm_374, int prm_375, int prm_376)
 {
+    std::string s_at_m33;
+    std::string n_at_m33;
+    int p_at_m33 = 0;
     s_at_m33 = prm_374;
     if (prm_373 == 1) {
         if (prm_376 == 0) {
@@ -8756,6 +8801,7 @@ void label_0176()
 }
 std::string cnvweight(int prm_399)
 {
+    std::string s_at_m35;
     s_at_m35 = ""s + abs(prm_399) / 1000 + u8"."s +
         abs(prm_399) % 1000 / 100 + ""s + strweight;
     return s_at_m35;
@@ -9848,6 +9894,7 @@ void label_0185()
 }
 void addnews2(const std::string& prm_401, int prm_402)
 {
+    std::string n_at_m36;
     n_at_m36 = prm_401;
     if (prm_402) {
         txtef(13);
@@ -11404,6 +11451,7 @@ void create_pcpic(int prm_409, int prm_410)
 }
 void label_0196()
 {
+    int p_at_m38 = 0;
     p_at_m38 = refitem(inv(3, i_at_m38), 18);
     if (p_at_m38 == 0) { p_at_m38 = 1; }
     if (body_at_m38 == 1) { return; }
@@ -12382,6 +12430,9 @@ void initcard(int prm_422, int prm_423, int)
 }
 void showcard2(int prm_425, int prm_426)
 {
+    elona_vector1<int> col_at_cardcontrol;
+    std::string s_at_cardcontrol;
+    int tx_at_cardcontrol = 0;
     font(lang(cfg_font1, cfg_font2), 43 - en * 2, 1);
     color(0, 0, 0);
     gmode(2, 64, 96);
@@ -12473,6 +12524,7 @@ void showcard2(int prm_425, int prm_426)
 }
 void showcardpile()
 {
+    int pilestack_at_cardcontrol = 0;
     redraw(0);
     pos(pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
     gcopy(3, 528, 216, 80, 112);
@@ -12517,6 +12569,7 @@ void showcard()
 }
 int servecard(int prm_427)
 {
+    int cardid_at_cardcontrol = 0;
     cardid_at_cardcontrol = -1;
     {
         int cnt = 0;
@@ -12692,6 +12745,7 @@ int trashcard(int prm_430)
 }
 int cpscore(int prm_431)
 {
+    int ace_at_cardcontrol = 0;
     i_at_cardcontrol = 0;
     ace_at_cardcontrol = 0;
     {
@@ -12777,6 +12831,7 @@ int pileremain()
 void csvsort(
     elona_vector1<std::string>& prm_435, std::string prm_436, int prm_437)
 {
+    elona_vector1<int> p_at_m40;
     p_at_m40(0) = 0;
     {
         int cnt = 0;
@@ -12853,17 +12908,24 @@ label_0223_internal:
 }
 std::string random_title(int prm_439)
 {
-label_0227_internal : {
-    int cnt = 0;
-    for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
-        p_at_m41(2) = rnd(length2(rnlist));
-        p_at_m41(1) = rnd(14);
-        if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s) {
-            --cnt;
-            continue;
+    elona_vector1<std::string> randn2_at_m41;
+    int rtval_at_m41 = 0;
+    elona_vector1<std::string> s2_at_m41;
+    // clang-format off
+label_0227_internal:
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
+            p_at_m41(2) = rnd(length2(rnlist));
+            p_at_m41(1) = rnd(14);
+            if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s) {
+                --cnt;
+                continue;
+            }
         }
     }
-}
+    // clang-format on
+
     if (prm_439 == 1 || prm_439 == 3) {
         if (rnlist(14, p_at_m41(2)) == u8"具"s) { goto label_0227_internal; }
     }
@@ -13043,6 +13105,8 @@ void label_0230()
 }
 void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
 {
+    int p_at_m42 = 0;
+    int f_at_m42 = 0;
     randomize(inv(30, prm_440) + 1);
     DIM2(prm_441, 15);
     prm_442 = 0;
@@ -13073,6 +13137,7 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
 }
 int calcobjlv(int prm_443)
 {
+    int objlv_at_m43 = 0;
     if (prm_443 <= 0) {
         objlv_at_m43 = gdata(22);
     } else {
@@ -13098,6 +13163,7 @@ int calcobjlv(int prm_443)
 }
 int calcfixlv(int prm_444)
 {
+    int fixlv_at_m43 = 0;
     if (prm_444 == 0) {
         fixlv_at_m43 = 2;
     } else {
@@ -13144,6 +13210,8 @@ void flt(int prm_445, int prm_446)
 }
 void fltn(const std::string& prm_447)
 {
+    std::string s2_at_m44;
+    int p_at_m44 = 0;
     s2_at_m44 = prm_447;
     p_at_m44 = 0;
     {
@@ -13178,6 +13246,8 @@ int fltsetdungeon()
 }
 int randomele()
 {
+    int p_at_m45 = 0;
+    int i_at_m45 = 0;
     p_at_m45 = rnd(11) + 50;
     if (p_at_m45 != 1) {
         {
@@ -14497,6 +14567,9 @@ void label_0247()
 }
 int randomenc(int prm_451)
 {
+    int sum_at_m47 = 0;
+    int max_at_m47 = 0;
+    int i_at_m47 = 0;
     sum_at_m47 = 0;
     max_at_m47 = 0;
     {
@@ -14541,6 +14614,7 @@ int randomenc(int prm_451)
 }
 int randomenclv(int prm_452)
 {
+    int enclv_at_m47 = 0;
     enclv_at_m47 = limit(prm_452, 0, 4);
     enclv_at_m47 = rnd(enclv_at_m47 + 1);
     stat = enclv_at_m47;
@@ -14548,6 +14622,7 @@ int randomenclv(int prm_452)
 }
 int randomencp(int prm_453)
 {
+    int encp_at_m47 = 0;
     encp_at_m47 = rnd(rnd(500 + (trait(163) != 0) * 50) + 1) + 1;
     if (prm_453 != 0) { encp_at_m47 = encp_at_m47 * prm_453 / 100; }
     stat = encp_at_m47;
@@ -14555,6 +14630,8 @@ int randomencp(int prm_453)
 }
 void sortenc(int prm_454)
 {
+    int f_at_m47 = 0;
+    int cnt2_at_m47 = 0;
     {
         int cnt = 0;
         for (;; ++cnt) {
@@ -14616,6 +14693,9 @@ void encremove(int prm_455, int prm_456, int prm_457)
 int encadd(int prm_458, int prm_459, int prm_460, int prm_461, int prm_462,
     int prm_463, int prm_464)
 {
+    int sum_at_m48 = 0;
+    int max_at_m48 = 0;
+    int i_at_m48 = 0;
     if (prm_459 == 0) {
         stat = 0;
         return stat;
@@ -16353,6 +16433,7 @@ int inv_getowner(int prm_473)
 }
 int inv_find(int prm_474, int prm_475)
 {
+    int f_at_m52 = 0;
     f_at_m52 = -1;
     inv_getheader(prm_475);
     {
@@ -16370,6 +16451,7 @@ int inv_find(int prm_474, int prm_475)
 }
 int item_find(int prm_476, int prm_477, int prm_478)
 {
+    elona_vector1<int> p_at_m52;
     p_at_m52(0) = -1;
     p_at_m52(1) = -1;
     {
@@ -16423,6 +16505,7 @@ int item_find(int prm_476, int prm_477, int prm_478)
 }
 int encfind(int prm_479, int prm_480)
 {
+    int i_at_m53 = 0;
     f_at_m53 = -1;
     {
         int cnt = 100;
@@ -16555,6 +16638,10 @@ int mapitemfind(int prm_490, int prm_491, int prm_492)
 }
 void cell_refresh(int prm_493, int prm_494)
 {
+    int p_at_m55 = 0;
+    elona_vector1<int> n_at_m55;
+    int cnt2_at_m55 = 0;
+    int i_at_m55 = 0;
     if (mode == 6 || mode == 9) { return; }
     if (prm_493 < 0 || prm_494 < 0 || prm_493 >= mdata(0) ||
         prm_494 >= mdata(1)) {
@@ -16633,6 +16720,7 @@ void itemturn(int prm_495)
 }
 void removeitem(int prm_496, int prm_497)
 {
+    int n_at_m56 = 0;
     n_at_m56 = prm_497;
     if (n_at_m56 == 0) { n_at_m56 = 1; }
     inv(0, prm_496) -= n_at_m56;
@@ -16827,6 +16915,7 @@ void item_num(int prm_508, int prm_509)
 }
 int item_separate(int& prm_510)
 {
+    int ti_at_m59 = 0;
     if (inv(0, prm_510) <= 1) {
         stat = prm_510;
         return stat;
@@ -16865,6 +16954,8 @@ int item_separate(int& prm_510)
 }
 int chara_unequip(int prm_511)
 {
+    int p_at_m59 = 0;
+    int c_at_m59 = 0;
     if (inv(18, prm_511) == 0) {
         stat = 0;
         return stat;
@@ -16882,6 +16973,7 @@ int chara_unequip(int prm_511)
 }
 int item_identify(int prm_512, int prm_513, int prm_514)
 {
+    int idlv_at_m60 = 0;
     idlv_at_m60 = prm_513;
     if (prm_514) {
         if (prm_514 >= inv(29, prm_512)) { idlv_at_m60 = 3; }
@@ -16910,6 +17002,7 @@ void item_checkknown(int prm_515)
 }
 std::string rpname(int prm_516)
 {
+    std::string s_at_m62;
     s_at_m62 = u8"?????"s;
     if (rpdatan(prm_516) != ""s) { return rpdatan(prm_516); }
     if (prm_516 >= 400) { return ioriginalnameref(prm_516 - 400); }
@@ -17068,6 +17161,15 @@ void label_0311()
 }
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
+    elona_vector1<int> iqiality_at_m63;
+    int num2_at_m63 = 0;
+    std::string s2_at_m63;
+    std::string s3_at_m63;
+    int alpha_at_m63 = 0;
+    std::string s4_at_m63;
+    int len_at_m63 = 0;
+    elona_vector1<std::string> buf_at_m63;
+    int ret_at_m63 = 0;
     elona::prm_518 = prm_518;
     itemnamehack = inv(3, prm_518) + 1;
     if (inv(3, prm_518) >= maxitemid - 2 ||
@@ -17490,6 +17592,7 @@ void make_dish(int prm_523, int prm_524)
 }
 int item_stack(int prm_525, int prm_526, int prm_527)
 {
+    elona_vector1<int> p_at_m65;
     inv_getheader(prm_525);
     p_at_m65 = 0;
     if (inv(4, prm_526) == 6) {
@@ -17574,6 +17677,8 @@ void colorres(int)
 }
 void equipinfo(int prm_529, int prm_530, int prm_531)
 {
+    int p_at_m66 = 0;
+    std::string s_at_m66;
     if (inv(8, prm_529) < 3) { return; }
     {
         int cnt = 0;
@@ -17617,6 +17722,9 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
 }
 void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
 {
+    std::string word_at_m67;
+    int p_at_m67 = 0;
+    int i_at_m67 = 0;
     word_at_m67 = prm_533;
     p_at_m67 = 0;
     i_at_m67 = strlen(word_at_m67);
@@ -17652,6 +17760,8 @@ int cargocheck()
 }
 void rndshuffle(elona_vector1<int>& prm_534)
 {
+    int p_at_m68 = 0;
+    int r_at_m68 = 0;
     p_at_m68 = length(prm_534);
     {
         int cnt = 0;
@@ -17667,6 +17777,7 @@ void rndshuffle(elona_vector1<int>& prm_534)
 }
 int dist(int prm_535, int prm_536, int prm_537, int prm_538)
 {
+    int d_at_m69 = 0;
     d_at_m69 = (prm_535 - prm_537) * (prm_535 - prm_537) +
         (prm_536 - prm_538) * (prm_536 - prm_538);
     stat = elona_int(sqrt(d_at_m69));
@@ -17683,6 +17794,10 @@ int winposy(int prm_539, int prm_540)
 }
 void cutname(std::string& prm_541, int prm_542)
 {
+    int len_at_m71 = 0;
+    elona_vector1<std::string> buf_at_m71;
+    int ret_at_m71 = 0;
+    int p_at_m71 = 0;
     if (strlen_u(prm_541) > prm_542) {
         len_at_m71 = zentohan(prm_541, buf_at_m71, 0);
         SDIM2(buf_at_m71, len_at_m71);
@@ -17713,6 +17828,7 @@ void cs_list(int CNT, const std::string& prm_543, int prm_544 = 0,
     int prm_545 = 0, int prm_546 = 0, int prm_547 = 0, int prm_548 = 0,
     int prm_549 = 0)
 {
+    int tx_at_m72 = 0;
     if (cs == CNT) {
         tx_at_m72 = limit(strlen(prm_543) * 7 + 32 + prm_547, 10, 480);
         gsel(3);
@@ -17773,6 +17889,8 @@ void gohostile()
 }
 void modkarma(int prm_550, int prm_551)
 {
+    int a_at_m74 = 0;
+    int max_at_m74 = 0;
     a_at_m74 = prm_551;
     if (trait(162)) {
         if (a_at_m74 < 0) {
@@ -17822,6 +17940,10 @@ void modkarma(int prm_550, int prm_551)
 }
 void modrank(int prm_552, int prm_553, int prm_554)
 {
+    elona_vector1<int> p_at_m75;
+    int orgrank_at_m75 = 0;
+    int i_at_m75 = 0;
+    std::string s_at_m75;
     p_at_m75 = 120 + prm_552;
     p_at_m75(1) = gdata(p_at_m75) / 100;
     orgrank_at_m75 = gdata(p_at_m75);
@@ -17872,6 +17994,7 @@ int sgrowth(int prm_557, int prm_558)
 }
 void modgrowth(int prm_559, int prm_560, int prm_561)
 {
+    int growth_at_m76 = 0;
     growth_at_m76 = sdata((prm_560 + 600), prm_559) % 1000 + prm_561;
     if (growth_at_m76 > 400) { growth_at_m76 = 400; }
     if (growth_at_m76 < 2) { growth_at_m76 = 2; }
@@ -17881,6 +18004,7 @@ void modgrowth(int prm_559, int prm_560, int prm_561)
 }
 void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
 {
+    int lv_at_m76 = 0;
     if (prm_563 >= 400) {
         if (prm_562 == 0) {
             spell(prm_563 - 400) += prm_565;
@@ -17978,6 +18102,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
 }
 int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
 {
+    int exp2_at_m77 = 0;
     if (sorg(prm_569, prm_570) == 0) {
         stat = 0;
         return stat;
@@ -18114,6 +18239,7 @@ int decfame(int prm_576, int prm_577)
 }
 int getworker(int prm_578, int prm_579)
 {
+    int p_at_m78 = 0;
     p_at_m78 = -1;
     {
         int cnt = 0;
@@ -18175,6 +18301,7 @@ void delmef(int prm_581)
 void addmef(int prm_582, int prm_583, int prm_584, int prm_585, int prm_586,
     int prm_587, int prm_588, int prm_589, int prm_590, int prm_591)
 {
+    int p_at_m79 = 0;
     p_at_m79 = map(prm_582, prm_583, 0);
     if (prm_584 == 5) {
         if (chipm(0, p_at_m79) == 3) { return; }
@@ -18212,6 +18339,7 @@ void addmef(int prm_582, int prm_583, int prm_584, int prm_585, int prm_586,
 void cell_featset(int prm_592, int prm_593, int prm_594, int prm_595,
     int prm_596, int prm_597)
 {
+    elona_vector1<int> feat_at_m80;
     if (prm_594 != -1) {
         feat_at_m80 = prm_594;
     } else {
@@ -18273,6 +18401,8 @@ void cell_check(int prm_603, int prm_604)
 }
 void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 {
+    int x2_at_m81 = 0;
+    int y2_at_m81 = 0;
     if (gdata(183) != 0) {
         if (gdata(183) == prm_605 || gdata(183) == prm_606) { return; }
     }
@@ -18306,6 +18436,7 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 }
 void cell_movechara(int prm_609, int prm_610, int prm_611)
 {
+    int rc_at_m81 = 0;
     if (map(prm_610, prm_611, 1) != 0) {
         rc_at_m81 = map(prm_610, prm_611, 1) - 1;
         if (rc_at_m81 == prm_609) { return; }
@@ -18439,6 +18570,7 @@ void draw_emo(int prm_615, int prm_616, int prm_617)
 }
 void chara_preparepic(int prm_618, int prm_619)
 {
+    int p_at_m83 = 0;
     if (prm_619 == 0) {
         p_at_m83 = prm_618 / 1000;
     } else {
@@ -18712,6 +18844,7 @@ label_0397_internal:
 }
 int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
 {
+    int p_at_modfov = 0;
     DIM3(route, 2, 100);
     dy_at_modfov = prm_636 - prm_634;
     dx_at_modfov = prm_635 - prm_633;
@@ -19076,6 +19209,7 @@ void cursor_check()
 }
 void lenfix(std::string& prm_644, int prm_645)
 {
+    int p_at_m89 = 0;
     p_at_m89 = prm_645 - strlen_u(prm_644);
     if (p_at_m89 < 1) { p_at_m89 = 1; }
     {
@@ -19088,6 +19222,11 @@ void lenfix(std::string& prm_644, int prm_645)
 }
 void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
 {
+    int x_at_m91 = 0;
+    int y_at_m91 = 0;
+    int x3_at_m91 = 0;
+    int y3_at_m91 = 0;
+    int cnt2_at_m91 = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt) {
@@ -19189,6 +19328,12 @@ void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
 void window(
     int prm_650, int prm_651, int prm_652, int prm_653, int, int prm_655)
 {
+    int dx_at_m92 = 0;
+    int dy_at_m92 = 0;
+    int x3_at_m92 = 0;
+    int y3_at_m92 = 0;
+    int p_at_m92 = 0;
+    int cnt2_at_m92 = 0;
     if (prm_655 == -1) {
         gmode(6 - 1, -1, 80);
         color(0, 0, 0);
@@ -19263,6 +19408,13 @@ void window(
 void window2(int prm_656, int prm_657, int prm_658, int prm_659, int prm_660,
     int prm_661)
 {
+    int dx_at_m93 = 0;
+    int dy_at_m93 = 0;
+    int x2_at_m93 = 0;
+    int y2_at_m93 = 0;
+    int x3_at_m93 = 0;
+    int y3_at_m93 = 0;
+    int p_at_m93 = 0;
     dx_at_m93 = 0;
     dy_at_m93 = 240;
     x2_at_m93 = prm_658;
@@ -19452,6 +19604,7 @@ void display_msg(int prm_680, int prm_681)
 }
 int role(int prm_686, int prm_687, int prm_688)
 {
+    int d_at_m97 = 0;
     d_at_m97 = 0;
     if (prm_686 < 1) { prm_686 = 1; }
     if (prm_687 < 1) { prm_687 = 1; }
@@ -19487,6 +19640,9 @@ void page_load()
 }
 void fileadd(const std::string& prm_692, int prm_693)
 {
+    elona_vector1<std::string> q_at_m98;
+    int p_at_m98 = 0;
+    std::string a_at_m98;
     if (prm_693 == 0) {
         q_at_m98(0) = u8"*"s;
         q_at_m98(1) = u8"#"s;
@@ -19663,6 +19819,7 @@ void arrayfile()
 }
 std::string del_str(const std::string& prm_694, const std::string& prm_695)
 {
+    std::string s_at_m99;
     s_at_m99 = prm_694;
     {
         int cnt = 0;
@@ -19678,6 +19835,8 @@ std::string del_str(const std::string& prm_694, const std::string& prm_695)
 std::string cnv_str(std::string& prm_696, const std::string& prm_697,
     const std::string& prm_698)
 {
+    std::string s3_at_m100;
+    int p_at_m100 = 0;
     {
         int cnt = 0;
         for (;; ++cnt) {
@@ -19740,6 +19899,7 @@ void imeset(int prm_709)
 }
 int imeget()
 {
+    int imesw_at_ime_control = 0;
     himc_at_ime_control = ImmGetContext(hwnd);
     imesw_at_ime_control = ImmGetOpenStatus(himc_at_ime_control);
     ImmReleaseContext(hwnd, himc_at_ime_control);
@@ -19748,6 +19908,16 @@ int imeget()
 }
 void gmes(const std::string& prm_715)
 {
+    std::string m_at_m102;
+    std::string msg_at_m102;
+    int i_at_m102 = 0;
+    int xorg_at_m102 = 0;
+    int size_at_m102 = 0;
+    elona_vector1<int> col_at_m102;
+    int lim_at_m102 = 0;
+    int p_at_m102 = 0;
+    int brwait_at_m102 = 0;
+    std::string s_at_m102;
     m_at_m102 = "";
     msg_at_m102 = ""s + prm_715 + u8"$end"s;
     i_at_m102 = 0;
@@ -19885,6 +20055,7 @@ void boxl(int prm_716, int prm_717, int prm_718, int prm_719)
 }
 std::string fixtxt(const std::string& prm_724, int prm_725)
 {
+    std::string m_at_m104;
     m_at_m104 = ""s + prm_724;
     if (strlen_u(prm_724) < prm_725) {
         {
@@ -19902,6 +20073,8 @@ std::string fixtxt(const std::string& prm_724, int prm_725)
 void windowanime(int prm_726, int prm_727, int prm_728, int prm_729,
     int prm_730, int prm_731)
 {
+    int cenx_at_m105 = 0;
+    int ceny_at_m105 = 0;
     if (nowindowanime) {
         nowindowanime = 0;
         return;
@@ -19978,6 +20151,8 @@ void windowanimecorner(int prm_732, int prm_733, int prm_734, int prm_735,
 }
 void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
 {
+    int x_at_m106 = 0;
+    int y_at_m106 = 0;
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     if (mode != 1) {
         x_at_m106 = prm_740 - 10;
@@ -20004,6 +20179,8 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
 }
 void drawmenu(int prm_742)
 {
+    int y_at_m107 = 0;
+    elona_vector1<int> x_at_m107;
     y_at_m107 = 34;
     if (prm_742 == 0) {
         x_at_m107(0) = windoww - 260;
@@ -20085,6 +20262,7 @@ void drawmenu(int prm_742)
 }
 void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
 {
+    int cnt2_at_m108 = 0;
     gmode(0);
     {
         int cnt = 0;
@@ -20527,6 +20705,8 @@ void label_0478()
 }
 int prodcheck()
 {
+    int f_at_m110 = 0;
+    elona_vector1<int> j_at_m110;
     f_at_m110 = 1;
     if (matval(1) > sdata(matval, 0)) { f_at_m110 = -1; }
     {
@@ -21484,6 +21664,8 @@ int label_1280()
 }
 void fixaiact(int prm_753)
 {
+    int p_at_m112 = 0;
+    int i_at_m112 = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt) {
@@ -21680,6 +21862,10 @@ void rowactend(int prm_763)
 }
 int customtalk(int prm_764, int prm_765)
 {
+    int f_at_m116 = 0;
+    elona_vector1<std::string> buff_at_m116;
+    std::string s_at_m116;
+    int p_at_m116 = 0;
     f_at_m116 = 0;
     if (cbit(989, prm_764)) {
         exist(exedir + u8"user\\talk\\"s + cdatan(4, prm_764));
@@ -21812,6 +21998,8 @@ int implevel(int prm_768)
 }
 void modimp(int prm_769, int prm_770)
 {
+    elona_vector1<int> p_at_m118;
+    int i_at_m118 = 0;
     p_at_m118 = implevel(cdata(17, prm_769));
     if (prm_770 < 0) {
         i_at_m118 = prm_770;
@@ -21858,6 +22046,7 @@ void put_questtarget()
 }
 int exist_questtarget()
 {
+    int f_at_m119 = 0;
     f_at_m119 = 0;
     {
         int cnt = 57;
@@ -21872,6 +22061,7 @@ int exist_questtarget()
 }
 void check_quest()
 {
+    int p_at_m119 = 0;
     if (gdata(20) == 5) {
         if (gdata(22) == 3) {
             if (exist_questtarget() == 0) {
@@ -21971,6 +22161,7 @@ void check_quest()
 }
 void refreshspeed(int prm_771)
 {
+    int r_at_m120 = 0;
     if (cdata(68, prm_771) == 0) {
         cdata(11, prm_771) = sdata(18, prm_771);
     } else {
@@ -22040,6 +22231,7 @@ void ride_begin(int prm_772)
 }
 void ride_end()
 {
+    int p_at_m121 = 0;
     cbitmod(975, gdata(183), 0);
     rowactend(gdata(183));
     p_at_m121 = gdata(183);
@@ -22161,6 +22353,16 @@ void del_chara(int prm_783)
 }
 int relocate_chara(int prm_784, int prm_785, int prm_786)
 {
+    int tc_at_m125 = 0;
+    int x_at_m125 = 0;
+    int y_at_m125 = 0;
+    int p1_at_m125 = 0;
+    int p2_at_m125 = 0;
+    int p3_at_m125 = 0;
+    int hp_at_m125 = 0;
+    int p_at_m125 = 0;
+    int invrangecc_at_m125 = 0;
+    int cnt2_at_m125 = 0;
     tc_at_m125 = prm_785;
     if (prm_784 == gdata(183)) {
         ride_end();
@@ -22443,6 +22645,9 @@ void cell_removechara(int prm_794, int prm_795)
 }
 int cell_findspace(int prm_796, int prm_797, int prm_798)
 {
+    int f_at_m130 = 0;
+    int dy_at_m130 = 0;
+    int dx_at_m130 = 0;
     f_at_m130 = 0;
     {
         int cnt = 0;
@@ -22475,6 +22680,7 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
 }
 int findbuff(int prm_799, int prm_800)
 {
+    int f_at_m131 = 0;
     f_at_m131 = -1;
     {
         int cnt = 0;
@@ -22491,6 +22697,9 @@ int findbuff(int prm_799, int prm_800)
 }
 int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
 {
+    int p_at_m132 = 0;
+    int fixeddur_at_m132 = 0;
+    int f_at_m132 = 0;
     if (prm_804 <= 0) {
         stat = 0;
         return stat;
@@ -22618,6 +22827,7 @@ void delbuff(int prm_805, int prm_806)
 }
 void animeload(int prm_807, int prm_808)
 {
+    elona_vector1<int> i_at_m133;
     if (mode != 0) { return; }
     if (synccheck(prm_808, -1) == 0) { return; }
     if (cfg_animewait == 0) { return; }
@@ -22672,6 +22882,10 @@ void animeload(int prm_807, int prm_808)
 }
 void animeblood(int prm_809, int prm_810, int prm_811)
 {
+    int ele2_at_m133 = 0;
+    elona_vector1<int> x_at_m133;
+    elona_vector1<int> y_at_m133;
+    int cnt2_at_m133 = 0;
     if (synccheck(prm_809, -1) == 0) { return; }
     if (cfg_animewait == 0) { return; }
     screenupdate = -1;
@@ -22809,6 +23023,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
 }
 void resistmod(int prm_812, int prm_813, int prm_814)
 {
+    int lv_at_m134 = 0;
     lv_at_m134 = sorg(prm_813, prm_812) + prm_814;
     if (lv_at_m134 < 50) { lv_at_m134 = 50; }
     if (lv_at_m134 > 200) { lv_at_m134 = 200; }
@@ -22930,6 +23145,11 @@ void resistmod(int prm_812, int prm_813, int prm_814)
 }
 void modcorrupt(int prm_815)
 {
+    int org_at_m134 = 0;
+    int p_at_m134 = 0;
+    int mod_at_m134 = 0;
+    int cnt2_at_m134 = 0;
+    int i_at_m134 = 0;
     org_at_m134 = gdata(85) / 1000;
     p_at_m134 = prm_815 + (prm_815 > 0) * gdata(800);
     if (trait(168)) {
@@ -23365,6 +23585,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
 }
 void label_1346()
 {
+    int r_at_con = 0;
     p_at_con = rnd(prm_820 / 2 + 1) + prm_820 / 2;
     r_at_con = sdata(res_at_con, prm_818) / 50;
     p_at_con = p_at_con * 100 / (50 + r_at_con * 50);
@@ -23644,6 +23865,7 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
 }
 void check_kill(int prm_836, int prm_837)
 {
+    int p_at_m137 = 0;
     if (gdata(20) == 40 || gdata(20) == 35 || gdata(20) == 6) { return; }
     p_at_m137 = 0;
     if (prm_836 >= 0) {
@@ -23685,6 +23907,7 @@ void check_kill(int prm_836, int prm_837)
 }
 void item_acid(int prm_838, int prm_839)
 {
+    int body_at_m138 = 0;
     if (prm_839 != -1) {
         ci_at_m138 = prm_839;
     } else {
@@ -23931,6 +24154,7 @@ void mapitem_fire(int prm_842, int prm_843)
 }
 int item_cold(int prm_844, int prm_845)
 {
+    std::string s_at_m138;
     max_at_m138 = 0;
     ti_at_m138 = -1;
     if (prm_845 != -1) {
@@ -24052,6 +24276,10 @@ void mapitem_cold(int prm_846, int prm_847)
 }
 int copy_chara(int prm_848)
 {
+    int c_at_m139 = 0;
+    int f_at_m139 = 0;
+    int y_at_m139 = 0;
+    int x_at_m139 = 0;
     c_at_m139 = 0;
     {
         int cnt = 57;
@@ -24370,6 +24598,16 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
 }
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
+    int ele_at_m141 = 0;
+    int c3_at_m141 = 0;
+    int r_at_m141 = 0;
+    int dmglevel_at_m141 = 0;
+    int f_at_m141 = 0;
+    int pcnoise_at_m141 = 0;
+    int se_at_m141 = 0;
+    elona_vector1<int> p_at_m141;
+    int exp_at_m141 = 0;
+    int cc_at_m141 = 0;
     elona::prm_853 = prm_853;
     ele_at_m141 = prm_856;
     if (txt3rd == 0) {
@@ -25276,6 +25514,7 @@ void label_1370()
 }
 int dmgmp(int prm_858, int prm_859)
 {
+    int d_at_m142 = 0;
     cdata(55, prm_858) -= prm_859;
     if (cdata(55, prm_858) < -999999) { cdata(55, prm_858) = -999999; }
     if (cdata(55, prm_858) < 0) {
@@ -25317,6 +25556,8 @@ void healsan(int prm_862, int prm_863)
 }
 int dmgsan(int prm_864, int prm_865)
 {
+    int r_at_m143 = 0;
+    int dmg_at_m143 = 0;
     if (cdata(25, prm_864) >= 4) {
         stat = 0;
         return stat;
@@ -25388,6 +25629,8 @@ int advfavoritestat(int prm_869)
 }
 void modweight(int prm_870, int prm_871, int prm_872)
 {
+    int mini_at_m146 = 0;
+    int max_at_m146 = 0;
     mini_at_m146 = cdata(19, prm_870) * cdata(19, prm_870) * 18 / 25000;
     max_at_m146 = cdata(19, prm_870) * cdata(19, prm_870) * 24 / 10000;
     if (cdata(20, prm_870) < mini_at_m146) {
@@ -25443,6 +25686,7 @@ void cure_anorexia(int prm_875)
 }
 void chara_vomit(int prm_876)
 {
+    int p_at_m146 = 0;
     ++cdata(93, prm_876);
     if (synccheck(prm_876, -1)) {
         snd(104);
@@ -25559,6 +25803,7 @@ void sickifcursed(int prm_880, int prm_881, int prm_882)
 }
 int net_send(const std::string& prm_883, int prm_884)
 {
+    std::string msg_at_m147;
     if (cfg_net == 0) {
         stat = 0;
         return stat;
@@ -25610,6 +25855,18 @@ int net_send(const std::string& prm_883, int prm_884)
 }
 int net_read(int prm_885)
 {
+    std::string a_at_m147;
+    int sz_at_m147 = 0;
+    int t_at_m147 = 0;
+    int c_at_m147 = 0;
+    int b_at_m147 = 0;
+    int header_at_m147 = 0;
+    int tail_at_m147 = 0;
+    int chat_count_at_m147 = 0;
+    int count_latest_at_m147 = 0;
+    std::string chat_date_at_m147;
+    std::string chat_msg_at_m147;
+    std::string chat_ip_at_m147;
     chatnew = "";
     netbuf = "";
     if (cfg_net == 0) {
@@ -25778,6 +26035,12 @@ label_1394_internal:
 }
 int net_dllist(const std::string& prm_886, int prm_887)
 {
+    std::string file_at_m147;
+    int size_at_m147 = 0;
+    int p_at_m147 = 0;
+    int f_at_m147 = 0;
+    int nxt_at_m147 = 0;
+    std::string s_at_m147;
     netinit();
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
     file_at_m147 = exedir + u8"user\\net.tmp"s;
@@ -29619,6 +29882,8 @@ int calcmedalvalue(int prm_897)
 }
 int calcitemvalue(int prm_898, int prm_899)
 {
+    int reftype_at_m153 = 0;
+    int limitvalue_at_m153 = 0;
     reftype_at_m153 = refitem(inv(3, prm_898), 5);
     if (inv(8, prm_898) == 0) {
         if (prm_899 == 2) {
@@ -29844,6 +30109,9 @@ int calcmealvalue()
 }
 int calccostreload(int prm_905, int prm_906)
 {
+    int ci_at_m153 = 0;
+    int enc_at_m153 = 0;
+    elona_vector1<int> i_at_m153;
     cost_at_m153 = 0;
     inv_getheader(prm_905);
     {
@@ -29955,6 +30223,7 @@ int calcrestorecost()
 }
 int calcinitgold(int prm_917)
 {
+    int lootrich_at_m155 = 0;
     if (prm_917 < 0) {
         stat = rnd(gdata(22) * 25 * (gdata(20) != 30) + 10) + 1;
         return stat;
@@ -29995,6 +30264,9 @@ int calcspellpower(int prm_918, int prm_919)
 }
 int calcspellfail(int prm_920, int prm_921)
 {
+    int i_at_m157 = 0;
+    int f_at_m157 = 0;
+    int p_at_m157 = 0;
     if (prm_921 != 0) {
         if (gdata(183) == prm_921) {
             stat = 95 - limit((30 - sdata(301, 0) / 2), 0, 30);
@@ -30031,6 +30303,7 @@ int calcspellfail(int prm_920, int prm_921)
 }
 int calcspellcostmp(int prm_922, int prm_923)
 {
+    int cost_at_m158 = 0;
     if (prm_923 == 0) {
         if (prm_922 == 413 || prm_922 == 461 || prm_922 == 457 ||
             prm_922 == 438 || prm_922 == 409 || prm_922 == 408 ||
@@ -30051,6 +30324,7 @@ int calcspellcostmp(int prm_922, int prm_923)
 }
 int calcspellcoststock(int prm_924, int prm_925)
 {
+    int cost_at_m159 = 0;
     cost_at_m159 =
         sdataref(2, prm_924) * 200 / (sdata(prm_924, prm_925) * 3 + 100);
     if (cost_at_m159 < sdataref(2, prm_924) / 5) {
@@ -30063,6 +30337,7 @@ int calcspellcoststock(int prm_924, int prm_925)
 }
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
+    elona_vector1<int> p_at_m161;
     elona_dup2<int> sdatadup_at_m161{sdata, prm_926 + 600, prm_927};
     if (prm_926 >= 100) {
         p_at_m161 = prm_928 * 5;
@@ -30681,6 +30956,7 @@ int eqweaponheavy()
 }
 void eqrandweaponmage(int prm_929)
 {
+    int p_at_m162 = 0;
     p_at_m162 = rnd(2);
     if (p_at_m162 == 0) {
         eqweapon1(0) = 10003;
@@ -32814,6 +33090,9 @@ void label_1567(int CNT)
 }
 int convertartifact(int prm_930, int prm_931)
 {
+    int f_at_m163 = 0;
+    int tc_at_m163 = 0;
+    std::string n_at_m163;
     if (refitem(inv(3, prm_930), 5) >= 50000) {
         stat = prm_930;
         return stat;
@@ -35967,6 +36246,10 @@ void map_tileset(int prm_933)
 }
 int dist_town()
 {
+    int p_at_m165 = 0;
+    int y_at_m165 = 0;
+    int x_at_m165 = 0;
+    int i_at_m165 = 0;
     p_at_m165 = 1000;
     {
         int cnt = 0;
@@ -36034,6 +36317,8 @@ void map_initcustom(const std::string& prm_934)
 }
 void map_reload(const std::string& prm_935)
 {
+    int y_at_m166 = 0;
+    int x_at_m166 = 0;
     fmapfile = exedir + u8"map\\"s + prm_935;
     fmode = 16;
     label_2107();
@@ -36105,6 +36390,8 @@ void map_initialize()
 }
 void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
 {
+    int x_at_m167 = 0;
+    int y_at_m167 = 0;
     if (prm_937 == 1) {
         x_at_m167 = mdata(5) % 1000;
         if (prm_938 != 0) { x_at_m167 += rnd(prm_938) - rnd(prm_938); }
@@ -36347,6 +36634,7 @@ void map_nextdir1(int prm_955, int prm_956)
 }
 void map_nextdir2(int prm_957, int prm_958)
 {
+    int p_at_m168 = 0;
     if (dir2_at_m168 != -1) {
         if (dir2_at_m168 == 1) {
             if (map_digcheck(tx_at_m168 - 1, ty_at_m168)) {
@@ -36434,6 +36722,9 @@ void map_nextdir2(int prm_957, int prm_958)
 int map_digtoentrance1(
     int prm_959, int prm_960, int prm_961, int prm_962, int prm_963)
 {
+    int f_at_m168 = 0;
+    int dx_at_m168 = 0;
+    int dy_at_m168 = 0;
     tx_at_m168 = prm_959;
     ty_at_m168 = prm_960;
     dest_at_m168 = -1;
@@ -36867,6 +37158,7 @@ int map_placedownstairs(int prm_969, int prm_970)
 }
 void map_randsite(int prm_971, int prm_972)
 {
+    int f_at_m169 = 0;
     f_at_m169 = 0;
     {
         int cnt = 0;
@@ -36970,6 +37262,7 @@ void map_randsite(int prm_971, int prm_972)
 }
 int map_trap(int prm_973, int prm_974, int, int prm_976)
 {
+    int trap_at_m170 = 0;
     dx_at_m170 = prm_973;
     dy_at_m170 = prm_974;
     p_at_m170 = 0;
@@ -38449,6 +38742,8 @@ void label_1705()
 }
 void dimmix(elona_vector1<int>& prm_983)
 {
+    int mx_at_m172 = 0;
+    int r_at_m172 = 0;
     mx_at_m172 = length(prm_983);
     {
         int cnt = 0;
@@ -39950,6 +40245,8 @@ void label_1730()
 }
 int cbreeder(int prm_984)
 {
+    std::string s_at_m173;
+    int p_at_m173 = 0;
     s_at_m173 = refchara_str(cdata(27, prm_984), 8);
     p_at_m173 = refrace(cdatan(2, prm_984), 9);
     p_at_m173 = p_at_m173 * 100 / (100 + cdata(38, prm_984) * 5);
@@ -42418,6 +42715,9 @@ int card_ref(int prm_991)
 }
 void makecardlist()
 {
+    int lmax_at_tcg = 0;
+    int c1_at_tcg = 0;
+    int c2_at_tcg = 0;
     DIM3(clist_at_tcg, 10, 4);
     DIM2(clistmax_at_tcg, 4);
     {
@@ -42498,6 +42798,8 @@ void makecardlist()
 }
 void cardhelp(const std::string& prm_992, int prm_993)
 {
+    int helpdur_at_tcg = 0;
+    int dur_at_tcg = 0;
     if (helpdur_at_tcg > 1) {
         if (prm_993 == 0) {
             --helpdur_at_tcg;
@@ -42515,6 +42817,7 @@ void cardhelp(const std::string& prm_992, int prm_993)
 }
 void tcgdrawcard(int prm_994, int prm_995)
 {
+    int selected_at_tcg = 0;
     selected_at_tcg = 0;
     if (prm_995 == 0) {
         if (cursor_at_tcg) {
@@ -42631,6 +42934,11 @@ void tcgdrawcard(int prm_994, int prm_995)
 }
 void tcgdraw()
 {
+    int t_at_tcg = 0;
+    int anime_at_tcg = 0;
+    int chaintime_at_tcg = 0;
+    elona_vector2<int> star_at_tcg;
+    int screenupdate_at_tcg = 0;
 label_1772_internal:
     ++t_at_tcg;
     redraw(0);
@@ -42869,6 +43177,10 @@ int create_card(int prm_1002, int prm_1003)
 }
 void cardpos(int prm_1004, int prm_1005)
 {
+    int l_at_tcg = 0;
+    int spotlistmax_at_tcg = 0;
+    elona_vector1<int> spotlist_at_tcg;
+    int x2_at_tcg = 0;
     if (prm_1004 == 0) {
         l_at_tcg = 1;
     } else {
@@ -42977,6 +43289,7 @@ void dmgplayer(int prm_1009, int prm_1010)
 }
 void delbottomcard(int prm_1011)
 {
+    int delcard_at_tcg = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt) {
@@ -43212,6 +43525,9 @@ void label_1793()
 }
 void actionproc()
 {
+    int ac_at_tcg = 0;
+    int ap_at_tcg = 0;
+    int tc_at_tcg = 0;
     spellused_at_tcg = 0;
 label_1799_internal:
     if (stack_at_tcg > 0) {
@@ -43400,6 +43716,8 @@ int putcard(int prm_1024, int prm_1025)
 }
 void tcgdrawbg()
 {
+    int w_at_tcg = 0;
+    int h_at_tcg = 0;
     redraw(0);
     x_at_tcg = 960;
     y_at_tcg = 96;
@@ -43427,6 +43745,7 @@ void tcgdrawbg()
 }
 void tcginit()
 {
+    elona_vector1<int> spotix_at_tcg;
     turn_at_tcg = 0;
     efllistmax_at_tcg = 10;
     cardmode_at_tcg = 0;
@@ -43546,6 +43865,7 @@ void calcdomain()
 }
 void calcdecksize()
 {
+    int cardsize_at_tcg = 0;
     gdata(830 + curdeck) = 0;
     cardsize_at_tcg = 0;
     cpdata_at_tcg(9, 0) = 0;
@@ -43570,6 +43890,7 @@ void calcdecksize()
 }
 void tcgdeck()
 {
+    std::string file_at_tcg;
     maxcard_at_tcg = 1000;
     tcginit();
     cardmode_at_tcg = 1;
@@ -43659,6 +43980,7 @@ label_1812_internal:
 }
 void tcgmain()
 {
+    int rp_at_tcg = 0;
     maxcard_at_tcg = 80;
     tcginit();
     {
@@ -43857,6 +44179,8 @@ void cslinedown()
 }
 void label_1823()
 {
+    elona_vector1<int> mana_at_tcg;
+    int m_at_tcg = 0;
     gsel(4);
     pos(0, 0);
     picload(exedir + u8"graphic\\bg_card.bmp"s, 1);
@@ -44825,6 +45149,7 @@ int label_1845()
 }
 void label_18462()
 {
+    int ec_at_tcg = 0;
 label_18461:
     spellused_at_tcg = 0;
     stick(a_at_tcg);
@@ -44902,6 +45227,13 @@ void label_1848()
 }
 int random_material(int prm_1028, int prm_1029)
 {
+    int f_at_m174 = 0;
+    int lv_at_m174 = 0;
+    int rare_at_m174 = 0;
+    int loc_at_m174 = 0;
+    int p_at_m174 = 0;
+    int f2_at_m174 = 0;
+    int p2_at_m174 = 0;
     f_at_m174 = 0;
     matnum = 1;
     lv_at_m174 = prm_1028;
@@ -48038,6 +48370,7 @@ int label_1898()
 }
 int calcincome(int prm_1036)
 {
+    int p_at_m176 = 0;
     p_at_m176 = 100 - gdata((120 + prm_1036)) / 100;
     if (p_at_m176 == 99) {
         p_at_m176 = p_at_m176 * 70;
@@ -48216,6 +48549,8 @@ void label_1901()
 }
 std::string rpmatname(int prm_1037)
 {
+    std::string s_at_m177;
+    int p_at_m177 = 0;
     s_at_m177 = u8"?????"s;
     if (rpdata(20 + prm_1037, rpid) < 9000) {
         s_at_m177 = ioriginalnameref(rpdata(20 + prm_1037, rpid));
@@ -48241,6 +48576,7 @@ std::string rpmatname(int prm_1037)
 }
 int blendcheckext(int prm_1038, int prm_1039)
 {
+    int p_at_m178 = 0;
     if (rpdata(40 + prm_1039, rpid) >= 10000) {
         p_at_m178 = rpdata((40 + prm_1039), rpid) % 10000;
         if (p_at_m178 < 0 || p_at_m178 >= 800) {
@@ -48273,6 +48609,12 @@ std::string rpsuccessrate(int prm_1040)
 }
 int rpdiff(int, int prm_1042, int prm_1043)
 {
+    int p1_at_m180 = 0;
+    int f_at_m180 = 0;
+    int f2_at_m180 = 0;
+    int i_at_m180 = 0;
+    int d_at_m180 = 0;
+    int p_at_m180 = 0;
     p1_at_m180 = 80;
     f_at_m180 = 100;
     if (prm_1042 > 0) {
@@ -48337,6 +48679,11 @@ int rpdiff(int, int prm_1042, int prm_1043)
 }
 int blendcheckmat(int prm_1044)
 {
+    int f_at_m181 = 0;
+    int step_at_m181 = 0;
+    int id_at_m181 = 0;
+    int rp_at_m181 = 0;
+    int o_at_m181 = 0;
     rpid = prm_1044;
     {
         int cnt = 0;
@@ -48406,6 +48753,8 @@ int blendcheckmat(int prm_1044)
 }
 int blendmatnum(int prm_1045, int prm_1046)
 {
+    int m_at_m182 = 0;
+    int o_at_m182 = 0;
     m_at_m182 = 0;
     {
         int cnt = 0;
@@ -48459,6 +48808,11 @@ int blendmatnum(int prm_1045, int prm_1046)
 }
 int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
 {
+    int id_at_m183 = 0;
+    int m_at_m183 = 0;
+    int o_at_m183 = 0;
+    int reftype_at_m183 = 0;
+    int f_at_m183 = 0;
     id_at_m183 = rpdata(20 + prm_1048, rpid);
     m_at_m183 = 0;
     {
@@ -48527,6 +48881,12 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
 }
 void window_recipe2()
 {
+    int x_at_m183 = 0;
+    int w_at_m183 = 0;
+    int dx_at_m183 = 0;
+    int dy_at_m183 = 0;
+    std::string s_at_m183;
+    int p_at_m183 = 0;
     x_at_m183 = wx + ww;
     w_at_m183 = 400;
     gmode(2);
@@ -48561,6 +48921,13 @@ void window_recipe2()
 void window_recipe_(
     int prm_1050, int prm_1051, int prm_1052, int prm_1053, int prm_1054)
 {
+    elona_vector1<std::string> s_at_m184;
+    int xfix2_at_m184 = 0;
+    int dx_at_m184 = 0;
+    int dy_at_m184 = 0;
+    int i_at_m184 = 0;
+    int p_at_m184 = 0;
+    int cnt2_at_m184 = 0;
     SDIM1(s_at_m184);
     if (windowshadow == 1) {
         window(prm_1051 + 4, prm_1052 + 4, prm_1053, prm_1054 - prm_1054 % 8, 0,
@@ -49737,6 +50104,8 @@ label_1936_internal:
 }
 std::string txtitemoncell(int prm_1055, int prm_1056)
 {
+    elona_vector1<int> p_at_m185;
+    elona_vector1<int> i_at_m185;
     cell_itemoncell(prm_1055, prm_1056);
     if (stat <= 3) {
         if (map(prm_1055, prm_1056, 5) < 0) {
@@ -49779,6 +50148,9 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
 }
 void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
 {
+    int dy_at_m186 = 0;
+    int i_at_m186 = 0;
+    int p_at_m186 = 0;
     dy_at_m186 = 0;
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     if (prm_1059 == 0) {
@@ -56376,6 +56748,8 @@ void savecycle()
 }
 std::string trimdesc(const std::string& prm_1060, int prm_1061)
 {
+    std::string q_at_m187;
+    int p_at_m187 = 0;
     q_at_m187 = prm_1060;
     {
         int cnt = 0;
@@ -58119,6 +58493,7 @@ void zipend2()
 }
 void unzip2(const std::string& prm_1066, const std::string& prm_1067)
 {
+    int zipsize_at_m188 = 0;
     p_at_m188(0) = 50;
     p_at_m188(1) = 40;
     p_at_m188(2) = 10;
@@ -58150,6 +58525,7 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
 }
 std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
 {
+    int p_at_m189 = 0;
     p_at_m189 = instr(txtbuff, 0, prm_1068);
     if (p_at_m189 == -1) { return prm_1069; }
     p_at_m189 += instr(txtbuff, p_at_m189, u8"\""s);
@@ -67784,6 +68160,8 @@ void label_2237()
 }
 int clientguide(int)
 {
+    int i_at_m193 = 0;
+    int f_at_m193 = 0;
     j_at_m193 = 0;
     {
         int cnt = 0;
@@ -70210,6 +70588,7 @@ void label_2267()
 }
 void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 {
+    int p_at_m194 = 0;
     p_at_m194 = -1;
     {
         int cnt = 0;
@@ -70458,6 +70837,7 @@ label_2272_internal:
 void showeconomy(int prm_1086, int prm_1087, const std::string& prm_1088,
     int prm_1089, int prm_1090)
 {
+    int p_at_m195 = 0;
     pos(prm_1086, prm_1087);
     color(0, 0, 0);
     mes(prm_1088);
@@ -76477,6 +76857,7 @@ void label_2720()
 }
 int cnvjkey(const std::string& prm_1092)
 {
+    int p_at_m198 = 0;
     p_at_m198 = -2;
     {
         int cnt = 0;

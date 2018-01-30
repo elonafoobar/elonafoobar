@@ -9223,39 +9223,44 @@ label_2652_internal:
     dblist(0, dbmax) = 330;
     dblist(1, dbmax) = dbsum;
     ++dbmax;
-label_2653_internal : {
-    int cnt = 0;
-    for (int cnt_end = cnt + (usernpcmax); cnt < cnt_end; ++cnt) {
-        if (cmshade) { break; }
-        if (fltselect != userdata(12, cnt)) { continue; }
-        if (flttypemajor != 0) { continue; }
-        if (fltnrace != ""s) {
-            if (fltnrace != userdatan(2, cnt)) { continue; }
-        }
-        if (userdata(2, cnt) > objlv) { continue; }
-        if (filtermax != 0) {
-            dbtmp = 1;
-            dbtmp2 = cnt;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (filtermax); cnt < cnt_end; ++cnt) {
-                    if (instr(userdatan(4, dbtmp2), 0, filtern(cnt)) == -1) {
-                        dbtmp = 0;
-                        break;
+
+    // clang-format off
+label_2653_internal:
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (usernpcmax); cnt < cnt_end; ++cnt) {
+            if (cmshade) { break; }
+            if (fltselect != userdata(12, cnt)) { continue; }
+            if (flttypemajor != 0) { continue; }
+            if (fltnrace != ""s) {
+                if (fltnrace != userdatan(2, cnt)) { continue; }
+            }
+            if (userdata(2, cnt) > objlv) { continue; }
+            if (filtermax != 0) {
+                dbtmp = 1;
+                dbtmp2 = cnt;
+                {
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (filtermax); cnt < cnt_end; ++cnt) {
+                        if (instr(userdatan(4, dbtmp2), 0, filtern(cnt)) == -1) {
+                            dbtmp = 0;
+                            break;
+                        }
                     }
                 }
+                if (dbtmp == 0) { continue; }
             }
-            if (dbtmp == 0) { continue; }
+            dbsum += limit(userdata(6, cnt), 1, 500) * 1000 /
+                    (500 + abs((objlv - userdata(2, cnt))) * 400) +
+                1;
+            unlist(dbmax) = cnt;
+            dblist(0, dbmax) = 343;
+            dblist(1, dbmax) = dbsum;
+            ++dbmax;
         }
-        dbsum += limit(userdata(6, cnt), 1, 500) * 1000 /
-                (500 + abs((objlv - userdata(2, cnt))) * 400) +
-            1;
-        unlist(dbmax) = cnt;
-        dblist(0, dbmax) = 343;
-        dblist(1, dbmax) = dbsum;
-        ++dbmax;
     }
-}
+    // clang-format on
+
     if (dbsum != 0) {
         exrand_rnd(dbtmp, dbsum);
         {
