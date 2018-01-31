@@ -63,7 +63,7 @@ label_17401:
     getkey(a, 8);
     if (a)
     {
-        exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
+        exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
         if (strsize != -1)
         {
             int stat = dialog(
@@ -78,7 +78,7 @@ label_17401:
             }
         }
     }
-    exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
+    exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
     if (strsize != -1)
     {
         fmode = 1;

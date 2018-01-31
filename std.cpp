@@ -1,20 +1,11 @@
 #include <algorithm>
 #include <fstream>
-
-
 #include <iomanip>
 #include <iostream>
 #include <random>
 #include <regex>
 #include <sstream>
 
-#if __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#else
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#endif
 
 #include "sdl/application.hpp"
 #include "sdl/input.hpp"
@@ -174,15 +165,6 @@ char hspkey2char(int hsp_key)
     case 105: return '9';
     default: assert(0);
     }
-}
-
-
-
-std::string to_unix_filename(const std::string& source)
-{
-    std::string ret{source};
-    std::replace(std::begin(ret), std::end(ret), '\\', '/');
-    return ret;
 }
 
 
@@ -392,13 +374,10 @@ void axobj(int, const std::string&, int, int)
 }
 
 
-void bcopy(const std::string& from, const std::string& to)
+void bcopy(const fs::path& from, const fs::path& to)
 {
     LOG("copy", from, to);
-    fs::copy_file(
-        to_unix_filename(from),
-        to_unix_filename(to),
-        fs::copy_options::overwrite_existing);
+    fs::copy_file(from, to, fs::copy_options::overwrite_existing);
 }
 
 // fullscreen
@@ -433,7 +412,7 @@ void boxf()
 }
 
 
-void bload(const std::string& filename, std::string& data, int size, int)
+void bload(const fs::path& filename, std::string& data, int size, int)
 {
     LOG("bload", filename);
 
@@ -442,7 +421,7 @@ void bload(const std::string& filename, std::string& data, int size, int)
         size = data.size();
     }
     std::unique_ptr<char[]> buf{new char[size]};
-    std::ifstream in{to_unix_filename(filename), std::ios::binary};
+    std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
         LOG("Failed");
@@ -452,12 +431,12 @@ void bload(const std::string& filename, std::string& data, int size, int)
     data = {buf.get(), static_cast<size_t>(size)};
 }
 
-void bload(const std::string& filename, int& data, int size, int)
+void bload(const fs::path& filename, int& data, int size, int)
 {
     LOG("bload", filename);
 
     std::unique_ptr<char[]> buf{new char[size]};
-    std::ifstream in{to_unix_filename(filename), std::ios::binary};
+    std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
         LOG("Failed");
@@ -467,7 +446,7 @@ void bload(const std::string& filename, int& data, int size, int)
     data = *reinterpret_cast<int*>(buf.get());
 }
 
-void bload(const std::string& filename, elona_vector1<int>& data, int size, int)
+void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 {
     LOG("bload", filename);
 
@@ -476,7 +455,7 @@ void bload(const std::string& filename, elona_vector1<int>& data, int size, int)
         size = data.size() * sizeof(int);
     }
     std::unique_ptr<char[]> buf{new char[size]};
-    std::ifstream in{to_unix_filename(filename), std::ios::binary};
+    std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
         LOG("Failed");
@@ -493,11 +472,11 @@ void bload(const std::string& filename, elona_vector1<int>& data, int size, int)
 }
 
 
-void bsave(const std::string& filename, const std::string& data)
+void bsave(const fs::path& filename, const std::string& data)
 {
     LOG("bsave", filename);
 
-    std::ofstream out{to_unix_filename(filename), std::ios::binary};
+    std::ofstream out{filename, std::ios::binary};
     if (!out)
     {
         LOG("Failed");
@@ -507,20 +486,20 @@ void bsave(const std::string& filename, const std::string& data)
 }
 
 
-void bsave(const std::string& filename, int data)
+void bsave(const fs::path& filename, int data)
 {
     LOG("bsave", filename);
 
-    std::ofstream out{to_unix_filename(filename), std::ios::binary};
+    std::ofstream out{filename, std::ios::binary};
     out.write(reinterpret_cast<const char*>(&data), sizeof(data));
 }
 
 
-void bsave(const std::string& filename, elona_vector1<int>& data)
+void bsave(const fs::path& filename, elona_vector1<int>& data)
 {
     LOG("bsave", filename);
 
-    std::ofstream out{to_unix_filename(filename), std::ios::binary};
+    std::ofstream out{filename, std::ios::binary};
     for (int i = 0; i < std::size(data); ++i)
     {
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
@@ -622,10 +601,10 @@ void delcom(int)
 {
 }
 
-void elona_delete(const std::string& filename)
+void elona_delete(const fs::path& filename)
 {
     LOG("delete", filename);
-    fs::remove_all(to_unix_filename(filename));
+    fs::remove_all(filename);
 }
 
 int dialog(const std::string& message, int)
@@ -682,39 +661,33 @@ std::regex glob2regex(const std::string& glob)
 
 
 
-int dirlist(std::string& out, const std::string& glob, int attr)
+int dirlist(std::string& out, const fs::path& glob, int attr)
 {
-    LOG("dirlist", attr, fs::path{to_unix_filename(glob)}.parent_path());
+    LOG("dirlist", attr, glob.parent_path());
 
     assert(attr == 0 || attr == 5);
 
     out = "";
     int n = 0;
 
-    const auto regex = dirlist_detail::glob2regex(to_unix_filename(glob));
+    const auto regex = dirlist_detail::glob2regex(glob);
 
     auto cond = [=, &regex](const auto& path) {
         const auto appreciate_attribute = attr != 5 || fs::is_directory(path);
-        const auto match = std::regex_match(path.string(), regex);
+        const auto match = std::regex_match(path.u8string(), regex);
 
         return appreciate_attribute && match;
     };
 
-    for (const auto& dir :
-         fs::directory_iterator(fs::path{to_unix_filename(glob)}.parent_path()))
+    for (const auto& dir : fs::directory_iterator(glob.parent_path()))
     {
         if (cond(dir.path()))
         {
-            out +=
-                fs::relative(
-                    dir.path(), fs::path{to_unix_filename(glob)}.parent_path())
-                    .string();
+            out += fs::relative(dir.path(), glob.parent_path()).u8string();
             out += '\n';
             ++n;
             LOG("dirlist:dir/file",
-                fs::relative(
-                    dir.path(), fs::path{to_unix_filename(glob)}.parent_path())
-                    .string());
+                fs::relative(dir.path(), glob.parent_path()).u8string());
         }
     }
 
@@ -737,12 +710,11 @@ void exec(const std::string&, int)
 }
 
 
-void exist(const std::string& filename)
+void exist(const fs::path& filename)
 {
-    if (fs::exists(to_unix_filename(filename))
-        && !fs::is_directory(to_unix_filename(filename)))
+    if (fs::exists(filename) && !fs::is_directory(filename))
     {
-        strsize = fs::file_size(to_unix_filename(filename));
+        strsize = fs::file_size(filename);
     }
     else
     {
@@ -843,21 +815,22 @@ void getkey(int& out, int key)
     out = Keyboard::instance().is_pressed(hspkey2snailkey(key));
 }
 
-std::string getpath(const std::string& source, int mode)
+std::string getpath(const fs::path& source, int mode)
 {
     if (mode == 8)
     {
-        return fs::path(to_unix_filename(source)).filename();
+        return source.filename();
     }
     else if (mode == 16)
     {
-        std::string ret;
+        std::string from{source};
+        std::string to;
         std::transform(
-            std::begin(source),
-            std::end(source),
-            std::back_inserter(ret),
+            std::begin(from),
+            std::end(from),
+            std::back_inserter(to),
             [](char c) { return std::tolower(c); });
-        return ret;
+        return to;
     }
     else
     {
@@ -1288,10 +1261,10 @@ void mesbox(
         std::make_unique<mesbox_detail::MessageBox>(buffer));
 }
 
-void mkdir(const std::string& path)
+void mkdir(const fs::path& path)
 {
-    LOG("mkdir", to_unix_filename(path));
-    fs::create_directory(to_unix_filename(path));
+    LOG("mkdir", path);
+    fs::create_directory(path);
 }
 
 void mmload(const std::string& file, int id, int mode)
@@ -1428,13 +1401,13 @@ int noteinfo(int mode)
     return notemanip::buffer ? notemanip::count(*notemanip::buffer) : 0;
 }
 
-void noteload(const std::string& filename)
+void noteload(const fs::path& filename)
 {
     LOG("noteload", filename);
 
-    std::ifstream in{to_unix_filename(filename)};
+    std::ifstream in{filename};
     if (!in)
-        throw notemanip::io_error{std::string{u8"Not found "} + filename};
+        throw notemanip::io_error{u8"Not found "s + filename.u8string()};
 
     std::string str;
     notemanip::buffer->clear();
@@ -1444,16 +1417,16 @@ void noteload(const std::string& filename)
     }
 }
 
-void notesave(const std::string& filename)
+void notesave(const fs::path& filename)
 {
     LOG("notesave", filename);
 
     if (!notemanip::buffer)
         return;
 
-    std::ofstream out{to_unix_filename(filename)};
+    std::ofstream out{filename};
     if (!out)
-        throw notemanip::io_error{std::string{u8"Cannot open "} + filename};
+        throw notemanip::io_error{u8"Cannot open "s + filename.u8string()};
 
     out << *notemanip::buffer;
 }
@@ -1501,20 +1474,20 @@ void pget(int x, int y)
 {
 }
 
-void picload(const std::string& filename, int mode)
+void picload(const fs::path& filename, int mode)
 {
     try
     {
         std::optional<Color> keycolor = Color{0, 0, 0};
-        if (filename.find("pcc") != std::string::npos)
+        if (filename.u8string().find("pcc") != std::string::npos)
         {
             keycolor = {43, 133, 133};
         }
-        if (filename.find("bg") != std::string::npos)
+        if (filename.u8string().find("bg") != std::string::npos)
         {
             keycolor = std::nullopt;
         }
-        BasicImage img{to_unix_filename(filename), keycolor};
+        BasicImage img{filename, keycolor};
         if (mode == 0)
         {
             buffer(detail::current_buffer, img.width(), img.height());
@@ -1891,19 +1864,17 @@ void memcpy_(
 
 
 
-void zOpen(int&, const std::string& filename, int mode, int)
+void zOpen(int&, const fs::path& filename, int mode, int)
 {
     if (mode == 1) // Write
     {
         LOG("zOpen/w", filename);
-        gzip_detail::file.open(
-            to_unix_filename(filename), std::ios::out | std::ios::binary);
+        gzip_detail::file.open(filename, std::ios::out | std::ios::binary);
     }
     else // Read
     {
         LOG("zOpen/r", filename);
-        gzip_detail::file.open(
-            to_unix_filename(filename), std::ios::in | std::ios::binary);
+        gzip_detail::file.open(filename, std::ios::in | std::ios::binary);
     }
     if (!gzip_detail::file)
     {
