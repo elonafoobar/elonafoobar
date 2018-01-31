@@ -1,11 +1,12 @@
 #pragma once
 
 #include <iostream>
-#include "dup.hpp"
 
 
 namespace elona
 {
+
+
 std::string calcage(int);
 
 void label_0481();

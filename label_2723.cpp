@@ -1,11 +1,12 @@
 #include "elona.hpp"
 #include "variables.hpp"
 
-#include "dup.hpp"
 
 
 namespace elona
 {
+
+
 void cs_list(
     int CNT,
     const std::string& prm_543,

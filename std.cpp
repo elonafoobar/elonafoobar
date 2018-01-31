@@ -724,10 +724,6 @@ double elona_double(int n)
     return static_cast<double>(n);
 }
 
-// // Special function
-// void dup()
-// {
-// }
 
 void exec(const std::string&, int)
 {

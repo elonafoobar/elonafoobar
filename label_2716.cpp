@@ -1,10 +1,11 @@
 #include "elona.hpp"
 #include "variables.hpp"
 
-#include "dup.hpp"
 
 namespace elona
 {
+
+
 void label_2716()
 {
     notesel(note_buff);

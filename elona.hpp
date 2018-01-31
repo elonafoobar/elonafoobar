@@ -392,11 +392,6 @@ double elona_double(const std::string& s);
 
 double elona_double(int n);
 
-// // Special function
-// void dup()
-// {
-// }
-
 void exec(const std::string&, int);
 
 
@@ -868,7 +863,6 @@ using namespace elona;
     } while (0)
 #define SDIM3(a, b, c) (a).allocate_and_clear(c)
 #define SDIM4(a, b, c, d) (a).allocate_and_clear(c, d)
-#define dup(a, b) /* Nothing */
 
 
 
