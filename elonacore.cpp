@@ -3,8 +3,34 @@
 
 #include "main.hpp"
 
+
+namespace
+{
+
+
+void main_loop()
+{
+redo:
+    try
+    {
+        label_2733();
+    }
+    catch (elona_turn_sequence&)
+    {
+        goto redo;
+    }
+}
+
+
+} // namespace
+
+
+
 namespace elona
 {
+
+
+
 int main()
 {
     exedir = dirinfo(1) + u8"\\"s;
@@ -14,7 +40,14 @@ int main()
     randomize(randseed);
     exrand_randomize(randseed);
     title(u8"Elona ver 1.22"s);
-    label_0192();
+    try
+    {
+        label_0192();
+    }
+    catch (elona_turn_sequence&)
+    {
+        main_loop();
+    }
     return 0;
 }
 void netload(const std::string& prm_194)
@@ -100369,8 +100402,6 @@ void label_2732()
 }
 void label_2733()
 {
-redo:
-
     sound = 0;
     ct = 0;
     {
@@ -100541,15 +100572,7 @@ label_2734_internal:
             label_2736();
         }
     }
-    try
-    {
-        label_2737();
-    }
-    catch (elona_turn_sequence&)
-    {
-        goto redo;
-    }
-    return;
+    label_2737();
 }
 void label_2735()
 {
@@ -100980,7 +101003,6 @@ void label_2737(bool label_2738_flg)
         if (ct >= 245)
         {
             throw elona_turn_sequence{};
-            return;
         }
         if (cdata_state(ct) != 1)
         {
