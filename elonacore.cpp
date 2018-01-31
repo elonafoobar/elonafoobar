@@ -3094,53 +3094,45 @@ void msg_clear()
 }
 void txt_conv()
 {
-    int len_at_txtfunc = 0;
-    int p2_at_txtfunc = 0;
-    std::string m_at_txtfunc;
-    int b_at_txtfunc = 0;
-    std::string mst_at_txtfunc;
     redraw(0);
-    if (msgtemp == ""s)
-    {
+
+    if (std::empty(msgtemp(0)))
         return;
-    }
+
     if (tcopy)
     {
         tcopy = 0;
-        txtcopy = ""s + msgtemp;
+        txtcopy = msgtemp(0);
     }
+
     if (tnew == 1)
     {
-        if (msg(msgline % inf_maxlog) != ""s)
+        if (!std::empty(msg(msgline % inf_maxlog)))
         {
             if (cfg_msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
                 redraw(0);
                 gmode(4 - 1, -1, cfg_msgtrans * 20);
+                for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (p_at_txtfunc + 1); cnt < cnt_end;
-                         ++cnt)
+                    if (i == p_at_txtfunc)
                     {
-                        if (cnt == p_at_txtfunc)
-                        {
-                            x_at_txtfunc = (windoww - inf_msgx) % 192;
-                        }
-                        else
-                        {
-                            x_at_txtfunc = 192;
-                        }
-                        pos(cnt * 192 + inf_msgx, inf_msgy + 5);
-                        gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 4);
+                        x_at_txtfunc = (windoww - inf_msgx) % 192;
                     }
+                    else
+                    {
+                        x_at_txtfunc = 192;
+                    }
+                    pos(i * 192 + inf_msgx, inf_msgy + 5);
+                    gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 4);
                 }
             }
             msg_newline();
             tnew = 0;
             if (cfg_msgaddtime)
             {
-                msgtemp = u8"["s + gdata(14) + u8"] "s + msgtemp;
+                msgtemp(0) = u8"["s + gdata(14) + u8"] " + msgtemp(0);
             }
             else
             {
@@ -3148,18 +3140,18 @@ void txt_conv()
             }
         }
     }
+
     if (msgdup != 0)
     {
-        if (msgtempprev == msgtemp)
-        {
+        if (msgtempprev == msgtemp(0))
             return;
-        }
-        msgtempprev = msgtemp;
+        msgtempprev = msgtemp(0);
         msgdup = 0;
     }
+
     if (jp)
     {
-        if (instr(msgtemp, 0, u8"「"s) != -1)
+        if (msgtemp(0).find(u8"「") != std::string::npos)
         {
             if (tcolfix_at_txtfunc == 0)
             {
@@ -3172,81 +3164,74 @@ void txt_conv()
                 tcolfix_at_txtfunc = 0;
             }
         }
+
+        int len = 0;
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            len = std::size(msgtemp(0));
+            if (msglen + 4 > inf_maxmsglen && !std::empty(msgtemp(0)))
             {
-                len_at_txtfunc = strlen(msgtemp);
-                if (msglen + 4 > inf_maxmsglen)
+                msg_newline();
+            }
+            if (msglen + len > inf_maxmsglen)
+            {
+                int p2 = 0;
+                while (1)
                 {
-                    if (msgtemp != ""s)
+                    const auto c = msgtemp(0)[p2];
+                    if (c >= 0x00 && c <= 0x7F)
+                        p2 += 1;
+                    else if (c >= 0xc2 && c <= 0xdf)
+                        p2 += 2;
+                    else if (c >= 0xe0 && c <= 0xef)
+                        p2 += 3;
+                    else if (c >= 0xf0 && c <= 0xf7)
+                        p2 += 4;
+                    else if (c >= 0xf8 && c <= 0xfb)
+                        p2 += 5;
+                    else if (c >= 0xfc && c <= 0xfd)
+                        p2 += 6;
+                    else
+                        p2 += 1;
+                    if (p2 + msglen > inf_maxmsglen)
                     {
-                        msg_newline();
-                    }
-                }
-                if (msglen + len_at_txtfunc > inf_maxmsglen)
-                {
-                    p2_at_txtfunc = 0;
-                    {
-                        int cnt = 0;
-                        for (;; ++cnt)
+                        if (p2 + msglen > inf_maxmsglen + 2)
                         {
-                            p_at_txtfunc = peek(msgtemp, p2_at_txtfunc);
-                            ++p2_at_txtfunc;
-                            if (p_at_txtfunc > 128 && p_at_txtfunc < 160)
-                            {
-                                ++p2_at_txtfunc;
-                            }
-                            if (p_at_txtfunc > 223 && p_at_txtfunc < 253)
-                            {
-                                ++p2_at_txtfunc;
-                            }
-                            if (p2_at_txtfunc + msglen > inf_maxmsglen)
-                            {
-                                if (p2_at_txtfunc + msglen > inf_maxmsglen + 2)
-                                {
-                                    break;
-                                }
-                                m_at_txtfunc =
-                                    strmid(msgtemp, p2_at_txtfunc, 2);
-                                if (m_at_txtfunc != u8"。"s
-                                    && m_at_txtfunc != u8"、"s
-                                    && m_at_txtfunc != u8"」"s
-                                    && m_at_txtfunc != u8"』"s
-                                    && m_at_txtfunc != u8"！"s
-                                    && m_at_txtfunc != u8"？"s
-                                    && m_at_txtfunc != u8"…"s)
-                                {
-                                    break;
-                                }
-                            }
+                            break;
+                        }
+                        const auto m = strmid(msgtemp(0), p2, 3);
+                        if (m != u8"。" && m != u8"、" && m != u8"」"
+                            && m != u8"』" && m != u8"！" && m != u8"？"
+                            && m != u8"…")
+                        {
+                            break;
                         }
                     }
-                    m_at_txtfunc = strmid(msgtemp, 0, p2_at_txtfunc);
-                    msg(msgline % inf_maxlog) += m_at_txtfunc;
-                    msg_write(m_at_txtfunc);
-                    msgtemp = strmid(
-                        msgtemp, p2_at_txtfunc, len_at_txtfunc - p2_at_txtfunc);
-                    if (msgtemp == ""s || msgtemp == u8" "s)
-                    {
-                        break;
-                    }
-                    msg_newline();
-                    continue;
                 }
-                break;
+                auto m = strmid(msgtemp(0), 0, p2);
+                msg(msgline % inf_maxlog) += m;
+                msg_write(m);
+                msgtemp(0) = strmid(msgtemp(0), p2, len - p2);
+                if (std::empty(msgtemp(0)) || msgtemp(0) == u8" ")
+                {
+                    break;
+                }
+                msg_newline();
+                continue;
             }
+            break;
         }
-        msg(msgline % inf_maxlog) += msgtemp;
-        msg_write(msgtemp);
-        msglen += len_at_txtfunc;
+        msg(msgline % inf_maxlog) += msgtemp(0);
+        msg_write(msgtemp(0));
+        msglen += len;
     }
     else
     {
         if (tcontinue_at_txtfunc == 0)
         {
-            b_at_txtfunc = peek(msgtemp, 0);
-            if (instr(msgtemp, 0, u8"\""s) != -1)
+            int b = 0;
+            b = peek(msgtemp(0), 0);
+            if (instr(msgtemp(0), 0, u8"\"") != -1)
             {
                 if (tcolfix_at_txtfunc == 0)
                 {
@@ -3259,44 +3244,40 @@ void txt_conv()
                     tcolfix_at_txtfunc = 0;
                 }
             }
-            if (b_at_txtfunc >= 97 && b_at_txtfunc <= 122)
+            if (b >= 97 && b <= 122)
             {
-                poke(msgtemp, 0, b_at_txtfunc - 32);
+                poke(msgtemp(0), 0, b - 32);
             }
         }
         else
         {
             tcontinue_at_txtfunc = 0;
         }
-        msgtemp += u8" "s;
+        msgtemp(0) += u8" ";
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            await();
+            p_at_txtfunc = instr(msgtemp(0), 0, u8" ") + 1;
+            if (p_at_txtfunc == 0)
             {
-                await();
-                p_at_txtfunc = instr(msgtemp, 0, u8" "s) + 1;
-                if (p_at_txtfunc == 0)
-                {
-                    break;
-                }
-                if (msglen + p_at_txtfunc > inf_maxmsglen)
-                {
-                    msg_newline();
-                    continue;
-                }
-                mst_at_txtfunc = strmid(msgtemp, 0, p_at_txtfunc);
-                msg(msgline % inf_maxlog) += mst_at_txtfunc;
-                msg_write(mst_at_txtfunc);
-                msglen += p_at_txtfunc;
-                msgtemp = strmid(
-                    msgtemp, p_at_txtfunc, strlen(msgtemp) - p_at_txtfunc);
+                break;
             }
+            if (msglen + p_at_txtfunc > inf_maxmsglen)
+            {
+                msg_newline();
+                continue;
+            }
+            auto mst = strmid(msgtemp(0), 0, p_at_txtfunc);
+            msg(msgline % inf_maxlog) += mst;
+            msg_write(mst);
+            msglen += p_at_txtfunc;
+            msgtemp(0) = strmid(
+                msgtemp(0), p_at_txtfunc, std::size(msgtemp(0)) - p_at_txtfunc);
         }
-        msg(msgline % inf_maxlog) += msgtemp;
-        msg_write(msgtemp);
-        msglen += strlen(msgtemp);
+        msg(msgline % inf_maxlog) += msgtemp(0);
+        msg_write(msgtemp(0));
+        msglen += std::size(msgtemp(0));
     }
-    return;
 }
 std::string name(int prm_309)
 {
