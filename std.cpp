@@ -503,8 +503,7 @@ void bsave(const std::string& filename, const std::string& data)
         LOG("Failed");
         throw 0;
     }
-    out.write(
-        reinterpret_cast<const char*>(data.c_str()), sizeof(std::size(data)));
+    out.write(reinterpret_cast<const char*>(data.c_str()), std::size(data));
 }
 
 
@@ -693,13 +692,12 @@ int dirlist(std::string& out, const std::string& glob, int attr)
     int n = 0;
 
     const auto regex = dirlist_detail::glob2regex(to_unix_filename(glob));
-    const auto bang = glob.find('!') != std::string::npos;
 
     auto cond = [=, &regex](const auto& path) {
         const auto appreciate_attribute = attr != 5 || fs::is_directory(path);
         const auto match = std::regex_match(path.string(), regex);
 
-        return appreciate_attribute && bang != match;
+        return appreciate_attribute && match;
     };
 
     for (const auto& dir :
@@ -707,10 +705,16 @@ int dirlist(std::string& out, const std::string& glob, int attr)
     {
         if (cond(dir.path()))
         {
-            out += dir.path().string();
+            out +=
+                fs::relative(
+                    dir.path(), fs::path{to_unix_filename(glob)}.parent_path())
+                    .string();
             out += '\n';
             ++n;
-            LOG("dirlist:dir/file", dir.path().string());
+            LOG("dirlist:dir/file",
+                fs::relative(
+                    dir.path(), fs::path{to_unix_filename(glob)}.parent_path())
+                    .string());
         }
     }
 
