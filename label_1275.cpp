@@ -396,7 +396,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -14366,7 +14366,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -19490,7 +19490,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -19583,7 +19583,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -22933,7 +22933,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24273,7 +24273,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24360,7 +24360,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24447,7 +24447,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24612,7 +24612,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24699,7 +24699,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24786,7 +24786,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24873,7 +24873,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24961,7 +24961,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -25049,7 +25049,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -25136,7 +25136,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -25489,7 +25489,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -30404,7 +30404,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30497,7 +30497,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30590,7 +30590,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30683,7 +30683,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30776,7 +30776,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -36225,7 +36225,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36315,7 +36315,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36405,7 +36405,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36495,7 +36495,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36587,7 +36587,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36677,7 +36677,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36767,7 +36767,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36857,7 +36857,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36947,7 +36947,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -37037,7 +37037,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -43745,7 +43745,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -46253,7 +46253,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -46346,7 +46346,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -46440,7 +46440,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 3)
+                if (cdata_god(0) == 3)
                 {
                     return 1;
                 }
@@ -47798,7 +47798,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 3)
+                if (cdata_god(0) == 3)
                 {
                     return 1;
                 }
@@ -48753,7 +48753,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -48843,7 +48843,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -48933,7 +48933,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49023,7 +49023,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49427,7 +49427,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49671,7 +49671,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49837,7 +49837,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49925,7 +49925,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -50015,7 +50015,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -50105,7 +50105,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -50590,7 +50590,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -60025,7 +60025,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -60198,7 +60198,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -61318,7 +61318,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61482,7 +61482,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61569,7 +61569,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61656,7 +61656,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61743,7 +61743,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61830,7 +61830,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61917,7 +61917,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -62004,7 +62004,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -62092,7 +62092,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }

@@ -22,7 +22,7 @@ int label_2107()
         }
         if (fmode == 8)
         {
-            playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata(38, 0)
+            playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata_level(0)
                 + u8" "s + mdatan(0);
             bsave(folder + u8"header.txt"s, playerheader);
         }
@@ -368,7 +368,7 @@ int label_2107()
         if (fmode == 14)
         {
             playerheader =
-                ""s + cdatan(0, 0) + u8"(Lv"s + cdata(38, 0) + u8")の遺伝子"s;
+                ""s + cdatan(0, 0) + u8"(Lv"s + cdata_level(0) + u8")の遺伝子"s;
             file = folder + u8"gene_header.txt"s;
             bsave(file, playerheader);
             fileadd(file);
@@ -815,7 +815,7 @@ int label_2107()
                         int cnt = 57;
                         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                         {
-                            if (cdata(0, cnt) == 0)
+                            if (cdata_state(cnt) == 0)
                             {
                                 tg = cnt;
                                 break;
@@ -902,17 +902,17 @@ int label_2107()
                     zipadd(u8"c2_"s + id + u8".t"s);
                     zipadd(u8"c3_"s + id + u8".t"s);
                     zipadd(u8"c4_"s + id + u8".t"s);
-                    if (cdata(27, tg) == 343)
+                    if (cdata_id(tg) == 343)
                     {
-                        exist(folder + userdatan(6, cdata(157, tg)));
+                        exist(folder + userdatan(6, cdata_cnpc_id(tg)));
                         if (strsize != -1)
                         {
-                            if (cdata(157, tg) != usernpcmax)
+                            if (cdata_cnpc_id(tg) != usernpcmax)
                             {
                                 if (instr(
                                         untaglist,
                                         0,
-                                        u8"/"s + userdatan(0, cdata(157, tg))
+                                        u8"/"s + userdatan(0, cdata_cnpc_id(tg))
                                             + u8"/"s)
                                     == -1)
                                 {
@@ -920,13 +920,14 @@ int label_2107()
                                     {
                                         bcopy(
                                             folder
-                                                + userdatan(6, cdata(157, tg)),
+                                                + userdatan(
+                                                      6, cdata_cnpc_id(tg)),
                                             folder + u8"_tmp_"s + gdata(86)
                                                 + u8".npc"s);
                                         zipadd(
                                             u8"_tmp_"s + gdata(86) + u8".npc"s);
                                         untaglist += u8"/"s
-                                            + userdatan(0, cdata(157, tg))
+                                            + userdatan(0, cdata_cnpc_id(tg))
                                             + u8"/"s;
                                         ++gdata(86);
                                     }
@@ -955,33 +956,33 @@ int label_2107()
                     }
                     rc = tg;
                     label_2666();
-                    cdata(12, rc) = 0;
+                    cdata_item_which_will_be_used(rc) = 0;
                     rowactend(rc);
                     cbitmod(967, rc, 0);
                     cbitmod(968, rc, 0);
-                    cdata(50, rc) = cdata(51, rc);
-                    cdata(55, rc) = cdata(56, rc);
+                    cdata_hp(rc) = cdata_max_hp(rc);
+                    cdata_mp(rc) = cdata_max_mp(rc);
                     cbitmod(960, rc, 0);
                     cbitmod(989, tc, 0);
                     if (importmode == 0)
                     {
-                        cdata(150, tg) = 20;
-                        cdata(30, tg) = 0;
-                        if (cdata(9, tg) >= 10)
+                        cdata_character_role(tg) = 20;
+                        cdata_gold(tg) = 0;
+                        if (cdata_relationship(tg) >= 10)
                         {
                             if (userrelation == 0)
                             {
-                                cdata(9, tg) = 0;
-                                cdata(69, tg) = 0;
+                                cdata_relationship(tg) = 0;
+                                cdata_original_relationship(tg) = 0;
                             }
                             else
                             {
-                                cdata(9, tg) = -3;
-                                cdata(69, tg) = -3;
+                                cdata_relationship(tg) = -3;
+                                cdata_original_relationship(tg) = -3;
                             }
                         }
-                        cxinit = cdata(1, tg);
-                        cyinit = cdata(2, tg);
+                        cxinit = cdata_x(tg);
+                        cyinit = cdata_y(tg);
                         label_1532();
                     }
                     if (importmode == 1)
@@ -990,8 +991,8 @@ int label_2107()
                         {
                             enemyteam = rc;
                         }
-                        cdata(9, rc) = -3;
-                        cdata(69, rc) = -3;
+                        cdata_relationship(rc) = -3;
+                        cdata_original_relationship(rc) = -3;
                         map_placearena(rc, 1);
                     }
                 }

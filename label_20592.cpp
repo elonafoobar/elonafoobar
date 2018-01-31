@@ -171,8 +171,8 @@ label_20591:
                         {
                             if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                             {
-                                if (inv_x(cnt) != cdata(1, cc)
-                                    || inv_y(cnt) != cdata(2, cc))
+                                if (inv_x(cnt) != cdata_x(cc)
+                                    || inv_y(cnt) != cdata_y(cc))
                                 {
                                     continue;
                                 }
@@ -595,7 +595,7 @@ label_20591:
     {
         if (tc > 0)
         {
-            if (cdata(9, tc) == 10)
+            if (cdata_relationship(tc) == 10)
             {
                 txt(lang(
                     u8"仲間からは盗みたくない。"s,
@@ -959,9 +959,9 @@ label_2061_internal:
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
     s = ""s + listmax + u8" items"s;
-    s += u8"  (重さ合計 "s + cnvweight(cdata(43, 0)) + u8"/"s
-        + cnvweight(cdata(44, 0)) + u8"  荷車 "s + cnvweight(gdata(80))
-        + u8")"s;
+    s += u8"  (重さ合計 "s + cnvweight(cdata_inventory_weight(0)) + u8"/"s
+        + cnvweight(cdata_max_inventory_weight(0)) + u8"  荷車 "s
+        + cnvweight(gdata(80)) + u8")"s;
     if (invctrl == 25)
     {
         s = ""s;
@@ -977,9 +977,10 @@ label_2061_internal:
         window(x, y, w, h - h % 8, 0, 0);
         font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
         pos(x + 16, y + 17);
-        mes(u8"Dv:"s + cdata(71, tc) + u8" Pv:"s + cdata(70, tc));
+        mes(u8"Dv:"s + cdata_dv(tc) + u8" Pv:"s + cdata_pv(tc));
         pos(x + 16, y + 35);
-        mes(lang(u8"装備重量:"s, u8"EquipWt:"s) + cnvweight(cdata(64, tc)) + ""s
+        mes(lang(u8"装備重量:"s, u8"EquipWt:"s)
+            + cnvweight(cdata_sum_of_equipment_weight(tc)) + ""s
             + cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
@@ -1185,7 +1186,7 @@ label_2061_internal:
             gcopy(3, 0, 392, 24, 24);
             color(0, 0, 0);
             pos(wx + 368, wy + 37 - en * 2);
-            mes(""s + cdata(30, tc) + u8" gp"s);
+            mes(""s + cdata_gold(tc) + u8" gp"s);
         }
     }
     redraw(1);
@@ -1496,7 +1497,7 @@ label_2061_internal:
                 }
                 if (invctrl == 11)
                 {
-                    if (calcitemvalue(ci, 0) * in > cdata(30, 0))
+                    if (calcitemvalue(ci, 0) * in > cdata_gold(0))
                     {
                         screenupdate = -1;
                         label_1419();
@@ -1512,9 +1513,9 @@ label_2061_internal:
                 }
                 if (invctrl == 12)
                 {
-                    if (cdata(150, tc) != 1009)
+                    if (cdata_character_role(tc) != 1009)
                     {
-                        if (calcitemvalue(ci, 1) * in > cdata(30, tc))
+                        if (calcitemvalue(ci, 1) * in > cdata_gold(tc))
                         {
                             screenupdate = -1;
                             label_1419();
@@ -1580,7 +1581,7 @@ label_2061_internal:
             screenupdate = -1;
             label_1419();
             savecycle();
-            if (cdata(22, 0) > 10000)
+            if (cdata_nutrition(0) > 10000)
             {
                 txt(lang(
                         u8"今はとても食べられない。"s,
@@ -1690,7 +1691,7 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             ti = inv_getfreeid(tc);
-            if (cdata(251, tc))
+            if (cdata_sleep(tc))
             {
                 txt(lang(
                     name(tc) + u8"は眠っている。"s,
@@ -1721,14 +1722,14 @@ label_2061_internal:
                         + _thanks(2) + u8"」"s,
                     cnvtalk(u8"Thank you!"s)));
                 modimp(tc, giftvalue(inv_param4(ci)));
-                cdata(79, tc) = 317;
+                cdata_emotion_icon(tc) = 317;
                 label_1419();
                 label_2743(false);
             }
             f = 0;
             p = sdata(10, tc) * 500 + sdata(11, tc) * 500
                 + sdata(153, tc) * 2500 + 25000;
-            if (cdata(27, tc) == 265)
+            if (cdata_id(tc) == 265)
             {
                 p *= 5;
             }
@@ -1736,7 +1737,7 @@ label_2061_internal:
             {
                 f = 1;
             }
-            if (cdata(27, tc) != 265)
+            if (cdata_id(tc) != 265)
             {
                 if (reftype == 60000)
                 {
@@ -1763,7 +1764,7 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             f = 0;
-            if (cdata(9, tc) == 10)
+            if (cdata_relationship(tc) == 10)
             {
                 f = 1;
             }
@@ -1803,7 +1804,7 @@ label_2061_internal:
                     f = 1;
                     if (refitem(inv_id(ci), 9) == 52002)
                     {
-                        if (cdata(257, tc))
+                        if (cdata_drunk(tc))
                         {
                             snd(27);
                             txt(lang(
@@ -1846,7 +1847,7 @@ label_2061_internal:
                         name(tc) + u8"は顔を赤らめた。"s,
                         name(tc) + u8" blushes."s));
                     modimp(tc, 15);
-                    cdata(79, tc) = 317;
+                    cdata_emotion_icon(tc) = 317;
                 }
                 if (inv_id(ci) == 620)
                 {
@@ -1869,7 +1870,7 @@ label_2061_internal:
                             name(tc) + u8"「ガード！ガード！ガード！」"s,
                             cnvtalk(u8"Guard! Guard! Guard!"s)));
                     modimp(tc, -20);
-                    cdata(79, tc) = 318;
+                    cdata_emotion_icon(tc) = 318;
                     --inv_number(ci);
                     goto label_20591;
                 }
@@ -2014,11 +2015,11 @@ label_2061_internal:
                     u8"It's set as no-drop. You can reset it from the <examine> menu."s));
                 goto label_2060_internal;
             }
-            if (cdata(140, tc) != 0)
+            if (cdata_continuous_action_id(tc) != 0)
             {
-                cdata(140, tc) = 0;
-                cdata(141, tc) = 0;
-                cdata(142, tc) = 0;
+                cdata_continuous_action_id(tc) = 0;
+                cdata_continuous_action_turn(tc) = 0;
+                cdata_continuous_action_item(tc) = 0;
             }
             snd(13);
             ibitmod(12, citrade, 0);
@@ -2037,9 +2038,9 @@ label_2061_internal:
             convertartifact(ci);
             rc = tc;
             ci = citrade;
-            if (cdata(12, rc) == ci)
+            if (cdata_item_which_will_be_used(rc) == ci)
             {
-                cdata(12, rc) = 0;
+                cdata_item_which_will_be_used(rc) = 0;
             }
             label_2666();
             if (tc >= 16)
@@ -2107,7 +2108,7 @@ label_2061_internal:
             }
             if (invctrl(1) == 2)
             {
-                if (cdata(30, 0) < inv_subname(ci))
+                if (cdata_gold(0) < inv_subname(ci))
                 {
                     snd(27);
                     txt(lang(
@@ -2122,7 +2123,7 @@ label_2061_internal:
                         u8"You don't have to pay your tax yet."s));
                     goto label_20591;
                 }
-                cdata(30, 0) -= inv_subname(ci);
+                cdata_gold(0) -= inv_subname(ci);
                 snd(12);
                 txtef(2);
                 txt(lang(
@@ -2186,7 +2187,7 @@ label_2061_internal:
                         + u8" angrily."s));
                 snd(65);
                 modimp(tc, -20);
-                cdata(79, tc) = 318;
+                cdata_emotion_icon(tc) = 318;
                 --inv_number(ci);
                 goto label_20591;
             }
@@ -2205,7 +2206,7 @@ label_2061_internal:
                 u8"You take "s + itemname(ci, in) + u8"."s));
             if (inv_id(ci) == 54)
             {
-                cdata(30, 0) += in;
+                cdata_gold(0) += in;
                 inv_number(ci) = 0;
             }
             else

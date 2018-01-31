@@ -38,13 +38,13 @@ label_17401:
             {
                 continue;
             }
-            if (cdata(80, cnt) != 0)
+            if (cdata_current_map(cnt) != 0)
             {
-                if (cdata(80, cnt) == gdata(20))
+                if (cdata_current_map(cnt) == gdata(20))
                 {
-                    if (cdata(0, cnt) == 9)
+                    if (cdata_state(cnt) == 9)
                     {
-                        cdata(0, cnt) = 1;
+                        cdata_state(cnt) = 1;
                     }
                 }
             }
@@ -114,15 +114,16 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 0)
+                if (cdata_state(cnt) == 0)
                 {
                     continue;
                 }
-                if (cdata(150, cnt) >= 1000 && cdata(150, cnt) < 2000
-                    || cdata(150, cnt) == 2003)
+                if (cdata_character_role(cnt) >= 1000
+                        && cdata_character_role(cnt) < 2000
+                    || cdata_character_role(cnt) == 2003)
                 {
-                    rolebk(0, maxnpcbk) = cdata(150, cnt);
-                    rolebk(1, maxnpcbk) = cdata(151, cnt);
+                    rolebk(0, maxnpcbk) = cdata_character_role(cnt);
+                    rolebk(1, maxnpcbk) = cdata_shop_rank(cnt);
                     ++maxnpcbk;
                 }
             }
@@ -158,7 +159,7 @@ label_1741_internal:
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            cdata(0, cnt) = 0;
+            cdata_state(cnt) = 0;
         }
     }
     {
@@ -373,7 +374,7 @@ label_1741_internal:
             for (int cnt_end = cnt + (0); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 0, cdata(1, 0), cdata(2, 0) + 5);
+                characreate(-1, 0, cdata_x(0), cdata_y(0) + 5);
             }
         }
         {
@@ -391,8 +392,8 @@ label_1741_internal:
             }
         }
         flt();
-        characreate(-1, 41, cdata(1, 0), cdata(2, 0));
-        cdata(150, rc) = 22;
+        characreate(-1, 41, cdata_x(0), cdata_y(0));
+        cdata_character_role(rc) = 22;
         cbitmod(960, rc, 1);
         {
             int cnt = 0;
@@ -475,30 +476,30 @@ label_1741_internal:
         mdata(10) = 0;
         flt();
         characreate(-1, 173, 9, 2);
-        cdata(150, rc) = 1012;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1012;
+        cdata_shop_rank(rc) = 10;
         flt();
         characreate(-1, 173, 15, 2);
-        cdata(150, rc) = 1012;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1012;
+        cdata_shop_rank(rc) = 10;
         flt();
         characreate(-1, 173, 21, 2);
-        cdata(150, rc) = 1013;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1013;
+        cdata_shop_rank(rc) = 10;
         flt();
         characreate(-1, 173, 3, 2);
-        cdata(150, rc) = 1013;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1013;
+        cdata_shop_rank(rc) = 10;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
                 flt();
                 characreate(-1, 39, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
             }
         }
         {
@@ -507,7 +508,7 @@ label_1741_internal:
             {
                 flt();
                 characreate(-1, 77, 3 + cnt * 6, 9);
-                cdata(150, rc) = 14;
+                cdata_character_role(rc) = 14;
             }
         }
         mdata(13) = 79;
@@ -519,27 +520,27 @@ label_1741_internal:
         mdata(10) = 0;
         flt();
         characreate(-1, 1, 7, 23);
-        cdata(150, rc) = 1006;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1006;
+        cdata_shop_rank(rc) = 10;
         sngeneral(cdatan(0, rc));
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 1, 5, 17);
-        cdata(150, rc) = 1009;
-        cdata(151, rc) = 12;
+        cdata_character_role(rc) = 1009;
+        cdata_shop_rank(rc) = 12;
         sntrade(cdatan(0, rc));
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 1, 16, 19);
-        cdata(150, rc) = 1005;
-        cdata(151, rc) = 8;
+        cdata_character_role(rc) = 1005;
+        cdata_shop_rank(rc) = 8;
         sninn(cdatan(0, rc));
         flt();
         characreate(-1, 70, 17, 13);
-        cdata(150, rc) = 9;
+        cdata_character_role(rc) = 9;
         flt();
         characreate(-1, 353, 7, 3);
-        cdata(150, rc) = 23;
+        cdata_character_role(rc) = 23;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
@@ -548,26 +549,26 @@ label_1741_internal:
                 characreate(-1, 9, -3, 0);
                 flt();
                 characreate(-1, 159, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
                 flt();
                 characreate(-1, 160, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
                 flt();
                 characreate(-1, 161, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
             }
         }
         flt();
         characreate(-1, 77, 5, 7);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 8, 7);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         mdata(13) = 79;
         map_placeplayer();
         evadd(30);
@@ -578,27 +579,27 @@ label_1741_internal:
         mdata(10) = 0;
         flt();
         characreate(-1, 1, 7, 23);
-        cdata(150, rc) = 1006;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1006;
+        cdata_shop_rank(rc) = 10;
         sngeneral(cdatan(0, rc));
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 1, 5, 17);
-        cdata(150, rc) = 1009;
-        cdata(151, rc) = 12;
+        cdata_character_role(rc) = 1009;
+        cdata_shop_rank(rc) = 12;
         sntrade(cdatan(0, rc));
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 1, 16, 19);
-        cdata(150, rc) = 1005;
-        cdata(151, rc) = 8;
+        cdata_character_role(rc) = 1005;
+        cdata_shop_rank(rc) = 8;
         sninn(cdatan(0, rc));
         flt();
         characreate(-1, 70, 17, 13);
-        cdata(150, rc) = 9;
+        cdata_character_role(rc) = 9;
         flt();
         characreate(-1, 353, 7, 3);
-        cdata(150, rc) = 23;
+        cdata_character_role(rc) = 23;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
@@ -607,26 +608,26 @@ label_1741_internal:
                 characreate(-1, 9, -3, 0);
                 flt();
                 characreate(-1, 159, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
                 flt();
                 characreate(-1, 160, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
                 flt();
                 characreate(-1, 161, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
             }
         }
         flt();
         characreate(-1, 77, 5, 7);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 8, 7);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         mdata(13) = 79;
         map_placeplayer();
     }
@@ -636,31 +637,31 @@ label_1741_internal:
         mdata(10) = 0;
         flt();
         characreate(-1, 1, 19, 10);
-        cdata(150, rc) = 1005;
-        cdata(151, rc) = 8;
+        cdata_character_role(rc) = 1005;
+        cdata_shop_rank(rc) = 8;
         sninn(cdatan(0, rc));
         flt();
         characreate(-1, 351, 26, 16);
-        cdata(150, rc) = 3;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 35, 25, 15);
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 35, 25, 17);
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 35, 27, 18);
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 35, 27, 16);
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 35, 26, 17);
-        cdata(202, rc) = 3;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 352, 4, 3);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 271, 4, 2);
         flt();
@@ -687,12 +688,12 @@ label_1741_internal:
                 characreate(-1, 9, -3, 0);
                 flt();
                 characreate(-1, 159, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
                 flt();
                 characreate(-1, 36, -3, 0);
-                cdata(9, rc) = -1;
-                cdata(69, rc) = -1;
+                cdata_relationship(rc) = -1;
+                cdata_original_relationship(rc) = -1;
                 flt();
                 characreate(-1, 8, -3, 0);
                 flt();
@@ -708,18 +709,18 @@ label_1741_internal:
         mdata(10) = 0;
         flt();
         characreate(-1, 208, 17, 11);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 209, 8, 16);
-        cdata(150, rc) = 1016;
-        cdata(151, rc) = 100;
+        cdata_character_role(rc) = 1016;
+        cdata_shop_rank(rc) = 100;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
                 flt();
                 characreate(-1, 164, -3, 0);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
             }
         }
         mdata(13) = 79;
@@ -738,14 +739,14 @@ label_1741_internal:
         }
         flt();
         characreate(-1, 249, 12, 6);
-        cdata(150, rc) = 1019;
+        cdata_character_role(rc) = 1019;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
             {
                 flt();
                 characreate(-1, 211, -3, 0);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
             }
         }
         {
@@ -754,7 +755,7 @@ label_1741_internal:
             {
                 flt();
                 characreate(-1, 246, -3, 0);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
             }
         }
         map_placeplayer();
@@ -769,25 +770,25 @@ label_1741_internal:
         inv_own_state(ci) = 1;
         flt();
         characreate(-1, 173, 9, 16);
-        cdata(150, rc) = 1011;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1011;
+        cdata_shop_rank(rc) = 10;
         flt();
         characreate(-1, 173, 9, 8);
-        cdata(150, rc) = 1011;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1011;
+        cdata_shop_rank(rc) = 10;
         flt();
         characreate(-1, 322, 28, 7);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
                 flt();
                 characreate(-1, 171, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
                 flt();
                 characreate(-1, 172, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
             }
         }
         {
@@ -807,24 +808,24 @@ label_1741_internal:
         mdata(10) = 20;
         flt();
         characreate(-1, 41, 21, 23);
-        cdata(150, rc) = 21;
+        cdata_character_role(rc) = 21;
         flt();
         characreate(-1, 1, 9, 44);
-        cdata(150, rc) = 1017;
-        cdata(151, rc) = 5;
+        cdata_character_role(rc) = 1017;
+        cdata_shop_rank(rc) = 5;
         cdatan(0, rc) = lang(
             u8"染色店の"s + cdatan(0, rc),
             sncnv(cdatan(0, rc)) + u8"the dye vendor"s);
         flt();
         characreate(-1, 1, 13, 37);
-        cdata(150, rc) = 1018;
-        cdata(151, rc) = 30;
+        cdata_character_role(rc) = 1018;
+        cdata_shop_rank(rc) = 30;
         cdatan(0, rc) = lang(
             u8"おみやげ屋の"s + cdatan(0, rc),
             sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
         flt();
         characreate(-1, 70, 24, 48);
-        cdata(150, rc) = 9;
+        cdata_character_role(rc) = 9;
         flt();
         characreate(-1, 239, 7, 36);
         flt();
@@ -843,10 +844,10 @@ label_1741_internal:
             {
                 flt();
                 characreate(-1, 16, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
                 flt();
                 characreate(-1, 39, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
                 flt();
                 characreate(-1, 239, -3, 0);
             }
@@ -878,14 +879,14 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 1)
+                if (cdata_state(cnt) == 1)
                 {
-                    if (cdata(9, cnt) == 10)
+                    if (cdata_relationship(cnt) == 10)
                     {
                         if (cnt != 0)
                         {
-                            map(cdata(1, cnt), cdata(2, cnt), 1) = 0;
-                            cdata(0, cnt) = 8;
+                            map(cdata_x(cnt), cdata_y(cnt), 1) = 0;
+                            cdata_state(cnt) = 8;
                         }
                     }
                 }
@@ -894,11 +895,11 @@ label_1741_internal:
         if (arenaop == 0)
         {
             fixlv = arenaop(2);
-            characreate(-1, arenaop(1), cdata(1, 0) - 1, cdata(2, 0) - 4);
-            cdata(201, rc) = 30;
-            cdata(9, rc) = -3;
-            cdata(9, rc) = -3;
-            cdata(69, rc) = -3;
+            characreate(-1, arenaop(1), cdata_x(0) - 1, cdata_y(0) - 4);
+            cdata_hate(rc) = 30;
+            cdata_relationship(rc) = -3;
+            cdata_relationship(rc) = -3;
+            cdata_original_relationship(rc) = -3;
             cbitmod(976, rc, 1);
         }
         if (arenaop == 1)
@@ -908,13 +909,14 @@ label_1741_internal:
                 for (int cnt_end = cnt + (3 + rnd(4)); cnt < cnt_end; ++cnt)
                 {
                     flt(arenaop(1), 2);
-                    characreate(-1, 0, cdata(1, 0) - 1, cdata(2, 0) - 5);
-                    cdata(9, rc) = -3;
-                    cdata(69, rc) = -3;
-                    cdata(201, rc) = 30;
-                    cdata(9, rc) = -3;
+                    characreate(-1, 0, cdata_x(0) - 1, cdata_y(0) - 5);
+                    cdata_relationship(rc) = -3;
+                    cdata_original_relationship(rc) = -3;
+                    cdata_hate(rc) = 30;
+                    cdata_relationship(rc) = -3;
                     cbitmod(976, rc, 1);
-                    if (cdata(38, rc) > arenaop(1) || cdata(9, rc) != -3)
+                    if (cdata_level(rc) > arenaop(1)
+                        || cdata_relationship(rc) != -3)
                     {
                         chara_vanquish(rc);
                         --cnt;
@@ -939,13 +941,13 @@ label_1741_internal:
                 }
                 if (followerin(cnt) == 0)
                 {
-                    cdata(0, cnt) = 6;
-                    cdata(1, cnt) = 0;
-                    cdata(2, cnt) = 0;
+                    cdata_state(cnt) = 6;
+                    cdata_x(cnt) = 0;
+                    cdata_y(cnt) = 0;
                 }
                 else
                 {
-                    cdata(0, cnt) = 1;
+                    cdata_state(cnt) = 1;
                 }
             }
         }
@@ -969,16 +971,16 @@ label_1741_internal:
                 {
                     flt(arenaop(2), calcfixlv(3));
                     characreate(-1, 0, -3, 0);
-                    map(cdata(1, rc), cdata(2, rc), 1) = 0;
+                    map(cdata_x(rc), cdata_y(rc), 1) = 0;
                     f = 1;
                     if (arenaop == 0)
                     {
-                        if (cdata(38, rc) < arenaop(2) / 2)
+                        if (cdata_level(rc) < arenaop(2) / 2)
                         {
                             f = 0;
                         }
                     }
-                    if (cdata(9, rc) != -3)
+                    if (cdata_relationship(rc) != -3)
                     {
                         f = 0;
                     }
@@ -1000,7 +1002,7 @@ label_1741_internal:
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(9, cnt) == -3)
+                if (cdata_relationship(cnt) == -3)
                 {
                     cbitmod(966, cnt, 1);
                 }
@@ -1049,10 +1051,10 @@ label_1741_internal:
                 mdata(20) = 1;
                 flt();
                 characreate(-1, 33, 18, 10);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
                 flt();
                 characreate(-1, 34, 16, 11);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
                 flt();
                 itemcreate(-1, 510, 6, 10, 0);
                 inv_count(ci) = 3;
@@ -1091,10 +1093,10 @@ label_1741_internal:
                     int cnt = 57;
                     for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                     {
-                        cdata(1, cnt) = mdata(0) / 2;
-                        cdata(2, cnt) = mdata(1) / 2;
-                        cdata(171, cnt) = mdata(0) / 2;
-                        cdata(172, cnt) = mdata(1) / 2;
+                        cdata_x(cnt) = mdata(0) / 2;
+                        cdata_y(cnt) = mdata(1) / 2;
+                        cdata_initial_x(cnt) = mdata(0) / 2;
+                        cdata_initial_y(cnt) = mdata(1) / 2;
                     }
                 }
             }
@@ -1102,39 +1104,39 @@ label_1741_internal:
             {
                 flt();
                 characreate(-1, 1, 31, 20);
-                cdata(150, rc) = 1006;
-                cdata(151, rc) = 10;
+                cdata_character_role(rc) = 1006;
+                cdata_shop_rank(rc) = 10;
                 sngeneral(cdatan(0, rc));
                 flt();
                 characreate(-1, 1, 9, 20);
-                cdata(150, rc) = 1001;
-                cdata(151, rc) = 12;
+                cdata_character_role(rc) = 1001;
+                cdata_shop_rank(rc) = 12;
                 snarmor(cdatan(0, rc));
                 flt();
                 characreate(-1, 1, 4, 20);
-                cdata(150, rc) = 1008;
-                cdata(151, rc) = 10;
+                cdata_character_role(rc) = 1008;
+                cdata_shop_rank(rc) = 10;
                 sngoods(cdatan(0, rc));
                 flt();
                 characreate(-1, 41, 4, 11);
-                cdata(150, rc) = 5;
+                cdata_character_role(rc) = 5;
                 flt();
                 characreate(-1, 70, 30, 11);
-                cdata(150, rc) = 9;
+                cdata_character_role(rc) = 9;
                 flt();
                 characreate(-1, 74, 30, 4);
-                cdata(150, rc) = 12;
+                cdata_character_role(rc) = 12;
                 flt();
                 characreate(-1, 41, 4, 4);
-                cdata(150, rc) = 1004;
-                cdata(151, rc) = 11;
+                cdata_character_role(rc) = 1004;
+                cdata_shop_rank(rc) = 11;
                 snmagic(cdatan(0, rc));
             }
         }
         else
         {
             flt();
-            itemcreate(-1, 219, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 219, cdata_x(0), cdata_y(0), 0);
         }
         label_1711();
     }
@@ -1166,78 +1168,78 @@ label_1741_internal:
             mdata(15) = 0;
             flt();
             characreate(-1, 253, 23, 14);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 259, 13, 18);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 294, 16, 17);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 1, 10, 17);
-            cdata(150, rc) = 1009;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1009;
+            cdata_shop_rank(rc) = 12;
             sntrade(cdatan(0, rc));
             flt();
             characreate(-1, 70, 15, 15);
-            cdata(150, rc) = 9;
+            cdata_character_role(rc) = 9;
             flt();
             characreate(-1, 1, 13, 3);
-            cdata(150, rc) = 1006;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1006;
+            cdata_shop_rank(rc) = 10;
             sngeneral(cdatan(0, rc));
             flt();
             characreate(-1, 1, 29, 23);
-            cdata(150, rc) = 1005;
-            cdata(151, rc) = 8;
+            cdata_character_role(rc) = 1005;
+            cdata_shop_rank(rc) = 8;
             sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 26, 7);
-            cdata(150, rc) = 1008;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1008;
+            cdata_shop_rank(rc) = 10;
             sngoods(cdatan(0, rc));
             flt();
             characreate(-1, 1, 30, 4);
-            cdata(150, rc) = 1007;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1007;
+            cdata_shop_rank(rc) = 10;
             snblack(cdatan(0, rc));
             flt();
             characreate(-1, 1, 29, 4);
-            cdata(150, rc) = 17;
+            cdata_character_role(rc) = 17;
             cdatan(0, rc) = lang(u8"謎の奴隷商人"s, u8"The slave master"s);
             flt();
             characreate(-1, 1, 10, 6);
-            cdata(150, rc) = 1001;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1001;
+            cdata_shop_rank(rc) = 12;
             snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 73, 7, 15);
-            cdata(150, rc) = 10;
+            cdata_character_role(rc) = 10;
             flt();
             characreate(-1, 38, 9, 18);
-            cdata(150, rc) = 6;
+            cdata_character_role(rc) = 6;
             cdatan(0, rc) = lang(
                 u8"ダルフィ"s + cdatan(0, rc), cdatan(0, rc) + u8" of Derphy"s);
             flt();
             characreate(-1, 40, 13, 18);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 5, 26);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 69, 3, 28);
-            cdata(150, rc) = 8;
+            cdata_character_role(rc) = 8;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     flt();
                     characreate(-1, 16, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                     flt();
                     characreate(-1, 39, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                 }
             }
             label_2669();
@@ -1264,28 +1266,28 @@ label_1741_internal:
             map_placeplayer();
             flt();
             characreate(-1, 292, 21, 9);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 40, 3, 6);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 3, 12);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 1, 5, 18);
-            cdata(150, rc) = 1007;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1007;
+            cdata_shop_rank(rc) = 10;
             snblack(cdatan(0, rc));
             flt();
             characreate(-1, 1, 27, 13);
-            cdata(150, rc) = 1007;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1007;
+            cdata_shop_rank(rc) = 10;
             snblack(cdatan(0, rc));
             flt();
             characreate(-1, 1, 21, 19);
-            cdata(150, rc) = 1021;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1021;
+            cdata_shop_rank(rc) = 10;
             cdatan(0, rc) = lang(
                 u8"盗賊店の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the fence"s);
@@ -1307,143 +1309,143 @@ label_1741_internal:
         mdata(15) = 0;
         flt();
         characreate(-1, 70, 42, 27);
-        cdata(150, rc) = 9;
+        cdata_character_role(rc) = 9;
         flt();
         characreate(-1, 74, 34, 3);
-        cdata(150, rc) = 12;
+        cdata_character_role(rc) = 12;
         flt();
         characreate(-1, 73, 22, 31);
-        cdata(150, rc) = 10;
+        cdata_character_role(rc) = 10;
         flt();
         characreate(-1, 142, 5, 15);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 247, 41, 11);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 301, 5, 6);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 320, 24, 6);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 320, 15, 22);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 326, 15, 22);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         if (gdata(460) == 1000)
         {
             flt();
             characreate(-1, 246, 42, 11);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
         }
         flt();
         characreate(-1, 1, 48, 18);
-        cdata(150, rc) = 1006;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1006;
+        cdata_shop_rank(rc) = 10;
         sngeneral(cdatan(0, rc));
         flt();
         characreate(-1, 1, 30, 17);
-        cdata(150, rc) = 1005;
-        cdata(151, rc) = 8;
+        cdata_character_role(rc) = 1005;
+        cdata_shop_rank(rc) = 8;
         sninn(cdatan(0, rc));
         flt();
         characreate(-1, 1, 48, 3);
-        cdata(150, rc) = 1008;
-        cdata(151, rc) = 8;
+        cdata_character_role(rc) = 1008;
+        cdata_shop_rank(rc) = 8;
         sngoods(cdatan(0, rc));
         flt();
         characreate(-1, 1, 42, 17);
-        cdata(150, rc) = 1001;
-        cdata(151, rc) = 12;
+        cdata_character_role(rc) = 1001;
+        cdata_shop_rank(rc) = 12;
         snarmor(cdatan(0, rc));
         flt();
         characreate(-1, 1, 11, 14);
-        cdata(150, rc) = 1003;
-        cdata(151, rc) = 9;
+        cdata_character_role(rc) = 1003;
+        cdata_shop_rank(rc) = 9;
         snbakery(cdatan(0, rc));
-        cdata(7, rc) = 138;
+        cdata_image(rc) = 138;
         flt();
         characreate(-1, 41, 41, 3);
-        cdata(150, rc) = 1004;
-        cdata(151, rc) = 11;
+        cdata_character_role(rc) = 1004;
+        cdata_shop_rank(rc) = 11;
         snmagic(cdatan(0, rc));
         flt();
         characreate(-1, 1, 41, 28);
-        cdata(150, rc) = 1009;
-        cdata(151, rc) = 12;
+        cdata_character_role(rc) = 1009;
+        cdata_shop_rank(rc) = 12;
         sntrade(cdatan(0, rc));
         flt();
         characreate(-1, 79, 7, 2);
-        cdata(150, rc) = 15;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 15;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 80, 6, 2);
-        cdata(150, rc) = 15;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 15;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 38, 49, 11);
-        cdata(150, rc) = 6;
+        cdata_character_role(rc) = 6;
         cdatan(0, rc) = lang(
             u8"パルミア市街地の"s + cdatan(0, rc),
             cdatan(0, rc) + u8" of Palmia city"s);
         flt();
         characreate(-1, 40, 30, 27);
-        cdata(150, rc) = 7;
+        cdata_character_role(rc) = 7;
         sntrainer(cdatan(0, rc));
         flt();
         characreate(-1, 41, 32, 27);
-        cdata(150, rc) = 5;
+        cdata_character_role(rc) = 5;
         flt();
         characreate(-1, 69, 29, 28);
-        cdata(150, rc) = 8;
+        cdata_character_role(rc) = 8;
         flt();
         characreate(-1, 77, 16, 5);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 16, 9);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 5, 3);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 8, 3);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 35, 14);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 38, 14);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 29, 2);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 19, 18);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         flt();
         characreate(-1, 77, 22, 18);
-        cdata(150, rc) = 14;
-        cdata(202, rc) = 3;
+        cdata_character_role(rc) = 14;
+        cdata_ai_calm(rc) = 3;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
                 flt();
                 characreate(-1, 39, -3, 0);
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
             }
         }
         {
@@ -1452,7 +1454,7 @@ label_1741_internal:
             {
                 flt();
                 characreate(-1, 77, -3, 0);
-                cdata(150, rc) = 14;
+                cdata_character_role(rc) = 14;
             }
         }
         label_2669();
@@ -1480,99 +1482,99 @@ label_1741_internal:
             }
             flt();
             characreate(-1, 252, 12, 24);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 280, 21, 3);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 290, 5, 20);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 320, 28, 29);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 41, 19);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 32, 43);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 29, 28);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 16, 45);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 13, 24);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 70, 41, 42);
-            cdata(150, rc) = 9;
+            cdata_character_role(rc) = 9;
             flt();
             characreate(-1, 74, 10, 16);
-            cdata(150, rc) = 12;
+            cdata_character_role(rc) = 12;
             flt();
             characreate(-1, 1, 47, 30);
-            cdata(150, rc) = 1006;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1006;
+            cdata_shop_rank(rc) = 10;
             sngeneral(cdatan(0, rc));
             flt();
             characreate(-1, 1, 24, 47);
-            cdata(150, rc) = 1005;
-            cdata(151, rc) = 8;
+            cdata_character_role(rc) = 1005;
+            cdata_shop_rank(rc) = 8;
             sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 37, 30);
-            cdata(150, rc) = 1001;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1001;
+            cdata_shop_rank(rc) = 12;
             snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 1, 37, 12);
-            cdata(150, rc) = 1003;
-            cdata(151, rc) = 9;
+            cdata_character_role(rc) = 1003;
+            cdata_shop_rank(rc) = 9;
             snbakery(cdatan(0, rc));
-            cdata(7, rc) = 138;
+            cdata_image(rc) = 138;
             flt();
             characreate(-1, 41, 6, 15);
-            cdata(150, rc) = 1004;
-            cdata(151, rc) = 11;
+            cdata_character_role(rc) = 1004;
+            cdata_shop_rank(rc) = 11;
             snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 1, 33, 43);
-            cdata(150, rc) = 1009;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1009;
+            cdata_shop_rank(rc) = 12;
             sntrade(cdatan(0, rc));
             flt();
             characreate(-1, 1, 47, 12);
-            cdata(150, rc) = 1014;
-            cdata(151, rc) = 5;
+            cdata_character_role(rc) = 1014;
+            cdata_shop_rank(rc) = 5;
             snfish(cdatan(0, rc));
             flt();
             characreate(-1, 38, 3, 38);
-            cdata(150, rc) = 6;
+            cdata_character_role(rc) = 6;
             cdatan(0, rc) = lang(
                 u8"ルミエストの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Lumiest"s);
             flt();
             characreate(-1, 40, 21, 28);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 21, 30);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 69, 23, 38);
-            cdata(150, rc) = 8;
+            cdata_character_role(rc) = 8;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
                 {
                     flt();
                     characreate(-1, 16, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                     flt();
                     characreate(-1, 39, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                 }
             }
             {
@@ -1581,7 +1583,7 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 77, -3, 0);
-                    cdata(150, rc) = 14;
+                    cdata_character_role(rc) = 14;
                 }
             }
             label_2669();
@@ -1608,28 +1610,28 @@ label_1741_internal:
             map_placeplayer();
             flt();
             characreate(-1, 288, 24, 3);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 41, 27, 8);
-            cdata(150, rc) = 1020;
+            cdata_character_role(rc) = 1020;
             cdatan(0, rc) = lang(
                 u8"魔法書作家の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the spell writer"s);
             flt();
             characreate(-1, 41, 22, 8);
-            cdata(150, rc) = 1004;
-            cdata(151, rc) = 11;
+            cdata_character_role(rc) = 1004;
+            cdata_shop_rank(rc) = 11;
             snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 74, 3, 9);
-            cdata(150, rc) = 12;
+            cdata_character_role(rc) = 12;
             flt();
             characreate(-1, 40, 12, 6);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 3, 3);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
@@ -1668,80 +1670,80 @@ label_1741_internal:
             }
             flt();
             characreate(-1, 224, 3, 17);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 227, 26, 11);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 231, 14, 20);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 1, 11, 5);
-            cdata(150, rc) = 1006;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1006;
+            cdata_shop_rank(rc) = 10;
             sngeneral(cdatan(0, rc));
             flt();
             characreate(-1, 1, 25, 8);
-            cdata(150, rc) = 1005;
-            cdata(151, rc) = 8;
+            cdata_character_role(rc) = 1005;
+            cdata_shop_rank(rc) = 8;
             sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 7, 8);
-            cdata(150, rc) = 1008;
-            cdata(151, rc) = 8;
+            cdata_character_role(rc) = 1008;
+            cdata_shop_rank(rc) = 8;
             sngoods(cdatan(0, rc));
             flt();
             characreate(-1, 1, 14, 14);
-            cdata(150, rc) = 1009;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1009;
+            cdata_shop_rank(rc) = 12;
             sntrade(cdatan(0, rc));
             flt();
             characreate(-1, 1, 35, 18);
-            cdata(150, rc) = 22;
+            cdata_character_role(rc) = 22;
             cdatan(0, rc) = lang(
                 u8"馬屋の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the horse master"s);
             flt();
             characreate(-1, 267, 33, 16);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 267, 37, 19);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 268, 34, 19);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 268, 38, 16);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 38, 3, 4);
-            cdata(150, rc) = 6;
+            cdata_character_role(rc) = 6;
             cdatan(0, rc) = lang(
                 u8"ヨウィンの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Yowyn"s);
             flt();
             characreate(-1, 40, 20, 14);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 24, 16);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 69, 26, 16);
-            cdata(150, rc) = 8;
+            cdata_character_role(rc) = 8;
             flt();
             characreate(-1, 213, 14, 12);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
                 {
                     flt();
                     characreate(-1, 16, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                     flt();
                     characreate(-1, 39, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                 }
             }
             {
@@ -1750,7 +1752,7 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 77, -3, 0);
-                    cdata(150, rc) = 14;
+                    cdata_character_role(rc) = 14;
                 }
             }
             label_2669();
@@ -1796,7 +1798,7 @@ label_1741_internal:
                 int cnt = 57;
                 for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
                         if (cbit(970, cnt) == 1)
                         {
@@ -1812,13 +1814,13 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 233 + 2 * (cnt > 22), 11, 16);
-                    cdata(9, rc) = 10;
-                    cdata(69, rc) = 10;
-                    cdata(201, rc) = 100;
+                    cdata_relationship(rc) = 10;
+                    cdata_original_relationship(rc) = 10;
+                    cdata_hate(rc) = 100;
                     p = list(0, rnd(listmax));
-                    cdata(29, rc) = p;
-                    cdata(201, p) = 100;
-                    cdata(29, p) = rc;
+                    cdata_enemy_id(rc) = p;
+                    cdata_hate(p) = 100;
+                    cdata_enemy_id(p) = rc;
                 }
             }
             noaggrorefresh = 1;
@@ -1833,96 +1835,96 @@ label_1741_internal:
         flt();
         characreate(-1, 202, 46, 18);
         gdata(259) = rc;
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 203, 47, 18);
-        cdata(150, rc) = 1015;
+        cdata_character_role(rc) = 1015;
         flt();
         characreate(-1, 35, 47, 20);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 35, 45, 19);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 35, 49, 20);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 326, 28, 22);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         flt();
         characreate(-1, 221, 19, 3);
-        cdata(150, rc) = 3;
+        cdata_character_role(rc) = 3;
         if (gdata(453) != 1001)
         {
             flt();
             characreate(-1, 222, 19, 2);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
         }
         flt();
         characreate(-1, 70, 40, 33);
-        cdata(150, rc) = 9;
+        cdata_character_role(rc) = 9;
         flt();
         characreate(-1, 74, 44, 6);
-        cdata(150, rc) = 12;
+        cdata_character_role(rc) = 12;
         flt();
         characreate(-1, 206, 44, 3);
-        cdata(150, rc) = 19;
+        cdata_character_role(rc) = 19;
         flt();
         characreate(-1, 1, 19, 31);
-        cdata(150, rc) = 1001;
-        cdata(151, rc) = 12;
+        cdata_character_role(rc) = 1001;
+        cdata_shop_rank(rc) = 12;
         snarmor(cdatan(0, rc));
         flt();
         characreate(-1, 1, 11, 31);
-        cdata(150, rc) = 1006;
-        cdata(151, rc) = 10;
+        cdata_character_role(rc) = 1006;
+        cdata_shop_rank(rc) = 10;
         sngeneral(cdatan(0, rc));
         flt();
         characreate(-1, 1, 38, 34);
-        cdata(150, rc) = 1005;
-        cdata(151, rc) = 8;
+        cdata_character_role(rc) = 1005;
+        cdata_shop_rank(rc) = 8;
         sninn(cdatan(0, rc));
         flt();
         characreate(-1, 1, 5, 27);
-        cdata(150, rc) = 1003;
-        cdata(151, rc) = 9;
+        cdata_character_role(rc) = 1003;
+        cdata_shop_rank(rc) = 9;
         snbakery(cdatan(0, rc));
-        cdata(7, rc) = 138;
+        cdata_image(rc) = 138;
         flt();
         characreate(-1, 41, 56, 5);
-        cdata(150, rc) = 1004;
-        cdata(151, rc) = 11;
+        cdata_character_role(rc) = 1004;
+        cdata_shop_rank(rc) = 11;
         snmagic(cdatan(0, rc));
         flt();
         characreate(-1, 1, 39, 35);
-        cdata(150, rc) = 1009;
-        cdata(151, rc) = 12;
+        cdata_character_role(rc) = 1009;
+        cdata_shop_rank(rc) = 12;
         sntrade(cdatan(0, rc));
         flt();
         characreate(-1, 38, 5, 18);
-        cdata(150, rc) = 6;
+        cdata_character_role(rc) = 6;
         cdatan(0, rc) = lang(
             u8"ノイエルの"s + cdatan(0, rc), cdatan(0, rc) + u8" of Noyel"s);
         flt();
         characreate(-1, 40, 18, 20);
-        cdata(150, rc) = 7;
+        cdata_character_role(rc) = 7;
         sntrainer(cdatan(0, rc));
         flt();
         characreate(-1, 41, 4, 33);
-        cdata(150, rc) = 5;
+        cdata_character_role(rc) = 5;
         flt();
         characreate(-1, 69, 6, 33);
-        cdata(150, rc) = 8;
+        cdata_character_role(rc) = 8;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
                 flt();
                 characreate(-1, 16, rnd(32), rnd(mdata(1)));
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
                 flt();
                 characreate(-1, 39, rnd(32), rnd(mdata(1)));
-                cdata(150, rc) = 4;
+                cdata_character_role(rc) = 4;
             }
         }
         {
@@ -1931,7 +1933,7 @@ label_1741_internal:
             {
                 flt();
                 characreate(-1, 77, rnd(32), rnd(mdata(1)));
-                cdata(150, rc) = 14;
+                cdata_character_role(rc) = 14;
             }
         }
         label_2669();
@@ -1941,7 +1943,7 @@ label_1741_internal:
             {
                 label_1735();
                 characreate(-1, 35, rnd(11) + 25, rnd(5) + 15);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
             }
         }
         {
@@ -1964,106 +1966,106 @@ label_1741_internal:
             mdata(15) = 0;
             flt();
             characreate(-1, 223, 15, 18);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 243, 36, 27);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 279, 5, 26);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 297, 29, 3);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 320, 24, 21);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 320, 12, 26);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 320, 8, 11);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 8, 14);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 1, 16, 17);
-            cdata(150, rc) = 1009;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1009;
+            cdata_shop_rank(rc) = 12;
             sntrade(cdatan(0, rc));
             flt();
             characreate(-1, 1, 23, 7);
-            cdata(150, rc) = 1001;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1001;
+            cdata_shop_rank(rc) = 12;
             snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 1, 32, 14);
-            cdata(150, rc) = 1006;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1006;
+            cdata_shop_rank(rc) = 10;
             sngeneral(cdatan(0, rc));
             flt();
             characreate(-1, 1, 22, 14);
-            cdata(150, rc) = 1008;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1008;
+            cdata_shop_rank(rc) = 10;
             sngoods(cdatan(0, rc));
             flt();
             characreate(-1, 1, 16, 25);
-            cdata(150, rc) = 1007;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1007;
+            cdata_shop_rank(rc) = 10;
             snblack(cdatan(0, rc));
             flt();
             characreate(-1, 1, 17, 28);
-            cdata(150, rc) = 1002;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1002;
+            cdata_shop_rank(rc) = 10;
             snfood(cdatan(0, rc));
             flt();
             characreate(-1, 41, 22, 22);
-            cdata(150, rc) = 1004;
-            cdata(151, rc) = 11;
+            cdata_character_role(rc) = 1004;
+            cdata_shop_rank(rc) = 11;
             snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 1, 35, 3);
-            cdata(150, rc) = 1005;
-            cdata(151, rc) = 8;
+            cdata_character_role(rc) = 1005;
+            cdata_shop_rank(rc) = 8;
             sninn(cdatan(0, rc));
             flt();
             characreate(-1, 70, 15, 15);
-            cdata(150, rc) = 9;
+            cdata_character_role(rc) = 9;
             flt();
             characreate(-1, 73, 26, 3);
-            cdata(150, rc) = 10;
+            cdata_character_role(rc) = 10;
             flt();
             characreate(-1, 179, 25, 4);
-            cdata(150, rc) = 11;
+            cdata_character_role(rc) = 11;
             flt();
             characreate(-1, 38, 8, 12);
-            cdata(150, rc) = 6;
+            cdata_character_role(rc) = 6;
             cdatan(0, rc) = lang(
                 u8"ポート・カプールの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Port Kapul"s);
             flt();
             characreate(-1, 40, 16, 4);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 14, 4);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 69, 17, 5);
-            cdata(150, rc) = 8;
+            cdata_character_role(rc) = 8;
             flt();
             characreate(-1, 74, 27, 11);
-            cdata(150, rc) = 12;
+            cdata_character_role(rc) = 12;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
                 {
                     flt();
                     characreate(-1, 16, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                     flt();
                     characreate(-1, 39, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                 }
             }
             {
@@ -2072,7 +2074,7 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 71, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                 }
             }
             {
@@ -2081,12 +2083,12 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 76, -3, 0);
-                    cdata(150, rc) = 14;
+                    cdata_character_role(rc) = 14;
                 }
             }
             flt();
             characreate(-1, 72, 7, 6);
-            cdata(150, rc) = 4;
+            cdata_character_role(rc) = 4;
             label_2669();
             {
                 int cnt = 0;
@@ -2110,21 +2112,21 @@ label_1741_internal:
             map_placeplayer();
             flt();
             characreate(-1, 291, 27, 4);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 74, 28, 10);
-            cdata(150, rc) = 12;
+            cdata_character_role(rc) = 12;
             flt();
             characreate(-1, 40, 15, 10);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 14, 18);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 1, 29, 15);
-            cdata(150, rc) = 1001;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1001;
+            cdata_shop_rank(rc) = 12;
             snarmor(cdatan(0, rc));
             {
                 int cnt = 0;
@@ -2154,9 +2156,9 @@ label_1741_internal:
                 for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                 {
                     flt();
-                    characreate(-1, 204, cdata(1, 0), cdata(2, 0));
-                    cdata(9, rc) = 10;
-                    cdata(69, rc) = 10;
+                    characreate(-1, 204, cdata_x(0), cdata_y(0));
+                    cdata_relationship(rc) = 10;
+                    cdata_original_relationship(rc) = 10;
                 }
             }
             noaggrorefresh = 1;
@@ -2178,96 +2180,96 @@ label_1741_internal:
             characreate(-1, 28, 39, 3);
             flt();
             characreate(-1, 29, 42, 23);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 30, 24, 5);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 31, 40, 24);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 32, 40, 25);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 226, 30, 5);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             flt();
             characreate(-1, 326, 42, 24);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             if (gdata(455) == 1000)
             {
                 flt();
                 characreate(-1, 225, 31, 4);
-                cdata(150, rc) = 3;
+                cdata_character_role(rc) = 3;
             }
             flt();
             characreate(-1, 1, 47, 9);
-            cdata(150, rc) = 1014;
-            cdata(151, rc) = 5;
+            cdata_character_role(rc) = 1014;
+            cdata_shop_rank(rc) = 5;
             snfish(cdatan(0, rc));
             flt();
             characreate(-1, 1, 14, 12);
-            cdata(150, rc) = 1001;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1001;
+            cdata_shop_rank(rc) = 12;
             snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 1, 39, 27);
-            cdata(150, rc) = 1009;
-            cdata(151, rc) = 12;
+            cdata_character_role(rc) = 1009;
+            cdata_shop_rank(rc) = 12;
             sntrade(cdatan(0, rc));
             flt();
             characreate(-1, 1, 10, 15);
-            cdata(150, rc) = 1006;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1006;
+            cdata_shop_rank(rc) = 10;
             sngeneral(cdatan(0, rc));
             flt();
             characreate(-1, 41, 7, 26);
-            cdata(150, rc) = 1004;
-            cdata(151, rc) = 11;
+            cdata_character_role(rc) = 1004;
+            cdata_shop_rank(rc) = 11;
             snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 1, 14, 25);
-            cdata(150, rc) = 1005;
-            cdata(151, rc) = 8;
+            cdata_character_role(rc) = 1005;
+            cdata_shop_rank(rc) = 8;
             sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 22, 26);
-            cdata(150, rc) = 1003;
-            cdata(151, rc) = 9;
+            cdata_character_role(rc) = 1003;
+            cdata_shop_rank(rc) = 9;
             snbakery(cdatan(0, rc));
-            cdata(7, rc) = 138;
+            cdata_image(rc) = 138;
             flt();
             characreate(-1, 41, 28, 16);
-            cdata(150, rc) = 5;
+            cdata_character_role(rc) = 5;
             flt();
             characreate(-1, 70, 38, 27);
-            cdata(150, rc) = 9;
+            cdata_character_role(rc) = 9;
             flt();
             characreate(-1, 74, 6, 25);
-            cdata(150, rc) = 12;
+            cdata_character_role(rc) = 12;
             flt();
             characreate(-1, 38, 10, 7);
-            cdata(150, rc) = 6;
+            cdata_character_role(rc) = 6;
             cdatan(0, rc) = lang(
                 u8"ヴェルニースの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Vernis"s);
             flt();
             characreate(-1, 40, 27, 16);
-            cdata(150, rc) = 7;
+            cdata_character_role(rc) = 7;
             sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 69, 25, 16);
-            cdata(150, rc) = 8;
+            cdata_character_role(rc) = 8;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     flt();
                     characreate(-1, 16, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                     flt();
                     characreate(-1, 39, -3, 0);
-                    cdata(150, rc) = 4;
+                    cdata_character_role(rc) = 4;
                 }
             }
             {
@@ -2276,7 +2278,7 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 77, -3, 0);
-                    cdata(150, rc) = 14;
+                    cdata_character_role(rc) = 14;
                 }
             }
             label_2669();
@@ -2495,7 +2497,7 @@ label_1741_internal:
             mdata(10) = 0;
             flt();
             initlv = encounterlv;
-            characreate(-1, 302, cdata(1, 0), cdata(2, 0));
+            characreate(-1, 302, cdata_x(0), cdata_y(0));
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (6 + rnd(6)); cnt < cnt_end; ++cnt)
@@ -2503,7 +2505,7 @@ label_1741_internal:
                     flt();
                     initlv = encounterlv + rnd(10);
                     characreate(-1, 303 + rnd(3), 14, 11);
-                    cdatan(0, rc) += u8" Lv"s + cdata(38, rc);
+                    cdatan(0, rc) += u8" Lv"s + cdata_level(rc);
                 }
             }
             gdatan(1) = random_title(2);
@@ -2524,12 +2526,12 @@ label_1741_internal:
                 for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
                 {
                     flt(qdata(5, rq), 3);
-                    characreate(-1, 0, cdata(1, 0), cdata(2, 0));
+                    characreate(-1, 0, cdata_x(0), cdata_y(0));
                     if (stat != 0)
                     {
-                        cdata(201, rc) = 30;
-                        cdata(9, rc) = -3;
-                        cdata(69, rc) = -3;
+                        cdata_hate(rc) = 30;
+                        cdata_relationship(rc) = -3;
+                        cdata_original_relationship(rc) = -3;
                     }
                 }
             }
@@ -2538,8 +2540,8 @@ label_1741_internal:
         {
             flt();
             characreate(-1, 1, 10, 11);
-            cdata(150, rc) = 1010;
-            cdata(151, rc) = encounterlv;
+            cdata_character_role(rc) = 1010;
+            cdata_shop_rank(rc) = encounterlv;
             cdatan(0, rc) = lang(
                 u8"行商人の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the wandering vendor"s);
@@ -2562,15 +2564,15 @@ label_1741_internal:
                     flt();
                     initlv = encounterlv + rnd(10);
                     characreate(-1, 159 + rnd(3), 14, 11);
-                    cdata(150, rc) = 16;
-                    cdatan(0, rc) += u8" Lv"s + cdata(38, rc);
+                    cdata_character_role(rc) = 16;
+                    cdatan(0, rc) += u8" Lv"s + cdata_level(rc);
                 }
             }
         }
         if (encounter == 1)
         {
             p = rnd(9);
-            if (cdata(38, 0) <= 5)
+            if (cdata_level(0) <= 5)
             {
                 p = rnd(3);
             }
@@ -2594,13 +2596,13 @@ label_1741_internal:
                     }
                     if (cnt < 4)
                     {
-                        characreate(-1, 0, cdata(1, 0), cdata(2, 0));
+                        characreate(-1, 0, cdata_x(0), cdata_y(0));
                     }
                     else
                     {
                         characreate(-1, 0, -3, 0);
                     }
-                    cdata(201, rc) = 30;
+                    cdata_hate(rc) = 30;
                 }
             }
         }
@@ -2666,15 +2668,15 @@ label_1741_internal:
         }
         if (gdata(22) == 3)
         {
-            characreate(-1, 139, cdata(1, 0), cdata(2, 0));
-            cdata(150, rc) = 3;
-            cdata(202, rc) = 3;
+            characreate(-1, 139, cdata_x(0), cdata_y(0));
+            cdata_character_role(rc) = 3;
+            cdata_ai_calm(rc) = 3;
         }
         if (gdata(22) == 17)
         {
-            characreate(-1, 146, cdata(1, 0), cdata(2, 0));
-            cdata(150, rc) = 3;
-            cdata(202, rc) = 3;
+            characreate(-1, 146, cdata_x(0), cdata_y(0));
+            cdata_character_role(rc) = 3;
+            cdata_ai_calm(rc) = 3;
         }
     }
     if (gdata(20) == 16)
@@ -2776,7 +2778,7 @@ label_1741_internal:
                     for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                     {
                         flt();
-                        characreate(-1, 240, cdata(1, tc), cdata(2, tc));
+                        characreate(-1, 240, cdata_x(tc), cdata_y(tc));
                     }
                 }
                 {
@@ -2784,9 +2786,9 @@ label_1741_internal:
                     for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                     {
                         flt();
-                        characreate(-1, 238, cdata(1, tc), cdata(2, tc));
+                        characreate(-1, 238, cdata_x(tc), cdata_y(tc));
                         flt();
-                        characreate(-1, 237, cdata(1, tc), cdata(2, tc));
+                        characreate(-1, 237, cdata_x(tc), cdata_y(tc));
                     }
                 }
             }
@@ -2961,12 +2963,13 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 0)
+                if (cdata_state(cnt) == 0)
                 {
                     continue;
                 }
-                if (cdata(150, cnt) >= 1000 && cdata(150, cnt) < 2000
-                    || cdata(150, cnt) == 2003)
+                if (cdata_character_role(cnt) >= 1000
+                        && cdata_character_role(cnt) < 2000
+                    || cdata_character_role(cnt) == 2003)
                 {
                     cnt2 = cnt;
                     {
@@ -2974,9 +2977,9 @@ label_1741_internal:
                         for (int cnt_end = cnt + (maxnpcbk); cnt < cnt_end;
                              ++cnt)
                         {
-                            if (cdata(150, cnt2) == rolebk(0, cnt))
+                            if (cdata_character_role(cnt2) == rolebk(0, cnt))
                             {
-                                cdata(151, cnt2) = rolebk(1, cnt);
+                                cdata_shop_rank(cnt2) = rolebk(1, cnt);
                                 rolebk(0, cnt) = 0;
                                 rolebk(1, cnt) = 0;
                                 break;
@@ -3002,8 +3005,8 @@ label_1742_internal:
     {
         if (gdata(252) == 180)
         {
-            cdata(1, 0) = adata(1, 11);
-            cdata(2, 0) = adata(2, 11);
+            cdata_x(0) = adata(1, 11);
+            cdata_y(0) = adata(2, 11);
             gdata(35) = 1;
             gdata(60) = -1;
             msg_newline();
@@ -3016,17 +3019,17 @@ label_1742_internal:
         int cnt = 16;
         for (int cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 3)
+            if (cdata_state(cnt) != 3)
             {
                 continue;
             }
             if (cbit(969, cnt))
             {
-                cdata(9, cnt) = 10;
-                cdata(80, cnt) = gdata(20);
+                cdata_relationship(cnt) = 10;
+                cdata_current_map(cnt) = gdata(20);
                 goto label_1743_internal;
             }
-            if (cdata(80, cnt) != gdata(20))
+            if (cdata_current_map(cnt) != gdata(20))
             {
                 continue;
             }
@@ -3044,19 +3047,19 @@ label_1742_internal:
                 continue;
             }
             rc = cnt;
-            cdata(0, rc) = 1;
+            cdata_state(rc) = 1;
             if (cbit(969, cnt) == 1)
             {
-                cxinit = cdata(1, 0);
-                cyinit = cdata(2, 0);
+                cxinit = cdata_x(0);
+                cyinit = cdata_y(0);
                 label_1532();
             }
             else
             {
                 cxinit = -1;
                 label_1532();
-                cdata(50, rc) = cdata(51, rc);
-                cdata(55, rc) = cdata(56, rc);
+                cdata_hp(rc) = cdata_max_hp(rc);
+                cdata_mp(rc) = cdata_max_mp(rc);
             }
         }
     }
@@ -3149,11 +3152,11 @@ label_1742_internal:
                         continue;
                     }
                 }
-                if (cdata(0, rc) == 2)
+                if (cdata_state(rc) == 2)
                 {
                     if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                             + gdata(10) * 24 * 30 * 12
-                        >= cdata(5, rc))
+                        >= cdata_time_to_revive(rc))
                     {
                         label_1540();
                     }
@@ -3162,15 +3165,15 @@ label_1742_internal:
                         continue;
                     }
                 }
-                if (cdata(0, rc) != 1)
+                if (cdata_state(rc) != 1)
                 {
                     continue;
                 }
-                if (cdata(150, rc) == 14)
+                if (cdata_character_role(rc) == 14)
                 {
-                    if (cdata(49, 0) < -30)
+                    if (cdata_karma(0) < -30)
                     {
-                        if (cdata(38, 0) > cdata(38, rc))
+                        if (cdata_level(0) > cdata_level(rc))
                         {
                             r1 = rc;
                             r2 = 1;
@@ -3180,58 +3183,59 @@ label_1742_internal:
                 }
                 if (rc >= 57)
                 {
-                    cdata(50, rc) = cdata(51, rc);
-                    cdata(55, rc) = cdata(56, rc);
-                    cdata(86, rc) = 0;
+                    cdata_hp(rc) = cdata_max_hp(rc);
+                    cdata_mp(rc) = cdata_max_mp(rc);
+                    cdata_insanity(rc) = 0;
                 }
                 if (rc >= 57)
                 {
                     if (mdata(8) == 1)
                     {
-                        cdata(1, rc) = cdata(171, rc);
-                        cdata(2, rc) = cdata(172, rc);
+                        cdata_x(rc) = cdata_initial_x(rc);
+                        cdata_y(rc) = cdata_initial_y(rc);
                     }
                     if (cbit(970, rc) == 0)
                     {
-                        cdata(201, rc) = 0;
-                        cdata(9, rc) = cdata(69, rc);
+                        cdata_hate(rc) = 0;
+                        cdata_relationship(rc) =
+                            cdata_original_relationship(rc);
                     }
-                    if (cdata(150, rc) == 14)
+                    if (cdata_character_role(rc) == 14)
                     {
-                        if (cdata(49, 0) < -30)
+                        if (cdata_karma(0) < -30)
                         {
                             if (cbit(16, 0) == 0)
                             {
-                                cdata(201, rc) = 200;
-                                cdata(9, rc) = -3;
+                                cdata_hate(rc) = 200;
+                                cdata_relationship(rc) = -3;
                             }
                         }
                     }
                     if (mdata(6) == 3 || mdata(6) == 2)
                     {
-                        cdata(251, rc) = 0;
+                        cdata_sleep(rc) = 0;
                         if (gdata(13) >= 22 || gdata(13) < 7)
                         {
                             if (rnd(6) == 0)
                             {
-                                cdata(251, rc) = rnd(400);
+                                cdata_sleep(rc) = rnd(400);
                             }
                         }
                     }
                 }
                 if (rc == 0 || gdata(183) != rc)
                 {
-                    cell_check(cdata(1, rc), cdata(2, rc));
-                    if (map(cdata(1, rc), cdata(2, rc), 1) != 0
+                    cell_check(cdata_x(rc), cdata_y(rc));
+                    if (map(cdata_x(rc), cdata_y(rc), 1) != 0
                         || cellaccess != 1)
                     {
                         {
                             int cnt = 0;
                             for (;; ++cnt)
                             {
-                                x = cdata(1, rc) + rnd((cnt / 2 + 2))
+                                x = cdata_x(rc) + rnd((cnt / 2 + 2))
                                     - rnd((cnt / 2 + 2));
-                                y = cdata(2, rc) + rnd((cnt / 2 + 2))
+                                y = cdata_y(rc) + rnd((cnt / 2 + 2))
                                     - rnd((cnt / 2 + 2));
                                 if (cnt > 100)
                                 {
@@ -3245,8 +3249,8 @@ label_1742_internal:
                                 cell_check(x, y);
                                 if (cellaccess == 1)
                                 {
-                                    cdata(1, rc) = x;
-                                    cdata(2, rc) = y;
+                                    cdata_x(rc) = x;
+                                    cdata_y(rc) = y;
                                     break;
                                 }
                             }
@@ -3255,7 +3259,7 @@ label_1742_internal:
                 }
                 if (cbit(975, rc) == 0)
                 {
-                    map(cdata(1, rc), cdata(2, rc), 1) = rc + 1;
+                    map(cdata_x(rc), cdata_y(rc), 1) = rc + 1;
                 }
             }
         }
@@ -3288,34 +3292,34 @@ label_1744_internal:
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            cdata(10, cnt) = 0;
-            if (cdata(27, cnt) == 343)
+            cdata_turn_cost(cnt) = 0;
+            if (cdata_id(cnt) == 343)
             {
                 getunid(cnt);
             }
             if (noaggrorefresh == 0)
             {
-                cdata(29, cnt) = 0;
-                cdata(201, cnt) = 0;
+                cdata_enemy_id(cnt) = 0;
+                cdata_hate(cnt) = 0;
             }
-            cdata(6, cnt) = 0;
+            cdata_vision_flag(cnt) = 0;
             if (cnt > 57)
             {
-                if (cdata(0, cnt) != 0)
+                if (cdata_state(cnt) != 0)
                 {
                     ++gdata(3);
                 }
             }
         }
     }
-    cdata(80, 0) = gdata(20);
-    cdata(81, 0) = gdata(22);
+    cdata_current_map(0) = gdata(20);
+    cdata_current_dungeon_level(0) = gdata(22);
     raderx = -1;
     radery = -1;
     raderw = 120 / mdata(0) + 2;
     raderh = 84 / mdata(1) + 2;
-    scx = cdata(1, 0);
-    scy = cdata(2, 0);
+    scx = cdata_x(0);
+    scy = cdata_y(0);
     msync = 1;
     label_1746();
     label_1439();
@@ -3488,8 +3492,8 @@ label_1744_internal:
         {
             if (gdata(453) >= 10)
             {
-                cdata(7, tc) = 360;
-                cdata(13, tc) = -1;
+                cdata_image(tc) = 360;
+                cdata_portrait(tc) = -1;
             }
         }
     }
@@ -3601,7 +3605,7 @@ label_1744_internal:
     }
     wake_up();
     pcattacker = 0;
-    cdata(29, 0) = 0;
+    cdata_enemy_id(0) = 0;
     gdata(94) = 0;
     mode = 0;
     screenupdate = -1;
@@ -3648,9 +3652,9 @@ label_1744_internal:
                             {
                                 if (cbit(963, cnt) == 1)
                                 {
-                                    if (cdata(0, cnt) == 1)
+                                    if (cdata_state(cnt) == 1)
                                     {
-                                        if (cdata(27, cnt) == qdata(13, cnt2))
+                                        if (cdata_id(cnt) == qdata(13, cnt2))
                                         {
                                             if (qdata(12, cnt2) == gdata(20))
                                             {
@@ -3702,9 +3706,9 @@ label_1744_internal:
             {
                 if (cbit(960, cnt) == 1)
                 {
-                    cdata(201, cnt) = 0;
-                    cdata(9, cnt) = -1;
-                    cdata(69, cnt) = -1;
+                    cdata_hate(cnt) = 0;
+                    cdata_relationship(cnt) = -1;
+                    cdata_original_relationship(cnt) = -1;
                 }
             }
         }
@@ -3717,7 +3721,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(202) = 1;
                         ghelp = 2;
@@ -3735,7 +3739,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(203) = 1;
                         ghelp = 3;
@@ -3753,7 +3757,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(214) = 1;
                         ghelp = 14;
@@ -3778,17 +3782,17 @@ label_1744_internal:
                     + u8" hours have passed since you left "s
                     + mapname(gdata(182)) + u8"."s));
             p = 0;
-            exp = cdata(38, 0) * gdata(180) * sdata(182, 0) / 100 + 1;
+            exp = cdata_level(0) * gdata(180) * sdata(182, 0) / 100 + 1;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
                     ++p;
-                    cdata(35, cnt) += exp;
+                    cdata_experience(cnt) += exp;
                 }
             }
             if (p == 1)

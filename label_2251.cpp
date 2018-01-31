@@ -15,15 +15,15 @@ void label_2251()
         {
             label_0173();
         }
-        if (cdata(14, tc) > 0)
+        if (cdata_interest(tc) > 0)
         {
-            if (cdata(9, tc) != 10)
+            if (cdata_relationship(tc) != 10)
             {
                 if (tc >= 16)
                 {
                     if (rnd(3) == 0)
                     {
-                        if (cdata(17, tc) < 100)
+                        if (cdata_impression(tc) < 100)
                         {
                             if (rnd(sdata(17, 0) + 1) > 10)
                             {
@@ -35,14 +35,14 @@ void label_2251()
                             }
                         }
                     }
-                    cdata(14, tc) -= rnd(30);
-                    cdata(15, tc) = gdata(13) + gdata(12) * 24
+                    cdata_interest(tc) -= rnd(30);
+                    cdata_time_interest_revive(tc) = gdata(13) + gdata(12) * 24
                         + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 8;
                 }
             }
         }
     }
-    if (cdata(150, tc) == 18)
+    if (cdata_character_role(tc) == 18)
     {
         if (gdata(814) > 0)
         {
@@ -56,14 +56,14 @@ void label_2251()
             ++listmax;
         }
     }
-    if (cdata(14, tc) > 0 && chatval(1) == 0)
+    if (cdata_interest(tc) > 0 && chatval(1) == 0)
     {
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"話がしたい"s, u8"Let's Talk."s);
         ++listmax;
     }
-    if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000
-        || cdata(150, tc) == 2003)
+    if (cdata_character_role(tc) >= 1000 && cdata_character_role(tc) < 2000
+        || cdata_character_role(tc) == 2003)
     {
         list(0, listmax) = 10;
         listn(0, listmax) = lang(u8"買いたい"s, u8"I want to buy something."s);
@@ -71,13 +71,14 @@ void label_2251()
         list(0, listmax) = 11;
         listn(0, listmax) = lang(u8"売りたい"s, u8"I want to sell something."s);
         ++listmax;
-        if (cdata(150, tc) == 1010)
+        if (cdata_character_role(tc) == 1010)
         {
             list(0, listmax) = 31;
             listn(0, listmax) = lang(u8"襲撃するよ"s, u8"Prepare to die!"s);
             ++listmax;
         }
-        if (cdata(150, tc) != 1010 && cdata(150, tc) != 1009)
+        if (cdata_character_role(tc) != 1010
+            && cdata_character_role(tc) != 1009)
         {
             list(0, listmax) = 12;
             listn(0, listmax) = lang(
@@ -85,14 +86,14 @@ void label_2251()
             ++listmax;
         }
     }
-    if (cdata(150, tc) == 9)
+    if (cdata_character_role(tc) == 9)
     {
         list(0, listmax) = 33;
         listn(0, listmax) =
             lang(u8"仲間を呼び戻す"s, u8"Call back my allies."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 17)
+    if (cdata_character_role(tc) == 17)
     {
         if (get_freeally() != 0)
         {
@@ -105,7 +106,7 @@ void label_2251()
         listn(0, listmax) = lang(u8"奴隷を売る"s, u8"I want to sell a slave."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 22)
+    if (cdata_character_role(tc) == 22)
     {
         if (get_freeally() != 0)
         {
@@ -142,7 +143,7 @@ void label_2251()
                         ++listmax;
                     }
                 }
-                if (cdata(23, tc) != 0)
+                if (cdata_can_talk(tc) != 0)
                 {
                     if (cbit(965, tc) == 0)
                     {
@@ -165,14 +166,14 @@ void label_2251()
             }
         }
     }
-    if (cdata(150, tc) == 1000 || cdata(150, tc) == 1001)
+    if (cdata_character_role(tc) == 1000 || cdata_character_role(tc) == 1001)
     {
         list(0, listmax) = 54;
         listn(0, listmax) =
             lang(u8"矢弾の充填"s, u8"I need ammos for my weapon."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 1005)
+    if (cdata_character_role(tc) == 1005)
     {
         list(0, listmax) = 13;
         listn(0, listmax) =
@@ -187,7 +188,7 @@ void label_2251()
             ++listmax;
         }
     }
-    if (cdata(150, tc) == 5)
+    if (cdata_character_role(tc) == 5)
     {
         list(0, listmax) = 14;
         listn(0, listmax) =
@@ -204,7 +205,7 @@ void label_2251()
             + u8" ("s + calcidentifyvalue(2) + strgold + u8")"s;
         ++listmax;
     }
-    if (cdata(150, tc) == 7)
+    if (cdata_character_role(tc) == 7)
     {
         list(0, listmax) = 17;
         listn(0, listmax) = lang(u8"訓練したい"s, u8"Train me."s);
@@ -214,7 +215,7 @@ void label_2251()
             lang(u8"新しい能力を覚えたい"s, u8"What skills can you teach me?"s);
         ++listmax;
     }
-    if (cdata(150, tc) == 8)
+    if (cdata_character_role(tc) == 8)
     {
         list(0, listmax) = 18;
         listn(0, listmax) =
@@ -225,14 +226,14 @@ void label_2251()
             u8"仲間の調査"s, u8"I want you to investigate one of my allies."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 12)
+    if (cdata_character_role(tc) == 12)
     {
         list(0, listmax) = 19;
         listn(0, listmax) = lang(u8"能力の復元"s, u8"Restore my attributes."s)
             + u8"("s + calcrestorecost() + strgold + u8")"s;
         ++listmax;
     }
-    if (cdata(150, tc) == 13)
+    if (cdata_character_role(tc) == 13)
     {
         list(0, listmax) = 20;
         listn(0, listmax) =
@@ -249,7 +250,7 @@ void label_2251()
             ++listmax;
         }
     }
-    if (cdata(150, tc) == 10)
+    if (cdata_character_role(tc) == 10)
     {
         list(0, listmax) = 21;
         listn(0, listmax) =
@@ -263,7 +264,7 @@ void label_2251()
         listn(0, listmax) = lang(u8"成績を聞く"s, u8"Tell me my scores."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 11)
+    if (cdata_character_role(tc) == 11)
     {
         list(0, listmax) = 40;
         listn(0, listmax) =
@@ -281,14 +282,14 @@ void label_2251()
         listn(0, listmax) = lang(u8"成績を聞く"s, u8"Tell me my scores."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 18)
+    if (cdata_character_role(tc) == 18)
     {
         list(0, listmax) = 45;
         listn(0, listmax) = lang(
             u8"家の名前を考えてくれ"s, u8"Think of a nice name for my house."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 19)
+    if (cdata_character_role(tc) == 19)
     {
         list(0, listmax) = 46;
         listn(0, listmax) =
@@ -303,7 +304,7 @@ void label_2251()
             lang(u8"アイテム交換"s, u8"Are you interested in trade?"s);
         ++listmax;
     }
-    if (cdata(150, tc) == 14)
+    if (cdata_character_role(tc) == 14)
     {
         clientguide();
         if (stat != 0)
@@ -339,13 +340,13 @@ void label_2251()
             }
         }
     }
-    if (cdata(150, tc) == 21)
+    if (cdata_character_role(tc) == 21)
     {
         list(0, listmax) = 53;
         listn(0, listmax) = lang(u8"帰還したい"s, u8"I want to return."s);
         ++listmax;
     }
-    if (cdata(150, tc) == 1020)
+    if (cdata_character_role(tc) == 1020)
     {
         if (gdata(263) != 0)
         {
@@ -355,7 +356,7 @@ void label_2251()
             ++listmax;
         }
     }
-    if (cdata(257, tc) != 0 || 0)
+    if (cdata_drunk(tc) != 0 || 0)
     {
         if (gdata(20) != 35)
         {
@@ -372,7 +373,7 @@ void label_2251()
             }
         }
     }
-    if (cdata(27, tc) == 335)
+    if (cdata_id(tc) == 335)
     {
         if (evid() == -1)
         {
@@ -381,7 +382,7 @@ void label_2251()
             ++listmax;
         }
     }
-    if (cdata(150, tc) == 23)
+    if (cdata_character_role(tc) == 23)
     {
         list(0, listmax) = 61;
         listn(0, listmax) = lang(u8"キャラバンを雇う"s, u8"Hire caravan."s);
@@ -535,9 +536,10 @@ void label_2251()
     {
         if (tc >= 57)
         {
-            if (cdata(150, tc) != 0)
+            if (cdata_character_role(tc) != 0)
             {
-                if (cdata(150, tc) >= 2000 && cdata(150, tc) < 3000)
+                if (cdata_character_role(tc) >= 2000
+                    && cdata_character_role(tc) < 3000)
                 {
                 }
                 else
@@ -553,14 +555,14 @@ void label_2251()
             }
         }
     }
-    if (cdata(150, tc) == 1015)
+    if (cdata_character_role(tc) == 1015)
     {
         if (gdata(453) == 1000)
         {
             rc = findchara(222);
             if (rc != 0)
             {
-                if (cdata(0, rc) == 1)
+                if (cdata_state(rc) == 1)
                 {
                     list(0, listmax) = 52;
                     listn(0, listmax) = lang(
@@ -578,10 +580,10 @@ void label_2251()
     label_2257();
     if (chatval == 10 || chatval == 11)
     {
-        if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000
-            || cdata(150, tc) == 2003)
+        if (cdata_character_role(tc) >= 1000 && cdata_character_role(tc) < 2000
+            || cdata_character_role(tc) == 2003)
         {
-            if (cdata(49, 0) < -30)
+            if (cdata_karma(0) < -30)
             {
                 if (gdata(20) != 14)
                 {
@@ -624,7 +626,7 @@ void label_2251()
     if (chatval == 10)
     {
         invctrl = 11;
-        invfile = cdata(153, tc);
+        invfile = cdata_shop_store_id(tc);
         label_2263();
         screenupdate = -1;
         label_1419();
@@ -636,7 +638,7 @@ void label_2251()
     if (chatval == 11)
     {
         invctrl = 12;
-        invfile = cdata(153, tc);
+        invfile = cdata_shop_store_id(tc);
         label_2263();
         cc = 0;
         screenupdate = -1;
@@ -653,13 +655,13 @@ void label_2251()
     }
     if (chatval == 13)
     {
-        if (cdata(30, 0) < calcmealvalue())
+        if (cdata_gold(0) < calcmealvalue())
         {
             buff = strnogold;
             label_2251();
             return;
         }
-        if (cdata(22, 0) >= 15000)
+        if (cdata_nutrition(0) >= 15000)
         {
             buff = lang(
                 u8"腹が減っているようにはみえない"s + _yo(),
@@ -668,9 +670,9 @@ void label_2251()
             return;
         }
         snd(12);
-        cdata(30, 0) -= calcmealvalue();
+        cdata_gold(0) -= calcmealvalue();
         snd(18);
-        cdata(22, 0) = 15000;
+        cdata_nutrition(0) = 15000;
         buff = lang(_dozo(), u8"Here you are."s);
         txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
             lang(u8"悪くない。"s, u8"Not bad at all."s),
@@ -682,7 +684,7 @@ void label_2251()
     }
     if (chatval >= 14 && chatval < 17)
     {
-        if (cdata(30, 0) < calcidentifyvalue(chatval - 14))
+        if (cdata_gold(0) < calcidentifyvalue(chatval - 14))
         {
             buff = strnogold;
             label_2251();
@@ -714,7 +716,7 @@ void label_2251()
         }
         if (chatval == 15)
         {
-            cdata(30, 0) -= calcidentifyvalue(1);
+            cdata_gold(0) -= calcidentifyvalue(1);
             inv_getheader(0);
             p(0) = 0;
             p(1) = 0;
@@ -779,7 +781,7 @@ void label_2251()
                     u8"さらなる知識を求めるのなら、調査する必要が"s + _aru(),
                     u8"You need to investigate it to gain more knowledge."s);
             }
-            cdata(30, 0) -= calcidentifyvalue(chatval - 14);
+            cdata_gold(0) -= calcidentifyvalue(chatval - 14);
         }
         snd(12);
         label_2251();
@@ -800,20 +802,20 @@ void label_2251()
     }
     if (chatval == 19)
     {
-        if (cdata(30, 0) < calcrestorecost())
+        if (cdata_gold(0) < calcrestorecost())
         {
             buff = strnogold;
             label_2251();
             return;
         }
         snd(12);
-        cdata(30, 0) -= calcrestorecost();
+        cdata_gold(0) -= calcrestorecost();
         tcbk = tc;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
@@ -864,7 +866,7 @@ void label_2251()
     {
         if (gdata(183) != 0)
         {
-            cell_findspace(cdata(1, 0), cdata(2, 0), 1);
+            cell_findspace(cdata_x(0), cdata_y(0), 1);
             if (stat == 0)
             {
                 txt(lang(
@@ -922,18 +924,18 @@ void label_2251()
                     {
                         continue;
                     }
-                    if (cdata(38, rc) < minlevel)
+                    if (cdata_level(rc) < minlevel)
                     {
                         continue;
                     }
-                    if (cdata(69, rc) != -3)
+                    if (cdata_original_relationship(rc) != -3)
                     {
                         continue;
                     }
                     break;
                 }
             }
-            arenaop(1) = cdata(27, rc);
+            arenaop(1) = cdata_id(rc);
             buff = lang(
                 u8"今日の対戦相手は"s + cdatan(0, rc) + _da() + u8"挑戦する"s
                     + _noka(1),
@@ -990,8 +992,8 @@ void label_2251()
         gdata(73) = 1;
         gdata(66) = gdata(20);
         gdata(67) = gdata(22);
-        gdata(68) = cdata(1, 0);
-        gdata(69) = cdata(2, 0);
+        gdata(68) = cdata_x(0);
+        gdata(69) = cdata_y(0);
         gdata(64) = 6;
         gdata(65) = 1;
         levelexitby = 2;
@@ -1081,7 +1083,7 @@ void label_2251()
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                followerexist(cnt) = cdata(0, cnt);
+                followerexist(cnt) = cdata_state(cnt);
             }
         }
         allyctrl = 2;
@@ -1100,8 +1102,8 @@ void label_2251()
         gdata(73) = 1;
         gdata(66) = gdata(20);
         gdata(67) = gdata(22);
-        gdata(68) = cdata(1, 0);
-        gdata(69) = cdata(2, 0);
+        gdata(68) = cdata_x(0);
+        gdata(69) = cdata_y(0);
         gdata(64) = 40;
         gdata(65) = 1;
         levelexitby = 2;
@@ -1280,7 +1282,7 @@ void label_2251()
         if (stat != -1)
         {
             rc = stat;
-            if (cdata(0, rc) == 1)
+            if (cdata_state(rc) == 1)
             {
                 buff = lang(
                     u8"そいつは呼び戻す必要はないよう"s + _da(),
@@ -1294,7 +1296,7 @@ void label_2251()
                     + u8"必要"s + _da(),
                 u8"Alright. We had taken good care of your pet. It will cost you "s
                     + calcresurrectvalue(rc) + u8" gold pieces."s);
-            if (cdata(30, 0) >= calcresurrectvalue(rc))
+            if (cdata_gold(0) >= calcresurrectvalue(rc))
             {
                 list(0, listmax) = 1;
                 listn(0, listmax) = lang(u8"呼び戻す"s, u8"I'll pay."s);
@@ -1308,7 +1310,7 @@ void label_2251()
             if (chatval == 1)
             {
                 snd(12);
-                cdata(30, 0) -= calcresurrectvalue(rc);
+                cdata_gold(0) -= calcresurrectvalue(rc);
                 buff = lang(
                     u8"(バーテンが店の奥から"s + name(rc) + u8"を連れてきた)"s
                         + _dozo(),
@@ -1348,9 +1350,9 @@ void label_2251()
                 return;
             }
         }
-        map(cdata(1, tc), cdata(2, tc), 1) = 0;
-        cdata(0, tc) = 7;
-        cdata(80, tc) = 0;
+        map(cdata_x(tc), cdata_y(tc), 1) = 0;
+        cdata_state(tc) = 7;
+        cdata_current_map(tc) = 0;
         label_2256();
         return;
     }
@@ -1375,7 +1377,7 @@ void label_2251()
             txt(lang(
                 ""s + name(tc) + u8"と別れた…"s,
                 u8"You abandoned "s + name(tc) + u8"..."s));
-            map(cdata(1, tc), cdata(2, tc), 1) = 0;
+            map(cdata_x(tc), cdata_y(tc), 1) = 0;
             del_chara(tc);
             label_2256();
             return;
@@ -1390,7 +1392,7 @@ void label_2251()
             int cnt = 0;
             for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
-                flt(cdata(38, 0) / 2 + 5);
+                flt(cdata_level(0) / 2 + 5);
                 fixlv = 2;
                 if (chatval == 36)
                 {
@@ -1401,7 +1403,7 @@ void label_2251()
                     fltn(u8"horse"s);
                 }
                 characreate(56, 0, -3, 0);
-                if (cdata(38, 56) == 0)
+                if (cdata_level(56) == 0)
                 {
                     chara_vanquish(56);
                     continue;
@@ -1416,7 +1418,7 @@ void label_2251()
             u8"Okay. Let me check the stable....How about "s
                 + cnven(cdatan(0, 56)) + u8" for "s + calcslavevalue(56)
                 + u8" gold pieces. I'd say it's quite a bargain!"s);
-        if (cdata(30, 0) >= calcslavevalue(56))
+        if (cdata_gold(0) >= calcslavevalue(56))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"買い取る"s, u8"I'll pay."s);
@@ -1433,7 +1435,7 @@ void label_2251()
                 cdatan(0, 56) + u8"を買い取った。"s,
                 u8"You buy "s + cnven(cdatan(0, 56)) + u8"."s));
             snd(12);
-            cdata(30, 0) -= calcslavevalue(56);
+            cdata_gold(0) -= calcslavevalue(56);
             rc = 56;
             label_2659();
             buff = lang(_thanks(2), u8"Thanks!"s);
@@ -1472,14 +1474,14 @@ void label_2251()
                     cdatan(0, rc) + u8"を売り飛ばした。"s,
                     u8"You sell off "s + cnven(cdatan(0, rc)) + u8"."s));
                 snd(11);
-                cdata(30, 0) += calcslavevalue(rc) * 2 / 3;
-                if (cdata(0, rc) == 1)
+                cdata_gold(0) += calcslavevalue(rc) * 2 / 3;
+                if (cdata_state(rc) == 1)
                 {
-                    map(cdata(1, rc), cdata(2, rc), 1) = 0;
+                    map(cdata_x(rc), cdata_y(rc), 1) = 0;
                 }
                 if (cbit(963, rc) == 1)
                 {
-                    evadd(15, cdata(27, rc));
+                    evadd(15, cdata_id(rc));
                 }
                 del_chara(rc);
                 buff = lang(_thanks(2), u8"Thanks!"s);
@@ -1498,7 +1500,7 @@ void label_2251()
     }
     if (chatval == 38)
     {
-        if (cdata(17, tc) < 200)
+        if (cdata_impression(tc) < 200)
         {
             buff = lang(
                 u8"("s + name(tc) + u8"はやんわりと断った)"s,
@@ -1598,8 +1600,8 @@ void label_2251()
         }
         gdata(66) = gdata(20);
         gdata(67) = gdata(22);
-        gdata(68) = cdata(1, 0);
-        gdata(69) = cdata(2, 0);
+        gdata(68) = cdata_x(0);
+        gdata(69) = cdata_y(0);
         gdata(64) = 30;
         gdata(65) = 1;
         levelexitby = 2;
@@ -1689,7 +1691,7 @@ void label_2251()
     }
     if (chatval == 46)
     {
-        if (cdata(49, 0) >= -30)
+        if (cdata_karma(0) >= -30)
         {
             buff = lang(
                 u8"その程度の罪なら自分でなんとかしなさい。"s,
@@ -1703,7 +1705,7 @@ void label_2251()
                 + u8"かかるけどいいの"s + _kana(1),
             u8"In the authority of all the saints, I will grant you an indulgence, for money of course. The price is "s
                 + calcguiltvalue() + u8" gold pieces."s);
-        if (cdata(30, 0) >= calcguiltvalue())
+        if (cdata_gold(0) >= calcguiltvalue())
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"買う"s, u8"Deal."s);
@@ -1717,8 +1719,8 @@ void label_2251()
         if (chatval == 1)
         {
             snd(12);
-            cdata(30, 0) -= calcguiltvalue();
-            modkarma(0, (cdata(49, 0) - -30) * -1 + 1);
+            cdata_gold(0) -= calcguiltvalue();
+            modkarma(0, (cdata_karma(0) - -30) * -1 + 1);
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
         else
@@ -1740,7 +1742,7 @@ void label_2251()
             buff = lang(
                 u8"10000 goldかかるけどいい"s + _ka(1),
                 u8"10000 gold pieces."s);
-            if (cdata(30, 0) >= 10000)
+            if (cdata_gold(0) >= 10000)
             {
                 list(0, listmax) = 1;
                 listn(0, listmax) =
@@ -1755,7 +1757,7 @@ void label_2251()
             if (chatval == 1)
             {
                 snd(12);
-                cdata(30, 0) -= 10000;
+                cdata_gold(0) -= 10000;
                 cc = rc;
                 csctrl = 4;
                 snd(26);
@@ -1807,7 +1809,7 @@ void label_2251()
                 + u8"払うならば、7日間護衛を引き受け"s + _ru(),
             u8"I will take the job for "s + calchireadv(tc)
                 + u8" gold pieces, for seven day."s);
-        if (cdata(30, 0) >= calchireadv(tc))
+        if (cdata_gold(0) >= calchireadv(tc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"頼む"s, u8"Sounds fair enough."s);
@@ -1821,12 +1823,12 @@ void label_2251()
         if (chatval == 1)
         {
             snd(12);
-            cdata(30, 0) -= calchireadv(tc);
-            cdata(9, tc) = 10;
+            cdata_gold(0) -= calchireadv(tc);
+            cdata_relationship(tc) = 10;
             cbitmod(969, tc, 1);
-            cdata(84, tc) = gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
-                + gdata(10) * 24 * 30 * 12 + 168;
-            ++cdata(85, tc);
+            cdata_period_of_contract(tc) = gdata(13) + gdata(12) * 24
+                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 168;
+            ++cdata_hire_count(tc);
             snd(64);
             txtef(5);
             txt(lang(
@@ -1843,7 +1845,7 @@ void label_2251()
     }
     if (chatval == 51)
     {
-        if (cdata(38, 0) * 3 / 2 + 10 < cdata(38, tc))
+        if (cdata_level(0) * 3 / 2 + 10 < cdata_level(tc))
         {
             buff = lang(
                 _kimi(3) + u8"の仲間になれと？あまりにも力の差がありすぎる"s
@@ -1852,7 +1854,7 @@ void label_2251()
             label_2251();
             return;
         }
-        if (cdata(17, tc) >= 200 && cdata(85, tc) > 2)
+        if (cdata_impression(tc) >= 200 && cdata_hire_count(tc) > 2)
         {
             listmax = 0;
             buff = lang(
@@ -1884,9 +1886,9 @@ void label_2251()
             }
             rc = tc;
             label_2659();
-            cdata(150, rc) = 0;
-            cdata(80, rc) = 0;
-            cdata(17, tc) = 100;
+            cdata_character_role(rc) = 0;
+            cdata_current_map(rc) = 0;
+            cdata_impression(tc) = 100;
             rc = oc;
             label_2661();
             label_2256();
@@ -1917,13 +1919,13 @@ void label_2251()
             txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mon..."s));
             modkarma(0, -20);
             snd(11);
-            cdata(30, 0) += 50000;
+            cdata_gold(0) += 50000;
             gdata(453) = 1002;
             rc = findchara(222);
-            cdata(202, rc) = 3;
-            cdata(9, rc) = 0;
-            cdata(171, rc) = 48;
-            cdata(172, rc) = 18;
+            cdata_ai_calm(rc) = 3;
+            cdata_relationship(rc) = 0;
+            cdata_initial_x(rc) = 48;
+            cdata_initial_y(rc) = 18;
             cell_movechara(rc, 48, 18);
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
@@ -1974,7 +1976,7 @@ void label_2251()
                 + calccostreload(0) + strgold + _da(),
             u8"Sure, let me check what type of ammos you need....Okay, reloading all of your ammos will cost "s
                 + calccostreload(0) + u8" gold pieces."s);
-        if (cdata(30, 0) >= calccostreload(0))
+        if (cdata_gold(0) >= calccostreload(0))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"頼む"s, u8"Alright."s);
@@ -1988,7 +1990,7 @@ void label_2251()
         if (chatval == 1)
         {
             snd(12);
-            cdata(30, 0) -= calccostreload(0);
+            cdata_gold(0) -= calccostreload(0);
             p = calccostreload(0, 1);
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
@@ -2078,8 +2080,8 @@ void label_2251()
     }
     if (chatval == 60)
     {
-        sexvalue = sdata(17, tc) * 25 + 100 + cdata(34, 0) / 10;
-        if (cdata(30, 0) >= sexvalue)
+        sexvalue = sdata(17, tc) * 25 + 100 + cdata_fame(0) / 10;
+        if (cdata_gold(0) >= sexvalue)
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"はじめる"s, u8"Let's do it."s);
@@ -2101,8 +2103,8 @@ void label_2251()
             return;
         }
         snd(12);
-        cdata(30, cc) -= sexvalue;
-        cdata(30, tc) += sexvalue;
+        cdata_gold(cc) -= sexvalue;
+        cdata_gold(tc) += sexvalue;
         listmax = 0;
         buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
         tc = tc * 1 + 0;
@@ -2186,7 +2188,7 @@ void label_2251()
     {
         clientguide();
         rc = rtval(chatval - 10000);
-        p = direction(cdata(1, 0), cdata(2, 0), cdata(1, rc), cdata(2, rc));
+        p = direction(cdata_x(0), cdata_y(0), cdata_x(rc), cdata_y(rc));
         if (p == 1)
         {
             s = lang(u8"西"s, u8"west"s);
@@ -2209,7 +2211,7 @@ void label_2251()
                 }
             }
         }
-        p = dist(cdata(1, 0), cdata(2, 0), cdata(1, rc), cdata(2, rc));
+        p = dist(cdata_x(0), cdata_y(0), cdata_x(rc), cdata_y(rc));
         {
             int cnt = 0;
             for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
@@ -2219,7 +2221,7 @@ void label_2251()
                     s = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
                     break;
                 }
-                if (cdata(0, rc) != 1)
+                if (cdata_state(rc) != 1)
                 {
                     s = lang(
                         u8"奴なら今は死んでいる"s + _yo(2),

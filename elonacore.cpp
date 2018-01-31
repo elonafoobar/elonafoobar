@@ -684,8 +684,8 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
                 return;
             }
         }
-        cdata(70, prm_266) += p_at_m8;
-        cdata(255, prm_266) = 0;
+        cdata_pv(prm_266) += p_at_m8;
+        cdata_fear(prm_266) = 0;
         return;
     }
     if (prm_267 == 2)
@@ -811,8 +811,8 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
         }
         sdata(10, prm_266) += p_at_m8;
         sdata(12, prm_266) += p_at_m8;
-        cdata(255, prm_266) = 0;
-        cdata(254, prm_266) = 0;
+        cdata_fear(prm_266) = 0;
+        cdata_confused(prm_266) = 0;
         return;
     }
     if (prm_267 == 8)
@@ -832,8 +832,8 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
                 return;
             }
         }
-        cdata(71, prm_266) = cdata(71, prm_266) / 2;
-        cdata(70, prm_266) = cdata(70, prm_266) / 2;
+        cdata_dv(prm_266) = cdata_dv(prm_266) / 2;
+        cdata_pv(prm_266) = cdata_pv(prm_266) / 2;
         return;
     }
     if (prm_267 == 9)
@@ -946,9 +946,9 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
             }
         }
         sdata(18, prm_266) -= p_at_m8;
-        if (cdata(70, prm_266) > 1)
+        if (cdata_pv(prm_266) > 1)
         {
-            cdata(70, prm_266) -= cdata(70, prm_266) / 5;
+            cdata_pv(prm_266) -= cdata_pv(prm_266) / 5;
         }
         return;
     }
@@ -1034,9 +1034,9 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
         sdata(10, prm_266) = sdata(10, prm_266) * 150 / 100 + 10;
         sdata(12, prm_266) = sdata(12, prm_266) * 150 / 100 + 10;
         sdata(154, prm_266) += 50;
-        cdata(70, prm_266) = cdata(70, prm_266) * 150 / 100 + 25;
-        cdata(71, prm_266) = cdata(71, prm_266) * 150 / 100 + 25;
-        cdata(72, prm_266) = cdata(72, prm_266) * 150 / 100 + 50;
+        cdata_pv(prm_266) = cdata_pv(prm_266) * 150 / 100 + 25;
+        cdata_dv(prm_266) = cdata_dv(prm_266) * 150 / 100 + 25;
+        cdata_hit_bonus(prm_266) = cdata_hit_bonus(prm_266) * 150 / 100 + 50;
         return;
     }
     if (prm_267 == 18)
@@ -1193,7 +1193,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
     if (prm_269 == 623)
     {
         dice1 = 1 + rs_at_m9 / 10;
-        dice2 = cdata(62, prm_270) / 70 + 1 + 1;
+        dice2 = cdata_piety_point(prm_270) / 70 + 1 + 1;
         bonus = 0;
         ele = 0;
         elep = 0;
@@ -1203,7 +1203,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
     if (prm_269 == 624)
     {
         dice1 = 1 + rs_at_m9 / 20;
-        dice2 = cdata(62, prm_270) / 140 + 1 + 1;
+        dice2 = cdata_piety_point(prm_270) / 140 + 1 + 1;
         bonus = 0;
         ele = 0;
         elep = 0;
@@ -1769,9 +1769,9 @@ int iequiploc(int prm_281)
 }
 void setunid(int prm_282, int prm_283)
 {
-    cdata(157, prm_282) = prm_283;
-    cdata(7, prm_282) = 825 + prm_283;
-    cdata(7, prm_282) += 0;
+    cdata_cnpc_id(prm_282) = prm_283;
+    cdata_image(prm_282) = 825 + prm_283;
+    cdata_image(prm_282) += 0;
     return;
 }
 int getunid(int prm_284)
@@ -1791,8 +1791,8 @@ int getunid(int prm_284)
     }
     if (f_at_m14 == 0)
     {
-        cdata(7, prm_284) = 1;
-        cdata(157, prm_284) = usernpcmax;
+        cdata_image(prm_284) = 1;
+        cdata_cnpc_id(prm_284) = usernpcmax;
         cdatan(0, prm_284) = lang(u8"残りカス"s, u8"a garbage"s);
     }
     stat = f_at_m14;
@@ -1819,7 +1819,7 @@ int synccheck(int prm_286, int prm_287)
 {
     if (prm_287 == -1)
     {
-        stat = cdata(6, prm_286) == msync || prm_286 == gdata(183);
+        stat = cdata_vision_flag(prm_286) == msync || prm_286 == gdata(183);
         return stat;
     }
     if (mapsync(prm_286, prm_287) == msync)
@@ -3374,8 +3374,8 @@ std::string name(int prm_309)
     {
         return lang(u8"何か"s, u8"something"s);
     }
-    if (cdata(253, 0) != 0
-        || cbit(6, prm_309) == 1 && cbit(7, 0) == 0 && cdata(259, prm_309) == 0)
+    if (cdata_blind(0) != 0
+        || cbit(6, prm_309) == 1 && cbit(7, 0) == 0 && cdata_wet(prm_309) == 0)
     {
         return lang(u8"何か"s, u8"something"s);
     }
@@ -3506,7 +3506,7 @@ std::string he(int prm_320, int prm_321)
     {
         if (jp)
         {
-            if (cdata(8, prm_320) == 0)
+            if (cdata_sex(prm_320) == 0)
             {
                 return u8"彼"s;
             }
@@ -3515,7 +3515,7 @@ std::string he(int prm_320, int prm_321)
                 return u8"彼女"s;
             }
         }
-        if (cdata(8, prm_320) == 0)
+        if (cdata_sex(prm_320) == 0)
         {
             return u8"he"s;
         }
@@ -3536,7 +3536,7 @@ std::string he(int prm_320, int prm_321)
     {
         return u8"you"s;
     }
-    if (cdata(8, prm_320) == 0)
+    if (cdata_sex(prm_320) == 0)
     {
         return u8"he"s;
     }
@@ -3554,7 +3554,7 @@ std::string his(int prm_322, int prm_323)
             }
             else
             {
-                if (cdata(8, prm_322) == 0)
+                if (cdata_sex(prm_322) == 0)
                 {
                     return u8"彼の"s;
                 }
@@ -3570,7 +3570,7 @@ std::string his(int prm_322, int prm_323)
         }
         else
         {
-            if (cdata(8, prm_322) == 0)
+            if (cdata_sex(prm_322) == 0)
             {
                 return u8"his"s;
             }
@@ -3592,7 +3592,7 @@ std::string his(int prm_322, int prm_323)
     {
         return u8"your"s;
     }
-    if (cdata(8, prm_322) == 0)
+    if (cdata_sex(prm_322) == 0)
     {
         return u8"his"s;
     }
@@ -3604,7 +3604,7 @@ std::string him(int prm_324, int prm_325)
     {
         if (jp)
         {
-            if (cdata(8, prm_324) == 0)
+            if (cdata_sex(prm_324) == 0)
             {
                 return u8"彼"s;
             }
@@ -3613,7 +3613,7 @@ std::string him(int prm_324, int prm_325)
                 return u8"彼女"s;
             }
         }
-        if (cdata(8, prm_324) == 0)
+        if (cdata_sex(prm_324) == 0)
         {
             return u8"him"s;
         }
@@ -3634,7 +3634,7 @@ std::string him(int prm_324, int prm_325)
     {
         return u8"yourself"s;
     }
-    if (cdata(8, prm_324) == 0)
+    if (cdata_sex(prm_324) == 0)
     {
         return u8"him"s;
     }
@@ -3666,7 +3666,7 @@ std::string yourself(int prm_328)
     {
         return u8"yourself"s;
     }
-    if (cdata(8, prm_328) == 0)
+    if (cdata_sex(prm_328) == 0)
     {
         return u8"himself"s;
     }
@@ -3699,7 +3699,7 @@ void txt_check(int prm_329)
     }
     if (prm_329 == 2)
     {
-        if (cc == 0 || cdata(9, cc) == 10)
+        if (cc == 0 || cdata_relationship(cc) == 10)
         {
             txtvalid = 0;
             return;
@@ -3749,7 +3749,7 @@ std::string cnvfix(int prm_339)
 }
 void stxt(int prm_340, const std::string& prm_341)
 {
-    if (prm_340 == 0 || synccheck(prm_340, -1) && cdata(253, 0) == 0)
+    if (prm_340 == 0 || synccheck(prm_340, -1) && cdata_blind(0) == 0)
     {
         txt(prm_341);
     }
@@ -4899,7 +4899,7 @@ std::string elename(int prm_348)
 }
 void txttargetlevel()
 {
-    if (cdata(38, cc) * 20 < cdata(38, tc))
+    if (cdata_level(cc) * 20 < cdata_level(tc))
     {
         s = lang(
             u8"相手が巨人だとすれば、あなたは蟻のフン以下だ。"s,
@@ -4907,7 +4907,7 @@ void txttargetlevel()
                 + u8" is a giant, you are less than a dropping of an ant."s);
         return;
     }
-    if (cdata(38, cc) * 10 < cdata(38, tc))
+    if (cdata_level(cc) * 10 < cdata_level(tc))
     {
         s = lang(
             u8"絶対に勝てない相手だ。"s,
@@ -4915,21 +4915,21 @@ void txttargetlevel()
                 + u8" eyes closed."s);
         return;
     }
-    if (cdata(38, cc) * 5 < cdata(38, tc))
+    if (cdata_level(cc) * 5 < cdata_level(tc))
     {
         s = lang(
             u8"確実に殺されるだろう。"s,
             u8"You will get killed, a hundred percent sure."s);
         return;
     }
-    if (cdata(38, cc) * 3 < cdata(38, tc))
+    if (cdata_level(cc) * 3 < cdata_level(tc))
     {
         s = lang(
             u8"奇跡が起きなければ殺されるだろう。"s,
             u8"You will get killed unless miracles happen."s);
         return;
     }
-    if (cdata(38, cc) * 2 < cdata(38, tc))
+    if (cdata_level(cc) * 2 < cdata_level(tc))
     {
         s = lang(
             u8"少なくとも、あなたの倍は強そうだ。"s,
@@ -4937,30 +4937,30 @@ void txttargetlevel()
                 + u8" at least twice stronger than you."s);
         return;
     }
-    if (cdata(38, cc) * 3 / 2 < cdata(38, tc))
+    if (cdata_level(cc) * 3 / 2 < cdata_level(tc))
     {
         s = lang(
             u8"相手はかなり強そうだ。"s, u8"The opponent looks quite strong."s);
         return;
     }
-    if (cdata(38, cc) < cdata(38, tc))
+    if (cdata_level(cc) < cdata_level(tc))
     {
         s = lang(u8"勝てない相手ではない。"s, u8"Won't be an easy fight."s);
         return;
     }
-    if (cdata(38, cc) / 3 * 2 < cdata(38, tc))
+    if (cdata_level(cc) / 3 * 2 < cdata_level(tc))
     {
         s = lang(u8"たぶん勝てそうだ。"s, u8"You will probably win."s);
         return;
     }
-    if (cdata(38, cc) / 2 < cdata(38, tc))
+    if (cdata_level(cc) / 2 < cdata_level(tc))
     {
         s = lang(
             u8"負ける気はしない。"s,
             cnven(he(tc)) + u8" "s + is(tc) + u8" a easy opponent."s);
         return;
     }
-    if (cdata(38, cc) / 3 < cdata(38, tc))
+    if (cdata_level(cc) / 3 < cdata_level(tc))
     {
         s = lang(
             u8"目隠ししていても勝てそうだ。"s,
@@ -7577,9 +7577,9 @@ void label_0149()
 }
 std::string _yoro(int prm_377)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よろしくお願いします"s;
             _tone_at_m34(1) = u8"どうぞ、よろしくです"s;
@@ -7600,9 +7600,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よろしく頼むぜ"s;
             _tone_at_m34(1) = u8"よろしくな"s;
@@ -7623,9 +7623,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よろしくね"s;
             _tone_at_m34(1) = u8"よろしくお願いするよ"s;
@@ -7646,9 +7646,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よろしく…"s;
             _tone_at_m34(1) = u8"今後とも、よろしく…"s;
@@ -7669,9 +7669,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よろしく頼もう"s;
             _tone_at_m34(1) = u8"よろしく頼むぞよ"s;
@@ -7692,9 +7692,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よしなに"s;
             _tone_at_m34(1) = u8"よろしく頼むでござる"s;
@@ -7715,9 +7715,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よろしくッス"s;
             _tone_at_m34(1) = "";
@@ -7742,9 +7742,9 @@ std::string _yoro(int prm_377)
 }
 std::string _dozo(int prm_378)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"はい、どうぞ"s;
             _tone_at_m34(1) = u8"お待ちどうさまです"s;
@@ -7765,9 +7765,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ほらよ"s;
             _tone_at_m34(1) = u8"ほれ"s;
@@ -7788,9 +7788,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"はい、お待ち"s;
             _tone_at_m34(1) = u8"さあ、どうぞ"s;
@@ -7811,9 +7811,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ほら…"s;
             _tone_at_m34(1) = u8"待たせたな…"s;
@@ -7834,9 +7834,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ほうれ"s;
             _tone_at_m34(1) = u8"ほれ、受け取りたまえ"s;
@@ -7857,9 +7857,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"お待たせ申した"s;
             _tone_at_m34(1) = u8"待たせたでござる"s;
@@ -7880,9 +7880,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"お待たせッス"s;
             _tone_at_m34(1) = "";
@@ -7907,9 +7907,9 @@ std::string _dozo(int prm_378)
 }
 std::string _thanks(int prm_379)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"感謝します"s;
             _tone_at_m34(1) = u8"ありがとうございます"s;
@@ -7930,9 +7930,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ありがとよ"s;
             _tone_at_m34(1) = u8"ありがたい"s;
@@ -7953,9 +7953,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ありがとう"s;
             _tone_at_m34(1) = u8"感謝するよ"s;
@@ -7976,9 +7976,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"礼を言う…"s;
             _tone_at_m34(1) = u8"感謝する…"s;
@@ -7999,9 +7999,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"礼を申すぞ"s;
             _tone_at_m34(1) = u8"感謝してつかわす"s;
@@ -8022,9 +8022,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かたじけない"s;
             _tone_at_m34(1) = u8"恩に着る"s;
@@ -8045,9 +8045,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"アザーッス"s;
             _tone_at_m34(1) = "";
@@ -8072,9 +8072,9 @@ std::string _thanks(int prm_379)
 }
 std::string _rob(int prm_380)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"悪いことは言わない。おやめなさい"s;
             _tone_at_m34(1) = u8"止めてください。きっと後悔しますよ"s;
@@ -8096,9 +8096,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"なんだ、貴様賊だったのか"s;
             _tone_at_m34(1) = u8"馬鹿な奴だ。後になって謝っても遅いぞ"s;
@@ -8119,9 +8119,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) =
                 u8"おい、傭兵さんたち、このごろつきを追い払ってくれ"s;
@@ -8144,9 +8144,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"甘く見られたものだ…"s;
             _tone_at_m34(1) = u8"この護衛の数が見えないのか…"s;
@@ -8167,9 +8167,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"なんたる無礼者か"s;
             _tone_at_m34(1) = u8"ほほほ、こやつめ"s;
@@ -8190,9 +8190,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"何をするでござるか"s;
             _tone_at_m34(1) = "";
@@ -8213,9 +8213,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"見損なったッス"s;
             _tone_at_m34(1) = "";
@@ -8240,9 +8240,9 @@ std::string _rob(int prm_380)
 }
 std::string _ka(int prm_381)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ですか"s;
             _tone_at_m34(1) = "";
@@ -8263,9 +8263,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かよ"s;
             _tone_at_m34(1) = u8"か"s;
@@ -8286,9 +8286,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かい"s;
             _tone_at_m34(1) = u8"なの"s;
@@ -8309,9 +8309,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"か…"s;
             _tone_at_m34(1) = u8"かよ…"s;
@@ -8332,9 +8332,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"であるか"s;
@@ -8355,9 +8355,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござるか"s;
             _tone_at_m34(1) = "";
@@ -8378,9 +8378,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスか"s;
             _tone_at_m34(1) = "";
@@ -8405,9 +8405,9 @@ std::string _ka(int prm_381)
 }
 std::string _da(int prm_382)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"です"s;
             _tone_at_m34(1) = u8"ですね"s;
@@ -8428,9 +8428,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だぜ"s;
             _tone_at_m34(1) = u8"だ"s;
@@ -8451,9 +8451,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だよ"s;
             _tone_at_m34(1) = "";
@@ -8474,9 +8474,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だ…"s;
             _tone_at_m34(1) = u8"さ…"s;
@@ -8497,9 +8497,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"じゃ"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
@@ -8520,9 +8520,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござる"s;
             _tone_at_m34(1) = u8"でござるよ"s;
@@ -8543,9 +8543,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッス"s;
             _tone_at_m34(1) = "";
@@ -8570,9 +8570,9 @@ std::string _da(int prm_382)
 }
 std::string _nda(int prm_383)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のです"s;
             _tone_at_m34(1) = u8"んです"s;
@@ -8593,9 +8593,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = "";
             _tone_at_m34(1) = u8"んだ"s;
@@ -8616,9 +8616,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"んだよ"s;
             _tone_at_m34(1) = u8"んだ"s;
@@ -8639,9 +8639,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"んだ…"s;
@@ -8662,9 +8662,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のじゃ"s;
             _tone_at_m34(1) = u8"のだぞよ"s;
@@ -8685,9 +8685,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のでござる"s;
             _tone_at_m34(1) = "";
@@ -8708,9 +8708,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"んだッス"s;
             _tone_at_m34(1) = "";
@@ -8735,9 +8735,9 @@ std::string _nda(int prm_383)
 }
 std::string _noka(int prm_384)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のですか"s;
             _tone_at_m34(1) = u8"んですか"s;
@@ -8758,9 +8758,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のか"s;
             _tone_at_m34(1) = u8"のだな"s;
@@ -8781,9 +8781,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のかい"s;
             _tone_at_m34(1) = u8"の"s;
@@ -8804,9 +8804,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のか…"s;
             _tone_at_m34(1) = "";
@@ -8827,9 +8827,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のかのう"s;
             _tone_at_m34(1) = u8"のだな"s;
@@ -8850,9 +8850,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のでござるか"s;
             _tone_at_m34(1) = "";
@@ -8873,9 +8873,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"のッスか"s;
             _tone_at_m34(1) = "";
@@ -8900,9 +8900,9 @@ std::string _noka(int prm_384)
 }
 std::string _kana(int prm_385)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でしょうか"s;
             _tone_at_m34(1) = u8"ですか"s;
@@ -8923,9 +8923,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"か"s;
             _tone_at_m34(1) = u8"かい"s;
@@ -8946,9 +8946,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かな"s;
             _tone_at_m34(1) = u8"かなぁ"s;
@@ -8969,9 +8969,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かな…"s;
             _tone_at_m34(1) = u8"か…"s;
@@ -8992,9 +8992,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"かの"s;
@@ -9015,9 +9015,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござるか"s;
             _tone_at_m34(1) = "";
@@ -9038,9 +9038,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスか"s;
             _tone_at_m34(1) = "";
@@ -9065,9 +9065,9 @@ std::string _kana(int prm_385)
 }
 std::string _kimi(int prm_386)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"貴方"s;
             _tone_at_m34(1) = "";
@@ -9088,9 +9088,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"お前"s;
             _tone_at_m34(1) = "";
@@ -9111,9 +9111,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"君"s;
             _tone_at_m34(1) = "";
@@ -9134,9 +9134,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"君"s;
             _tone_at_m34(1) = "";
@@ -9157,9 +9157,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"お主"s;
             _tone_at_m34(1) = "";
@@ -9180,9 +9180,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"そこもと"s;
             _tone_at_m34(1) = "";
@@ -9203,9 +9203,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"アンタ"s;
             _tone_at_m34(1) = "";
@@ -9230,9 +9230,9 @@ std::string _kimi(int prm_386)
 }
 std::string _ru(int prm_387)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ます"s;
             _tone_at_m34(1) = u8"ますよ"s;
@@ -9253,9 +9253,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"るぜ"s;
             _tone_at_m34(1) = u8"るぞ"s;
@@ -9276,9 +9276,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"るよ"s;
             _tone_at_m34(1) = u8"るね"s;
@@ -9299,9 +9299,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"る…"s;
             _tone_at_m34(1) = u8"るが…"s;
@@ -9322,9 +9322,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"るぞよ"s;
             _tone_at_m34(1) = u8"るぞ"s;
@@ -9345,9 +9345,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"るでござる"s;
             _tone_at_m34(1) = u8"るでござるよ"s;
@@ -9368,9 +9368,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"るッス"s;
             _tone_at_m34(1) = "";
@@ -9395,9 +9395,9 @@ std::string _ru(int prm_387)
 }
 std::string _tanomu(int prm_388)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"お願いします"s;
             _tone_at_m34(1) = u8"頼みます"s;
@@ -9418,9 +9418,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頼む"s;
             _tone_at_m34(1) = u8"頼むな"s;
@@ -9441,9 +9441,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頼むね"s;
             _tone_at_m34(1) = u8"頼むよ"s;
@@ -9464,9 +9464,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頼む…"s;
             _tone_at_m34(1) = u8"頼むぞ…"s;
@@ -9487,9 +9487,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頼むぞよ"s;
             _tone_at_m34(1) = "";
@@ -9510,9 +9510,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頼み申す"s;
             _tone_at_m34(1) = u8"頼むでござる"s;
@@ -9533,9 +9533,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頼むッス"s;
             _tone_at_m34(1) = "";
@@ -9560,9 +9560,9 @@ std::string _tanomu(int prm_388)
 }
 std::string _ore(int prm_389)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"私"s;
             _tone_at_m34(1) = "";
@@ -9583,9 +9583,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"俺"s;
             _tone_at_m34(1) = "";
@@ -9606,9 +9606,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"僕"s;
             _tone_at_m34(1) = "";
@@ -9629,9 +9629,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"自分"s;
             _tone_at_m34(1) = "";
@@ -9652,9 +9652,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"麻呂"s;
             _tone_at_m34(1) = "";
@@ -9675,9 +9675,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"拙者"s;
             _tone_at_m34(1) = "";
@@ -9698,9 +9698,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"あっし"s;
             _tone_at_m34(1) = "";
@@ -9725,9 +9725,9 @@ std::string _ore(int prm_389)
 }
 std::string _ga(int prm_390)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ですが"s;
             _tone_at_m34(1) = u8"ですけど"s;
@@ -9748,9 +9748,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"が"s;
             _tone_at_m34(1) = u8"がな"s;
@@ -9771,9 +9771,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"けど"s;
             _tone_at_m34(1) = u8"が"s;
@@ -9794,9 +9794,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"が…"s;
             _tone_at_m34(1) = u8"けど…"s;
@@ -9817,9 +9817,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"であるが"s;
             _tone_at_m34(1) = "";
@@ -9840,9 +9840,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござるが"s;
             _tone_at_m34(1) = "";
@@ -9863,9 +9863,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスけど"s;
             _tone_at_m34(1) = u8"ッスが"s;
@@ -9890,9 +9890,9 @@ std::string _ga(int prm_390)
 }
 std::string _dana(int prm_391)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ですね"s;
             _tone_at_m34(1) = "";
@@ -9913,9 +9913,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だな"s;
             _tone_at_m34(1) = "";
@@ -9936,9 +9936,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だね"s;
             _tone_at_m34(1) = "";
@@ -9959,9 +9959,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だな…"s;
             _tone_at_m34(1) = "";
@@ -9982,9 +9982,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"であるな"s;
             _tone_at_m34(1) = "";
@@ -10005,9 +10005,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござるな"s;
             _tone_at_m34(1) = "";
@@ -10028,9 +10028,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = "";
@@ -10055,9 +10055,9 @@ std::string _dana(int prm_391)
 }
 std::string _kure(int prm_392)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ください"s;
             _tone_at_m34(1) = u8"くださいよ"s;
@@ -10078,9 +10078,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"くれ"s;
             _tone_at_m34(1) = u8"くれよ"s;
@@ -10101,9 +10101,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"よ"s;
@@ -10124,9 +10124,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"くれ…"s;
             _tone_at_m34(1) = u8"…"s;
@@ -10147,9 +10147,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"つかわせ"s;
             _tone_at_m34(1) = u8"たもれ"s;
@@ -10170,9 +10170,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"頂きたいでござる"s;
             _tone_at_m34(1) = "";
@@ -10193,9 +10193,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"くれッス"s;
             _tone_at_m34(1) = "";
@@ -10220,9 +10220,9 @@ std::string _kure(int prm_392)
 }
 std::string _daro(int prm_393)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でしょう"s;
             _tone_at_m34(1) = "";
@@ -10243,9 +10243,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だろ"s;
             _tone_at_m34(1) = "";
@@ -10266,9 +10266,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だろうね"s;
             _tone_at_m34(1) = "";
@@ -10289,9 +10289,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"だろ…"s;
             _tone_at_m34(1) = "";
@@ -10312,9 +10312,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"であろう"s;
             _tone_at_m34(1) = "";
@@ -10335,9 +10335,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござろうな"s;
             _tone_at_m34(1) = "";
@@ -10358,9 +10358,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = "";
@@ -10385,9 +10385,9 @@ std::string _daro(int prm_393)
 }
 std::string _yo(int prm_394)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ですよ"s;
             _tone_at_m34(1) = u8"です"s;
@@ -10408,9 +10408,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ぜ"s;
             _tone_at_m34(1) = u8"ぞ"s;
@@ -10431,9 +10431,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"よ"s;
             _tone_at_m34(1) = u8"ぞ"s;
@@ -10454,9 +10454,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"ぞ…"s;
@@ -10477,9 +10477,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"であろう"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
@@ -10500,9 +10500,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござろう"s;
             _tone_at_m34(1) = "";
@@ -10523,9 +10523,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスよ"s;
             _tone_at_m34(1) = u8"ッス"s;
@@ -10550,9 +10550,9 @@ std::string _yo(int prm_394)
 }
 std::string _aru(int prm_395)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"あります"s;
             _tone_at_m34(1) = u8"ありますね"s;
@@ -10573,9 +10573,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ある"s;
             _tone_at_m34(1) = u8"あるな"s;
@@ -10596,9 +10596,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"あるね"s;
             _tone_at_m34(1) = u8"あるよ"s;
@@ -10619,9 +10619,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ある…"s;
             _tone_at_m34(1) = u8"あるぞ…"s;
@@ -10642,9 +10642,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"あろう"s;
             _tone_at_m34(1) = u8"おじゃる"s;
@@ -10665,9 +10665,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"あるでござる"s;
             _tone_at_m34(1) = u8"あるでござるな"s;
@@ -10688,9 +10688,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"あるッスよ"s;
             _tone_at_m34(1) = u8"あるッス"s;
@@ -10715,9 +10715,9 @@ std::string _aru(int prm_395)
 }
 std::string _u(int prm_396)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"います"s;
             _tone_at_m34(1) = u8"いますよ"s;
@@ -10738,9 +10738,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"うぜ"s;
             _tone_at_m34(1) = u8"うぞ"s;
@@ -10761,9 +10761,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"うよ"s;
             _tone_at_m34(1) = u8"う"s;
@@ -10784,9 +10784,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"う…"s;
             _tone_at_m34(1) = u8"うぞ…"s;
@@ -10807,9 +10807,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"うぞよ"s;
             _tone_at_m34(1) = u8"うぞ"s;
@@ -10830,9 +10830,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"うでござる"s;
             _tone_at_m34(1) = u8"うでござるよ"s;
@@ -10853,9 +10853,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"うッスよ"s;
             _tone_at_m34(1) = u8"うッス"s;
@@ -10880,9 +10880,9 @@ std::string _u(int prm_396)
 }
 std::string _na(int prm_397)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ですね"s;
             _tone_at_m34(1) = u8"です"s;
@@ -10903,9 +10903,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ぜ"s;
             _tone_at_m34(1) = u8"な"s;
@@ -10926,9 +10926,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"なぁ"s;
@@ -10949,9 +10949,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"な…"s;
@@ -10972,9 +10972,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でおじゃるな"s;
             _tone_at_m34(1) = u8"のう"s;
@@ -10995,9 +10995,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"でござるな"s;
             _tone_at_m34(1) = "";
@@ -11018,9 +11018,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = u8"ッス"s;
@@ -11045,9 +11045,9 @@ std::string _na(int prm_397)
 }
 std::string _ta(int prm_398)
 {
-    if (cdata(18, tc) == 0)
+    if (cdata_talk_type(tc) == 0)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"ました"s;
             _tone_at_m34(1) = u8"ましたね"s;
@@ -11068,9 +11068,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata(18, tc) == 1)
+    if (cdata_talk_type(tc) == 1)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"た"s;
             _tone_at_m34(1) = u8"たな"s;
@@ -11091,9 +11091,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata(18, tc) == 2)
+    if (cdata_talk_type(tc) == 2)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"たね"s;
             _tone_at_m34(1) = u8"たよ"s;
@@ -11114,9 +11114,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata(18, tc) == 3)
+    if (cdata_talk_type(tc) == 3)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"た…"s;
             _tone_at_m34(1) = u8"たぞ…"s;
@@ -11137,9 +11137,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata(18, tc) == 4)
+    if (cdata_talk_type(tc) == 4)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"たぞよ"s;
             _tone_at_m34(1) = u8"たぞな"s;
@@ -11160,9 +11160,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata(18, tc) == 5)
+    if (cdata_talk_type(tc) == 5)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"たでござる"s;
             _tone_at_m34(1) = "";
@@ -11183,9 +11183,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata(18, tc) == 6)
+    if (cdata_talk_type(tc) == 6)
     {
-        if (cdata(8, tc) == 0)
+        if (cdata_sex(tc) == 0)
         {
             _tone_at_m34(0) = u8"たッスよ"s;
             _tone_at_m34(1) = u8"たッス"s;
@@ -11368,7 +11368,7 @@ void label_0176()
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
-            if (cdata(150, tc) == 18)
+            if (cdata_character_role(tc) == 18)
             {
                 if (gdata(814) > 0)
                 {
@@ -11377,7 +11377,7 @@ void label_0176()
                     break;
                 }
             }
-            if (cdata(14, tc) <= 0)
+            if (cdata_interest(tc) <= 0)
             {
                 p = instr(buff, 0, u8"%BORED,"s + lang(u8"JP"s, u8"EN"s));
                 break;
@@ -11388,23 +11388,24 @@ void label_0176()
                     buff, 0, u8"%ALLY_DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata(27, tc) == 335)
+            if (cdata_id(tc) == 335)
             {
                 p = instr(buff, 0, u8"%BITCH,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata(150, tc) == 1015)
+            if (cdata_character_role(tc) == 1015)
             {
                 p = instr(buff, 0, u8"%MOYER,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata(150, tc) == 17)
+            if (cdata_character_role(tc) == 17)
             {
                 p = instr(buff, 0, u8"%SLAVEKEEPER,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000
-                || cdata(150, tc) == 2003)
+            if (cdata_character_role(tc) >= 1000
+                    && cdata_character_role(tc) < 2000
+                || cdata_character_role(tc) == 2003)
             {
                 if (rnd(3))
                 {
@@ -11413,7 +11414,7 @@ void label_0176()
                     break;
                 }
             }
-            if (cdata(17, tc) >= 100)
+            if (cdata_impression(tc) >= 100)
             {
                 if (rnd(3) == 0)
                 {
@@ -11442,7 +11443,7 @@ void label_0176()
                 p = instr(
                     buff,
                     0,
-                    u8"%PERSONALITY,"s + cdata(16, tc) + u8","s
+                    u8"%PERSONALITY,"s + cdata_personality(tc) + u8","s
                         + lang(u8"JP"s, u8"EN"s));
                 break;
             }
@@ -12933,10 +12934,11 @@ void addnews(int prm_405, int prm_406)
         addnewstopic(u8"@01"s, lang(u8"アイテム発見"s, u8"Discovery"s));
         addnews2(
             lang(
-                cdatan(1, prm_406) + u8"は"s + mapname(cdata(80, prm_406))
-                    + u8"にて"s + valn + u8"を入手した。"s,
+                cdatan(1, prm_406) + u8"は"s
+                    + mapname(cdata_current_map(prm_406)) + u8"にて"s + valn
+                    + u8"を入手した。"s,
                 cdatan(1, prm_406) + u8" has discovered "s + valn + u8" in "s
-                    + mapname(cdata(80, prm_406)) + u8"."s),
+                    + mapname(cdata_current_map(prm_406)) + u8"."s),
             1);
     }
     if (prm_405 == 2)
@@ -12945,10 +12947,10 @@ void addnews(int prm_405, int prm_406)
         addnews2(
             lang(
                 cdatan(1, prm_406) + u8"は経験をつみ、レベル"s
-                    + cdata(38, prm_406) + u8"になった。"s,
+                    + cdata_level(prm_406) + u8"になった。"s,
                 cdatan(1, prm_406)
                     + u8" has gained experience and achieved level "s
-                    + cdata(38, prm_406) + u8"."s),
+                    + cdata_level(prm_406) + u8"."s),
             1);
     }
     if (prm_405 == 3)
@@ -14186,8 +14188,8 @@ void create_pcpic(int prm_409, int prm_410)
     boxf();
     if (pcc(15, prm_409) == 0)
     {
-        pcc(15, prm_409) = cdata(8, prm_409) + 1;
-        pcc(14, prm_409) = cdata(8, prm_409) + 7;
+        pcc(15, prm_409) = cdata_sex(prm_409) + 1;
+        pcc(14, prm_409) = cdata_sex(prm_409) + 7;
         pcc(1, prm_409) = 2 + rnd(21) * 1000;
         pcc(9, prm_409) = 1 + rnd(21) * 1000;
         pcc(7, prm_409) = 1 + rnd(21) * 1000;
@@ -20131,7 +20133,7 @@ void label_0264()
 {
     if (cm)
     {
-        mtlv = cdata(38, rc) / 15 + 1;
+        mtlv = cdata_level(rc) / 15 + 1;
     }
     else
     {
@@ -20852,8 +20854,8 @@ int item_find(int prm_476, int prm_477, int prm_478)
                     }
                     if (p_at_m52(2) == 0)
                     {
-                        if (inv_x(cnt) != cdata(1, 0)
-                            || inv_y(cnt) != cdata(2, 0))
+                        if (inv_x(cnt) != cdata_x(0)
+                            || inv_y(cnt) != cdata_y(0))
                         {
                             continue;
                         }
@@ -20982,15 +20984,15 @@ int itemusingfind(int prm_485, int prm_486)
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(140, cnt) != 0)
+            if (cdata_continuous_action_id(cnt) != 0)
             {
-                if (cdata(141, cnt) > 0)
+                if (cdata_continuous_action_turn(cnt) > 0)
                 {
-                    if (cdata(142, cnt) == prm_485)
+                    if (cdata_continuous_action_item(cnt) == prm_485)
                     {
                         if (prm_486 == 0 || prm_486 == 1 && cnt != 0)
                         {
@@ -21469,8 +21471,8 @@ int item_separate(int& prm_510)
         {
             if (inv_getowner(prm_510) != -1)
             {
-                inv_x(prm_510) = cdata(1, inv_getowner(prm_510));
-                inv_y(prm_510) = cdata(2, inv_getowner(prm_510));
+                inv_x(prm_510) = cdata_x(inv_getowner(prm_510));
+                inv_y(prm_510) = cdata_y(inv_getowner(prm_510));
             }
             inv_x(ti_at_m59) = inv_x(prm_510);
             inv_y(ti_at_m59) = inv_y(prm_510);
@@ -22420,9 +22422,9 @@ label_0313_internal:
 }
 void remain_make(int prm_521, int prm_522)
 {
-    inv_subname(prm_521) = cdata(27, prm_522);
-    inv_color(prm_521) = cdata(7, prm_522) / 1000;
-    inv_weight(prm_521) = cdata(20, prm_522);
+    inv_subname(prm_521) = cdata_id(prm_522);
+    inv_color(prm_521) = cdata_image(prm_522) / 1000;
+    inv_weight(prm_521) = cdata_weight(prm_522);
     if (inv_id(prm_521) == 204)
     {
         inv_weight(prm_521) = 250 * (inv_weight(prm_521) + 100) / 100 + 500;
@@ -22431,13 +22433,13 @@ void remain_make(int prm_521, int prm_522)
     else
     {
         inv_weight(prm_521) = 20 * (inv_weight(prm_521) + 500) / 500;
-        inv_value(prm_521) = cdata(38, prm_522) * 40 + 600;
-        if (refchara(cdata(27, prm_522), 6) < 20)
+        inv_value(prm_521) = cdata_level(prm_522) * 40 + 600;
+        if (refchara(cdata_id(prm_522), 6) < 20)
         {
-            if (cdata(69, prm_522) < -1)
+            if (cdata_original_relationship(prm_522) < -1)
             {
                 inv_value(prm_521) = inv_value(prm_521)
-                    * limit((4 - refchara(cdata(27, prm_522), 6) / 5), 1, 5);
+                    * limit((4 - refchara(cdata_id(prm_522), 6) / 5), 1, 5);
             }
         }
     }
@@ -22880,12 +22882,13 @@ void gohostile()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(150, cnt) == 14 || cdata(150, cnt) == 16
-                || cdata(150, cnt) == 1010)
+            if (cdata_character_role(cnt) == 14
+                || cdata_character_role(cnt) == 16
+                || cdata_character_role(cnt) == 1010)
             {
-                cdata(9, cnt) = -3;
-                cdata(201, cnt) = 80;
-                cdata(79, cnt) = 218;
+                cdata_relationship(cnt) = -3;
+                cdata_hate(cnt) = 80;
+                cdata_emotion_icon(cnt) = 218;
             }
         }
     }
@@ -22928,9 +22931,9 @@ void modkarma(int prm_550, int prm_551)
         u8"Karma("s + a_at_m74 + u8")"s));
     if (a_at_m74 > 0)
     {
-        if (cdata(49, prm_550) < -30)
+        if (cdata_karma(prm_550) < -30)
         {
-            if (cdata(49, prm_550) + a_at_m74 >= -30)
+            if (cdata_karma(prm_550) + a_at_m74 >= -30)
             {
                 txtmore();
                 txtef(2);
@@ -22942,9 +22945,9 @@ void modkarma(int prm_550, int prm_551)
     }
     if (a_at_m74 < 0)
     {
-        if (cdata(49, prm_550) >= -30)
+        if (cdata_karma(prm_550) >= -30)
         {
-            if (cdata(49, prm_550) + a_at_m74 < -30)
+            if (cdata_karma(prm_550) + a_at_m74 < -30)
             {
                 txtmore();
                 txtef(8);
@@ -22954,7 +22957,7 @@ void modkarma(int prm_550, int prm_551)
             }
         }
     }
-    cdata(49, prm_550) += a_at_m74;
+    cdata_karma(prm_550) += a_at_m74;
     max_at_m74 = 20;
     if (trait(162))
     {
@@ -22964,13 +22967,13 @@ void modkarma(int prm_550, int prm_551)
     {
         max_at_m74 += 20;
     }
-    if (cdata(49, prm_550) > max_at_m74)
+    if (cdata_karma(prm_550) > max_at_m74)
     {
-        cdata(49, prm_550) = max_at_m74;
+        cdata_karma(prm_550) = max_at_m74;
     }
-    if (cdata(49, prm_550) < -100)
+    if (cdata_karma(prm_550) < -100)
     {
-        cdata(49, prm_550) = -100;
+        cdata_karma(prm_550) = -100;
     }
     return;
 }
@@ -23262,11 +23265,12 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         {
             if (prm_573 != 1000)
             {
-                exp2_at_m77 = rnd(cdata(36, prm_570) * exp_at_m77 / 1000
-                                      / (cdata(38, prm_570) + prm_573)
-                                  + 1)
+                exp2_at_m77 =
+                    rnd(cdata_required_experience(prm_570) * exp_at_m77 / 1000
+                            / (cdata_level(prm_570) + prm_573)
+                        + 1)
                     + rnd(2);
-                cdata(35, prm_570) += exp2_at_m77;
+                cdata_experience(prm_570) += exp2_at_m77;
                 if (prm_570 == 0)
                 {
                     gdata(92) += exp2_at_m77;
@@ -23363,7 +23367,8 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
 int calcfame(int prm_574, int prm_575)
 {
     p_at_m77 = prm_575 * 100
-        / (100 + cdata(34, prm_574) / 100 * (cdata(34, prm_574) / 100) / 2500);
+        / (100
+           + cdata_fame(prm_574) / 100 * (cdata_fame(prm_574) / 100) / 2500);
     if (p_at_m77 < 5)
     {
         p_at_m77 = rnd(5) + 1;
@@ -23373,12 +23378,12 @@ int calcfame(int prm_574, int prm_575)
 }
 int decfame(int prm_576, int prm_577)
 {
-    p_at_m77 = cdata(34, prm_576) / prm_577 + 5;
+    p_at_m77 = cdata_fame(prm_576) / prm_577 + 5;
     p_at_m77 = p_at_m77 + rnd(p_at_m77 / 2) - rnd(p_at_m77 / 2);
-    cdata(34, prm_576) -= p_at_m77;
-    if (cdata(34, prm_576) < 0)
+    cdata_fame(prm_576) -= p_at_m77;
+    if (cdata_fame(prm_576) < 0)
     {
-        cdata(34, prm_576) = 0;
+        cdata_fame(prm_576) = 0;
     }
     stat = p_at_m77;
     return stat;
@@ -23402,7 +23407,7 @@ int getworker(int prm_578, int prm_579)
                     continue;
                 }
             }
-            if (cdata(80, cnt) == prm_578)
+            if (cdata_current_map(cnt) == prm_578)
             {
                 p_at_m78 = cnt;
                 break;
@@ -23422,9 +23427,9 @@ void removeworker(int prm_580)
             {
                 continue;
             }
-            if (cdata(80, cnt) == prm_580)
+            if (cdata_current_map(cnt) == prm_580)
             {
-                cdata(80, cnt) = 0;
+                cdata_current_map(cnt) = 0;
             }
         }
     }
@@ -23633,27 +23638,27 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     }
     if (tc_at_m81 != -1)
     {
-        map(cdata(1, prm_605), cdata(2, prm_605), 1) = tc_at_m81 + 1;
-        x2_at_m81 = cdata(1, tc_at_m81);
-        y2_at_m81 = cdata(2, tc_at_m81);
-        cdata(1, tc_at_m81) = cdata(1, prm_605);
-        cdata(2, tc_at_m81) = cdata(2, prm_605);
+        map(cdata_x(prm_605), cdata_y(prm_605), 1) = tc_at_m81 + 1;
+        x2_at_m81 = cdata_x(tc_at_m81);
+        y2_at_m81 = cdata_y(tc_at_m81);
+        cdata_x(tc_at_m81) = cdata_x(prm_605);
+        cdata_y(tc_at_m81) = cdata_y(prm_605);
     }
     else
     {
-        map(cdata(1, prm_605), cdata(2, prm_605), 1) = 0;
+        map(cdata_x(prm_605), cdata_y(prm_605), 1) = 0;
         x2_at_m81 = prm_607;
         y2_at_m81 = prm_608;
     }
     map(x2_at_m81, y2_at_m81, 1) = prm_605 + 1;
-    cdata(1, prm_605) = x2_at_m81;
-    cdata(2, prm_605) = y2_at_m81;
+    cdata_x(prm_605) = x2_at_m81;
+    cdata_y(prm_605) = y2_at_m81;
     if (prm_605 == 0 || tc_at_m81 == 0)
     {
         if (gdata(183))
         {
-            cdata(1, gdata(183)) = cdata(1, 0);
-            cdata(2, gdata(183)) = cdata(2, 0);
+            cdata_x(gdata(183)) = cdata_x(0);
+            cdata_y(gdata(183)) = cdata_y(0);
         }
     }
     return;
@@ -23672,10 +23677,10 @@ void cell_movechara(int prm_609, int prm_610, int prm_611)
     }
     else
     {
-        map(cdata(1, prm_609), cdata(2, prm_609), 1) = 0;
-        cdata(1, prm_609) = prm_610;
-        cdata(2, prm_609) = prm_611;
-        map(cdata(1, prm_609), cdata(2, prm_609), 1) = prm_609 + 1;
+        map(cdata_x(prm_609), cdata_y(prm_609), 1) = 0;
+        cdata_x(prm_609) = prm_610;
+        cdata_y(prm_609) = prm_611;
+        map(cdata_x(prm_609), cdata_y(prm_609), 1) = prm_609 + 1;
     }
     return;
 }
@@ -23739,8 +23744,8 @@ int breath_list()
     DIM3(breathlist, 2, 100);
     maxbreath = 0;
     breathw = 1;
-    dx = cdata(1, cc);
-    dy = cdata(2, cc);
+    dx = cdata_x(cc);
+    dy = cdata_y(cc);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (sdataref(3, efid) % 1000 + 1); cnt < cnt_end;
@@ -23835,7 +23840,7 @@ void draw_emo(int prm_615, int prm_616, int prm_617)
 {
     gmode(2, 16, 16);
     pos(prm_616 + 16, prm_617);
-    gcopy(3, 32 + cdata(79, prm_615) % 100 * 16, 608);
+    gcopy(3, 32 + cdata_emotion_icon(prm_615) % 100 * 16, 608);
     return;
 }
 void chara_preparepic(int prm_618, int prm_619)
@@ -27591,11 +27596,11 @@ void fixaiact(int prm_753)
             }
         }
     }
-    i_at_m112 = cdata(211, prm_753);
+    i_at_m112 = cdata_ai_heal(prm_753);
     if (i_at_m112 == 464 || i_at_m112 == 441 || i_at_m112 == 660
         || i_at_m112 == 657)
     {
-        cdata(211, prm_753) = 0;
+        cdata_ai_heal(prm_753) = 0;
     }
     return;
 }
@@ -27777,8 +27782,8 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
     {
         if (rc == 56)
         {
-            cdata(0, rc) = 0;
-            --npcmemory(1, cdata(27, rc));
+            cdata_state(rc) = 0;
+            --npcmemory(1, cdata_id(rc));
             stat = 1;
             return stat;
         }
@@ -27801,9 +27806,9 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
 }
 int relationbetween(int prm_760, int)
 {
-    if (cdata(9, prm_760) >= -2)
+    if (cdata_relationship(prm_760) >= -2)
     {
-        if (cdata(9, prm_760) <= -3)
+        if (cdata_relationship(prm_760) <= -3)
         {
             stat = -3;
             return stat;
@@ -27811,7 +27816,7 @@ int relationbetween(int prm_760, int)
     }
     else
     {
-        if (cdata(9, prm_760) >= -2)
+        if (cdata_relationship(prm_760) >= -2)
         {
             stat = -3;
             return stat;
@@ -27822,17 +27827,17 @@ int relationbetween(int prm_760, int)
 }
 std::string calcage(int prm_762)
 {
-    if (gdata(10) - cdata(21, prm_762) < 0)
+    if (gdata(10) - cdata_birth_year(prm_762) < 0)
     {
         return lang(u8"不明"s, u8"Unknown"s);
     }
-    return elona_str(gdata(10) - cdata(21, prm_762));
+    return elona_str(gdata(10) - cdata_birth_year(prm_762));
 }
 void rowactend(int prm_763)
 {
-    cdata(140, prm_763) = 0;
-    cdata(141, prm_763) = 0;
-    cdata(142, prm_763) = 0;
+    cdata_continuous_action_id(prm_763) = 0;
+    cdata_continuous_action_turn(prm_763) = 0;
+    cdata_continuous_action_item(prm_763) = 0;
     return;
 }
 int customtalk(int prm_764, int prm_765)
@@ -27857,10 +27862,10 @@ int customtalk(int prm_764, int prm_765)
     }
     else
     {
-        if (cdata(27, prm_764) == 343)
+        if (cdata_id(prm_764) == 343)
         {
             f_at_m116 = 1;
-            buff_at_m116 = ""s + usertxt(cdata(157, prm_764));
+            buff_at_m116 = ""s + usertxt(cdata_cnpc_id(prm_764));
             notesel(buff_at_m116);
         }
     }
@@ -27922,9 +27927,9 @@ int customtalk(int prm_764, int prm_765)
         stat = 0;
         return stat;
     }
-    if (cdata(23, prm_764) != 0)
+    if (cdata_can_talk(prm_764) != 0)
     {
-        dbid = cdata(27, prm_764);
+        dbid = cdata_id(prm_764);
         dbmode = prm_765;
         label_2299();
         stat = 1;
@@ -27940,14 +27945,14 @@ int findchara(int prm_766)
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 2)
+            if (cdata_state(cnt) != 2)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
             }
-            if (cdata(27, cnt) == prm_766)
+            if (cdata_id(cnt) == prm_766)
             {
                 p_at_m117 = cnt;
                 break;
@@ -27964,11 +27969,11 @@ int findally(int prm_767)
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(27, cnt) == prm_767)
+            if (cdata_id(cnt) == prm_767)
             {
                 p_at_m117 = cnt;
                 break;
@@ -28027,7 +28032,7 @@ void modimp(int prm_769, int prm_770)
 {
     elona_vector1<int> p_at_m118;
     int i_at_m118 = 0;
-    p_at_m118 = implevel(cdata(17, prm_769));
+    p_at_m118 = implevel(cdata_impression(prm_769));
     if (prm_770 < 0)
     {
         i_at_m118 = prm_770;
@@ -28043,8 +28048,8 @@ void modimp(int prm_769, int prm_770)
             }
         }
     }
-    cdata(17, prm_769) += i_at_m118;
-    p_at_m118(1) = implevel(cdata(17, prm_769));
+    cdata_impression(prm_769) += i_at_m118;
+    p_at_m118(1) = implevel(cdata_impression(prm_769));
     if (p_at_m118 > p_at_m118(1))
     {
         txtef(8);
@@ -28057,7 +28062,7 @@ void modimp(int prm_769, int prm_770)
     }
     if (p_at_m118(1) > p_at_m118)
     {
-        if (cdata(9, prm_769) != -3)
+        if (cdata_relationship(prm_769) != -3)
         {
             txtef(2);
             txt(lang(
@@ -28076,10 +28081,10 @@ void put_questtarget()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 1)
+            if (cdata_state(cnt) == 1)
             {
                 cbitmod(970, cnt, 1);
-                cdata(9, cnt) = -3;
+                cdata_relationship(cnt) = -3;
             }
         }
     }
@@ -28093,7 +28098,7 @@ int exist_questtarget()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 1)
+            if (cdata_state(cnt) == 1)
             {
                 if (cbit(970, cnt) == 1)
                 {
@@ -28220,7 +28225,7 @@ void check_quest()
                 int cnt = 57;
                 for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
                         ++p_at_m119;
                     }
@@ -28252,20 +28257,21 @@ void check_quest()
 void refreshspeed(int prm_771)
 {
     int r_at_m120 = 0;
-    if (cdata(68, prm_771) == 0)
+    if (cdata_speed_correction_value(prm_771) == 0)
     {
-        cdata(11, prm_771) = sdata(18, prm_771);
+        cdata_current_speed(prm_771) = sdata(18, prm_771);
     }
     else
     {
-        cdata(11, prm_771) = sdata(18, prm_771)
-            * limit((100 - cdata(68, prm_771)), 0, 100) / 100;
+        cdata_current_speed(prm_771) = sdata(18, prm_771)
+            * limit((100 - cdata_speed_correction_value(prm_771)), 0, 100)
+            / 100;
     }
-    if (cdata(11, prm_771) < 10)
+    if (cdata_current_speed(prm_771) < 10)
     {
-        cdata(11, prm_771) = 10;
+        cdata_current_speed(prm_771) = 10;
     }
-    cdata(39, prm_771) = 0;
+    cdata_speed_percentage_in_next_turn(prm_771) = 0;
     if (prm_771 != 0)
     {
         if (gdata(183) != prm_771)
@@ -28275,18 +28281,18 @@ void refreshspeed(int prm_771)
     }
     if (gdata(183) != 0)
     {
-        cdata(11, 0) = sdata(18, gdata(183)) * 100
+        cdata_current_speed(0) = sdata(18, gdata(183)) * 100
             / limit((100 + sdata(18, gdata(183)) - sdata(10, gdata(183)) * 3 / 2
                      - sdata(301, 0) * 2 - (cbit(22, gdata(183)) == 1) * 50),
                     100,
                     1000);
         if (cbit(25, gdata(183)))
         {
-            cdata(11, 0) /= 10;
+            cdata_current_speed(0) /= 10;
         }
         if (gdata(183) == prm_771)
         {
-            cdata(11, prm_771) = limit(
+            cdata_current_speed(prm_771) = limit(
                 sdata(10, prm_771) + sdata(301, 0), 10, sdata(18, prm_771));
             return;
         }
@@ -28294,48 +28300,49 @@ void refreshspeed(int prm_771)
     gspdorg = sorg(18, 0);
     if (gdata(183) == 0)
     {
-        r_at_m120 = cdata(22, 0) / 1000 * 1000;
+        r_at_m120 = cdata_nutrition(0) / 1000 * 1000;
         if (r_at_m120 < 1000)
         {
-            cdata(39, 0) -= 30;
+            cdata_speed_percentage_in_next_turn(0) -= 30;
         }
         if (r_at_m120 < 2000)
         {
-            cdata(39, 0) -= 10;
+            cdata_speed_percentage_in_next_turn(0) -= 10;
         }
-        if (cdata(52, 0) < 0)
+        if (cdata_sp(0) < 0)
         {
-            cdata(39, 0) -= 30;
+            cdata_speed_percentage_in_next_turn(0) -= 30;
         }
-        if (cdata(52, 0) < 25)
+        if (cdata_sp(0) < 25)
         {
-            cdata(39, 0) -= 20;
+            cdata_speed_percentage_in_next_turn(0) -= 20;
         }
-        if (cdata(52, 0) < 50)
+        if (cdata_sp(0) < 50)
         {
-            cdata(39, 0) -= 10;
+            cdata_speed_percentage_in_next_turn(0) -= 10;
         }
     }
-    if (cdata(45, 0) >= 3)
+    if (cdata_inventory_weight_type(0) >= 3)
     {
-        cdata(39, 0) -= 50;
+        cdata_speed_percentage_in_next_turn(0) -= 50;
     }
-    if (cdata(45, 0) == 2)
+    if (cdata_inventory_weight_type(0) == 2)
     {
-        cdata(39, 0) -= 30;
+        cdata_speed_percentage_in_next_turn(0) -= 30;
     }
-    if (cdata(45, 0) == 1)
+    if (cdata_inventory_weight_type(0) == 1)
     {
-        cdata(39, 0) -= 10;
+        cdata_speed_percentage_in_next_turn(0) -= 10;
     }
     if (mdata(6) == 1 || mdata(6) == 4)
     {
         if (gdata(80) > gdata(82))
         {
-            cdata(39, 0) -= 25 + 25 * (gdata(80) / (gdata(82) + 1));
+            cdata_speed_percentage_in_next_turn(0) -=
+                25 + 25 * (gdata(80) / (gdata(82) + 1));
         }
     }
-    gspd = cdata(11, 0) * (100 + cdata(37, 0)) / 100;
+    gspd = cdata_current_speed(0) * (100 + cdata_speed_percentage(0)) / 100;
     if (gspd < 10)
     {
         gspd = 10;
@@ -28346,16 +28353,16 @@ void ride_begin(int prm_772)
 {
     txt(lang(
         name(prm_772) + u8"に騎乗した("s + name(prm_772) + u8"の速度: "s
-            + cdata(11, prm_772) + u8"→"s,
+            + cdata_current_speed(prm_772) + u8"→"s,
         u8"You ride "s + name(prm_772) + u8". ("s + name(prm_772)
-            + u8"'s speed: "s + cdata(11, prm_772) + u8"->"s));
+            + u8"'s speed: "s + cdata_current_speed(prm_772) + u8"->"s));
     cbitmod(975, prm_772, 1);
-    map(cdata(1, prm_772), cdata(2, prm_772), 1) = 0;
+    map(cdata_x(prm_772), cdata_y(prm_772), 1) = 0;
     gdata(183) = prm_772;
     create_pcpic(0, 1);
     rowactend(gdata(183));
     refreshspeed(gdata(183));
-    txt(""s + cdata(11, prm_772) + u8") "s);
+    txt(""s + cdata_current_speed(prm_772) + u8") "s);
     if (cbit(22, gdata(183)))
     {
         txt(lang(
@@ -28388,13 +28395,13 @@ void chara_vanquish(int prm_773)
     }
     else
     {
-        if (cdata(0, prm_773) == 1 || cdata(0, prm_773) == 10)
+        if (cdata_state(prm_773) == 1 || cdata_state(prm_773) == 10)
         {
-            map(cdata(1, prm_773), cdata(2, prm_773), 1) = 0;
+            map(cdata_x(prm_773), cdata_y(prm_773), 1) = 0;
         }
     }
-    cdata(0, prm_773) = 0;
-    cdata(150, prm_773) = 0;
+    cdata_state(prm_773) = 0;
+    cdata_character_role(prm_773) = 0;
     check_quest();
     return;
 }
@@ -28402,11 +28409,11 @@ void turn_aggro(int prm_774, int prm_775, int prm_776)
 {
     if (prm_775 < 16)
     {
-        cdata(9, prm_774) = -3;
+        cdata_relationship(prm_774) = -3;
     }
-    cdata(201, prm_774) = prm_776;
-    cdata(79, prm_774) = 218;
-    cdata(29, prm_774) = prm_775;
+    cdata_hate(prm_774) = prm_776;
+    cdata_emotion_icon(prm_774) = 218;
+    cdata_enemy_id(prm_774) = prm_775;
     return;
 }
 void make_sound(
@@ -28421,17 +28428,17 @@ void make_sound(
         int cnt = 1;
         for (int cnt_end = cnt + (244); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (dist(prm_777, prm_778, cdata(1, cnt), cdata(2, cnt)) < prm_779)
+            if (dist(prm_777, prm_778, cdata_x(cnt), cdata_y(cnt)) < prm_779)
             {
                 if (rnd(prm_780) == 0)
                 {
-                    if (cdata(251, cnt) != 0)
+                    if (cdata_sleep(cnt) != 0)
                     {
-                        cdata(251, cnt) = 0;
+                        cdata_sleep(cnt) = 0;
                         if (synccheck(cnt, -1))
                         {
                             txt(lang(
@@ -28440,7 +28447,7 @@ void make_sound(
                                     + u8" the sound and wake"s + _s(cnt)
                                     + u8" up."s));
                         }
-                        cdata(79, cnt) = 221;
+                        cdata_emotion_icon(cnt) = 221;
                         if (prm_781)
                         {
                             if (rnd(500) == 0)
@@ -28473,7 +28480,7 @@ int get_freechara()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 0)
+            if (cdata_state(cnt) == 0)
             {
                 f_at_m125 = cnt;
                 break;
@@ -28492,7 +28499,7 @@ int get_freeally()
              cnt < cnt_end;
              ++cnt)
         {
-            if (cdata(0, cnt) != 0)
+            if (cdata_state(cnt) != 0)
             {
                 continue;
             }
@@ -28540,8 +28547,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     if (prm_784 == gdata(183))
     {
         ride_end();
-        cdata(1, prm_784) = cdata(1, 0);
-        cdata(2, prm_784) = cdata(2, 0);
+        cdata_x(prm_784) = cdata_x(0);
+        cdata_y(prm_784) = cdata_y(0);
     }
     if (tc_at_m125 == -1)
     {
@@ -28550,7 +28557,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 0)
+                if (cdata_state(cnt) == 0)
                 {
                     f_at_m125 = 1;
                     tc_at_m125 = cnt;
@@ -28565,9 +28572,9 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
                 for (;; ++cnt)
                 {
                     tc_at_m125 = 57 + rnd(188);
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
-                        if (cdata(150, cnt) == 0)
+                        if (cdata_character_role(cnt) == 0)
                         {
                             break;
                         }
@@ -28579,14 +28586,14 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     }
     if (prm_786 == 1)
     {
-        x_at_m125 = cdata(1, tc_at_m125);
-        y_at_m125 = cdata(2, tc_at_m125);
+        x_at_m125 = cdata_x(tc_at_m125);
+        y_at_m125 = cdata_y(tc_at_m125);
     }
-    p1_at_m125 = cdata(9, tc_at_m125);
-    p2_at_m125 = cdata(201, tc_at_m125);
-    p3_at_m125 = cdata(0, tc_at_m125);
-    hp_at_m125 = cdata(50, tc_at_m125);
-    cdata(12, prm_784) = 0;
+    p1_at_m125 = cdata_relationship(tc_at_m125);
+    p2_at_m125 = cdata_hate(tc_at_m125);
+    p3_at_m125 = cdata_state(tc_at_m125);
+    hp_at_m125 = cdata_hp(tc_at_m125);
+    cdata_item_which_will_be_used(prm_784) = 0;
     cbitmod(960, prm_784, 0);
     inv_getheader(prm_784);
     p_at_m125 = invhead;
@@ -28653,31 +28660,31 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     }
     if (prm_786 == 1)
     {
-        cdata(0, tc_at_m125) = 1;
-        cdata(1, tc_at_m125) = x_at_m125;
-        cdata(2, tc_at_m125) = y_at_m125;
-        cdata(9, tc_at_m125) = p1_at_m125;
-        cdata(201, tc_at_m125) = p2_at_m125;
-        cdata(50, tc_at_m125) = hp_at_m125;
-        cdata(0, tc_at_m125) = p3_at_m125;
-        map(cdata(1, tc_at_m125), cdata(2, tc_at_m125), 1) = tc_at_m125 + 1;
+        cdata_state(tc_at_m125) = 1;
+        cdata_x(tc_at_m125) = x_at_m125;
+        cdata_y(tc_at_m125) = y_at_m125;
+        cdata_relationship(tc_at_m125) = p1_at_m125;
+        cdata_hate(tc_at_m125) = p2_at_m125;
+        cdata_hp(tc_at_m125) = hp_at_m125;
+        cdata_state(tc_at_m125) = p3_at_m125;
+        map(cdata_x(tc_at_m125), cdata_y(tc_at_m125), 1) = tc_at_m125 + 1;
     }
     else
     {
         if (prm_784 != 56)
         {
-            map(cdata(1, tc_at_m125), cdata(2, tc_at_m125), 1) = tc_at_m125 + 1;
+            map(cdata_x(tc_at_m125), cdata_y(tc_at_m125), 1) = tc_at_m125 + 1;
         }
         else
         {
             rc = tc_at_m125;
-            cdata(0, tc_at_m125) = 1;
-            cxinit = cdata(1, 0);
-            cyinit = cdata(2, 0);
+            cdata_state(tc_at_m125) = 1;
+            cxinit = cdata_x(0);
+            cyinit = cdata_y(0);
             label_1532();
         }
-        cdata(29, tc_at_m125) = 0;
-        cdata(201, tc_at_m125) = 0;
+        cdata_enemy_id(tc_at_m125) = 0;
+        cdata_hate(tc_at_m125) = 0;
     }
     if (tc_at_m125 < 16)
     {
@@ -28712,11 +28719,11 @@ void hostileaction(int prm_787, int prm_788)
     {
         return;
     }
-    if (cdata(9, prm_788) != -3)
+    if (cdata_relationship(prm_788) != -3)
     {
-        cdata(79, prm_788) = 418;
+        cdata_emotion_icon(prm_788) = 418;
     }
-    if (cdata(9, prm_788) == 10)
+    if (cdata_relationship(prm_788) == 10)
     {
         txtmore();
         txtef(8);
@@ -28726,11 +28733,11 @@ void hostileaction(int prm_787, int prm_788)
     }
     else
     {
-        if (cdata(9, prm_788) == 0)
+        if (cdata_relationship(prm_788) == 0)
         {
             modkarma(0, -2);
         }
-        if (cdata(27, prm_788) == 202)
+        if (cdata_id(prm_788) == 202)
         {
             if (gdata(258) == 0)
             {
@@ -28742,18 +28749,18 @@ void hostileaction(int prm_787, int prm_788)
                 return;
             }
         }
-        if (cdata(9, prm_788) > -2)
+        if (cdata_relationship(prm_788) > -2)
         {
             txtmore();
             txtef(8);
             txt(lang(
                 name(prm_788) + u8"は嫌な顔をした。"s,
                 name(prm_788) + u8" glares at you."s));
-            cdata(9, prm_788) = -2;
+            cdata_relationship(prm_788) = -2;
         }
         else
         {
-            if (cdata(9, prm_788) != -3)
+            if (cdata_relationship(prm_788) != -3)
             {
                 txtef(8);
                 txtmore();
@@ -28761,9 +28768,9 @@ void hostileaction(int prm_787, int prm_788)
                     name(prm_788) + u8"は激怒した。"s,
                     name(prm_788) + u8" gets furious!"s));
             }
-            cdata(9, prm_788) = -3;
-            cdata(201, prm_788) = 80;
-            cdata(29, prm_788) = prm_787;
+            cdata_relationship(prm_788) = -3;
+            cdata_hate(prm_788) = 80;
+            cdata_enemy_id(prm_788) = prm_787;
         }
         customtalk(prm_788, 101);
     }
@@ -28779,9 +28786,9 @@ void hostileaction(int prm_787, int prm_788)
                 {
                     if (cbit(960, cnt) == 1)
                     {
-                        cdata(29, cnt) = 0;
-                        cdata(201, cnt) = 20;
-                        cdata(79, cnt) = 318;
+                        cdata_enemy_id(cnt) = 0;
+                        cdata_hate(cnt) = 20;
+                        cdata_emotion_icon(cnt) = 318;
                     }
                 }
             }
@@ -28792,11 +28799,11 @@ void hostileaction(int prm_787, int prm_788)
 }
 void rowact_check(int prm_789)
 {
-    if (cdata(140, prm_789) != 0)
+    if (cdata_continuous_action_id(prm_789) != 0)
     {
-        if (cdata(140, prm_789) != 3)
+        if (cdata_continuous_action_id(prm_789) != 3)
         {
-            cdata(143, prm_789) = 1;
+            cdata_stops_continuous_action_if_damaged(prm_789) = 1;
         }
     }
     return;
@@ -28807,17 +28814,18 @@ void rowact_item(int prm_790)
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(141, cnt) <= 0)
+            if (cdata_continuous_action_turn(cnt) <= 0)
             {
                 continue;
             }
-            if (cdata(140, cnt) == 1 || cdata(140, cnt) == 2)
+            if (cdata_continuous_action_id(cnt) == 1
+                || cdata_continuous_action_id(cnt) == 2)
             {
-                if (cdata(142, cnt) == prm_790)
+                if (cdata_continuous_action_item(cnt) == prm_790)
                 {
                     rowactend(cnt);
                     txt(lang(
@@ -28838,11 +28846,11 @@ void wake_up()
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(251, cnt) > 0)
+                if (cdata_sleep(cnt) > 0)
                 {
                     if (rnd(10))
                     {
-                        cdata(251, cnt) = 0;
+                        cdata_sleep(cnt) = 0;
                     }
                 }
             }
@@ -28856,25 +28864,25 @@ void incognitobegin()
         int cnt = 16;
         for (int cnt_end = cnt + (229); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(150, cnt) == 1010)
+            if (cdata_character_role(cnt) == 1010)
             {
                 continue;
             }
-            if (cdata(150, cnt) == 16)
+            if (cdata_character_role(cnt) == 16)
             {
                 continue;
             }
-            if (cdata(69, cnt) >= -2)
+            if (cdata_original_relationship(cnt) >= -2)
             {
-                if (cdata(9, cnt) <= -2)
+                if (cdata_relationship(cnt) <= -2)
                 {
-                    cdata(201, cnt) = 0;
-                    cdata(9, cnt) = cdata(69, cnt);
-                    cdata(79, cnt) = 221;
+                    cdata_hate(cnt) = 0;
+                    cdata_relationship(cnt) = cdata_original_relationship(cnt);
+                    cdata_emotion_icon(cnt) = 221;
                 }
             }
         }
@@ -28887,17 +28895,17 @@ void incognitoend()
         int cnt = 16;
         for (int cnt_end = cnt + (229); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(150, cnt) == 14)
+            if (cdata_character_role(cnt) == 14)
             {
-                if (cdata(49, 0) < -30)
+                if (cdata_karma(0) < -30)
                 {
-                    cdata(9, cnt) = -3;
-                    cdata(201, cnt) = 80;
-                    cdata(79, cnt) = 218;
+                    cdata_relationship(cnt) = -3;
+                    cdata_hate(cnt) = 80;
+                    cdata_emotion_icon(cnt) = 218;
                 }
             }
         }
@@ -28907,8 +28915,8 @@ void incognitoend()
 void cell_setchara(int prm_791, int prm_792, int prm_793)
 {
     map(prm_792, prm_793, 1) = prm_791 + 1;
-    cdata(1, prm_791) = prm_792;
-    cdata(2, prm_791) = prm_793;
+    cdata_x(prm_791) = prm_792;
+    cdata_y(prm_791) = prm_793;
     return;
 }
 void cell_removechara(int prm_794, int prm_795)
@@ -29056,7 +29064,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         {
             f_at_m132 = 0;
         }
-        if (cdata(25, prm_801) > 3)
+        if (cdata_quality(prm_801) > 3)
         {
             if (rnd(4))
             {
@@ -29067,7 +29075,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
                 fixeddur_at_m132 = prm_804 / 5 + 1;
             }
         }
-        if (cdata(25, prm_801) >= 4)
+        if (cdata_quality(prm_801) >= 4)
         {
             if (prm_802 == 16)
             {
@@ -29195,8 +29203,8 @@ void animeload(int prm_807, int prm_808)
     }
     screenupdate = -1;
     label_1419();
-    dx_at_m133 = (cdata(1, prm_808) - scx) * inf_tiles + inf_screenx;
-    dy_at_m133 = (cdata(2, prm_808) - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 = (cdata_x(prm_808) - scx) * inf_tiles + inf_screenx;
+    dy_at_m133 = (cdata_y(prm_808) - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(exedir + u8"graphic\\anime"s + prm_807 + u8".bmp"s);
     gsel(4);
@@ -29287,8 +29295,8 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
         gsel(selcur);
     }
-    dx_at_m133 = (cdata(1, prm_809) - scx) * inf_tiles + inf_screenx;
-    dy_at_m133(0) = (cdata(2, prm_809) - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 = (cdata_x(prm_809) - scx) * inf_tiles + inf_screenx;
+    dy_at_m133(0) = (cdata_y(prm_809) - scy) * inf_tiles + inf_screeny;
     dy_at_m133(1) = 0;
     gsel(4);
     gmode(0);
@@ -29627,7 +29635,7 @@ void modcorrupt(int prm_815)
                 {
                     if (mode == 0)
                     {
-                        if (cdata(141, 0) == 0)
+                        if (cdata_continuous_action_turn(0) == 0)
                         {
                             gdata(215) = 1;
                             ghelp = 15;
@@ -29773,7 +29781,7 @@ void modcorrupt(int prm_815)
 }
 void wet(int prm_816, int prm_817)
 {
-    cdata(259, prm_816) += prm_817;
+    cdata_wet(prm_816) += prm_817;
     if (synccheck(prm_816, -1))
     {
         txtmore();
@@ -29810,9 +29818,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) / 2 + 1))
+            if (rnd(cdata_level(prm_818) / 2 + 1))
             {
                 f_at_con = 0;
             }
@@ -29827,9 +29835,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 6;
         if (p_at_con > 0)
         {
-            if (cdata(253, prm_818) == 0)
+            if (cdata_blind(prm_818) == 0)
             {
-                cdata(253, prm_818) = p_at_con;
+                cdata_blind(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -29841,7 +29849,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(253, prm_818) += p_at_con / 3 + 1;
+                cdata_blind(prm_818) += p_at_con / 3 + 1;
             }
             rowactend(prm_818);
         }
@@ -29858,9 +29866,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) / 2 + 1))
+            if (rnd(cdata_level(prm_818) / 2 + 1))
             {
                 f_at_con = 0;
             }
@@ -29875,9 +29883,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 7;
         if (p_at_con > 0)
         {
-            if (cdata(254, prm_818) == 0)
+            if (cdata_confused(prm_818) == 0)
             {
-                cdata(254, prm_818) = p_at_con;
+                cdata_confused(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -29890,7 +29898,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(254, prm_818) += p_at_con / 3 + 1;
+                cdata_confused(prm_818) += p_at_con / 3 + 1;
             }
             rowactend(prm_818);
         }
@@ -29903,9 +29911,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) + 1))
+            if (rnd(cdata_level(prm_818) + 1))
             {
                 f_at_con = 0;
             }
@@ -29920,9 +29928,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 10;
         if (p_at_con > 0)
         {
-            if (cdata(252, prm_818) == 0)
+            if (cdata_paralyzed(prm_818) == 0)
             {
-                cdata(252, prm_818) = p_at_con;
+                cdata_paralyzed(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -29935,7 +29943,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(252, prm_818) += p_at_con / 3 + 1;
+                cdata_paralyzed(prm_818) += p_at_con / 3 + 1;
             }
             rowactend(prm_818);
         }
@@ -29948,9 +29956,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) / 3 + 1))
+            if (rnd(cdata_level(prm_818) / 3 + 1))
             {
                 f_at_con = 0;
             }
@@ -29965,9 +29973,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 5;
         if (p_at_con > 0)
         {
-            if (cdata(250, prm_818) == 0)
+            if (cdata_poisoned(prm_818) == 0)
             {
-                cdata(250, prm_818) = p_at_con;
+                cdata_poisoned(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -29980,7 +29988,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(250, prm_818) += p_at_con / 3 + 3;
+                cdata_poisoned(prm_818) += p_at_con / 3 + 3;
             }
             rowactend(prm_818);
         }
@@ -29993,9 +30001,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) / 5 + 1))
+            if (rnd(cdata_level(prm_818) / 5 + 1))
             {
                 f_at_con = 0;
             }
@@ -30010,9 +30018,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 4;
         if (p_at_con > 0)
         {
-            if (cdata(251, prm_818) == 0)
+            if (cdata_sleep(prm_818) == 0)
             {
-                cdata(251, prm_818) = p_at_con;
+                cdata_sleep(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -30025,7 +30033,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(251, prm_818) += p_at_con / 3 + 1;
+                cdata_sleep(prm_818) += p_at_con / 3 + 1;
             }
             rowactend(prm_818);
         }
@@ -30046,9 +30054,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) / 5 + 1))
+            if (rnd(cdata_level(prm_818) / 5 + 1))
             {
                 f_at_con = 0;
             }
@@ -30063,9 +30071,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 7;
         if (p_at_con > 0)
         {
-            if (cdata(255, prm_818) == 0)
+            if (cdata_fear(prm_818) == 0)
             {
-                cdata(255, prm_818) = p_at_con;
+                cdata_fear(prm_818) = p_at_con;
             }
             if (synccheck(prm_818, -1))
             {
@@ -30080,9 +30088,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 7)
     {
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
-            if (rnd(cdata(38, prm_818) / 3 + 1))
+            if (rnd(cdata_level(prm_818) / 3 + 1))
             {
                 f_at_con = 0;
             }
@@ -30101,9 +30109,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = p_at_con / 8;
         if (p_at_con > 0)
         {
-            if (cdata(256, prm_818) == 0)
+            if (cdata_dimmed(prm_818) == 0)
             {
-                cdata(256, prm_818) = p_at_con;
+                cdata_dimmed(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -30115,7 +30123,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(256, prm_818) += p_at_con / 3 + 1;
+                cdata_dimmed(prm_818) += p_at_con / 3 + 1;
             }
             rowactend(prm_818);
         }
@@ -30125,15 +30133,15 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     if (prm_819 == 9)
     {
         p_at_con = prm_820 / 25;
-        if (cdata(25, prm_818) > 3)
+        if (cdata_quality(prm_818) > 3)
         {
             p_at_con /= 2;
         }
         if (p_at_con > 0)
         {
-            if (cdata(258, prm_818) == 0)
+            if (cdata_bleeding(prm_818) == 0)
             {
-                cdata(258, prm_818) = p_at_con;
+                cdata_bleeding(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -30146,7 +30154,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(258, prm_818) += p_at_con;
+                cdata_bleeding(prm_818) += p_at_con;
             }
             rowactend(prm_818);
         }
@@ -30158,9 +30166,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = prm_820 / 10;
         if (p_at_con > 0)
         {
-            if (cdata(257, prm_818) == 0)
+            if (cdata_drunk(prm_818) == 0)
             {
-                cdata(257, prm_818) = p_at_con;
+                cdata_drunk(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -30172,7 +30180,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(257, prm_818) += p_at_con;
+                cdata_drunk(prm_818) += p_at_con;
             }
         }
         stat = 1;
@@ -30183,9 +30191,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = prm_820 / 8;
         if (p_at_con > 0)
         {
-            if (cdata(260, prm_818) == 0)
+            if (cdata_insane(prm_818) == 0)
             {
-                cdata(260, prm_818) = p_at_con;
+                cdata_insane(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -30198,7 +30206,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(260, prm_818) += p_at_con / 3 + 1;
+                cdata_insane(prm_818) += p_at_con / 3 + 1;
             }
             rowactend(prm_818);
         }
@@ -30210,9 +30218,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         p_at_con = prm_820 / 10;
         if (p_at_con > 0)
         {
-            if (cdata(261, prm_818) == 0)
+            if (cdata_sick(prm_818) == 0)
             {
-                cdata(261, prm_818) = p_at_con;
+                cdata_sick(prm_818) = p_at_con;
                 if (synccheck(prm_818, -1))
                 {
                     txtmore();
@@ -30224,7 +30232,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             else
             {
-                cdata(261, prm_818) += p_at_con / 10 + 1;
+                cdata_sick(prm_818) += p_at_con / 10 + 1;
             }
         }
         stat = 1;
@@ -30250,28 +30258,28 @@ void label_1346()
 }
 void healhp(int prm_821, int prm_822)
 {
-    cdata(50, prm_821) += prm_822;
-    if (cdata(50, prm_821) > cdata(51, prm_821))
+    cdata_hp(prm_821) += prm_822;
+    if (cdata_hp(prm_821) > cdata_max_hp(prm_821))
     {
-        cdata(50, prm_821) = cdata(51, prm_821);
+        cdata_hp(prm_821) = cdata_max_hp(prm_821);
     }
     return;
 }
 void healmp(int prm_823, int prm_824)
 {
-    cdata(55, prm_823) += prm_824;
-    if (cdata(55, prm_823) > cdata(56, prm_823))
+    cdata_mp(prm_823) += prm_824;
+    if (cdata_mp(prm_823) > cdata_max_mp(prm_823))
     {
-        cdata(55, prm_823) = cdata(56, prm_823);
+        cdata_mp(prm_823) = cdata_max_mp(prm_823);
     }
     return;
 }
 void healsp(int prm_825, int prm_826)
 {
-    cdata(52, prm_825) += prm_826;
-    if (cdata(52, prm_825) > cdata(53, prm_825))
+    cdata_sp(prm_825) += prm_826;
+    if (cdata_sp(prm_825) > cdata_max_sp(prm_825))
     {
-        cdata(52, prm_825) = cdata(53, prm_825);
+        cdata_sp(prm_825) = cdata_max_sp(prm_825);
     }
     return;
 }
@@ -30279,19 +30287,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
 {
     if (prm_828 == 6)
     {
-        if (cdata(255, prm_827) > 0)
+        if (cdata_fear(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(255, prm_827) = 0;
+                cdata_fear(prm_827) = 0;
             }
             else
             {
-                cdata(255, prm_827) -= prm_829;
+                cdata_fear(prm_827) -= prm_829;
             }
-            if (cdata(255, prm_827) <= 0)
+            if (cdata_fear(prm_827) <= 0)
             {
-                cdata(255, prm_827) = 0;
+                cdata_fear(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30305,19 +30313,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 4)
     {
-        if (cdata(253, prm_827) > 0)
+        if (cdata_blind(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(253, prm_827) = 0;
+                cdata_blind(prm_827) = 0;
             }
             else
             {
-                cdata(253, prm_827) -= prm_829;
+                cdata_blind(prm_827) -= prm_829;
             }
-            if (cdata(253, prm_827) <= 0)
+            if (cdata_blind(prm_827) <= 0)
             {
-                cdata(253, prm_827) = 0;
+                cdata_blind(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30330,19 +30338,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 5)
     {
-        if (cdata(254, prm_827) > 0)
+        if (cdata_confused(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(254, prm_827) = 0;
+                cdata_confused(prm_827) = 0;
             }
             else
             {
-                cdata(254, prm_827) -= prm_829;
+                cdata_confused(prm_827) -= prm_829;
             }
-            if (cdata(254, prm_827) <= 0)
+            if (cdata_confused(prm_827) <= 0)
             {
-                cdata(254, prm_827) = 0;
+                cdata_confused(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30356,19 +30364,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 3)
     {
-        if (cdata(252, prm_827) > 0)
+        if (cdata_paralyzed(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(252, prm_827) = 0;
+                cdata_paralyzed(prm_827) = 0;
             }
             else
             {
-                cdata(252, prm_827) -= prm_829;
+                cdata_paralyzed(prm_827) -= prm_829;
             }
-            if (cdata(252, prm_827) <= 0)
+            if (cdata_paralyzed(prm_827) <= 0)
             {
-                cdata(252, prm_827) = 0;
+                cdata_paralyzed(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30382,19 +30390,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 1)
     {
-        if (cdata(250, prm_827) > 0)
+        if (cdata_poisoned(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(250, prm_827) = 0;
+                cdata_poisoned(prm_827) = 0;
             }
             else
             {
-                cdata(250, prm_827) -= prm_829;
+                cdata_poisoned(prm_827) -= prm_829;
             }
-            if (cdata(250, prm_827) <= 0)
+            if (cdata_poisoned(prm_827) <= 0)
             {
-                cdata(250, prm_827) = 0;
+                cdata_poisoned(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30408,19 +30416,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 2)
     {
-        if (cdata(251, prm_827) > 0)
+        if (cdata_sleep(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(251, prm_827) = 0;
+                cdata_sleep(prm_827) = 0;
             }
             else
             {
-                cdata(251, prm_827) -= prm_829;
+                cdata_sleep(prm_827) -= prm_829;
             }
-            if (cdata(251, prm_827) <= 0)
+            if (cdata_sleep(prm_827) <= 0)
             {
-                cdata(251, prm_827) = 0;
+                cdata_sleep(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30434,19 +30442,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 7)
     {
-        if (cdata(256, prm_827) > 0)
+        if (cdata_dimmed(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(256, prm_827) = 0;
+                cdata_dimmed(prm_827) = 0;
             }
             else
             {
-                cdata(256, prm_827) -= prm_829;
+                cdata_dimmed(prm_827) -= prm_829;
             }
-            if (cdata(256, prm_827) <= 0)
+            if (cdata_dimmed(prm_827) <= 0)
             {
-                cdata(256, prm_827) = 0;
+                cdata_dimmed(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30459,19 +30467,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 9)
     {
-        if (cdata(258, prm_827) > 0)
+        if (cdata_bleeding(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(258, prm_827) = 0;
+                cdata_bleeding(prm_827) = 0;
             }
             else
             {
-                cdata(258, prm_827) -= prm_829;
+                cdata_bleeding(prm_827) -= prm_829;
             }
-            if (cdata(258, prm_827) <= 0)
+            if (cdata_bleeding(prm_827) <= 0)
             {
-                cdata(258, prm_827) = 0;
+                cdata_bleeding(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30483,19 +30491,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 8)
     {
-        if (cdata(257, prm_827) > 0)
+        if (cdata_drunk(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(257, prm_827) = 0;
+                cdata_drunk(prm_827) = 0;
             }
             else
             {
-                cdata(257, prm_827) -= prm_829;
+                cdata_drunk(prm_827) -= prm_829;
             }
-            if (cdata(257, prm_827) <= 0)
+            if (cdata_drunk(prm_827) <= 0)
             {
-                cdata(257, prm_827) = 0;
+                cdata_drunk(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30508,19 +30516,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 11)
     {
-        if (cdata(260, prm_827) > 0)
+        if (cdata_insane(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(260, prm_827) = 0;
+                cdata_insane(prm_827) = 0;
             }
             else
             {
-                cdata(260, prm_827) -= prm_829;
+                cdata_insane(prm_827) -= prm_829;
             }
-            if (cdata(260, prm_827) <= 0)
+            if (cdata_insane(prm_827) <= 0)
             {
-                cdata(260, prm_827) = 0;
+                cdata_insane(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30533,19 +30541,19 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     if (prm_828 == 12)
     {
-        if (cdata(261, prm_827) > 0)
+        if (cdata_sick(prm_827) > 0)
         {
             if (prm_829 == 0)
             {
-                cdata(261, prm_827) = 0;
+                cdata_sick(prm_827) = 0;
             }
             else
             {
-                cdata(261, prm_827) -= prm_829;
+                cdata_sick(prm_827) -= prm_829;
             }
-            if (cdata(261, prm_827) <= 0)
+            if (cdata_sick(prm_827) <= 0)
             {
-                cdata(261, prm_827) = 0;
+                cdata_sick(prm_827) = 0;
                 if (synccheck(prm_827, -1))
                 {
                     txt(lang(
@@ -30636,55 +30644,56 @@ void check_kill(int prm_836, int prm_837)
     p_at_m137 = 0;
     if (prm_836 >= 0)
     {
-        if (prm_836 == 0 || cdata(9, prm_836) >= 10)
+        if (prm_836 == 0 || cdata_relationship(prm_836) >= 10)
         {
             if (prm_837 > 16)
             {
                 ++gdata(2);
-                if (cdata(27, prm_837) == gdata(268))
+                if (cdata_id(prm_837) == gdata(268))
                 {
                     if (gdata(267) > 0)
                     {
                         --gdata(267);
                     }
                 }
-                if (cdata(69, prm_837) >= 0)
+                if (cdata_original_relationship(prm_837) >= 0)
                 {
                     p_at_m137 = -2;
                 }
-                if (cdata(27, prm_837) == 183)
+                if (cdata_id(prm_837) == 183)
                 {
                     p_at_m137 = -15;
                 }
-                if (cdata(27, prm_837) == 184)
+                if (cdata_id(prm_837) == 184)
                 {
                     p_at_m137 = -10;
                 }
-                if (cdata(27, prm_837) == 185)
+                if (cdata_id(prm_837) == 185)
                 {
                     p_at_m137 = -5;
                 }
-                if (cdata(150, prm_837) >= 1000 && cdata(150, prm_837) < 2000
-                    || cdata(150, prm_837) == 2003)
+                if (cdata_character_role(prm_837) >= 1000
+                        && cdata_character_role(prm_837) < 2000
+                    || cdata_character_role(prm_837) == 2003)
                 {
                     p_at_m137 = -10;
                 }
-                if (cdata(150, prm_837) == 13)
+                if (cdata_character_role(prm_837) == 13)
                 {
                     modimp(prm_837, -25);
                 }
             }
         }
-        if (cdata(9, prm_836) >= 10)
+        if (cdata_relationship(prm_836) >= 10)
         {
             if (prm_836 != 0)
             {
-                if (cdata(17, prm_836) < 200)
+                if (cdata_impression(prm_836) < 200)
                 {
                     if (rnd(2))
                     {
                         modimp(prm_836, 1);
-                        cdata(79, prm_836) = 317;
+                        cdata_emotion_icon(prm_836) = 317;
                     }
                 }
                 else
@@ -30692,7 +30701,7 @@ void check_kill(int prm_836, int prm_837)
                     if (rnd(10) == 0)
                     {
                         modimp(prm_836, 1);
-                        cdata(79, prm_836) = 317;
+                        cdata_emotion_icon(prm_836) = 317;
                     }
                 }
             }
@@ -30779,7 +30788,7 @@ int item_fire(int prm_840, int prm_841)
     }
     if (prm_840 != -1)
     {
-        if (sdata(50, prm_840) / 50 >= 6 || cdata(25, prm_840) >= 4)
+        if (sdata(50, prm_840) / 50 >= 6 || cdata_quality(prm_840) >= 4)
         {
             stat = 0;
             return stat;
@@ -31061,7 +31070,7 @@ int item_cold(int prm_844, int prm_845)
     }
     if (prm_844 != -1)
     {
-        if (sdata(51, prm_844) / 50 >= 6 || cdata(25, prm_844) >= 4)
+        if (sdata(51, prm_844) / 50 >= 6 || cdata_quality(prm_844) >= 4)
         {
             stat = 0;
             return stat;
@@ -31227,7 +31236,7 @@ int copy_chara(int prm_848)
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 0)
+            if (cdata_state(cnt) == 0)
             {
                 c_at_m139 = cnt;
                 break;
@@ -31245,13 +31254,13 @@ int copy_chara(int prm_848)
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             y_at_m139 =
-                cdata(2, prm_848) - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
+                cdata_y(prm_848) - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
             if (y_at_m139 < 0 || y_at_m139 >= mdata(1))
             {
                 continue;
             }
             x_at_m139 =
-                cdata(1, prm_848) - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
+                cdata_x(prm_848) - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
             if (x_at_m139 < 0 || x_at_m139 >= mdata(0))
             {
                 continue;
@@ -31282,10 +31291,10 @@ int copy_chara(int prm_848)
         }
     }
     map(x_at_m139, y_at_m139, 1) = c_at_m139 + 1;
-    cdata(1, c_at_m139) = x_at_m139;
-    cdata(2, c_at_m139) = y_at_m139;
-    cdata(17, c_at_m139) = 0;
-    cdata(30, c_at_m139) = 0;
+    cdata_x(c_at_m139) = x_at_m139;
+    cdata_y(c_at_m139) = y_at_m139;
+    cdata_impression(c_at_m139) = 0;
+    cdata_gold(c_at_m139) = 0;
     {
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
@@ -31293,7 +31302,7 @@ int copy_chara(int prm_848)
             cdata(cnt, c_at_m139) = cdata(cnt, c_at_m139) / 10000 * 10000;
         }
     }
-    cdata(69, c_at_m139) = -3;
+    cdata_original_relationship(c_at_m139) = -3;
     cbitmod(967, c_at_m139, 0);
     cbitmod(960, c_at_m139, 0);
     cbitmod(961, c_at_m139, 0);
@@ -31678,16 +31687,16 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     {
         c3_at_m141 = -1;
     }
-    if (cdata(0, prm_853) != 1)
+    if (cdata_state(prm_853) != 1)
     {
         label_1370();
         stat = 0;
         return stat;
     }
-    dmg_at_m141 = prm_854 * (1 + (cdata(264, prm_853) > 0));
+    dmg_at_m141 = prm_854 * (1 + (cdata_furious(prm_853) > 0));
     if (prm_855 >= 0)
     {
-        if (cdata(264, prm_855) > 0)
+        if (cdata_furious(prm_855) > 0)
         {
             dmg_at_m141 *= 2;
         }
@@ -31727,7 +31736,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             snd(2);
         }
     }
-    if (cdata(259, prm_853) > 0)
+    if (cdata_wet(prm_853) > 0)
     {
         if (ele_at_m141 == 50 || prm_855 == -9)
         {
@@ -31755,7 +31764,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     if (cbit(980, prm_853))
     {
-        if (cdata(50, prm_853) - dmg_at_m141 <= 0)
+        if (cdata_hp(prm_853) - dmg_at_m141 <= 0)
         {
             if (limit(
                     25
@@ -31769,9 +31778,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
     }
-    if (cdata(91, prm_853) > 0)
+    if (cdata_nullify_damage(prm_853) > 0)
     {
-        if (cdata(91, prm_853) > rnd(100))
+        if (cdata_nullify_damage(prm_853) > rnd(100))
         {
             dmg_at_m141 = 0;
         }
@@ -31781,7 +31790,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         dmg_at_m141 = prm_854;
     }
     rtdmg = dmg_at_m141;
-    cdata(50, prm_853) -= dmg_at_m141;
+    cdata_hp(prm_853) -= dmg_at_m141;
     if (ele_at_m141 == 56)
     {
         if (prm_855 >= 0)
@@ -31793,13 +31802,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     limit(
                         rnd(dmg_at_m141 * (150 + prm_857 * 2) / 1000 + 10),
                         1,
-                        cdata(51, prm_855) / 10 + rnd(5)));
+                        cdata_max_hp(prm_855) / 10 + rnd(5)));
             }
         }
     }
     if (prm_853 == 0)
     {
-        if (cdata(61, 0) == 5)
+        if (cdata_god(0) == 5)
         {
             dmg_at_m141 = dmg_at_m141 * 90 / 100;
         }
@@ -31808,18 +31817,18 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             lasttc = prm_853;
         }
         gdata(30) = 0;
-        if (cdata(50, prm_853) < 0)
+        if (cdata_hp(prm_853) < 0)
         {
             if (evid() != -1)
             {
                 if (evid() != 21)
                 {
-                    cdata(50, prm_853) = 1;
+                    cdata_hp(prm_853) = 1;
                 }
             }
             if (gdata(20) == 40)
             {
-                cdata(50, prm_853) = 1;
+                cdata_hp(prm_853) = 1;
             }
         }
     }
@@ -31829,9 +31838,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     else
     {
-        dmglevel_at_m141 = dmg_at_m141 * 6 / cdata(51, prm_853);
+        dmglevel_at_m141 = dmg_at_m141 * 6 / cdata_max_hp(prm_853);
     }
-    if (cdata(50, prm_853) < 0)
+    if (cdata_hp(prm_853) < 0)
     {
         if (prm_853 < 16)
         {
@@ -31843,7 +31852,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         continue;
                     }
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
@@ -31866,7 +31875,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     txt(lang(
                         name(prm_853) + u8"は回復した。"s,
                         name(prm_853) + u8" "s + is(prm_853) + u8" healed."s));
-                    cdata(50, prm_853) = cdata(51, prm_853) / 2;
+                    cdata_hp(prm_853) = cdata_max_hp(prm_853) / 2;
                     animeid = 19;
                     animode = 100 + prm_853;
                     label_1426();
@@ -31879,15 +31888,15 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (cbit(985, prm_853))
             {
-                cdata(50, prm_853) = cdata(51, prm_853);
+                cdata_hp(prm_853) = cdata_max_hp(prm_853);
             }
         }
     }
-    if (cdata(50, prm_853) >= 0)
+    if (cdata_hp(prm_853) >= 0)
     {
         if (dmglevel_at_m141 > 1)
         {
-            spillblood(cdata(1, prm_853), cdata(2, prm_853), 1 + rnd(2));
+            spillblood(cdata_x(prm_853), cdata_y(prm_853), 1 + rnd(2));
         }
         if (gdata(809) == 1)
         {
@@ -31899,13 +31908,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (dmglevel_at_m141 > 0)
         {
-            if (cdata(51, prm_853) / 2 > cdata(50, prm_853))
+            if (cdata_max_hp(prm_853) / 2 > cdata_hp(prm_853))
             {
                 ++dmglevel_at_m141;
-                if (cdata(51, prm_853) / 4 > cdata(50, prm_853))
+                if (cdata_max_hp(prm_853) / 4 > cdata_hp(prm_853))
                 {
                     ++dmglevel_at_m141;
-                    if (cdata(51, prm_853) / 10 > cdata(50, prm_853))
+                    if (cdata_max_hp(prm_853) / 10 > cdata_hp(prm_853))
                     {
                         ++dmglevel_at_m141;
                     }
@@ -31993,9 +32002,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (dmg_at_m141 < 0)
         {
-            if (cdata(50, prm_853) > cdata(51, prm_853))
+            if (cdata_hp(prm_853) > cdata_max_hp(prm_853))
             {
-                cdata(50, prm_853) = cdata(51, prm_853);
+                cdata_hp(prm_853) = cdata_max_hp(prm_853);
             }
             if (synccheck(prm_853, -1))
             {
@@ -32007,15 +32016,15 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
     label_1369_internal:
         rowact_check(prm_853);
-        if (cdata(50, prm_853) < cdata(51, prm_853) / 5)
+        if (cdata_hp(prm_853) < cdata_max_hp(prm_853) / 5)
         {
             if (prm_853 != 0)
             {
-                if (cdata(255, prm_853) == 0)
+                if (cdata_fear(prm_853) == 0)
                 {
                     if (cbit(10, prm_853) == 0)
                     {
-                        if (dmg_at_m141 * 100 / cdata(51, prm_853) + 10
+                        if (dmg_at_m141 * 100 / cdata_max_hp(prm_853) + 10
                             > rnd(200))
                         {
                             f_at_m141 = 1;
@@ -32033,7 +32042,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         }
                         if (f_at_m141)
                         {
-                            cdata(255, prm_853) = rnd(20) + 5;
+                            cdata_fear(prm_853) = rnd(20) + 5;
                             if (synccheck(prm_853, -1))
                             {
                                 txtmore();
@@ -32075,9 +32084,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
             if (ele_at_m141 == 52)
             {
-                if (rnd(3 + (cdata(25, prm_853) >= 4) * 3) == 0)
+                if (rnd(3 + (cdata_quality(prm_853) >= 4) * 3) == 0)
                 {
-                    ++cdata(252, prm_853);
+                    ++cdata_paralyzed(prm_853);
                 }
             }
             if (ele_at_m141 == 53)
@@ -32127,11 +32136,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             item_cold(prm_853, -1);
         }
-        if (cdata(251, prm_853) != 0)
+        if (cdata_sleep(prm_853) != 0)
         {
             if (ele_at_m141 != 54 && ele_at_m141 != 58 && ele_at_m141 != 59)
             {
-                cdata(251, prm_853) = 0;
+                cdata_sleep(prm_853) = 0;
                 txtmore();
                 txt(lang(
                     name(prm_853) + u8"は眠りを妨げられた。"s,
@@ -32147,7 +32156,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (prm_853 == 0)
         {
-            if (cdata(51, prm_853) / 4 > cdata(50, prm_853))
+            if (cdata_max_hp(prm_853) / 4 > cdata_hp(prm_853))
             {
                 if (cfg_sound == 1)
                 {
@@ -32176,7 +32185,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (gdata(809) != 1)
             {
-                if (dmg_at_m141 > cdata(51, prm_853) / 20 || rnd(10) == 0)
+                if (dmg_at_m141 > cdata_max_hp(prm_853) / 20 || rnd(10) == 0)
                 {
                     if (mdata(6) != 1)
                     {
@@ -32198,9 +32207,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (rnd(3) == 0)
                 {
-                    if (cdata(254, prm_853) == 0 && cdata(256, prm_853) == 0
-                        && cdata(250, prm_853) == 0 && cdata(252, prm_853) == 0
-                        && cdata(253, prm_853) == 0)
+                    if (cdata_confused(prm_853) == 0
+                        && cdata_dimmed(prm_853) == 0
+                        && cdata_poisoned(prm_853) == 0
+                        && cdata_paralyzed(prm_853) == 0
+                        && cdata_blind(prm_853) == 0)
                     {
                         if (mdata(6) != 1)
                         {
@@ -32221,7 +32232,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (gdata(809) != 1)
             {
-                if (cdata(264, prm_853) == 0)
+                if (cdata_furious(prm_853) == 0)
                 {
                     if (rnd(20) == 0)
                     {
@@ -32233,7 +32244,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                                 name(prm_853) + u8" "s + is(prm_853)
                                     + u8" engulfed in fury!"s));
                         }
-                        cdata(264, prm_853) += rnd(30) + 15;
+                        cdata_furious(prm_853) += rnd(30) + 15;
                     }
                 }
             }
@@ -32241,11 +32252,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (prm_855 >= 0)
         {
             f_at_m141 = 0;
-            if (cdata(9, prm_853) <= -3)
+            if (cdata_relationship(prm_853) <= -3)
             {
-                if (cdata(69, prm_855) > -3)
+                if (cdata_original_relationship(prm_855) > -3)
                 {
-                    if (cdata(201, prm_853) == 0 || rnd(4) == 0)
+                    if (cdata_hate(prm_853) == 0 || rnd(4) == 0)
                     {
                         f_at_m141 = 1;
                     }
@@ -32253,9 +32264,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
             else
             {
-                if (cdata(69, prm_855) <= -3)
+                if (cdata_original_relationship(prm_855) <= -3)
                 {
-                    if (cdata(201, prm_853) == 0 || rnd(4) == 0)
+                    if (cdata_hate(prm_853) == 0 || rnd(4) == 0)
                     {
                         f_at_m141 = 1;
                     }
@@ -32263,7 +32274,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
             if (prm_855 != 0)
             {
-                if (cdata(29, prm_855) == prm_853)
+                if (cdata_enemy_id(prm_855) == prm_853)
                 {
                     if (rnd(3) == 0)
                     {
@@ -32275,21 +32286,21 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (prm_853 != 0)
                 {
-                    cdata(29, prm_853) = prm_855;
-                    if (cdata(201, prm_853) == 0)
+                    cdata_enemy_id(prm_853) = prm_855;
+                    if (cdata_hate(prm_853) == 0)
                     {
-                        cdata(79, prm_853) = 218;
-                        cdata(201, prm_853) = 20;
+                        cdata_emotion_icon(prm_853) = 218;
+                        cdata_hate(prm_853) = 20;
                     }
                     else
                     {
-                        cdata(201, prm_853) += 2;
+                        cdata_hate(prm_853) += 2;
                     }
                 }
             }
         }
     }
-    if (cdata(50, prm_853) < 0)
+    if (cdata_hp(prm_853) < 0)
     {
         se_at_m141 = eleinfo(ele_at_m141, 1);
         if (se_at_m141)
@@ -32681,8 +32692,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (prm_855 == -9 || ele_at_m141 == 50)
         {
             addmef(
-                cdata(1, prm_853),
-                cdata(2, prm_853),
+                cdata_x(prm_853),
+                cdata_y(prm_853),
                 5,
                 24,
                 rnd(10) + 5,
@@ -32701,42 +32712,42 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (gdata(183) != prm_853 || prm_853 == 0)
         {
-            cell_removechara(cdata(1, prm_853), cdata(2, prm_853));
+            cell_removechara(cdata_x(prm_853), cdata_y(prm_853));
         }
         if (cbit(983, prm_853))
         {
             if (synccheck(prm_853, -1))
             {
-                x = cdata(1, prm_853);
-                y = cdata(2, prm_853);
+                x = cdata_x(prm_853);
+                y = cdata_y(prm_853);
                 snd(45, 0, 1);
                 animeblood(prm_853, 1, ele_at_m141);
             }
-            spillfrag(cdata(1, prm_853), cdata(2, prm_853), 3);
+            spillfrag(cdata_x(prm_853), cdata_y(prm_853), 3);
         }
         else
         {
             snd(8 + rnd(2), 0, 1);
             animeblood(prm_853, 0, ele_at_m141);
-            spillblood(cdata(1, prm_853), cdata(2, prm_853), 4);
+            spillblood(cdata_x(prm_853), cdata_y(prm_853), 4);
         }
-        if (cdata(150, prm_853) == 0)
+        if (cdata_character_role(prm_853) == 0)
         {
-            cdata(0, prm_853) = 0;
+            cdata_state(prm_853) = 0;
         }
         else
         {
-            if (cdata(150, prm_853) == 13)
+            if (cdata_character_role(prm_853) == 13)
             {
-                cdata(0, prm_853) = 4;
-                cdata(5, prm_853) = gdata(13) + gdata(12) * 24
+                cdata_state(prm_853) = 4;
+                cdata_time_to_revive(prm_853) = gdata(13) + gdata(12) * 24
                     + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 24
                     + rnd(12);
             }
             else
             {
-                cdata(0, prm_853) = 2;
-                cdata(5, prm_853) = gdata(13) + gdata(12) * 24
+                cdata_state(prm_853) = 2;
+                cdata_time_to_revive(prm_853) = gdata(13) + gdata(12) * 24
                     + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 48;
             }
         }
@@ -32745,16 +32756,16 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (prm_853 < 16)
             {
                 modimp(prm_853, -10);
-                cdata(0, prm_853) = 6;
-                cdata(80, prm_853) = 0;
+                cdata_state(prm_853) = 6;
+                cdata_current_map(prm_853) = 0;
                 if (cbit(963, prm_853) == 1)
                 {
-                    evadd(15, cdata(27, prm_853));
-                    cdata(0, prm_853) = 0;
+                    evadd(15, cdata_id(prm_853));
+                    cdata_state(prm_853) = 0;
                 }
                 if (cbit(971, prm_853) == 1)
                 {
-                    cdata(0, prm_853) = 0;
+                    cdata_state(prm_853) = 0;
                 }
             }
         }
@@ -32772,11 +32783,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 customtalk(prm_855, 103);
             }
-            exp_at_m141 = limit(cdata(38, prm_853), 1, 200)
-                    * limit((cdata(38, prm_853) + 1), 1, 200)
-                    * limit((cdata(38, prm_853) + 2), 1, 200) / 20
+            exp_at_m141 = limit(cdata_level(prm_853), 1, 200)
+                    * limit((cdata_level(prm_853) + 1), 1, 200)
+                    * limit((cdata_level(prm_853) + 2), 1, 200) / 20
                 + 8;
-            if (cdata(38, prm_853) > cdata(38, prm_855))
+            if (cdata_level(prm_853) > cdata_level(prm_855))
             {
                 exp_at_m141 /= 4;
             }
@@ -32784,12 +32795,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 exp_at_m141 /= 20;
             }
-            cdata(35, prm_855) += exp_at_m141;
+            cdata_experience(prm_855) += exp_at_m141;
             if (prm_855 == 0)
             {
                 gdata(92) += exp_at_m141;
             }
-            cdata(201, prm_855) = 0;
+            cdata_hate(prm_855) = 0;
         }
         if (prm_853 != 0)
         {
@@ -32797,11 +32808,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (gdata(20) != 42)
                 {
-                    if (cdata(27, prm_853) == 2)
+                    if (cdata_id(prm_853) == 2)
                     {
                         evadd(1);
                     }
-                    if (cdata(27, prm_853) == 141)
+                    if (cdata_id(prm_853) == 141)
                     {
                         txtef(2);
                         txt(lang(
@@ -32810,7 +32821,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         snd(51);
                         gdata(253) = 1;
                     }
-                    if (cdata(27, prm_853) == 143)
+                    if (cdata_id(prm_853) == 143)
                     {
                         txtef(2);
                         txt(lang(
@@ -32819,7 +32830,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         snd(51);
                         gdata(255) = 1;
                     }
-                    if (cdata(27, prm_853) == 144)
+                    if (cdata_id(prm_853) == 144)
                     {
                         txtef(2);
                         txt(lang(
@@ -32828,7 +32839,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         snd(51);
                         gdata(254) = 1;
                     }
-                    if (cdata(27, prm_853) == 242)
+                    if (cdata_id(prm_853) == 242)
                     {
                         if (gdata(458) < 1000)
                         {
@@ -32840,7 +32851,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                                 u8"Your journal has been updated."s));
                         }
                     }
-                    if (cdata(27, prm_853) == 257)
+                    if (cdata_id(prm_853) == 257)
                     {
                         if (gdata(462) < 1000)
                         {
@@ -32856,7 +32867,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             snd(51);
                         }
                     }
-                    if (cdata(27, prm_853) == 300)
+                    if (cdata_id(prm_853) == 300)
                     {
                         if (gdata(472) < 1000)
                         {
@@ -32868,11 +32879,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                                 u8"Your journal has been updated."s));
                         }
                     }
-                    if (cdata(27, prm_853) == 318)
+                    if (cdata_id(prm_853) == 318)
                     {
-                        evadd(27, cdata(1, prm_853), cdata(2, prm_853));
+                        evadd(27, cdata_x(prm_853), cdata_y(prm_853));
                     }
-                    if (cdata(27, prm_853) == 319)
+                    if (cdata_id(prm_853) == 319)
                     {
                         ++gdata(810);
                         txtef(3);
@@ -32890,11 +32901,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             evadd(5);
                         }
                     }
-                    if (cdata(27, prm_853) == 331)
+                    if (cdata_id(prm_853) == 331)
                     {
                         if (rnd(4) == 0)
                         {
-                            evadd(28, cdata(1, prm_853), cdata(2, prm_853));
+                            evadd(28, cdata_x(prm_853), cdata_y(prm_853));
                         }
                     }
                     check_quest();
@@ -32913,7 +32924,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (prm_853 != 0)
         {
-            ++npcmemory(0, cdata(27, prm_853));
+            ++npcmemory(0, cdata_id(prm_853));
             customtalk(prm_853, 102);
             if (prm_853 < 16)
             {
@@ -32944,7 +32955,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (prm_855 >= 0)
         {
-            if (cdata(27, prm_855) == 260)
+            if (cdata_id(prm_855) == 260)
             {
                 catitem = prm_855;
             }
@@ -32972,7 +32983,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 int cnt = 0;
                 for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
@@ -33002,7 +33013,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (rnd(20) == 0)
                 {
-                    txtgod(cdata(61, 0), 9);
+                    txtgod(cdata_god(0), 9);
                 }
             }
         }
@@ -33041,17 +33052,16 @@ void label_1370()
 int dmgmp(int prm_858, int prm_859)
 {
     int d_at_m142 = 0;
-    cdata(55, prm_858) -= prm_859;
-    if (cdata(55, prm_858) < -999999)
+    cdata_mp(prm_858) -= prm_859;
+    if (cdata_mp(prm_858) < -999999)
     {
-        cdata(55, prm_858) = -999999;
+        cdata_mp(prm_858) = -999999;
     }
-    if (cdata(55, prm_858) < 0)
+    if (cdata_mp(prm_858) < 0)
     {
         r1 = prm_858;
         label_1463();
-        d_at_m142 =
-            -cdata(55, prm_858) * 400 / (100 + sdata(164, prm_858) * 10);
+        d_at_m142 = -cdata_mp(prm_858) * 400 / (100 + sdata(164, prm_858) * 10);
         if (prm_858 == 0)
         {
             if (trait(156) == 1)
@@ -33083,19 +33093,19 @@ int dmgsp(int prm_860, int prm_861)
         stat = 0;
         return stat;
     }
-    if (cdata(52, prm_860) >= -100)
+    if (cdata_sp(prm_860) >= -100)
     {
-        cdata(52, prm_860) -= prm_861;
+        cdata_sp(prm_860) -= prm_861;
     }
     stat = 1;
     return stat;
 }
 void healsan(int prm_862, int prm_863)
 {
-    cdata(86, prm_862) -= prm_863;
-    if (cdata(86, prm_862) < 0)
+    cdata_insanity(prm_862) -= prm_863;
+    if (cdata_insanity(prm_862) < 0)
     {
-        cdata(86, prm_862) = 0;
+        cdata_insanity(prm_862) = 0;
     }
     return;
 }
@@ -33103,7 +33113,7 @@ int dmgsan(int prm_864, int prm_865)
 {
     int r_at_m143 = 0;
     int dmg_at_m143 = 0;
-    if (cdata(25, prm_864) >= 4)
+    if (cdata_quality(prm_864) >= 4)
     {
         stat = 0;
         return stat;
@@ -33128,14 +33138,14 @@ int dmgsan(int prm_864, int prm_865)
     }
     if (dmg_at_m143 > 0)
     {
-        cdata(86, prm_864) += dmg_at_m143;
+        cdata_insanity(prm_864) += dmg_at_m143;
     }
     else
     {
         dmg_at_m143 = 0;
     }
     if (rnd(10) == 0 || rnd(dmg_at_m143 + 1) > 5
-        || rnd(cdata(86, prm_864) + 1) > 50)
+        || rnd(cdata_insanity(prm_864) + 1) > 50)
     {
         dmgcon(prm_864, 11, 100);
     }
@@ -33149,9 +33159,9 @@ int actionsp(int prm_866, int prm_867)
         stat = 1;
         return stat;
     }
-    if (cdata(52, prm_866) < 50)
+    if (cdata_sp(prm_866) < 50)
     {
-        if (cdata(52, prm_866) < rnd(75))
+        if (cdata_sp(prm_866) < rnd(75))
         {
             dmgsp(prm_866, prm_867);
             stat = 0;
@@ -33199,25 +33209,25 @@ void modweight(int prm_870, int prm_871, int prm_872)
 {
     int mini_at_m146 = 0;
     int max_at_m146 = 0;
-    mini_at_m146 = cdata(19, prm_870) * cdata(19, prm_870) * 18 / 25000;
-    max_at_m146 = cdata(19, prm_870) * cdata(19, prm_870) * 24 / 10000;
-    if (cdata(20, prm_870) < mini_at_m146)
+    mini_at_m146 = cdata_height(prm_870) * cdata_height(prm_870) * 18 / 25000;
+    max_at_m146 = cdata_height(prm_870) * cdata_height(prm_870) * 24 / 10000;
+    if (cdata_weight(prm_870) < mini_at_m146)
     {
-        cdata(20, prm_870) = mini_at_m146;
+        cdata_weight(prm_870) = mini_at_m146;
         return;
     }
     if (prm_872 == 0)
     {
-        if (cdata(20, prm_870) > max_at_m146)
+        if (cdata_weight(prm_870) > max_at_m146)
         {
             return;
         }
     }
-    cdata(20, prm_870) = cdata(20, prm_870) * (100 + prm_871) / 100
+    cdata_weight(prm_870) = cdata_weight(prm_870) * (100 + prm_871) / 100
         + (prm_871 > 0) - (prm_871 < 0);
-    if (cdata(20, prm_870) <= 0)
+    if (cdata_weight(prm_870) <= 0)
     {
-        cdata(20, prm_870) = 1;
+        cdata_weight(prm_870) = 1;
     }
     if (synccheck(prm_870, -1))
     {
@@ -33238,11 +33248,11 @@ void modweight(int prm_870, int prm_871, int prm_872)
 }
 void modheight(int prm_873, int prm_874)
 {
-    cdata(19, prm_873) = cdata(19, prm_873) * (100 + prm_874) / 100
+    cdata_height(prm_873) = cdata_height(prm_873) * (100 + prm_874) / 100
         + (prm_874 > 0) - (prm_874 < 0);
-    if (cdata(19, prm_873) <= 1)
+    if (cdata_height(prm_873) <= 1)
     {
-        cdata(19, prm_873) = 1;
+        cdata_height(prm_873) = 1;
     }
     if (synccheck(prm_873, -1))
     {
@@ -33281,7 +33291,7 @@ void cure_anorexia(int prm_875)
 void chara_vomit(int prm_876)
 {
     int p_at_m146 = 0;
-    ++cdata(93, prm_876);
+    ++cdata_anorexia_count(prm_876);
     if (synccheck(prm_876, -1))
     {
         snd(104);
@@ -33339,19 +33349,19 @@ void chara_vomit(int prm_876)
         if (rnd(p_at_m146 * p_at_m146 * p_at_m146) == 0 || prm_876 == 0)
         {
             flt();
-            itemcreate(-1, 704, cdata(1, prm_876), cdata(2, prm_876), 0);
+            itemcreate(-1, 704, cdata_x(prm_876), cdata_y(prm_876), 0);
             if (stat != 0)
             {
                 if (prm_876 != 0)
                 {
-                    inv_subname(ci) = cdata(27, prm_876);
+                    inv_subname(ci) = cdata_id(prm_876);
                 }
             }
         }
     }
     if (cbit(986, prm_876) == 0)
     {
-        if (prm_876 < 16 && cdata(93, prm_876) > 10
+        if (prm_876 < 16 && cdata_anorexia_count(prm_876) > 10
             || prm_876 >= 16 && rnd(4) == 0)
         {
             if (rnd(5) == 0)
@@ -33376,22 +33386,22 @@ void chara_vomit(int prm_876)
     }
     dmgcon(prm_876, 7, 100);
     modweight(prm_876, (1 + rnd(5)) * -1);
-    if (cdata(22, prm_876) <= 0)
+    if (cdata_nutrition(prm_876) <= 0)
     {
         dmghp(prm_876, 9999, -3);
     }
-    cdata(22, prm_876) -= 3000;
+    cdata_nutrition(prm_876) -= 3000;
     return;
 }
 void eatstatus(int prm_877, int prm_878)
 {
-    if (cdata(0, prm_878) != 1)
+    if (cdata_state(prm_878) != 1)
     {
         return;
     }
     if (prm_877 <= -1)
     {
-        cdata(22, prm_878) -= 1500;
+        cdata_nutrition(prm_878) -= 1500;
         if (synccheck(prm_878, -1))
         {
             txt(lang(
@@ -34422,9 +34432,9 @@ void label_1421()
     gcopy(3, 312, 504, 104, 15);
     pos(inf_mpx, inf_mpy);
     gcopy(3, 312, 504, 104, 15);
-    if (cdata(50, 0) > 0)
+    if (cdata_hp(0) > 0)
     {
-        ap = cdata(50, 0) * 84 / cdata(51, 0);
+        ap = cdata_hp(0) * 84 / cdata_max_hp(0);
         if (ap > 100)
         {
             ap = 100;
@@ -34432,9 +34442,9 @@ void label_1421()
         pos(inf_hpx + 16, inf_hpy + 5);
         gcopy(3, 412 - ap, 520, ap, 6);
     }
-    if (cdata(55, 0) > 0)
+    if (cdata_mp(0) > 0)
     {
-        ap = cdata(55, 0) * 84 / cdata(56, 0);
+        ap = cdata_mp(0) * 84 / cdata_max_mp(0);
         if (ap > 100)
         {
             ap = 100;
@@ -34444,11 +34454,11 @@ void label_1421()
     }
     if (gdata(183) != 0)
     {
-        if (cdata(0, gdata(183)) == 1)
+        if (cdata_state(gdata(183)) == 1)
         {
             pos(inf_hpx - 120, inf_hpy);
             gcopy(3, 312, 504, 104, 15);
-            ap = cdata(50, gdata(183)) * 84 / cdata(51, gdata(183));
+            ap = cdata_hp(gdata(183)) * 84 / cdata_max_hp(gdata(183));
             if (ap > 100)
             {
                 ap = 100;
@@ -34461,12 +34471,12 @@ void label_1421()
     sy = inf_hpy - 8;
     color(0, 0, 0);
     pos(sx + 4, sy);
-    bmes(""s + cdata(50, 0) + u8"("s + cdata(51, 0) + u8")"s, 255, 255, 255);
+    bmes(""s + cdata_hp(0) + u8"("s + cdata_max_hp(0) + u8")"s, 255, 255, 255);
     sx = inf_mpx + 16;
     sy = inf_mpy - 8;
     color(0, 0, 0);
     pos(sx + 4, sy);
-    bmes(""s + cdata(55, 0) + u8"("s + cdata(56, 0) + u8")"s, 255, 255, 255);
+    bmes(""s + cdata_mp(0) + u8"("s + cdata_max_mp(0) + u8")"s, 255, 255, 255);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(0, 0, 0);
     sy = inf_bary + 2 + vfix;
@@ -34517,7 +34527,7 @@ void label_1421()
                     color(0, 0, 0);
                     pos(sx + 14, sy);
                     gcopy(3, 0, 440, 64, 16);
-                    mes(""s + cdata(71, 0) + u8"/"s + cdata(70, 0));
+                    mes(""s + cdata_dv(0) + u8"/"s + cdata_pv(0));
                 }
             }
         }
@@ -34529,29 +34539,30 @@ void label_1421()
     gcopy(3, 0, 392, 24, 24);
     color(0);
     pos(sx + 28, sy + 2);
-    bmes(""s + cdata(30, 0) + u8" gp"s, 255, 255, 255);
+    bmes(""s + cdata_gold(0) + u8" gp"s, 255, 255, 255);
     sx = windoww - 120;
     pos(sx, sy);
     gcopy(3, 24, 392, 24, 24);
     color(0);
     pos(sx + 28, sy + 2);
-    bmes(""s + cdata(31, 0) + u8" pp"s, 255, 255, 255);
+    bmes(""s + cdata_platinum_coin(0) + u8" pp"s, 255, 255, 255);
     color(0, 0, 0);
     pos(4, inf_ver - 16);
     gcopy(3, 48, 392, 24, 24);
     pos(32, inf_ver - 14);
     bmes(
-        u8"Lv"s + cdata(38, 0) + u8"/"s + (cdata(36, 0) - cdata(35, 0)),
+        u8"Lv"s + cdata_level(0) + u8"/"s
+            + (cdata_required_experience(0) - cdata_experience(0)),
         255,
         255,
         255);
-    if (cdata(1, 0) < 6)
+    if (cdata_x(0) < 6)
     {
         if (mode != 9)
         {
             if (mdata(6) != 1)
             {
-                if (cdata(140, 0) == 0)
+                if (cdata_continuous_action_id(0) == 0)
                 {
                     gmode(4 - 1, -1, 150);
                 }
@@ -34560,7 +34571,7 @@ void label_1421()
     }
     sx = 8;
     sy = inf_ver - 50;
-    if (cdata(22, 0) >= 12000)
+    if (cdata_nutrition(0) >= 12000)
     {
         color(0, 0, 0);
         pos(sx, sy);
@@ -34571,9 +34582,9 @@ void label_1421()
     }
     else
     {
-        if (cdata(22, 0) >= 1000)
+        if (cdata_nutrition(0) >= 1000)
         {
-            if (cdata(22, 0) <= 4000)
+            if (cdata_nutrition(0) <= 4000)
             {
                 color(200, 0, 0);
             }
@@ -34581,12 +34592,12 @@ void label_1421()
             {
                 color(0, 0, 0);
             }
-            if (_hunger(cdata(22, 0) / 1000) != ""s)
+            if (_hunger(cdata_nutrition(0) / 1000) != ""s)
             {
                 pos(sx, sy);
                 gcopy(3, 0, 416, 50 + en * 30, 15);
                 pos(sx + 6, sy + 1);
-                mes(_hunger(cdata(22, 0) / 1000));
+                mes(_hunger(cdata_nutrition(0) / 1000));
                 sy -= 20;
             }
         }
@@ -34600,10 +34611,10 @@ void label_1421()
             sy -= 20;
         }
     }
-    if (cdata(261, 0) != 0)
+    if (cdata_sick(0) != 0)
     {
         color(80, 120, 0);
-        if (cdata(261, 0) >= 30)
+        if (cdata_sick(0) >= 30)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34620,10 +34631,10 @@ void label_1421()
             sy -= 20;
         }
     }
-    if (cdata(250, 0) != 0)
+    if (cdata_poisoned(0) != 0)
     {
         color(0, 150, 0);
-        if (cdata(250, 0) >= 30)
+        if (cdata_poisoned(0) >= 30)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34640,10 +34651,10 @@ void label_1421()
             sy -= 20;
         }
     }
-    if (cdata(251, 0) != 0)
+    if (cdata_sleep(0) != 0)
     {
         color(0, 50, 50);
-        if (cdata(251, 0) >= 30)
+        if (cdata_sleep(0) >= 30)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34660,7 +34671,7 @@ void label_1421()
             sy -= 20;
         }
     }
-    if (cdata(253, 0) != 0)
+    if (cdata_blind(0) != 0)
     {
         color(100, 100, 0);
         pos(sx, sy);
@@ -34669,7 +34680,7 @@ void label_1421()
         mes(_conblind);
         sy -= 20;
     }
-    if (cdata(252, 0) != 0)
+    if (cdata_paralyzed(0) != 0)
     {
         color(0, 100, 100);
         pos(sx, sy);
@@ -34678,7 +34689,7 @@ void label_1421()
         mes(_conparalyze);
         sy -= 20;
     }
-    if (cdata(263, 0) != 0)
+    if (cdata_choked(0) != 0)
     {
         color(0, 100, 100);
         pos(sx, sy);
@@ -34687,7 +34698,7 @@ void label_1421()
         mes(_conmochi);
         sy -= 20;
     }
-    if (cdata(254, 0) != 0)
+    if (cdata_confused(0) != 0)
     {
         color(100, 0, 100);
         pos(sx, sy);
@@ -34696,7 +34707,7 @@ void label_1421()
         mes(_conconfuse);
         sy -= 20;
     }
-    if (cdata(255, 0) != 0)
+    if (cdata_fear(0) != 0)
     {
         color(100, 0, 100);
         pos(sx, sy);
@@ -34705,10 +34716,10 @@ void label_1421()
         mes(_confear);
         sy -= 20;
     }
-    if (cdata(256, 0) != 0)
+    if (cdata_dimmed(0) != 0)
     {
         color(0, 100, 100);
-        if (cdata(256, 0) >= 60)
+        if (cdata_dimmed(0) >= 60)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34718,7 +34729,7 @@ void label_1421()
         }
         else
         {
-            if (cdata(256, 0) >= 30)
+            if (cdata_dimmed(0) >= 30)
             {
                 pos(sx, sy);
                 gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34736,10 +34747,10 @@ void label_1421()
             }
         }
     }
-    if (cdata(264, 0) != 0)
+    if (cdata_furious(0) != 0)
     {
         color(150, 0, 0);
-        if (cdata(264, 0) >= 30)
+        if (cdata_furious(0) >= 30)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34756,10 +34767,10 @@ void label_1421()
             sy -= 20;
         }
     }
-    if (cdata(258, 0) != 0)
+    if (cdata_bleeding(0) != 0)
     {
         color(150, 0, 0);
-        if (cdata(258, 0) >= 20)
+        if (cdata_bleeding(0) >= 20)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34769,7 +34780,7 @@ void label_1421()
         }
         else
         {
-            if (cdata(258, 0) >= 10)
+            if (cdata_bleeding(0) >= 10)
             {
                 pos(sx, sy);
                 gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34787,10 +34798,10 @@ void label_1421()
             }
         }
     }
-    if (cdata(260, 0) != 0)
+    if (cdata_insane(0) != 0)
     {
         color(150, 100, 0);
-        if (cdata(260, 0) >= 50)
+        if (cdata_insane(0) >= 50)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34800,7 +34811,7 @@ void label_1421()
         }
         else
         {
-            if (cdata(260, 0) >= 25)
+            if (cdata_insane(0) >= 25)
             {
                 pos(sx, sy);
                 gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -34818,7 +34829,7 @@ void label_1421()
             }
         }
     }
-    if (cdata(257, 0) != 0)
+    if (cdata_drunk(0) != 0)
     {
         color(100, 0, 100);
         pos(sx, sy);
@@ -34827,7 +34838,7 @@ void label_1421()
         mes(_condrunk);
         sy -= 20;
     }
-    if (cdata(259, 0) != 0)
+    if (cdata_wet(0) != 0)
     {
         color(0, 0, 160);
         pos(sx, sy);
@@ -34836,7 +34847,7 @@ void label_1421()
         mes(_conwet);
         sy -= 20;
     }
-    if (cdata(262, 0) != 0)
+    if (cdata_gravity(0) != 0)
     {
         color(0, 80, 80);
         pos(sx, sy);
@@ -34878,9 +34889,9 @@ void label_1421()
             }
         }
     }
-    if (cdata(52, 0) < 50)
+    if (cdata_sp(0) < 50)
     {
-        if (cdata(52, 0) < 0)
+        if (cdata_sp(0) < 0)
         {
             color(120, 120, 0);
             pos(sx, sy);
@@ -34891,7 +34902,7 @@ void label_1421()
         }
         else
         {
-            if (cdata(52, 0) < 25)
+            if (cdata_sp(0) < 25)
             {
                 color(80, 80, 0);
                 pos(sx, sy);
@@ -34911,13 +34922,16 @@ void label_1421()
             }
         }
     }
-    if (cdata(45, 0) != 0)
+    if (cdata_inventory_weight_type(0) != 0)
     {
-        color(0, cdata(45, 0) * 40, cdata(45, 0) * 40);
+        color(
+            0,
+            cdata_inventory_weight_type(0) * 40,
+            cdata_inventory_weight_type(0) * 40);
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_burden(cdata(45, 0)));
+        mes(_burden(cdata_inventory_weight_type(0)));
         sy -= 20;
     }
     color(0);
@@ -34966,7 +34980,7 @@ void label_1421()
                 continue;
             }
             ap2 = gdata((750 + cnt)) / 10000;
-            if (cdata(0, ap2) != 1)
+            if (cdata_state(ap2) != 1)
             {
                 if (ap2 != 0)
                 {
@@ -34994,22 +35008,22 @@ void label_1422()
 {
     gsel(9);
     pos(0, 0);
-    if (cdata(140, 0) == 5)
+    if (cdata_continuous_action_id(0) == 5)
     {
         picload(exedir + u8"\\graphic\\anime1.bmp"s);
     }
-    if (cdata(140, 0) == 7)
+    if (cdata_continuous_action_id(0) == 7)
     {
         if (rowactre)
         {
             picload(exedir + u8"\\graphic\\anime2.bmp"s);
         }
     }
-    if (cdata(140, 0) == 8)
+    if (cdata_continuous_action_id(0) == 8)
     {
         picload(exedir + u8"\\graphic\\anime3.bmp"s);
     }
-    if (cdata(140, 0) == 9)
+    if (cdata_continuous_action_id(0) == 9)
     {
         picload(exedir + u8"\\graphic\\anime4.bmp"s);
     }
@@ -35022,13 +35036,15 @@ void label_1423()
     {
         label_1422();
     }
-    if (msgtemp != ""s || cdata(140, 0) == 7 && rowactre == 0 && fishanime == 0)
+    if (msgtemp != ""s
+        || cdata_continuous_action_id(0) == 7 && rowactre == 0
+            && fishanime == 0)
     {
         label_1433();
         msgtemp = "";
     }
     label_1421();
-    if (cdata(140, 0) == 7)
+    if (cdata_continuous_action_id(0) == 7)
     {
         if (rowactre == 0)
         {
@@ -35047,8 +35063,9 @@ void label_1423()
     pos(sx + 18, sy + 12);
     gmode(2, 24, 24);
     grotate(3, 72, 392, 0.0174532925199433 * (gdata(14) / 4 % 2 * 90));
-    if (cdata(140, 0) == 9 || cdata(140, 0) == 5 || cdata(140, 0) == 8
-        || cdata(140, 0) == 7 && rowactre != 0)
+    if (cdata_continuous_action_id(0) == 9 || cdata_continuous_action_id(0) == 5
+        || cdata_continuous_action_id(0) == 8
+        || cdata_continuous_action_id(0) == 7 && rowactre != 0)
     {
         window2(sx, sy - 104, 148, 101, 0, 5);
         if (racount % 15 == 0)
@@ -35060,7 +35077,7 @@ void label_1423()
                     redraw(0);
                     gmode(0);
                     pos(sx + 2, sy - 102);
-                    if (cdata(140, 0) == 5)
+                    if (cdata_continuous_action_id(0) == 5)
                     {
                         if (cnt == 2)
                         {
@@ -35069,7 +35086,7 @@ void label_1423()
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
                         await(40);
                     }
-                    if (cdata(140, 0) == 7)
+                    if (cdata_continuous_action_id(0) == 7)
                     {
                         if (racount == 0)
                         {
@@ -35081,7 +35098,7 @@ void label_1423()
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
                         await(50);
                     }
-                    if (cdata(140, 0) == 8)
+                    if (cdata_continuous_action_id(0) == 8)
                     {
                         if (cnt == 4)
                         {
@@ -35090,7 +35107,7 @@ void label_1423()
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
                         await(55);
                     }
-                    if (cdata(140, 0) == 9)
+                    if (cdata_continuous_action_id(0) == 9)
                     {
                         if (cnt == 2)
                         {
@@ -35199,8 +35216,8 @@ void label_1426()
         gfini(chipi(2, 10), chipi(3, 10));
         gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
         gsel(selcur);
-        anidx = (cdata(1, cc) - scx) * inf_tiles + inf_screenx;
-        anidy = (cdata(2, cc) - scy) * inf_tiles + inf_screeny;
+        anidx = (cdata_x(cc) - scx) * inf_tiles + inf_screenx;
+        anidy = (cdata_y(cc) - scy) * inf_tiles + inf_screeny;
         gsel(4);
         gmode(0);
         pos(0, 0);
@@ -35270,8 +35287,8 @@ void label_1426()
             gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
             gsel(selcur);
         }
-        ax = (cdata(1, tc) - scx) * inf_tiles + inf_screenx;
-        ay = (cdata(2, tc) - scy) * inf_tiles + inf_screeny;
+        ax = (cdata_x(tc) - scx) * inf_tiles + inf_screenx;
+        ay = (cdata_y(tc) - scy) * inf_tiles + inf_screeny;
         gsel(4);
         gmode(0);
         pos(0, 0);
@@ -35365,7 +35382,7 @@ void label_1426()
                     {
                         anidx = breathlist(0, cnt);
                         anidy = breathlist(1, cnt);
-                        if (fov_los(cdata(1, cc), cdata(2, cc), anidx, anidy)
+                        if (fov_los(cdata_x(cc), cdata_y(cc), anidx, anidy)
                             == 0)
                         {
                             continue;
@@ -35388,8 +35405,8 @@ void label_1426()
                                     cnt2 * 48,
                                     0,
                                     atan(
-                                        tlocx - cdata(1, cc),
-                                        cdata(2, cc) - tlocy),
+                                        tlocx - cdata_x(cc),
+                                        cdata_y(cc) - tlocy),
                                     inf_tiles,
                                     inf_tiles);
                             }
@@ -35516,8 +35533,8 @@ void label_1426()
         gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
         gsel(selcur);
         snd(37);
-        anidx = cdata(1, cc);
-        anidy = cdata(2, cc);
+        anidx = cdata_x(cc);
+        anidy = cdata_y(cc);
         gsel(7);
         picload(exedir + u8"graphic\\anime6.bmp"s);
         pos(0, 0);
@@ -35550,7 +35567,7 @@ void label_1426()
                             continue;
                         }
                     }
-                    if (dist(anidx, anidy, cdata(1, cc), cdata(2, cc))
+                    if (dist(anidx, anidy, cdata_x(cc), cdata_y(cc))
                         > sdataref(3, efid) % 1000 + 1)
                     {
                         ap(cnt) = -2;
@@ -35601,8 +35618,8 @@ void label_1426()
                                         ap(cnt) * 48,
                                         0,
                                         atan(
-                                            tlocx - cdata(1, cc),
-                                            cdata(2, cc) - tlocy),
+                                            tlocx - cdata_x(cc),
+                                            cdata_y(cc) - tlocy),
                                         48,
                                         48);
                                 }
@@ -35689,15 +35706,15 @@ void label_1426()
                 gsel(selcur);
             }
         }
-        ax = (cdata(1, cc) - scx) * inf_tiles;
-        ay = (cdata(2, cc) - scy) * inf_tiles;
-        ap = dist(cdata(1, cc), cdata(2, cc), anix, aniy) / 2 + 1;
+        ax = (cdata_x(cc) - scx) * inf_tiles;
+        ay = (cdata_y(cc) - scy) * inf_tiles;
+        ap = dist(cdata_x(cc), cdata_y(cc), anix, aniy) / 2 + 1;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (ap); cnt < cnt_end; ++cnt)
             {
-                ax -= (cdata(1, cc) - anix) * inf_tiles / ap;
-                ay -= (cdata(2, cc) - aniy) * inf_tiles / ap;
+                ax -= (cdata_x(cc) - anix) * inf_tiles / ap;
+                ay -= (cdata_y(cc) - aniy) * inf_tiles / ap;
                 gsel(4);
                 gmode(0);
                 pos(0, 0);
@@ -35715,7 +35732,7 @@ void label_1426()
                             1,
                             0,
                             960,
-                            atan(anix - cdata(1, cc), cdata(2, cc) - aniy),
+                            atan(anix - cdata_x(cc), cdata_y(cc) - aniy),
                             inf_tiles,
                             inf_tiles);
                     }
@@ -35898,16 +35915,15 @@ void label_1426()
         {
             snd(36);
         }
-        ax = (cdata(1, cc) - scx) * inf_tiles;
-        ay = (cdata(2, cc) - scy) * inf_tiles - 12;
-        ap = dist(cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc)) / 2
-            + 1;
+        ax = (cdata_x(cc) - scx) * inf_tiles;
+        ay = (cdata_y(cc) - scy) * inf_tiles - 12;
+        ap = dist(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)) / 2 + 1;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (ap); cnt < cnt_end; ++cnt)
             {
-                ax -= (cdata(1, cc) - cdata(1, tc)) * inf_tiles / ap;
-                ay -= (cdata(2, cc) - cdata(2, tc)) * inf_tiles / ap;
+                ax -= (cdata_x(cc) - cdata_x(tc)) * inf_tiles / ap;
+                ay -= (cdata_y(cc) - cdata_y(tc)) * inf_tiles / ap;
                 gsel(4);
                 gmode(0);
                 pos(0, 0);
@@ -35920,9 +35936,7 @@ void label_1426()
                     1,
                     0,
                     960,
-                    atan(
-                        cdata(1, tc) - cdata(1, cc),
-                        cdata(2, cc) - cdata(2, tc)),
+                    atan(cdata_x(tc) - cdata_x(cc), cdata_y(cc) - cdata_y(tc)),
                     inf_tiles,
                     inf_tiles);
                 redraw(1);
@@ -35949,8 +35963,8 @@ void label_1426()
         gfini(chipi(2, 17), chipi(3, 17));
         gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
         gsel(selcur);
-        anidx = (cdata(1, tc) - scx) * inf_tiles + inf_screenx;
-        anidy = (cdata(2, tc) - scy) * inf_tiles + inf_screeny;
+        anidx = (cdata_x(tc) - scx) * inf_tiles + inf_screenx;
+        anidy = (cdata_y(tc) - scy) * inf_tiles + inf_screeny;
         gsel(4);
         gmode(0);
         pos(0, 0);
@@ -36049,9 +36063,9 @@ void label_1426()
                 sy(cnt) = rnd(8);
             }
         }
-        anidx = (cdata(1, tc) - scx) * inf_tiles + inf_screenx;
+        anidx = (cdata_x(tc) - scx) * inf_tiles + inf_screenx;
         anix = anidx + rnd(12) - rnd(12);
-        anidy = (cdata(2, tc) - scy) * inf_tiles + inf_screeny;
+        anidy = (cdata_y(tc) - scy) * inf_tiles + inf_screeny;
         aniy = anidy - 16 + rnd(12) - rnd(12);
         gsel(4);
         gmode(0);
@@ -36134,8 +36148,8 @@ void label_1426()
         pos(0, 0);
         gcopy(0, 0, 0, windoww, windowh);
         gsel(0);
-        anidx = (cdata(1, anic) - scx) * inf_tiles + inf_screenx - 24;
-        anidy = (cdata(2, anic) - scy) * inf_tiles + inf_screeny - 60;
+        anidx = (cdata_x(anic) - scx) * inf_tiles + inf_screenx - 24;
+        anidy = (cdata_y(anic) - scy) * inf_tiles + inf_screeny - 60;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -36173,7 +36187,7 @@ void label_1426()
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
@@ -36191,12 +36205,12 @@ void label_1426()
                         continue;
                     }
                 }
-                ax(am) = (cdata(1, cnt) - scx) * inf_tiles + inf_screenx - 24;
+                ax(am) = (cdata_x(cnt) - scx) * inf_tiles + inf_screenx - 24;
                 if (am != 0)
                 {
                     ax(am) += 4 - rnd(8);
                 }
-                ay(am) = (cdata(2, cnt) - scy) * inf_tiles + inf_screeny + 32;
+                ay(am) = (cdata_y(cnt) - scy) * inf_tiles + inf_screeny + 32;
                 if (ay(am) < 0
                     || ay(am) > inf_screenh * inf_tiles + inf_screeny)
                 {
@@ -36564,17 +36578,17 @@ void label_1428()
     {
         if (scroll)
         {
-            sx(0) = cdata(3, 0) - scx;
-            sx(1) = cdata(3, 0);
-            sy(0) = cdata(4, 0) - scy;
-            sy(1) = cdata(4, 0);
+            sx(0) = cdata_next_x(0) - scx;
+            sx(1) = cdata_next_x(0);
+            sy(0) = cdata_next_y(0) - scy;
+            sy(1) = cdata_next_y(0);
         }
         else
         {
-            sx(0) = cdata(1, 0) - scx;
-            sx(1) = cdata(1, 0);
-            sy(0) = cdata(2, 0) - scy;
-            sy(1) = cdata(2, 0);
+            sx(0) = cdata_x(0) - scx;
+            sx(1) = cdata_x(0);
+            sy(0) = cdata_y(0) - scy;
+            sy(1) = cdata_y(0);
         }
     }
     else
@@ -36586,10 +36600,10 @@ void label_1428()
     }
     if (gdata(20) == 40)
     {
-        sx(0) = cdata(1, camera) - scx;
-        sx(1) = cdata(1, camera);
-        sy(0) = cdata(2, camera) - scy;
-        sy(1) = cdata(2, camera);
+        sx(0) = cdata_x(camera) - scx;
+        sx(1) = cdata_x(camera);
+        sy(0) = cdata_y(camera) - scy;
+        sy(1) = cdata_y(camera);
     }
     if (cfg_alwayscenter)
     {
@@ -36637,10 +36651,10 @@ void label_1429()
 {
     slight.clear();
     ++msync;
-    sy(2) = cdata(2, 0) - 7;
-    sy(3) = cdata(2, 0) + 7;
-    sy(4) = 7 - cdata(2, 0);
-    sx(3) = cdata(1, 0) - 7 - 2;
+    sy(2) = cdata_y(0) - 7;
+    sy(3) = cdata_y(0) + 7;
+    sy(4) = 7 - cdata_y(0);
+    sx(3) = cdata_x(0) - 7 - 2;
     if (cfg_scroll)
     {
         repw(0) = inf_screenw + 2;
@@ -36704,9 +36718,9 @@ void label_1429()
                     {
                         goto label_1430_internal;
                     }
-                    if (cdata(253, 0) != 0)
+                    if (cdata_blind(0) != 0)
                     {
-                        if (sx != cdata(1, 0) || sy != cdata(2, 0))
+                        if (sx != cdata_x(0) || sy != cdata_y(0))
                         {
                             goto label_1431_internal;
                         }
@@ -36720,15 +36734,14 @@ void label_1429()
                             {
                                 if (sx < fovlist(1, sy + sy(4)) + sx(3))
                                 {
-                                    if (fov_los(
-                                            cdata(1, 0), cdata(2, 0), sx, sy))
+                                    if (fov_los(cdata_x(0), cdata_y(0), sx, sy))
                                     {
                                     label_1430_internal:
                                         mapsync(sx, sy) = msync;
                                         if (map(sx, sy, 1) != 0)
                                         {
-                                            cdata(6, map(sx, sy, 1) - 1) =
-                                                msync;
+                                            cdata_vision_flag(
+                                                map(sx, sy, 1) - 1) = msync;
                                         }
                                         if (map(sx, sy, 2) != map(sx, sy, 0))
                                         {
@@ -36772,18 +36785,18 @@ void label_1433()
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
                 ap = 0;
-                if (cdata(9, cnt) == 10)
+                if (cdata_relationship(cnt) == 10)
                 {
                     ap(0) = 1;
                     ap(1) = 1;
                     ap(2) = 25;
                 }
-                if (cdata(9, cnt) == -3)
+                if (cdata_relationship(cnt) == -3)
                 {
                     ap(0) = 25;
                     ap(1) = 1;
@@ -36795,8 +36808,8 @@ void label_1433()
                 }
                 if (ap != 0)
                 {
-                    sx = (cdata(1, cnt) - scx) * inf_tiles + inf_screenx;
-                    sy = (cdata(2, cnt) - scy) * inf_tiles + inf_screeny;
+                    sx = (cdata_x(cnt) - scx) * inf_tiles + inf_screenx;
+                    sy = (cdata_y(cnt) - scy) * inf_tiles + inf_screeny;
                     if (sx >= 0)
                     {
                         if (sy >= 0)
@@ -36828,7 +36841,7 @@ void label_1433()
         }
     }
     screendrawhack = 4;
-    sy = 84 * cdata(2, 0) / mdata(1);
+    sy = 84 * cdata_y(0) / mdata(1);
     if (sy < 2)
     {
         sy = 2;
@@ -36840,7 +36853,7 @@ void label_1433()
             sy = 76;
         }
     }
-    sx = 120 * cdata(1, 0) / mdata(0);
+    sx = 120 * cdata_x(0) / mdata(0);
     if (sx < 2)
     {
         sx = 2;
@@ -37047,11 +37060,11 @@ void label_1437()
 }
 void label_1438()
 {
-    if (abs(cdata(3, 0) - cdata(1, 0)) > 1)
+    if (abs(cdata_next_x(0) - cdata_x(0)) > 1)
     {
         return;
     }
-    if (abs(cdata(4, 0) - cdata(2, 0)) > 1)
+    if (abs(cdata_next_y(0) - cdata_y(0)) > 1)
     {
         return;
     }
@@ -37060,7 +37073,7 @@ void label_1438()
     {
         scrollp = 6;
         keybd_wait = 1000;
-        if (chipm(0, map(cdata(1, 0), cdata(2, 0), 0)) == 4)
+        if (chipm(0, map(cdata_x(0), cdata_y(0), 0)) == 4)
         {
             scrollp = 9;
         }
@@ -37100,9 +37113,9 @@ void label_1438()
             }
             redraw(0);
             sxfix =
-                (cdata(3, 0) - cdata(1, 0)) * cnt * inf_tiles / scrollp * -1;
+                (cdata_next_x(0) - cdata_x(0)) * cnt * inf_tiles / scrollp * -1;
             syfix =
-                (cdata(4, 0) - cdata(2, 0)) * cnt * inf_tiles / scrollp * -1;
+                (cdata_next_y(0) - cdata_y(0)) * cnt * inf_tiles / scrollp * -1;
             gsel(4);
             pos(0, 0);
             gmode(0);
@@ -37300,8 +37313,8 @@ void label_1446()
     fishdir(1) = 1;
     fishdir(2) = 3;
     fishdir(3) = 2;
-    fishdir = fishdir(cdata(83, 0));
-    randomize(cdata(26, 0) / 3);
+    fishdir = fishdir(cdata_direction(0));
+    randomize(cdata_turn(0) / 3);
     gmode(2);
     if (fishanime == 4)
     {
@@ -37309,9 +37322,8 @@ void label_1446()
         sy = (fishy - scy) * inf_tiles + inf_screeny;
         if (fishanime(1) > 15)
         {
-            sx += (cdata(1, 0) - fishx) * 8 * (fishanime(1) - 15);
-            sy +=
-                (cdata(2, 0) - fishy) * 8 * (fishanime(1) - 15) + fishanime(1);
+            sx += (cdata_x(0) - fishx) * 8 * (fishanime(1) - 15);
+            sy += (cdata_y(0) - fishy) * 8 * (fishanime(1) - 15) + fishanime(1);
             pos(sx, sy - 44);
             gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48);
         }
@@ -37327,7 +37339,7 @@ void label_1446()
         }
         return;
     }
-    sx = (cdata(1, 0) - scx) * inf_tiles + inf_screenx + 20;
+    sx = (cdata_x(0) - scx) * inf_tiles + inf_screenx + 20;
     if (fishdir == 1)
     {
         sx -= 48;
@@ -37336,7 +37348,7 @@ void label_1446()
     {
         sx += 48;
     }
-    sy = (cdata(2, 0) - scy) * inf_tiles + inf_screeny + 20;
+    sy = (cdata_y(0) - scy) * inf_tiles + inf_screeny + 20;
     if (fishdir == 0)
     {
         sy += 48;
@@ -37359,8 +37371,8 @@ void label_1446()
     }
     pos(sx, sy - 5 + ap);
     gcopy(9, 116, 18, 14, 10 - ap);
-    sx = (cdata(1, 0) - scx) * inf_tiles + inf_screenx;
-    sy = (cdata(2, 0) - scy) * inf_tiles + inf_screeny;
+    sx = (cdata_x(0) - scx) * inf_tiles + inf_screenx;
+    sy = (cdata_y(0) - scy) * inf_tiles + inf_screeny;
     gmode(2, 48, 48);
     if (fishdir == 0)
     {
@@ -37406,14 +37418,14 @@ void label_1446()
 }
 int carmor(int prm_890)
 {
-    if (cdata(64, prm_890) >= 35000)
+    if (cdata_sum_of_equipment_weight(prm_890) >= 35000)
     {
         stat = 169;
         return stat;
     }
     else
     {
-        if (cdata(64, prm_890) >= 15000)
+        if (cdata_sum_of_equipment_weight(prm_890) >= 15000)
         {
             stat = 170;
             return stat;
@@ -37427,13 +37439,13 @@ int carmor(int prm_890)
 }
 std::string cnveqweight(int prm_891)
 {
-    if (cdata(64, prm_891) >= 35000)
+    if (cdata_sum_of_equipment_weight(prm_891) >= 35000)
     {
         return lang(u8"(重装備)"s, u8"(Heavy)"s);
     }
     else
     {
-        if (cdata(64, prm_891) >= 15000)
+        if (cdata_sum_of_equipment_weight(prm_891) >= 15000)
         {
             return lang(u8"(中装備)"s, u8"(Medium)"s);
         }
@@ -37450,24 +37462,25 @@ int calcexpalive(int prm_892)
 }
 void label_1452()
 {
-    cdata(68, r1) = 0;
+    cdata_speed_correction_value(r1) = 0;
     {
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
             if (cdata(cnt, r1) != 0)
             {
-                ++cdata(68, r1);
+                ++cdata_speed_correction_value(r1);
             }
         }
     }
-    if (cdata(68, r1) > 13)
+    if (cdata_speed_correction_value(r1) > 13)
     {
-        cdata(68, r1) = (cdata(68, r1) - 13) * 5;
+        cdata_speed_correction_value(r1) =
+            (cdata_speed_correction_value(r1) - 13) * 5;
     }
     else
     {
-        cdata(68, r1) = 0;
+        cdata_speed_correction_value(r1) = 0;
     }
     return;
 }
@@ -37625,13 +37638,13 @@ void label_1453()
 }
 void label_1454()
 {
-    cdata(35, r1) -= cdata(36, r1);
-    if (cdata(35, r1) < 0)
+    cdata_experience(r1) -= cdata_required_experience(r1);
+    if (cdata_experience(r1) < 0)
     {
-        cdata(35, r1) = 0;
+        cdata_experience(r1) = 0;
     }
-    ++cdata(38, r1);
-    if (cdata(150, r1) != 13)
+    ++cdata_level(r1);
+    if (cdata_character_role(r1) != 13)
     {
         if (r2 == 0)
         {
@@ -37639,7 +37652,8 @@ void label_1454()
             if (r1 == 0)
             {
                 txt(lang(
-                    name(r1) + u8"はレベル"s + cdata(38, r1) + u8"になった！"s,
+                    name(r1) + u8"はレベル"s + cdata_level(r1)
+                        + u8"になった！"s,
                     name(r1) + u8" have gained a level."s));
             }
             else
@@ -37654,14 +37668,14 @@ void label_1454()
     {
         addnews(2, r1);
     }
-    p = 5 * (100 + sorg(14, r1) * 10) / (300 + cdata(38, r1) * 15) + 1;
+    p = 5 * (100 + sorg(14, r1) * 10) / (300 + cdata_level(r1) * 15) + 1;
     if (r1 == 0)
     {
-        if (cdata(38, r1) % 5 == 0)
+        if (cdata_level(r1) % 5 == 0)
         {
-            if (cdata(48, r1) < cdata(38, r1))
+            if (cdata_max_level(r1) < cdata_level(r1))
             {
-                if (cdata(38, r1) <= 50)
+                if (cdata_level(r1) <= 50)
                 {
                     ++gdata(93);
                 }
@@ -37670,24 +37684,24 @@ void label_1454()
         label_1525();
         p += trait(154);
     }
-    cdata(41, r1) += p;
+    cdata_skill_bonus(r1) += p;
     cdata(42, r1) += p;
     if (cdatan(2, r1) == u8"mutant"s || r1 == 0 && trait(0) == 1)
     {
-        if (cdata(38, r1) < 37)
+        if (cdata_level(r1) < 37)
         {
-            if (cdata(38, r1) % 3 == 0)
+            if (cdata_level(r1) % 3 == 0)
             {
-                if (cdata(48, r1) < cdata(38, r1))
+                if (cdata_max_level(r1) < cdata_level(r1))
                 {
                     label_1453();
                 }
             }
         }
     }
-    if (cdata(48, r1) < cdata(38, r1))
+    if (cdata_max_level(r1) < cdata_level(r1))
     {
-        cdata(48, r1) = cdata(38, r1);
+        cdata_max_level(r1) = cdata_level(r1);
     }
     if (r1 >= 16)
     {
@@ -37721,14 +37735,15 @@ void label_1455()
 }
 void label_1456()
 {
-    cdata(36, r1) = limit(cdata(38, r1), 1, 200)
-            * (limit(cdata(38, r1), 1, 200) + 1)
-            * (limit(cdata(38, r1), 1, 200) + 2)
-            * (limit(cdata(38, r1), 1, 200) + 3)
+    cdata_required_experience(r1) = limit(cdata_level(r1), 1, 200)
+            * (limit(cdata_level(r1), 1, 200) + 1)
+            * (limit(cdata_level(r1), 1, 200) + 2)
+            * (limit(cdata_level(r1), 1, 200) + 3)
         + 3000;
-    if (cdata(36, r1) > 100000000 || cdata(36, r1) < 0)
+    if (cdata_required_experience(r1) > 100000000
+        || cdata_required_experience(r1) < 0)
     {
-        cdata(36, r1) = 100000000;
+        cdata_required_experience(r1) = 100000000;
     }
     return;
 }
@@ -37776,19 +37791,19 @@ void label_1462()
 }
 void label_1463()
 {
-    skillexp(164, r1, abs(cdata(55, r1)) * 200 / (cdata(56, r1) + 1));
+    skillexp(164, r1, abs(cdata_mp(r1)) * 200 / (cdata_max_mp(r1) + 1));
     return;
 }
 void label_1464()
 {
-    if (cdata(50, r1) != cdata(51, r1))
+    if (cdata_hp(r1) != cdata_max_hp(r1))
     {
         if (sdata(154, r1) < sdata(11, r1))
         {
             skillexp(154, r1, 5 + sdata(154, r1) / 5, 1000);
         }
     }
-    if (cdata(55, r1) != cdata(56, r1))
+    if (cdata_mp(r1) != cdata_max_mp(r1))
     {
         if (sdata(155, r1) < sdata(16, r1))
         {
@@ -37821,7 +37836,7 @@ void label_1467()
 }
 void label_1468()
 {
-    if (cdata(45, 0) == 0)
+    if (cdata_inventory_weight_type(0) == 0)
     {
         return;
     }
@@ -37865,9 +37880,9 @@ int calcattackhit(int prm_893)
     {
         tohitorg =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
-        tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata(72, cc);
+        tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata_hit_bonus(cc);
         pierce = limit(sdata(attackskill, cc) / 5, 5, 50);
-        if (cdata(32, cc) && 1)
+        if (cdata_equipment_type(cc) && 1)
         {
             tohitorg = tohitorg * 100 / 130;
         }
@@ -37876,7 +37891,7 @@ int calcattackhit(int prm_893)
     {
         tohitorg = sdata(12, cc) / 4 + sdata(inv_skill(cw), cc) / 3
             + sdata(attackskill, cc) + 50;
-        tohitfix = cdata(72, cc) + inv_hit_bonus(cw);
+        tohitfix = cdata_hit_bonus(cc) + inv_hit_bonus(cw);
         if (ammo != -1)
         {
             tohitfix += inv_hit_bonus(ammo);
@@ -37891,7 +37906,7 @@ int calcattackhit(int prm_893)
             if (prm_893 == 0)
             {
                 rangedist = limit(
-                    dist(cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc))
+                    dist(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc))
                         - 1,
                     0,
                     9);
@@ -37900,7 +37915,7 @@ int calcattackhit(int prm_893)
         }
         else
         {
-            if (cdata(32, cc) && 2)
+            if (cdata_equipment_type(cc) && 2)
             {
                 tohit += 25;
                 if (inv_weight(cw) >= 4000)
@@ -37908,7 +37923,7 @@ int calcattackhit(int prm_893)
                     tohit += sdata(167, cc);
                 }
             }
-            if (cdata(32, cc) && 4)
+            if (cdata_equipment_type(cc) && 4)
             {
                 if (attacknum == 1)
                 {
@@ -37975,13 +37990,13 @@ int calcattackhit(int prm_893)
         stat = tohit;
         return stat;
     }
-    evade = sdata(13, tc) / 3 + sdata(173, tc) + cdata(71, tc) + 25;
+    evade = sdata(13, tc) / 3 + sdata(173, tc) + cdata_dv(tc) + 25;
     if (prm_893 == 2)
     {
         stat = evade;
         return stat;
     }
-    if (cdata(256, tc) != 0)
+    if (cdata_dimmed(tc) != 0)
     {
         if (rnd(4) == 0)
         {
@@ -37991,20 +38006,20 @@ int calcattackhit(int prm_893)
         }
         evade /= 2;
     }
-    if (cdata(253, cc) != 0)
+    if (cdata_blind(cc) != 0)
     {
         tohit /= 2;
     }
-    if (cdata(253, tc) != 0)
+    if (cdata_blind(tc) != 0)
     {
         evade /= 2;
     }
-    if (cdata(251, tc) != 0)
+    if (cdata_sleep(tc) != 0)
     {
         stat = 1;
         return stat;
     }
-    if (cdata(254, cc) != 0 || cdata(256, cc) != 0)
+    if (cdata_confused(cc) != 0 || cdata_dimmed(cc) != 0)
     {
         if (attackrange)
         {
@@ -38052,7 +38067,7 @@ int calcattackhit(int prm_893)
         stat = 1;
         return stat;
     }
-    if (cdata(67, cc) > rnd(200))
+    if (cdata_rate_of_critical_hit(cc) > rnd(200))
     {
         critical = 1;
         stat = 1;
@@ -38090,7 +38105,8 @@ int calcattackdmg(int prm_894)
 {
     if (attackskill == 106)
     {
-        dmgfix = sdata(10, cc) / 8 + sdata(106, cc) / 8 + cdata(73, cc);
+        dmgfix =
+            sdata(10, cc) / 8 + sdata(106, cc) / 8 + cdata_damage_bonus(cc);
         dice1 = 2;
         dice2 = sdata(106, cc) / 8 + 5;
         dmgmulti = 0.5
@@ -38101,8 +38117,8 @@ int calcattackdmg(int prm_894)
     }
     else
     {
-        dmgfix = cdata(73, cc) + inv_damage_bonus(cw) + inv_enhancement(cw)
-            + (inv_curse_state(cw) == 1);
+        dmgfix = cdata_damage_bonus(cc) + inv_damage_bonus(cw)
+            + inv_enhancement(cw) + (inv_curse_state(cw) == 1);
         dice1 = inv_dice_x(cw);
         dice2 = inv_dice_y(cw);
         if (ammo != -1)
@@ -38133,7 +38149,7 @@ int calcattackdmg(int prm_894)
     }
     else
     {
-        if (cdata(32, cc) && 2)
+        if (cdata_equipment_type(cc) && 2)
         {
             if (inv_weight(cw) >= 4000)
             {
@@ -38150,7 +38166,7 @@ int calcattackdmg(int prm_894)
     {
         if (trait(207))
         {
-            dmgfix += 5 + cdata(38, 0) * 2 / 3;
+            dmgfix += 5 + cdata_level(0) * 2 / 3;
         }
     }
     if (prm_894 == 1)
@@ -38158,7 +38174,7 @@ int calcattackdmg(int prm_894)
         stat = damage;
         return stat;
     }
-    prot = cdata(70, tc) + sdata(carmor(tc), tc) + sdata(12, tc) / 10;
+    prot = cdata_pv(tc) + sdata(carmor(tc), tc) + sdata(12, tc) / 10;
     if (prot > 0)
     {
         prot2 = prot / 4;
@@ -38218,7 +38234,7 @@ int calcattackdmg(int prm_894)
     }
     if (attackrange == 0)
     {
-        if (cdata(66, cc) > rnd(100))
+        if (cdata_rate_to_pierce(cc) > rnd(100))
         {
             pierce = 100;
             if (synccheck(cc, -1))
@@ -38272,9 +38288,10 @@ int calcattackdmg(int prm_894)
             --damage;
         }
     }
-    if (cdata(90, tc) != 0)
+    if (cdata_decrease_physical_damage(tc) != 0)
     {
-        damage = damage * 100 / limit((100 + cdata(90, tc)), 25, 1000);
+        damage = damage * 100
+            / limit((100 + cdata_decrease_physical_damage(tc)), 25, 1000);
     }
     if (damage < 0)
     {
@@ -38363,13 +38380,13 @@ void label_1477()
     }
     else
     {
-        if (cdata(27, r1) == 343)
+        if (cdata_id(r1) == 343)
         {
-            memcpy(cdata, 450, r1, userdata, 40, cdata(157, r1), 120);
+            memcpy(cdata, 450, r1, userdata, 40, cdata_cnpc_id(r1), 120);
         }
         else
         {
-            memcpy(cdata, 450, r1, cbitorg, 0, cdata(27, r1), 120);
+            memcpy(cdata, 450, r1, cbitorg, 0, cdata_id(r1), 120);
         }
     }
     {
@@ -38390,28 +38407,28 @@ void label_1477()
             cdata(270 + cnt - 10, r1) = 0;
         }
     }
-    cdata(71, r1) = 0;
-    cdata(70, r1) = 0;
-    cdata(72, r1) = 0;
-    cdata(73, r1) = 0;
-    cdata(32, r1) = 0;
+    cdata_dv(r1) = 0;
+    cdata_pv(r1) = 0;
+    cdata_hit_bonus(r1) = 0;
+    cdata_damage_bonus(r1) = 0;
+    cdata_equipment_type(r1) = 0;
     attacknum = 0;
-    cdata(66, r1) = 0;
+    cdata_rate_to_pierce(r1) = 0;
     if (sdata(186, r1))
     {
-        cdata(67, r1) = elona_int(sqrt(sdata(186, r1))) + 2;
+        cdata_rate_of_critical_hit(r1) = elona_int(sqrt(sdata(186, r1))) + 2;
     }
     else
     {
-        cdata(67, r1) = 0;
+        cdata_rate_of_critical_hit(r1) = 0;
     }
-    cdata(87, r1) = 0;
-    cdata(88, r1) = 0;
-    cdata(89, r1) = 0;
-    cdata(64, r1) = 0;
-    cdata(90, r1) = 0;
-    cdata(91, r1) = 0;
-    cdata(92, r1) = 0;
+    cdata_curse_power(r1) = 0;
+    cdata_extra_attack(r1) = 0;
+    cdata_extra_shot(r1) = 0;
+    cdata_sum_of_equipment_weight(r1) = 0;
+    cdata_decrease_physical_damage(r1) = 0;
+    cdata_nullify_damage(r1) = 0;
+    cdata_cut_counterattack(r1) = 0;
     {
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
@@ -38421,24 +38438,24 @@ void label_1477()
                 continue;
             }
             rp = cdata(cnt, r1) % 10000 - 1;
-            cdata(64, r1) += inv_weight(rp);
+            cdata_sum_of_equipment_weight(r1) += inv_weight(rp);
             if (inv_skill(rp) == 168)
             {
-                if (cdata(32, r1) && 1)
+                if (cdata_equipment_type(r1) && 1)
                 {
                 }
                 else
                 {
-                    cdata(32, r1) += 1;
+                    cdata_equipment_type(r1) += 1;
                 }
             }
-            cdata(71, r1) += inv_dv(rp);
-            cdata(70, r1) += inv_pv(rp);
+            cdata_dv(r1) += inv_dv(rp);
+            cdata_pv(r1) += inv_pv(rp);
             if (inv_dice_x(rp) == 0)
             {
-                cdata(72, r1) += inv_hit_bonus(rp);
-                cdata(73, r1) += inv_damage_bonus(rp);
-                cdata(70, r1) +=
+                cdata_hit_bonus(r1) += inv_hit_bonus(rp);
+                cdata_damage_bonus(r1) += inv_damage_bonus(rp);
+                cdata_pv(r1) +=
                     inv_enhancement(rp) * 2 + (inv_curse_state(rp) == 1) * 2;
             }
             else
@@ -38450,11 +38467,11 @@ void label_1477()
             }
             if (inv_curse_state(rp) == -1)
             {
-                cdata(87, r1) += 20;
+                cdata_curse_power(r1) += 20;
             }
             if (inv_curse_state(rp) == -2)
             {
-                cdata(87, r1) += 100;
+                cdata_curse_power(r1) += 100;
             }
             if (inv_material(rp) == 8)
             {
@@ -38591,42 +38608,43 @@ void label_1477()
                         }
                         if (rp2 == 52)
                         {
-                            cdata(90, r1) +=
+                            cdata_decrease_physical_damage(r1) +=
                                 inv_enchantment_power(rp, cnt) / 40 + 5;
                             continue;
                         }
                         if (rp2 == 53)
                         {
-                            cdata(91, r1) +=
+                            cdata_nullify_damage(r1) +=
                                 inv_enchantment_power(rp, cnt) / 60 + 3;
                             continue;
                         }
                         if (rp2 == 54)
                         {
-                            cdata(92, r1) += inv_enchantment_power(rp, cnt) / 5;
+                            cdata_cut_counterattack(r1) +=
+                                inv_enchantment_power(rp, cnt) / 5;
                             continue;
                         }
                         if (rp2 == 44)
                         {
-                            cdata(67, r1) +=
+                            cdata_rate_of_critical_hit(r1) +=
                                 inv_enchantment_power(rp, cnt) / 50;
                             continue;
                         }
                         if (rp2 == 39)
                         {
-                            cdata(66, r1) +=
+                            cdata_rate_to_pierce(r1) +=
                                 inv_enchantment_power(rp, cnt) / 50;
                             continue;
                         }
                         if (rp2 == 50)
                         {
-                            cdata(88, r1) +=
+                            cdata_extra_attack(r1) +=
                                 inv_enchantment_power(rp, cnt) / 15;
                             continue;
                         }
                         if (rp2 == 51)
                         {
-                            cdata(89, r1) +=
+                            cdata_extra_shot(r1) +=
                                 inv_enchantment_power(rp, cnt) / 15;
                             continue;
                         }
@@ -38676,7 +38694,7 @@ void label_1477()
         {
             if (cdata(240 + cnt, r1) != 0)
             {
-                if (cdata(25, r1) >= 4)
+                if (cdata_quality(r1) >= 4)
                 {
                     if (cdata(240 + cnt, r1) < sorg((10 + cnt), r1) / 5)
                     {
@@ -38707,11 +38725,11 @@ void label_1477()
             }
         }
     }
-    if (cdata(32, r1) && 1)
+    if (cdata_equipment_type(r1) && 1)
     {
-        if (cdata(70, r1) > 0)
+        if (cdata_pv(r1) > 0)
         {
-            cdata(70, r1) = cdata(70, r1)
+            cdata_pv(r1) = cdata_pv(r1)
                 * (120 + elona_int(sqrt(sdata(168, r1))) * 2) / 100;
         }
     }
@@ -38719,59 +38737,64 @@ void label_1477()
     {
         if (attacknum == 1)
         {
-            cdata(32, r1) += 2;
+            cdata_equipment_type(r1) += 2;
         }
         else
         {
             if (attacknum != 0)
             {
-                cdata(32, r1) += 4;
+                cdata_equipment_type(r1) += 4;
             }
         }
     }
-    cdata(56, r1) = limit(
-                        ((sdata(16, r1) * 2 + sdata(15, r1) + sdata(14, r1) / 3)
-                             * cdata(38, r1) / 25
-                         + sdata(16, r1)),
-                        1,
-                        1000000)
+    cdata_max_mp(r1) =
+        limit(
+            ((sdata(16, r1) * 2 + sdata(15, r1) + sdata(14, r1) / 3)
+                 * cdata_level(r1) / 25
+             + sdata(16, r1)),
+            1,
+            1000000)
         * sdata(3, r1) / 100;
-    cdata(51, r1) = limit(
-                        ((sdata(11, r1) * 2 + sdata(10, r1) + sdata(15, r1) / 3)
-                             * cdata(38, r1) / 25
-                         + sdata(11, r1)),
-                        1,
-                        1000000)
+    cdata_max_hp(r1) =
+        limit(
+            ((sdata(11, r1) * 2 + sdata(10, r1) + sdata(15, r1) / 3)
+                 * cdata_level(r1) / 25
+             + sdata(11, r1)),
+            1,
+            1000000)
             * sdata(2, r1) / 100
         + 5;
-    cdata(53, r1) = 100 + (sdata(15, r1) + sdata(11, r1)) / 5 + trait(24) * 8;
-    if (cdata(56, r1) < 1)
+    cdata_max_sp(r1) =
+        100 + (sdata(15, r1) + sdata(11, r1)) / 5 + trait(24) * 8;
+    if (cdata_max_mp(r1) < 1)
     {
-        cdata(56, r1) = 1;
+        cdata_max_mp(r1) = 1;
     }
-    if (cdata(51, r1) < 1)
+    if (cdata_max_hp(r1) < 1)
     {
-        cdata(51, r1) = 1;
+        cdata_max_hp(r1) = 1;
     }
     if (r1 >= 57 || 0)
     {
-        cdata(71, r1) = cdata(38, r1) / 2 + cdata(71, r1) * cdata(77, r1) / 100
-            + cdata(77, r1) - 100;
-        cdata(70, r1) = cdata(38, r1)
-            + (cdata(70, r1) + cdata(38, r1) / 2 + cdata(76, r1) / 25)
-                * cdata(76, r1) / 100;
-        if (cdata(25, r1) == 3)
+        cdata_dv(r1) = cdata_level(r1) / 2
+            + cdata_dv(r1) * cdata_dv_correction_value(r1) / 100
+            + cdata_dv_correction_value(r1) - 100;
+        cdata_pv(r1) = cdata_level(r1)
+            + (cdata_pv(r1) + cdata_level(r1) / 2
+               + cdata_pv_correction_value(r1) / 25)
+                * cdata_pv_correction_value(r1) / 100;
+        if (cdata_quality(r1) == 3)
         {
-            cdata(51, r1) = cdata(51, r1) * 3 / 2;
+            cdata_max_hp(r1) = cdata_max_hp(r1) * 3 / 2;
         }
-        if (cdata(25, r1) >= 4)
+        if (cdata_quality(r1) >= 4)
         {
-            cdata(51, r1) = cdata(51, r1) * 5;
+            cdata_max_hp(r1) = cdata_max_hp(r1) * 5;
         }
     }
     else
     {
-        cdata(51, r1) += 10;
+        cdata_max_hp(r1) += 10;
     }
     {
         int cnt = 0;
@@ -38785,14 +38808,14 @@ void label_1477()
             calcbuff(r1, rp, cdata(280 + cnt * 3 + 1, r1));
         }
     }
-    if (cdata(32, r1) && 4)
+    if (cdata_equipment_type(r1) && 4)
     {
-        cdata(88, r1) += elona_int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
+        cdata_extra_attack(r1) += elona_int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
     }
-    if (cdata(67, r1) > 30)
+    if (cdata_rate_of_critical_hit(r1) > 30)
     {
-        cdata(72, r1) += (cdata(67, r1) - 30) * 2;
-        cdata(67, r1) = 30;
+        cdata_hit_bonus(r1) += (cdata_rate_of_critical_hit(r1) - 30) * 2;
+        cdata_rate_of_critical_hit(r1) = 30;
     }
     label_1521();
     refreshspeed(r1);
@@ -38913,8 +38936,8 @@ int calcitemvalue(int prm_898, int prm_899)
         }
         else
         {
-            value_at_m153 = cdata(38, 0) / 5
-                    * ((gdata(8) + prm_898 * 31) % cdata(38, 0) + 4)
+            value_at_m153 = cdata_level(0) / 5
+                    * ((gdata(8) + prm_898 * 31) % cdata_level(0) + 4)
                 + 10;
         }
     }
@@ -38968,7 +38991,7 @@ int calcitemvalue(int prm_898, int prm_899)
         if (prm_899 == 0)
         {
             value_at_m153 += limit(
-                cdata(34, 0) / 40 + value_at_m153 * (cdata(34, 0) / 80) / 100,
+                cdata_fame(0) / 40 + value_at_m153 * (cdata_fame(0) / 80) / 100,
                 0,
                 800);
         }
@@ -39091,8 +39114,8 @@ int calcitemvalue(int prm_898, int prm_899)
 }
 int calcinvestvalue(int)
 {
-    value_at_m153 =
-        limit(cdata(151, tc), 1, 200) * limit(cdata(151, tc), 1, 200) * 15
+    value_at_m153 = limit(cdata_shop_rank(tc), 1, 200)
+            * limit(cdata_shop_rank(tc), 1, 200) * 15
         + 200;
     if (value_at_m153 > 500000)
     {
@@ -39105,55 +39128,56 @@ int calcinvestvalue(int)
 int calcguiltvalue(int)
 {
     value_at_m153 =
-        (-cdata(49, 0) + -30) * (cdata(34, 0) / 2 + cdata(38, 0) * 200);
+        (-cdata_karma(0) + -30) * (cdata_fame(0) / 2 + cdata_level(0) * 200);
     stat = value_at_m153;
     return stat;
 }
 int calchireadv(int prm_902)
 {
-    stat = 250 + cdata(38, prm_902) * cdata(38, prm_902) * 30;
+    stat = 250 + cdata_level(prm_902) * cdata_level(prm_902) * 30;
     return stat;
 }
 int calchirecost(int prm_903)
 {
     value_at_m153 = 0;
-    if (cdata(150, prm_903) == 18)
+    if (cdata_character_role(prm_903) == 18)
     {
         value_at_m153 = 450;
     }
-    if (cdata(150, prm_903) == 7)
+    if (cdata_character_role(prm_903) == 7)
     {
         value_at_m153 = 250;
     }
-    if (cdata(150, prm_903) == 9)
+    if (cdata_character_role(prm_903) == 9)
     {
         value_at_m153 = 350;
     }
-    if (cdata(150, prm_903) == 12)
+    if (cdata_character_role(prm_903) == 12)
     {
         value_at_m153 = 500;
     }
-    if (cdata(150, prm_903) == 5)
+    if (cdata_character_role(prm_903) == 5)
     {
         value_at_m153 = 750;
     }
-    if (cdata(150, prm_903) == 8)
+    if (cdata_character_role(prm_903) == 8)
     {
         value_at_m153 = 250;
     }
-    if (cdata(150, prm_903) == 14)
+    if (cdata_character_role(prm_903) == 14)
     {
         value_at_m153 = 50;
     }
-    if (cdata(150, prm_903) >= 1000 && cdata(150, prm_903) < 2000
-        || cdata(150, prm_903) == 2003)
+    if (cdata_character_role(prm_903) >= 1000
+            && cdata_character_role(prm_903) < 2000
+        || cdata_character_role(prm_903) == 2003)
     {
         value_at_m153 = 1000;
-        if (cdata(150, prm_903) == 1007)
+        if (cdata_character_role(prm_903) == 1007)
         {
             value_at_m153 *= 4;
         }
-        if (cdata(150, prm_903) == 2003)
+        if (cdata_character_role(prm_903) == 2003)
         {
             value_at_m153 = 0;
         }
@@ -39163,15 +39187,16 @@ int calchirecost(int prm_903)
 }
 void generatemoney(int prm_904)
 {
-    p_at_m153 = rnd(100) + rnd((cdata(38, prm_904) * 50 + 1));
-    if (cdata(150, prm_904) >= 1000 && cdata(150, prm_904) < 2000
-        || cdata(150, prm_904) == 2003)
+    p_at_m153 = rnd(100) + rnd((cdata_level(prm_904) * 50 + 1));
+    if (cdata_character_role(prm_904) >= 1000
+            && cdata_character_role(prm_904) < 2000
+        || cdata_character_role(prm_904) == 2003)
     {
-        p_at_m153 += 2500 + cdata(151, prm_904) * 250;
+        p_at_m153 += 2500 + cdata_shop_rank(prm_904) * 250;
     }
-    if (cdata(30, prm_904) < p_at_m153 / 2)
+    if (cdata_gold(prm_904) < p_at_m153 / 2)
     {
-        cdata(30, prm_904) = p_at_m153;
+        cdata_gold(prm_904) = p_at_m153;
     }
     return;
 }
@@ -39182,11 +39207,11 @@ void calccosthire()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(150, cnt) == 0)
+            if (cdata_character_role(cnt) == 0)
             {
                 continue;
             }
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
@@ -39194,8 +39219,8 @@ void calccosthire()
         }
     }
     cost_at_m153 = cost_at_m153
-        * limit((100 - limit(cdata(49, 0) / 2, 0, 50) - 7 * trait(38)
-                 - (cdata(49, 0) >= 20) * 5),
+        * limit((100 - limit(cdata_karma(0) / 2, 0, 50) - 7 * trait(38)
+                 - (cdata_karma(0) >= 20) * 5),
                 25,
                 200)
         / 100;
@@ -39233,8 +39258,8 @@ int calccostbuilding()
         }
     }
     cost_at_m153 = cost_at_m153
-        * limit((100 - limit(cdata(49, 0) / 2, 0, 50) - 7 * trait(38)
-                 - (cdata(49, 0) >= 20) * 5),
+        * limit((100 - limit(cdata_karma(0) / 2, 0, 50) - 7 * trait(38)
+                 - (cdata_karma(0) >= 20) * 5),
                 25,
                 200)
         / 100;
@@ -39244,12 +39269,12 @@ int calccostbuilding()
 int calccosttax()
 {
     cost_at_m153 = 0;
-    cost_at_m153 += cdata(30, 0) / 1000;
-    cost_at_m153 += cdata(34, 0);
-    cost_at_m153 += cdata(38, 0) * 200;
+    cost_at_m153 += cdata_gold(0) / 1000;
+    cost_at_m153 += cdata_fame(0);
+    cost_at_m153 += cdata_level(0) * 200;
     cost_at_m153 = cost_at_m153
-        * limit((100 - limit(cdata(49, 0) / 2, 0, 50) - 7 * trait(38)
-                 - (cdata(49, 0) >= 20) * 5),
+        * limit((100 - limit(cdata_karma(0) / 2, 0, 50) - 7 * trait(38)
+                 - (cdata_karma(0) >= 20) * 5),
                 25,
                 200)
         / 100;
@@ -39387,19 +39412,19 @@ int calclearncost(int, int, int prm_913)
 }
 int calcresurrectvalue(int prm_914)
 {
-    if (cdata(0, prm_914) != 6)
+    if (cdata_state(prm_914) != 6)
     {
         stat = 100;
         return stat;
     }
-    value_at_m153 = cdata(38, prm_914) * cdata(38, prm_914) * 15;
+    value_at_m153 = cdata_level(prm_914) * cdata_level(prm_914) * 15;
     stat = value_at_m153;
     return stat;
 }
 int calcslavevalue(int prm_915)
 {
     value_at_m153 = sdata(10, prm_915) * sdata(11, prm_915)
-        + cdata(38, prm_915) * cdata(38, prm_915) + 1000;
+        + cdata_level(prm_915) * cdata_level(prm_915) + 1000;
     if (value_at_m153 > 50000)
     {
         value_at_m153 = 50000;
@@ -39430,15 +39455,15 @@ int calcinitgold(int prm_917)
         return stat;
     }
     lootrich_at_m155 = -1;
-    if (cdata(27, prm_917) == 183)
+    if (cdata_id(prm_917) == 183)
     {
         lootrich_at_m155 = 10;
     }
-    if (cdata(27, prm_917) == 184)
+    if (cdata_id(prm_917) == 184)
     {
         lootrich_at_m155 = 4;
     }
-    if (cdata(27, prm_917) == 185)
+    if (cdata_id(prm_917) == 185)
     {
         lootrich_at_m155 = 2;
     }
@@ -39447,7 +39472,7 @@ int calcinitgold(int prm_917)
         stat = lootrich_at_m155 * 500 + rnd((1000 + lootrich_at_m155 * 1000));
         return stat;
     }
-    stat = rnd(cdata(38, prm_917) * 25 + 10) + 1;
+    stat = rnd(cdata_level(prm_917) * 25 + 10) + 1;
     return stat;
 }
 int calcspellpower(int prm_918, int prm_919)
@@ -39471,7 +39496,7 @@ int calcspellpower(int prm_918, int prm_919)
     {
         if (prm_919 >= 16)
         {
-            stat = cdata(38, prm_919) * 6 + 10;
+            stat = cdata_level(prm_919) * 6 + 10;
             return stat;
         }
     }
@@ -39548,11 +39573,11 @@ int calcspellfail(int prm_920, int prm_921)
             }
         }
     }
-    if (cdata(32, prm_921) && 4)
+    if (cdata_equipment_type(prm_921) && 4)
     {
         p_at_m157 -= 6;
     }
-    if (cdata(32, prm_921) && 1)
+    if (cdata_equipment_type(prm_921) && 1)
     {
         p_at_m157 -= 12;
     }
@@ -39583,7 +39608,7 @@ int calcspellcostmp(int prm_922, int prm_923)
     else
     {
         cost_at_m158 =
-            sdataref(2, prm_922) * (50 + cdata(38, prm_923) * 3) / 100;
+            sdataref(2, prm_922) * (50 + cdata_level(prm_923) * 3) / 100;
     }
     stat = cost_at_m158;
     return stat;
@@ -39631,16 +39656,17 @@ void skillinit(int prm_926, int prm_927, int prm_928)
     }
     if (prm_926 == 18)
     {
-        p_at_m161(1) = prm_928 * (100 + cdata(38, prm_927) * 2) / 100;
+        p_at_m161(1) = prm_928 * (100 + cdata_level(prm_927) * 2) / 100;
     }
     else
     {
-        p_at_m161(1) = p_at_m161 * p_at_m161 * cdata(38, prm_927) / 45000
-            + prm_928 + cdata(38, prm_927) / 3;
+        p_at_m161(1) = p_at_m161 * p_at_m161 * cdata_level(prm_927) / 45000
+            + prm_928 + cdata_level(prm_927) / 3;
     }
-    if (cdata(38, prm_927) > 1)
+    if (cdata_level(prm_927) > 1)
     {
-        p_at_m161 = elona_int(expf(logf(0.9) * cdata(38, prm_927)) * p_at_m161);
+        p_at_m161 =
+            elona_int(expf(logf(0.9) * cdata_level(prm_927)) * p_at_m161);
     }
     if (p_at_m161 < 1)
     {
@@ -39665,7 +39691,7 @@ void label_1512()
         int cnt = 50;
         for (int cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
         {
-            p = cdata(38, r1) * 4 + 96;
+            p = cdata_level(r1) * 4 + 96;
             if (p > 300)
             {
                 p = 300;
@@ -39681,7 +39707,7 @@ void label_1512()
                     p += sdata(cnt, r1);
                 }
             }
-            if (cnt == 60 && p < 500 || cdata(38, r1) == 1)
+            if (cnt == 60 && p < 500 || cdata_level(r1) == 1)
             {
                 p = 100;
             }
@@ -39716,11 +39742,11 @@ int label_1513()
 {
     f = 1;
     tc = cc;
-    if (cdata(253, cc) != 0)
+    if (cdata_blind(cc) != 0)
     {
         f = 0;
     }
-    if (cdata(254, cc) != 0 || cdata(256, cc) != 0)
+    if (cdata_confused(cc) != 0 || cdata_dimmed(cc) != 0)
     {
         if (rnd(4) != 0)
         {
@@ -39781,11 +39807,11 @@ int label_1513()
         }
         if (cc == 0)
         {
-            dmgmp(cc, cdata(56, cc));
+            dmgmp(cc, cdata_max_mp(cc));
         }
         else
         {
-            dmgmp(cc, cdata(56, cc) / 3);
+            dmgmp(cc, cdata_max_mp(cc) / 3);
         }
         stat = 0;
         return stat;
@@ -39794,7 +39820,7 @@ int label_1513()
     {
         if (synccheck(cc, -1))
         {
-            if (cdata(254, cc) != 0)
+            if (cdata_confused(cc) != 0)
             {
                 txt(lang(
                     name(cc) + u8"は余計に混乱した。"s,
@@ -39821,14 +39847,14 @@ int label_1513()
             int cnt = 0;
             for (int cnt_end = cnt + (2 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata(38, 0) * 3 / 2 + 3), calcfixlv(2));
-                characreate(-1, 0, cdata(1, cc), cdata(2, cc));
+                flt(calcobjlv(cdata_level(0) * 3 / 2 + 3), calcfixlv(2));
+                characreate(-1, 0, cdata_x(cc), cdata_y(cc));
                 if (stat != 0)
                 {
-                    if (cdata(9, cc) <= -3)
+                    if (cdata_relationship(cc) <= -3)
                     {
-                        cdata(9, rc) = -1;
-                        cdata(69, rc) = -1;
+                        cdata_relationship(rc) = -1;
+                        cdata_original_relationship(rc) = -1;
                     }
                 }
             }
@@ -39905,18 +39931,16 @@ int label_1517()
 int label_1518()
 {
     cv = 8;
-    if (cdata(1, r1) > cdata(1, r2) - cv && cdata(1, r1) < cdata(1, r2) + cv)
+    if (cdata_x(r1) > cdata_x(r2) - cv && cdata_x(r1) < cdata_x(r2) + cv)
     {
-        if (cdata(2, r1) > cdata(2, r2) - cv
-            && cdata(2, r1) < cdata(2, r2) + cv)
+        if (cdata_y(r1) > cdata_y(r2) - cv && cdata_y(r1) < cdata_y(r2) + cv)
         {
-            if (cdata(201, r2) > 0)
+            if (cdata_hate(r2) > 0)
             {
                 stat = 1;
                 return stat;
             }
-            p = dist(cdata(1, r1), cdata(2, r1), cdata(1, r2), cdata(2, r2))
-                    * 150
+            p = dist(cdata_x(r1), cdata_y(r1), cdata_x(r2), cdata_y(r2)) * 150
                 + (sdata(157, r1) * 100 + 150) + 1;
             if (rnd(p) < rnd(sdata(13, r2) * 60 + 150))
             {
@@ -39945,9 +39969,9 @@ void label_1519()
             return;
         }
     }
-    p = cdata(22, r1) / 1000;
-    cdata(22, r1) -= 8;
-    if (cdata(22, r1) / 1000 != p)
+    p = cdata_nutrition(r1) / 1000;
+    cdata_nutrition(r1) -= 8;
+    if (cdata_nutrition(r1) / 1000 != p)
     {
         if (p == 1)
         {
@@ -39981,46 +40005,46 @@ void label_1519()
 void label_1520()
 {
     regen = 1;
-    if (cdata(251, r1) > 0)
+    if (cdata_sleep(r1) > 0)
     {
         healcon(r1, 2, 1);
-        if (cdata(251, r1) > 0)
+        if (cdata_sleep(r1) > 0)
         {
-            cdata(79, r1) = 114;
+            cdata_emotion_icon(r1) = 114;
         }
         healhp(r1, 1);
         healmp(r1, 1);
     }
-    if (cdata(250, r1) > 0)
+    if (cdata_poisoned(r1) > 0)
     {
         dmghp(r1, rnd(2 + sdata(11, r1) / 10), -4);
         healcon(r1, 1, 1);
-        if (cdata(250, r1) > 0)
+        if (cdata_poisoned(r1) > 0)
         {
-            cdata(79, r1) = 108;
+            cdata_emotion_icon(r1) = 108;
         }
         regen = 0;
     }
-    if (cdata(263, r1) > 0)
+    if (cdata_choked(r1) > 0)
     {
-        if (cdata(263, r1) % 3 == 0)
+        if (cdata_choked(r1) % 3 == 0)
         {
             if (synccheck(r1, -1))
             {
                 txt(lang(u8"「うぐぐ…！」"s, cnvtalk(u8"Ughh...!"s)));
             }
         }
-        ++cdata(263, r1);
-        if (cdata(263, r1) > 15)
+        ++cdata_choked(r1);
+        if (cdata_choked(r1) > 15)
         {
             dmghp(r1, 500, -21);
         }
         regen = 0;
     }
-    if (cdata(262, r1) > 0)
+    if (cdata_gravity(r1) > 0)
     {
-        --cdata(262, r1);
-        if (cdata(262, r1) == 0)
+        --cdata_gravity(r1);
+        if (cdata_gravity(r1) == 0)
         {
             if (synccheck(r1, -1))
             {
@@ -40031,10 +40055,10 @@ void label_1520()
             }
         }
     }
-    if (cdata(264, r1) > 0)
+    if (cdata_furious(r1) > 0)
     {
-        --cdata(264, r1);
-        if (cdata(264, r1) == 0)
+        --cdata_furious(r1);
+        if (cdata_furious(r1) == 0)
         {
             if (synccheck(r1, -1))
             {
@@ -40044,7 +40068,7 @@ void label_1520()
             }
         }
     }
-    if (cdata(261, r1) > 0)
+    if (cdata_sick(r1) > 0)
     {
         if (rnd(80) == 0)
         {
@@ -40061,7 +40085,7 @@ void label_1520()
         }
         if (r1 >= 16)
         {
-            if (cdata(25, r1) >= 4)
+            if (cdata_quality(r1) >= 4)
             {
                 if (rnd(200) == 0)
                 {
@@ -40070,74 +40094,74 @@ void label_1520()
             }
         }
     }
-    if (cdata(253, r1) > 0)
+    if (cdata_blind(r1) > 0)
     {
         healcon(r1, 4, 1);
-        if (cdata(253, r1) > 0)
+        if (cdata_blind(r1) > 0)
         {
-            cdata(79, r1) = 110;
+            cdata_emotion_icon(r1) = 110;
         }
     }
-    if (cdata(252, r1) > 0)
+    if (cdata_paralyzed(r1) > 0)
     {
         regen = 0;
         healcon(r1, 3, 1);
-        if (cdata(252, r1) > 0)
+        if (cdata_paralyzed(r1) > 0)
         {
-            cdata(79, r1) = 115;
+            cdata_emotion_icon(r1) = 115;
         }
     }
-    if (cdata(254, r1) > 0)
+    if (cdata_confused(r1) > 0)
     {
         healcon(r1, 5, 1);
-        if (cdata(254, r1) > 0)
+        if (cdata_confused(r1) > 0)
         {
-            cdata(79, r1) = 111;
+            cdata_emotion_icon(r1) = 111;
         }
     }
-    if (cdata(255, r1) > 0)
+    if (cdata_fear(r1) > 0)
     {
         healcon(r1, 6, 1);
-        if (cdata(255, r1) > 0)
+        if (cdata_fear(r1) > 0)
         {
-            cdata(79, r1) = 113;
+            cdata_emotion_icon(r1) = 113;
         }
     }
-    if (cdata(256, r1) > 0)
+    if (cdata_dimmed(r1) > 0)
     {
         healcon(r1, 7, 1);
-        if (cdata(256, r1) > 0)
+        if (cdata_dimmed(r1) > 0)
         {
-            cdata(79, r1) = 112;
+            cdata_emotion_icon(r1) = 112;
         }
     }
-    if (cdata(257, r1) > 0)
+    if (cdata_drunk(r1) > 0)
     {
         healcon(r1, 8, 1);
-        if (cdata(257, r1) > 0)
+        if (cdata_drunk(r1) > 0)
         {
-            cdata(79, r1) = 106;
+            cdata_emotion_icon(r1) = 106;
         }
     }
-    if (cdata(258, r1) > 0)
+    if (cdata_bleeding(r1) > 0)
     {
         dmghp(
             r1,
-            rnd(cdata(50, r1) * (1 + cdata(258, r1) / 4) / 100 + 3) + 1,
+            rnd(cdata_hp(r1) * (1 + cdata_bleeding(r1) / 4) / 100 + 3) + 1,
             -13);
         healcon(r1, 9, 1 + cbit(29, r1) * 3);
-        if (cdata(258, r1) > 0)
+        if (cdata_bleeding(r1) > 0)
         {
-            cdata(79, r1) = 109;
+            cdata_emotion_icon(r1) = 109;
         }
         regen = 0;
-        spillblood(cdata(1, r1), cdata(2, r1));
+        spillblood(cdata_x(r1), cdata_y(r1));
     }
-    if (cdata(259, r1) > 0)
+    if (cdata_wet(r1) > 0)
     {
-        --cdata(259, r1);
+        --cdata_wet(r1);
     }
-    if (cdata(260, r1) > 0)
+    if (cdata_insane(r1) > 0)
     {
         if (synccheck(r1, -1))
         {
@@ -40215,35 +40239,35 @@ void label_1520()
         }
         if (rnd(5) == 0)
         {
-            cdata(254, r1) += rnd(10);
+            cdata_confused(r1) += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata(256, r1) += rnd(10);
+            cdata_dimmed(r1) += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata(251, r1) += rnd(5);
+            cdata_sleep(r1) += rnd(5);
         }
         if (rnd(5) == 0)
         {
-            cdata(255, r1) += rnd(10);
+            cdata_fear(r1) += rnd(10);
         }
         healcon(r1, 11, 1);
-        if (cdata(260, r1) > 0)
+        if (cdata_insane(r1) > 0)
         {
-            cdata(79, r1) = 124;
+            cdata_emotion_icon(r1) = 124;
         }
     }
     if (r1 == 0)
     {
-        if (cdata(22, r1) < 2000)
+        if (cdata_nutrition(r1) < 2000)
         {
-            if (cdata(22, r1) < 1000)
+            if (cdata_nutrition(r1) < 1000)
             {
-                if (cdata(140, r1) != 1)
+                if (cdata_continuous_action_id(r1) != 1)
                 {
-                    dmghp(r1, rnd(2) + cdata(51, 0) / 50, -3);
+                    dmghp(r1, rnd(2) + cdata_max_hp(0) / 50, -3);
                     if (gdata(4) % 10 == 0)
                     {
                         rowact_check(r1);
@@ -40277,18 +40301,18 @@ void label_1520()
     }
     else
     {
-        if (cdata(82, r1) != 0)
+        if (cdata_related_quest_id(r1) != 0)
         {
-            p = cdata(82, r1) - 1;
+            p = cdata_related_quest_id(r1) - 1;
             if (qdata(15, p) > 0)
             {
-                cdata(79, r1) = 122;
+                cdata_emotion_icon(r1) = 122;
             }
             if (qdata(8, p) != 0)
             {
-                if (cdata(26, r1) % 2 == 1)
+                if (cdata_turn(r1) % 2 == 1)
                 {
-                    cdata(79, r1) = 123;
+                    cdata_emotion_icon(r1) = 123;
                 }
             }
         }
@@ -40297,9 +40321,9 @@ void label_1520()
     {
         if (r1 >= 57)
         {
-            if (cdata(17, r1) >= 53)
+            if (cdata_impression(r1) >= 53)
             {
-                cdata(79, r1) = 225;
+                cdata_emotion_icon(r1) = 225;
             }
         }
     }
@@ -40318,35 +40342,36 @@ void label_1520()
 }
 void label_1521()
 {
-    cdata(43, 0) = limit(inv_weight_(0), 0, 20000000)
+    cdata_inventory_weight(0) = limit(inv_weight_(0), 0, 20000000)
         * (100 - trait(201) * 10 + trait(205) * 20) / 100;
-    cdata(44, 0) =
+    cdata_max_inventory_weight(0) =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
-            if (cdata(43, 0) > cdata(44, 0) * 2)
+            if (cdata_inventory_weight(0) > cdata_max_inventory_weight(0) * 2)
             {
-                cdata(45, 0) = 4;
+                cdata_inventory_weight_type(0) = 4;
                 break;
             }
-            if (cdata(43, 0) > cdata(44, 0))
+            if (cdata_inventory_weight(0) > cdata_max_inventory_weight(0))
             {
-                cdata(45, 0) = 3;
+                cdata_inventory_weight_type(0) = 3;
                 break;
             }
-            if (cdata(43, 0) > cdata(44, 0) / 4 * 3)
+            if (cdata_inventory_weight(0)
+                > cdata_max_inventory_weight(0) / 4 * 3)
             {
-                cdata(45, 0) = 2;
+                cdata_inventory_weight_type(0) = 2;
                 break;
             }
-            if (cdata(43, 0) > cdata(44, 0) / 2)
+            if (cdata_inventory_weight(0) > cdata_max_inventory_weight(0) / 2)
             {
-                cdata(45, 0) = 1;
+                cdata_inventory_weight_type(0) = 1;
                 break;
             }
-            cdata(45, 0) = 0;
+            cdata_inventory_weight_type(0) = 0;
         }
     }
     refreshspeed(0);
@@ -40354,7 +40379,7 @@ void label_1521()
 }
 int calcscore()
 {
-    p = cdata(38, 0) * cdata(38, 0) + gdata(1) * gdata(1) + gdata(2);
+    p = cdata_level(0) * cdata_level(0) + gdata(1) * gdata(1) + gdata(2);
     if (gdata(0) > 1)
     {
         p = p / 10 + 1;
@@ -40373,15 +40398,15 @@ void calcpartyscore()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(17, cnt) >= 53)
+            if (cdata_impression(cnt) >= 53)
             {
-                p += cdata(38, cnt) + 5;
+                p += cdata_level(cnt) + 5;
             }
-            if (cdata(17, cnt) < 50)
+            if (cdata_impression(cnt) < 50)
             {
                 p -= 20;
             }
@@ -40407,15 +40432,15 @@ void calcpartyscore2()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            if (cdata(17, cnt) >= 53)
+            if (cdata_impression(cnt) >= 53)
             {
-                if (cdata(25, cnt) >= 4)
+                if (cdata_quality(cnt) >= 4)
                 {
-                    p += 20 + cdata(38, cnt) / 2;
+                    p += 20 + cdata_level(cnt) / 2;
                     txt(lang(
                         cdatan(0, cnt) + u8"は満足した。"s,
                         cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
@@ -40527,7 +40552,8 @@ void label_1530()
         r1 = rc;
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (cdata(38, r1) / 3); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (cdata_level(r1) / 3); cnt < cnt_end;
+                 ++cnt)
             {
                 label_1453();
             }
@@ -40557,21 +40583,21 @@ void label_1530()
     }
     else
     {
-        if (cdata(25, rc) <= 2)
+        if (cdata_quality(rc) <= 2)
         {
             probeq = 3;
             fixeq = 0;
         }
         else
         {
-            if (cdata(25, rc) == 3)
+            if (cdata_quality(rc) == 3)
             {
                 probeq = 6;
                 fixeq = 0;
             }
             else
             {
-                if (cdata(25, rc) == 4)
+                if (cdata_quality(rc) == 4)
                 {
                     probeq = 8;
                     fixeq = 1;
@@ -40801,7 +40827,7 @@ void label_1530()
             eqcloack(1) = 1;
         }
     }
-    if (cdata(25, rc) >= 4)
+    if (cdata_quality(rc) >= 4)
     {
         {
             int cnt = 0;
@@ -40840,56 +40866,56 @@ void label_1530()
     if (cspecialeq)
     {
         dbmode = 4;
-        dbid = cdata(27, rc);
+        dbid = cdata_id(rc);
         label_2299();
     }
     if (eqtwohand)
     {
         eqshield = 0;
     }
-    if (cdata(27, rc) == 9)
+    if (cdata_id(rc) == 9)
     {
         if (rnd(120) == 0)
         {
             eqamulet1 = 705;
         }
     }
-    if (cdata(27, rc) == 274)
+    if (cdata_id(rc) == 274)
     {
         if (rnd(100) == 0)
         {
             eqrange = 718;
         }
     }
-    if (cdata(27, rc) == 163)
+    if (cdata_id(rc) == 163)
     {
         if (rnd(200) == 0)
         {
             eqrange = 716;
         }
     }
-    if (cdata(27, rc) == 186 || cdata(27, rc) == 187 || cdata(27, rc) == 188)
+    if (cdata_id(rc) == 186 || cdata_id(rc) == 187 || cdata_id(rc) == 188)
     {
         if (rnd(800) == 0)
         {
             eqgirdle = 728;
         }
     }
-    if (cdata(27, rc) == 317)
+    if (cdata_id(rc) == 317)
     {
         if (rnd(150) == 0)
         {
             eqweapon1 = 719;
         }
     }
-    if (cdata(27, rc) == 309 || cdata(27, rc) == 310 || cdata(27, rc) == 311)
+    if (cdata_id(rc) == 309 || cdata_id(rc) == 310 || cdata_id(rc) == 311)
     {
         if (rnd(600) == 0)
         {
             eqamulet1 = 723;
         }
     }
-    if (cdata(27, rc) == 304)
+    if (cdata_id(rc) == 304)
     {
         if (rnd(250) == 0)
         {
@@ -40911,7 +40937,7 @@ void label_1530()
                 {
                     if (eqamulet1 >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqamulet1(1)));
                         flttypeminor = eqamulet1;
                         dbid = -1;
@@ -40932,7 +40958,7 @@ void label_1530()
                 {
                     if (eqamulet2 >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqamulet2(1)));
                         flttypeminor = eqamulet2;
                         dbid = -1;
@@ -40956,7 +40982,7 @@ void label_1530()
                 {
                     if (eqring1 >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqring1(1)));
                         flttypeminor = eqring1;
                         dbid = -1;
@@ -40977,7 +41003,7 @@ void label_1530()
                 {
                     if (eqring2 >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqring2(1)));
                         flttypeminor = eqring2;
                         dbid = -1;
@@ -41001,7 +41027,7 @@ void label_1530()
                 {
                     if (eqcloack >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqcloack(1)));
                         flttypeminor = eqcloack;
                         dbid = -1;
@@ -41026,7 +41052,7 @@ void label_1530()
                 {
                     if (eqgirdle >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqgirdle(1)));
                         flttypeminor = eqgirdle;
                         dbid = -1;
@@ -41051,7 +41077,7 @@ void label_1530()
                 {
                     if (eqhelm >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqhelm(1)));
                         flttypeminor = eqhelm;
                         dbid = -1;
@@ -41076,7 +41102,7 @@ void label_1530()
                 {
                     if (eqarmor >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqarmor(1)));
                         flttypeminor = eqarmor;
                         dbid = -1;
@@ -41101,7 +41127,7 @@ void label_1530()
                 {
                     if (eqglove >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqglove(1)));
                         flttypeminor = eqglove;
                         dbid = -1;
@@ -41126,7 +41152,7 @@ void label_1530()
                 {
                     if (eqboots >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqboots(1)));
                         flttypeminor = eqboots;
                         dbid = -1;
@@ -41153,7 +41179,8 @@ void label_1530()
                         int cnt = 0;
                         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                         {
-                            flt(calcobjlv(cdata(38, rc)), calcfixlv(2 + fixeq));
+                            flt(calcobjlv(cdata_level(rc)),
+                                calcfixlv(2 + fixeq));
                             itemcreate(rc, eqmultiweapon, -1, -1, 0);
                             if (inv_weight(ci) > 1500)
                             {
@@ -41180,7 +41207,7 @@ void label_1530()
                             int cnt = 0;
                             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                             {
-                                flt(calcobjlv(cdata(38, rc)),
+                                flt(calcobjlv(cdata_level(rc)),
                                     calcfixlv(fixeq + eqweapon1(1)));
                                 flttypeminor = eqweapon1;
                                 dbid = -1;
@@ -41231,7 +41258,7 @@ void label_1530()
                             int cnt = 0;
                             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                             {
-                                flt(calcobjlv(cdata(38, rc)),
+                                flt(calcobjlv(cdata_level(rc)),
                                     calcfixlv(fixeq + eqweapon2(1)));
                                 flttypeminor = eqweapon2;
                                 dbid = -1;
@@ -41267,7 +41294,7 @@ void label_1530()
                 {
                     if (eqshield >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqshield(1)));
                         flttypeminor = eqshield;
                         dbid = -1;
@@ -41292,7 +41319,7 @@ void label_1530()
                 {
                     if (eqrange >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqrange(1)));
                         flttypeminor = eqrange;
                         dbid = -1;
@@ -41317,7 +41344,7 @@ void label_1530()
                 {
                     if (eqammo >= 10000)
                     {
-                        flt(calcobjlv(cdata(38, rc)),
+                        flt(calcobjlv(cdata_level(rc)),
                             calcfixlv(fixeq + eqammo(1)));
                         flttypeminor = eqammo;
                         dbid = -1;
@@ -41338,7 +41365,7 @@ void label_1530()
             }
         }
     }
-    if (cdata(27, rc) == 326)
+    if (cdata_id(rc) == 326)
     {
         if (rnd(150) == 0)
         {
@@ -41347,12 +41374,12 @@ void label_1530()
         }
         else
         {
-            flt(calcobjlv(cdata(38, rc)), calcfixlv());
+            flt(calcobjlv(cdata_level(rc)), calcfixlv());
             flttypeminor = 60005;
             itemcreate(rc, 0, -1, -1, 0);
         }
     }
-    if (cdata(27, rc) == 351 || cdata(27, rc) == 352)
+    if (cdata_id(rc) == 351 || cdata_id(rc) == 352)
     {
         {
             int cnt = 0;
@@ -41460,7 +41487,7 @@ void label_1532()
     }
     if (rc == 56)
     {
-        cdata(0, rc) = 0;
+        cdata_state(rc) = 0;
         return;
     }
     placefail = 0;
@@ -41468,8 +41495,8 @@ void label_1532()
     {
         if (rc != 0)
         {
-            cdata(1, rc) = cdata(1, 0);
-            cdata(2, rc) = cdata(2, 0);
+            cdata_x(rc) = cdata_x(0);
+            cdata_y(rc) = cdata_y(0);
             return;
         }
     }
@@ -41533,10 +41560,10 @@ void label_1532()
                 {
                     if (cxinit == -2)
                     {
-                        p = cdata(28, 0) / 2;
-                        if (x >= cdata(1, 0) - p && x <= cdata(1, 0) + p)
+                        p = cdata_vision_distance(0) / 2;
+                        if (x >= cdata_x(0) - p && x <= cdata_x(0) + p)
                         {
-                            if (y >= cdata(2, 0) - p && y <= cdata(2, 0) + p)
+                            if (y >= cdata_y(0) - p && y <= cdata_y(0) + p)
                             {
                                 continue;
                             }
@@ -41584,11 +41611,11 @@ void label_1532()
                     }
                 }
             }
-            cdata(171, rc) = x;
-            cdata(172, rc) = y;
+            cdata_initial_x(rc) = x;
+            cdata_initial_y(rc) = y;
             map(x, y, 1) = rc + 1;
-            cdata(1, rc) = x;
-            cdata(2, rc) = y;
+            cdata_x(rc) = x;
+            cdata_y(rc) = y;
             p = 1;
             break;
         }
@@ -41597,7 +41624,7 @@ void label_1532()
     {
         if (rc < 16)
         {
-            cdata(0, rc) = 8;
+            cdata_state(rc) = 8;
             txt(lang(
                 name(rc) + u8"とはぐれた。"s,
                 name(rc) + u8" loses "s + his(rc) + u8" way."s));
@@ -41607,15 +41634,15 @@ void label_1532()
             txt(lang(
                 name(rc) + u8"は何かに潰されて息絶えた。"s,
                 name(rc) + u8" is killed."s));
-            cdata(0, rc) = 0;
+            cdata_state(rc) = 0;
         }
-        if (cdata(150, rc) != 0)
+        if (cdata_character_role(rc) != 0)
         {
-            cdata(0, rc) = 2;
+            cdata_state(rc) = 2;
         }
-        if (cdata(150, rc) == 13)
+        if (cdata_character_role(rc) == 13)
         {
-            cdata(0, rc) = 4;
+            cdata_state(rc) = 4;
         }
     }
     return;
@@ -41628,7 +41655,7 @@ int label_1533()
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 0)
+                if (cdata_state(cnt) == 0)
                 {
                     rc = cnt;
                     break;
@@ -41690,7 +41717,7 @@ int label_1533()
         {
             if (usernpcmax > 0)
             {
-                cdata(157, rc) = rnd(usernpcmax);
+                cdata_cnpc_id(rc) = rnd(usernpcmax);
             }
         }
     }
@@ -41736,9 +41763,9 @@ int label_1533()
     if (cmshade)
     {
         cdatan(0, rc) = lang(u8"シェイド"s, u8"shade"s);
-        cdata(7, rc) = 280;
+        cdata_image(rc) = 280;
     }
-    cdata(25, rc) = fixlv;
+    cdata_quality(rc) = fixlv;
     label_1535();
     rtval = rc;
     stat = 1;
@@ -41749,13 +41776,13 @@ void label_1534()
     if (fixlv == 4)
     {
         cdatan(0, rc) = strbracketleft + cdatan(0, rc) + strbracketright;
-        cdata(38, rc) = cdata(38, rc) * 10 / 8;
+        cdata_level(rc) = cdata_level(rc) * 10 / 8;
     }
     if (fixlv == 5)
     {
         cdatan(0, rc) =
             lang(u8"《"s, u8"{"s) + cdatan(0, rc) + lang(u8"》"s, u8"}"s);
-        cdata(38, rc) = cdata(38, rc) * 10 / 6;
+        cdata_level(rc) = cdata_level(rc) * 10 / 6;
     }
     return;
 }
@@ -41765,42 +41792,43 @@ void label_1535()
     {
         label_1534();
     }
-    cdata(0, rc) = 1;
-    cdata(14, rc) = 100;
-    cdata(17, rc) = 50;
-    cdata(28, rc) = 14;
-    if (cdata(27, rc) == 205)
+    cdata_state(rc) = 1;
+    cdata_interest(rc) = 100;
+    cdata_impression(rc) = 50;
+    cdata_vision_distance(rc) = 14;
+    if (cdata_id(rc) == 205)
     {
-        cdata(7, rc) = rnd(33) * 2 + cdata(8, rc) + 1;
+        cdata_image(rc) = rnd(33) * 2 + cdata_sex(rc) + 1;
     }
     if (rc == 0)
     {
-        cdata(22, rc) = 9000;
+        cdata_nutrition(rc) = 9000;
     }
     else
     {
-        cdata(22, rc) = 5000 + rnd(4000);
+        cdata_nutrition(rc) = 5000 + rnd(4000);
     }
-    cdata(19, rc) = cdata(19, rc) + rnd((cdata(19, rc) / 5 + 1))
-        - rnd((cdata(19, rc) / 5 + 1));
-    cdata(20, rc) = cdata(19, rc) * cdata(19, rc) * (rnd(6) + 18) / 10000;
+    cdata_height(rc) = cdata_height(rc) + rnd((cdata_height(rc) / 5 + 1))
+        - rnd((cdata_height(rc) / 5 + 1));
+    cdata_weight(rc) =
+        cdata_height(rc) * cdata_height(rc) * (rnd(6) + 18) / 10000;
     r1 = rc;
     label_1456();
     r1 = rc;
     label_1512();
-    if (cdata(13, rc) == 0)
+    if (cdata_portrait(rc) == 0)
     {
-        cdata(13, rc) = rnd(32);
+        cdata_portrait(rc) = rnd(32);
     }
-    cdata(16, rc) = rnd(4);
-    cdata(18, rc) = rnd(7);
+    cdata_personality(rc) = rnd(4);
+    cdata_talk_type(rc) = rnd(7);
     label_1530();
     r1 = rc;
     label_1477();
     ++gdata(3);
-    cdata(50, rc) = cdata(51, rc);
-    cdata(55, rc) = cdata(56, rc);
-    cdata(52, rc) = cdata(53, rc);
+    cdata_hp(rc) = cdata_max_hp(rc);
+    cdata_mp(rc) = cdata_max_mp(rc);
+    cdata_sp(rc) = cdata_max_sp(rc);
     if (rc == 0)
     {
         label_2124();
@@ -41816,9 +41844,9 @@ void label_1535()
 }
 void label_1536()
 {
-    cdata(25, rc) = 2;
-    cdata(9, rc) = 10;
-    cdata(69, rc) = 10;
+    cdata_quality(rc) = 2;
+    cdata_relationship(rc) = 10;
+    cdata_original_relationship(rc) = 10;
     cbitmod(967, rc, 1);
     flt();
     itemcreate(0, 333, -1, -1, 0);
@@ -41862,7 +41890,7 @@ void label_1536()
         itemcreate(0, 378, -1, -1, 0);
     }
     label_0043();
-    cdata(41, r1) = 5 + trait(154);
+    cdata_skill_bonus(r1) = 5 + trait(154);
     cdata(42, r1) = 5 + trait(154);
     inv_getheader(0);
     {
@@ -41883,10 +41911,10 @@ void label_1536()
 void label_1537()
 {
     label_1538();
-    cxinit = cdata(1, 0);
-    cyinit = cdata(2, 0);
+    cxinit = cdata_x(0);
+    cyinit = cdata_y(0);
     label_1532();
-    cdata(80, rc) = 0;
+    cdata_current_map(rc) = 0;
     snd(64);
     txtef(5);
     txt(cnven(cdatan(0, rc))
@@ -41913,36 +41941,36 @@ void label_15380()
     cbitmod(978, rc, 0);
     cbitmod(980, rc, 0);
     cbitmod(986, rc, 0);
-    cdata(50, rc) = cdata(51, rc) / 3;
-    cdata(55, rc) = cdata(56, rc) / 3;
-    cdata(52, rc) = cdata(53, rc) / 3;
-    cdata(86, rc) = 0;
-    cdata(0, rc) = 1;
-    cdata(80, rc) = 0;
-    cdata(9, rc) = cdata(69, rc);
-    cdata(22, rc) = 8000;
+    cdata_hp(rc) = cdata_max_hp(rc) / 3;
+    cdata_mp(rc) = cdata_max_mp(rc) / 3;
+    cdata_sp(rc) = cdata_max_sp(rc) / 3;
+    cdata_insanity(rc) = 0;
+    cdata_state(rc) = 1;
+    cdata_current_map(rc) = 0;
+    cdata_relationship(rc) = cdata_original_relationship(rc);
+    cdata_nutrition(rc) = 8000;
     return;
 }
 void label_15390()
 {
     cbitmod(980, rc, 0);
     rowactend(rc);
-    cdata(250, rc) = 0;
-    cdata(251, rc) = 0;
-    cdata(254, rc) = 0;
-    cdata(253, rc) = 0;
-    cdata(252, rc) = 0;
-    cdata(263, rc) = 0;
-    cdata(264, rc) = 0;
-    cdata(256, rc) = 0;
-    cdata(257, rc) = 0;
-    cdata(258, rc) = 0;
-    cdata(262, rc) = 0;
-    cdata(12, rc) = 0;
-    cdata(201, rc) = 0;
-    cdata(29, rc) = 0;
-    cdata(261, rc) = 0;
-    cdata(79, rc) = 0;
+    cdata_poisoned(rc) = 0;
+    cdata_sleep(rc) = 0;
+    cdata_confused(rc) = 0;
+    cdata_blind(rc) = 0;
+    cdata_paralyzed(rc) = 0;
+    cdata_choked(rc) = 0;
+    cdata_furious(rc) = 0;
+    cdata_dimmed(rc) = 0;
+    cdata_drunk(rc) = 0;
+    cdata_bleeding(rc) = 0;
+    cdata_gravity(rc) = 0;
+    cdata_item_which_will_be_used(rc) = 0;
+    cdata_hate(rc) = 0;
+    cdata_enemy_id(rc) = 0;
+    cdata_sick(rc) = 0;
+    cdata_emotion_icon(rc) = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -41986,11 +42014,11 @@ void label_1540()
             evadd(6);
         }
     }
-    if (cdata(150, rc) == 1)
+    if (cdata_character_role(rc) == 1)
     {
-        cdata(9, rc) = 0;
+        cdata_relationship(rc) = 0;
     }
-    if (cdata(150, rc) == 14)
+    if (cdata_character_role(rc) == 14)
     {
         p = rnd(5) + 1;
         {
@@ -42003,7 +42031,7 @@ void label_1540()
             }
         }
     }
-    if (cdata(27, rc) == 326)
+    if (cdata_id(rc) == 326)
     {
         skillmod(183, rc, 1000);
     }
@@ -42492,7 +42520,7 @@ label_1554:
     dbidn = cmclass;
     dbmode = 3;
     label_2298();
-    cdata(38, rc) = 1;
+    cdata_level(rc) = 1;
     {
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -42826,7 +42854,7 @@ label_1561_internal:
         goto label_1561_internal;
     }
     label_1566();
-    cmportrait = cdata(13, rc);
+    cmportrait = cdata_portrait(rc);
 label_1562_internal:
     snd(94);
 label_1563_internal:
@@ -42848,7 +42876,7 @@ label_1563_internal:
     label_2298();
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
-    cdata(38, rc) = 1;
+    cdata_level(rc) = 1;
     {
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -42858,7 +42886,7 @@ label_1563_internal:
     }
     label_1535();
     label_1536();
-    cdata(13, rc) = cmportrait;
+    cdata_portrait(rc) = cmportrait;
     create_pcpic(0, 1);
     mode = 1;
     csctrl = 1;
@@ -42961,7 +42989,7 @@ label_1565_internal:
     }
     snd(101);
     cdatan(0, rc) = cmname;
-    cdata(30, 0) = 400 + rnd(200);
+    cdata_gold(0) = 400 + rnd(200);
     if (geneuse != ""s)
     {
         label_2091();
@@ -43239,7 +43267,8 @@ int convertartifact(int prm_930, int prm_931)
             tc_at_m163 = inv_getowner(cnt);
             if (tc_at_m163 != -1)
             {
-                if (cdata(0, tc_at_m163) == 0 || cdata(150, tc_at_m163) == 13)
+                if (cdata_state(tc_at_m163) == 0
+                    || cdata_character_role(tc_at_m163) == 13)
                 {
                     continue;
                 }
@@ -43718,8 +43747,8 @@ void label_1573()
                     inv_number(ci) = 0;
                     continue;
                 }
-                inv_x(ci) = cdata(1, rc);
-                inv_y(ci) = cdata(2, rc);
+                inv_x(ci) = cdata_x(rc);
+                inv_y(ci) = cdata_y(rc);
                 item_stack(-1, ci);
                 if (stat == 0)
                 {
@@ -43734,7 +43763,7 @@ void label_1573()
                 inv_number(ci) = 0;
             }
         }
-        cell_refresh(cdata(1, rc), cdata(2, rc));
+        cell_refresh(cdata_x(rc), cdata_y(rc));
         create_pcpic(0, 1);
         return;
     }
@@ -43747,18 +43776,18 @@ void label_1573()
                 create_pcpic(rc, 1);
             }
         }
-        if (cdata(9, rc) == 10)
+        if (cdata_relationship(rc) == 10)
         {
             return;
         }
     }
     if (gdata(20) == 33)
     {
-        if (cdata(27, rc) == 185)
+        if (cdata_id(rc) == 185)
         {
             return;
         }
-        if (cdata(27, rc) == 204)
+        if (cdata_id(rc) == 204)
         {
             return;
         }
@@ -43785,7 +43814,7 @@ void label_1573()
             }
             ci = cnt;
             f = 0;
-            if (cdata(150, rc) == 20)
+            if (cdata_character_role(rc) == 20)
             {
                 break;
             }
@@ -43797,14 +43826,14 @@ void label_1573()
             {
                 f = 1;
             }
-            if (cdata(25, rc) >= 4)
+            if (cdata_quality(rc) >= 4)
             {
                 if (rnd(2) == 0)
                 {
                     f = 1;
                 }
             }
-            if (cdata(150, rc) == 13)
+            if (cdata_character_role(rc) == 13)
             {
                 if (rnd(5))
                 {
@@ -43861,8 +43890,8 @@ void label_1573()
                     cdata(inv_body_part(ci), rc) / 10000 * 10000;
                 inv_body_part(ci) = 0;
             }
-            inv_x(ci) = cdata(1, rc);
-            inv_y(ci) = cdata(2, rc);
+            inv_x(ci) = cdata_x(rc);
+            inv_y(ci) = cdata_y(rc);
             itemturn(ci);
             item_stack(-1, ci);
             if (stat == 0)
@@ -43877,18 +43906,18 @@ void label_1573()
             inv_number(ci) = 0;
         }
     }
-    if (cdata(25, rc) >= 4 || rnd(20) == 0 || cbit(17, rc) == 1 || rc < 16)
+    if (cdata_quality(rc) >= 4 || rnd(20) == 0 || cbit(17, rc) == 1 || rc < 16)
     {
-        if (cdata(30, rc) > 0)
+        if (cdata_gold(rc) > 0)
         {
             flt();
             itemcreate(
                 -1,
                 54,
-                cdata(1, rc),
-                cdata(2, rc),
-                cdata(30, rc) / (1 + 3 * (cbit(17, rc) == 0)));
-            cdata(30, rc) -= cdata(30, rc) / (1 + 3 * (cbit(17, rc) == 0));
+                cdata_x(rc),
+                cdata_y(rc),
+                cdata_gold(rc) / (1 + 3 * (cbit(17, rc) == 0)));
+            cdata_gold(rc) -= cdata_gold(rc) / (1 + 3 * (cbit(17, rc) == 0));
         }
     }
     switch (refclass(rc, 4))
@@ -43897,124 +43926,124 @@ void label_1573()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1574_internal;
     case 7:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1574_internal;
     case 3:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1574_internal;
     case 2:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1574_internal;
     case 4:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1574_internal;
     case 5:
         if (rnd(50) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1574_internal;
     }
 label_1574_internal:
-    switch (refchara(cdata(27, rc), 3))
+    switch (refchara(cdata_id(rc), 3))
     {
     case 3:
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = fsetwear(rnd(length(fsetwear)));
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = fsetweapon(rnd(length(fsetweapon)));
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1575_internal;
     case 1:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 62000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
             remain_make(ci, rc);
         }
         goto label_1575_internal;
@@ -44022,10 +44051,10 @@ label_1574_internal:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 62000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
             remain_make(ci, rc);
         }
         goto label_1575_internal;
@@ -44033,166 +44062,166 @@ label_1574_internal:
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 32000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 34000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1575_internal;
     case 4:
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = fsetwear(rnd(length(fsetwear)));
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = fsetweapon(rnd(length(fsetweapon)));
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1575_internal;
     case 5:
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = fsetwear(rnd(length(fsetwear)));
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = fsetweapon(rnd(length(fsetweapon)));
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(15) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         }
         goto label_1575_internal;
     }
@@ -44200,51 +44229,52 @@ label_1575_internal:
     if (rnd(40) == 0)
     {
         p = 0;
-        flt(calcobjlv(cdata(38, tc)), calcfixlv(2));
+        flt(calcobjlv(cdata_level(tc)), calcfixlv(2));
         flttypemajor = 62000;
         flttypeminor = 0;
-        itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+        itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
         remain_make(ci, rc);
     }
     if (gdata(20) == 35)
     {
-        cell_refresh(cdata(1, rc), cdata(2, rc));
+        cell_refresh(cdata_x(rc), cdata_y(rc));
         return;
     }
-    if (gdata(20) != 6 && cdata(150, rc) != 20)
+    if (gdata(20) != 6 && cdata_character_role(rc) != 20)
     {
-        if (rnd(175) == 0 || cdata(25, rc) == 6 || 0
-            || cdata(25, rc) == 4 && rnd(2) == 0
-            || cdata(25, rc) == 5 && rnd(3) == 0)
+        if (rnd(175) == 0 || cdata_quality(rc) == 6 || 0
+            || cdata_quality(rc) == 4 && rnd(2) == 0
+            || cdata_quality(rc) == 5 && rnd(3) == 0)
         {
             flt();
-            itemcreate(-1, 504, cdata(1, rc), cdata(2, rc), 0);
-            inv_color(ci) = cdata(7, rc) % 1000;
-            inv_subname(ci) = cdata(27, rc);
+            itemcreate(-1, 504, cdata_x(rc), cdata_y(rc), 0);
+            inv_color(ci) = cdata_image(rc) % 1000;
+            inv_subname(ci) = cdata_id(rc);
             cell_refresh(inv_x(ci), inv_y(ci));
         }
-        if (rnd(175) == 0 || cdata(25, rc) == 6 || 0
-            || cdata(25, rc) == 4 && rnd(2) == 0
-            || cdata(25, rc) == 5 && rnd(3) == 0)
+        if (rnd(175) == 0 || cdata_quality(rc) == 6 || 0
+            || cdata_quality(rc) == 4 && rnd(2) == 0
+            || cdata_quality(rc) == 5 && rnd(3) == 0)
         {
             flt();
-            itemcreate(-1, 503, cdata(1, rc), cdata(2, rc), 0);
-            inv_color(ci) = cdata(7, rc) % 1000;
-            inv_subname(ci) = cdata(27, rc);
+            itemcreate(-1, 503, cdata_x(rc), cdata_y(rc), 0);
+            inv_color(ci) = cdata_image(rc) % 1000;
+            inv_subname(ci) = cdata_id(rc);
             cell_refresh(inv_x(ci), inv_y(ci));
         }
     }
-    if (cdata(150, rc) == 1010)
+    if (cdata_character_role(rc) == 1010)
     {
         flt();
-        itemcreate(-1, 361, cdata(1, rc), cdata(2, rc), 0);
-        inv_param1(ci) = cdata(153, rc);
+        itemcreate(-1, 361, cdata_x(rc), cdata_y(rc), 0);
+        inv_param1(ci) = cdata_shop_store_id(rc);
         inv_own_state(ci) = 2;
     }
-    if (rollanatomy == 1 || cdata(25, rc) >= 4 || 0 || cbit(960, rc) == 1 || 0)
+    if (rollanatomy == 1 || cdata_quality(rc) >= 4 || 0 || cbit(960, rc) == 1
+        || 0)
     {
         flt();
-        itemcreate(-1, 204, cdata(1, rc), cdata(2, rc), 0);
+        itemcreate(-1, 204, cdata_x(rc), cdata_y(rc), 0);
         if (stat != 0)
         {
             remain_make(ci, rc);
@@ -44252,21 +44282,22 @@ label_1575_internal:
             {
                 if (sdata(161, 0) != 0)
                 {
-                    inv_number(ci) += rnd(1 + (sdata(161, 0) > cdata(38, rc)));
+                    inv_number(ci) +=
+                        rnd(1 + (sdata(161, 0) > cdata_level(rc)));
                 }
             }
         }
     }
     lootrich = -1;
-    if (cdata(27, rc) == 183)
+    if (cdata_id(rc) == 183)
     {
         lootrich = 8;
     }
-    if (cdata(27, rc) == 184)
+    if (cdata_id(rc) == 184)
     {
         lootrich = 4;
     }
-    if (cdata(27, rc) == 185)
+    if (cdata_id(rc) == 185)
     {
         lootrich = 2;
     }
@@ -44276,15 +44307,15 @@ label_1575_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (lootrich); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata(38, rc)));
+                flt(calcobjlv(cdata_level(rc)));
                 flttypeminor = 77001;
-                itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+                itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
             }
         }
         if (rnd(3) == 0)
         {
             flt();
-            itemcreate(-1, 284, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 284, cdata_x(rc), cdata_y(rc), 0);
         }
     }
     drop(0) = -1;
@@ -44298,14 +44329,14 @@ label_1575_internal:
     drop(8) = -1;
     drop(9) = -1;
     drop(10) = -1;
-    if (cdata(27, rc) == 140)
+    if (cdata_id(rc) == 140)
     {
         drop(0) = 355;
         drop(1) = -1;
     }
-    if (cdata(27, rc) == 175 || cdata(27, rc) == 177 || cdata(27, rc) == 178)
+    if (cdata_id(rc) == 175 || cdata_id(rc) == 177 || cdata_id(rc) == 178)
     {
-        if (npcmemory(0, cdata(27, rc)) == 0)
+        if (npcmemory(0, cdata_id(rc)) == 0)
         {
             drop(0) = 290;
             drop(1) = 421;
@@ -44320,7 +44351,7 @@ label_1575_internal:
     }
     if (gdata(20) == 37)
     {
-        if (cdata(27, rc) == 257)
+        if (cdata_id(rc) == 257)
         {
             drop(0) = 665;
             drop(1) = 55;
@@ -44340,126 +44371,126 @@ label_1575_internal:
                 break;
             }
             flt();
-            itemcreate(-1, drop(cnt), cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, drop(cnt), cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 5)
+    if (cdata_id(rc) == 5)
     {
         if (rnd(200) == 0)
         {
             flt();
-            itemcreate(-1, 702, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 702, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 21)
+    if (cdata_id(rc) == 21)
     {
         if (rnd(100) == 0)
         {
             flt();
-            itemcreate(-1, 706, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 706, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 34)
+    if (cdata_id(rc) == 34)
     {
         if (rnd(4) == 0)
         {
             flt();
-            itemcreate(-1, 717, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 717, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 99 || cdata(27, rc) == 100 || cdata(27, rc) == 101)
+    if (cdata_id(rc) == 99 || cdata_id(rc) == 100 || cdata_id(rc) == 101)
     {
         if (rnd(300) == 0)
         {
             flt();
-            itemcreate(-1, 708, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 708, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 117)
+    if (cdata_id(rc) == 117)
     {
         if (rnd(140) == 0)
         {
             flt();
-            itemcreate(-1, 720, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 720, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 168)
+    if (cdata_id(rc) == 168)
     {
         if (rnd(100) == 0)
         {
             flt();
-            itemcreate(-1, 740, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 740, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) >= 302 && cdata(27, rc) <= 305)
+    if (cdata_id(rc) >= 302 && cdata_id(rc) <= 305)
     {
         if (rnd(90) == 0)
         {
             flt();
-            itemcreate(-1, idcupsule, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, idcupsule, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 307 || cdata(27, rc) == 308)
+    if (cdata_id(rc) == 307 || cdata_id(rc) == 308)
     {
         if (rnd(150) == 0)
         {
             flt();
-            itemcreate(-1, 709, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 709, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 189 || cdata(27, rc) == 190)
+    if (cdata_id(rc) == 189 || cdata_id(rc) == 190)
     {
         if (rnd(150) == 0)
         {
             flt();
-            itemcreate(-1, 711, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 711, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 213)
+    if (cdata_id(rc) == 213)
     {
         if (rnd(50) == 0)
         {
             flt();
-            itemcreate(-1, 672, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 672, cdata_x(rc), cdata_y(rc), 0);
             if (stat != 0)
             {
                 inv_param1(ci) = 169;
             }
         }
     }
-    if (cdata(27, rc) == 250)
+    if (cdata_id(rc) == 250)
     {
         if (rnd(200) == 0)
         {
             flt();
-            itemcreate(-1, 715, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 715, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 341)
+    if (cdata_id(rc) == 341)
     {
         if (rnd(3) == 0)
         {
             flt();
-            itemcreate(-1, 635, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 635, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 85 || cdata(27, rc) == 86 || cdata(27, rc) == 87)
+    if (cdata_id(rc) == 85 || cdata_id(rc) == 86 || cdata_id(rc) == 87)
     {
         if (rnd(600) == 0)
         {
             flt();
-            itemcreate(-1, 737, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 737, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 302)
+    if (cdata_id(rc) == 302)
     {
         {
             int cnt = 0;
             for (int cnt_end = cnt + (2 + rnd(4)); cnt < cnt_end; ++cnt)
             {
-                flt(cdata(38, rc), 2);
+                flt(cdata_level(rc), 2);
                 flttypemajor = 92000;
-                itemcreate(-1, 0, cdata(1, rc), cdata(2, rc), 0);
+                itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
                 if (inv_value(ci) < 800)
                 {
                     inv_number(ci) = rnd(5) + 1;
@@ -44467,27 +44498,27 @@ label_1575_internal:
             }
         }
     }
-    if (cdata(27, rc) == 328)
+    if (cdata_id(rc) == 328)
     {
         flt();
-        itemcreate(-1, 55, cdata(1, rc), cdata(2, rc), 1 + rnd(3));
+        itemcreate(-1, 55, cdata_x(rc), cdata_y(rc), 1 + rnd(3));
         if (rnd(2))
         {
             flt();
-            itemcreate(-1, 622, cdata(1, rc), cdata(2, rc), 0);
+            itemcreate(-1, 622, cdata_x(rc), cdata_y(rc), 0);
         }
     }
-    if (cdata(27, rc) == 329)
+    if (cdata_id(rc) == 329)
     {
         flt();
         itemcreate(
             -1,
             54,
-            cdata(1, rc),
-            cdata(2, rc),
-            2500 + rnd((cdata(34, 0) + 1000)));
+            cdata_x(rc),
+            cdata_y(rc),
+            2500 + rnd((cdata_fame(0) + 1000)));
     }
-    if (cdata(27, rc) == 351 || cdata(27, rc) == 352)
+    if (cdata_id(rc) == 351 || cdata_id(rc) == 352)
     {
         {
             int cnt = 0;
@@ -44495,7 +44526,7 @@ label_1575_internal:
             {
                 flt();
                 nostack = 1;
-                itemcreate(-1, 772, cdata(1, rc), cdata(2, rc), 0);
+                itemcreate(-1, 772, cdata_x(rc), cdata_y(rc), 0);
                 if (rnd(2))
                 {
                     if (stat != 0)
@@ -44507,8 +44538,8 @@ label_1575_internal:
             }
         }
     }
-    cell_refresh(cdata(1, rc), cdata(2, rc));
-    if (cdata(150, rc) == 13)
+    cell_refresh(cdata_x(rc), cdata_y(rc));
+    if (cdata_character_role(rc) == 13)
     {
         label_2668();
     }
@@ -44529,7 +44560,7 @@ void label_1576()
             else
             {
                 p = cnt;
-                if (cdata(0, p) == 0)
+                if (cdata_state(p) == 0)
                 {
                     continue;
                 }
@@ -44607,7 +44638,7 @@ void label_1576()
                                     }
                                     if (p == 0)
                                     {
-                                        if (cdata(61, 0) == 7)
+                                        if (cdata_god(0) == 7)
                                         {
                                             i = refitem(inv_id(cnt), 9);
                                             if (rnd(3) == 0)
@@ -44623,7 +44654,7 @@ void label_1576()
                                                 p = rnd(inv_number(cnt)) + 1;
                                                 removeitem(
                                                     cnt, inv_number(cnt));
-                                                flt(calcobjlv(cdata(38, 0)));
+                                                flt(calcobjlv(cdata_level(0)));
                                                 flttypeminor = 58500;
                                                 itemcreate(0, 0, -1, -1, p);
                                                 p = 0;
@@ -44647,12 +44678,12 @@ void label_1577()
 {
     if (rnd(4) == 0)
     {
-        dmghp(cc, cdata(50, cc) * (5 + cdata(87, cc) / 5) / 100, -5);
+        dmghp(cc, cdata_hp(cc) * (5 + cdata_curse_power(cc) / 5) / 100, -5);
         return;
     }
     if (mdata(6) != 1)
     {
-        if (rnd(10 - limit(cdata(87, cc) / 10, 0, 9)) == 0)
+        if (rnd(10 - limit(cdata_curse_power(cc) / 10, 0, 9)) == 0)
         {
             efid = 408;
             tc = cc;
@@ -44662,14 +44693,14 @@ void label_1577()
     }
     if (rnd(10) == 0)
     {
-        if (cdata(30, cc) > 0)
+        if (cdata_gold(cc) > 0)
         {
-            p = rnd(cdata(30, cc)) / 100 + rnd(10) + 1;
-            if (p > cdata(30, cc))
+            p = rnd(cdata_gold(cc)) / 100 + rnd(10) + 1;
+            if (p > cdata_gold(cc))
             {
-                p = cdata(30, cc);
+                p = cdata_gold(cc);
             }
-            cdata(30, cc) -= p;
+            cdata_gold(cc) -= p;
             if (synccheck(cc, -1))
             {
                 txtef(8);
@@ -44713,11 +44744,11 @@ void label_1578()
                     u8"Something splits "s + name(cc) + your(cc)
                         + u8" body and breaks out!"s));
             }
-            cdata(258, cc) += 15;
+            cdata_bleeding(cc) += 15;
             flt();
-            initlv = cdata(38, cc) / 2 + 1;
+            initlv = cdata_level(cc) / 2 + 1;
             novoidlv = 1;
-            characreate(-1, 330, cdata(1, cc), cdata(2, cc));
+            characreate(-1, 330, cdata_x(cc), cdata_y(cc));
             if (stat != 0)
             {
                 if (strlen_u(cdatan(0, cc)) > 10
@@ -44786,7 +44817,7 @@ void label_1579()
                                     u8"Something sucks "s + name(cc) + your(cc)
                                         + u8" blood."s));
                             }
-                            cdata(258, cc) +=
+                            cdata_bleeding(cc) +=
                                 abs(inv_enchantment_power(ci, cnt)) / 25 + 3;
                             continue;
                         }
@@ -44803,7 +44834,8 @@ void label_1579()
                                     name(cc) + u8" become"s + _s(cc)
                                         + u8" inexperienced."s));
                             }
-                            cdata(35, cc) -= cdata(36, cc)
+                            cdata_experience(cc) -=
+                                cdata_required_experience(cc)
                                     / (300
                                        - limit(
                                              abs(inv_enchantment_power(ci, cnt))
@@ -44811,9 +44843,9 @@ void label_1579()
                                              0,
                                              50))
                                 + rnd(100);
-                            if (cdata(35, cc) < 0)
+                            if (cdata_experience(cc) < 0)
                             {
-                                cdata(35, cc) = 0;
+                                cdata_experience(cc) = 0;
                             }
                             continue;
                         }
@@ -44845,13 +44877,13 @@ void label_1579()
                                              ++cnt)
                                         {
                                             flt(calcobjlv(
-                                                    cdata(38, 0) * 3 / 2 + 3),
+                                                    cdata_level(0) * 3 / 2 + 3),
                                                 calcfixlv(2));
                                             characreate(
                                                 -1,
                                                 0,
-                                                cdata(1, cc),
-                                                cdata(2, cc));
+                                                cdata_x(cc),
+                                                cdata_y(cc));
                                         }
                                     }
                                     continue;
@@ -44867,8 +44899,8 @@ void label_1579()
 }
 void label_1580()
 {
-    if (cdata(254, 0) != 0 || cdata(251, 0) != 0 || cdata(252, 0) != 0
-        || cdata(263, 0) != 0)
+    if (cdata_confused(0) != 0 || cdata_sleep(0) != 0 || cdata_paralyzed(0) != 0
+        || cdata_choked(0) != 0)
     {
         return;
     }
@@ -45168,16 +45200,16 @@ int label_1582()
                 ii_p = inv_getowner(ci);
                 if (ii_p != -1)
                 {
-                    if (cdata(150, ii_p) == 13)
+                    if (cdata_character_role(ii_p) == 13)
                     {
                         artifactlocation += lang(
                             iknownnameref(inv_id(ci)) + u8"は"s + gdata(10)
                                 + u8"年"s + gdata(11) + u8"月に"s
-                                + mapname(cdata(80, ii_p)) + u8"の"s
+                                + mapname(cdata_current_map(ii_p)) + u8"の"s
                                 + cdatan(0, ii_p) + u8"の手に渡った。\n"s,
                             cnven(iknownnameref(inv_id(ci)))
                                 + u8" was held by "s + cdatan(0, ii_p)
-                                + u8" at "s + mapname(cdata(80, ii_p))
+                                + u8" at "s + mapname(cdata_current_map(ii_p))
                                 + u8" in "s + gdata(12) + u8"/"s + gdata(11)
                                 + u8", "s + gdata(10) + u8". "s);
                     }
@@ -45234,7 +45266,7 @@ int label_1582()
         }
         if (val >= 0)
         {
-            cdata(30, val) += inv_number(ci);
+            cdata_gold(val) += inv_number(ci);
             inv_number(ci) = 0;
             stat = 1;
             return stat;
@@ -45296,11 +45328,11 @@ int label_1582()
         inv_param1(ci) = gdata(22) * (gdata(20) != 30) + 5;
         if (inv_id(ci) == 283)
         {
-            inv_param1(ci) = (rnd(10) + 1) * (cdata(38, 0) / 10 + 1);
+            inv_param1(ci) = (rnd(10) + 1) * (cdata_level(0) / 10 + 1);
         }
         if (inv_id(ci) == 415 || inv_id(ci) == 416)
         {
-            inv_param1(ci) = cdata(38, 0);
+            inv_param1(ci) = cdata_level(0);
         }
         inv_param2(ci) = rnd(abs(gdata(22)) * (gdata(20) != 30) + 1);
         if (inv_id(ci) == 284 || inv_id(ci) == 283)
@@ -45434,21 +45466,23 @@ void lovemiracle(int prm_932)
     flt();
     if (rnd(2))
     {
-        itemcreate(-1, 573, cdata(1, prm_932), cdata(2, prm_932), 0);
+        itemcreate(-1, 573, cdata_x(prm_932), cdata_y(prm_932), 0);
         if (stat)
         {
-            inv_subname(ci) = cdata(27, prm_932);
-            inv_weight(ci) = cdata(20, prm_932) * 10 + 250;
+            inv_subname(ci) = cdata_id(prm_932);
+            inv_weight(ci) = cdata_weight(prm_932) * 10 + 250;
             inv_value(ci) = limit(
-                cdata(20, prm_932) * cdata(20, prm_932) / 10000, 200, 40000);
+                cdata_weight(prm_932) * cdata_weight(prm_932) / 10000,
+                200,
+                40000);
         }
     }
     else
     {
-        itemcreate(-1, 574, cdata(1, prm_932), cdata(2, prm_932), 0);
+        itemcreate(-1, 574, cdata_x(prm_932), cdata_y(prm_932), 0);
         if (stat)
         {
-            inv_subname(ci) = cdata(27, prm_932);
+            inv_subname(ci) = cdata_id(prm_932);
         }
     }
     ci = cibk;
@@ -46347,9 +46381,9 @@ void label_1588()
         for (int cnt_end = cnt + (fdmax); cnt < cnt_end; ++cnt)
         {
             i = 100;
-            if (cdata(22, cc) >= 5000)
+            if (cdata_nutrition(cc) >= 5000)
             {
-                p = (cdata(22, cc) - 5000) / 25;
+                p = (cdata_nutrition(cc) - 5000) / 25;
                 i = i * 100 / (100 + p);
             }
             if (cc != 0)
@@ -46379,20 +46413,20 @@ void label_1588()
     }
     if (nutrition >= 3000)
     {
-        if (rnd(10) == 0 || cdata(22, cc) >= 12000)
+        if (rnd(10) == 0 || cdata_nutrition(cc) >= 12000)
         {
-            modweight(cc, rnd(3) + 1, cdata(22, cc) >= 12000);
+            modweight(cc, rnd(3) + 1, cdata_nutrition(cc) >= 12000);
         }
     }
-    cdata(22, cc) += nutrition;
-    if (cdata(27, cc) == 261)
+    cdata_nutrition(cc) += nutrition;
+    if (cdata_id(cc) == 261)
     {
         if (nutrition >= 2000)
         {
             cibk = ci;
-            flt(calcobjlv(cdata(38, cc)));
+            flt(calcobjlv(cdata_level(cc)));
             flttypeminor = 58500;
-            itemcreate(-1, 0, cdata(1, cc), cdata(2, cc), 0);
+            itemcreate(-1, 0, cdata_x(cc), cdata_y(cc), 0);
             txtef(9);
             txtmore();
             txt(lang(
@@ -46492,11 +46526,11 @@ void label_1588()
                 lang(u8"「ブッ！」"s, cnvtalk(u8"Ugh!"s)));
         }
         dmghp(cc, rnd(250) + 250, -4);
-        if (cdata(0, cc) != 1)
+        if (cdata_state(cc) != 1)
         {
             if (cc != 0)
             {
-                if (cdata(9, cc) >= 0)
+                if (cdata_relationship(cc) >= 0)
                 {
                     modkarma(0, -1);
                 }
@@ -46523,13 +46557,13 @@ void label_1588()
                           u8"「あれ…なにこの感じは…」"s,
                           (u8"gasps "s
                            + cnvtalk(u8"Uh..uh..What is this feeling..."s))));
-            cdata(79, cc) = 317;
+            cdata_emotion_icon(cc) = 317;
             modimp(cc, 30);
             modkarma(0, -10);
             lovemiracle(cc);
         }
         dmgcon(cc, 7, 500);
-        cdata(79, cc) = 317;
+        cdata_emotion_icon(cc) = 317;
     }
     {
         int cnt = 0;
@@ -47349,8 +47383,8 @@ int dist_town()
                     cell_featread(x_at_m165, y_at_m165);
                     if (adata(0, feat(2)) == 3)
                     {
-                        i_at_m165 = dist(
-                            cdata(1, 0), cdata(2, 0), x_at_m165, y_at_m165);
+                        i_at_m165 =
+                            dist(cdata_x(0), cdata_y(0), x_at_m165, y_at_m165);
                         if (i_at_m165 < p_at_m165)
                         {
                             p_at_m165 = i_at_m165;
@@ -47675,21 +47709,21 @@ void map_placearena(int prm_939, int prm_940)
             label_1532();
             if (prm_940 == 0)
             {
-                if (cdata(1, prm_939) >= 13 && cdata(2, prm_939) >= 6
-                    && cdata(1, prm_939) < 20 && cdata(2, prm_939) < 12)
+                if (cdata_x(prm_939) >= 13 && cdata_y(prm_939) >= 6
+                    && cdata_x(prm_939) < 20 && cdata_y(prm_939) < 12)
                 {
                     break;
                 }
             }
             else
             {
-                if (cdata(1, prm_939) >= 5 && cdata(2, prm_939) >= 6
-                    && cdata(1, prm_939) < 12 && cdata(2, prm_939) < 12)
+                if (cdata_x(prm_939) >= 5 && cdata_y(prm_939) >= 6
+                    && cdata_x(prm_939) < 12 && cdata_y(prm_939) < 12)
                 {
                     break;
                 }
             }
-            map(cdata(1, prm_939), cdata(2, prm_939), 1) = 0;
+            map(cdata_x(prm_939), cdata_y(prm_939), 1) = 0;
         }
     }
     return;
@@ -47705,7 +47739,7 @@ void map_placeplayer()
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
@@ -47713,8 +47747,8 @@ void map_placeplayer()
             {
                 if (gdata(183) == cnt)
                 {
-                    cdata(1, gdata(183)) = cdata(1, 0);
-                    cdata(2, gdata(183)) = cdata(2, 0);
+                    cdata_x(gdata(183)) = cdata_x(0);
+                    cdata_y(gdata(183)) = cdata_y(0);
                     continue;
                 }
             }
@@ -47730,12 +47764,12 @@ void map_placeplayer()
                     continue;
                 }
             }
-            if (cdata(80, cnt) == gdata(20))
+            if (cdata_current_map(cnt) == gdata(20))
             {
                 if (cnt != 0)
                 {
-                    cxinit = cdata(171, cnt);
-                    cyinit = cdata(172, cnt);
+                    cxinit = cdata_initial_x(cnt);
+                    cyinit = cdata_initial_y(cnt);
                     rc = cnt;
                     label_1532();
                     continue;
@@ -48718,7 +48752,7 @@ void map_randsite(int prm_971, int prm_972)
         }
         if (rnd(18) == 0)
         {
-            flt(calcobjlv(rnd(cdata(38, 0) + 10)), calcfixlv(3));
+            flt(calcobjlv(rnd(cdata_level(0) + 10)), calcfixlv(3));
             flttypemajor = fsetwear(rnd(length(fsetwear)));
             itemcreate(-1, 0, x_at_m169, y_at_m169, 0);
             return;
@@ -49378,7 +49412,7 @@ label_16951_internal:
                                              cnt < cnt_end;
                                              ++cnt)
                                         {
-                                            flt(cdata(38, rc), calcfixlv(2));
+                                            flt(cdata_level(rc), calcfixlv(2));
                                             flttypemajor = creaturepack;
                                             characreate(
                                                 -1,
@@ -49587,8 +49621,8 @@ void label_1696()
             characreate(-1, 0, -3, 0);
             if (stat != 0)
             {
-                cdata(9, rc) = -3;
-                cdata(69, rc) = -3;
+                cdata_relationship(rc) = -3;
+                cdata_original_relationship(rc) = -3;
             }
         }
     }
@@ -49704,7 +49738,7 @@ int label_1697()
     mapstarty = rnd(mdata(1) / 3) + mdata(1) / 3;
     map_placeplayer();
     flt();
-    itemcreate(-1, 560, cdata(1, 0) + 1, cdata(2, 0), 0);
+    itemcreate(-1, 560, cdata_x(0) + 1, cdata_y(0), 0);
     inv_own_state(ci) = 1;
     {
         int cnt = 0;
@@ -50355,10 +50389,10 @@ int label_1703()
                     initlv = roomdiff * 7 + rnd(5);
                     dbid = list(rnd(3), roomdiff);
                     characreate(-1, dbid, rnd(rw) + rx, rnd(rh) + ry);
-                    cdata(150, rc) = 3;
-                    cdata(9, rc) = -1;
-                    cdata(69, rc) = -1;
-                    cdata(30, rc) = cdata(38, rc) * (20 + rnd(20));
+                    cdata_character_role(rc) = 3;
+                    cdata_relationship(rc) = -1;
+                    cdata_original_relationship(rc) = -1;
+                    cdata_gold(rc) = cdata_level(rc) * (20 + rnd(20));
                 }
             }
         }
@@ -50393,63 +50427,63 @@ int label_1703()
     }
     flt();
     characreate(-1, 29, -3, 0);
-    cdata(150, rc) = 3;
-    cdata(9, rc) = -1;
-    cdata(69, rc) = -1;
+    cdata_character_role(rc) = 3;
+    cdata_relationship(rc) = -1;
+    cdata_original_relationship(rc) = -1;
     flt();
     characreate(-1, 231, -3, 0);
-    cdata(150, rc) = 3;
-    cdata(9, rc) = -1;
-    cdata(69, rc) = -1;
+    cdata_character_role(rc) = 3;
+    cdata_relationship(rc) = -1;
+    cdata_original_relationship(rc) = -1;
     flt();
     characreate(-1, 31, -3, 0);
-    cdata(150, rc) = 3;
-    cdata(9, rc) = -1;
-    cdata(69, rc) = -1;
+    cdata_character_role(rc) = 3;
+    cdata_relationship(rc) = -1;
+    cdata_original_relationship(rc) = -1;
     flt();
     characreate(-1, 247, -3, 0);
-    cdata(150, rc) = 3;
-    cdata(9, rc) = -1;
-    cdata(69, rc) = -1;
+    cdata_character_role(rc) = 3;
+    cdata_relationship(rc) = -1;
+    cdata_original_relationship(rc) = -1;
     if (rnd(10) == 0)
     {
         flt();
         characreate(-1, 34, -3, 0);
-        cdata(150, rc) = 3;
-        cdata(9, rc) = -1;
-        cdata(69, rc) = -1;
+        cdata_character_role(rc) = 3;
+        cdata_relationship(rc) = -1;
+        cdata_original_relationship(rc) = -1;
     }
     if (rnd(10) == 0)
     {
         flt();
         characreate(-1, 28, -3, 0);
-        cdata(150, rc) = 3;
-        cdata(9, rc) = -1;
-        cdata(69, rc) = -1;
+        cdata_character_role(rc) = 3;
+        cdata_relationship(rc) = -1;
+        cdata_original_relationship(rc) = -1;
     }
     if (rnd(10) == 0)
     {
         flt();
         characreate(-1, 223, -3, 0);
-        cdata(150, rc) = 3;
-        cdata(9, rc) = -1;
-        cdata(69, rc) = -1;
+        cdata_character_role(rc) = 3;
+        cdata_relationship(rc) = -1;
+        cdata_original_relationship(rc) = -1;
     }
     if (rnd(10) == 0)
     {
         flt();
         characreate(-1, 252, -3, 0);
-        cdata(150, rc) = 3;
-        cdata(9, rc) = -1;
-        cdata(69, rc) = -1;
+        cdata_character_role(rc) = 3;
+        cdata_relationship(rc) = -1;
+        cdata_original_relationship(rc) = -1;
     }
     if (rnd(10) == 0)
     {
         flt();
         characreate(-1, 322, -3, 0);
-        cdata(150, rc) = 3;
-        cdata(9, rc) = -1;
-        cdata(69, rc) = -1;
+        cdata_character_role(rc) = 3;
+        cdata_relationship(rc) = -1;
+        cdata_original_relationship(rc) = -1;
     }
     inv_getheader(-1);
     {
@@ -50483,8 +50517,8 @@ void label_1704()
         initlv = qdata(5, gdata(72));
         fixlv = 5;
         characreate(-1, qdata(12, gdata(72)), -3, 0);
-        cdata(9, rc) = -3;
-        cdata(69, rc) = -3;
+        cdata_relationship(rc) = -3;
+        cdata_original_relationship(rc) = -3;
         qdata(13, gdata(72)) = rc;
     }
     if (gdata(70) == 1010)
@@ -50497,8 +50531,8 @@ void label_1704()
                 initlv = qdata(5, gdata(72)) * 3 / 2;
                 fixlv = 1;
                 characreate(-1, qdata(12, gdata(72)), -3, 0);
-                cdata(9, rc) = -3;
-                cdata(69, rc) = -3;
+                cdata_relationship(rc) = -3;
+                cdata_original_relationship(rc) = -3;
             }
         }
     }
@@ -51159,7 +51193,7 @@ void label_1712()
         label_1419();
         label_2743(false);
     }
-    cell_featread(cdata(1, 0), cdata(2, 0));
+    cell_featread(cdata_x(0), cdata_y(0));
     if (feat(0) != 0)
     {
         txt(lang(
@@ -51233,8 +51267,8 @@ void label_1712()
     fmode = 13;
     label_2107();
     p = area;
-    adata(1, p) = cdata(1, 0);
-    adata(2, p) = cdata(2, 0);
+    adata(1, p) = cdata_x(0);
+    adata(2, p) = cdata_y(0);
     adata(0, p) = 5;
     adata(11, p) = 1;
     adata(12, p) = 0;
@@ -51318,8 +51352,8 @@ void label_1713()
     }
     if (gdata(24) != 0)
     {
-        adata(1, p) = cdata(1, 0);
-        adata(2, p) = cdata(2, 0);
+        adata(1, p) = cdata_x(0);
+        adata(2, p) = cdata_y(0);
     }
     adata(30, p) = gdata(850);
     return;
@@ -51408,9 +51442,9 @@ void label_1714()
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 1 || cdata(0, cnt) == 2)
+                if (cdata_state(cnt) == 1 || cdata_state(cnt) == 2)
                 {
-                    if (cdata(150, cnt) != 0)
+                    if (cdata_character_role(cnt) != 0)
                     {
                         ++p;
                     }
@@ -51493,16 +51527,16 @@ void label_1714()
     {
     case 0:
         homemapmode = 1;
-        cxbk = cdata(1, 0);
-        cybk = cdata(2, 0);
+        cxbk = cdata_x(0);
+        cybk = cdata_y(0);
         label_1723();
         n = 0;
         txtnew();
         txt(lang(
             u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
             u8"Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit."s));
-        tlocinitx = cdata(1, 0);
-        tlocinity = cdata(2, 0);
+        tlocinitx = cdata_x(0);
+        tlocinity = cdata_y(0);
         tile = 0;
         {
             int cnt = 0;
@@ -51530,8 +51564,8 @@ void label_1714()
             }
         }
         homemapmode = 0;
-        cdata(1, 0) = cxbk;
-        cdata(2, 0) = cybk;
+        cdata_x(0) = cxbk;
+        cdata_y(0) = cybk;
         goto label_1722_internal;
     case 2:
         gsel(4);
@@ -51713,7 +51747,7 @@ void label_1714()
         {
             goto label_1722_internal;
         }
-        if (cdata(9, stat) <= -3)
+        if (cdata_relationship(stat) <= -3)
         {
             txtnew();
             txtef(9);
@@ -51744,12 +51778,12 @@ void label_1714()
             goto label_1718_internal;
         }
         tc = tchome;
-        map(cdata(1, tc), cdata(2, tc), 1) = 0;
+        map(cdata_x(tc), cdata_y(tc), 1) = 0;
         map(tlocx, tlocy, 1) = tc + 1;
-        cdata(1, tc) = tlocx;
-        cdata(171, tc) = tlocx;
-        cdata(2, tc) = tlocy;
-        cdata(172, tc) = tlocy;
+        cdata_x(tc) = tlocx;
+        cdata_initial_x(tc) = tlocx;
+        cdata_y(tc) = tlocy;
+        cdata_initial_y(tc) = tlocy;
         rowactend(tc);
         txtnew();
         txt(lang(
@@ -51772,7 +51806,7 @@ void label_1714()
             {
                 if (gdata(20) == 7)
                 {
-                    cdata(80, c) = 0;
+                    cdata_current_map(c) = 0;
                     txt(lang(
                         cdatan(0, c) + u8"の滞在を取り消した。"s,
                         cdatan(0, c) + u8" "s + is(c)
@@ -51791,8 +51825,8 @@ void label_1714()
             {
                 if (gdata(20) == 7)
                 {
-                    cdata(171, c) = cdata(1, c);
-                    cdata(172, c) = cdata(2, c);
+                    cdata_initial_x(c) = cdata_x(c);
+                    cdata_initial_y(c) = cdata_y(c);
                     txt(lang(
                         cdatan(0, c) + u8"を滞在させた。"s,
                         cdatan(0, c) + u8" stay"s + _s(c)
@@ -51806,13 +51840,13 @@ void label_1714()
                         cdatan(0, c) + u8" take"s + _s(c)
                             + u8" charge of the job now."s));
                 }
-                cdata(80, c) = gdata(20);
+                cdata_current_map(c) = gdata(20);
             }
         }
         goto label_1722_internal;
     case 5:
         txtnew();
-        if (cdata(30, 0) < calcshopreform())
+        if (cdata_gold(0) < calcshopreform())
         {
             txt(lang(
                 u8"お金が足りない…"s, u8"You don't have enough money..."s));
@@ -51820,7 +51854,7 @@ void label_1714()
         else
         {
             snd(12);
-            cdata(30, 0) -= calcshopreform();
+            cdata_gold(0) -= calcshopreform();
             mdata(18) = limit(mdata(18) + 10, 1, 400);
             txtef(2);
             txt(lang(
@@ -51837,9 +51871,9 @@ void label_1714()
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 1 || cdata(0, cnt) == 2)
+                if (cdata_state(cnt) == 1 || cdata_state(cnt) == 2)
                 {
-                    if (cdata(150, cnt) != 0)
+                    if (cdata_character_role(cnt) != 0)
                     {
                         ++p;
                     }
@@ -51878,55 +51912,55 @@ void label_1714()
                 {
                     continue;
                 }
-                cdata(0, rc) = 10;
-                cdata(150, rc) = isethirerole(hire);
-                if (cdata(27, rc) == 1)
+                cdata_state(rc) = 10;
+                cdata_character_role(rc) = isethirerole(hire);
+                if (cdata_id(rc) == 1)
                 {
                     p = rnd(6);
                     if (p == 0)
                     {
-                        cdata(150, rc) = 1001;
+                        cdata_character_role(rc) = 1001;
                         cdatan(0, rc) = lang(
                             u8"武具店の"s + cdatan(0, rc),
                             cdatan(0, rc) + u8" of armory"s);
                     }
                     if (p == 1)
                     {
-                        cdata(150, rc) = 1006;
+                        cdata_character_role(rc) = 1006;
                         cdatan(0, rc) = lang(
                             u8"雑貨屋の"s + cdatan(0, rc),
                             cdatan(0, rc) + u8" of general store"s);
                     }
                     if (p == 2)
                     {
-                        cdata(150, rc) = 1004;
+                        cdata_character_role(rc) = 1004;
                         cdatan(0, rc) = lang(
                             u8"魔法店の"s + cdatan(0, rc),
                             cdatan(0, rc) + u8" of magic store"s);
                     }
                     if (p == 3)
                     {
-                        cdata(150, rc) = 1008;
+                        cdata_character_role(rc) = 1008;
                         cdatan(0, rc) = lang(
                             u8"何でも屋の"s + cdatan(0, rc),
                             cdatan(0, rc) + u8" of goods store"s);
                     }
                     if (p == 4)
                     {
-                        cdata(150, rc) = 1001;
+                        cdata_character_role(rc) = 1001;
                         cdatan(0, rc) = lang(
                             u8"武具店の"s + cdatan(0, rc),
                             cdatan(0, rc) + u8" of armory"s);
                     }
                     if (p == 5)
                     {
-                        cdata(150, rc) = 1007;
+                        cdata_character_role(rc) = 1007;
                         cdatan(0, rc) = lang(
                             u8"ブラックマーケットの"s + cdatan(0, rc),
                             cdatan(0, rc) + u8" of blackmarket"s);
                     }
                     randomize();
-                    cdata(151, rc) = rnd(15) + 1;
+                    cdata_shop_rank(rc) = rnd(15) + 1;
                 }
                 cnt2 = cnt;
                 {
@@ -51954,7 +51988,7 @@ void label_1714()
         {
             tc = stat;
             txtnew();
-            if (cdata(30, 0) < calchirecost(tc) * 20)
+            if (cdata_gold(0) < calchirecost(tc) * 20)
             {
                 txt(lang(
                     u8"お金が足りない…"s,
@@ -51963,9 +51997,9 @@ void label_1714()
             else
             {
                 snd(12);
-                cdata(30, 0) -= calchirecost(tc) * 20;
+                cdata_gold(0) -= calchirecost(tc) * 20;
                 await(250);
-                cdata(0, tc) = 1;
+                cdata_state(tc) = 1;
                 txtef(2);
                 txt(lang(
                     cdatan(0, tc) + u8"を家に迎えた。"s,
@@ -51977,7 +52011,7 @@ void label_1714()
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) == 10)
+                if (cdata_state(cnt) == 10)
                 {
                     chara_vanquish(cnt);
                 }
@@ -52247,15 +52281,16 @@ void label_1725()
                     int cnt = 0;
                     for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata(0, cnt) != 1)
+                        if (cdata_state(cnt) != 1)
                         {
                             continue;
                         }
-                        if (cdata(140, cnt) == 0 || cdata(141, cnt) == 0)
+                        if (cdata_continuous_action_id(cnt) == 0
+                            || cdata_continuous_action_turn(cnt) == 0)
                         {
                             continue;
                         }
-                        if (cdata(142, cnt) == ci)
+                        if (cdata_continuous_action_item(cnt) == ci)
                         {
                             rowactend(cnt);
                         }
@@ -52442,25 +52477,25 @@ void label_1727()
     fixlv = 2;
     dbmode = 3;
     label_2299();
-    ++dblist(val, cdata(27, 56));
+    ++dblist(val, cdata_id(56));
     if (fixlv == 6)
     {
-        rtval = 70 + cdata(38, 56);
+        rtval = 70 + cdata_level(56);
     }
     else
     {
-        rtval = cdata(38, 56) / 10 + 2;
-        if (chipc(3, cdata(7, 56) % 1000) > inf_tiles)
+        rtval = cdata_level(56) / 10 + 2;
+        if (chipc(3, cdata_image(56) % 1000) > inf_tiles)
         {
             rtval = rtval / 2 * 3 + 40;
         }
-        p = refchara(cdata(27, 56), 6);
+        p = refchara(cdata_id(56), 6);
         if (p < 80)
         {
             rtval = rtval + 80 - p;
         }
     }
-    if (dblist(val, cdata(27, 56)) > 1)
+    if (dblist(val, cdata_id(56)) > 1)
     {
         rtval /= 3;
         if (rtval > 15)
@@ -52674,9 +52709,9 @@ int cbreeder(int prm_984)
 {
     std::string s_at_m173;
     int p_at_m173 = 0;
-    s_at_m173 = refchara_str(cdata(27, prm_984), 8);
+    s_at_m173 = refchara_str(cdata_id(prm_984), 8);
     p_at_m173 = refrace(cdatan(2, prm_984), 9);
-    p_at_m173 = p_at_m173 * 100 / (100 + cdata(38, prm_984) * 5);
+    p_at_m173 = p_at_m173 * 100 / (100 + cdata_level(prm_984) * 5);
     stat = p_at_m173;
     return stat;
 }
@@ -52688,7 +52723,7 @@ void label_1733()
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
@@ -52715,10 +52750,10 @@ void label_1733()
                     goto label_1734_internal;
                 }
             }
-            flt(calcobjlv(cdata(38, worker)), 1);
+            flt(calcobjlv(cdata_level(worker)), 1);
             if (rnd(2))
             {
-                dbid = cdata(27, worker);
+                dbid = cdata_id(worker);
             }
             else
             {
@@ -52728,7 +52763,7 @@ void label_1733()
             {
                 fltnrace = cdatan(2, worker);
             }
-            if (cdata(27, worker) == 319)
+            if (cdata_id(worker) == 319)
             {
                 dbid = 176;
             }
@@ -52744,7 +52779,7 @@ void label_1733()
                 int cnt = 0;
                 for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
@@ -52758,7 +52793,7 @@ void label_1733()
                     {
                         continue;
                     }
-                    flt(calcobjlv(cdata(38, cnt)), 2);
+                    flt(calcobjlv(cdata_level(cnt)), 2);
                     p = rnd(5);
                     f = 0;
                     if (rnd(egg + 1) > 2)
@@ -52812,10 +52847,11 @@ void label_1733()
                             itemcreate(-1, 573, x, y, 0);
                             if (stat)
                             {
-                                inv_subname(ci) = cdata(27, cnt);
-                                inv_weight(ci) = cdata(20, cnt) * 10 + 250;
+                                inv_subname(ci) = cdata_id(cnt);
+                                inv_weight(ci) = cdata_weight(cnt) * 10 + 250;
                                 inv_value(ci) = limit(
-                                    cdata(20, cnt) * cdata(20, cnt) / 10000,
+                                    cdata_weight(cnt) * cdata_weight(cnt)
+                                        / 10000,
                                     200,
                                     40000);
                             }
@@ -52841,7 +52877,7 @@ void label_1733()
                             itemcreate(-1, 574, x, y, 0);
                             if (stat)
                             {
-                                inv_subname(ci) = cdata(27, cnt);
+                                inv_subname(ci) = cdata_id(cnt);
                             }
                         }
                         continue;
@@ -52857,10 +52893,11 @@ void label_1733()
                             itemcreate(-1, 575, x, y, 0);
                             if (stat)
                             {
-                                inv_subname(ci) = cdata(27, cnt);
-                                inv_weight(ci) = cdata(20, cnt) * 40 + 300;
+                                inv_subname(ci) = cdata_id(cnt);
+                                inv_weight(ci) = cdata_weight(cnt) * 40 + 300;
                                 inv_value(ci) = limit(
-                                    cdata(20, cnt) * cdata(20, cnt) / 5000,
+                                    cdata_weight(cnt) * cdata_weight(cnt)
+                                        / 5000,
                                     1,
                                     20000);
                             }
@@ -53089,7 +53126,7 @@ void label_1735()
         }
         return;
     }
-    flt(calcobjlv(cdata(38, 0)), calcfixlv(2));
+    flt(calcobjlv(cdata_level(0)), calcfixlv(2));
     return;
 }
 void label_1736()
@@ -53147,7 +53184,7 @@ void label_1737()
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(201) = 1;
                         ghelp = 1;
@@ -53189,14 +53226,14 @@ void label_1737()
     }
     if (levelexitby == 4)
     {
-        cell_featread(cdata(1, 0), cdata(2, 0));
+        cell_featread(cdata_x(0), cdata_y(0));
         if (gdata(20) == 7)
         {
-            if (mapitemfind(cdata(1, cc), cdata(2, cc), 751) != -1)
+            if (mapitemfind(cdata_x(cc), cdata_y(cc), 751) != -1)
             {
                 feat(1) = 11;
             }
-            if (mapitemfind(cdata(1, cc), cdata(2, cc), 750) != -1)
+            if (mapitemfind(cdata_x(cc), cdata_y(cc), 750) != -1)
             {
                 feat(1) = 10;
             }
@@ -53208,7 +53245,7 @@ void label_1737()
                 lang(u8"階段を降りた。"s, u8"You walk down the stairs. "s);
             f = 1;
             gdata(26) = 1;
-            mdata(4) = cdata(2, 0) * 1000 + cdata(1, 0);
+            mdata(4) = cdata_y(0) * 1000 + cdata_x(0);
             if (feat(2) == 0)
             {
                 ++gdata(22);
@@ -53224,7 +53261,7 @@ void label_1737()
             msgtemp += lang(u8"階段を昇った。"s, u8"You walk up the stairs. "s);
             f = 1;
             gdata(26) = 2;
-            mdata(5) = cdata(2, 0) * 1000 + cdata(1, 0);
+            mdata(5) = cdata_y(0) * 1000 + cdata_x(0);
             if (feat(2) == 0)
             {
                 --gdata(22);
@@ -53239,8 +53276,8 @@ void label_1737()
         {
             if (mdata(6) == 1)
             {
-                gdata(5) = cdata(1, cc);
-                gdata(6) = cdata(2, cc);
+                gdata(5) = cdata_x(cc);
+                gdata(6) = cdata_y(cc);
                 gdata(22) = 1;
                 if (feat(2) != 0 || feat(3) != 0)
                 {
@@ -53351,7 +53388,7 @@ void label_1737()
             fixstart = 1;
         }
     }
-    if (cdata(0, 0) == 0)
+    if (cdata_state(0) == 0)
     {
         rc = 0;
         label_1540();
@@ -53465,23 +53502,23 @@ void label_1737()
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            cdata(201, cnt) = 0;
-            cdata(29, cnt) = 0;
+            cdata_hate(cnt) = 0;
+            cdata_enemy_id(cnt) = 0;
             rowactend(cnt);
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
-                if (cdata(0, cnt) == 8)
+                if (cdata_state(cnt) == 8)
                 {
-                    cdata(0, cnt) = 1;
+                    cdata_state(cnt) = 1;
                 }
                 continue;
             }
-            map(cdata(1, cnt), cdata(2, cnt), 1) = 0;
+            map(cdata_x(cnt), cdata_y(cnt), 1) = 0;
             if (cnt != 0)
             {
-                if (cdata(80, cnt) != 0)
+                if (cdata_current_map(cnt) != 0)
                 {
-                    cdata(0, cnt) = 9;
+                    cdata_state(cnt) = 9;
                 }
             }
         }
@@ -53503,9 +53540,9 @@ void label_1737()
             int cnt = 57;
             for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 0)
+                if (cdata_state(cnt) != 0)
                 {
-                    --npcmemory(1, cdata(27, cnt));
+                    --npcmemory(1, cdata_id(cnt));
                 }
             }
         }
@@ -53530,17 +53567,17 @@ void label_1738()
         for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
         {
             rowactend(cnt);
-            cdata(12, cnt) = 0;
+            cdata_item_which_will_be_used(cnt) = 0;
         }
     }
     {
         int cnt = 16;
         for (int cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 1)
+            if (cdata_state(cnt) == 1)
             {
-                map(cdata(1, cnt), cdata(2, cnt), 1) = 0;
-                cdata(0, cnt) = 3;
+                map(cdata_x(cnt), cdata_y(cnt), 1) = 0;
+                cdata_state(cnt) = 3;
             }
         }
     }
@@ -53649,7 +53686,7 @@ void label_1745()
                 {
                     rc = cnt;
                     label_1539();
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
@@ -53657,8 +53694,8 @@ void label_1745()
                     {
                         if (rnd(2))
                         {
-                            cdata(0, cnt) = 0;
-                            map(cdata(1, cnt), cdata(2, cnt), 1) = 0;
+                            cdata_state(cnt) = 0;
+                            map(cdata_x(cnt), cdata_y(cnt), 1) = 0;
                         }
                     }
                 }
@@ -53712,14 +53749,14 @@ void label_1745()
                 int cnt = 57;
                 for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
                     if (cbit(964, cnt) == 1)
                     {
-                        cdata(0, cnt) = 0;
-                        map(cdata(1, cnt), cdata(2, cnt), 1) = 0;
+                        cdata_state(cnt) = 0;
+                        map(cdata_x(cnt), cdata_y(cnt), 1) = 0;
                     }
                 }
             }
@@ -53782,12 +53819,12 @@ void label_1745()
                     int cnt = 57;
                     for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata(0, cnt) != 1)
+                        if (cdata_state(cnt) != 1)
                         {
                             continue;
                         }
                         generatemoney(cnt);
-                        if (cdata(27, cnt) == 326)
+                        if (cdata_id(cnt) == 326)
                         {
                             if (itemfind(cnt, 60005, 1) == -1)
                             {
@@ -53798,7 +53835,8 @@ void label_1745()
                                 }
                                 else
                                 {
-                                    flt(calcobjlv(cdata(38, cnt)), calcfixlv());
+                                    flt(calcobjlv(cdata_level(cnt)),
+                                        calcfixlv());
                                     flttypeminor = 60005;
                                     itemcreate(cnt, 0, -1, -1, 0);
                                 }
@@ -53813,7 +53851,7 @@ void label_1745()
                         {
                             if (inv_sum(rc) < 8)
                             {
-                                flt(calcobjlv(cdata(38, rc)), calcfixlv(2));
+                                flt(calcobjlv(cdata_level(rc)), calcfixlv(2));
                                 itemcreate(rc, 0, -1, -1, 0);
                                 if (stat != 0)
                                 {
@@ -55009,7 +55047,7 @@ int label_1753()
             adata(30, p) = gdata(850);
             if (rnd(3))
             {
-                adata(17, p) = rnd(cdata(38, 0) + 5) + 1;
+                adata(17, p) = rnd(cdata_level(0) + 5) + 1;
             }
             else
             {
@@ -55057,7 +55095,7 @@ void label_1754()
     {
         if (gdata(258) == 1)
         {
-            if (cdata(0, gdata(259)) == 1)
+            if (cdata_state(gdata(259)) == 1)
             {
                 if (gdata(3) < 30)
                 {
@@ -55099,10 +55137,10 @@ void label_1754()
                     characreate(-1, dbid, -3, 0);
                     if (stat != 0)
                     {
-                        cdata(9, rc) = -1;
-                        cdata(69, rc) = -1;
-                        cdata(201, rc) = 100;
-                        cdata(29, rc) = qdata(13, gdata(72));
+                        cdata_relationship(rc) = -1;
+                        cdata_original_relationship(rc) = -1;
+                        cdata_hate(rc) = 100;
+                        cdata_enemy_id(rc) = qdata(13, gdata(72));
                     }
                 }
             }
@@ -55188,8 +55226,8 @@ void label_1754()
             }
             flt();
             characreate(-1, p, x, y);
-            cdata(201, rc) = 1000;
-            cdata(29, rc) = 0;
+            cdata_hate(rc) = 1000;
+            cdata_enemy_id(rc) = 0;
             return;
         }
     }
@@ -55197,7 +55235,7 @@ void label_1754()
     {
         if (rnd(50) == 0)
         {
-            if (cdata(49, 0) < -30)
+            if (cdata_karma(0) < -30)
             {
                 txt(lang(
                     u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
@@ -55209,7 +55247,7 @@ void label_1754()
                 }
             }
         }
-        if (cdata(49, 0) >= -30)
+        if (cdata_karma(0) >= -30)
         {
             if (rnd(1000) == 0)
             {
@@ -55236,7 +55274,7 @@ void label_1754()
     {
         if (gdata(17) == 2 || gdata(17) == 4 || gdata(17) == 1)
         {
-            if (cdata(22, 0) < 5000)
+            if (cdata_nutrition(0) < 5000)
             {
                 if (cbit(986, 0) == 0)
                 {
@@ -55244,7 +55282,7 @@ void label_1754()
                     txt(lang(
                         u8"シェルターの貯蔵食品を食べた。"s,
                         u8"You eat stored food."s));
-                    cdata(22, cc) += 5000;
+                    cdata_nutrition(cc) += 5000;
                     label_2162();
                 }
             }
@@ -55263,7 +55301,7 @@ void label_1754()
                     int cnt = 0;
                     for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                     {
-                        cdata(10, cnt) = 0;
+                        cdata_turn_cost(cnt) = 0;
                     }
                 }
                 txt(lang(
@@ -55437,14 +55475,14 @@ void label_1755()
         characreate(-1, 345, 48, 19);
         if (stat != 0)
         {
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             cbitmod(991, rc, 1);
         }
         flt();
         characreate(-1, 348, 30, 17);
         if (stat != 0)
         {
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             cbitmod(991, rc, 1);
         }
         flt();
@@ -55498,22 +55536,22 @@ void label_1755()
         characreate(-1, 70, 17, 8);
         if (stat != 0)
         {
-            cdata(202, rc) = 3;
+            cdata_ai_calm(rc) = 3;
             cbitmod(991, rc, 1);
-            cdata(150, rc) = 1002;
-            cdata(151, rc) = 10;
+            cdata_character_role(rc) = 1002;
+            cdata_shop_rank(rc) = 10;
             snfood(cdatan(0, rc));
         }
         flt();
         characreate(-1, 239, 25, 8);
         if (stat != 0)
         {
-            cdata(202, rc) = 3;
-            cdata(9, rc) = 0;
-            cdata(69, rc) = 0;
+            cdata_ai_calm(rc) = 3;
+            cdata_relationship(rc) = 0;
+            cdata_original_relationship(rc) = 0;
             cbitmod(991, rc, 1);
-            cdata(150, rc) = 1018;
-            cdata(151, rc) = 30;
+            cdata_character_role(rc) = 1018;
+            cdata_shop_rank(rc) = 30;
             cdatan(0, rc) = randomname();
             cdatan(0, rc) = lang(
                 u8"おみやげ屋の"s + cdatan(0, rc),
@@ -55523,12 +55561,12 @@ void label_1755()
         characreate(-1, 271, 24, 22);
         if (stat != 0)
         {
-            cdata(202, rc) = 3;
-            cdata(9, rc) = 0;
-            cdata(69, rc) = 0;
+            cdata_ai_calm(rc) = 3;
+            cdata_relationship(rc) = 0;
+            cdata_original_relationship(rc) = 0;
             cbitmod(991, rc, 1);
-            cdata(150, rc) = 1018;
-            cdata(151, rc) = 30;
+            cdata_character_role(rc) = 1018;
+            cdata_shop_rank(rc) = 30;
             cdatan(0, rc) = randomname();
             cdatan(0, rc) = lang(
                 u8"おみやげ屋の"s + cdatan(0, rc),
@@ -55538,9 +55576,9 @@ void label_1755()
         characreate(-1, 1, 38, 12);
         if (stat != 0)
         {
-            cdata(202, rc) = 3;
-            cdata(150, rc) = 1007;
-            cdata(151, rc) = 10;
+            cdata_ai_calm(rc) = 3;
+            cdata_character_role(rc) = 1007;
+            cdata_shop_rank(rc) = 10;
             snblack(cdatan(0, rc));
             cbitmod(991, rc, 1);
         }
@@ -55548,12 +55586,12 @@ void label_1755()
         characreate(-1, 271, 28, 9);
         if (stat != 0)
         {
-            cdata(202, rc) = 3;
-            cdata(9, rc) = 0;
-            cdata(69, rc) = 0;
+            cdata_ai_calm(rc) = 3;
+            cdata_relationship(rc) = 0;
+            cdata_original_relationship(rc) = 0;
             cbitmod(991, rc, 1);
-            cdata(150, rc) = 1022;
-            cdata(151, rc) = 30;
+            cdata_character_role(rc) = 1022;
+            cdata_shop_rank(rc) = 30;
             cdatan(0, rc) = randomname();
             cdatan(0, rc) = lang(
                 u8"屋台商人の"s + cdatan(0, rc),
@@ -55563,12 +55601,12 @@ void label_1755()
         characreate(-1, 271, 29, 24);
         if (stat != 0)
         {
-            cdata(202, rc) = 3;
-            cdata(9, rc) = 0;
-            cdata(69, rc) = 0;
+            cdata_ai_calm(rc) = 3;
+            cdata_relationship(rc) = 0;
+            cdata_original_relationship(rc) = 0;
             cbitmod(991, rc, 1);
-            cdata(150, rc) = 1022;
-            cdata(151, rc) = 30;
+            cdata_character_role(rc) = 1022;
+            cdata_shop_rank(rc) = 30;
             cdatan(0, rc) = randomname();
             cdatan(0, rc) = lang(
                 u8"屋台商人屋の"s + cdatan(0, rc),
@@ -60266,7 +60304,7 @@ void label_1873()
     }
     if (f == 1)
     {
-        if (cdata(50, 0) >= 0)
+        if (cdata_hp(0) >= 0)
         {
             txt(lang(
                 u8"幾つかの戦利品がある。"s,
@@ -60316,7 +60354,7 @@ void label_1874()
         }
         if (mdata(6) == 1)
         {
-            atxlv = cdata(38, 0);
+            atxlv = cdata_level(0);
             if (4 <= gdata(62) && gdata(62) < 9)
             {
                 atxid(1) = 2;
@@ -60404,7 +60442,7 @@ void label_1874()
         atxspot = 11;
     }
 label_1875:
-    if (atxap <= 0 || cdata(50, 0) < 0)
+    if (atxap <= 0 || cdata_hp(0) < 0)
     {
         label_1877();
         return;
@@ -60637,7 +60675,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"痛っ！蚊に刺された。"s);
             snd(2);
-            dmghp(0, cdata(51, 0) * 5 / 100, -10);
+            dmghp(0, cdata_max_hp(0) * 5 / 100, -10);
         }
         else
         {
@@ -60647,7 +60685,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"うっ！ヘビに噛まれた。"s);
             snd(2);
-            dmghp(0, cdata(51, 0) * 10 / 100, -10);
+            dmghp(0, cdata_max_hp(0) * 10 / 100, -10);
         }
         atxthrough = 1;
         goto label_1875;
@@ -60662,7 +60700,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"痛っ！蚊に刺された。"s);
             snd(2);
-            dmghp(0, cdata(51, 0) * 5 / 100, -10);
+            dmghp(0, cdata_max_hp(0) * 5 / 100, -10);
         }
         else
         {
@@ -60672,7 +60710,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"うっ！ヘビに噛まれた。"s);
             snd(2);
-            dmghp(0, cdata(51, 0) * 10 / 100, -10);
+            dmghp(0, cdata_max_hp(0) * 10 / 100, -10);
         }
         atxthrough = 1;
         goto label_1875;
@@ -60729,7 +60767,7 @@ label_1876_internal:
 void label_1877()
 {
     atxinit();
-    if (cdata(50, 0) >= 0)
+    if (cdata_hp(0) >= 0)
     {
         noteadd(u8"探索を終えた。"s);
         list(0, listmax) = 0;
@@ -61188,7 +61226,7 @@ void label_1879()
 }
 int modpiety(int prm_1035)
 {
-    if (sdata(181, 0) * 100 < cdata(62, 0))
+    if (sdata(181, 0) * 100 < cdata_piety_point(0))
     {
         txt(lang(
             u8"あなたの信仰は既に限界まで高まっている。"s,
@@ -61198,42 +61236,42 @@ int modpiety(int prm_1035)
     }
     if (gdata(807) == 4)
     {
-        if (cdata(62, 0) >= 4000)
+        if (cdata_piety_point(0) >= 4000)
         {
             ++gdata(807);
-            txtgod(cdata(61, 0), 8);
+            txtgod(cdata_god(0), 8);
         }
     }
     if (gdata(807) == 2)
     {
-        if (cdata(62, 0) >= 2500)
+        if (cdata_piety_point(0) >= 2500)
         {
             ++gdata(807);
-            txtgod(cdata(61, 0), 7);
+            txtgod(cdata_god(0), 7);
         }
     }
     if (gdata(807) == 0)
     {
-        if (cdata(62, 0) >= 1500)
+        if (cdata_piety_point(0) >= 1500)
         {
             ++gdata(807);
-            txtgod(cdata(61, 0), 7);
+            txtgod(cdata_god(0), 7);
         }
     }
-    cdata(62, 0) += prm_1035 / (1 + (gdata(20) == 35) * 9);
+    cdata_piety_point(0) += prm_1035 / (1 + (gdata(20) == 35) * 9);
     stat = 1;
     return stat;
 }
 void label_1882()
 {
-    if (cdata(61, tc) != 0 || cbit(990, tc) || tc == 0)
+    if (cdata_god(tc) != 0 || cbit(990, tc) || tc == 0)
     {
         return;
     }
     randomize(gdata(8) + gdata(20));
-    cdata(61, tc) = rnd(8);
+    cdata_god(tc) = rnd(8);
     randomize();
-    if (cdata(61, tc) == 0 || rnd(4) == 0)
+    if (cdata_god(tc) == 0 || rnd(4) == 0)
     {
         cbitmod(990, tc, 1);
     }
@@ -61254,250 +61292,250 @@ void label_1883()
 }
 void label_1884()
 {
-    if (cdata(61, r1) == 1)
+    if (cdata_god(r1) == 1)
     {
         if (sdata(12, r1) > 0)
         {
             sdata(12, r1) +=
-                limit(cdata(62, r1) / 400, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(13, r1) > 0)
         {
             sdata(13, r1) +=
-                limit(cdata(62, r1) / 300, 1, 14 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 14 + sdata(181, 0) / 10);
         }
         if (sdata(154, r1) > 0)
         {
             sdata(154, r1) +=
-                limit(cdata(62, r1) / 500, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 500, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(110, r1) > 0)
         {
             sdata(110, r1) +=
-                limit(cdata(62, r1) / 250, 1, 18 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(159, r1) > 0)
         {
             sdata(159, r1) +=
-                limit(cdata(62, r1) / 350, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(158, r1) > 0)
         {
             sdata(158, r1) +=
-                limit(cdata(62, r1) / 250, 1, 16 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(176, r1) > 0)
         {
             sdata(176, r1) +=
-                limit(cdata(62, r1) / 300, 1, 10 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(179, r1) > 0)
         {
             sdata(179, r1) +=
-                limit(cdata(62, r1) / 350, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
         }
     }
-    if (cdata(61, r1) == 2)
+    if (cdata_god(r1) == 2)
     {
         if (sdata(13, r1) > 0)
         {
             sdata(13, r1) +=
-                limit(cdata(62, r1) / 450, 1, 10 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(18, r1) > 0)
         {
             sdata(18, r1) +=
-                limit(cdata(62, r1) / 350, 1, 30 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 30 + sdata(181, 0) / 10);
         }
         if (sdata(108, r1) > 0)
         {
             sdata(108, r1) +=
-                limit(cdata(62, r1) / 350, 1, 16 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(109, r1) > 0)
         {
             sdata(109, r1) +=
-                limit(cdata(62, r1) / 450, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(157, r1) > 0)
         {
             sdata(157, r1) +=
-                limit(cdata(62, r1) / 450, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, r1) > 0)
         {
             sdata(174, r1) +=
-                limit(cdata(62, r1) / 550, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 550, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata(61, r1) == 3)
+    if (cdata_god(r1) == 3)
     {
         if (sdata(16, r1) > 0)
         {
             sdata(16, r1) +=
-                limit(cdata(62, r1) / 300, 1, 18 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, r1) > 0)
         {
             sdata(155, r1) +=
-                limit(cdata(62, r1) / 350, 1, 15 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(50, r1) > 0)
         {
             sdata(50, r1) +=
-                limit(cdata(62, r1) / 50, 1, 200 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(51, r1) > 0)
         {
             sdata(51, r1) +=
-                limit(cdata(62, r1) / 50, 1, 200 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(52, r1) > 0)
         {
             sdata(52, r1) +=
-                limit(cdata(62, r1) / 50, 1, 200 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
         }
     }
-    if (cdata(61, r1) == 4)
+    if (cdata_god(r1) == 4)
     {
         if (sdata(17, r1) > 0)
         {
             sdata(17, r1) +=
-                limit(cdata(62, r1) / 250, 1, 20 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 250, 1, 20 + sdata(181, 0) / 10);
         }
         if (sdata(19, r1) > 0)
         {
             sdata(19, r1) +=
-                limit(cdata(62, r1) / 100, 1, 50 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 100, 1, 50 + sdata(181, 0) / 10);
         }
         if (sdata(173, r1) > 0)
         {
             sdata(173, r1) +=
-                limit(cdata(62, r1) / 300, 1, 15 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(164, r1) > 0)
         {
             sdata(164, r1) +=
-                limit(cdata(62, r1) / 350, 1, 17 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 17 + sdata(181, 0) / 10);
         }
         if (sdata(185, r1) > 0)
         {
             sdata(185, r1) +=
-                limit(cdata(62, r1) / 300, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(158, r1) > 0)
         {
             sdata(158, r1) +=
-                limit(cdata(62, r1) / 450, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata(61, r1) == 5)
+    if (cdata_god(r1) == 5)
     {
         if (sdata(10, r1) > 0)
         {
             sdata(10, r1) +=
-                limit(cdata(62, r1) / 450, 1, 11 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 11 + sdata(181, 0) / 10);
         }
         if (sdata(11, r1) > 0)
         {
             sdata(11, r1) +=
-                limit(cdata(62, r1) / 350, 1, 16 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(168, r1) > 0)
         {
             sdata(168, r1) +=
-                limit(cdata(62, r1) / 350, 1, 15 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(153, r1) > 0)
         {
             sdata(153, r1) +=
-                limit(cdata(62, r1) / 300, 1, 16 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(163, r1) > 0)
         {
             sdata(163, r1) +=
-                limit(cdata(62, r1) / 350, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, r1) > 0)
         {
             sdata(174, r1) +=
-                limit(cdata(62, r1) / 450, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata(61, r1) == 6)
+    if (cdata_god(r1) == 6)
     {
         if (sdata(15, r1) > 0)
         {
             sdata(15, r1) +=
-                limit(cdata(62, r1) / 300, 1, 16 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(154, r1) > 0)
         {
             sdata(154, r1) +=
-                limit(cdata(62, r1) / 250, 1, 18 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, r1) > 0)
         {
             sdata(155, r1) +=
-                limit(cdata(62, r1) / 400, 1, 10 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(161, r1) > 0)
         {
             sdata(161, r1) +=
-                limit(cdata(62, r1) / 400, 1, 9 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 400, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(184, r1) > 0)
         {
             sdata(184, r1) +=
-                limit(cdata(62, r1) / 450, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(174, r1) > 0)
         {
             sdata(174, r1) +=
-                limit(cdata(62, r1) / 400, 1, 10 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(164, r1) > 0)
         {
             sdata(164, r1) +=
-                limit(cdata(62, r1) / 400, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 400, 1, 12 + sdata(181, 0) / 10);
         }
     }
-    if (cdata(61, r1) == 7)
+    if (cdata_god(r1) == 7)
     {
         if (sdata(13, r1) > 0)
         {
             sdata(13, r1) +=
-                limit(cdata(62, r1) / 400, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(12, r1) > 0)
         {
             sdata(12, r1) +=
-                limit(cdata(62, r1) / 350, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(14, r1) > 0)
         {
             sdata(14, r1) +=
-                limit(cdata(62, r1) / 250, 1, 16 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(180, r1) > 0)
         {
             sdata(180, r1) +=
-                limit(cdata(62, r1) / 300, 1, 12 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(178, r1) > 0)
         {
             sdata(178, r1) +=
-                limit(cdata(62, r1) / 350, 1, 10 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(177, r1) > 0)
         {
             sdata(177, r1) +=
-                limit(cdata(62, r1) / 350, 1, 9 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(150, r1) > 0)
         {
             sdata(150, r1) +=
-                limit(cdata(62, r1) / 350, 1, 8 + sdata(181, 0) / 10);
+                limit(cdata_piety_point(r1) / 350, 1, 8 + sdata(181, 0) / 10);
         }
     }
     return;
@@ -61619,7 +61657,7 @@ void label_1886()
     keylog = "";
     listmax = 0;
     chatesc = 2;
-    if (cdata(61, 0) != 0)
+    if (cdata_god(0) != 0)
     {
         if (inv_param1(ci) == 0)
         {
@@ -61761,14 +61799,14 @@ void label_1888()
         gmode(2);
         label_1421();
         redraw(1);
-        if (cdata(61, 0) != 0)
+        if (cdata_god(0) != 0)
         {
             mode = 9;
             txtef(8);
             txt(lang(
-                godname(cdata(61, 0)) + u8"は激怒した。"s,
-                godname(cdata(61, 0)) + u8" is enraged."s));
-            txtgod(cdata(61, 0), 1);
+                godname(cdata_god(0)) + u8"は激怒した。"s,
+                godname(cdata_god(0)) + u8" is enraged."s));
+            txtgod(cdata_god(0), 1);
             redraw(1);
             efid = 622;
             efp = 10000;
@@ -61778,7 +61816,7 @@ void label_1888()
             mode = 0;
             await(500);
         }
-        cdata(61, 0) = inv_param1(ci);
+        cdata_god(0) = inv_param1(ci);
         label_1889();
         msg_halt();
     }
@@ -61788,13 +61826,13 @@ void label_1888()
 }
 void label_1889()
 {
-    cdata(62, 0) = 0;
-    cdata(63, 0) = 500;
+    cdata_piety_point(0) = 0;
+    cdata_praying_point(0) = 500;
     gdata(807) = 0;
     spact(23) = 0;
     spact(24) = 0;
     spact(25) = 0;
-    if (cdata(61, 0) == 0)
+    if (cdata_god(0) == 0)
     {
         txtef(5);
         txt(lang(
@@ -61808,27 +61846,27 @@ void label_1889()
         snd(51);
         txtef(5);
         txt(lang(
-            u8"あなたは今や"s + godname(cdata(61, 0)) + u8"の信者だ！"s,
-            u8"You become a follower of "s + godname(cdata(61, 0)) + u8"!"s));
-        if (cdata(61, 0) == 3)
+            u8"あなたは今や"s + godname(cdata_god(0)) + u8"の信者だ！"s,
+            u8"You become a follower of "s + godname(cdata_god(0)) + u8"!"s));
+        if (cdata_god(0) == 3)
         {
             spact(24) = 1;
         }
-        if (cdata(61, 0) == 6)
+        if (cdata_god(0) == 6)
         {
             spact(23) = 1;
         }
-        if (cdata(61, 0) == 2)
+        if (cdata_god(0) == 2)
         {
             spact(25) = 1;
         }
-        txtgod(cdata(61, 0), 5);
+        txtgod(cdata_god(0), 5);
     }
     return;
 }
 void label_1890()
 {
-    if (cdata(61, 0) == 0)
+    if (cdata_god(0) == 0)
     {
         txt(lang(
             name(0) + u8"は神を信仰していないが、試しに祈ってみた。"s,
@@ -61856,14 +61894,14 @@ void label_1890()
         label_2743(false);
     }
     txt(lang(
-        godname(cdata(61, 0)) + u8"に祈った。"s,
-        u8"You pray to "s + godname(cdata(61, 0)) + u8"."s));
-    if (cdata(62, 0) < 200 || cdata(63, 0) < 1000)
+        godname(cdata_god(0)) + u8"に祈った。"s,
+        u8"You pray to "s + godname(cdata_god(0)) + u8"."s));
+    if (cdata_piety_point(0) < 200 || cdata_praying_point(0) < 1000)
     {
         txtmore();
         txt(lang(
-            godname(cdata(61, 0)) + u8"はあなたに無関心だ。"s,
-            godname(cdata(61, 0)) + u8" is indifferent to you."s));
+            godname(cdata_god(0)) + u8"はあなたに無関心だ。"s,
+            godname(cdata_god(0)) + u8" is indifferent to you."s));
         label_2742();
         return;
     }
@@ -61879,11 +61917,11 @@ void label_1890()
     efp = 200;
     tc = 0;
     label_2176();
-    cdata(63, 0) = 0;
-    cdata(62, 0) = cdata(62, 0) * 85 / 100;
+    cdata_praying_point(0) = 0;
+    cdata_piety_point(0) = cdata_piety_point(0) * 85 / 100;
     if (gdata(807) % 2 == 1)
     {
-        txtgod(cdata(61, 0), 6);
+        txtgod(cdata_god(0), 6);
         if (gdata(807) == 1)
         {
             f = 0;
@@ -61892,7 +61930,7 @@ void label_1890()
                 int cnt = 1;
                 for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 0)
+                    if (cdata_state(cnt) != 0)
                     {
                         if (cdatan(2, cnt) == u8"servant"s)
                         {
@@ -61948,49 +61986,49 @@ void label_1890()
             dbid = 0;
             txtef(4);
             txtmore();
-            if (cdata(61, 0) == 1)
+            if (cdata_god(0) == 1)
             {
                 dbid = 262;
                 txt(lang(
                     u8"このアンドロイドはブーストした時に恐るべき力を発揮するようだ。"s,
                     u8"This android shows enormous strength when boosting."s));
             }
-            if (cdata(61, 0) == 2)
+            if (cdata_god(0) == 2)
             {
                 dbid = 263;
                 txt(lang(
                     u8"この黒天使はブーストした時に恐るべき力を発揮するようだ。"s,
                     u8"This black angel shows enormous strength when boosting."s));
             }
-            if (cdata(61, 0) == 3)
+            if (cdata_god(0) == 3)
             {
                 dbid = 264;
                 txt(lang(
                     u8"この追放者は連続魔法を使えるようだ。"s,
                     u8"This exile can cast several spells in a raw."s));
             }
-            if (cdata(61, 0) == 4)
+            if (cdata_god(0) == 4)
             {
                 dbid = 260;
                 txt(lang(
                     u8"この猫に舐められた武具は、エヘカトルの祝福を授かるようだ。祝福を受けた武具にはエンチャントが一つ付与される。"s,
                     u8"Weapons and armor licked by this cat receive a blessing of Ehekatl which adds an extra enchantment."s));
             }
-            if (cdata(61, 0) == 5)
+            if (cdata_god(0) == 5)
             {
                 dbid = 265;
                 txt(lang(
                     u8"この騎士はある程度重いものをもたせても文句をいわないようだ。"s,
                     u8"This knight can hold really heavy stuff for you."s));
             }
-            if (cdata(61, 0) == 6)
+            if (cdata_god(0) == 6)
             {
                 dbid = 266;
                 txt(lang(
                     u8"この防衛者は致死ダメージを受けた仲間をレイハンドで回復できるようだ。レイハンドは眠るたびに再使用可能になる。"s,
                     u8"This defender can use Lay on hand to heal a deadly wounded ally. The ability becomes re-useable after sleeping."s));
             }
-            if (cdata(61, 0) == 7)
+            if (cdata_god(0) == 7)
             {
                 dbid = 261;
                 txt(lang(
@@ -62006,19 +62044,19 @@ void label_1890()
         {
             flt();
             dbid = 0;
-            if (cdata(61, 0) == 2)
+            if (cdata_god(0) == 2)
             {
                 dbid = 680;
             }
-            if (cdata(61, 0) == 6)
+            if (cdata_god(0) == 6)
             {
                 dbid = 681;
             }
-            if (cdata(61, 0) == 7)
+            if (cdata_god(0) == 7)
             {
                 dbid = 682;
             }
-            if (cdata(61, 0) == 1)
+            if (cdata_god(0) == 1)
             {
                 dbid = 683;
             }
@@ -62028,30 +62066,30 @@ void label_1890()
                 {
                     dbid = 559;
                 }
-                itemcreate(-1, dbid, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, dbid, cdata_x(0), cdata_y(0), 0);
             }
             else
             {
                 nostack = 1;
-                itemcreate(-1, 672, cdata(1, 0), cdata(2, 0), 0);
-                if (cdata(61, 0) == 3)
+                itemcreate(-1, 672, cdata_x(0), cdata_y(0), 0);
+                if (cdata_god(0) == 3)
                 {
                     inv_param1(ci) = 165;
                 }
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     inv_param1(ci) = 163;
                 }
-                if (cdata(61, 0) == 5)
+                if (cdata_god(0) == 5)
                 {
                     inv_param1(ci) = 164;
                 }
             }
-            if (cdata(61, 0) == 6)
+            if (cdata_god(0) == 6)
             {
                 flt();
                 nostack = 1;
-                itemcreate(-1, 672, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, 672, cdata_x(0), cdata_y(0), 0);
                 inv_param1(ci) = 166;
             }
             txt(lang(
@@ -62062,31 +62100,31 @@ void label_1890()
         {
             flt();
             dbid = 0;
-            if (cdata(61, 0) == 1)
+            if (cdata_god(0) == 1)
             {
                 dbid = 674;
             }
-            if (cdata(61, 0) == 2)
+            if (cdata_god(0) == 2)
             {
                 dbid = 673;
             }
-            if (cdata(61, 0) == 3)
+            if (cdata_god(0) == 3)
             {
                 dbid = 676;
             }
-            if (cdata(61, 0) == 4)
+            if (cdata_god(0) == 4)
             {
                 dbid = 678;
             }
-            if (cdata(61, 0) == 5)
+            if (cdata_god(0) == 5)
             {
                 dbid = 679;
             }
-            if (cdata(61, 0) == 6)
+            if (cdata_god(0) == 6)
             {
                 dbid = 677;
             }
-            if (cdata(61, 0) == 7)
+            if (cdata_god(0) == 7)
             {
                 dbid = 675;
             }
@@ -62094,7 +62132,7 @@ void label_1890()
             {
                 dbid = 621;
             }
-            itemcreate(-1, dbid, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, dbid, cdata_x(0), cdata_y(0), 0);
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -62106,7 +62144,7 @@ void label_1890()
 }
 void label_1891()
 {
-    if (cdata(61, 0) == 0)
+    if (cdata_god(0) == 0)
     {
         txt(lang(
             u8"あなたは神を信仰していないが、試しに捧げてみた。"s,
@@ -62117,10 +62155,10 @@ void label_1891()
     rowact_item(ci);
     item_separate(ci);
     txt(lang(
-        u8"あなたは"s + itemname(ci) + u8"を"s + godname(cdata(61, 0))
+        u8"あなたは"s + itemname(ci) + u8"を"s + godname(cdata_god(0))
             + u8"に捧げ、その名を唱えた。"s,
         u8"You put "s + itemname(ci)
-            + u8" on the altar and mutter the name of "s + godname(cdata(61, 0))
+            + u8" on the altar and mutter the name of "s + godname(cdata_god(0))
             + u8"."s));
     snd(121);
     animeid = 7;
@@ -62147,24 +62185,24 @@ void label_1891()
     {
         i = 25;
     }
-    if (inv_param1(ti) != cdata(61, 0))
+    if (inv_param1(ti) != cdata_god(0))
     {
         f = 0;
         if (inv_param1(ti) == 0)
         {
             f = 1;
             txt(lang(
-                u8"異世界で、"s + godname(cdata(61, 0))
+                u8"異世界で、"s + godname(cdata_god(0))
                     + u8"が空白の祭壇の権利を主張した。"s,
-                godname(cdata(61, 0)) + u8" claims the empty altar."s));
+                godname(cdata_god(0)) + u8" claims the empty altar."s));
         }
         else
         {
             txt(lang(
-                u8"異様な霧が現れ、"s + godname(cdata(61, 0)) + u8"と"s
+                u8"異様な霧が現れ、"s + godname(cdata_god(0)) + u8"と"s
                     + godname(inv_param1(ti)) + u8"の幻影がせめぎあった。"s,
                 u8"Strange fogs surround all over the place. You see shadows of "s
-                    + godname(cdata(61, 0)) + u8" and "s
+                    + godname(cdata_god(0)) + u8" and "s
                     + godname(inv_param1(ti)) + u8" make a fierce dance."s));
             if (rnd(17) <= i)
             {
@@ -62178,7 +62216,7 @@ void label_1891()
         if (f == 1)
         {
             modpiety(i * 5);
-            cdata(63, 0) += i * 30;
+            cdata_praying_point(0) += i * 30;
             animeid = 19;
             animode = 100;
             label_1426();
@@ -62191,11 +62229,11 @@ void label_1891()
             }
             txtef(5);
             txt(lang(
-                godname(cdata(61, 0)) + u8"は"s + itemname(ti)
+                godname(cdata_god(0)) + u8"は"s + itemname(ti)
                     + u8"を支配した。"s,
-                godname(cdata(61, 0)) + u8" takes over the altar."s));
-            txtgod(cdata(61, 0), 2);
-            inv_param1(ti) = cdata(61, 0);
+                godname(cdata_god(0)) + u8" takes over the altar."s));
+            txtgod(cdata_god(0), 2);
+            inv_param1(ti) = cdata_god(0);
         }
         else
         {
@@ -62220,7 +62258,7 @@ void label_1891()
                         itemname(ci) + u8" shine"s + _s2(inv_number(ci))
                             + u8" all around and disappear"s
                             + _s2(inv_number(ci)) + u8"."s));
-                    txtgod(cdata(61, 0), 4);
+                    txtgod(cdata_god(0), 4);
                     break;
                 }
                 if (i >= 10)
@@ -62254,7 +62292,7 @@ void label_1891()
             }
         }
         modpiety(i);
-        cdata(63, 0) += i * 7;
+        cdata_praying_point(0) += i * 7;
     }
     removeitem(ci, inv_number(ci));
     label_2742();
@@ -62304,7 +62342,7 @@ int label_1893()
     }
     if (mode == 9)
     {
-        if (cdata(61, 0) != 0)
+        if (cdata_god(0) != 0)
         {
             if (rnd(12) == 0)
             {
@@ -62377,7 +62415,7 @@ int label_1893()
     }
     if (mdata(6) != 1)
     {
-        if (cdata(140, 0) != 0)
+        if (cdata_continuous_action_id(0) != 0)
         {
             stat = 0;
             return stat;
@@ -62473,7 +62511,7 @@ label_1894_internal:
                 --cnt;
                 continue;
             }
-            if (cdata(0, p) == 1)
+            if (cdata_state(p) == 1)
             {
                 txt(lang(
                     name(p) + u8"「ぎゃぁーー！」"s,
@@ -62508,7 +62546,7 @@ label_1894_internal:
         label_1896();
         if (rtval == 1)
         {
-            cdata(22, 0) = 15000;
+            cdata_nutrition(0) = 15000;
             txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
                 lang(u8"悪くない。"s, u8"Not bad at all."s),
                 lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
@@ -62522,7 +62560,7 @@ label_1894_internal:
         buff = lang(
             u8"どこからともなく漂うご馳走の匂いで、あなたの胃は不満を叫び始めた。"s,
             u8"A sweet smell of food floats from nowhere. Your stomach growls but you can't find out where it comes from."s);
-        cdata(22, 0) -= 5000;
+        cdata_nutrition(0) -= 5000;
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"腹減った…"s, u8"I'm hungry now!"s);
         ++listmax;
@@ -62616,7 +62654,7 @@ label_1894_internal:
                 {
                     flt();
                     flttypemajor = fsetremain(rnd(length(fsetremain)));
-                    itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+                    itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
                 }
             }
             txt(lang(
@@ -62747,7 +62785,7 @@ label_1894_internal:
         label_1896();
         goto label_1895_internal;
     case 8:
-        p = rnd(cdata(30, 0) / 8 + 1);
+        p = rnd(cdata_gold(0) / 8 + 1);
         if (cbit(15, 0))
         {
             p = 0;
@@ -62757,7 +62795,7 @@ label_1894_internal:
             txt(lang(
                 u8"金貨"s + p + u8"枚を失った。"s,
                 u8"You lose "s + p + u8" gold pieces."s));
-            cdata(30, 0) -= p;
+            cdata_gold(0) -= p;
         }
         else
         {
@@ -62806,7 +62844,7 @@ label_1894_internal:
                     {
                         flttypemajor = fsetremain(rnd(length(fsetremain)));
                     }
-                    itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+                    itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
                 }
             }
             txt(lang(
@@ -62876,7 +62914,7 @@ label_1894_internal:
         label_1896();
         goto label_1895_internal;
     case 9:
-        ++cdata(31, 0);
+        ++cdata_platinum_coin(0);
         s = lang(u8"路上に転がる幸運"s, u8"Great Luck"s);
         file = u8"bg_re1"s;
         buff = lang(
@@ -62888,8 +62926,8 @@ label_1894_internal:
         label_1896();
         goto label_1895_internal;
     case 16:
-        p = rnd(cdata(30, 0) / 10 + 1000) + 1;
-        cdata(30, 0) += p;
+        p = rnd(cdata_gold(0) / 10 + 1000) + 1;
+        cdata_gold(0) += p;
         txt(lang(
             u8"金貨"s + p + u8"枚を手に入れた。"s,
             u8"You pick up "s + p + u8" gold pieces."s));
@@ -63177,12 +63215,12 @@ void label_1901()
             }
         }
     }
-    if (cdata(34, 0) > 0)
+    if (cdata_fame(0) > 0)
     {
-        p = limit(cdata(34, 0) / 10, 100, 25000);
-        if (cdata(34, 0) >= 25000)
+        p = limit(cdata_fame(0) / 10, 100, 25000);
+        if (cdata_fame(0) >= 25000)
         {
-            p += (cdata(34, 0) - 25000) / 100;
+            p += (cdata_fame(0) - 25000) / 100;
         }
         income += p;
         flt();
@@ -63207,7 +63245,7 @@ void label_1901()
     }
     if (gdata(12) == 1)
     {
-        if (cdata(38, 0) > 5)
+        if (cdata_level(0) > 5)
         {
             autosave = 1 * (gdata(20) != 35);
             inv_getheader(-1);
@@ -63305,7 +63343,7 @@ void label_1901()
         {
             if (mode == 0)
             {
-                if (cdata(141, 0) == 0)
+                if (cdata_continuous_action_turn(0) == 0)
                 {
                     gdata(216) = 1;
                     ghelp = 16;
@@ -63583,8 +63621,8 @@ int blendcheckmat(int prm_1044)
                                 if (dist(
                                         inv_x(cnt),
                                         inv_y(cnt),
-                                        cdata(1, 0),
-                                        cdata(2, 0))
+                                        cdata_x(0),
+                                        cdata_y(0))
                                     > 4)
                                 {
                                     continue;
@@ -63683,11 +63721,7 @@ int blendmatnum(int prm_1045, int prm_1046)
                     }
                     if (o_at_m182 == -1)
                     {
-                        if (dist(
-                                inv_x(cnt),
-                                inv_y(cnt),
-                                cdata(1, 0),
-                                cdata(2, 0))
+                        if (dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0))
                             > 4)
                         {
                             continue;
@@ -63781,11 +63815,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     }
                     if (o_at_m183 == -1)
                     {
-                        if (dist(
-                                inv_x(cnt),
-                                inv_y(cnt),
-                                cdata(1, 0),
-                                cdata(2, 0))
+                        if (dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0))
                             > 4)
                         {
                             continue;
@@ -65026,7 +65056,7 @@ void label_1933()
         {
             flt();
             nostack = 1;
-            itemcreate(-1, rpdata(0, rpid), cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, rpdata(0, rpid), cdata_x(0), cdata_y(0), 0);
             if (stat != 0)
             {
                 {
@@ -65082,18 +65112,18 @@ label_19341_internal:
         rowactend(cc);
         return;
     }
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
         txtnew();
         txt(lang(
             name(cc) + u8"は"s + rpname(rpid) + u8"の調合をはじめた。"s,
             name(cc) + u8" start"s + _s(cc) + u8" blending of "s + rpname(rpid)
                 + u8"."s));
-        cdata(140, cc) = 12;
-        cdata(141, cc) = rpref(2) % 10000;
+        cdata_continuous_action_id(cc) = 12;
+        cdata_continuous_action_turn(cc) = rpref(2) % 10000;
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         if (rnd(30) == 0)
         {
@@ -65105,7 +65135,7 @@ label_19341_internal:
     }
     if (rpref(2) >= 10000)
     {
-        cdata(141, cc) = rpref(2) / 10000;
+        cdata_continuous_action_turn(cc) = rpref(2) / 10000;
         {
             int cnt = 0;
             for (;; ++cnt)
@@ -65132,8 +65162,8 @@ label_19341_internal:
                 }
                 gdata(14) = 0;
                 cc = 0;
-                --cdata(141, cc);
-                if (cdata(141, cc) <= 0)
+                --cdata_continuous_action_turn(cc);
+                if (cdata_continuous_action_turn(cc) <= 0)
                 {
                     label_1931();
                     if (stat == 0)
@@ -65146,7 +65176,7 @@ label_19341_internal:
                     label_1933();
                     if (rpref(1) > 0)
                     {
-                        cdata(141, cc) = rpref(2) / 10000;
+                        cdata_continuous_action_turn(cc) = rpref(2) / 10000;
                         cnt = 0 - 1;
                         continue;
                     }
@@ -65173,7 +65203,7 @@ label_19341_internal:
     label_1933();
     if (rpref(1) > 0)
     {
-        cdata(140, cc) = 0;
+        cdata_continuous_action_id(cc) = 0;
         goto label_19341_internal;
     }
     rowactend(cc);
@@ -65479,9 +65509,9 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     if (prm_1059 == 0)
     {
-        if (fov_los(cdata(1, 0), cdata(2, 0), prm_1057, prm_1058) == 0
-            || dist(cdata(1, 0), cdata(2, 0), prm_1057, prm_1058)
-                > cdata(28, 0) / 2)
+        if (fov_los(cdata_x(0), cdata_y(0), prm_1057, prm_1058) == 0
+            || dist(cdata_x(0), cdata_y(0), prm_1057, prm_1058)
+                > cdata_vision_distance(0) / 2)
         {
             pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
@@ -65498,7 +65528,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     if (map(prm_1057, prm_1058, 1) != 0)
     {
         i_at_m186 = map(prm_1057, prm_1058, 1) - 1;
-        if (cbit(6, i_at_m186) == 0 || cbit(7, 0) || cdata(259, i_at_m186))
+        if (cbit(6, i_at_m186) == 0 || cbit(7, 0) || cdata_wet(i_at_m186))
         {
             tc = i_at_m186;
             txttargetlevel();
@@ -65513,10 +65543,10 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                 lang(u8"現在のターゲットは"s, u8"You are targeting "s)
                     + name(i_at_m186) + lang(u8" (距離 "s, u8".(Distance "s)
                     + dist(
-                          cdata(1, 0),
-                          cdata(2, 0),
-                          cdata(1, i_at_m186),
-                          cdata(2, i_at_m186))
+                          cdata_x(0),
+                          cdata_y(0),
+                          cdata_x(i_at_m186),
+                          cdata_y(i_at_m186))
                     + u8")"s,
                 255,
                 2552,
@@ -65628,7 +65658,7 @@ void label_1942()
         {
             if (mode == 0)
             {
-                if (cdata(141, 0) == 0)
+                if (cdata_continuous_action_turn(0) == 0)
                 {
                     gdata(217) = 1;
                     ghelp = 17;
@@ -65994,8 +66024,8 @@ int label_1947()
     }
     else
     {
-        tlocx = cdata(1, cc);
-        tlocy = cdata(2, cc);
+        tlocx = cdata_x(cc);
+        tlocy = cdata_y(cc);
     }
     if (homemapmode)
     {
@@ -66004,7 +66034,7 @@ int label_1947()
     else
     {
         scposval = 1;
-        if (cdata(29, 0) == 0)
+        if (cdata_enemy_id(0) == 0)
         {
             label_2072();
         }
@@ -66023,10 +66053,10 @@ int label_1947()
                 {
                     continue;
                 }
-                if (list(0, cnt) == cdata(29, 0))
+                if (list(0, cnt) == cdata_enemy_id(0))
                 {
-                    tlocx = cdata(1, list(0, cnt));
-                    tlocy = cdata(2, list(0, cnt));
+                    tlocx = cdata_x(list(0, cnt));
+                    tlocy = cdata_y(list(0, cnt));
                     break;
                 }
             }
@@ -66073,24 +66103,22 @@ label_1948_internal:
                 {
                     break;
                 }
-                if (fov_los(
-                        cdata(1, cc), cdata(2, cc), cdata(1, rc), cdata(2, rc))
+                if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(rc), cdata_y(rc))
                     == 0)
                 {
                     break;
                 }
-                if ((cbit(6, rc) == 0 || cbit(7, 0) || cdata(259, rc)) == 0)
+                if ((cbit(6, rc) == 0 || cbit(7, 0) || cdata_wet(rc)) == 0)
                 {
                     break;
                 }
-                get_route(
-                    cdata(1, cc), cdata(2, cc), cdata(1, rc), cdata(2, rc));
+                get_route(cdata_x(cc), cdata_y(cc), cdata_x(rc), cdata_y(rc));
                 dx = (tlocx - scx) * inf_tiles + inf_screenx;
                 dy = (tlocy - scy) * inf_tiles + inf_screeny;
                 if (maxroute != 0)
                 {
-                    dx = cdata(1, cc);
-                    dy = cdata(2, cc);
+                    dx = cdata_x(cc);
+                    dy = cdata_y(cc);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
@@ -66163,28 +66191,28 @@ label_1948_internal:
         key_direction();
         if (stat == 1)
         {
-            cdata(1, 0) += kdx;
-            cdata(2, 0) += kdy;
-            if (cdata(1, 0) < 0)
+            cdata_x(0) += kdx;
+            cdata_y(0) += kdy;
+            if (cdata_x(0) < 0)
             {
-                cdata(1, 0) = 0;
+                cdata_x(0) = 0;
             }
             else
             {
-                if (cdata(1, 0) >= mdata(0))
+                if (cdata_x(0) >= mdata(0))
                 {
-                    cdata(1, 0) = mdata(0) - 1;
+                    cdata_x(0) = mdata(0) - 1;
                 }
             }
-            if (cdata(2, 0) < 0)
+            if (cdata_y(0) < 0)
             {
-                cdata(2, 0) = 0;
+                cdata_y(0) = 0;
             }
             else
             {
-                if (cdata(2, 0) >= mdata(1))
+                if (cdata_y(0) >= mdata(1))
                 {
-                    cdata(2, 0) = mdata(1) - 1;
+                    cdata_y(0) = mdata(1) - 1;
                 }
             }
         }
@@ -66243,9 +66271,9 @@ label_1948_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
             {
-                if (cdata(1, list(0, cnt)) == cdata(1, i))
+                if (cdata_x(list(0, cnt)) == cdata_x(i))
                 {
-                    if (cdata(2, list(0, cnt)) == cdata(2, i))
+                    if (cdata_y(list(0, cnt)) == cdata_y(i))
                     {
                         p = cnt;
                         break;
@@ -66279,8 +66307,8 @@ label_1948_internal:
         if (f)
         {
             snd(5);
-            tlocx = cdata(1, list(0, p));
-            tlocy = cdata(2, list(0, p));
+            tlocx = cdata_x(list(0, p));
+            tlocy = cdata_y(list(0, p));
         }
     }
     if (key == key_enter)
@@ -66297,7 +66325,7 @@ label_1948_internal:
             snd(20);
             if (rc > 0)
             {
-                cdata(29, 0) = rc;
+                cdata_enemy_id(0) = rc;
                 txt(lang(
                     name(rc) + u8"をターゲットにした。"s,
                     u8"You target "s + name(rc) + u8"."s));
@@ -66361,7 +66389,7 @@ void label_1951()
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
-            if (list(0, cnt) == cdata(29, 0))
+            if (list(0, cnt) == cdata_enemy_id(0))
             {
                 cs = cnt % pagesize;
                 page = cnt / pagesize;
@@ -66408,16 +66436,16 @@ label_1953_internal:
                 {
                     i = p;
                     get_route(
-                        cdata(1, cc),
-                        cdata(2, cc),
-                        cdata(1, list(0, p)),
-                        cdata(2, list(0, p)));
+                        cdata_x(cc),
+                        cdata_y(cc),
+                        cdata_x(list(0, p)),
+                        cdata_y(list(0, p)));
                     dx = (tlocx - scx) * inf_tiles + inf_screenx;
                     dy = (tlocy - scy) * inf_tiles + inf_screeny;
                     if (maxroute != 0)
                     {
-                        dx = cdata(1, cc);
-                        dy = cdata(2, cc);
+                        dx = cdata_x(cc);
+                        dy = cdata_y(cc);
                         {
                             int cnt = 0;
                             for (int cnt_end = cnt + (100); cnt < cnt_end;
@@ -66472,7 +66500,7 @@ label_1953_internal:
                     x * inf_tiles + inf_screenx - 12, y * inf_tiles - 12, cnt);
             }
         }
-        txttargetnpc(cdata(1, list(0, i)), cdata(2, list(0, i)));
+        txttargetnpc(cdata_x(list(0, i)), cdata_y(list(0, i)));
         cs_bk = cs;
         label_1421();
         redraw(1);
@@ -66498,7 +66526,7 @@ label_1953_internal:
     }
     if (p != -1)
     {
-        cdata(29, 0) = p;
+        cdata_enemy_id(0) = p;
         snd(20);
         txt(lang(
             name(p) + u8"をターゲットにした。"s,
@@ -66627,20 +66655,20 @@ int label_1959()
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 0)
+            if (cdata_state(cnt) == 0)
             {
                 continue;
             }
             if (allyctrl == 1)
             {
-                if (cdata(0, cnt) == 6)
+                if (cdata_state(cnt) == 6)
                 {
                     continue;
                 }
             }
             if (allyctrl == 3 || allyctrl == 5)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
@@ -66652,7 +66680,7 @@ int label_1959()
                     continue;
                 }
             }
-            if (cdata(80, cnt) != 0)
+            if (cdata_current_map(cnt) != 0)
             {
                 if (allyctrl == 1 || allyctrl == 2)
                 {
@@ -66675,7 +66703,7 @@ int label_1959()
                 continue;
             }
             list(0, listmax) = cnt;
-            list(1, listmax) = -cdata(38, cnt);
+            list(1, listmax) = -cdata_level(cnt);
             ++listmax;
         }
     }
@@ -66693,7 +66721,7 @@ int label_1959()
                     continue;
                 }
                 i = list(0, cnt);
-                if (cdata(0, i) != 6)
+                if (cdata_state(i) != 6)
                 {
                     followerin(i) = 1;
                     ++p;
@@ -66854,8 +66882,8 @@ label_1961_internal:
             }
             if (list(0, p) != 99)
             {
-                i(0) = cdata(7, list(0, p)) % 1000;
-                i(1) = cdata(7, list(0, p)) / 1000;
+                i(0) = cdata_image(list(0, p)) % 1000;
+                i(1) = cdata_image(list(0, p)) / 1000;
                 chara_preparepic(i, i(1));
                 pos(wx + 40, wy + 74 + cnt * 19 - 8);
                 gmode(2, chipc(2, i), chipc(3, i));
@@ -66882,9 +66910,9 @@ label_1961_internal:
                 || allyctrl == 5)
             {
                 s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
-                if (cdata(80, i) != 0)
+                if (cdata_current_map(i) != 0)
                 {
-                    s = s + u8"("s + mapname(cdata(80, i)) + u8")"s;
+                    s = s + u8"("s + mapname(cdata_current_map(i)) + u8")"s;
                 }
                 if (allyctrl == 2)
                 {
@@ -66896,7 +66924,7 @@ label_1961_internal:
                 n = 0;
                 if (allyctrl == 5)
                 {
-                    if (cdata(38, i) > sdata(151, 0) + 5)
+                    if (cdata_level(i) > sdata(151, 0) + 5)
                     {
                         n = 3;
                     }
@@ -66904,12 +66932,12 @@ label_1961_internal:
                 cs_list(cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 19, 0, n);
                 if (allyctrl != 3 || allyctrl == 3 && gdata(20) == 7)
                 {
-                    s = u8"Lv."s + cdata(38, i) + u8" "s;
-                    if (cdata(0, i) == 6)
+                    s = u8"Lv."s + cdata_level(i) + u8" "s;
+                    if (cdata_state(i) == 6)
                     {
                         s += lang(u8"(死んでいる)"s, u8"(Dead"s);
                     }
-                    if (cdata(0, i) == 7)
+                    if (cdata_state(i) == 7)
                     {
                         if (allyctrl == 0)
                         {
@@ -66917,11 +66945,12 @@ label_1961_internal:
                         }
                         else
                         {
-                            s += u8"(Hp: "s + cdata(50, i) * 100 / cdata(51, i)
-                                + u8"%) "s + lang(u8"待機"s, u8"Waiting"s);
+                            s += u8"(Hp: "s
+                                + cdata_hp(i) * 100 / cdata_max_hp(i) + u8"%) "s
+                                + lang(u8"待機"s, u8"Waiting"s);
                         }
                     }
-                    if (cdata(0, i) == 1)
+                    if (cdata_state(i) == 1)
                     {
                         if (allyctrl == 0)
                         {
@@ -66929,8 +66958,8 @@ label_1961_internal:
                         }
                         else
                         {
-                            s += u8"(Hp: "s + cdata(50, i) * 100 / cdata(51, i)
-                                + u8"%)"s;
+                            s += u8"(Hp: "s
+                                + cdata_hp(i) * 100 / cdata_max_hp(i) + u8"%)"s;
                         }
                     }
                 }
@@ -66981,7 +67010,7 @@ label_1961_internal:
             if (allyctrl == 1)
             {
                 s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
-                s += u8" Lv."s + cdata(38, i);
+                s += u8" Lv."s + cdata_level(i);
                 cs_list(cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 19);
                 s = ""s + calcslavevalue(i) * 2 / 3 + strgold;
                 pos(wx + 390, wy + 66 + cnt * 19 + 2);
@@ -67013,7 +67042,7 @@ label_1961_internal:
     {
         if (allyctrl == 5)
         {
-            if (cdata(38, p) > sdata(151, 0) + 5)
+            if (cdata_level(p) > sdata(151, 0) + 5)
             {
                 snd(27);
                 txt(lang(
@@ -67049,7 +67078,7 @@ label_1961_internal:
                 stat = 1;
                 return stat;
             }
-            if (cdata(0, p) == 6)
+            if (cdata_state(p) == 6)
             {
                 txt(lang(
                     u8"死んでいる。"s, he(p) + u8" "s + is(p) + u8" dead."s));
@@ -67128,8 +67157,8 @@ void label_1964()
     notesel(buff);
     del_chara(56);
     r1 = 56;
-    cdata(62, r1) = cdata(62, 0);
-    cdata(61, r1) = cdata(61, 0);
+    cdata_piety_point(r1) = cdata_piety_point(0);
+    cdata_god(r1) = cdata_god(0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (600); cnt < cnt_end; ++cnt)
@@ -67138,9 +67167,9 @@ void label_1964()
         }
     }
     label_1884();
-    if (cdata(61, 0) != 0)
+    if (cdata_god(0) != 0)
     {
-        buff += u8"<title1>◆ "s + godname(cdata(61, 0))
+        buff += u8"<title1>◆ "s + godname(cdata_god(0))
             + u8"による能力の恩恵<def>\n"s;
         {
             int cnt = 0;
@@ -67466,15 +67495,15 @@ label_196901_internal:
             + lang(u8"あなたは拒食症だ"s, u8"You have anorexia."s);
         ++listmax;
     }
-    if (cdata(68, tc) != 0)
+    if (cdata_speed_correction_value(tc) != 0)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-            + lang((u8"あなたは複雑な体をしている[速度-"s + cdata(68, tc)
-                    + u8"%]"s),
-                   (u8"Your body is complicated. [SPD-"s + cdata(68, tc)
-                    + u8"%]"s));
+            + lang((u8"あなたは複雑な体をしている[速度-"s
+                    + cdata_speed_correction_value(tc) + u8"%]"s),
+                   (u8"Your body is complicated. [SPD-"s
+                    + cdata_speed_correction_value(tc) + u8"%]"s));
         ++listmax;
     }
     if (gdata(800) != 0)
@@ -67922,7 +67951,7 @@ label_1970_internal:
                         p = 0;
                     }
                 }
-                if (cdata(0, p) != 1)
+                if (cdata_state(p) != 1)
                 {
                     continue;
                 }
@@ -68036,15 +68065,15 @@ void label_1972()
         }
     }
     gold = 0;
-    p = limit(cdata(34, 0) / 10, 100, 25000);
-    if (cdata(34, 0) >= 25000)
+    p = limit(cdata_fame(0) / 10, 100, 25000);
+    if (cdata_fame(0) >= 25000)
     {
-        p += (cdata(34, 0) - 25000) / 100;
+        p += (cdata_fame(0) - 25000) / 100;
     }
     gold += p;
     noteadd(u8" - Title & Ranking - "s);
     noteadd(""s);
-    noteadd(lang(u8"名声: "s, u8"Fame: "s) + cdata(34, 0));
+    noteadd(lang(u8"名声: "s, u8"Fame: "s) + cdata_fame(0));
     noteadd(""s);
     {
         int cnt = 0;
@@ -68309,7 +68338,7 @@ void label_1976()
         {
             if (mode == 0)
             {
-                if (cdata(141, 0) == 0)
+                if (cdata_continuous_action_turn(0) == 0)
                 {
                     gdata(204) = 1;
                     ghelp = 4;
@@ -68344,7 +68373,7 @@ void label_1976()
                 continue;
             }
             rc = qdata(0, cnt);
-            if (cdata(0, rc) != 1)
+            if (cdata_state(rc) != 1)
             {
                 continue;
             }
@@ -68468,17 +68497,17 @@ label_1978_internal:
                 int cnt = 0;
                 for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(38, 0) * 2 < qdata(5, rq))
+                    if (cdata_level(0) * 2 < qdata(5, rq))
                     {
                         color(205, 0, 0);
                         break;
                     }
-                    if (cdata(38, 0) * 3 / 2 < qdata(5, rq))
+                    if (cdata_level(0) * 3 / 2 < qdata(5, rq))
                     {
                         color(140, 80, 0);
                         break;
                     }
-                    if (cdata(38, 0) < qdata(5, rq))
+                    if (cdata_level(0) < qdata(5, rq))
                     {
                         color(0, 0, 205);
                         break;
@@ -68611,7 +68640,7 @@ int label_1980()
         {
             if (allyctrl == 2)
             {
-                if (cdata(0, cnt) != 6 && cdata(0, cnt) != 2)
+                if (cdata_state(cnt) != 6 && cdata_state(cnt) != 2)
                 {
                     continue;
                 }
@@ -68622,7 +68651,7 @@ int label_1980()
                 {
                     if (allyctrl == 1)
                     {
-                        if (cdata(0, cnt) != 10)
+                        if (cdata_state(cnt) != 10)
                         {
                             continue;
                         }
@@ -68630,14 +68659,14 @@ int label_1980()
                 }
                 else
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
                 }
                 if (cnt < 16)
                 {
-                    if (cdata(80, cnt) != gdata(20))
+                    if (cdata_current_map(cnt) != gdata(20))
                     {
                         continue;
                     }
@@ -68652,7 +68681,7 @@ int label_1980()
                 continue;
             }
             list(0, listmax) = cnt;
-            list(1, listmax) = -cdata(38, cnt);
+            list(1, listmax) = -cdata_level(cnt);
             ++listmax;
         }
     }
@@ -68724,8 +68753,8 @@ label_1982_internal:
             {
                 break;
             }
-            i(0) = cdata(7, list(0, p)) % 1000;
-            i(1) = cdata(7, list(0, p)) / 1000;
+            i(0) = cdata_image(list(0, p)) % 1000;
+            i(1) = cdata_image(list(0, p)) / 1000;
             chara_preparepic(i, i(1));
             pos(wx + 40, wy + 74 + cnt * 19 - 8);
             gmode(2, chipc(2, i), chipc(3, i));
@@ -68740,8 +68769,8 @@ label_1982_internal:
             s = cdatan(0, i);
             cutname(s, 36);
             cs_list(cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 19);
-            s = u8"Lv."s + cdata(38, i) + u8" "s;
-            if (cdata(8, i) == 0)
+            s = u8"Lv."s + cdata_level(i) + u8" "s;
+            if (cdata_sex(i) == 0)
             {
                 s += cnven(strmale);
             }
@@ -69003,12 +69032,12 @@ void label_1988()
         int cnt = 0;
         for (int cnt_end = cnt + (56); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 0)
+            if (cdata_state(cnt) == 0)
             {
                 continue;
             }
             list(0, listmax) = cnt;
-            list(1, listmax) = -cdata(34, cnt);
+            list(1, listmax) = -cdata_fame(cnt);
             ++listmax;
         }
     }
@@ -69070,8 +69099,8 @@ label_1990_internal:
             {
                 break;
             }
-            i(0) = cdata(7, list(0, p)) % 1000;
-            i(1) = cdata(7, list(0, p)) / 1000;
+            i(0) = cdata_image(list(0, p)) % 1000;
+            i(1) = cdata_image(list(0, p)) / 1000;
             chara_preparepic(i, i(1));
             pos(wx + 40, wy + 74 + cnt * 19 - 8);
             gmode(2, chipc(2, i), chipc(3, i));
@@ -69088,15 +69117,15 @@ label_1990_internal:
             s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
             cutname(s, 26);
             cs_list(cnt, s, wx + 118, wy + 66 + cnt * 19 - 1, 19);
-            s = ""s + cdata(34, i) + u8"("s + cdata(38, i) + u8")"s;
+            s = ""s + cdata_fame(i) + u8"("s + cdata_level(i) + u8")"s;
             pos(wx + 402 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
             mes(s);
-            s = mapname(cdata(80, i));
+            s = mapname(cdata_current_map(i));
             if (s == ""s)
             {
                 s = lang(u8"不明"s, u8"Unknown"s);
             }
-            if (cdata(0, i) == 4)
+            if (cdata_state(i) == 4)
             {
                 s = lang(u8"病院"s, u8"Hospital"s);
             }
@@ -69324,7 +69353,7 @@ void label_1997()
     {
         txt(lang(u8"「うみみゅみゅぁ！」"s, cnvtalk(u8"Meeewmew!"s)));
         flt();
-        characreate(-1, 331, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 331, cdata_x(0), cdata_y(0));
         label_1996();
         return;
     }
@@ -69334,7 +69363,7 @@ void label_1997()
             u8"「アタシを呼びつけるとは生意気ね。」"s,
             cnvtalk(u8"You dare to call my name?"s)));
         flt();
-        characreate(-1, 306, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 306, cdata_x(0), cdata_y(0));
         label_1996();
         return;
     }
@@ -69342,7 +69371,7 @@ void label_1997()
     {
         txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
         flt();
-        characreate(-1, 338, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 338, cdata_x(0), cdata_y(0));
         label_1996();
         return;
     }
@@ -69350,7 +69379,7 @@ void label_1997()
     {
         txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
         flt();
-        characreate(-1, 339, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 339, cdata_x(0), cdata_y(0));
         label_1996();
         return;
     }
@@ -69358,7 +69387,7 @@ void label_1997()
     {
         txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
         flt();
-        characreate(-1, 342, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 342, cdata_x(0), cdata_y(0));
         label_1996();
         return;
     }
@@ -69367,10 +69396,10 @@ void label_1997()
         || inputlog == u8"age"s || inputlog == u8"beauty"s)
     {
         txt(lang(u8"ふぅん…そんな願いでいいんだ。"s, u8"A typical wish."s));
-        cdata(21, 0) += 20;
-        if (cdata(21, 0) + 12 > gdata(10))
+        cdata_birth_year(0) += 20;
+        if (cdata_birth_year(0) + 12 > gdata(10))
         {
-            cdata(21, 0) = gdata(10) - 12;
+            cdata_birth_year(0) = gdata(10) - 12;
         }
         label_1996();
         return;
@@ -69410,32 +69439,32 @@ void label_1997()
     if (inputlog == u8"性転換"s || inputlog == u8"性"s || inputlog == u8"異性"s
         || inputlog == u8"sex"s)
     {
-        if (cdata(8, 0) == 0)
+        if (cdata_sex(0) == 0)
         {
-            cdata(8, 0) = 1;
+            cdata_sex(0) = 1;
         }
         else
         {
-            cdata(8, 0) = 0;
+            cdata_sex(0) = 0;
         }
         txt(lang(
-            name(0) + u8"は"s + _sex(cdata(8, 0))
+            name(0) + u8"は"s + _sex(cdata_sex(0))
                 + u8"になった！ …もう後戻りはできないわよ。"s,
-            name(0) + u8" become "s + _sex(cdata(8, 0)) + u8"!"s));
+            name(0) + u8" become "s + _sex(cdata_sex(0)) + u8"!"s));
         label_1996();
         return;
     }
     if (inputlog == u8"贖罪"s || inputlog == u8"redemption"s
         || inputlog == u8"atonement"s)
     {
-        if (cdata(49, 0) >= 0)
+        if (cdata_karma(0) >= 0)
         {
             txt(lang(
                 u8"…罪なんて犯してないじゃない。"s, u8"You aren't a sinner."s));
             label_1996();
             return;
         }
-        modkarma(0, cdata(49, 0) / 2 * -1);
+        modkarma(0, cdata_karma(0) / 2 * -1);
         txt(lang(
             u8"あら…都合のいいことを言うのね。"s,
             u8"What a convenient wish!"s));
@@ -69465,7 +69494,7 @@ void label_1997()
         txt(lang(u8"金貨が降ってきた！"s, u8"Lots of gold pieces appear."s));
         flt();
         itemcreate(
-            -1, 54, cdata(1, 0), cdata(2, 0), (cdata(38, 0) / 3 + 1) * 10000);
+            -1, 54, cdata_x(0), cdata_y(0), (cdata_level(0) / 3 + 1) * 10000);
         label_1996();
         return;
     }
@@ -69477,7 +69506,7 @@ void label_1997()
         txtef(5);
         txt(lang(u8"小さなメダルが降ってきた！"s, u8"A small coin appears."s));
         flt();
-        itemcreate(-1, 622, cdata(1, 0), cdata(2, 0), 3 + rnd(3));
+        itemcreate(-1, 622, cdata_x(0), cdata_y(0), 3 + rnd(3));
         label_1996();
         return;
     }
@@ -69488,7 +69517,7 @@ void label_1997()
         txt(lang(
             u8"プラチナ硬貨が降ってきた！"s, u8"Platinum pieces appear."s));
         flt();
-        itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 5);
+        itemcreate(-1, 55, cdata_x(0), cdata_y(0), 5);
         label_1996();
         return;
     }
@@ -69594,7 +69623,7 @@ label_1998_internal:
                     f = 0;
                     break;
                 }
-                flt(cdata(38, 0) + 10, 4);
+                flt(cdata_level(0) + 10, 4);
                 if (p == 558 || p == 556 || p == 557 || p == 664)
                 {
                     fixlv = calcobjlv(3);
@@ -69605,7 +69634,7 @@ label_1998_internal:
                 }
                 nostack = 1;
                 nooracle = 1;
-                itemcreate(-1, p, cdata(1, cc), cdata(2, cc), 0);
+                itemcreate(-1, p, cdata_x(cc), cdata_y(cc), 0);
                 nooracle = 0;
                 if (ibit(5, ci) == 1 || inv_quality(ci) == 6)
                 {
@@ -69620,7 +69649,8 @@ label_1998_internal:
                 }
                 if (inv_id(ci) == 54)
                 {
-                    inv_number(ci) = cdata(38, 0) * cdata(38, 0) * 50 + 20000;
+                    inv_number(ci) =
+                        cdata_level(0) * cdata_level(0) * 50 + 20000;
                 }
                 if (inv_id(ci) == 55)
                 {
@@ -69630,7 +69660,7 @@ label_1998_internal:
                 {
                     inv_number(ci) = 0;
                     flt();
-                    itemcreate(-1, 516, cdata(1, cc), cdata(2, cc), 3);
+                    itemcreate(-1, 516, cdata_x(cc), cdata_y(cc), 3);
                     inv_curse_state(ci) = 1;
                     txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
                     txtmore();
@@ -69790,11 +69820,11 @@ void label_2000()
     flt();
     characreate(56, dbid, -3, 0);
     flt();
-    itemcreate(-1, 504, cdata(1, 0), cdata(2, 0), 0);
-    inv_subname(ci) = cdata(27, 56);
-    inv_color(ci) = cdata(7, 56) % 1000;
+    itemcreate(-1, 504, cdata_x(0), cdata_y(0), 0);
+    inv_subname(ci) = cdata_id(56);
+    inv_color(ci) = cdata_image(56) % 1000;
     chara_vanquish(56);
-    cell_refresh(cdata(1, 0), cdata(2, 0));
+    cell_refresh(cdata_x(0), cdata_y(0));
     txt(lang(
         u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
         ""s + itemname(ci) + u8" appear"s + _s2(inv_number(ci))
@@ -69808,11 +69838,11 @@ void label_2001()
     flt();
     characreate(56, dbid, -3, 0);
     flt();
-    itemcreate(-1, 503, cdata(1, 0), cdata(2, 0), 0);
-    inv_subname(ci) = cdata(27, 56);
-    inv_color(ci) = cdata(7, 56) % 1000;
+    itemcreate(-1, 503, cdata_x(0), cdata_y(0), 0);
+    inv_subname(ci) = cdata_id(56);
+    inv_color(ci) = cdata_image(56) % 1000;
     chara_vanquish(56);
-    cell_refresh(cdata(1, 0), cdata(2, 0));
+    cell_refresh(cdata_x(0), cdata_y(0));
     txt(lang(
         u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
         ""s + itemname(ci) + u8" appear"s + _s2(inv_number(ci))
@@ -69961,9 +69991,9 @@ void label_2004()
     refy = y;
     tlocx = x;
     tlocy = y;
-    if (tlocx == cdata(1, 0))
+    if (tlocx == cdata_x(0))
     {
-        if (tlocy == cdata(2, 0))
+        if (tlocy == cdata_y(0))
         {
             rowactre = 0;
             label_2158();
@@ -70343,7 +70373,7 @@ void label_2012()
     p = 0;
     if (tc != 0)
     {
-        if (cdata(254, 0) == 0)
+        if (cdata_confused(0) == 0)
         {
             promptl(0, promptmax) = lang(u8"話しかける"s, u8"Talk"s);
             promptl(1, promptmax) = u8"null"s;
@@ -70537,7 +70567,7 @@ void label_2012()
             name(tc) + u8"の縄を解いた。"s,
             u8"You release "s + name(tc) + u8"."s));
         flt();
-        itemcreate(-1, 733, cdata(1, tc), cdata(2, tc), 0);
+        itemcreate(-1, 733, cdata_x(tc), cdata_y(tc), 0);
     }
     if (p == 10)
     {
@@ -70888,7 +70918,7 @@ label_2020_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(27, cnt) == 343)
+                if (cdata_id(cnt) == 343)
                 {
                     getunid(cnt);
                 }
@@ -71706,12 +71736,12 @@ label_20331:
     gsel(4);
     pos(0, 0);
     picload(exedir + u8"graphic\\face1"s + devfile + u8".bmp"s, 1);
-    if (cdata(13, cc) < 0)
+    if (cdata_portrait(cc) < 0)
     {
-        s = exedir + u8"user\\graphic\\face"s + abs((cdata(13, cc) + 1))
+        s = exedir + u8"user\\graphic\\face"s + abs((cdata_portrait(cc) + 1))
             + u8".bmp"s;
         exist(s);
-        if (cdata(13, cc) != -1)
+        if (cdata_portrait(cc) != -1)
         {
             if (strsize != -1)
             {
@@ -71829,9 +71859,10 @@ label_2035_internal:
         if (page != 0)
         {
             s = lang(
-                u8"残り "s + cdata(41, cc)
+                u8"残り "s + cdata_skill_bonus(cc)
                     + u8" のボーナスをスキルに分配できる"s,
-                u8"You can spend "s + cdata(41, cc) + u8" bonus points."s);
+                u8"You can spend "s + cdata_skill_bonus(cc)
+                    + u8" bonus points."s);
         }
     }
     display_window2(
@@ -71852,18 +71883,18 @@ label_2035_internal:
         display_topic(
             lang(u8"祝福と呪い"s, u8"Blessing and Hex"s), wx + 400, wy + 122);
         display_topic(lang(u8"その他"s, u8"Extra Info"s), wx + 220, wy + 273);
-        if (cdata(13, cc) >= 0)
+        if (cdata_portrait(cc) >= 0)
         {
-            p = cdata(8, cc) * 64 + cdata(13, cc);
+            p = cdata_sex(cc) * 64 + cdata_portrait(cc);
             pos(wx + 560, wy + 27);
             gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
         }
         else
         {
-            s = exedir + u8"user\\graphic\\face"s + abs((cdata(13, cc) + 1))
-                + u8".bmp"s;
+            s = exedir + u8"user\\graphic\\face"s
+                + abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
             exist(s);
-            if (cdata(13, cc) != -1)
+            if (cdata_portrait(cc) != -1)
             {
                 if (strsize != -1)
                 {
@@ -71881,8 +71912,8 @@ label_2035_internal:
         }
         else
         {
-            i = cdata(7, cc) % 1000;
-            chara_preparepic(cdata(7, cc) % 1000, cdata(7, cc) / 1000);
+            i = cdata_image(cc) % 1000;
+            chara_preparepic(cdata_image(cc) % 1000, cdata_image(cc) / 1000);
             pos(wx + 596 + 22, wy + 86 + 24);
             gmode(2, chipc(2, i), chipc(3, i));
             grotate(
@@ -71987,10 +72018,10 @@ label_2035_internal:
         }
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
-        s(0) = ""s + cdata(38, cc);
-        s(1) = ""s + cdata(35, cc);
-        s(2) = ""s + cdata(36, cc);
-        s(3) = godname(cdata(61, cc));
+        s(0) = ""s + cdata_level(cc);
+        s(1) = ""s + cdata_experience(cc);
+        s(2) = ""s + cdata_required_experience(cc);
+        s(3) = godname(cdata_god(cc));
         s(4) = guildname();
         {
             int cnt = 0;
@@ -72010,7 +72041,7 @@ label_2035_internal:
         dbmode = 2;
         label_2298();
         s(4) = cnven(lang(""s + classname, cdatan(3, cc)));
-        if (cdata(8, cc) == 0)
+        if (cdata_sex(cc) == 0)
         {
             s(3) = cnven(strmale);
         }
@@ -72019,8 +72050,8 @@ label_2035_internal:
             s(3) = cnven(strfemale);
         }
         s(5) = ""s + calcage(cc) + u8" "s + lang(u8"歳"s, ""s);
-        s(6) = ""s + cdata(19, cc) + u8" cm"s;
-        s(7) = ""s + cdata(20, cc) + u8" kg"s;
+        s(6) = ""s + cdata_height(cc) + u8" cm"s;
+        s(7) = ""s + cdata_weight(cc) + u8" kg"s;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -72071,11 +72102,11 @@ label_2035_internal:
         }
         s(0) = ""s + sdata(2, cc) + u8"("s + sorg(2, cc) + u8")"s;
         s(1) = ""s + sdata(3, cc) + u8"("s + sorg(3, cc) + u8")"s;
-        s(2) = ""s + cdata(86, cc);
-        s(3) = ""s + cdata(11, cc) + u8"("s + sorg(18, cc) + u8")"s;
+        s(2) = ""s + cdata_insanity(cc);
+        s(3) = ""s + cdata_current_speed(cc) + u8"("s + sorg(18, cc) + u8")"s;
         s(4) = "";
-        s(5) = ""s + cdata(34, cc);
-        s(6) = ""s + cdata(49, cc);
+        s(5) = ""s + cdata_fame(cc);
+        s(6) = ""s + cdata_karma(cc);
         s(7) = "";
         s(8) = "";
         {
@@ -72123,7 +72154,8 @@ label_2035_internal:
         }
         s(0) = ""s + cnvweight(gdata(80));
         s(1) = cnvweight(gdata(82));
-        s(2) = cnvweight(cdata(64, cc)) + u8" "s + cnveqweight(cc);
+        s(2) = cnvweight(cdata_sum_of_equipment_weight(cc)) + u8" "s
+            + cnveqweight(cc);
         s(3) = cnvrank(gdata(1)) + lang(u8"階相当"s, u8" Level"s);
         {
             int cnt = 0;
@@ -72461,7 +72493,7 @@ label_2035_internal:
                 stat = 0;
                 return stat;
             }
-            if (cdata(41, 0) < 1 || p < 0 || p < 100)
+            if (cdata_skill_bonus(0) < 1 || p < 0 || p < 100)
             {
                 goto label_2034_internal;
             }
@@ -72470,7 +72502,7 @@ label_2035_internal:
                 snd(27);
                 goto label_2034_internal;
             }
-            --cdata(41, 0);
+            --cdata_skill_bonus(0);
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
             modgrowth(
@@ -72575,7 +72607,7 @@ void label_2038()
         {
             rtval(0) = 100;
             rtval(1) = 0;
-            rtval(2) = cdata(13, cc);
+            rtval(2) = cdata_portrait(cc);
         }
         if (val == 2)
         {
@@ -72845,18 +72877,19 @@ label_2041_internal:
     window2(wx + 234, wy + 71, 88, 120, 1, 1);
     if (cs == 1 && page == 0)
     {
-        if (cdata(13, cc) >= 0)
+        if (cdata_portrait(cc) >= 0)
         {
-            p = cdata(8, cc) * 64 + cdata(13, cc);
+            p = cdata_sex(cc) * 64 + cdata_portrait(cc);
             pos(wx + 238, wy + 75);
             gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
         }
         else
         {
-            if (cdata(13, cc) != -1)
+            if (cdata_portrait(cc) != -1)
             {
                 pos(wx + 238, wy + 75);
-                gzoom(80, 112, 7, abs((cdata(13, cc) + 2)) * 80, 0, 80, 112);
+                gzoom(
+                    80, 112, 7, abs((cdata_portrait(cc) + 2)) * 80, 0, 80, 112);
             }
         }
     }
@@ -72870,8 +72903,8 @@ label_2041_internal:
         }
         else
         {
-            i = cdata(7, cc) % 1000;
-            chara_preparepic(cdata(7, cc) % 1000, cdata(7, cc) / 1000);
+            i = cdata_image(cc) % 1000;
+            chara_preparepic(cdata_image(cc) % 1000, cdata_image(cc) / 1000);
             pos(wx + 280, wy + 130);
             gmode(2, chipc(2, i), chipc(3, i));
             grotate(5, 0, 960, 0, chipc(2, i), chipc(3, i));
@@ -72975,9 +73008,9 @@ label_2041_internal:
         snd(5);
         if (rtval == 100)
         {
-            if (cdata(13, cc) < 31)
+            if (cdata_portrait(cc) < 31)
             {
-                ++cdata(13, cc);
+                ++cdata_portrait(cc);
             }
             goto label_2041_internal;
         }
@@ -73011,9 +73044,9 @@ label_2041_internal:
         snd(5);
         if (rtval == 100)
         {
-            if (cdata(13, cc) > -10)
+            if (cdata_portrait(cc) > -10)
             {
-                --cdata(13, cc);
+                --cdata_portrait(cc);
             }
             goto label_2041_internal;
         }
@@ -73323,7 +73356,7 @@ void label_2049()
                 continue;
             }
             ++attacknum;
-            if (cdata(32, cc) && 2)
+            if (cdata_equipment_type(cc) && 2)
             {
                 if (inv_weight(cw) >= 4000)
                 {
@@ -73342,7 +73375,7 @@ void label_2049()
                             + u8" is too light for two-hand fighting style."s));
                 }
             }
-            if (cdata(32, cc) && 4)
+            if (cdata_equipment_type(cc) && 4)
             {
                 if (attacknum == 1)
                 {
@@ -73497,11 +73530,12 @@ label_2052_internal:
             u8"Fi Co Li Da Mi Po Nt So Nr Ch Ma"s));
     }
     display_note(
-        lang(u8"装備重量: "s, u8"Equip weight: "s) + cnvweight(cdata(64, cc))
-        + cnveqweight(cc) + lang(u8" 命中修正:"s, u8" Hit Bonus:"s)
-        + cdata(72, cc) + lang(u8" ダメージ修正:"s, u8" Damage Bonus:"s)
-        + cdata(73, cc) + u8"  DV/PV:"s + cdata(71, cc) + u8"/"s
-        + cdata(70, cc));
+        lang(u8"装備重量: "s, u8"Equip weight: "s)
+        + cnvweight(cdata_sum_of_equipment_weight(cc)) + cnveqweight(cc)
+        + lang(u8" 命中修正:"s, u8" Hit Bonus:"s) + cdata_hit_bonus(cc)
+        + lang(u8" ダメージ修正:"s, u8" Damage Bonus:"s)
+        + cdata_damage_bonus(cc) + u8"  DV/PV:"s + cdata_dv(cc) + u8"/"s
+        + cdata_pv(cc));
     color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     gmode(2);
@@ -73814,14 +73848,14 @@ label_2052_internal:
 }
 void label_2054()
 {
-    if (map(cdata(1, 0), cdata(2, 0), 6) != 0)
+    if (map(cdata_x(0), cdata_y(0), 6) != 0)
     {
         if (gdata(20) != 35 || 0)
         {
-            cell_itemoncell(cdata(1, 0), cdata(2, 0));
+            cell_itemoncell(cdata_x(0), cdata_y(0));
             if (stat == 0)
             {
-                cell_featread(cdata(1, 0), cdata(2, 0));
+                cell_featread(cdata_x(0), cdata_y(0));
                 if (feat(1) == 29)
                 {
                     if (gdata(20) != 35)
@@ -73831,7 +73865,7 @@ void label_2054()
                             txt(lang(
                                 u8"芽を摘み取った。"s,
                                 u8"You nip a young plant."s));
-                            map(cdata(1, 0), cdata(2, 0), 6) = 0;
+                            map(cdata_x(0), cdata_y(0), 6) = 0;
                             label_2742();
                             return;
                         }
@@ -73840,7 +73874,7 @@ void label_2054()
                             txt(lang(
                                 u8"枯れた草を摘み取った。"s,
                                 u8"You nip a dead plant."s));
-                            map(cdata(1, 0), cdata(2, 0), 6) = 0;
+                            map(cdata_x(0), cdata_y(0), 6) = 0;
                             label_2742();
                             return;
                         }
@@ -73853,7 +73887,7 @@ void label_2054()
                             label_2743(false);
                         }
                         label_2236();
-                        if (chipm(0, map(cdata(1, 0), cdata(2, 0), 0)) == 2)
+                        if (chipm(0, map(cdata_x(0), cdata_y(0), 0)) == 2)
                         {
                             val = 1;
                         }
@@ -73899,7 +73933,7 @@ void label_2054()
                                 label_2743(false);
                             }
                             area = feat(2) + feat(3) * 100;
-                            map(cdata(1, 0), cdata(2, 0), 6) = 0;
+                            map(cdata_x(0), cdata_y(0), 6) = 0;
                             adata(16, area) = 0;
                             removeworker(area);
                             label_1749();
@@ -73917,12 +73951,12 @@ void label_2054()
             }
         }
     }
-    cell_itemoncell(cdata(1, 0), cdata(2, 0));
+    cell_itemoncell(cdata_x(0), cdata_y(0));
     if (stat == 0)
     {
         if (mdata(6) == 3 || mdata(6) == 2)
         {
-            if (chipm(0, map(cdata(1, 0), cdata(2, 0), 0)) == 4)
+            if (chipm(0, map(cdata_x(0), cdata_y(0), 0)) == 4)
             {
                 snd(83);
                 txt(lang(
@@ -73999,7 +74033,7 @@ void label_2054()
 }
 void label_2055()
 {
-    if (cdata(141, tc) != 0)
+    if (cdata_continuous_action_turn(tc) != 0)
     {
         txt(lang(
             name(tc) + u8"は忙しい。"s,
@@ -74573,24 +74607,24 @@ label_2070_internal:
 }
 int label_2072()
 {
-    if (cdata(0, cdata(29, cc)) != 1)
+    if (cdata_state(cdata_enemy_id(cc)) != 1)
     {
-        cdata(29, cc) = 0;
+        cdata_enemy_id(cc) = 0;
     }
     else
     {
-        if (synccheck(cdata(29, cc), -1) == 0)
+        if (synccheck(cdata_enemy_id(cc), -1) == 0)
         {
-            cdata(29, cc) = 0;
+            cdata_enemy_id(cc) = 0;
         }
     }
-    if (cdata(29, cc) == 0)
+    if (cdata_enemy_id(cc) == 0)
     {
         label_2076();
         if (listmax != 0)
         {
             f = 0;
-            if (cc == 0 || cdata(9, cc) >= 0)
+            if (cc == 0 || cdata_relationship(cc) >= 0)
             {
                 p(0) = -3;
                 p(1) = -1;
@@ -74612,9 +74646,9 @@ int label_2072()
                         for (int cnt_end = cnt + (listmax); cnt < cnt_end;
                              ++cnt)
                         {
-                            if (cdata(9, list(0, cnt)) <= p(cnt2))
+                            if (cdata_relationship(list(0, cnt)) <= p(cnt2))
                             {
-                                cdata(29, cc) = list(0, cnt);
+                                cdata_enemy_id(cc) = list(0, cnt);
                                 f = 1;
                                 break;
                             }
@@ -74628,7 +74662,7 @@ int label_2072()
             }
         }
     }
-    if (cdata(29, cc) == 0 || cdata(253, cc) != 0)
+    if (cdata_enemy_id(cc) == 0 || cdata_blind(cc) != 0)
     {
         if (cc == 0)
         {
@@ -74639,9 +74673,9 @@ int label_2072()
         stat = 0;
         return stat;
     }
-    if (cdata(29, cc) < 0)
+    if (cdata_enemy_id(cc) < 0)
     {
-        cdata(29, cc) = 0;
+        cdata_enemy_id(cc) = 0;
     }
     stat = 1;
     return stat;
@@ -74687,8 +74721,8 @@ void label_2074()
     {
         label_2743(false);
     }
-    tc = cdata(29, 0);
-    if (cdata(9, tc) >= 0)
+    tc = cdata_enemy_id(0);
+    if (cdata_relationship(tc) >= 0)
     {
         label_2073();
         if (stat == 0)
@@ -74789,7 +74823,7 @@ void label_2076()
                 int cnt = 0;
                 for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
@@ -74797,9 +74831,9 @@ void label_2076()
                     {
                         continue;
                     }
-                    if (cc == 0 || cdata(9, cc) >= 0)
+                    if (cc == 0 || cdata_relationship(cc) >= 0)
                     {
-                        if (cdata(9, cnt) == 10)
+                        if (cdata_relationship(cnt) == 10)
                         {
                             if (cnt == 0)
                             {
@@ -74807,13 +74841,13 @@ void label_2076()
                             }
                         }
                     }
-                    x = cdata(1, cnt);
-                    y = cdata(2, cnt);
-                    if (x == cdata(1, cc) && y == cdata(2, cc))
+                    x = cdata_x(cnt);
+                    y = cdata_y(cnt);
+                    if (x == cdata_x(cc) && y == cdata_y(cc))
                     {
                         continue;
                     }
-                    if (fov_los(cdata(1, cc), cdata(2, cc), x, y) == 0)
+                    if (fov_los(cdata_x(cc), cdata_y(cc), x, y) == 0)
                     {
                         continue;
                     }
@@ -74821,7 +74855,7 @@ void label_2076()
                     {
                         if (cbit(7, cc) == 0)
                         {
-                            if (cdata(259, cnt) == 0)
+                            if (cdata_wet(cnt) == 0)
                             {
                                 continue;
                             }
@@ -74857,10 +74891,10 @@ void label_2076()
                 for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
                 {
                     p = dist(
-                        cdata(1, cc), cdata(2, cc), list(1, cnt), list(2, cnt));
+                        cdata_x(cc), cdata_y(cc), list(1, cnt), list(2, cnt));
                     p(1) = dist(
-                        cdata(1, cc),
-                        cdata(2, cc),
+                        cdata_x(cc),
+                        cdata_y(cc),
                         list(1, cnt + 1),
                         list(2, cnt + 1));
                     if (p(1) < p)
@@ -74897,8 +74931,10 @@ void label_2077()
 void label_2078()
 {
     txt(lang(
-        actlistn(cdata(140, cc)) + u8"を中断したほうがいいだろうか？ "s,
-        u8"Do you want to cancel "s + actlistn(cdata(140, cc)) + u8"? "s));
+        actlistn(cdata_continuous_action_id(cc))
+            + u8"を中断したほうがいいだろうか？ "s,
+        u8"Do you want to cancel "s + actlistn(cdata_continuous_action_id(cc))
+            + u8"? "s));
     promptl(0, 0) = stryes;
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
@@ -75167,7 +75203,7 @@ void label_2082()
             {
                 p = 416;
             }
-            itemcreate(-1, p, cdata(1, cc), cdata(2, cc), 0);
+            itemcreate(-1, p, cdata_x(cc), cdata_y(cc), 0);
             if (stat != 0)
             {
                 inv_param2(ci) = 0;
@@ -75328,7 +75364,7 @@ void label_2084()
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                followerexist(cnt) = cdata(0, cnt);
+                followerexist(cnt) = cdata_state(cnt);
             }
         }
         arenaop(0) = 1;
@@ -75351,7 +75387,7 @@ void label_2084()
                     if (followerin(cnt) == 1)
                     {
                         list(0, cnt) = 1;
-                        lv += cdata(38, cnt);
+                        lv += cdata_level(cnt);
                         ++n;
                     }
                 }
@@ -75410,7 +75446,7 @@ void label_2084()
                 u8"You can't do it in this area."s));
             return;
         }
-        if (cdata(38, 0) < 10)
+        if (cdata_level(0) < 10)
         {
             txt(lang(
                 u8"それはレベルが10以上でないとできない。"s,
@@ -75454,26 +75490,26 @@ void label_2085()
     noteadd(""s);
     noteadd(
         u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34)
-        + _sex(cdata(8, 0)) + u8" "s + calcage(0) + u8"歳"s + u8"  "s
-        + cdata(19, 0) + u8"cm"s + u8" "s + cdata(20, 0) + u8"kg"s);
+        + _sex(cdata_sex(0)) + u8" "s + calcage(0) + u8"歳"s + u8"  "s
+        + cdata_height(0) + u8"cm"s + u8" "s + cdata_weight(0) + u8"kg"s);
     noteadd(""s);
     noteadd(
         fixtxt(u8"種族       : "s + racename, 30)
-        + fixtxt((u8"信仰      : "s + godname(cdata(61, 0))), 32));
+        + fixtxt((u8"信仰      : "s + godname(cdata_god(0))), 32));
     noteadd(
         fixtxt(u8"職業       : "s + classname, 30)
         + fixtxt((u8"所属      : "s + guildname()), 32));
     noteadd(
-        fixtxt(u8"レベル     : "s + cdata(38, 0), 30)
+        fixtxt(u8"レベル     : "s + cdata_level(0), 30)
         + fixtxt((u8"経過日数  : "s + gdata(7)), 32));
     noteadd(
-        fixtxt(u8"残りBP     : "s + cdata(41, 0), 30)
+        fixtxt(u8"残りBP     : "s + cdata_skill_bonus(0), 30)
         + fixtxt((u8"経過ターン: "s + gdata(4)), 32));
     noteadd(
-        fixtxt(u8"金貨       : "s + cdata(30, 0), 30)
+        fixtxt(u8"金貨       : "s + cdata_gold(0), 30)
         + fixtxt((u8"殺害数    : "s + gdata(2)), 32));
     noteadd(
-        fixtxt(u8"プラチナ   : "s + cdata(31, 0), 30)
+        fixtxt(u8"プラチナ   : "s + cdata_platinum_coin(0), 30)
         + fixtxt((u8"最深到達  : "s + gdata(1) + u8"階相当"s), 32));
     noteadd(fixtxt(
         u8"プレイ時間 : "s
@@ -75483,11 +75519,11 @@ void label_2085()
     s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s + sorg(2, 0) + u8")"s;
     s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s + sorg(3, 0) + u8")"s;
     s(3) = u8"狂気度    : 0"s;
-    s(4) = u8"速度      : "s + cdata(11, 0);
-    s(5) = u8"名声度    : "s + cdata(34, 0);
-    s(6) = u8"カルマ    : "s + cdata(49, 0);
-    s(7) = u8"DV        : "s + cdata(71, 0);
-    s(8) = u8"PV        : "s + cdata(70, 0);
+    s(4) = u8"速度      : "s + cdata_current_speed(0);
+    s(5) = u8"名声度    : "s + cdata_fame(0);
+    s(6) = u8"カルマ    : "s + cdata_karma(0);
+    s(7) = u8"DV        : "s + cdata_dv(0);
+    s(8) = u8"PV        : "s + cdata_pv(0);
     s(9) = "";
     {
         int cnt = 0;
@@ -75547,7 +75583,8 @@ void label_2085()
     noteadd(""s);
     noteadd(
         u8"------------------------------ 装備品 合計重量"s
-        + cnvweight(cdata(64, cc)) + u8" "s + cnveqweight(cc));
+        + cnvweight(cdata_sum_of_equipment_weight(cc)) + u8" "s
+        + cnveqweight(cc));
     noteadd(""s);
     listmax = 0;
     {
@@ -75638,7 +75675,7 @@ void label_2085()
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 0)
+            if (cdata_state(cnt) == 0)
             {
                 continue;
             }
@@ -75654,10 +75691,10 @@ void label_2085()
             label_2298();
             noteadd(
                 cdatan(0, cnt) + u8" "s + racename + u8"の"s + classname
-                + u8" "s + _sex(cdata(8, cnt)) + u8" "s + calcage(cnt) + u8"歳"s
-                + u8"  "s + cdata(19, cnt) + u8"cm"s + u8" "s + cdata(20, cnt)
-                + u8"kg"s);
-            s = u8"レベル "s + cdata(38, cnt) + u8" "s;
+                + u8" "s + _sex(cdata_sex(cnt)) + u8" "s + calcage(cnt)
+                + u8"歳"s + u8"  "s + cdata_height(cnt) + u8"cm"s + u8" "s
+                + cdata_weight(cnt) + u8"kg"s);
+            s = u8"レベル "s + cdata_level(cnt) + u8" "s;
             if (cbit(961, cnt) == 1)
             {
                 s += u8"婚約済み "s;
@@ -75824,13 +75861,13 @@ void label_2088()
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 1)
+            if (cdata_state(cnt) == 1)
             {
-                if (cdata(1, cnt) < 0 || cdata(1, cnt) >= mdata(0)
-                    || cdata(2, cnt) < 0 || cdata(2, cnt) >= mdata(1))
+                if (cdata_x(cnt) < 0 || cdata_x(cnt) >= mdata(0)
+                    || cdata_y(cnt) < 0 || cdata_y(cnt) >= mdata(1))
                 {
-                    cdata(1, cnt) = 0;
-                    cdata(2, cnt) = 0;
+                    cdata_x(cnt) = 0;
+                    cdata_y(cnt) = 0;
                 }
             }
         }
@@ -75905,7 +75942,7 @@ void label_2089()
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cnt == 0 || cdata(0, cnt) == 0)
+                if (cnt == 0 || cdata_state(cnt) == 0)
                 {
                     continue;
                 }
@@ -75975,7 +76012,7 @@ void label_2089()
             int cnt = 0;
             for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
             {
-                cdata(69, cnt) = 10;
+                cdata_original_relationship(cnt) = 10;
             }
         }
     }
@@ -75985,16 +76022,16 @@ void label_2089()
             int cnt = 0;
             for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
             {
-                cdata(48, cnt) = cdata(38, cnt);
+                cdata_max_level(cnt) = cdata_level(cnt);
                 if (cnt >= 16)
                 {
-                    cdata(9, cnt) = 0;
-                    cdata(69, cnt) = 0;
+                    cdata_relationship(cnt) = 0;
+                    cdata_original_relationship(cnt) = 0;
                 }
                 else
                 {
-                    cdata(9, cnt) = 10;
-                    cdata(69, cnt) = 10;
+                    cdata_relationship(cnt) = 10;
+                    cdata_original_relationship(cnt) = 10;
                 }
             }
         }
@@ -76012,7 +76049,7 @@ void label_2089()
             int cnt = 0;
             for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
             {
-                if (cdata(150, cnt) == 13)
+                if (cdata_character_role(cnt) == 13)
                 {
                     cdata(156, cnt) = 100;
                 }
@@ -76207,9 +76244,9 @@ void label_2091()
             i = 40;
         }
     }
-    cdata(30, 0) += limit(cdata(30, 56) / 100, 1000, 100000);
-    cdata(31, 0) += p;
-    cdata(41, 0) += i;
+    cdata_gold(0) += limit(cdata_gold(56) / 100, 1000, 100000);
+    cdata_platinum_coin(0) += p;
+    cdata_skill_bonus(0) += i;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (400); cnt < cnt_end; ++cnt)
@@ -76229,7 +76266,7 @@ void label_2092()
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            cdata(0, cnt) = 0;
+            cdata_state(cnt) = 0;
         }
     }
     {
@@ -76475,23 +76512,23 @@ void label_2104()
 {
     if (initunid)
     {
-        cdata(157, rc) = initunid - 1;
+        cdata_cnpc_id(rc) = initunid - 1;
         initunid = 0;
     }
-    cun = cdata(157, rc);
-    cdata(27, rc) = 343;
+    cun = cdata_cnpc_id(rc);
+    cdata_id(rc) = 343;
     if (initlv != 0)
     {
-        cdata(38, rc) = initlv;
+        cdata_level(rc) = initlv;
     }
     else
     {
-        cdata(38, rc) = limit(userdata(2, cun), 1, 100);
+        cdata_level(rc) = limit(userdata(2, cun), 1, 100);
     }
-    cdata(13, rc) = -1;
+    cdata_portrait(rc) = -1;
     creaturepack = 0;
-    cdata(212, rc) = 55;
-    cdata(209, rc) = unaiactsubfreq(cun);
+    cdata_ai_act_num(rc) = 55;
+    cdata_ai_act_sub_freq(rc) = unaiactsubfreq(cun);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
@@ -76517,31 +76554,32 @@ void label_2104()
             }
         }
     }
-    cdata(23, rc) = 1;
+    cdata_can_talk(rc) = 1;
     cdata(40, rc) = -10000;
     cdatan(0, rc) = userdatan(1, cun);
     cdatan(5, rc) = userdatan(0, cun);
-    cdata(9, rc) = limit(userdata(4, cun), -3, 10);
-    cdata(202, rc) = limit(userdata(7, cun), 1, 4);
-    cdata(207, rc) = limit(userdata(8, cun), 0, 100);
-    cdata(208, rc) = limit(userdata(9, cun), 1, 100);
+    cdata_relationship(rc) = limit(userdata(4, cun), -3, 10);
+    cdata_ai_calm(rc) = limit(userdata(7, cun), 1, 4);
+    cdata_ai_move(rc) = limit(userdata(8, cun), 0, 100);
+    cdata_ai_dist(rc) = limit(userdata(9, cun), 1, 100);
     if (userdata(11, cun))
     {
-        cdata(230, rc) = limit(userdata(11, cun), 5000000, 6400000);
+        cdata_element_of_unarmed_attack(rc) =
+            limit(userdata(11, cun), 5000000, 6400000);
     }
-    cdata(211, rc) = userdata(10, cun);
+    cdata_ai_heal(rc) = userdata(10, cun);
     dbidn = userdatan(2, cun);
     dbmode = 3;
     label_2297();
     dbidn = userdatan(3, cun);
     dbmode = 3;
     label_2298();
-    cdata(8, rc) = userdata(3, cun);
+    cdata_sex(rc) = userdata(3, cun);
     if (userdata(3, cun) != 0)
     {
         if (userdata(3, cun) != 1)
         {
-            cdata(8, rc) = rnd(2);
+            cdata_sex(rc) = rnd(2);
         }
     }
     if (userdata(5, cun))
@@ -76549,7 +76587,7 @@ void label_2104()
         fixlv = limit(userdata(5, cun), 0, 6);
     }
     cspecialeq = 0;
-    cdata(69, rc) = cdata(9, rc);
+    cdata_original_relationship(rc) = cdata_relationship(rc);
     fixaiact(rc);
     setunid(rc, cun);
     return;
@@ -76854,18 +76892,18 @@ void label_2106()
         u8"カスタムNPCを作成した！"s,
         u8"A custom NPC has been successfully generated!"s));
     flt();
-    characreate(-1, 343, cdata(1, 0), cdata(2, 0));
+    characreate(-1, 343, cdata_x(0), cdata_y(0));
     {
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata(27, cnt) == 343)
+            if (cdata_id(cnt) == 343)
             {
                 getunid(cnt);
             }
         }
     }
-    cdata(9, rc) = -3;
+    cdata_relationship(rc) = -3;
     txt(lang(
         name(rc) + u8"は興奮して襲い掛かってきた。"s,
         name(rc) + u8" is excited and attacks you."s));
@@ -76903,9 +76941,9 @@ void label_2108()
             list(0, cnt) = 0;
             if (cnt != 0)
             {
-                if (cdata(150, cnt) != 13)
+                if (cdata_character_role(cnt) != 13)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
                         if (cbit(975, cnt) == 0)
                         {
@@ -77111,8 +77149,8 @@ void label_2114()
     snd(49);
     gdata(66) = gdata(20);
     gdata(67) = gdata(22);
-    gdata(68) = cdata(1, 0);
-    gdata(69) = cdata(2, 0);
+    gdata(68) = cdata_x(0);
+    gdata(69) = cdata_y(0);
     gdata(64) = 35;
     gdata(65) = 1;
     levelexitby = 2;
@@ -77648,13 +77686,13 @@ void label_2124()
 {
     DIM3(fovlist, 2, 15);
     DIM3(fovmap, 34, 30);
-    if (cdata(28, 0) < 1)
+    if (cdata_vision_distance(0) < 1)
     {
-        cdata(28, 0) = 1;
+        cdata_vision_distance(0) = 1;
     }
-    if (cdata(28, 0) >= 15)
+    if (cdata_vision_distance(0) >= 15)
     {
-        cdata(28, 0) = 14;
+        cdata_vision_distance(0) = 14;
     }
     {
         int cnt = 0;
@@ -77958,8 +77996,8 @@ int label_2127()
     snd(26);
     redraw(0);
     gsel(4);
-    x = (cdata(1, 0) - scx) * inf_tiles + inf_screenx - 48;
-    y = (cdata(2, 0) - scy) * inf_tiles + inf_screeny - 48;
+    x = (cdata_x(0) - scx) * inf_tiles + inf_screenx - 48;
+    y = (cdata_y(0) - scy) * inf_tiles + inf_screeny - 48;
     gmode(0);
     pos(0, 0);
     gcopy(0, x, y, 144, 144);
@@ -77969,8 +78007,8 @@ label_2128_internal:
     ++t;
     gmode(4, 28, 28, 200 - t / 2 % 20 * (t / 2 % 20));
     color(0, 0, 0);
-    x = (cdata(1, 0) - scx) * inf_tiles + inf_screenx + 24;
-    y = (cdata(2, 0) - scy) * inf_tiles + inf_screeny + 24;
+    x = (cdata_x(0) - scx) * inf_tiles + inf_screenx + 24;
+    y = (cdata_y(0) - scy) * inf_tiles + inf_screeny + 24;
     if (key_alt == 0)
     {
         pos(x, y - 48);
@@ -77998,8 +78036,8 @@ label_2128_internal:
     gmode(2);
     await(30);
     key_check(1);
-    x = cdata(1, 0);
-    y = cdata(2, 0);
+    x = cdata_x(0);
+    y = cdata_y(0);
     if (key == key_alter)
     {
         goto label_2128_internal;
@@ -78080,13 +78118,13 @@ label_2128_internal:
     {
         if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
         {
-            x = cdata(1, 0);
-            y = cdata(2, 0);
+            x = cdata_x(0);
+            y = cdata_y(0);
             keyhalt = 1;
             stat = 0;
             return stat;
         }
-        if (x == cdata(1, 0) && y == cdata(2, 0))
+        if (x == cdata_x(0) && y == cdata_y(0))
         {
             stat = 0;
             return stat;
@@ -78333,8 +78371,9 @@ void label_2138()
             {
                 noteadd(
                     ""s + cnt + u8"\t"s + cdatan(0, cnt) + u8"\tExist:"s
-                    + cdata(0, cnt) + u8"\tRespawn:"s + cdata(5, cnt)
-                    + u8"\tRole:"s + cdata(150, cnt));
+                    + cdata_state(cnt) + u8"\tRespawn:"s
+                    + cdata_time_to_revive(cnt) + u8"\tRole:"s
+                    + cdata_character_role(cnt));
             }
         }
         label_2139();
@@ -78587,15 +78626,15 @@ void label_2138()
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
-                if (cdata(1, cnt) < 0 || cdata(1, cnt) >= mdata(0)
-                    || cdata(2, cnt) < 0 || cdata(2, cnt) >= mdata(1))
+                if (cdata_x(cnt) < 0 || cdata_x(cnt) >= mdata(0)
+                    || cdata_y(cnt) < 0 || cdata_y(cnt) >= mdata(1))
                 {
-                    cdata(1, cnt) = 0;
-                    cdata(2, cnt) = 0;
+                    cdata_x(cnt) = 0;
+                    cdata_y(cnt) = 0;
                 }
             }
         }
@@ -78695,7 +78734,7 @@ void label_2138()
                 }
                 if (cnt >= 16)
                 {
-                    cdata(0, cnt) = 5;
+                    cdata_state(cnt) = 5;
                     label_2661();
                 }
             }
@@ -78745,10 +78784,10 @@ void label_2138()
                 {
                     continue;
                 }
-                if (cdata(0, cnt) == 1)
+                if (cdata_state(cnt) == 1)
                 {
-                    cdata(9, cnt) = -3;
-                    cdata(69, cnt) = -3;
+                    cdata_relationship(cnt) = -3;
+                    cdata_original_relationship(cnt) = -3;
                 }
             }
         }
@@ -78776,7 +78815,7 @@ void label_2138()
         noteadd(u8"gArea\t\t:"s + gdata(20));
         noteadd(u8"gLevel\t\t:"s + gdata(22));
         noteadd(u8"file\t\t:mdata_"s + mid + u8".s2"s);
-        noteadd(u8"pc x/y\t\t:"s + cdata(1, 0) + u8"/"s + cdata(2, 0));
+        noteadd(u8"pc x/y\t\t:"s + cdata_x(0) + u8"/"s + cdata_y(0));
         noteadd(u8"map max w/h\t:"s + mdata(0) + u8"/"s + mdata(1));
         noteadd(u8"Done."s);
         label_2139();
@@ -78826,7 +78865,7 @@ void label_2138()
                 int cnt = 400;
                 for (int cnt_end = cnt + (67); cnt < cnt_end; ++cnt)
                 {
-                    skillgain(0, cnt, cdata(38, r1), 10000);
+                    skillgain(0, cnt, cdata_level(r1), 10000);
                 }
             }
             noteadd(u8"Done."s);
@@ -78899,7 +78938,7 @@ void label_2138()
         }
         if (instr(buff, 0, u8"gain_exp"s) != -1)
         {
-            cdata(35, 0) += 1000000000;
+            cdata_experience(0) += 1000000000;
             r1 = 0;
             r2 = 0;
             label_1454();
@@ -78909,7 +78948,7 @@ void label_2138()
         }
         if (instr(buff, 0, u8"gain_fame"s) != -1)
         {
-            cdata(34, 0) += 10000;
+            cdata_fame(0) += 10000;
             noteadd(u8"Done."s);
             label_2139();
             return;
@@ -78965,7 +79004,7 @@ int efstatusfix(int prm_1072, int prm_1073, int prm_1074, int prm_1075)
 }
 int label_2143()
 {
-    if (map(cdata(1, 0), cdata(2, 0), 6) == 0)
+    if (map(cdata_x(0), cdata_y(0), 6) == 0)
     {
         stat = 0;
         return stat;
@@ -78995,7 +79034,7 @@ int label_2143()
     }
     if (mdata(6) == 1)
     {
-        atxlv = cdata(38, 0) / 2 + rnd(10);
+        atxlv = cdata_level(0) / 2 + rnd(10);
         if (atxlv > 30)
         {
             atxlv = 30 + rnd((rnd(atxlv - 30) + 1));
@@ -79017,7 +79056,7 @@ int label_2143()
             atxspot = 11;
         }
     }
-    cell_featread(cdata(1, 0), cdata(2, 0));
+    cell_featread(cdata_x(0), cdata_y(0));
     if (feat(1) == 27)
     {
         atxlv += sdata(161, 0) / 3;
@@ -79101,7 +79140,7 @@ int label_2143()
         }
         txt(s);
         rowactend(cc);
-        map(cdata(1, 0), cdata(2, 0), 6) = 0;
+        map(cdata_x(0), cdata_y(0), 6) = 0;
     }
     stat = 0;
     return stat;
@@ -79109,7 +79148,7 @@ int label_2143()
 void label_2144()
 {
     cell_featset(movx, movy, 0);
-    if (cdata(61, cc) == 1)
+    if (cdata_god(cc) == 1)
     {
         txt(lang(u8"あなたは罠を解体した。"s, u8"You dismantle the trap."s));
         {
@@ -79138,20 +79177,20 @@ label_21451_internal:
             label_1438();
         }
     }
-    map(cdata(1, cc), cdata(2, cc), 1) = 0;
-    cdata(1, cc) = cdata(3, cc);
-    cdata(2, cc) = cdata(4, cc);
-    map(cdata(3, cc), cdata(4, cc), 1) = cc + 1;
+    map(cdata_x(cc), cdata_y(cc), 1) = 0;
+    cdata_x(cc) = cdata_next_x(cc);
+    cdata_y(cc) = cdata_next_y(cc);
+    map(cdata_next_x(cc), cdata_next_y(cc), 1) = cc + 1;
     if (cc == 0)
     {
         if (gdata(183) != 0)
         {
-            cdata(1, gdata(183)) = cdata(1, 0);
-            cdata(2, gdata(183)) = cdata(2, 0);
+            cdata_x(gdata(183)) = cdata_x(0);
+            cdata_y(gdata(183)) = cdata_y(0);
         }
     }
-    movx = cdata(1, cc);
-    movy = cdata(2, cc);
+    movx = cdata_x(cc);
+    movy = cdata_y(cc);
     if (map(movx, movy, 6) != 0)
     {
         cell_featread(movx, movy);
@@ -79159,7 +79198,7 @@ label_21451_internal:
         {
             if (feat(2) == 7)
             {
-                if (cbit(5, cc) == 1 && cdata(262, cc) == 0
+                if (cbit(5, cc) == 1 && cdata_gravity(cc) == 0
                     || cbit(31, cc) == 1)
                 {
                     return;
@@ -79285,9 +79324,9 @@ label_21451_internal:
                         int cnt = 0;
                         for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
                         {
-                            cdata(3, cc) = rnd(mdata(0) - 2) + 1;
-                            cdata(4, cc) = rnd(mdata(1) - 2) + 1;
-                            cell_check(cdata(3, cc), cdata(4, cc));
+                            cdata_next_x(cc) = rnd(mdata(0) - 2) + 1;
+                            cdata_next_y(cc) = rnd(mdata(1) - 2) + 1;
+                            cell_check(cdata_next_x(cc), cdata_next_y(cc));
                             if (cellaccess == 1)
                             {
                                 if (synccheck(cc, -1))
@@ -79316,7 +79355,7 @@ label_21451_internal:
                             u8"槍が地面から飛び出した。"s,
                             u8"Several spears fly out from the ground."s));
                     }
-                    if (cbit(5, cc) == 1 && cdata(262, cc) == 0)
+                    if (cbit(5, cc) == 1 && cdata_gravity(cc) == 0)
                     {
                         if (synccheck(cc, -1))
                         {
@@ -79373,7 +79412,7 @@ label_21451_internal:
 }
 void label_2146()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
         if (synccheck(cc, -1))
         {
@@ -79382,18 +79421,18 @@ void label_2146()
                 name(cc) + u8" start"s + _s(cc) + u8" to play "s + itemname(ci)
                     + u8"."s));
         }
-        cdata(140, cc) = 6;
-        cdata(141, cc) = 61;
-        cdata(142, cc) = ci;
-        cdata(144, cc) = 40;
-        cdata(145, cc) = 0;
+        cdata_continuous_action_id(cc) = 6;
+        cdata_continuous_action_turn(cc) = 61;
+        cdata_continuous_action_item(cc) = ci;
+        cdata_quality_of_performance(cc) = 40;
+        cdata_tip_gold(cc) = 0;
         performtips = 0;
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
-        ci = cdata(142, cc);
-        if (cdata(141, cc) % 10 == 0)
+        ci = cdata_continuous_action_item(cc);
+        if (cdata_continuous_action_turn(cc) % 10 == 0)
         {
             if (synccheck(cc, -1))
             {
@@ -79408,27 +79447,27 @@ void label_2146()
                 txt(lang(u8"ｼﾞｬﾝ♪ "s, u8"*Cha*"s));
             }
         }
-        if (cdata(141, cc) % 20 == 0)
+        if (cdata_continuous_action_turn(cc) % 20 == 0)
         {
             gold = 0;
-            make_sound(cdata(1, cc), cdata(2, cc), 5, 1, 1, cc);
+            make_sound(cdata_x(cc), cdata_y(cc), 5, 1, 1, cc);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
                     if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                             + gdata(10) * 24 * 30 * 12
-                        >= cdata(15, cnt))
+                        >= cdata_time_interest_revive(cnt))
                     {
-                        cdata(14, cnt) = 100;
+                        cdata_interest(cnt) = 100;
                     }
                     if (synccheck(cc, -1))
                     {
-                        if (cdata(6, cnt) != msync)
+                        if (cdata_vision_flag(cnt) != msync)
                         {
                             continue;
                         }
@@ -79436,25 +79475,25 @@ void label_2146()
                     else
                     {
                         if (dist(
-                                cdata(1, cc),
-                                cdata(2, cc),
-                                cdata(1, cnt),
-                                cdata(2, cnt))
+                                cdata_x(cc),
+                                cdata_y(cc),
+                                cdata_x(cnt),
+                                cdata_y(cnt))
                             > 3)
                         {
                             continue;
                         }
                     }
-                    if (cdata(14, cnt) <= 0)
+                    if (cdata_interest(cnt) <= 0)
                     {
                         continue;
                     }
-                    if (cdata(251, cnt) > 0)
+                    if (cdata_sleep(cnt) > 0)
                     {
                         continue;
                     }
-                    x = cdata(1, cnt);
-                    y = cdata(2, cnt);
+                    x = cdata_x(cnt);
+                    y = cdata_y(cnt);
                     if (map(x, y, 1) == 0)
                     {
                         continue;
@@ -79464,9 +79503,9 @@ void label_2146()
                     {
                         continue;
                     }
-                    if (cdata(9, tc) == -3)
+                    if (cdata_relationship(tc) == -3)
                     {
-                        if (cdata(201, tc) == 0)
+                        if (cdata_hate(tc) == 0)
                         {
                             if (synccheck(tc, -1))
                             {
@@ -79476,17 +79515,17 @@ void label_2146()
                                         + u8" angry."s));
                             }
                         }
-                        cdata(201, tc) = 30;
+                        cdata_hate(tc) = 30;
                         continue;
                     }
                     if (cc == 0)
                     {
-                        cdata(14, tc) -= rnd(15);
-                        cdata(15, tc) = gdata(13) + gdata(12) * 24
-                            + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12
-                            + 12;
+                        cdata_interest(tc) -= rnd(15);
+                        cdata_time_interest_revive(tc) = gdata(13)
+                            + gdata(12) * 24 + gdata(11) * 24 * 30
+                            + gdata(10) * 24 * 30 * 12 + 12;
                     }
-                    if (cdata(14, tc) <= 0)
+                    if (cdata_interest(tc) <= 0)
                     {
                         if (synccheck(cc, -1))
                         {
@@ -79504,14 +79543,15 @@ void label_2146()
                                     cnvtalk(u8"This song again?"s));
                             }
                         }
-                        cdata(14, tc) = 0;
+                        cdata_interest(tc) = 0;
                         continue;
                     }
-                    if (sdata(183, cc) < cdata(38, tc))
+                    if (sdata(183, cc) < cdata_level(tc))
                     {
                         if (rnd(3) == 0)
                         {
-                            cdata(144, cc) -= cdata(38, tc) / 2;
+                            cdata_quality_of_performance(cc) -=
+                                cdata_level(tc) / 2;
                             if (synccheck(cc, -1))
                             {
                                 txtef(9);
@@ -79534,13 +79574,13 @@ void label_2146()
                                     name(tc) + u8" throw"s + _s(tc)
                                         + u8" a rock."s));
                             }
-                            dmg = rnd(cdata(38, tc) + 1) + 1;
-                            if (cdata(27, tc) == 29)
+                            dmg = rnd(cdata_level(tc) + 1) + 1;
+                            if (cdata_id(tc) == 29)
                             {
-                                dmg = cdata(38, tc) * 2 + rnd(100);
+                                dmg = cdata_level(tc) * 2 + rnd(100);
                             }
                             dmghp(cc, dmg, -8);
-                            if (cdata(0, cc) == 0)
+                            if (cdata_state(cc) == 0)
                             {
                                 break;
                             }
@@ -79549,54 +79589,56 @@ void label_2146()
                     }
                     if (rnd(3) == 0)
                     {
-                        p = cdata(144, cc) * cdata(144, cc)
+                        p = cdata_quality_of_performance(cc)
+                                * cdata_quality_of_performance(cc)
                                 * (100 + inv_param1(ci) / 5) / 100 / 1000
                             + rnd(10);
                         p = limit(
-                            cdata(30, tc) * limit(p, 1, 100) / 125,
+                            cdata_gold(tc) * limit(p, 1, 100) / 125,
                             0,
                             sdata(183, cc) * 100);
                         if (tc < 16)
                         {
                             p = rnd(limit(p, 1, 100)) + 1;
                         }
-                        if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000
-                            || cdata(150, tc) == 2003)
+                        if (cdata_character_role(tc) >= 1000
+                                && cdata_character_role(tc) < 2000
+                            || cdata_character_role(tc) == 2003)
                         {
                             p /= 5;
                         }
-                        if (p > cdata(30, tc))
+                        if (p > cdata_gold(tc))
                         {
-                            p = cdata(30, tc);
+                            p = cdata_gold(tc);
                         }
-                        cdata(30, tc) -= p;
-                        cdata(30, cc) += p;
+                        cdata_gold(tc) -= p;
+                        cdata_gold(cc) += p;
                         gold += p;
                     }
-                    if (cdata(38, tc) > sdata(183, cc))
+                    if (cdata_level(tc) > sdata(183, cc))
                     {
                         continue;
                     }
-                    p = rnd(cdata(38, tc) + 1) + 1;
-                    if (rnd(sdata(183, cc) + 1) > rnd(cdata(38, tc) * 2 + 1))
+                    p = rnd(cdata_level(tc) + 1) + 1;
+                    if (rnd(sdata(183, cc) + 1) > rnd(cdata_level(tc) * 2 + 1))
                     {
                         if (gdata(70) == 1009)
                         {
                             if (tc >= 57)
                             {
-                                cdata(17, tc) += rnd(3);
+                                cdata_impression(tc) += rnd(3);
                                 calcpartyscore();
                             }
                         }
                         if (rnd(2) == 0)
                         {
-                            cdata(144, cc) += p;
+                            cdata_quality_of_performance(cc) += p;
                         }
                         else
                         {
                             if (rnd(2) == 0)
                             {
-                                cdata(144, cc) -= p;
+                                cdata_quality_of_performance(cc) -= p;
                             }
                         }
                     }
@@ -79607,7 +79649,7 @@ void label_2146()
                             dmgcon(tc, 8, 500);
                         }
                     }
-                    if (rnd(sdata(183, cc) + 1) > rnd(cdata(38, tc) * 5 + 1))
+                    if (rnd(sdata(183, cc) + 1) > rnd(cdata_level(tc) * 5 + 1))
                     {
                         if (rnd(3) == 0)
                         {
@@ -79637,7 +79679,8 @@ void label_2146()
                                             + u8" excited!"s);
                                 }
                             }
-                            cdata(144, cc) += cdata(38, tc) + 5;
+                            cdata_quality_of_performance(cc) +=
+                                cdata_level(tc) + 5;
                             if (cc == 0)
                             {
                                 if (tc >= 16)
@@ -79645,11 +79688,11 @@ void label_2146()
                                     if (rnd(performtips * 2 + 2) == 0)
                                     {
                                         x = limit(
-                                            cdata(1, cc) - 1 + rnd(3),
+                                            cdata_x(cc) - 1 + rnd(3),
                                             0,
                                             mdata(0) - 1);
                                         y = limit(
-                                            cdata(2, cc) - 1 + rnd(3),
+                                            cdata_y(cc) - 1 + rnd(3),
                                             0,
                                             mdata(1) - 1);
                                         cell_check(x, y);
@@ -79658,22 +79701,25 @@ void label_2146()
                                             continue;
                                         }
                                         if (fov_los(
-                                                cdata(1, tc),
-                                                cdata(2, tc),
-                                                x,
-                                                y)
+                                                cdata_x(tc), cdata_y(tc), x, y)
                                             == 0)
                                         {
                                             continue;
                                         }
                                         if (encfindspec(ci, 49) != -1)
                                         {
-                                            flt(calcobjlv(cdata(144, cc) / 8),
+                                            flt(calcobjlv(
+                                                    cdata_quality_of_performance(
+                                                        cc)
+                                                    / 8),
                                                 calcfixlv(3 + (rnd(4) == 0)));
                                         }
                                         else
                                         {
-                                            flt(calcobjlv(cdata(144, cc) / 10),
+                                            flt(calcobjlv(
+                                                    cdata_quality_of_performance(
+                                                        cc)
+                                                    / 10),
                                                 calcfixlv(3));
                                         }
                                         flttypemajor = fsetperform(
@@ -79689,14 +79735,14 @@ void label_2146()
                                             {
                                                 dbid = 622;
                                             }
-                                            if (cdata(38, tc) > 15)
+                                            if (cdata_level(tc) > 15)
                                             {
                                                 if (rnd(1000) == 0)
                                                 {
                                                     dbid = 725;
                                                 }
                                             }
-                                            if (cdata(38, tc) > 10)
+                                            if (cdata_level(tc) > 10)
                                             {
                                                 if (rnd(800) == 0)
                                                 {
@@ -79742,7 +79788,7 @@ void label_2146()
             }
             if (gold != 0)
             {
-                cdata(145, cc) += gold;
+                cdata_tip_gold(cc) += gold;
                 if (synccheck(cc, -1))
                 {
                     snd(11);
@@ -79759,54 +79805,54 @@ void label_2146()
             {
                 break;
             }
-            if (cdata(144, cc) < 0)
+            if (cdata_quality_of_performance(cc) < 0)
             {
                 txt(lang(u8"まるで駄目だ…"s, u8"It is a waste of time."s));
                 break;
             }
-            if (cdata(144, cc) < 20)
+            if (cdata_quality_of_performance(cc) < 20)
             {
                 txt(lang(u8"不評だった…"s, u8"Almost everyone ignores you."s));
                 break;
             }
-            if (cdata(144, cc) < 40)
+            if (cdata_quality_of_performance(cc) < 40)
             {
                 txt(lang(
                     u8"もっと練習しなくては…"s,
                     u8"You need to practice lot more."s));
                 break;
             }
-            if (cdata(144, cc) == 40)
+            if (cdata_quality_of_performance(cc) == 40)
             {
                 txt(lang(
                     u8"演奏を終えた。"s, u8"You finish your performance."s));
                 break;
             }
-            if (cdata(144, cc) < 60)
+            if (cdata_quality_of_performance(cc) < 60)
             {
                 txt(lang(u8"いまいちだ。"s, u8"Not good."s));
                 break;
             }
-            if (cdata(144, cc) < 80)
+            if (cdata_quality_of_performance(cc) < 80)
             {
                 txt(lang(
                     u8"手ごたえがあった。"s,
                     u8"People seem to like your performance."s));
                 break;
             }
-            if (cdata(144, cc) < 100)
+            if (cdata_quality_of_performance(cc) < 100)
             {
                 txt(lang(
                     u8"納得できる演奏ができた。"s,
                     u8"Your performance is successful."s));
                 break;
             }
-            if (cdata(144, cc) < 120)
+            if (cdata_quality_of_performance(cc) < 120)
             {
                 txt(lang(u8"大盛況だ！"s, u8"Wonderful!"s));
                 break;
             }
-            if (cdata(144, cc) < 150)
+            if (cdata_quality_of_performance(cc) < 150)
             {
                 txt(lang(
                     u8"素晴らしい！"s,
@@ -79817,23 +79863,24 @@ void label_2146()
             break;
         }
     }
-    if (cdata(144, cc) > 40)
+    if (cdata_quality_of_performance(cc) > 40)
     {
-        cdata(144, cc) = cdata(144, cc) * (100 + inv_param1(ci) / 5) / 100;
+        cdata_quality_of_performance(cc) =
+            cdata_quality_of_performance(cc) * (100 + inv_param1(ci) / 5) / 100;
     }
-    if (cdata(145, cc) != 0)
+    if (cdata_tip_gold(cc) != 0)
     {
         if (synccheck(cc, -1))
         {
             txt(lang(
-                name(cc) + u8"は合計 "s + cdata(145, cc) + strgold
+                name(cc) + u8"は合計 "s + cdata_tip_gold(cc) + strgold
                     + u8"のおひねりを貰った。"s,
                 u8"The audience gives "s + name(cc) + u8" total of "s
-                    + cdata(145, cc) + u8" gold pieces."s));
+                    + cdata_tip_gold(cc) + u8" gold pieces."s));
         }
     }
     rowactend(cc);
-    r1 = cdata(144, cc) - sdata(183, cc) + 50;
+    r1 = cdata_quality_of_performance(cc) - sdata(183, cc) + 50;
     if (r1 > 0)
     {
         label_1467();
@@ -79842,14 +79889,14 @@ void label_2146()
 }
 void label_2147()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 11;
-        cdata(141, cc) = 25 + rnd(10);
-        cdata(152, cc) = tc;
-        cdata(140, tc) = 11;
-        cdata(141, tc) = cdata(141, cc) * 2;
-        cdata(152, tc) = cc + 10000;
+        cdata_continuous_action_id(cc) = 11;
+        cdata_continuous_action_turn(cc) = 25 + rnd(10);
+        cdata_continuous_action_target(cc) = tc;
+        cdata_continuous_action_id(tc) = 11;
+        cdata_continuous_action_turn(tc) = cdata_continuous_action_turn(cc) * 2;
+        cdata_continuous_action_target(tc) = cc + 10000;
         if (synccheck(cc, -1))
         {
             txt(lang(
@@ -79860,20 +79907,20 @@ void label_2147()
         return;
     }
     sexhost = 1;
-    tc = cdata(152, cc);
+    tc = cdata_continuous_action_target(cc);
     if (tc >= 10000)
     {
         tc -= 10000;
         sexhost = 0;
     }
-    if (cdata(0, tc) != 1 || cdata(140, tc) != 11)
+    if (cdata_state(tc) != 1 || cdata_continuous_action_id(tc) != 11)
     {
         if (synccheck(cc, -1))
         {
             txt(lang(
-                u8"「そ、その"s + _sex2(cdata(8, tc)) + u8"とは体だけの関係"s
+                u8"「そ、その"s + _sex2(cdata_sex(tc)) + u8"とは体だけの関係"s
                     + _da() + _ore(3) + u8"は何も知らないから、命だけは…！」"s,
-                u8"\"I-I don't really know that "s + _sex2(cdata(8, tc))
+                u8"\"I-I don't really know that "s + _sex2(cdata_sex(tc))
                     + u8". Please spare my life!\""s));
         }
         rowactend(cc);
@@ -79891,12 +79938,12 @@ void label_2147()
             return;
         }
     }
-    cdata(79, cc) = 317;
-    if (cdata(141, cc) > 0)
+    cdata_emotion_icon(cc) = 317;
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         if (sexhost == 0)
         {
-            if (cdata(141, cc) % 5 == 0)
+            if (cdata_continuous_action_turn(cc) % 5 == 0)
             {
                 if (synccheck(cc, -1))
                 {
@@ -79939,7 +79986,7 @@ void label_2147()
             {
                 c = tc;
             }
-            cdata(257, cc) = 0;
+            cdata_drunk(cc) = 0;
             if (cnt == 1)
             {
                 if (rnd(3) == 0)
@@ -79989,7 +80036,7 @@ void label_2147()
     }
     if (tc != 0)
     {
-        if (cdata(30, tc) >= sexvalue)
+        if (cdata_gold(tc) >= sexvalue)
         {
             if (synccheck(cc, -1))
             {
@@ -80015,23 +80062,23 @@ void label_2147()
                             name(cc) + u8" gets furious, "s
                                 + cnvtalk(
                                       u8"And you think you can just run away?"s)));
-                        cdata(29, cc) = tc;
-                        cdata(201, cc) = 20;
+                        cdata_enemy_id(cc) = tc;
+                        cdata_hate(cc) = 20;
                     }
                 }
             }
-            if (cdata(30, tc) <= 0)
+            if (cdata_gold(tc) <= 0)
             {
-                cdata(30, tc) = 1;
+                cdata_gold(tc) = 1;
             }
-            sexvalue = cdata(30, tc);
+            sexvalue = cdata_gold(tc);
         }
-        cdata(30, tc) -= sexvalue;
+        cdata_gold(tc) -= sexvalue;
         if (cc == 0)
         {
             modimp(tc, 5);
             flt();
-            itemcreate(-1, 54, cdata(1, cc), cdata(2, cc), sexvalue);
+            itemcreate(-1, 54, cdata_x(cc), cdata_y(cc), sexvalue);
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -80039,7 +80086,7 @@ void label_2147()
         }
         else
         {
-            cdata(30, cc) += sexvalue;
+            cdata_gold(cc) += sexvalue;
         }
     }
     rowactend(cc);
@@ -80053,29 +80100,30 @@ void label_2148()
         rowactend(cc);
         return;
     }
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 10;
-        cdata(142, cc) = ci;
-        cdata(152, cc) = tc;
+        cdata_continuous_action_id(cc) = 10;
+        cdata_continuous_action_item(cc) = ci;
+        cdata_continuous_action_target(cc) = tc;
         if (gdata(91) == 105)
         {
             txt(lang(
                 itemname(ci, 1) + u8"に目星をつけた。"s,
                 u8"You target "s + itemname(ci, 1) + u8"."s));
-            cdata(141, cc) = 2 + limit(inv_weight(ci) / 500, 0, 50);
+            cdata_continuous_action_turn(cc) =
+                2 + limit(inv_weight(ci) / 500, 0, 50);
         }
         if (gdata(91) == 100)
         {
             if (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)
             {
                 txt(lang(u8"寝る仕度を始めた。"s, u8"You lie down."s));
-                cdata(141, cc) = 5;
+                cdata_continuous_action_turn(cc) = 5;
             }
             else
             {
                 txt(lang(u8"露営の準備を始めた。"s, u8"You start to camp."s));
-                cdata(141, cc) = 20;
+                cdata_continuous_action_turn(cc) = 20;
             }
         }
         if (gdata(91) == 101)
@@ -80083,21 +80131,21 @@ void label_2148()
             txt(lang(
                 itemname(ci, 1) + u8"の建設を始めた。"s,
                 u8"You start to construct "s + itemname(ci, 1) + u8"."s));
-            cdata(141, cc) = 25;
+            cdata_continuous_action_turn(cc) = 25;
         }
         if (gdata(91) == 102)
         {
             txt(lang(
                 itemname(ci, 1) + u8"のハッチを回し始めた。"s,
                 u8"You start to pull the hatch."s));
-            cdata(141, cc) = 10;
+            cdata_continuous_action_turn(cc) = 10;
         }
         if (gdata(91) == 103)
         {
             txt(lang(
                 itemname(ci, 1) + u8"を掘り始めた。"s,
                 u8"You start to pick "s + itemname(ci, 1) + u8"."s));
-            cdata(141, cc) = 10
+            cdata_continuous_action_turn(cc) = 10
                 + limit(inv_weight(ci)
                             / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
                         1,
@@ -80140,13 +80188,13 @@ void label_2148()
                         u8"The weather's bad outside, you have plenty of time to waste."s));
                 }
             }
-            cdata(141, cc) = 50;
+            cdata_continuous_action_turn(cc) = 50;
         }
         label_1419();
         return;
     }
-    tc = cdata(152, cc);
-    if (cdata(141, cc) > 0)
+    tc = cdata_continuous_action_target(cc);
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         if (gdata(91) == 103)
         {
@@ -80259,7 +80307,7 @@ void label_2148()
             tg = inv_getowner(ci);
             if (tg != -1)
             {
-                if (cdata(69, tg) == -3)
+                if (cdata_original_relationship(tg) == -3)
                 {
                     f2 = 1;
                 }
@@ -80277,24 +80325,20 @@ void label_2148()
             {
                 i = i * 5 / 10;
             }
-            make_sound(cdata(1, 0), cdata(2, 0), 5, 8);
+            make_sound(cdata_x(0), cdata_y(0), 5, 8);
             {
                 int cnt = 16;
                 for (int cnt_end = cnt + (229); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
-                    if (cdata(251, cnt) != 0)
+                    if (cdata_sleep(cnt) != 0)
                     {
                         continue;
                     }
-                    if (dist(
-                            cdata(1, cnt),
-                            cdata(2, cnt),
-                            cdata(1, 0),
-                            cdata(2, 0))
+                    if (dist(cdata_x(cnt), cdata_y(cnt), cdata_x(0), cdata_y(0))
                         > 5)
                     {
                         continue;
@@ -80309,10 +80353,10 @@ void label_2148()
                     p = rnd((i + 1))
                         * (80 + (synccheck(cnt, -1) == 0) * 50
                            + dist(
-                                 cdata(1, cnt),
-                                 cdata(2, cnt),
-                                 cdata(1, 0),
-                                 cdata(2, 0))
+                                 cdata_x(cnt),
+                                 cdata_y(cnt),
+                                 cdata_x(0),
+                                 cdata_y(0))
                                * 20)
                         / 100;
                     if (cnt < 57)
@@ -80335,7 +80379,7 @@ void label_2148()
                                 name(cnt) + u8" hear"s + _s(cnt)
                                     + u8" loud noise,"s));
                         }
-                        if (cdata(150, cnt) == 14)
+                        if (cdata_character_role(cnt) == 14)
                         {
                             txt(lang(
                                 u8"「貴様、何をしている！」"s,
@@ -80349,7 +80393,7 @@ void label_2148()
                                 cnvtalk(u8"Guards! Guards!"s)));
                             modimp(cnt, -5);
                         }
-                        cdata(79, cnt) = 520;
+                        cdata_emotion_icon(cnt) = 520;
                         f = 1;
                     }
                 }
@@ -80363,11 +80407,11 @@ void label_2148()
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
-                    if (cdata(27, p) != 202)
+                    if (cdata_id(p) != 202)
                     {
-                        if (cdata(251, tg) == 0)
+                        if (cdata_sleep(tg) == 0)
                         {
-                            cdata(9, tg) = -2;
+                            cdata_relationship(tg) = -2;
                             hostileaction(0, tg);
                             modimp(tg, -20);
                         }
@@ -80377,7 +80421,7 @@ void label_2148()
             }
             if (tg != -1)
             {
-                if (cdata(0, tg) != 1)
+                if (cdata_state(tg) != 1)
                 {
                     if (f != 1)
                     {
@@ -80386,7 +80430,7 @@ void label_2148()
                         f = 1;
                     }
                 }
-                if (cdata(150, tg) == 20)
+                if (cdata_character_role(tg) == 20)
                 {
                     if (f != 1)
                     {
@@ -80395,7 +80439,7 @@ void label_2148()
                         f = 1;
                     }
                 }
-                if (dist(cdata(1, cc), cdata(2, cc), cdata(1, tg), cdata(2, tg))
+                if (dist(cdata_x(cc), cdata_y(cc), cdata_x(tg), cdata_y(tg))
                     >= 3)
                 {
                     if (f != 1)
@@ -80451,7 +80495,7 @@ void label_2148()
         tg = inv_getowner(ci);
         if (tg != -1)
         {
-            if (cdata(0, tg) != 1)
+            if (cdata_state(tg) != 1)
             {
                 txt(lang(u8"行動を中断した。"s, u8"You abort stealing."s));
                 rowactend(cc);
@@ -80500,7 +80544,7 @@ void label_2148()
         {
             snd(11);
             inv_number(ti) = 0;
-            cdata(30, 0) += in;
+            cdata_gold(0) += in;
         }
         else
         {
@@ -80509,7 +80553,7 @@ void label_2148()
         }
         label_1521();
         skillexp(300, 0, limit(inv_weight(ti) / 25, 0, 450) + 50);
-        if (cdata(49, 0) >= -30)
+        if (cdata_karma(0) >= -30)
         {
             if (rnd(3) == 0)
             {
@@ -80544,8 +80588,8 @@ void label_2148()
         chatteleport = 1;
         gdata(66) = gdata(20);
         gdata(67) = gdata(22);
-        gdata(68) = cdata(1, 0);
-        gdata(69) = cdata(2, 0);
+        gdata(68) = cdata_x(0);
+        gdata(69) = cdata_y(0);
         gdata(64) = 30;
         gdata(65) = inv_count(ci);
         levelexitby = 2;
@@ -80615,7 +80659,7 @@ void label_2151()
     }
     if (gdata(185))
     {
-        txtgod(cdata(61, 0), 10);
+        txtgod(cdata_god(0), 10);
     }
     redraw(0);
     label_2150();
@@ -80639,32 +80683,32 @@ void label_2151()
         for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
         {
             tc = cnt;
-            cdata(259, tc) = 0;
-            cdata(250, tc) = 0;
-            cdata(251, tc) = 0;
-            cdata(254, tc) = 0;
-            cdata(253, tc) = 0;
-            cdata(252, tc) = 0;
-            cdata(256, tc) = 0;
-            cdata(257, tc) = 0;
-            cdata(258, tc) = 0;
+            cdata_wet(tc) = 0;
+            cdata_poisoned(tc) = 0;
+            cdata_sleep(tc) = 0;
+            cdata_confused(tc) = 0;
+            cdata_blind(tc) = 0;
+            cdata_paralyzed(tc) = 0;
+            cdata_dimmed(tc) = 0;
+            cdata_drunk(tc) = 0;
+            cdata_bleeding(tc) = 0;
             gdata(90) = 0;
-            cdata(50, tc) = cdata(51, tc);
-            cdata(55, tc) = cdata(56, tc);
-            cdata(52, tc) = cdata(53, tc);
+            cdata_hp(tc) = cdata_max_hp(tc);
+            cdata_mp(tc) = cdata_max_mp(tc);
+            cdata_sp(tc) = cdata_max_sp(tc);
             healcon(tc, 12, 7 + rnd(7));
             if (cbit(986, tc))
             {
-                cdata(93, tc) -= rnd(6);
+                cdata_anorexia_count(tc) -= rnd(6);
             }
             else
             {
-                cdata(93, tc) -= rnd(3);
+                cdata_anorexia_count(tc) -= rnd(3);
             }
-            if (cdata(93, tc) < 0)
+            if (cdata_anorexia_count(tc) < 0)
             {
                 cure_anorexia(tc);
-                cdata(93, tc) = 0;
+                cdata_anorexia_count(tc) = 0;
             }
             healsan(tc, 10);
             if (cbit(21, tc))
@@ -80702,7 +80746,7 @@ void label_2151()
             {
                 if (cbit(962, cnt) == 1)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
                         tc = cnt;
                         break;
@@ -80731,20 +80775,20 @@ void label_2151()
     gdata(98) = 0;
     mode = 0;
     wake_up();
-    cdata(22, cc) -= 1500 / (trait(158) + 1);
+    cdata_nutrition(cc) -= 1500 / (trait(158) + 1);
     txtef(2);
     txt(lang(
         ""s + timeslept + u8"時間眠った。あなたはリフレッシュした。"s,
         u8"You have slept for "s + timeslept
             + u8" hours. You are refreshed."s));
     f = 0;
-    if (cdata(142, 0) == -1)
+    if (cdata_continuous_action_item(0) == -1)
     {
         f = 1;
     }
     else
     {
-        ci = cdata(142, 0);
+        ci = cdata_continuous_action_item(0);
         if (inv_param1(ci) == 0 || inv_number(ci) == 0
             || refitem(inv_id(ci), 9) != 60004)
         {
@@ -80810,21 +80854,21 @@ void label_2151()
 }
 void label_2152()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 4;
-        cdata(141, cc) = r1;
+        cdata_continuous_action_id(cc) = 4;
+        cdata_continuous_action_turn(cc) = r1;
         txt(lang(u8"あなたは横になった。"s, u8"You lie down to rest."s));
         label_1419();
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
-        if (cdata(141, cc) % 2 == 0)
+        if (cdata_continuous_action_turn(cc) % 2 == 0)
         {
             healsp(cc, 1);
         }
-        if (cdata(141, cc) % 3 == 0)
+        if (cdata_continuous_action_turn(cc) % 3 == 0)
         {
             healhp(cc, 1);
             healmp(cc, 1);
@@ -80850,7 +80894,7 @@ void label_2152()
             txt(lang(
                 u8"あなたはそのまま眠りにおちた…"s,
                 u8"After a short while, you drop off to sleep."s));
-            cdata(142, cc) = -1;
+            cdata_continuous_action_item(cc) = -1;
             label_2151();
             rowactend(cc);
             return;
@@ -80862,31 +80906,35 @@ void label_2152()
 }
 void label_2153()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 3;
-        cdata(141, cc) = 20;
+        cdata_continuous_action_id(cc) = 3;
+        cdata_continuous_action_turn(cc) = 20;
         if (gdata(17) == 3)
         {
-            cdata(141, cc) = cdata(141, cc) * 13 / 10;
+            cdata_continuous_action_turn(cc) =
+                cdata_continuous_action_turn(cc) * 13 / 10;
         }
         if (gdata(17) == 4)
         {
-            cdata(141, cc) = cdata(141, cc) * 16 / 10;
+            cdata_continuous_action_turn(cc) =
+                cdata_continuous_action_turn(cc) * 16 / 10;
         }
-        if (gdata(17) == 2 || chipm(0, map(cdata(1, cc), cdata(2, cc), 0)) == 4)
+        if (gdata(17) == 2 || chipm(0, map(cdata_x(cc), cdata_y(cc), 0)) == 4)
         {
-            cdata(141, cc) = cdata(141, cc) * 22 / 10;
+            cdata_continuous_action_turn(cc) =
+                cdata_continuous_action_turn(cc) * 22 / 10;
         }
         if (gdata(17) == 1)
         {
-            cdata(141, cc) = cdata(141, cc) * 5 / 10;
+            cdata_continuous_action_turn(cc) =
+                cdata_continuous_action_turn(cc) * 5 / 10;
         }
-        cdata(141, cc) =
-            cdata(141, cc) * 100 / (100 + gdata(28) + sdata(182, 0));
+        cdata_continuous_action_turn(cc) = cdata_continuous_action_turn(cc)
+            * 100 / (100 + gdata(28) + sdata(182, 0));
         return;
     }
-    if (cdata(22, 0) <= 5000)
+    if (cdata_nutrition(0) <= 5000)
     {
         inv_getheader(cc);
         f = 0;
@@ -80918,13 +80966,13 @@ void label_2153()
             label_2161();
         }
     }
-    if (gdata(17) == 2 || chipm(0, map(cdata(1, cc), cdata(2, cc), 0)) == 4)
+    if (gdata(17) == 2 || chipm(0, map(cdata_x(cc), cdata_y(cc), 0)) == 4)
     {
         if (gdata(83) == 0)
         {
             if (rnd(100) == 0)
             {
-                if (cbit(5, 0) == 0 || cdata(262, 0) > 0)
+                if (cbit(5, 0) == 0 || cdata_gravity(0) > 0)
                 {
                     txtef(9);
                     if (jp)
@@ -80942,7 +80990,7 @@ void label_2153()
                             u8"*clump*"s,
                             u8"*skritch*"s);
                     }
-                    cdata(141, cc) += 10;
+                    cdata_continuous_action_turn(cc) += 10;
                 }
             }
             if (rnd(1000) == 0)
@@ -80960,10 +81008,10 @@ void label_2153()
                         u8"You are caught in a snowdrift."s,
                         u8"It's hard to walk on a snowy road."s);
                 }
-                cdata(141, cc) += 50;
+                cdata_continuous_action_turn(cc) += 50;
             }
         }
-        if (cdata(22, 0) <= 2000)
+        if (cdata_nutrition(0) <= 2000)
         {
             if (cbit(986, 0) == 0)
             {
@@ -80971,7 +81019,7 @@ void label_2153()
                 txt(lang(
                     u8"空腹のあまり、あなたは積もっている雪を腹にかきこんだ。"s,
                     u8"You are too hungry. You chow down snow."s));
-                cdata(22, cc) += 5000;
+                cdata_nutrition(cc) += 5000;
                 label_2162();
                 dmgcon(0, 7, 1000);
             }
@@ -80983,7 +81031,7 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cbit(5, 0) == 0 || cdata(262, 0) > 0)
+                if (cbit(5, 0) == 0 || cdata_gravity(0) > 0)
                 {
                     txtef(9);
                     if (jp)
@@ -81001,10 +81049,10 @@ void label_2153()
                             u8"*splash*"s,
                             u8"*kissh*"s);
                     }
-                    cdata(141, cc) += 5;
+                    cdata_continuous_action_turn(cc) += 5;
                 }
             }
-            if (cdata(254, 0) == 0)
+            if (cdata_confused(0) == 0)
             {
                 if (rnd(500) == 0)
                 {
@@ -81020,20 +81068,20 @@ void label_2153()
                         txt(u8"It's raining heavily. You lose your way."s,
                             u8"You can't see a thing!"s);
                     }
-                    cdata(254, 0) = 10;
+                    cdata_confused(0) = 10;
                 }
             }
             else
             {
                 if (rnd(5) == 0)
                 {
-                    cdata(254, 0) = 10;
+                    cdata_confused(0) = 10;
                 }
             }
         }
-        cdata(253, 0) = 3;
+        cdata_blind(0) = 3;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         ++gdata(14);
         return;
@@ -81049,7 +81097,7 @@ void label_2154()
     {
         return;
     }
-    ci = cdata(142, 0);
+    ci = cdata_continuous_action_item(0);
     dbmax = 0;
     dbsum = 0;
     {
@@ -81104,16 +81152,16 @@ void label_2155()
 }
 void label_2156()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
         txt(lang(u8"釣りを始めた。"s, u8"You start fishing."s));
         snd(87);
         if (rowactre == 0)
         {
-            cdata(142, cc) = ci;
+            cdata_continuous_action_item(cc) = ci;
         }
-        cdata(140, cc) = 7;
-        cdata(141, cc) = 100;
+        cdata_continuous_action_id(cc) = 7;
+        cdata_continuous_action_turn(cc) = 100;
         racount = 0;
         fishstat = 0;
         gsel(9);
@@ -81127,7 +81175,7 @@ void label_2156()
         label_2143();
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         if (rnd(5) == 0)
         {
@@ -81167,7 +81215,7 @@ void label_2156()
         {
             fishanime = 2;
             snd(46);
-            cdata(79, 0) = 220;
+            cdata_emotion_icon(0) = 220;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (8 + rnd(10)); cnt < cnt_end; ++cnt)
@@ -81244,7 +81292,7 @@ void label_2156()
             rowactend(cc);
             label_2155();
             label_1470();
-            cdata(79, 0) = 306;
+            cdata_emotion_icon(0) = 306;
         }
         if (rnd(10) == 0)
         {
@@ -81258,10 +81306,10 @@ void label_2156()
 }
 void label_2157()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 8;
-        cdata(141, cc) = 40;
+        cdata_continuous_action_id(cc) = 8;
+        cdata_continuous_action_turn(cc) = 40;
         txt(lang(u8"採取を始めた。"s, u8"You start to search the spot."s));
         racount = 0;
         return;
@@ -81276,10 +81324,10 @@ void label_2157()
 }
 void label_2158()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 9;
-        cdata(141, cc) = 20;
+        cdata_continuous_action_id(cc) = 9;
+        cdata_continuous_action_turn(cc) = 20;
         if (rowactre == 0)
         {
             txt(lang(
@@ -81297,9 +81345,9 @@ void label_2158()
         label_2143();
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
-        if (cdata(26, cc) % 5 == 0)
+        if (cdata_turn(cc) % 5 == 0)
         {
             txtmore();
             txtef(4);
@@ -81327,9 +81375,9 @@ void label_2158()
                 {
                     if (inv_param1(cnt) != 0)
                     {
-                        if (inv_param1(cnt) == cdata(1, 0))
+                        if (inv_param1(cnt) == cdata_x(0))
                         {
-                            if (inv_param2(cnt) == cdata(2, 0))
+                            if (inv_param2(cnt) == cdata_y(0))
                             {
                                 snd(23);
                                 txtef(5);
@@ -81342,29 +81390,25 @@ void label_2158()
                                 itemcreate(
                                     -1,
                                     622,
-                                    cdata(1, 0),
-                                    cdata(2, 0),
+                                    cdata_x(0),
+                                    cdata_y(0),
                                     2 + rnd(3));
                                 flt();
                                 itemcreate(
-                                    -1,
-                                    55,
-                                    cdata(1, 0),
-                                    cdata(2, 0),
-                                    1 + rnd(3));
+                                    -1, 55, cdata_x(0), cdata_y(0), 1 + rnd(3));
                                 flt();
                                 itemcreate(
                                     -1,
                                     54,
-                                    cdata(1, 0),
-                                    cdata(2, 0),
+                                    cdata_x(0),
+                                    cdata_y(0),
                                     rnd(10000) + 2000);
                                 {
                                     int cnt = 0;
                                     for (int cnt_end = cnt + (4); cnt < cnt_end;
                                          ++cnt)
                                     {
-                                        flt(calcobjlv(cdata(38, 0) + 10),
+                                        flt(calcobjlv(cdata_level(0) + 10),
                                             calcfixlv(3));
                                         if (cnt == 0)
                                         {
@@ -81373,7 +81417,7 @@ void label_2158()
                                         flttypemajor =
                                             fsetchest(rnd(length(fsetchest)));
                                         itemcreate(
-                                            -1, 0, cdata(1, 0), cdata(2, 0), 0);
+                                            -1, 0, cdata_x(0), cdata_y(0), 0);
                                     }
                                 }
                                 txt(lang(
@@ -81395,10 +81439,10 @@ void label_2158()
 }
 void label_2159()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 5;
-        cdata(141, cc) = 40;
+        cdata_continuous_action_id(cc) = 5;
+        cdata_continuous_action_turn(cc) = 40;
         if (rowactre == 0)
         {
             txt(lang(u8"壁を掘りはじめた。"s, u8"You start to dig the wall."s));
@@ -81424,7 +81468,7 @@ void label_2159()
         label_2143();
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         if (rnd(5) == 0)
         {
@@ -81529,7 +81573,7 @@ void label_2159()
         }
         else
         {
-            if (cdata(26, cc) % 5 == 0)
+            if (cdata_turn(cc) % 5 == 0)
             {
                 txtmore();
                 txtef(4);
@@ -81550,11 +81594,11 @@ void label_2159()
 }
 void label_2160()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
-        cdata(140, cc) = 1;
-        cdata(141, cc) = 8;
-        cdata(142, cc) = ci;
+        cdata_continuous_action_id(cc) = 1;
+        cdata_continuous_action_turn(cc) = 8;
+        cdata_continuous_action_item(cc) = ci;
         if (synccheck(cc, -1))
         {
             snd(18);
@@ -81581,7 +81625,7 @@ void label_2160()
         }
         return;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
         return;
     }
@@ -81629,9 +81673,9 @@ void label_2161()
     }
     else
     {
-        if (ci == cdata(12, cc))
+        if (ci == cdata_item_which_will_be_used(cc))
         {
-            cdata(12, cc) = 0;
+            cdata_item_which_will_be_used(cc) = 0;
         }
         if (cbit(987, cc))
         {
@@ -81658,9 +81702,9 @@ void label_2161()
                             cnvtalk(u8"You fool!"s));
                     }
                     dmghp(cc, 999, -12);
-                    if (cdata(0, cc) != 1)
+                    if (cdata_state(cc) != 1)
                     {
-                        if (cdata(9, cc) > 0)
+                        if (cdata_relationship(cc) > 0)
                         {
                             modkarma(0, -5);
                         }
@@ -81686,7 +81730,7 @@ void label_2161()
                 name(cc) + u8" choke"s + _s(cc) + u8" on mochi!"s));
             txt(lang(u8"「むがっ」"s, cnvtalk(u8"Mm-ghmm"s)));
         }
-        ++cdata(263, cc);
+        ++cdata_choked(cc);
     }
     return;
 }
@@ -81694,7 +81738,7 @@ void label_2162()
 {
     txtmore();
     txtef(2);
-    if (cdata(22, cc) >= 12000)
+    if (cdata_nutrition(cc) >= 12000)
     {
         txt(lang(
                 u8"もう当分食べなくてもいい。"s,
@@ -81707,7 +81751,7 @@ void label_2162()
                 u8"Your stomach is unbelievably full!"s));
         return;
     }
-    if (cdata(22, cc) >= 10000)
+    if (cdata_nutrition(cc) >= 10000)
     {
         txt(lang(u8"あなたは満足した。"s, u8"You are satisfied!"s),
             lang(u8"満腹だ！"s, u8"This hearty meal has filled your stomach."s),
@@ -81717,7 +81761,7 @@ void label_2162()
                 u8"You pat your stomach contentedly."s));
         return;
     }
-    if (cdata(22, cc) >= 5000)
+    if (cdata_nutrition(cc) >= 5000)
     {
         txt(lang(u8"まだ食べられるな…"s, u8"You can eat more."s),
             lang(u8"あなたは腹をさすった。"s, u8"You pat your stomach."s),
@@ -81726,7 +81770,7 @@ void label_2162()
                 u8"You satisfied your appetite a little."s));
         return;
     }
-    if (cdata(22, cc) >= 2000)
+    if (cdata_nutrition(cc) >= 2000)
     {
         txt(lang(u8"まだまだ食べたりない。"s, u8"You are still a bit hungry."s),
             lang(u8"物足りない…"s, u8"Not enough..."s),
@@ -81736,7 +81780,7 @@ void label_2162()
                 u8"Your stomach is still somewhat empty."s));
         return;
     }
-    if (cdata(22, cc) >= 1000)
+    if (cdata_nutrition(cc) >= 1000)
     {
         txt(lang(u8"全然食べたりない！"s, u8"No, it was not enough at all."s),
             lang(u8"腹の足しにもならない。"s, u8"You still feel very hungry."s),
@@ -81756,7 +81800,7 @@ void label_2162()
 }
 int label_2163()
 {
-    if (cdata(140, cc) == 0)
+    if (cdata_continuous_action_id(cc) == 0)
     {
         if (inv_id(ci) == 687)
         {
@@ -81769,7 +81813,7 @@ int label_2163()
                 return stat;
             }
         }
-        if (cdata(253, cc) != 0)
+        if (cdata_blind(cc) != 0)
         {
             if (synccheck(cc, -1))
             {
@@ -81780,7 +81824,7 @@ int label_2163()
             stat = 0;
             return stat;
         }
-        cdata(140, cc) = 2;
+        cdata_continuous_action_id(cc) = 2;
         if (inv_id(ci) == 783)
         {
             p = 50;
@@ -81797,8 +81841,8 @@ int label_2163()
                 p = sdataref(4, efid);
             }
         }
-        cdata(141, cc) = p / (2 + sdata(150, 0)) + 1;
-        cdata(142, cc) = ci;
+        cdata_continuous_action_turn(cc) = p / (2 + sdata(150, 0)) + 1;
+        cdata_continuous_action_item(cc) = ci;
         if (synccheck(cc, -1))
         {
             txt(lang(
@@ -81810,9 +81854,9 @@ int label_2163()
         stat = 0;
         return stat;
     }
-    if (cdata(141, cc) > 0)
+    if (cdata_continuous_action_turn(cc) > 0)
     {
-        ci = cdata(142, cc);
+        ci = cdata_continuous_action_item(cc);
         cibkread = ci;
         label_1458();
         if (inv_id(ci) == 783)
@@ -81951,7 +81995,7 @@ int label_2163()
 }
 int label_2164()
 {
-    if (cdata(253, cc) != 0)
+    if (cdata_blind(cc) != 0)
     {
         if (synccheck(cc, -1))
         {
@@ -82004,8 +82048,10 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 {
     if (sdata(188, prm_1076) != 0)
     {
-        if (cdata(9, prm_1076) >= 0 && cdata(9, prm_1077) >= 0
-            || cdata(9, prm_1076) <= -1 && cdata(9, prm_1077) <= -1)
+        if (cdata_relationship(prm_1076) >= 0
+                && cdata_relationship(prm_1077) >= 0
+            || cdata_relationship(prm_1076) <= -1
+                && cdata_relationship(prm_1077) <= -1)
         {
             if (sdata(188, prm_1076) * 5 > rnd(dmg + 1))
             {
@@ -82058,7 +82104,7 @@ int label_2168()
     efp = calcspellpower(efid, cc);
     if (cc == 0)
     {
-        if (calcspellcostmp(efid, cc) > cdata(55, cc))
+        if (calcspellcostmp(efid, cc) > cdata_mp(cc))
         {
             txt(lang(
                 u8"マナが足りないが、それでも詠唱を試みる？"s,
@@ -82097,7 +82143,7 @@ int label_2168()
     {
         if (sdataref(1, efid) == 7)
         {
-            if (cdata(9, cc) == 10 || gdata(20) == 40)
+            if (cdata_relationship(cc) == 10 || gdata(20) == 40)
             {
                 efsource = 0;
                 stat = 0;
@@ -82124,20 +82170,20 @@ int label_2168()
         mp = calcspellcostmp(efid, cc);
         if (cc == 0)
         {
-            if (cdata(61, 0) == 4)
+            if (cdata_god(0) == 4)
             {
                 mp = rnd(mp * 140 / 100 + 1) + 1;
             }
         }
         dmgmp(cc, mp);
-        if (cdata(0, cc) != 1)
+        if (cdata_state(cc) != 1)
         {
             efsource = 0;
             stat = 1;
             return stat;
         }
     }
-    if (cdata(254, cc) != 0 || cdata(256, cc) != 0)
+    if (cdata_confused(cc) != 0 || cdata_dimmed(cc) != 0)
     {
         if (synccheck(cc, -1))
         {
@@ -82163,15 +82209,15 @@ int label_2168()
             {
                 txt(lang(
                     name(cc) + u8"は"s + skillname(efid) + u8"の"s
-                        + _cast(cdata(65, cc)),
+                        + _cast(cdata_special_attack_type(cc)),
                     name(cc) + u8" cast "s + skillname(efid) + u8"."s));
                 txtmore();
             }
             else
             {
                 txt(lang(
-                    name(cc) + u8"は"s + _cast(cdata(65, cc)),
-                    name(cc) + ""s + _cast(cdata(65, cc))));
+                    name(cc) + u8"は"s + _cast(cdata_special_attack_type(cc)),
+                    name(cc) + ""s + _cast(cdata_special_attack_type(cc))));
                 txtmore();
             }
         }
@@ -82227,7 +82273,7 @@ int label_2168()
             for (int cnt_end = cnt + (rapidmagic); cnt < cnt_end; ++cnt)
             {
                 label_2176();
-                if (cdata(0, tc) != 1)
+                if (cdata_state(tc) != 1)
                 {
                     label_2072();
                     if (stat == 0)
@@ -82236,7 +82282,7 @@ int label_2168()
                     }
                     else
                     {
-                        tc = cdata(29, cc);
+                        tc = cdata_enemy_id(cc);
                         if (relationbetween(cc, tc) != -3)
                         {
                             break;
@@ -82306,10 +82352,10 @@ int label_2169()
             }
         }
     }
-    cdata(22, tc) += 150;
+    cdata_nutrition(tc) += 150;
     if (tc < 16)
     {
-        if (cdata(22, tc) > 12000)
+        if (cdata_nutrition(tc) > 12000)
         {
             if (rnd(5) == 0)
             {
@@ -82357,7 +82403,7 @@ int label_2170()
                               u8"「手を伸ばせー」"s,
                               (u8" yells, "s
                                + cnvtalk(u8"G-Give me your hands!"s))));
-                    if (cbit(5, cc) == 1 && cdata(262, cc) == 0)
+                    if (cbit(5, cc) == 1 && cdata_gravity(cc) == 0)
                     {
                         txtmore();
                         txt(lang(
@@ -82423,7 +82469,7 @@ int label_2170()
             if (p > 55)
             {
                 flt();
-                itemcreate(-1, 54, cdata(1, cc), cdata(2, cc), 0);
+                itemcreate(-1, 54, cdata_x(cc), cdata_y(cc), 0);
                 inv_number(ci) = rnd(sdata(159, cc) / 2 * 50 + 100) + 1;
                 txt(lang(
                     name(cc) + u8"は水の中に金貨を見つけた。"s,
@@ -82446,7 +82492,7 @@ int label_2170()
             }
             if (p > 40)
             {
-                if (cdata(38, cc) < 5)
+                if (cdata_level(cc) < 5)
                 {
                     break;
                 }
@@ -82470,8 +82516,9 @@ int label_2170()
                     int cnt = 0;
                     for (int cnt_end = cnt + (1 + rnd(3)); cnt < cnt_end; ++cnt)
                     {
-                        flt(calcobjlv(cdata(38, cc) * 3 / 2 + 3), calcfixlv(2));
-                        characreate(-1, 0, cdata(1, cc), cdata(2, cc));
+                        flt(calcobjlv(cdata_level(cc) * 3 / 2 + 3),
+                            calcfixlv(2));
+                        characreate(-1, 0, cdata_x(cc), cdata_y(cc));
                     }
                 }
                 break;
@@ -82514,11 +82561,11 @@ int label_2170()
     ci = cibk;
     if (cc != 0)
     {
-        cdata(22, cc) += 4000;
+        cdata_nutrition(cc) += 4000;
     }
     else
     {
-        cdata(22, cc) += 500;
+        cdata_nutrition(cc) += 500;
     }
     if (inv_id(ci) == 602)
     {
@@ -82549,11 +82596,11 @@ int label_2170()
 int label_2171()
 {
     tc = cc;
-    tlocx = cdata(1, cc);
-    tlocy = cdata(2, cc);
+    tlocx = cdata_x(cc);
+    tlocy = cdata_y(cc);
     efstatus = inv_curse_state(ci);
     efsource = 2;
-    if (cdata(253, cc) != 0)
+    if (cdata_blind(cc) != 0)
     {
         if (synccheck(cc, -1))
         {
@@ -82565,7 +82612,7 @@ int label_2171()
         stat = 0;
         return stat;
     }
-    if (cdata(256, cc) != 0 || cdata(254, cc) != 0)
+    if (cdata_dimmed(cc) != 0 || cdata_confused(cc) != 0)
     {
         if (rnd(4) != 0)
         {
@@ -82740,17 +82787,17 @@ int label_2174()
     {
         if (cbit(973, tc) == 1)
         {
-            if (cdata(9, cc) == -3)
+            if (cdata_relationship(cc) == -3)
             {
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata(0, cnt) == 1)
+                        if (cdata_state(cnt) == 1)
                         {
-                            if (cdata(9, cnt) == 10)
+                            if (cdata_relationship(cnt) == 10)
                             {
-                                cdata(29, cc) = cnt;
+                                cdata_enemy_id(cc) = cnt;
                                 break;
                             }
                         }
@@ -82770,7 +82817,7 @@ int label_2174()
     if (sdataref(3, efid) / 1000 * 1000 != 3000
         && sdataref(3, efid) / 1000 * 1000 != 10000)
     {
-        if (cdata(254, cc) != 0 || cdata(253, cc) != 0)
+        if (cdata_confused(cc) != 0 || cdata_blind(cc) != 0)
         {
             if (rnd(5) == 0)
             {
@@ -82790,9 +82837,9 @@ int label_2174()
     {
         if (cc == 0)
         {
-            if (cdata(52, 0) < 50)
+            if (cdata_sp(0) < 50)
             {
-                if (cdata(52, 0) < rnd(75))
+                if (cdata_sp(0) < rnd(75))
                 {
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
@@ -82876,14 +82923,14 @@ int label_2175()
         }
         else
         {
-            if (dist(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc))
+            if (dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
                 > sdataref(3, efid) % 1000 + 1)
             {
                 stat = 0;
                 return stat;
             }
-            tlocx = cdata(1, tc);
-            tlocy = cdata(2, tc);
+            tlocx = cdata_x(tc);
+            tlocy = cdata_y(tc);
         }
         stat = 1;
         return stat;
@@ -82894,7 +82941,7 @@ int label_2175()
         {
             if (tg == 9000)
             {
-                if (fov_los(cdata(1, cc), cdata(2, cc), tglocx, tglocy) == 0)
+                if (fov_los(cdata_x(cc), cdata_y(cc), tglocx, tglocy) == 0)
                 {
                     if (stat == 0)
                     {
@@ -82930,14 +82977,14 @@ int label_2175()
         }
         else
         {
-            if (fov_los(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc))
+            if (fov_los(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
                 == 0)
             {
                 stat = 0;
                 return stat;
             }
-            tlocx = cdata(1, tc);
-            tlocy = cdata(2, tc);
+            tlocx = cdata_x(tc);
+            tlocy = cdata_y(tc);
         }
         stat = 1;
         return stat;
@@ -82948,14 +82995,13 @@ int label_2175()
         {
             if (sdataref(1, efid) == 3)
             {
-                if (dist(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc))
+                if (dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
                     > sdataref(3, efid) % 1000 + 1)
                 {
                     stat = 0;
                     return stat;
                 }
-                if (fov_los(
-                        cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc))
+                if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc))
                     == 0)
                 {
                     stat = 0;
@@ -82964,8 +83010,8 @@ int label_2175()
             }
         }
         tc = cc;
-        tlocx = cdata(1, cc);
-        tlocy = cdata(2, cc);
+        tlocx = cdata_x(cc);
+        tlocy = cdata_y(cc);
         stat = 1;
         return stat;
     }
@@ -82980,8 +83026,8 @@ int label_2175()
                 stat = 0;
                 return stat;
             }
-            tc = cdata(29, 0);
-            if (cdata(9, tc) >= 0)
+            tc = cdata_enemy_id(0);
+            if (cdata_relationship(tc) >= 0)
             {
                 label_2073();
                 if (stat == 0)
@@ -82992,7 +83038,7 @@ int label_2175()
                 }
             }
         }
-        if (dist(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc))
+        if (dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
             > sdataref(3, efid) % 1000 + 1)
         {
             if (cc == 0)
@@ -83004,14 +83050,13 @@ int label_2175()
             stat = 0;
             return stat;
         }
-        if (fov_los(cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc))
-            == 0)
+        if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)) == 0)
         {
             stat = 0;
             return stat;
         }
-        tlocx = cdata(1, tc);
-        tlocy = cdata(2, tc);
+        tlocx = cdata_x(tc);
+        tlocy = cdata_y(tc);
         stat = 1;
         return stat;
     }
@@ -83081,19 +83126,19 @@ void label_2187()
 }
 void label_2188()
 {
-    cdata(250, tc) = 0;
-    cdata(251, tc) = 0;
-    cdata(254, tc) = 0;
-    cdata(253, tc) = 0;
-    cdata(252, tc) = 0;
-    cdata(263, tc) = 0;
-    cdata(256, tc) = 0;
-    cdata(257, tc) = 0;
-    cdata(258, tc) = 0;
+    cdata_poisoned(tc) = 0;
+    cdata_sleep(tc) = 0;
+    cdata_confused(tc) = 0;
+    cdata_blind(tc) = 0;
+    cdata_paralyzed(tc) = 0;
+    cdata_choked(tc) = 0;
+    cdata_dimmed(tc) = 0;
+    cdata_drunk(tc) = 0;
+    cdata_bleeding(tc) = 0;
     gdata(90) = 0;
-    cdata(50, tc) = cdata(51, tc);
-    cdata(55, tc) = cdata(56, tc);
-    cdata(52, tc) = cdata(53, tc);
+    cdata_hp(tc) = cdata_max_hp(tc);
+    cdata_mp(tc) = cdata_max_mp(tc);
+    cdata_sp(tc) = cdata_max_sp(tc);
     return;
 }
 void label_2189()
@@ -83105,7 +83150,7 @@ void label_2189()
             name(cc) + u8" throw"s + _s(cc) + u8" "s + itemname(ci, 1)
                 + u8"."s));
     }
-    if (dist(cdata(1, cc), cdata(2, cc), tlocx, tlocy) * 4
+    if (dist(cdata_x(cc), cdata_y(cc), tlocx, tlocy) * 4
             > rnd(sdata(111, cc) + 10) + sdata(111, cc) / 4
         || rnd(10) == 0)
     {
@@ -83169,8 +83214,8 @@ void label_2189()
                 u8"It hits "s + name(tc) + u8"!"s));
             if (inv_id(ci) == 685)
             {
-                if (tc < 57 || cdata(150, tc) != 0 || cdata(25, tc) == 6
-                    || cbit(976, tc) == 1)
+                if (tc < 57 || cdata_character_role(tc) != 0
+                    || cdata_quality(tc) == 6 || cbit(976, tc) == 1)
                 {
                     txt(lang(
                         u8"その生物には無効だ。"s,
@@ -83178,7 +83223,7 @@ void label_2189()
                     label_2742();
                     return;
                 }
-                if (cdata(38, tc) > inv_param2(ci))
+                if (cdata_level(tc) > inv_param2(ci))
                 {
                     txt(lang(
                         u8"その生物を捕獲するには、より高レベルのモンスターボールが必要だ。"s,
@@ -83186,7 +83231,7 @@ void label_2189()
                     label_2742();
                     return;
                 }
-                if (cdata(50, tc) > cdata(51, tc) / 10)
+                if (cdata_hp(tc) > cdata_max_hp(tc) / 10)
                 {
                     txt(lang(
                         u8"捕獲するためにはもっと弱らせる必要がある。"s,
@@ -83199,14 +83244,14 @@ void label_2189()
                     name(tc) + u8"をモンスターボールに捕獲した。"s,
                     u8"You capture "s + name(tc) + u8"."s));
                 animeload(8, tc);
-                inv_subname(ci) = cdata(27, tc);
-                inv_param3(ci) = cdata(38, tc);
-                inv_weight(ci) = limit(cdata(20, tc), 10000, 100000);
+                inv_subname(ci) = cdata_id(tc);
+                inv_param3(ci) = cdata_level(tc);
+                inv_weight(ci) = limit(cdata_weight(tc), 10000, 100000);
                 inv_value(ci) = 1000;
             }
             else
             {
-                if (cdata(27, tc) != 319 || tc < 16)
+                if (cdata_id(tc) != 319 || tc < 16)
                 {
                     txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                     label_2742();
@@ -83297,7 +83342,7 @@ void label_2189()
                                 name(tc) + u8" "s + is(tc)
                                     + u8" engulfed in fury!"s));
                         }
-                        cdata(264, tc) += rnd(10) + 5;
+                        cdata_furious(tc) += rnd(10) + 5;
                     }
                     label_2742();
                     return;
@@ -83438,7 +83483,7 @@ void label_2190()
     if (stat != -1)
     {
         ci = stat;
-        if (inv_param1(ci) != cdata(61, 0))
+        if (inv_param1(ci) != cdata_god(0))
         {
             label_1886();
             label_2742();
@@ -83471,11 +83516,11 @@ int label_2192()
             cell_refresh(inv_x(ci), inv_y(ci));
             if (inv_id(ci) == 54)
             {
-                cdata(30, cc) += in;
+                cdata_gold(cc) += in;
             }
             else
             {
-                cdata(31, cc) += in;
+                cdata_platinum_coin(cc) += in;
             }
             stat = 1;
             return stat;
@@ -83485,9 +83530,9 @@ int label_2192()
     {
         if (gdata(183) != 0)
         {
-            if (cdata(140, gdata(183)) != 0)
+            if (cdata_continuous_action_id(gdata(183)) != 0)
             {
-                if (cdata(142, gdata(183)) == ci)
+                if (cdata_continuous_action_item(gdata(183)) == ci)
                 {
                     txt(lang(
                         u8"それは"s + name(gdata(183)) + u8"が使用中だ。"s,
@@ -83502,7 +83547,7 @@ int label_2192()
         {
             if (inv_own_state(ci) == 4)
             {
-                if (cdata(140, 0) == 0)
+                if (cdata_continuous_action_id(0) == 0)
                 {
                     if (inv_getspace(0) == 0)
                     {
@@ -83693,8 +83738,8 @@ int label_2192()
                 u8"You buy "s + itemname(ti, in) + u8"."s));
             sellgold = calcitemvalue(ti, 0) * in;
             snd(12);
-            cdata(30, 0) -= sellgold;
-            cdata(30, tc) += sellgold;
+            cdata_gold(0) -= sellgold;
+            cdata_gold(tc) += sellgold;
             if (refitem(inv_id(ti), 5) == 92000)
             {
                 inv_param2(ti) = calcitemvalue(ti, 0);
@@ -83733,11 +83778,11 @@ int label_2192()
                 }
             }
             snd(11);
-            cdata(30, 0) += sellgold;
-            cdata(30, tc) -= sellgold;
-            if (cdata(30, tc) < 0)
+            cdata_gold(0) += sellgold;
+            cdata_gold(tc) -= sellgold;
+            if (cdata_gold(tc) < 0)
             {
-                cdata(30, tc) = 0;
+                cdata_gold(tc) = 0;
             }
             inv_identification_state(ti) = 3;
         }
@@ -83837,8 +83882,8 @@ int label_2193()
 {
     inumbk = inv_number(ci) - in;
     inv_number(ci) = in;
-    inv_x(ci) = cdata(1, cc);
-    inv_y(ci) = cdata(2, cc);
+    inv_x(ci) = cdata_x(cc);
+    inv_y(ci) = cdata_y(cc);
     itemturn(ci);
     item_stack(-1, ci);
     if (stat == 0 || dropval == 0)
@@ -83879,7 +83924,7 @@ int label_2193()
         if (stat != -1)
         {
             p = stat;
-            if (inv_param1(p) == cdata(61, cc))
+            if (inv_param1(p) == cdata_god(cc))
             {
                 if (inv_curse_state(ti) != 1)
                 {
@@ -84038,7 +84083,7 @@ void label_2198()
             }
         }
     }
-    cdata(79, cc) = 116;
+    cdata_emotion_icon(cc) = 116;
     label_2160();
     label_2742();
     return;
@@ -84111,11 +84156,11 @@ void label_2201()
     if (map(x, y, 1) != 0)
     {
         tc = map(x, y, 1) - 1;
-        if (cdata(251, tc) == 0)
+        if (cdata_sleep(tc) == 0)
         {
             if (cc == 0)
             {
-                if (cdata(9, tc) >= 0)
+                if (cdata_relationship(tc) >= 0)
                 {
                     label_2073();
                     if (stat == 0)
@@ -84124,7 +84169,7 @@ void label_2201()
                     }
                 }
             }
-            if (cdata(263, tc))
+            if (cdata_choked(tc))
             {
                 snd(73);
                 txt(lang(
@@ -84132,14 +84177,14 @@ void label_2201()
                     name(cc) + u8" bash"s + _s(cc) + u8" up "s + name(tc)
                         + u8" at full power."s));
                 dmghp(tc, sdata(10, cc) * 5, cc);
-                if (cdata(0, tc) == 1)
+                if (cdata_state(tc) == 1)
                 {
                     txt(lang(
                         name(tc) + u8"はもちを吐き出した。"s,
                         name(tc) + u8" spit"s + _s(tc) + u8" mochi."s));
                     txt(lang(
                         u8"「助かったよ！」"s, cnvtalk(u8"You saved me!"s)));
-                    cdata(263, tc) = 0;
+                    cdata_choked(tc) = 0;
                     modimp(tc, 10);
                 }
             }
@@ -84165,9 +84210,9 @@ void label_2201()
                 name(cc) + u8" disturb"s + _s(cc) + u8" "s + his(tc)
                     + u8" sleep."s));
             modkarma(cc, -1);
-            cdata(79, tc) = 418;
+            cdata_emotion_icon(tc) = 418;
         }
-        cdata(251, tc) = 0;
+        cdata_sleep(tc) = 0;
         label_2742();
         return;
     }
@@ -84240,7 +84285,7 @@ void label_2201()
                 }
                 if (rnd(3) == 0)
                 {
-                    if (cdata(25, cc) < 4 && encfind(cc, 60010) == -1)
+                    if (cdata_quality(cc) < 4 && encfind(cc, 60010) == -1)
                     {
                         --cdata(240, cc);
                         r1 = cc;
@@ -84286,14 +84331,14 @@ void label_2201()
 void label_2203()
 {
     f = 0;
-    if (cdata(256, cc) != 0)
+    if (cdata_dimmed(cc) != 0)
     {
-        if (cdata(256, cc) + 10 > rnd(60))
+        if (cdata_dimmed(cc) + 10 > rnd(60))
         {
             f = 1;
         }
     }
-    if (cdata(257, cc) != 0)
+    if (cdata_drunk(cc) != 0)
     {
         if (rnd(5) == 0)
         {
@@ -84303,28 +84348,28 @@ void label_2203()
             f = 1;
         }
     }
-    if (cdata(254, cc) != 0 || f == 1)
+    if (cdata_confused(cc) != 0 || f == 1)
     {
-        cdata(3, cc) = cdata(1, cc) + rnd(3) - 1;
-        cdata(4, cc) = cdata(2, cc) + rnd(3) - 1;
+        cdata_next_x(cc) = cdata_x(cc) + rnd(3) - 1;
+        cdata_next_y(cc) = cdata_y(cc) + rnd(3) - 1;
     }
     if (gdata(183) != 0)
     {
-        if (cdata(140, gdata(183)) != 0)
+        if (cdata_continuous_action_id(gdata(183)) != 0)
         {
-            if (cdata(141, gdata(183)) > 0)
+            if (cdata_continuous_action_turn(gdata(183)) > 0)
             {
                 txt(lang(
                     name(gdata(183)) + u8"はあなたを睨み付けた。"s,
                     name(gdata(183)) + u8" stares in your face."s));
-                cdata(140, gdata(183)) = 0;
-                cdata(141, gdata(183)) = 0;
+                cdata_continuous_action_id(gdata(183)) = 0;
+                cdata_continuous_action_turn(gdata(183)) = 0;
                 txtmore();
             }
         }
     }
-    cell_check(cdata(3, cc), cdata(4, cc));
-    if (cdata(45, 0) >= 4)
+    cell_check(cdata_next_x(cc), cdata_next_y(cc));
+    if (cdata_inventory_weight_type(0) >= 4)
     {
         ++msgdup;
         txt(lang(u8"潰れていて動けない！ "s, u8"You carry too much to move!"s));
@@ -84334,8 +84379,9 @@ void label_2203()
     if (cellchara != -1 && cellchara != 0)
     {
         tc = cellchara;
-        if (cdata(9, tc) >= 10 || cdata(9, tc) == -1 && cfg_ignoredislike != 0
-            || cdata(9, tc) == 0
+        if (cdata_relationship(tc) >= 10
+            || cdata_relationship(tc) == -1 && cfg_ignoredislike != 0
+            || cdata_relationship(tc) == 0
                 && (adata(16, gdata(20)) == 101 || adata(16, gdata(20)) == 102))
         {
             if (cbit(985, tc) == 0)
@@ -84346,8 +84392,8 @@ void label_2203()
                 }
                 if (cfg_scroll)
                 {
-                    cdata(3, 0) = cdata(1, tc);
-                    cdata(4, 0) = cdata(2, tc);
+                    cdata_next_x(0) = cdata_x(tc);
+                    cdata_next_y(0) = cdata_y(tc);
                     label_1438();
                 }
                 cell_swap(cc, tc);
@@ -84355,13 +84401,13 @@ void label_2203()
                     name(tc) + u8"と入れ替わった。"s,
                     u8"You displace "s + name(tc) + u8"."s));
                 txtmore();
-                if (cdata(27, tc) == 271)
+                if (cdata_id(tc) == 271)
                 {
                     if (rnd(5) == 0)
                     {
-                        if (cdata(251, tc) == 0)
+                        if (cdata_sleep(tc) == 0)
                         {
-                            p = rnd(limit(cdata(30, cc), 0, 20) + 1);
+                            p = rnd(limit(cdata_gold(cc), 0, 20) + 1);
                             if (cbit(15, cc))
                             {
                                 p = 0;
@@ -84369,8 +84415,8 @@ void label_2203()
                             if (p != 0)
                             {
                                 snd(11);
-                                cdata(30, cc) -= p;
-                                cdata(30, tc) += p;
+                                cdata_gold(cc) -= p;
+                                cdata_gold(tc) += p;
                                 txt(lang(
                                         u8"「おっと、ごめんよ」"s,
                                         cnvtalk(u8"Ops, sorry."s)),
@@ -84381,15 +84427,15 @@ void label_2203()
                         }
                     }
                 }
-                if (cdata(140, tc) == 1)
+                if (cdata_continuous_action_id(tc) == 1)
                 {
-                    if (cdata(141, tc) > 0)
+                    if (cdata_continuous_action_turn(tc) > 0)
                     {
                         txt(lang(
                             name(tc) + u8"はあなたを睨み付けた。"s,
                             name(tc) + u8" stares in your face."s));
-                        cdata(140, tc) = 0;
-                        cdata(141, tc) = 0;
+                        cdata_continuous_action_id(tc) = 0;
+                        cdata_continuous_action_turn(tc) = 0;
                         txtmore();
                     }
                 }
@@ -84400,21 +84446,21 @@ void label_2203()
         }
         if (running)
         {
-            if (cdata(9, tc) >= -2 || keybd_wait >= 40)
+            if (cdata_relationship(tc) >= -2 || keybd_wait >= 40)
             {
                 label_2743(false);
             }
         }
-        if (cdata(9, tc) <= -1)
+        if (cdata_relationship(tc) <= -1)
         {
-            cdata(29, 0) = tc;
+            cdata_enemy_id(0) = tc;
             if (cbit(6, tc) == 1)
             {
                 if (cbit(7, 0) == 0)
                 {
-                    if (cdata(259, tc) == 0)
+                    if (cdata_wet(tc) == 0)
                     {
-                        cdata(29, 0) = 0;
+                        cdata_enemy_id(0) = 0;
                     }
                 }
             }
@@ -84445,8 +84491,8 @@ void label_2203()
     {
         if (dbg_freemove)
         {
-            x = cdata(3, 0);
-            y = cdata(4, 0);
+            x = cdata_next_x(0);
+            y = cdata_next_y(0);
             if (x >= 0 && x < mdata(0) && y >= 0 && y < mdata(1))
             {
                 if (map(x, y, 1) == 0)
@@ -84461,8 +84507,8 @@ void label_2203()
     label_2204_internal:
         if (mdata(6) == 1)
         {
-            if (264 <= map(cdata(3, cc), cdata(4, cc), 0)
-                && map(cdata(3, cc), cdata(4, cc), 0) < 363)
+            if (264 <= map(cdata_next_x(cc), cdata_next_y(cc), 0)
+                && map(cdata_next_x(cc), cdata_next_y(cc), 0) < 363)
             {
                 label_2743(false);
             }
@@ -84474,8 +84520,8 @@ void label_2203()
     {
         if (mdata(6) != 1)
         {
-            if (cdata(3, cc) < 0 || cdata(3, cc) > mdata(0) - 1
-                || cdata(4, cc) < 0 || cdata(4, cc) > mdata(1) - 1)
+            if (cdata_next_x(cc) < 0 || cdata_next_x(cc) > mdata(0) - 1
+                || cdata_next_y(cc) < 0 || cdata_next_y(cc) > mdata(1) - 1)
             {
                 txt(lang(
                     mdatan(0) + u8"を去る？ "s,
@@ -84505,8 +84551,8 @@ void label_2203()
                 label_1419();
                 if (rtval == 0)
                 {
-                    gdata(60) = cdata(1, 0);
-                    gdata(61) = cdata(2, 0);
+                    gdata(60) = cdata_x(0);
+                    gdata(61) = cdata_y(0);
                     snd(49);
                     --gdata(22);
                     levelexitby = 4;
@@ -84545,7 +84591,7 @@ void label_2203()
             label_2743(false);
         }
     }
-    if (cdata(254, 0) != 0)
+    if (cdata_confused(0) != 0)
     {
         ++msgdup;
         txt(lang(u8" *ごつん* "s, u8"*bump*"s));
@@ -84560,32 +84606,32 @@ void label_2205()
         label_2742();
         return;
     }
-    dx = cdata(3, cc);
-    dy = cdata(4, cc);
+    dx = cdata_next_x(cc);
+    dy = cdata_next_y(cc);
     if (cc < 16)
     {
         if (cc != 0)
         {
-            if (dx != cdata(1, cc))
+            if (dx != cdata_x(cc))
             {
-                if (cdata(1, cc) > dx)
+                if (cdata_x(cc) > dx)
                 {
-                    cdata(83, cc) = 1;
+                    cdata_direction(cc) = 1;
                 }
                 else
                 {
-                    cdata(83, cc) = 2;
+                    cdata_direction(cc) = 2;
                 }
             }
-            if (dy != cdata(2, cc))
+            if (dy != cdata_y(cc))
             {
-                if (cdata(2, cc) > dy)
+                if (cdata_y(cc) > dy)
                 {
-                    cdata(83, cc) = 3;
+                    cdata_direction(cc) = 3;
                 }
                 else
                 {
-                    cdata(83, cc) = 0;
+                    cdata_direction(cc) = 0;
                 }
             }
         }
@@ -84606,16 +84652,16 @@ void label_2205()
             return;
         }
     }
-    if (map(cdata(1, cc), cdata(2, cc), 8) != 0)
+    if (map(cdata_x(cc), cdata_y(cc), 8) != 0)
     {
-        i = map(cdata(1, cc), cdata(2, cc), 8) - 1;
+        i = map(cdata_x(cc), cdata_y(cc), 8) - 1;
         if (mef(0, i) == 1)
         {
             if (cdatan(2, cc) != u8"spider"s)
             {
                 txtmore();
                 if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
-                    || cdata(20, cc) > 100)
+                    || cdata_weight(cc) > 100)
                 {
                     if (synccheck(cc, -1))
                     {
@@ -84660,15 +84706,15 @@ void label_2205()
         }
     }
     label_21452();
-    p = map(cdata(1, cc), cdata(2, cc), 0);
+    p = map(cdata_x(cc), cdata_y(cc), 0);
     if (chipm(0, p) == 3)
     {
         if (chipm(1, p) == 5)
         {
             healsan(cc, 1);
         }
-        addefmap(cdata(1, cc), cdata(2, cc), 1, 3);
-        if (cdata(259, cc) == 0)
+        addefmap(cdata_x(cc), cdata_y(cc), 1, 3);
+        if (cdata_wet(cc) == 0)
         {
             wet(cc, 20);
         }
@@ -84679,10 +84725,10 @@ void label_2205()
         if (cc == 0)
         {
             encounter = 0;
-            gdata(62) = map(cdata(1, cc), cdata(2, cc), 0);
-            if (map(cdata(1, cc), cdata(2, cc), 6) == 0)
+            gdata(62) = map(cdata_x(cc), cdata_y(cc), 0);
+            if (map(cdata_x(cc), cdata_y(cc), 6) == 0)
             {
-                p = map(cdata(1, cc), cdata(2, cc), 0);
+                p = map(cdata_x(cc), cdata_y(cc), 0);
                 if (rnd(30) == 0)
                 {
                     encounter = 1;
@@ -84712,11 +84758,11 @@ void label_2205()
                         encounter = 2;
                     }
                 }
-                if (rnd(220 + cdata(38, 0) * 10
+                if (rnd(220 + cdata_level(0) * 10
                         - limit(
                               gdata(80) * 150 / (gdata(82) + 1),
                               0,
-                              (210 + cdata(38, 0) * 10)))
+                              (210 + cdata_level(0) * 10)))
                     == 0)
                 {
                     encounter = 4;
@@ -84750,7 +84796,7 @@ void label_2205()
             }
             if (encounter == 4)
             {
-                encounterlv = cdata(34, 0) / 1000;
+                encounterlv = cdata_fame(0) / 1000;
                 levelexitby = 4;
                 label_1737();
                 return;
@@ -84763,8 +84809,8 @@ void label_2205()
                 msg_halt();
                 gdata(66) = gdata(20);
                 gdata(67) = gdata(22);
-                gdata(68) = cdata(1, 0);
-                gdata(69) = cdata(2, 0);
+                gdata(68) = cdata_x(0);
+                gdata(69) = cdata_y(0);
                 levelexitby = 4;
                 label_1737();
                 return;
@@ -84780,12 +84826,12 @@ void label_2205()
             {
                 p = dist_town();
                 encounterlv = p * 3 / 2 - 10;
-                if (cdata(38, 0) <= 5)
+                if (cdata_level(0) <= 5)
                 {
                     encounterlv /= 2;
                 }
-                if (33 <= map(cdata(1, cc), cdata(2, cc), 0)
-                    && map(cdata(1, cc), cdata(2, cc), 0) < 66)
+                if (33 <= map(cdata_x(cc), cdata_y(cc), 0)
+                    && map(cdata_x(cc), cdata_y(cc), 0) < 66)
                 {
                     encounterlv /= 2;
                 }
@@ -84856,27 +84902,27 @@ void label_2206()
     {
         gdata(60) = -1;
         gdata(61) = -1;
-        x = cdata(1, 0);
-        y = cdata(2, 0);
-        if (key_shift && gdata(30) == 0 && cdata(254, 0) == 0
-            && cdata(256, 0) == 0)
+        x = cdata_x(0);
+        y = cdata_y(0);
+        if (key_shift && gdata(30) == 0 && cdata_confused(0) == 0
+            && cdata_dimmed(0) == 0)
         {
             if (mdata(6) != 1)
             {
                 gdata(30) = 1;
-                cell_check(cdata(1, cc) + 1, cdata(2, cc));
+                cell_check(cdata_x(cc) + 1, cdata_y(cc));
                 gdata(33) = cellaccess;
-                cell_check(cdata(1, cc) - 1, cdata(2, cc));
+                cell_check(cdata_x(cc) - 1, cdata_y(cc));
                 gdata(31) = cellaccess;
-                cell_check(cdata(1, cc), cdata(2, cc) + 1);
+                cell_check(cdata_x(cc), cdata_y(cc) + 1);
                 gdata(34) = cellaccess;
-                cell_check(cdata(1, cc), cdata(2, cc) - 1);
+                cell_check(cdata_x(cc), cdata_y(cc) - 1);
                 gdata(32) = cellaccess;
             }
         }
         if (map(x, y, 4) != 0)
         {
-            if (cdata(253, 0) == 0)
+            if (cdata_blind(0) == 0)
             {
                 txt(txtitemoncell(x, y));
             }
@@ -84903,9 +84949,9 @@ void label_2206()
             }
             if (p == 4)
             {
-                addefmap(cdata(1, cc), cdata(2, cc), 3, 10, dirsub, rnd(2));
+                addefmap(cdata_x(cc), cdata_y(cc), 3, 10, dirsub, rnd(2));
                 if (keybd_wait <= cfg_walkwait * cfg_startrun
-                    || cdata(26, 0) % 2 == 0 || mdata(6) == 1)
+                    || cdata_turn(0) % 2 == 0 || mdata(6) == 1)
                 {
                     snd(83 + foot % 3);
                     foot += 1 + rnd(2);
@@ -84916,7 +84962,7 @@ void label_2206()
         {
             if (mdata(6) == 1)
             {
-                addefmap(cdata(1, cc), cdata(2, cc), 2, 10, dirsub);
+                addefmap(cdata_x(cc), cdata_y(cc), 2, 10, dirsub);
                 snd(81 + foot % 2);
                 ++foot;
             }
@@ -84940,7 +84986,7 @@ void label_2206()
                         {
                             if (mode == 0)
                             {
-                                if (cdata(141, 0) == 0)
+                                if (cdata_continuous_action_turn(0) == 0)
                                 {
                                     gdata(206) = 1;
                                     ghelp = 6;
@@ -85060,7 +85106,7 @@ void label_2206()
                     {
                         if (mode == 0)
                         {
-                            if (cdata(141, 0) == 0)
+                            if (cdata_continuous_action_turn(0) == 0)
                             {
                                 gdata(205) = 1;
                                 ghelp = 5;
@@ -85093,11 +85139,11 @@ void label_2207()
             return;
         }
     }
-    cell_featread(cdata(1, cc), cdata(2, cc));
+    cell_featread(cdata_x(cc), cdata_y(cc));
     movelevelbystairs = 0;
     if (val == 1)
     {
-        if (mapitemfind(cdata(1, cc), cdata(2, cc), 753) != -1)
+        if (mapitemfind(cdata_x(cc), cdata_y(cc), 753) != -1)
         {
             txt(lang(
                 u8"本当にこたつの中に入る？"s,
@@ -85120,7 +85166,7 @@ void label_2207()
                 label_2743(false);
             }
             txt(lang(u8"まっくらだ！"s, u8"It's dark here!"s));
-            cdata(253, 0) += 2;
+            cdata_blind(0) += 2;
             label_2742();
             return;
         }
@@ -85129,7 +85175,7 @@ void label_2207()
     {
         if (val == 1)
         {
-            if (mapitemfind(cdata(1, cc), cdata(2, cc), 751) != -1)
+            if (mapitemfind(cdata_x(cc), cdata_y(cc), 751) != -1)
             {
                 if (gdata(22) >= adata(10, gdata(20)))
                 {
@@ -85146,7 +85192,7 @@ void label_2207()
         }
         if (val == 2)
         {
-            if (mapitemfind(cdata(1, cc), cdata(2, cc), 750) != -1)
+            if (mapitemfind(cdata_x(cc), cdata_y(cc), 750) != -1)
             {
                 if (gdata(22) <= adata(17, gdata(20)))
                 {
@@ -85249,7 +85295,7 @@ void label_2207()
                 txt(lang(u8"扉の鍵を開けた。"s, u8"You unlock the door"s));
             }
             snd(23);
-            cell_featset(cdata(1, cc), cdata(2, cc), tile_downstairs, 11);
+            cell_featset(cdata_x(cc), cdata_y(cc), tile_downstairs, 11);
             label_2742();
             return;
         }
@@ -85292,22 +85338,25 @@ void label_2207()
     if (movelevelbystairs == 1)
     {
         actionsp(0, 15);
-        if (stat == 0 || cdata(45, 0) >= 3)
+        if (stat == 0 || cdata_inventory_weight_type(0) >= 3)
         {
-            if (stat == 0 || rnd(5 - cdata(45, 0)) == 0)
+            if (stat == 0 || rnd(5 - cdata_inventory_weight_type(0)) == 0)
             {
                 txt(lang(
                     u8"うわああ！"s + name(0) + u8"は階段から足を踏み外した。"s,
                     u8"Noooo! You lost your step and roll down!"s));
                 dmghp(
                     cc,
-                    cdata(51, cc) * (cdata(43, 0) * 10 / cdata(44, 0) + 10)
+                    cdata_max_hp(cc)
+                            * (cdata_inventory_weight(0) * 10
+                                   / cdata_max_inventory_weight(0)
+                               + 10)
                             / 100
                         + 1,
                     -7);
                 msg_halt();
             }
-            if (cdata(0, 0) == 0)
+            if (cdata_state(0) == 0)
             {
                 label_2733();
                 return;
@@ -85470,7 +85519,7 @@ void label_2212()
             {
                 if (gdata(258) == 0)
                 {
-                    if (cdata(0, gdata(259)) == 1)
+                    if (cdata_state(gdata(259)) == 1)
                     {
                         tc = findchara(203);
                         if (tc != 0)
@@ -85480,8 +85529,8 @@ void label_2212()
                             txt(lang(
                                 u8"モイアー「馬鹿やろう！！」"s,
                                 u8"Moyer yells, "s + cnvtalk(u8"You idiot!"s)));
-                            cdata(29, gdata(259)) = tc;
-                            cdata(201, gdata(259)) = 1000;
+                            cdata_enemy_id(gdata(259)) = tc;
+                            cdata_hate(gdata(259)) = 1000;
                         }
                         gdata(258) = 1;
                     }
@@ -85761,7 +85810,7 @@ void label_2213()
                     in = rnd(20000) + 10000;
                 }
             }
-            itemcreate(-1, dbid, cdata(1, 0), cdata(2, 0), in);
+            itemcreate(-1, dbid, cdata_x(0), cdata_y(0), in);
         }
     }
     randomize();
@@ -85783,7 +85832,7 @@ void label_2213()
     if (f)
     {
         flt();
-        itemcreate(-1, 622, cdata(1, 0), cdata(2, 0), 1);
+        itemcreate(-1, 622, cdata_x(0), cdata_y(0), 1);
     }
     snd(24);
     txtmore();
@@ -85828,8 +85877,8 @@ void label_2214()
                 int cnt = 0;
                 for (int cnt_end = cnt + (3 + rnd(3)); cnt < cnt_end; ++cnt)
                 {
-                    flt(calcobjlv(cdata(38, 0) * 3 / 2 + 3), calcfixlv(2));
-                    characreate(-1, 0, cdata(1, cc), cdata(2, cc));
+                    flt(calcobjlv(cdata_level(0) * 3 / 2 + 3), calcfixlv(2));
+                    characreate(-1, 0, cdata_x(cc), cdata_y(cc));
                 }
             }
             return;
@@ -85846,8 +85895,8 @@ void label_2214()
                 int cnt = 0;
                 for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
                 {
-                    tlocx = cdata(1, 0) + rnd(3) - rnd(3);
-                    tlocy = cdata(2, 0) - rnd(3) + rnd(3);
+                    tlocx = cdata_x(0) + rnd(3) - rnd(3);
+                    tlocy = cdata_y(0) - rnd(3) + rnd(3);
                     if (tlocx < 0 || tlocx >= mdata(0) || tlocy < 0
                         || tlocy >= mdata(1))
                     {
@@ -85881,13 +85930,13 @@ void label_2214()
                 txt(lang(u8" *チリリリリーン* "s, u8"*ring ring ring*"s));
             }
             flt();
-            characreate(-1, 328 + rnd(2), cdata(1, cc), cdata(2, cc));
+            characreate(-1, 328 + rnd(2), cdata_x(cc), cdata_y(cc));
             if (stat != 0)
             {
-                if (cdata(9, cc) <= -3)
+                if (cdata_relationship(cc) <= -3)
                 {
-                    cdata(9, rc) = -1;
-                    cdata(69, rc) = -1;
+                    cdata_relationship(rc) = -1;
+                    cdata_original_relationship(rc) = -1;
                 }
             }
             return;
@@ -85901,10 +85950,10 @@ void label_2214()
                     u8"The pack contains your younger sister!"s));
             }
             flt();
-            characreate(-1, 176, cdata(1, cc), cdata(2, cc));
+            characreate(-1, 176, cdata_x(cc), cdata_y(cc));
             if (stat != 0)
             {
-                cdata(30, rc) = 5000;
+                cdata_gold(rc) = 5000;
             }
             return;
         }
@@ -85918,8 +85967,8 @@ void label_2214()
         itemcreate(
             -1,
             isetgiftminor(rnd(length(isetgiftminor))),
-            cdata(1, 0),
-            cdata(2, 0),
+            cdata_x(0),
+            cdata_y(0),
             1);
         return;
     }
@@ -85935,13 +85984,13 @@ void label_2214()
             for (int cnt_end = cnt + (2 + rnd(3)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 328 + rnd(2), cdata(1, cc), cdata(2, cc));
+                characreate(-1, 328 + rnd(2), cdata_x(cc), cdata_y(cc));
                 if (stat != 0)
                 {
-                    if (cdata(9, cc) <= -3)
+                    if (cdata_relationship(cc) <= -3)
                     {
-                        cdata(9, rc) = -1;
-                        cdata(69, rc) = -1;
+                        cdata_relationship(rc) = -1;
+                        cdata_original_relationship(rc) = -1;
                     }
                 }
             }
@@ -85960,8 +86009,8 @@ void label_2214()
         itemcreate(
             -1,
             isetgiftgrand(rnd(length(isetgiftgrand))),
-            cdata(1, 0),
-            cdata(2, 0),
+            cdata_x(0),
+            cdata_y(0),
             1);
         return;
     }
@@ -85975,8 +86024,8 @@ void label_2214()
     itemcreate(
         -1,
         isetgiftmajor(rnd(length(isetgiftmajor))),
-        cdata(1, 0),
-        cdata(2, 0),
+        cdata_x(0),
+        cdata_y(0),
         1);
     return;
 }
@@ -86105,8 +86154,8 @@ int label_2217()
     attacknum = 0;
     ele = 0;
     ammoproc = -1;
-    ammox = cdata(1, tc);
-    ammoy = cdata(2, tc);
+    ammox = cdata_x(tc);
+    ammoy = cdata_y(tc);
     attackitem = cw;
     if (ammo != -1)
     {
@@ -86122,9 +86171,9 @@ int label_2217()
                 ammoproc = inv_enchantment_id(ammo, inv_count(ammo)) % 10000;
                 if (cc == 0)
                 {
-                    if (cdata(52, 0) < 50)
+                    if (cdata_sp(0) < 50)
                     {
-                        if (cdata(52, 0) < rnd(75))
+                        if (cdata_sp(0) < rnd(75))
                         {
                             txt(lang(
                                 u8"疲労し過ぎて失敗した！"s,
@@ -86151,7 +86200,7 @@ int label_2217()
                 ele = 0;
                 extraattack = 0;
                 label_22192();
-                if (cdata(0, tc) != 1)
+                if (cdata_state(tc) != 1)
                 {
                     label_2072();
                     if (stat == 0)
@@ -86160,7 +86209,7 @@ int label_2217()
                     }
                     else
                     {
-                        tc = cdata(29, cc);
+                        tc = cdata_enemy_id(cc);
                     }
                 }
             }
@@ -86182,9 +86231,9 @@ int label_2217()
                         break;
                     }
                     tc = list(0, rnd(listmax));
-                    if (cc == 0 || cdata(9, cc) >= 0)
+                    if (cc == 0 || cdata_relationship(cc) >= 0)
                     {
-                        if (cdata(9, tc) >= 0)
+                        if (cdata_relationship(tc) >= 0)
                         {
                             if (cnt != 0)
                             {
@@ -86195,7 +86244,7 @@ int label_2217()
                     }
                     else
                     {
-                        if (cdata(9, tc) == -3)
+                        if (cdata_relationship(tc) == -3)
                         {
                             cnt = cnt + (rnd(5) == 0) - 1;
                             continue;
@@ -86229,12 +86278,11 @@ void label_2218()
 {
     if (cc != 0)
     {
-        if (cdata(78, tc))
+        if (cdata_damage_reaction_info(tc))
         {
             if (distance < 6)
             {
-                if (fov_los(
-                        cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc)))
+                if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
                 {
                     label_2075();
                     if (stat == 1)
@@ -86243,10 +86291,10 @@ void label_2218()
                     }
                 }
             }
-            p = cdata(78, tc) % 1000;
+            p = cdata_damage_reaction_info(tc) % 1000;
             if (p == 61)
             {
-                if (cdata(50, cc) < cdata(51, cc) / 2)
+                if (cdata_hp(cc) < cdata_max_hp(cc) / 2)
                 {
                     return;
                 }
@@ -86258,7 +86306,7 @@ void label_2218()
     attackskill = 106;
     ammo = -1;
     ele = 0;
-    if (cdata(32, cc) && 1)
+    if (cdata_equipment_type(cc) && 1)
     {
         if (limit(sqrt(sdata(168, cc)) - 3, 1, 5) + cbit(30, cc) * 5 > rnd(100))
         {
@@ -86271,7 +86319,7 @@ void label_2218()
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
             dmgcon(tc, 7, 50 + elona_int(sqrt(sdata(168, cc))) * 15);
-            cdata(252, tc) += rnd(3);
+            cdata_paralyzed(tc) += rnd(3);
         }
     }
     {
@@ -86313,15 +86361,15 @@ void label_2218()
 void label_22192()
 {
 label_22191_internal:
-    if (cdata(0, cc) != 1)
+    if (cdata_state(cc) != 1)
     {
         return;
     }
-    if (cdata(0, tc) != 1)
+    if (cdata_state(tc) != 1)
     {
         return;
     }
-    if (cdata(255, cc) != 0)
+    if (cdata_fear(cc) != 0)
     {
         ++msgdup;
         txt(lang(
@@ -86329,9 +86377,9 @@ label_22191_internal:
             name(cc) + u8" "s + is(cc) + u8" frightened."s));
         return;
     }
-    if (map(cdata(1, tc), cdata(2, tc), 8) != 0)
+    if (map(cdata_x(tc), cdata_y(tc), 8) != 0)
     {
-        i = map(cdata(1, tc), cdata(2, tc), 8) - 1;
+        i = map(cdata_x(tc), cdata_y(tc), 8) - 1;
         if (mef(0, i) == 2)
         {
             if (rnd(2) == 0)
@@ -86368,7 +86416,7 @@ label_22191_internal:
             if (cfg_attackanime)
             {
                 animeid = 12;
-                aniref = dmg * 100 / cdata(51, tc);
+                aniref = dmg * 100 / cdata_max_hp(tc);
                 label_1426();
             }
         }
@@ -86422,10 +86470,10 @@ label_22191_internal:
         }
         if (attackskill == 106)
         {
-            if (cdata(230, cc) != 0)
+            if (cdata_element_of_unarmed_attack(cc) != 0)
             {
-                ele = cdata(230, cc) / 100000;
-                elep = cdata(230, cc) % 100000;
+                ele = cdata_element_of_unarmed_attack(cc) / 100000;
+                elep = cdata_element_of_unarmed_attack(cc) % 100000;
             }
         }
         if (synccheck(tc, -1))
@@ -86441,15 +86489,19 @@ label_22191_internal:
                 {
                     gdata(809) = 2;
                     txt(lang(
-                        aln(cc) + name(tc) + u8"を"s + _melee(0, cdata(33, cc)),
-                        name(cc) + u8" "s + _melee(0, cdata(33, cc)) + _s(cc)
+                        aln(cc) + name(tc) + u8"を"s
+                            + _melee(0, cdata_melee_attack_type(cc)),
+                        name(cc) + u8" "s
+                            + _melee(0, cdata_melee_attack_type(cc)) + _s(cc)
                             + u8" "s + name(tc) + u8" and"s));
                 }
                 else
                 {
                     txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + _melee(1, cdata(33, cc)),
-                        name(cc) + u8" "s + _melee(1, cdata(33, cc)) + _s(cc)
+                        aln(tc) + name(cc) + u8"に"s
+                            + _melee(1, cdata_melee_attack_type(cc)),
+                        name(cc) + u8" "s
+                            + _melee(1, cdata_melee_attack_type(cc)) + _s(cc)
                             + u8" "s + name(tc) + u8"."s));
                 }
             }
@@ -86670,7 +86722,8 @@ label_22191_internal:
             skillexp(186, cc, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > cdata(51, tc) / 20 || rtdmg > sdata(154, tc) || rnd(5) == 0)
+        if (rtdmg > cdata_max_hp(tc) / 20 || rtdmg > sdata(154, tc)
+            || rnd(5) == 0)
         {
             skillexp(
                 attackskill,
@@ -86682,11 +86735,11 @@ label_22191_internal:
             if (attackrange == 0)
             {
                 skillexp(152, cc, 20 / expmodifer, 0, 4);
-                if (cdata(32, cc) && 2)
+                if (cdata_equipment_type(cc) && 2)
                 {
                     skillexp(167, cc, 20 / expmodifer, 0, 4);
                 }
-                if (cdata(32, cc) && 4)
+                if (cdata_equipment_type(cc) && 4)
                 {
                     skillexp(166, cc, 20 / expmodifer, 0, 4);
                 }
@@ -86709,16 +86762,16 @@ label_22191_internal:
                     skillexp(301, 0, 30 / expmodifer, 0, 5);
                 }
             }
-            if (cdata(0, tc) == 1)
+            if (cdata_state(tc) == 1)
             {
                 skillexp(
                     carmor(tc),
                     tc,
-                    limit((250 * rtdmg / cdata(51, tc) + 1), 3, 100)
+                    limit((250 * rtdmg / cdata_max_hp(tc) + 1), 3, 100)
                         / expmodifer,
                     0,
                     5);
-                if (cdata(32, tc) && 1)
+                if (cdata_equipment_type(tc) && 1)
                 {
                     skillexp(168, tc, 40 / expmodifer, 0, 4);
                 }
@@ -86731,16 +86784,21 @@ label_22191_internal:
         {
             label_2220();
         }
-        if (cdata(92, tc) > 0)
+        if (cdata_cut_counterattack(tc) > 0)
         {
             if (attackrange == 0)
             {
-                dmghp(cc, dmg * cdata(92, tc) / 100 + 1, tc, 61, 100);
+                dmghp(
+                    cc,
+                    dmg * cdata_cut_counterattack(tc) / 100 + 1,
+                    tc,
+                    61,
+                    100);
             }
         }
-        if (cdata(78, tc) != 0)
+        if (cdata_damage_reaction_info(tc) != 0)
         {
-            p = cdata(78, tc) % 1000;
+            p = cdata_damage_reaction_info(tc) % 1000;
             ccbk = cc;
             {
                 int cnt = 0;
@@ -86760,10 +86818,10 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                limit(dmg / 10, 1, cdata(51, tc) / 10),
+                                limit(dmg / 10, 1, cdata_max_hp(tc) / 10),
                                 tc,
                                 p,
-                                cdata(78, tc) / 1000);
+                                cdata_damage_reaction_info(tc) / 1000);
                             break;
                         }
                         if (p == 62)
@@ -86779,10 +86837,10 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                limit(dmg / 10, 1, cdata(51, tc) / 10),
+                                limit(dmg / 10, 1, cdata_max_hp(tc) / 10),
                                 tc,
                                 p,
-                                cdata(78, tc) / 1000);
+                                cdata_damage_reaction_info(tc) / 1000);
                             break;
                         }
                         if (p == 63)
@@ -86796,11 +86854,11 @@ label_22191_internal:
                             }
                         }
                     }
-                    if (dmg > cdata(51, tc) / 10)
+                    if (dmg > cdata_max_hp(tc) / 10)
                     {
                         cc = tc;
-                        tlocx = cdata(1, cc);
-                        tlocy = cdata(2, cc);
+                        tlocx = cdata_x(cc);
+                        tlocy = cdata_y(cc);
                         if (p == 63)
                         {
                             if (synccheck(tc, -1))
@@ -86811,7 +86869,7 @@ label_22191_internal:
                                     u8"Acids spread over the ground."s));
                             }
                             efid = 455;
-                            efp = cdata(78, tc) / 1000;
+                            efp = cdata_damage_reaction_info(tc) / 1000;
                             label_2176();
                             break;
                         }
@@ -86892,14 +86950,14 @@ label_22191_internal:
     rowact_check(tc);
     if (attackskill != 106)
     {
-        if (cdata(0, tc) != 1)
+        if (cdata_state(tc) != 1)
         {
             cw = attackitem;
             if (ibit(10, cw))
             {
                 if (inv_param2(cw) < calcexpalive(inv_param1(cw)))
                 {
-                    inv_param2(cw) += rnd(cdata(38, tc) / inv_param1(cw) + 1);
+                    inv_param2(cw) += rnd(cdata_level(tc) / inv_param1(cw) + 1);
                     if (inv_param2(cw) >= calcexpalive(inv_param1(cw)))
                     {
                         txtef(2);
@@ -86916,7 +86974,7 @@ label_22191_internal:
     {
         if (attackrange)
         {
-            if (rnd(100) < cdata(89, cc))
+            if (rnd(100) < cdata_extra_shot(cc))
             {
                 ammoproc = -1;
                 ++extraattack;
@@ -86925,7 +86983,7 @@ label_22191_internal:
         }
         else
         {
-            if (rnd(100) < cdata(88, cc))
+            if (rnd(100) < cdata_extra_attack(cc))
             {
                 ++extraattack;
                 goto label_22191_internal;
@@ -86957,7 +87015,7 @@ void label_2220()
             {
                 p = rnd(inv_enchantment_power(cw, cnt) / 25 + 1) + 1;
                 healmp(cc, p / 5);
-                if (cdata(0, tc) != 1)
+                if (cdata_state(tc) != 1)
                 {
                     continue;
                 }
@@ -86990,7 +87048,7 @@ void label_2220()
             }
             if (enc == 57)
             {
-                s = refchara_str(cdata(27, tc), 8);
+                s = refchara_str(cdata_id(tc), 8);
                 if (instr(s, 0, u8"/dragon/"s) != -1)
                 {
                     gdata(809) = 1;
@@ -87001,7 +87059,7 @@ void label_2220()
             }
             if (enc == 61)
             {
-                s = refchara_str(cdata(27, tc), 8);
+                s = refchara_str(cdata_id(tc), 8);
                 if (instr(s, 0, u8"/god/"s) != -1)
                 {
                     gdata(809) = 1;
@@ -87012,7 +87070,7 @@ void label_2220()
             }
             if (enc == 58)
             {
-                s = refchara_str(cdata(27, tc), 8);
+                s = refchara_str(cdata_id(tc), 8);
                 if (instr(s, 0, u8"/undead/"s) != -1)
                 {
                     gdata(809) = 1;
@@ -87032,7 +87090,7 @@ void label_2220()
                         continue;
                     }
                     ele = enc;
-                    if (cdata(0, tc) != 1)
+                    if (cdata_state(tc) != 1)
                     {
                         continue;
                     }
@@ -87051,7 +87109,7 @@ void label_2220()
                 }
                 if (i == 8)
                 {
-                    if (cdata(0, tc) != 1)
+                    if (cdata_state(tc) != 1)
                     {
                         continue;
                     }
@@ -87067,8 +87125,8 @@ void label_2220()
                     }
                     p = encprocref(5, enc);
                     enc = encprocref(0, enc);
-                    tlocx = cdata(1, tc);
-                    tlocy = cdata(2, tc);
+                    tlocx = cdata_x(tc);
+                    tlocy = cdata_y(tc);
                     if (rnd(100) < p)
                     {
                         efid = enc;
@@ -87093,7 +87151,7 @@ void label_2220()
     }
     if (ammoproc == 3)
     {
-        if (cdata(0, tc) == 1)
+        if (cdata_state(tc) == 1)
         {
             gdata(809) = 1;
             dmghp(
@@ -87133,9 +87191,9 @@ void label_2221()
                 {
                     continue;
                 }
-                if (p > dist(inv_x(cnt), inv_y(cnt), cdata(1, 0), cdata(2, 0)))
+                if (p > dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0)))
                 {
-                    p = dist(inv_x(cnt), inv_y(cnt), cdata(1, 0), cdata(2, 0));
+                    p = dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0));
                 }
             }
         }
@@ -87177,7 +87235,7 @@ void label_2221()
         int cnt = 0;
         for (int cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
         {
-            y = cdata(2, cc) + cnt - 5;
+            y = cdata_y(cc) + cnt - 5;
             if (y < 0 || y >= mdata(1))
             {
                 continue;
@@ -87186,7 +87244,7 @@ void label_2221()
                 int cnt = 0;
                 for (int cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
                 {
-                    x = cdata(1, cc) + cnt - 5;
+                    x = cdata_x(cc) + cnt - 5;
                     if (x < 0 || x >= mdata(0))
                     {
                         continue;
@@ -87196,8 +87254,8 @@ void label_2221()
                         cell_featread(x, y);
                         refx = x;
                         refy = y;
-                        if (abs(cdata(2, cc) - y) <= 1
-                            && abs(cdata(1, cc) - x) <= 1)
+                        if (abs(cdata_y(cc) - y) <= 1
+                            && abs(cdata_x(cc) - x) <= 1)
                         {
                             if (feat(1) == 14)
                             {
@@ -87229,7 +87287,7 @@ void label_2221()
                         {
                             if (gdata(20) != 35)
                             {
-                                if (cdata(1, cc) == x && cdata(2, cc) == y)
+                                if (cdata_x(cc) == x && cdata_y(cc) == y)
                                 {
                                     snd(24);
                                     txt(lang(
@@ -87241,7 +87299,7 @@ void label_2221()
                                 else
                                 {
                                     txtmore();
-                                    if (dist(cdata(1, cc), cdata(2, cc), x, y)
+                                    if (dist(cdata_x(cc), cdata_y(cc), x, y)
                                         > 2)
                                     {
                                         txt(lang(
@@ -87262,17 +87320,17 @@ void label_2221()
             }
         }
     }
-    cell_featread(cdata(1, cc), cdata(2, cc));
+    cell_featread(cdata_x(cc), cdata_y(cc));
     if (feat(1) == 14)
     {
         if (feat(0) == tile_trap)
         {
-            if (cdata(61, 0) == 1)
+            if (cdata_god(0) == 1)
             {
                 if (cc == 0)
                 {
-                    movx = cdata(1, cc);
-                    movy = cdata(2, cc);
+                    movx = cdata_x(cc);
+                    movy = cdata_y(cc);
                     label_2144();
                 }
             }
@@ -87281,8 +87339,8 @@ void label_2221()
     if (feat(1) >= 24 && feat(1) <= 28)
     {
         rowactre(0) = 1;
-        rowactre(1) = cdata(1, cc);
-        rowactre(2) = cdata(2, cc);
+        rowactre(1) = cdata_x(cc);
+        rowactre(2) = cdata_y(cc);
         if (feat(1) == 24)
         {
             label_2158();
@@ -87320,7 +87378,7 @@ void label_2223()
 }
 void label_2224()
 {
-    if (cdata(52, cc) < 0)
+    if (cdata_sp(cc) < 0)
     {
         txt(lang(
             u8"疲れ過ぎて無理だ。"s, u8"You are too exhausted to do that."s));
@@ -87655,8 +87713,8 @@ void label_2228()
     screenupdate = -1;
     label_1419();
     tc = cc;
-    tlocx = cdata(1, cc);
-    tlocy = cdata(2, cc);
+    tlocx = cdata_x(cc);
+    tlocy = cdata_y(cc);
     if (ibit(7, ci) == 1)
     {
         if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
@@ -87853,8 +87911,8 @@ void label_2228()
     switch (inv_function(ci))
     {
     case 24:
-        x = cdata(1, cc);
-        y = cdata(2, cc);
+        x = cdata_x(cc);
+        y = cdata_y(cc);
         if (mdata(6) == 1)
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
@@ -88017,7 +88075,7 @@ void label_2228()
             removeitem(ci, 5);
         }
         flt();
-        itemcreate(-1, 541, cdata(1, 0), cdata(2, 0), 0);
+        itemcreate(-1, 541, cdata_x(0), cdata_y(0), 0);
         if (synccheck(cc, -1))
         {
             snd(86);
@@ -88075,7 +88133,7 @@ void label_2228()
         }
         if (tc > 0 && tc < 16)
         {
-            if (cdata(0, tc) == 1)
+            if (cdata_state(tc) == 1)
             {
                 gdata(94) = 0;
                 if (cbit(966, tc) == 1)
@@ -88092,7 +88150,7 @@ void label_2228()
                     u8"あなたは"s + name(tc) + u8"に聴診器を当てた。"s,
                     u8"You start to keep an eye on "s + his(tc)
                         + u8" health."s));
-                if (cdata(8, tc) == 1)
+                if (cdata_sex(tc) == 1)
                 {
                     txt(lang(
                         ""s + name(tc) + u8"は顔を赤らめた。"s,
@@ -88198,7 +88256,7 @@ void label_2228()
             if (map(x, y, 1) > 0)
             {
                 tc = map(x, y, 1) - 1;
-                if (cdata(50, tc) >= cdata(51, tc) / 5)
+                if (cdata_hp(tc) >= cdata_max_hp(tc) / 5)
                 {
                     txt(lang(
                         u8"もっと弱らせないと吊るせない。"s,
@@ -88327,7 +88385,7 @@ void label_2228()
         label_2148();
         goto label_2229_internal;
     case 11:
-        if (moneybox(inv_param2(ci)) > cdata(30, 0))
+        if (moneybox(inv_param2(ci)) > cdata_gold(0))
         {
             txt(lang(
                 u8"金貨が足りない…"s, u8"You count your coins and sigh..."s));
@@ -88342,7 +88400,7 @@ void label_2228()
         }
         item_separate(ci);
         snd(12);
-        cdata(30, 0) -= moneybox(inv_param2(ci));
+        cdata_gold(0) -= moneybox(inv_param2(ci));
         inv_param1(ci) += moneybox(inv_param2(ci));
         inv_weight(ci) += 100;
         goto label_2229_internal;
@@ -88522,7 +88580,7 @@ void label_2228()
             label_1419();
             label_2743(false);
         }
-        if (cdata(1, 0) != 33 || cdata(2, 0) != 16)
+        if (cdata_x(0) != 33 || cdata_y(0) != 16)
         {
             if (gdata(463) == 1)
             {
@@ -88554,7 +88612,7 @@ void label_2228()
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
         snd(58);
-        addmef(cdata(1, cc), cdata(2, cc), 7, 632, 10, 100, cc);
+        addmef(cdata_x(cc), cdata_y(cc), 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
         if (gdata(20) != 35 || usermapid == 0)
@@ -88598,7 +88656,7 @@ void label_2228()
         label_2176();
         goto label_2229_internal;
     case 41:
-        if (gdata(827) > cdata(38, 0))
+        if (gdata(827) > cdata_level(0))
         {
             txt(lang(
                 u8"クミロミの声がした。「ダメ…経験…足りない…」"s,
@@ -88676,8 +88734,8 @@ void label_2228()
         label_2659();
         goto label_2229_internal;
     case 31:
-        x = cdata(1, cc);
-        y = cdata(2, cc);
+        x = cdata_x(cc);
+        y = cdata_y(cc);
         cell_featread(x, y);
         if (feat(1) != 29)
         {
@@ -88801,9 +88859,9 @@ void label_2228()
                 }
             }
         }
-        if (cdata(38, tc) > cdata(38, rc))
+        if (cdata_level(tc) > cdata_level(rc))
         {
-            lv = (cdata(38, tc) - cdata(38, rc)) / 2 + 1;
+            lv = (cdata_level(tc) - cdata_level(rc)) / 2 + 1;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (lv); cnt < cnt_end; ++cnt)
@@ -88815,8 +88873,10 @@ void label_2228()
             }
             txtef(2);
             txt(lang(
-                cdatan(0, rc) + u8"はレベル"s + cdata(38, rc) + u8"になった！"s,
-                cdatan(0, rc) + u8" is now level "s + cdata(38, rc) + u8"!"s));
+                cdatan(0, rc) + u8"はレベル"s + cdata_level(rc)
+                    + u8"になった！"s,
+                cdatan(0, rc) + u8" is now level "s + cdata_level(rc)
+                    + u8"!"s));
             listmax = 0;
             {
                 int cnt = 10;
@@ -88891,7 +88951,7 @@ void label_2228()
     case 39:
         txtef(9);
         txt(lang(u8" *ピーーーー* "s, u8"*Peeeeeeeeeep* "s));
-        make_sound(cdata(1, cc), cdata(2, cc), 10, 1, 1, cc);
+        make_sound(cdata_x(cc), cdata_y(cc), 10, 1, 1, cc);
         goto label_2229_internal;
     case 37:
         tcgdeck();
@@ -88930,7 +88990,7 @@ int label_2230()
         stat = 0;
         return stat;
     }
-    randomize(cdata(27, tc));
+    randomize(cdata_id(tc));
     dbmax = 0;
     {
         int cnt = 0;
@@ -88973,7 +89033,7 @@ int label_2230()
 int label_2231()
 {
     dbmax = 0;
-    s(1) = refchara_str(cdata(27, tc), 8);
+    s(1) = refchara_str(cdata_id(tc), 8);
     if (instr(s(1), 0, u8"/man/"s) != -1)
     {
         stat = -1;
@@ -89021,7 +89081,7 @@ int label_2231()
         stat = -1;
         return stat;
     }
-    randomize(cdata(27, tc));
+    randomize(cdata_id(tc));
     {
         int cnt = 0;
         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
@@ -89108,14 +89168,14 @@ void label_2232()
         label_1419();
         label_2743(false);
     }
-    if (map(cdata(1, cc), cdata(2, cc), 6) != 0)
+    if (map(cdata_x(cc), cdata_y(cc), 6) != 0)
     {
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         label_1419();
         label_2743(false);
     }
-    if (chipm(0, map(cdata(1, 0), cdata(2, 0), 0)) == 2)
+    if (chipm(0, map(cdata_x(0), cdata_y(0), 0)) == 2)
     {
         val = 1;
     }
@@ -89142,7 +89202,7 @@ void label_2232()
     snd(55);
     removeitem(ci, 1);
     cell_featset(
-        cdata(1, cc), cdata(2, cc), tile_plant, 29, inv_material(ci), feat(3));
+        cdata_x(cc), cdata_y(cc), tile_plant, 29, inv_material(ci), feat(3));
     skillexp(180, 0, 300);
     label_2742();
     return;
@@ -89234,12 +89294,12 @@ void label_2235()
     }
     if (sdata(180, 0) < rnd(p + 1) || rnd(5) == 0 || feat(2) == 40)
     {
-        map(cdata(1, 0), cdata(2, 0), 6) = 0;
+        map(cdata_x(0), cdata_y(0), 6) = 0;
         return;
     }
     feat = tile_plant;
     label_2234();
-    cell_featset(cdata(1, cc), cdata(2, cc), feat, feat(1), feat(2), feat(3));
+    cell_featset(cdata_x(cc), cdata_y(cc), feat, feat(1), feat(2), feat(3));
     txtef(2);
     txt(lang(u8"新しい芽が息吹いている！"s, u8"A new plant grows!"s));
     return;
@@ -89394,7 +89454,7 @@ void label_2241()
 void label_2242()
 {
     keyhalt = 1;
-    if (cdata(150, tc) == 1005)
+    if (cdata_character_role(tc) == 1005)
     {
         if (cfg_extrahelp)
         {
@@ -89402,7 +89462,7 @@ void label_2242()
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(207) = 1;
                         ghelp = 7;
@@ -89414,7 +89474,7 @@ void label_2242()
             }
         }
     }
-    if (cdata(150, tc) == 7)
+    if (cdata_character_role(tc) == 7)
     {
         if (cfg_extrahelp)
         {
@@ -89422,7 +89482,7 @@ void label_2242()
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(208) = 1;
                         ghelp = 8;
@@ -89443,7 +89503,7 @@ void label_2242()
     cs = 0;
     chatflag = 0;
     chatesc = 1;
-    if (cdata(9, tc) <= -1)
+    if (cdata_relationship(tc) <= -1)
     {
         if (evnum == 0)
         {
@@ -89457,14 +89517,14 @@ void label_2242()
     }
     if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
             + gdata(10) * 24 * 30 * 12
-        >= cdata(15, tc))
+        >= cdata_time_interest_revive(tc))
     {
-        cdata(14, tc) = 100;
+        cdata_interest(tc) = 100;
     }
-    if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000
-        || cdata(150, tc) == 2003)
+    if (cdata_character_role(tc) >= 1000 && cdata_character_role(tc) < 2000
+        || cdata_character_role(tc) == 2003)
     {
-        invfile = cdata(153, tc);
+        invfile = cdata_shop_store_id(tc);
         label_2262();
     }
     label_2241();
@@ -89475,9 +89535,9 @@ void label_2242()
     }
     chatval(1) = 0;
     chatval(2) = 1;
-    if (cdata(25, tc) == 6)
+    if (cdata_quality(tc) == 6)
     {
-        chatval(1) = cdata(27, tc);
+        chatval(1) = cdata_id(tc);
         chatval(2) = 0;
     }
     if (evid() == 2)
@@ -89490,7 +89550,7 @@ void label_2242()
         label_2250();
         return;
     }
-    if (cdata(251, tc) != 0)
+    if (cdata_sleep(tc) != 0)
     {
         listmax = 0;
         buff = u8"("s + name(tc)
@@ -89512,7 +89572,7 @@ void label_2242()
         label_2256();
         return;
     }
-    if (cdata(140, tc))
+    if (cdata_continuous_action_id(tc))
     {
         listmax = 0;
         buff = u8"("s + name(tc)
@@ -89592,7 +89652,7 @@ void label_2244()
 {
     listmax = 0;
     cc = 0;
-    switch (cdata(150, tc))
+    switch (cdata_character_role(tc))
     {
     case 13:
         if (gdata(11) == 1 && rnd(4))
@@ -89633,10 +89693,10 @@ void label_2244()
                 }
             }
             flt();
-            itemcreate(-1, 752, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 752, cdata_x(0), cdata_y(0), 0);
             if (stat != 0)
             {
-                inv_param3(ci) = cdata(17, tc) + rnd(50);
+                inv_param3(ci) = cdata_impression(tc) + rnd(50);
             }
             txt(lang(
                 name(tc) + u8"は"s + itemname(ci, 1) + u8"を置いていった。"s,
@@ -89644,7 +89704,7 @@ void label_2244()
             label_2256();
             return;
         }
-        if (cdata(17, tc) < 25)
+        if (cdata_impression(tc) < 25)
         {
             listmax = 0;
             buff = lang(
@@ -89673,16 +89733,16 @@ void label_2244()
                     int cnt = 0;
                     for (int cnt_end = cnt + (28); cnt < cnt_end; ++cnt)
                     {
-                        tlocx = cdata(1, tc) + rnd(3) - rnd(3);
-                        tlocy = cdata(2, tc) - rnd(3) + rnd(3);
+                        tlocx = cdata_x(tc) + rnd(3) - rnd(3);
+                        tlocy = cdata_y(tc) - rnd(3) + rnd(3);
                         if (tlocx < 0 || tlocy < 0 || tlocx >= mdata(0)
                             || tlocy >= mdata(1))
                         {
                             continue;
                         }
-                        if (tlocx == cdata(1, tc))
+                        if (tlocx == cdata_x(tc))
                         {
-                            if (tlocy == cdata(2, tc))
+                            if (tlocy == cdata_y(tc))
                             {
                                 continue;
                             }
@@ -89725,7 +89785,7 @@ void label_2244()
             label_2256();
             return;
         }
-        if (cdata(17, tc) >= 100)
+        if (cdata_impression(tc) >= 100)
         {
             if (cbit(984, tc) == 0)
             {
@@ -89750,7 +89810,7 @@ void label_2244()
                     }
                     cbitmod(984, tc, 1);
                     flt();
-                    itemcreate(-1, 730, cdata(1, 0), cdata(2, 0), 0);
+                    itemcreate(-1, 730, cdata_x(0), cdata_y(0), 0);
                     txt(lang(
                         name(tc) + u8"に"s + itemname(ci, 1)
                             + u8"をもらった！"s,
@@ -89765,11 +89825,11 @@ void label_2244()
         }
         if (rnd(4) == 0)
         {
-            if (cdata(17, tc) >= 150)
+            if (cdata_impression(tc) >= 150)
             {
                 advfavoriteskill(tc);
                 csskill = rtval(rnd(stat));
-                if (cdata(17, tc) >= 300)
+                if (cdata_impression(tc) >= 300)
                 {
                     if (rnd(3) == 0)
                     {
@@ -89792,7 +89852,7 @@ void label_2244()
                             u8" for a friendly price of "s +
                             calclearncost(csskill, cc, 1) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata(31, 0) >= calclearncost(csskill, cc, 1))
+                    if (cdata_platinum_coin(0) >= calclearncost(csskill, cc, 1))
                     {
                         list(0, listmax) = 1;
                         listn(0, listmax) =
@@ -89811,7 +89871,7 @@ void label_2244()
                             u8" skill for a friendly price of "s +
                             calctraincost(csskill, cc, 1) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata(31, 0) >= calctraincost(csskill, cc, 1))
+                    if (cdata_platinum_coin(0) >= calctraincost(csskill, cc, 1))
                     {
                         list(0, listmax) = 2;
                         listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);
@@ -89847,7 +89907,7 @@ void label_2244()
                 snd(12);
                 if (chatval == 1)
                 {
-                    cdata(31, 0) -= calclearncost(csskill, 0, 1);
+                    cdata_platinum_coin(0) -= calclearncost(csskill, 0, 1);
                     skillgain(cc, csskill);
                     ++gdata(39);
                     listmax = 0;
@@ -89872,7 +89932,7 @@ void label_2244()
                 }
                 if (chatval == 2)
                 {
-                    cdata(31, 0) -= calctraincost(csskill, 0, 1);
+                    cdata_platinum_coin(0) -= calctraincost(csskill, 0, 1);
                     modgrowth(
                         cc,
                         csskill,
@@ -89906,7 +89966,7 @@ void label_2244()
         }
         if (rnd(5) == 0)
         {
-            if (cdata(17, tc) >= 150)
+            if (cdata_impression(tc) >= 150)
             {
                 listmax = 0;
                 buff = lang(
@@ -89944,7 +90004,7 @@ void label_2244()
                         p = 622;
                     }
                     flt();
-                    itemcreate(-1, p, cdata(1, 0), cdata(2, 0), 0);
+                    itemcreate(-1, p, cdata_x(0), cdata_y(0), 0);
                     txt(lang(
                         name(tc) + u8"に"s + itemname(ci, 1)
                             + u8"をもらった！"s,
@@ -89957,7 +90017,7 @@ void label_2244()
         }
         if (rnd(4) == 0)
         {
-            if (cdata(17, tc) >= 100)
+            if (cdata_impression(tc) >= 100)
             {
                 listmax = 0;
                 buff = lang(
@@ -89999,7 +90059,7 @@ void label_2244()
         }
         if (rnd(5) == 0)
         {
-            if (cdata(17, tc) >= 100)
+            if (cdata_impression(tc) >= 100)
             {
                 listmax = 0;
                 buff = lang(
@@ -90086,7 +90146,7 @@ void label_2244()
         }
         if (rnd(3) == 0)
         {
-            if (cdata(17, tc) >= 75)
+            if (cdata_impression(tc) >= 75)
             {
                 listmax = 0;
                 buff = lang(u8"やあ。特に用はない"s + _ga(3) +
@@ -90264,7 +90324,7 @@ void label_2244()
         list(0, listmax) = 0;
         listn(0, listmax) = lang(u8"訓練しない"s, u8"Not today."s);
         ++listmax;
-        if (cdata(31, 0) >= plat)
+        if (cdata_platinum_coin(0) >= plat)
         {
             {
                 int cnt = 0;
@@ -90304,7 +90364,7 @@ void label_2244()
             label_2256();
             return;
         }
-        cdata(31, 0) -= plat;
+        cdata_platinum_coin(0) -= plat;
         snd(61);
         txtef(2);
         txt(lang(
@@ -90355,7 +90415,7 @@ void label_2244()
         label_2256();
         return;
     case 2000:
-        if (cdata(30, 0) > 0)
+        if (cdata_gold(0) > 0)
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
@@ -90371,13 +90431,13 @@ void label_2244()
         label_2257();
         if (chatval == 1)
         {
-            p = cdata(30, 0) / 20 + 1;
+            p = cdata_gold(0) / 20 + 1;
             txt(lang(
                 u8"あなたは"s + p + u8"goldを乞食に渡した。"s,
                 u8"You spare "s + him(tc) + u8" "s + p + u8" gold pieces."s));
-            cdata(30, 0) -= p;
+            cdata_gold(0) -= p;
             snd(12);
-            cdata(30, tc) += p;
+            cdata_gold(tc) += p;
             modkarma(0, 2);
             listmax = 0;
             buff = lang(
@@ -90540,7 +90600,7 @@ void label_2244()
         if (chatval == 0)
         {
             invctrl = 11;
-            invfile = cdata(153, tc);
+            invfile = cdata_shop_store_id(tc);
             label_2263();
             screenupdate = -1;
             label_1419();
@@ -90552,7 +90612,7 @@ void label_2244()
         if (chatval == 1)
         {
             invctrl = 12;
-            invfile = cdata(153, tc);
+            invfile = cdata_shop_store_id(tc);
             label_2263();
             cc = 0;
             screenupdate = -1;
@@ -90580,7 +90640,7 @@ void label_2244()
                 return;
             }
         }
-        cdata(150, tc) = 2002;
+        cdata_character_role(tc) = 2002;
         label_2256();
         return;
     }
@@ -90656,7 +90716,7 @@ void label_2249()
 {
     if (lomiaseaster)
     {
-        cdata(253, 0) = 100;
+        cdata_blind(0) = 100;
         listmax = 0;
         buff = lang(
             u8"この洞窟…雨をしのぐにはちょうどいいわ。ロミアス、危険がないか奥を調べて来て。"s,
@@ -90802,7 +90862,7 @@ void label_2249()
         pos(0, 0);
         picload(exedir + u8"graphic\\face1"s + devfile + u8".bmp"s, 1);
         gsel(0);
-        cdata(253, 0) = 0;
+        cdata_blind(0) = 0;
         txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
     }
     else
@@ -91131,11 +91191,11 @@ void label_2252()
                             int cnt = 0;
                             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
                             {
-                                if (cdata(0, cnt) == 0)
+                                if (cdata_state(cnt) == 0)
                                 {
                                     continue;
                                 }
-                                if (cdata(27, cnt) == cdata(27, rc))
+                                if (cdata_id(cnt) == cdata_id(rc))
                                 {
                                     if (cbit(963, cnt) == 1)
                                     {
@@ -91155,7 +91215,7 @@ void label_2252()
             rc = 56;
             label_2659();
             cbitmod(963, rc, 1);
-            qdata(13, rq) = cdata(27, rc);
+            qdata(13, rq) = cdata_id(rc);
         }
         qdata(8, rq) = 1;
         if (qdata(9, rq) == -1)
@@ -91170,7 +91230,7 @@ void label_2252()
         {
             ++qdata(15, qdata(10, rq));
             flt();
-            itemcreate(0, qdata(11, rq), cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(0, qdata(11, rq), cdata_x(0), cdata_y(0), 0);
             txt(lang(
                 itemname(ci, 1) + u8"をバックパックに入れた。"s,
                 u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
@@ -91262,8 +91322,8 @@ void label_2253()
     gdata(73) = 1;
     gdata(66) = gdata(20);
     gdata(67) = gdata(22);
-    gdata(68) = cdata(1, 0);
-    gdata(69) = cdata(2, 0);
+    gdata(68) = cdata_x(0);
+    gdata(69) = cdata_y(0);
     gdata(64) = 13;
     gdata(65) = 1;
     levelexitby = 2;
@@ -91294,7 +91354,7 @@ void label_2254()
                 + _kana(1),
             u8"Training "s + skillname(csskill) + u8" will cost you "s
                 + calctraincost(csskill, cc) + u8" platinum pieces."s);
-        if (cdata(31, 0) >= calctraincost(csskill, cc))
+        if (cdata_platinum_coin(0) >= calctraincost(csskill, cc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);
@@ -91309,7 +91369,7 @@ void label_2254()
                 + _kana(1),
             u8"Learning "s + skillname(csskill) + u8" will cost you "s
                 + calclearncost(csskill, cc) + u8" platinum pieces."s);
-        if (cdata(31, 0) >= calclearncost(csskill, cc))
+        if (cdata_platinum_coin(0) >= calclearncost(csskill, cc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"習得する"s, u8"Teach me the skill."s);
@@ -91326,7 +91386,7 @@ void label_2254()
         snd(12);
         if (csctrl == 2)
         {
-            cdata(31, 0) -= calctraincost(csskill, cc);
+            cdata_platinum_coin(0) -= calctraincost(csskill, cc);
             modgrowth(
                 cc, csskill, limit(15 - sgrowth(csskill, cc) / 15, 2, 15));
             buff = lang(
@@ -91337,7 +91397,7 @@ void label_2254()
         }
         else
         {
-            cdata(31, 0) -= calclearncost(csskill, cc);
+            cdata_platinum_coin(0) -= calclearncost(csskill, cc);
             skillgain(cc, csskill);
             ++gdata(39);
             buff = lang(
@@ -91363,7 +91423,7 @@ void label_2255()
             + u8"かかるけどいいの"s + _kana(1),
         u8"Oh, do you want to invest in my shop? It will cost you "s
             + calcinvestvalue() + u8" golds. I hope you got the money."s);
-    if (cdata(30, 0) >= calcinvestvalue())
+    if (cdata_gold(0) >= calcinvestvalue())
     {
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"投資する"s, u8"Invest"s);
@@ -91377,9 +91437,9 @@ void label_2255()
     if (chatval == 1)
     {
         snd(12);
-        cdata(30, 0) -= calcinvestvalue();
+        cdata_gold(0) -= calcinvestvalue();
         label_1466();
-        cdata(151, tc) += rnd(2) + 2;
+        cdata_shop_rank(tc) += rnd(2) + 2;
         buff = lang(_thanks(2), u8"Thanks!"s);
     }
     else
@@ -91531,9 +91591,9 @@ void label_22610()
     gmode(2);
     pos(wx, wy - 20);
     gcopy(7, 0, 0, 600, 380);
-    if (cdata(13, tc) >= 0 || scenemode)
+    if (cdata_portrait(tc) >= 0 || scenemode)
     {
-        p = cdata(8, tc) * 64 + cdata(13, tc);
+        p = cdata_sex(tc) * 64 + cdata_portrait(tc);
         if (scenemode)
         {
             p = elona_int(actor(1, rc));
@@ -91543,13 +91603,13 @@ void label_22610()
     }
     else
     {
-        s = exedir + u8"user\\graphic\\face"s + abs((cdata(13, tc) + 1))
+        s = exedir + u8"user\\graphic\\face"s + abs((cdata_portrait(tc) + 1))
             + u8".bmp"s;
         exist(s);
-        if (strsize == -1 || cdata(13, tc) == -1)
+        if (strsize == -1 || cdata_portrait(tc) == -1)
         {
-            p(0) = cdata(7, tc) % 1000;
-            p(1) = cdata(7, tc) / 1000;
+            p(0) = cdata_image(tc) % 1000;
+            p(1) = cdata_image(tc) / 1000;
             chara_preparepic(p, p(1));
             pos(wx + 82, wy + 125 - chipc(4, p));
             gmode(2, chipc(2, p), chipc(3, p));
@@ -91585,7 +91645,7 @@ void label_22610()
             cdatan(1, tc) + u8" "s + cdatan(0, tc) + u8" "s,
             cdatan(0, tc) + u8" of "s + cdatan(1, tc) + u8" "s);
     }
-    if (cdata(8, tc) == 0)
+    if (cdata_sex(tc) == 0)
     {
         s += cnven(strmale);
     }
@@ -91595,16 +91655,16 @@ void label_22610()
     }
     if (cdatan(1, tc) != ""s)
     {
-        s += lang(u8" 名声 "s, u8" Fame: "s) + cdata(34, tc);
+        s += lang(u8" 名声 "s, u8" Fame: "s) + cdata_fame(tc);
     }
-    if (cdata(150, tc) >= 1000 && cdata(150, tc) < 2000
-        || cdata(150, tc) == 2003)
+    if (cdata_character_role(tc) >= 1000 && cdata_character_role(tc) < 2000
+        || cdata_character_role(tc) == 2003)
     {
-        s += lang(u8" 店の規模:"s, u8" Shop Rank:"s) + cdata(151, tc);
+        s += lang(u8" 店の規模:"s, u8" Shop Rank:"s) + cdata_shop_rank(tc);
     }
     if (gdata(187))
     {
-        s += u8" ("s + godname(cdata(61, tc)) + u8")"s;
+        s += u8" ("s + godname(cdata_god(tc)) + u8")"s;
     }
     if (scenemode)
     {
@@ -91616,10 +91676,10 @@ void label_22610()
     color(20, 10, 5);
     if (chatval(2) == 1)
     {
-        s = _impression(implevel(cdata(17, tc)));
-        if (cdata(17, tc) < 150)
+        s = _impression(implevel(cdata_impression(tc)));
+        if (cdata_impression(tc) < 150)
         {
-            s(1) = ""s + cdata(17, tc);
+            s(1) = ""s + cdata_impression(tc);
         }
         else
         {
@@ -91627,11 +91687,12 @@ void label_22610()
         }
         pos(wx + 32, wy + 198);
         mes(u8"("s + s(1) + u8")"s + s);
-        if (cdata(14, tc) >= 0)
+        if (cdata_interest(tc) >= 0)
         {
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (cdata(14, tc) / 5 + 1); cnt < cnt_end;
+                for (int cnt_end = cnt + (cdata_interest(tc) / 5 + 1);
+                     cnt < cnt_end;
                      ++cnt)
                 {
                     pos(wx + 26 + cnt * 4, wy + 245);
@@ -91669,7 +91730,7 @@ void label_2262()
 {
     if (tc > 0)
     {
-        if (cdata(150, tc) == 1009)
+        if (cdata_character_role(tc) == 1009)
         {
             label_2267();
         }
@@ -91678,16 +91739,17 @@ void label_2262()
     file = u8"shoptmp.s2"s;
     fmode = 4;
     label_2107();
-    if (cdata(153, tc) == 0)
+    if (cdata_shop_store_id(tc) == 0)
     {
-        if (cdata(150, tc) == 1010 || cdata(150, tc) == 2003)
+        if (cdata_character_role(tc) == 1010
+            || cdata_character_role(tc) == 2003)
         {
-            cdata(153, tc) = 1;
+            cdata_shop_store_id(tc) = 1;
         }
         else
         {
             ++gdata(16);
-            cdata(153, tc) = gdata(16);
+            cdata_shop_store_id(tc) = gdata(16);
         }
         label_2265();
     }
@@ -91695,7 +91757,7 @@ void label_2262()
     {
         if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                 + gdata(10) * 24 * 30 * 12
-            >= cdata(154, tc))
+            >= cdata_time_to_restore(tc))
         {
             label_2265();
         }
@@ -91706,7 +91768,7 @@ void label_2262()
             label_2107();
         }
     }
-    invfile = cdata(153, tc);
+    invfile = cdata_shop_store_id(tc);
     label_2264();
     return;
 }
@@ -91722,7 +91784,7 @@ void label_2263()
     shoptrade = 0;
     if (tc > 0)
     {
-        if (cdata(150, tc) == 1009)
+        if (cdata_character_role(tc) == 1009)
         {
             shoptrade = 1;
         }
@@ -91751,28 +91813,28 @@ void label_2265()
             inv_number(cnt) = 0;
         }
     }
-    p = 20 + cdata(151, tc) / 2;
+    p = 20 + cdata_shop_rank(tc) / 2;
     if (p > 80)
     {
         p = 80;
     }
-    if (cdata(150, tc) == 1007)
+    if (cdata_character_role(tc) == 1007)
     {
-        p = 6 + cdata(151, tc) / 10;
+        p = 6 + cdata_shop_rank(tc) / 10;
     }
-    if (cdata(150, tc) == 1010)
-    {
-        p = 4 + rnd(4);
-    }
-    if (cdata(150, tc) == 2003)
+    if (cdata_character_role(tc) == 1010)
     {
         p = 4 + rnd(4);
     }
-    if (cdata(150, tc) == 1016)
+    if (cdata_character_role(tc) == 2003)
+    {
+        p = 4 + rnd(4);
+    }
+    if (cdata_character_role(tc) == 1016)
     {
         p = 20;
     }
-    if (cdata(150, tc) == 1018)
+    if (cdata_character_role(tc) == 1018)
     {
         p /= 2;
     }
@@ -91780,9 +91842,9 @@ void label_2265()
         int cnt = 0;
         for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
         {
-            flt(calcobjlv(cdata(151, tc)), calcfixlv(2));
+            flt(calcobjlv(cdata_shop_rank(tc)), calcfixlv(2));
             dbid = 0;
-            if (cdata(150, tc) == 1004)
+            if (cdata_character_role(tc) == 1004)
             {
                 p = rnd(3);
                 if (p == 0)
@@ -91810,11 +91872,11 @@ void label_2265()
                     dbid = 783;
                 }
             }
-            if (cdata(150, tc) == 1019)
+            if (cdata_character_role(tc) == 1019)
             {
                 dbid = 667;
             }
-            if (cdata(150, tc) == 1020)
+            if (cdata_character_role(tc) == 1020)
             {
                 listmax = 0;
                 {
@@ -91834,7 +91896,7 @@ void label_2265()
                 }
                 dbid = list(0, rnd(listmax));
             }
-            if (cdata(150, tc) == 1015)
+            if (cdata_character_role(tc) == 1015)
             {
                 p = rnd(3);
                 if (p == 0)
@@ -91858,7 +91920,7 @@ void label_2265()
                     fixlv = 4;
                 }
             }
-            if (cdata(150, tc) == 1006)
+            if (cdata_character_role(tc) == 1006)
             {
                 p = rnd(5);
                 if (p == 0)
@@ -91894,7 +91956,7 @@ void label_2265()
                     dbid = isetdeed(rnd(length(isetdeed)));
                 }
             }
-            if (cdata(150, tc) == 1003)
+            if (cdata_character_role(tc) == 1003)
             {
                 if (rnd(3) != 0)
                 {
@@ -91909,7 +91971,7 @@ void label_2265()
                     flttypeminor = 57002;
                 }
             }
-            if (cdata(150, tc) == 1002)
+            if (cdata_character_role(tc) == 1002)
             {
                 if (rnd(3) != 0)
                 {
@@ -91921,7 +91983,7 @@ void label_2265()
                     flttypemajor = 91000;
                 }
             }
-            if (cdata(150, tc) == 1007)
+            if (cdata_character_role(tc) == 1007)
             {
                 flttypemajor = fsetwear(rnd(length(fsetwear)));
                 if (rnd(3) == 0)
@@ -91933,7 +91995,8 @@ void label_2265()
                     fixlv = 4;
                 }
             }
-            if (cdata(150, tc) == 1010 || cdata(150, tc) == 2003)
+            if (cdata_character_role(tc) == 1010
+                || cdata_character_role(tc) == 2003)
             {
                 flttypemajor = fsetwear(rnd(length(fsetwear)));
                 fixlv = 3;
@@ -91942,7 +92005,7 @@ void label_2265()
                     fixlv = 4;
                 }
             }
-            if (cdata(150, tc) == 1005)
+            if (cdata_character_role(tc) == 1005)
             {
                 flttypemajor = 91000;
                 if (rnd(4))
@@ -91954,7 +92017,7 @@ void label_2265()
                     dbid = 734;
                 }
             }
-            if (cdata(150, tc) == 1008)
+            if (cdata_character_role(tc) == 1008)
             {
                 flttypemajor = 56000;
                 if (rnd(3) == 0)
@@ -91990,7 +92053,7 @@ void label_2265()
                     dbid = 511;
                 }
             }
-            if (cdata(150, tc) == 1001)
+            if (cdata_character_role(tc) == 1001)
             {
                 p = rnd(6);
                 if (p == 0)
@@ -92029,11 +92092,11 @@ void label_2265()
                     }
                 }
             }
-            if (cdata(150, tc) == 1009)
+            if (cdata_character_role(tc) == 1009)
             {
                 flttypemajor = 92000;
             }
-            if (cdata(150, tc) == 1021)
+            if (cdata_character_role(tc) == 1021)
             {
                 flttypemajor = 59000;
                 if (rnd(2) == 0)
@@ -92045,7 +92108,7 @@ void label_2265()
                     dbid = 629;
                 }
             }
-            if (cdata(150, tc) == 1011)
+            if (cdata_character_role(tc) == 1011)
             {
                 if (rnd(4) == 0)
                 {
@@ -92061,7 +92124,7 @@ void label_2265()
                 }
                 fltn(u8"sf"s);
             }
-            if (cdata(150, tc) == 1013)
+            if (cdata_character_role(tc) == 1013)
             {
                 if (rnd(3) != 0)
                 {
@@ -92077,11 +92140,11 @@ void label_2265()
                     dbid = 511;
                 }
             }
-            if (cdata(150, tc) == 1018)
+            if (cdata_character_role(tc) == 1018)
             {
                 fltn(u8"spshop"s);
             }
-            if (cdata(150, tc) == 1022)
+            if (cdata_character_role(tc) == 1022)
             {
                 fltn(u8"fest"s);
                 if (rnd(12) == 0)
@@ -92109,11 +92172,11 @@ void label_2265()
                     dbid = 769;
                 }
             }
-            if (cdata(150, tc) == 1017)
+            if (cdata_character_role(tc) == 1017)
             {
                 dbid = 519;
             }
-            if (cdata(150, tc) == 1012)
+            if (cdata_character_role(tc) == 1012)
             {
                 flttypemajor = 60000;
                 if (cnt == 0)
@@ -92164,11 +92227,11 @@ void label_2265()
                     dbid = 616;
                 }
             }
-            if (cdata(150, tc) == 1014)
+            if (cdata_character_role(tc) == 1014)
             {
                 dbid = 617;
             }
-            if (cdata(150, tc) == 1016)
+            if (cdata_character_role(tc) == 1016)
             {
                 if (cnt == 0)
                 {
@@ -92256,7 +92319,7 @@ void label_2265()
             {
                 break;
             }
-            if (cdata(150, tc) == 1016)
+            if (cdata_character_role(tc) == 1016)
             {
                 inv_number(ci) = 1;
                 inv_curse_state(ci) = 0;
@@ -92273,7 +92336,7 @@ void label_2265()
             }
             if (instr(filter_item(inv_id(ci)), 0, u8"/noshop/"s) != -1)
             {
-                if (cdata(150, tc) != 1018)
+                if (cdata_character_role(tc) != 1018)
                 {
                     f = 1;
                 }
@@ -92283,13 +92346,13 @@ void label_2265()
                 inv_number(ci) = 0;
                 continue;
             }
-            if (cdata(150, tc) == 1012)
+            if (cdata_character_role(tc) == 1012)
             {
                 flttypemajor = 60000;
             }
             label_2266();
             inv_number(ci) = rnd(rtval) + 1;
-            if (cdata(150, tc) == 1009)
+            if (cdata_character_role(tc) == 1009)
             {
                 p = trate(inv_param1(ci));
                 if (p <= 70)
@@ -92348,7 +92411,7 @@ void label_2265()
                     }
                 }
             }
-            if (cdata(150, tc) == 1018)
+            if (cdata_character_role(tc) == 1018)
             {
                 inv_value(ci) = limit(inv_value(ci), 1, 1000000) * 50;
                 if (inv_id(ci) == 729)
@@ -92356,11 +92419,11 @@ void label_2265()
                     inv_value(ci) *= 10;
                 }
             }
-            if (cdata(150, tc) == 1015)
+            if (cdata_character_role(tc) == 1015)
             {
                 inv_value(ci) *= 2;
             }
-            if (cdata(150, tc) == 1007)
+            if (cdata_character_role(tc) == 1007)
             {
                 if (gdata(265) != 0)
                 {
@@ -92371,22 +92434,23 @@ void label_2265()
                     inv_value(ci) *= 3;
                 }
             }
-            if (cdata(150, tc) == 1010)
+            if (cdata_character_role(tc) == 1010)
             {
                 inv_value(ci) *= 2;
             }
-            if (cdata(150, tc) == 2003)
+            if (cdata_character_role(tc) == 2003)
             {
                 inv_value(ci) = inv_value(ci) * 4 / 5;
             }
-            if (cdata(150, tc) == 1020)
+            if (cdata_character_role(tc) == 1020)
             {
                 inv_value(ci) = inv_value(ci) * 3 / 2;
             }
         }
     }
-    cdata(154, tc) = gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
-        + gdata(10) * 24 * 30 * 12 + 168 * (1 + (cdata(150, tc) == 1009));
+    cdata_time_to_restore(tc) = gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
+        + gdata(10) * 24 * 30 * 12
+        + 168 * (1 + (cdata_character_role(tc) == 1009));
     return;
 }
 void label_2266()
@@ -92577,15 +92641,15 @@ void label_2270()
     }
     bkdata(0) = gdata(20);
     bkdata(1) = gdata(22);
-    bkdata(2) = cdata(1, 0);
-    bkdata(3) = cdata(2, 0);
+    bkdata(2) = cdata_x(0);
+    bkdata(3) = cdata_y(0);
     snd(44);
     label_2113();
     mode = 11;
-    cdata(1, 0) = 0;
-    cdata(2, 0) = 0;
-    scx = cdata(1, 0);
-    scy = cdata(2, 0);
+    cdata_x(0) = 0;
+    cdata_y(0) = 0;
+    scx = cdata_x(0);
+    scy = cdata_y(0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
@@ -92656,8 +92720,8 @@ void label_2270()
     }
     gdata(20) = bkdata(0);
     gdata(22) = bkdata(1);
-    cdata(1, 0) = bkdata(2);
-    cdata(2, 0) = bkdata(3);
+    cdata_x(0) = bkdata(2);
+    cdata_y(0) = bkdata(3);
     gdata(79) = 1;
     mode = 3;
     mapsubroutine = 1;
@@ -95019,9 +95083,9 @@ int label_2659()
     }
     relocate_chara(rc, f);
     oc = stat;
-    cdata(9, rc) = 10;
-    cdata(69, rc) = 10;
-    cdata(150, rc) = 0;
+    cdata_relationship(rc) = 10;
+    cdata_original_relationship(rc) = 10;
+    cdata_character_role(rc) = 0;
     cbitmod(970, rc, 0);
     cbitmod(979, rc, 0);
     cbitmod(985, rc, 0);
@@ -95050,19 +95114,19 @@ void label_2660()
 void label_2661()
 {
     flt(0, 4);
-    initlv = rnd(60 + cdata(38, 0)) + 1;
+    initlv = rnd(60 + cdata_level(0)) + 1;
     p(0) = 75;
     p(1) = 41;
     p(2) = 160;
     characreate(rc, p(rnd(3)), -1, -1);
-    cdata(9, rc) = 0;
-    cdata(69, rc) = 0;
+    cdata_relationship(rc) = 0;
+    cdata_original_relationship(rc) = 0;
     cdata(156, rc) = 100;
-    cdata(0, rc) = 3;
-    cdata(7, rc) = rnd(33) * 2 + 1 + cdata(8, rc);
+    cdata_state(rc) = 3;
+    cdata_image(rc) = rnd(33) * 2 + 1 + cdata_sex(rc);
     cdatan(0, rc) = randomname();
     cdatan(1, rc) = random_title();
-    cdata(150, rc) = 13;
+    cdata_character_role(rc) = 13;
     p = rnd(450);
     if (adata(16, p) == 0 || adata(16, p) == 7 || adata(0, p) == 7)
     {
@@ -95080,10 +95144,10 @@ void label_2661()
     {
         p = 12;
     }
-    cdata(80, rc) = p;
-    cdata(81, rc) = 1;
-    cdata(34, rc) = cdata(38, rc) * cdata(38, rc) * 30
-        + rnd((cdata(38, rc) * 200 + 100)) + rnd(500);
+    cdata_current_map(rc) = p;
+    cdata_current_dungeon_level(rc) = 1;
+    cdata_fame(rc) = cdata_level(rc) * cdata_level(rc) * 30
+        + rnd((cdata_level(rc) * 200 + 100)) + rnd(500);
     return;
 }
 void label_2662()
@@ -95094,45 +95158,45 @@ void label_2662()
         {
             rc = cnt;
             cc = rc;
-            if (cdata(84, rc) != 0)
+            if (cdata_period_of_contract(rc) != 0)
             {
-                if (cdata(84, rc) < gdata(13) + gdata(12) * 24
+                if (cdata_period_of_contract(rc) < gdata(13) + gdata(12) * 24
                         + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12)
                 {
-                    cdata(84, rc) = 0;
+                    cdata_period_of_contract(rc) = 0;
                     cbitmod(969, rc, 0);
-                    cdata(9, rc) = 0;
+                    cdata_relationship(rc) = 0;
                     txt(lang(
                         cdatan(0, rc) + u8"との契約期間が切れた。"s,
                         u8"The period of contract with "s + cdatan(0, rc)
                             + u8" has been expired."s));
                 }
             }
-            if (cdata(80, rc) == gdata(20))
+            if (cdata_current_map(rc) == gdata(20))
             {
                 continue;
             }
-            if (cdata(0, rc) == 5)
+            if (cdata_state(rc) == 5)
             {
                 label_2661();
                 continue;
             }
-            if (cdata(0, rc) == 4)
+            if (cdata_state(rc) == 4)
             {
                 if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                         + gdata(10) * 24 * 30 * 12
-                    >= cdata(5, rc))
+                    >= cdata_time_to_revive(rc))
                 {
                     if (rnd(3) == 0)
                     {
                         addnews(5, rc);
-                        cdata(0, rc) = 0;
+                        cdata_state(rc) = 0;
                         label_2661();
                     }
                     else
                     {
                         addnews(3, rc);
-                        cdata(0, rc) = 3;
+                        cdata_state(rc) = 3;
                     }
                     continue;
                 }
@@ -95166,35 +95230,36 @@ void label_2662()
                         break;
                     }
                 }
-                cdata(80, rc) = p;
-                cdata(81, rc) = 1;
+                cdata_current_map(rc) = p;
+                cdata_current_dungeon_level(rc) = 1;
             }
             if (rnd(200) == 0)
             {
-                if (adata(0, cdata(80, rc)) != 3)
+                if (adata(0, cdata_current_map(rc)) != 3)
                 {
                     label_2664();
                 }
             }
             if (rnd(10) == 0)
             {
-                cdata(35, rc) += cdata(38, rc) * cdata(38, rc) * 2;
+                cdata_experience(rc) += cdata_level(rc) * cdata_level(rc) * 2;
             }
             if (rnd(20) == 0)
             {
-                cdata(34, rc) += rnd(cdata(38, rc) * cdata(38, rc) / 40 + 5)
-                    - rnd((cdata(38, rc) * cdata(38, rc) / 50 + 5));
+                cdata_fame(rc) +=
+                    rnd(cdata_level(rc) * cdata_level(rc) / 40 + 5)
+                    - rnd((cdata_level(rc) * cdata_level(rc) / 50 + 5));
             }
             if (rnd(2000) == 0)
             {
-                cdata(35, rc) +=
-                    cdata(38, rc) * cdata(38, rc) * cdata(38, rc) * 5;
-                val = rnd(cdata(38, rc) * cdata(38, rc) / 20 + 10) + 10;
-                cdata(34, rc) += val;
+                cdata_experience(rc) +=
+                    cdata_level(rc) * cdata_level(rc) * cdata_level(rc) * 5;
+                val = rnd(cdata_level(rc) * cdata_level(rc) / 20 + 10) + 10;
+                cdata_fame(rc) += val;
                 addnews(4, rc);
                 label_2664();
             }
-            if (cdata(35, rc) >= cdata(36, rc))
+            if (cdata_experience(rc) >= cdata_required_experience(rc))
             {
                 r1 = rc;
                 r2 = 0;
@@ -95220,7 +95285,7 @@ void label_2663()
     a = refitem(inv_id(ci), 5);
     if (a == 57000 || a == 52000 || a == 53000)
     {
-        cdata(12, rc) = ci;
+        cdata_item_which_will_be_used(rc) = ci;
     }
     return;
 }
@@ -95244,9 +95309,9 @@ int label_2664()
             }
             if (inv_number(ci) != 0)
             {
-                if (cdata(12, rc) == ci)
+                if (cdata_item_which_will_be_used(rc) == ci)
                 {
-                    cdata(12, rc) = 0;
+                    cdata_item_which_will_be_used(rc) = 0;
                 }
                 inv_number(ci) = 0;
                 f = 1;
@@ -95259,7 +95324,7 @@ int label_2664()
         stat = 0;
         return stat;
     }
-    flt(cdata(38, rc), 4);
+    flt(cdata_level(rc), 4);
     if (rnd(3) == 0)
     {
         flttypemajor = fsetwear(rnd(length(fsetwear)));
@@ -95303,9 +95368,9 @@ int label_2665()
             if (inv_body_part(p) == 0)
             {
                 inv_number(p) = 0;
-                if (cdata(12, tc) == p)
+                if (cdata_item_which_will_be_used(tc) == p)
                 {
-                    cdata(12, tc) = 0;
+                    cdata_item_which_will_be_used(tc) = 0;
                 }
                 break;
             }
@@ -95438,13 +95503,13 @@ void label_2668()
             {
                 ci = invhead + invrange - 1;
             }
-            if (cdata(150, rc) == 13)
+            if (cdata_character_role(rc) == 13)
             {
-                flt(cdata(38, rc), 3);
+                flt(cdata_level(rc), 3);
             }
             else
             {
-                flt(cdata(38, rc), calcfixlv(2));
+                flt(cdata_level(rc), calcfixlv(2));
             }
             mustequip = 0;
             {
@@ -95521,7 +95586,7 @@ void label_2668()
             {
                 if (refitem(inv_id(ci), 5) < 50000)
                 {
-                    if (cdata(150, rc) == 13)
+                    if (cdata_character_role(rc) == 13)
                     {
                         valn = itemname(ci);
                         addnews(1, rc);
@@ -95529,7 +95594,7 @@ void label_2668()
                 }
             }
             label_2667();
-            if (cdata(150, rc) != 13)
+            if (cdata_character_role(rc) != 13)
             {
                 if (rnd(3))
                 {
@@ -95546,19 +95611,19 @@ void label_2669()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) == 0)
+            if (cdata_state(cnt) == 0)
             {
                 continue;
             }
-            if (cdata(150, cnt) == 0)
+            if (cdata_character_role(cnt) == 0)
             {
                 continue;
             }
-            if (cdata(25, cnt) == 6)
+            if (cdata_quality(cnt) == 6)
             {
                 continue;
             }
-            if (cdata(150, cnt) == 3)
+            if (cdata_character_role(cnt) == 3)
             {
                 continue;
             }
@@ -95596,7 +95661,7 @@ void label_2669()
             qdata(0, i) = cnt;
             qdata(1, i) = gdata(20);
             qname(i) = cdatan(0, cnt);
-            cdata(82, cnt) = i + 1;
+            cdata_related_quest_id(cnt) = i + 1;
             gdata(75) = i + 1;
         }
     }
@@ -95612,15 +95677,15 @@ void label_2670()
     {
         return;
     }
-    if (cdata(38, 0) >= qdata(5, rq))
+    if (cdata_level(0) >= qdata(5, rq))
     {
         qdata(6, rq) =
-            qdata(6, rq) * 100 / (100 + (cdata(38, 0) - qdata(5, rq)) * 10);
+            qdata(6, rq) * 100 / (100 + (cdata_level(0) - qdata(5, rq)) * 10);
     }
     else
     {
         qdata(6, rq) = qdata(6, rq)
-            * (100 + limit((qdata(5, rq) - cdata(38, 0)) / 5 * 25, 0, 200))
+            * (100 + limit((qdata(5, rq) - cdata_level(0)) / 5 * 25, 0, 200))
             / 100;
     }
     return;
@@ -95680,12 +95745,13 @@ int label_2672()
                 {
                     continue;
                 }
-                if (cdata(0, n) != 1)
+                if (cdata_state(n) != 1)
                 {
                     continue;
                 }
-                if (cdata(9, n) != 0
-                    || cdata(150, n) != 4 && cdata(150, n) != 14)
+                if (cdata_relationship(n) != 0
+                    || cdata_character_role(n) != 4
+                        && cdata_character_role(n) != 14)
                 {
                     continue;
                 }
@@ -95718,18 +95784,18 @@ int label_2672()
             qdata(14, rq) = 3;
             qdata(4, rq) = 0;
             qdata(9, rq) = rnd(3) + 2;
-            qdata(5, rq) = cdata(38, i) / 3;
+            qdata(5, rq) = cdata_level(i) / 3;
         }
         stat = 0;
         return stat;
     }
-    if (cdata(34, 0) >= 30000)
+    if (cdata_fame(0) >= 30000)
     {
         if (rnd(13) == 0)
         {
             qdata(5, rq) =
-                rnd(cdata(38, 0) + 10) + rnd((cdata(34, 0) / 2500 + 1));
-            qdata(5, rq) = roundmargin(qdata(5, rq), cdata(38, 0));
+                rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 2500 + 1));
+            qdata(5, rq) = roundmargin(qdata(5, rq), cdata_level(0));
             minlevel = limit(qdata(5, rq) / 7, 5, 30);
             {
                 int cnt = 0;
@@ -95741,14 +95807,14 @@ int label_2672()
                     {
                         continue;
                     }
-                    if (cdata(38, rc) < minlevel)
+                    if (cdata_level(rc) < minlevel)
                     {
                         continue;
                     }
                     break;
                 }
             }
-            qdata(12, rq) = cdata(27, 56);
+            qdata(12, rq) = cdata_id(56);
             qdata(2, rq) = (rnd(6) + 2) * 24
                 + (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                    + gdata(10) * 24 * 30 * 12);
@@ -95763,13 +95829,13 @@ int label_2672()
             return stat;
         }
     }
-    if (cdata(34, 0) >= 50000)
+    if (cdata_fame(0) >= 50000)
     {
         if (rnd(20) == 0)
         {
             qdata(5, rq) =
-                rnd(cdata(38, 0) + 10) + rnd((cdata(34, 0) / 2500 + 1));
-            qdata(5, rq) = roundmargin(qdata(5, rq), cdata(38, 0));
+                rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 2500 + 1));
+            qdata(5, rq) = roundmargin(qdata(5, rq), cdata_level(0));
             minlevel = limit(qdata(5, rq) / 4, 5, 30);
             {
                 int cnt = 0;
@@ -95781,14 +95847,14 @@ int label_2672()
                     {
                         continue;
                     }
-                    if (cdata(38, rc) < minlevel)
+                    if (cdata_level(rc) < minlevel)
                     {
                         continue;
                     }
                     break;
                 }
             }
-            qdata(12, rq) = cdata(27, 56);
+            qdata(12, rq) = cdata_id(56);
             qdata(2, rq) = (rnd(6) + 2) * 24
                 + (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                    + gdata(10) * 24 * 30 * 12);
@@ -95836,7 +95902,7 @@ int label_2672()
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = limit(
-                rnd(cdata(38, 0) + 10) + rnd((cdata(34, 0) / 500 + 1)) + 1,
+                rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 500 + 1)) + 1,
                 1,
                 80);
         }
@@ -95876,7 +95942,7 @@ int label_2672()
         qdata(5, rq) = limit(
             rnd(sdata(183, 0) + 10),
             elona_int(1.5 * sqrt(sdata(183, 0))) + 1,
-            cdata(34, 0) / 1000 + 10);
+            cdata_fame(0) / 1000 + 10);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                + gdata(10) * 24 * 30 * 12);
@@ -95895,7 +95961,9 @@ int label_2672()
     if (rnd(30) == 0 || gdata(20) == 12 && rnd(2) == 0)
     {
         qdata(5, rq) = limit(
-            rnd(cdata(38, 0) + 5) + rnd((cdata(34, 0) / 800 + 1)) + 1, 1, 50);
+            rnd(cdata_level(0) + 5) + rnd((cdata_fame(0) / 800 + 1)) + 1,
+            1,
+            50);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                + gdata(10) * 24 * 30 * 12);
@@ -95913,8 +95981,10 @@ int label_2672()
     if (rnd(8) == 0)
     {
         qdata(5, rq) = limit(
-            rnd(cdata(38, 0) + 10) + rnd((cdata(34, 0) / 500 + 1)) + 1, 1, 80);
-        qdata(5, rq) = roundmargin(qdata(5, rq), cdata(38, 0));
+            rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 500 + 1)) + 1,
+            1,
+            80);
+        qdata(5, rq) = roundmargin(qdata(5, rq), cdata_level(0));
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
                + gdata(10) * 24 * 30 * 12);
@@ -96063,7 +96133,7 @@ int label_2672()
         label_0481();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
-        qdata(5, rq) = limit(rnd(cdata(38, 0) + 5) + 1, 1, 30);
+        qdata(5, rq) = limit(rnd(cdata_level(0) + 5) + 1, 1, 30);
         rewardfix = 65 + qdata(5, rq);
         stat = 0;
         return stat;
@@ -96200,11 +96270,11 @@ void label_2676()
                     {
                         if (cbit(963, cnt) == 1)
                         {
-                            if (qdata(13, rq) == cdata(27, cnt))
+                            if (qdata(13, rq) == cdata_id(cnt))
                             {
                                 tc = cnt;
                                 cbitmod(963, cnt, 0);
-                                if (cdata(0, tc) == 1)
+                                if (cdata_state(tc) == 1)
                                 {
                                     if (qdata(4, rq) == 0)
                                     {
@@ -96234,15 +96304,14 @@ void label_2676()
                                                 u8" pours a bottole of molotov cocktail over "s +
                                                 him(tc) + u8"self."s);
                                         addmef(
-                                            cdata(1, 0),
-                                            cdata(2, 0),
+                                            cdata_x(0),
+                                            cdata_y(0),
                                             5,
                                             24,
                                             rnd(15) + 25,
                                             efp,
                                             0);
-                                        mapitem_fire(
-                                            cdata(1, tc), cdata(2, tc));
+                                        mapitem_fire(cdata_x(tc), cdata_y(tc));
                                         p = -9;
                                     }
                                     txtef(9);
@@ -96250,7 +96319,7 @@ void label_2676()
                                     txt(s);
                                     dmghp(tc, 999999, p);
                                 }
-                                cdata(0, tc) = 0;
+                                cdata_state(tc) = 0;
                                 break;
                             }
                         }
@@ -96280,9 +96349,9 @@ void label_2677()
             {
                 continue;
             }
-            if (cdata(50, cnt) < cdata(51, cnt) / 2)
+            if (cdata_hp(cnt) < cdata_max_hp(cnt) / 2)
             {
-                cdata(50, cnt) = cdata(51, cnt) / 2;
+                cdata_hp(cnt) = cdata_max_hp(cnt) / 2;
             }
         }
     }
@@ -96312,7 +96381,7 @@ void label_2677()
         }
         else
         {
-            cdata(34, 0) += gdata(74);
+            cdata_fame(0) += gdata(74);
             modrank(1, 100, 2);
         }
         ++adata(23, gdata(66));
@@ -96364,7 +96433,7 @@ void label_2678()
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
         modrank(0, 100, 2);
-        cdata(34, 0) += gdata(74);
+        cdata_fame(0) += gdata(74);
         txt(lang(u8"外への階段が現れた。"s, u8"Stairs appear."s));
         map_placeupstairs(mdata(0) / 2, mdata(1) / 2);
         ++adata(22, gdata(66));
@@ -96418,7 +96487,7 @@ void label_2679()
     if (p != 0)
     {
         flt();
-        itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), p);
+        itemcreate(-1, 54, cdata_x(0), cdata_y(0), p);
     }
     if (qdata(3, rq) == 1002)
     {
@@ -96430,17 +96499,16 @@ void label_2679()
     }
     if (qdata(3, rq) == 1008 || qdata(3, rq) == 1010)
     {
-        p = 2 + (rnd(100) < rnd(cdata(34, 0) / 5000 + 1));
+        p = 2 + (rnd(100) < rnd(cdata_fame(0) / 5000 + 1));
     }
     flt();
-    itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), p);
+    itemcreate(-1, 55, cdata_x(0), cdata_y(0), p);
     if (qdata(3, rq) == 1009)
     {
         if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
         {
             flt();
-            itemcreate(
-                -1, 724, cdata(1, 0), cdata(2, 0), 1 + qdata(13, rq) / 10);
+            itemcreate(-1, 724, cdata_x(0), cdata_y(0), 1 + qdata(13, rq) / 10);
         }
     }
     if (qdata(7, rq) != 0)
@@ -96463,7 +96531,7 @@ void label_2679()
                         fixlv = 4;
                     }
                 }
-                flt((qdata(5, rq) + cdata(38, 0)) / 2 + 1, calcfixlv(fixlv));
+                flt((qdata(5, rq) + cdata_level(0)) / 2 + 1, calcfixlv(fixlv));
                 if (qdata(7, rq) < 10000)
                 {
                     if (qdata(7, rq) == 1)
@@ -96492,7 +96560,7 @@ void label_2679()
                 {
                     flttypemajor = qdata(7, rq);
                 }
-                itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
             }
         }
     }
@@ -96507,7 +96575,7 @@ void label_2679()
     txt(lang(
         ""s + gdata(74) + u8"の名声値を手に入れた。"s,
         u8"You gain "s + gdata(74) + u8" fame."s));
-    cdata(34, 0) += gdata(74);
+    cdata_fame(0) += gdata(74);
     txt(lang(
         u8"何かが足元に転がってきた。"s, u8"Something is put on the ground."s));
     if (qdata(3, rq) == 1002)
@@ -96830,47 +96898,47 @@ int ai_check()
         {
             if (dir == 2)
             {
-                cdata(3, cc) = cdata(1, cc) + 1;
-                cdata(4, cc) = dirchk(cnt, p) + cdata(2, cc);
+                cdata_next_x(cc) = cdata_x(cc) + 1;
+                cdata_next_y(cc) = dirchk(cnt, p) + cdata_y(cc);
             }
             if (dir == 1)
             {
-                cdata(3, cc) = cdata(1, cc) - 1;
-                cdata(4, cc) = dirchk(cnt, p) + cdata(2, cc);
+                cdata_next_x(cc) = cdata_x(cc) - 1;
+                cdata_next_y(cc) = dirchk(cnt, p) + cdata_y(cc);
             }
             if (dir == 3)
             {
-                cdata(4, cc) = cdata(2, cc) - 1;
-                cdata(3, cc) = dirchk(cnt, p) + cdata(1, cc);
+                cdata_next_y(cc) = cdata_y(cc) - 1;
+                cdata_next_x(cc) = dirchk(cnt, p) + cdata_x(cc);
             }
             if (dir == 0)
             {
-                cdata(4, cc) = cdata(2, cc) + 1;
-                cdata(3, cc) = dirchk(cnt, p) + cdata(1, cc);
+                cdata_next_y(cc) = cdata_y(cc) + 1;
+                cdata_next_x(cc) = dirchk(cnt, p) + cdata_x(cc);
             }
-            cell_check(cdata(3, cc), cdata(4, cc));
+            cell_check(cdata_next_x(cc), cdata_next_y(cc));
             if (cellaccess == 1)
             {
                 break;
             }
             if (cellchara != -1)
             {
-                if (cdata(9, cc) == 10)
+                if (cdata_relationship(cc) == 10)
                 {
-                    if (cdata(9, cellchara) == -3)
+                    if (cdata_relationship(cellchara) == -3)
                     {
-                        cdata(29, cc) = cellchara;
+                        cdata_enemy_id(cc) = cellchara;
                     }
                     else
                     {
                         blockedbychara = 1;
                     }
                 }
-                if (cdata(9, cc) == -3)
+                if (cdata_relationship(cc) == -3)
                 {
-                    if (cdata(9, cellchara) == 10)
+                    if (cdata_relationship(cellchara) == 10)
                     {
-                        cdata(29, cc) = cellchara;
+                        cdata_enemy_id(cc) = cellchara;
                     }
                     else
                     {
@@ -96916,13 +96984,13 @@ void label_2687()
                         cnvtalk(u8"Hit me!"s)));
             }
         }
-        cdata(201, cc) = 0;
+        cdata_hate(cc) = 0;
         label_2742();
         return;
     }
     if (synccheck(cc, -1) == 0)
     {
-        if (cdata(253, 0) == 0)
+        if (cdata_blind(0) == 0)
         {
             if (rnd(4) == 0)
             {
@@ -96934,8 +97002,8 @@ void label_2687()
                         {
                             if (cc < 16)
                             {
-                                cdata(201, cc) = 0;
-                                cdata(29, cc) = 0;
+                                cdata_hate(cc) = 0;
+                                cdata_enemy_id(cc) = 0;
                             }
                             else
                             {
@@ -96973,84 +97041,86 @@ void label_2687()
     }
     if (cbit(972, cc))
     {
-        tlocx = cdata(1, cc);
-        tlocy = cdata(2, cc);
+        tlocx = cdata_x(cc);
+        tlocy = cdata_y(cc);
         efid = 644;
         label_2176();
         label_2742();
         return;
     }
-    if (cdata(9, cc) >= 10)
+    if (cdata_relationship(cc) >= 10)
     {
-        --cdata(201, cc);
-        if (cdata(29, cc) == 0 || cdata(201, cc) <= 0
-            || cdata(9, cdata(29, cc)) >= -2 && cdata(29, cdata(29, cc)) != cc)
+        --cdata_hate(cc);
+        if (cdata_enemy_id(cc) == 0 || cdata_hate(cc) <= 0
+            || cdata_relationship(cdata_enemy_id(cc)) >= -2
+                && cdata_enemy_id(cdata_enemy_id(cc)) != cc)
         {
-            cdata(29, cc) = 0;
+            cdata_enemy_id(cc) = 0;
             if (pcattacker != 0)
             {
-                if (cdata(9, pcattacker) <= -3)
+                if (cdata_relationship(pcattacker) <= -3)
                 {
-                    if (cdata(0, pcattacker) == 1)
+                    if (cdata_state(pcattacker) == 1)
                     {
                         if (fov_los(
-                                cdata(1, cc),
-                                cdata(2, cc),
-                                cdata(1, pcattacker),
-                                cdata(2, pcattacker)))
+                                cdata_x(cc),
+                                cdata_y(cc),
+                                cdata_x(pcattacker),
+                                cdata_y(pcattacker)))
                         {
-                            cdata(201, cc) = 5;
-                            cdata(29, cc) = pcattacker;
+                            cdata_hate(cc) = 5;
+                            cdata_enemy_id(cc) = pcattacker;
                         }
                     }
                 }
             }
-            if (cdata(29, cc) == 0)
+            if (cdata_enemy_id(cc) == 0)
             {
-                if (cdata(29, 0) != 0 && cdata(9, cdata(29, 0)) <= -3)
+                if (cdata_enemy_id(0) != 0
+                    && cdata_relationship(cdata_enemy_id(0)) <= -3)
                 {
-                    if (cdata(0, cdata(29, 0)) == 1)
+                    if (cdata_state(cdata_enemy_id(0)) == 1)
                     {
                         if (fov_los(
-                                cdata(1, cc),
-                                cdata(2, cc),
-                                cdata(1, cdata(29, 0)),
-                                cdata(2, cdata(29, 0))))
+                                cdata_x(cc),
+                                cdata_y(cc),
+                                cdata_x(cdata_enemy_id(0)),
+                                cdata_y(cdata_enemy_id(0))))
                         {
-                            cdata(201, cc) = 5;
-                            cdata(29, cc) = cdata(29, 0);
+                            cdata_hate(cc) = 5;
+                            cdata_enemy_id(cc) = cdata_enemy_id(0);
                         }
                     }
                 }
             }
         }
-        if (cbit(6, cdata(29, cc)) == 1)
+        if (cbit(6, cdata_enemy_id(cc)) == 1)
         {
             if (cbit(7, cc) == 0)
             {
-                if (cdata(259, cdata(29, cc)) == 0)
+                if (cdata_wet(cdata_enemy_id(cc)) == 0)
                 {
                     if (rnd(5))
                     {
-                        cdata(29, cc) = 0;
+                        cdata_enemy_id(cc) = 0;
                     }
                 }
             }
         }
     }
-    if (cdata(29, cc) != 0)
+    if (cdata_enemy_id(cc) != 0)
     {
-        if (cdata(0, cdata(29, cc)) != 1)
+        if (cdata_state(cdata_enemy_id(cc)) != 1)
         {
-            cdata(29, cc) = 0;
-            cdata(201, cc) = 0;
+            cdata_enemy_id(cc) = 0;
+            cdata_hate(cc) = 0;
         }
     }
     if (gdata(20) == 40)
     {
-        if (cdata(9, cc) != -3)
+        if (cdata_relationship(cc) != -3)
         {
-            if (cdata(9, cc) != 10)
+            if (cdata_relationship(cc) != 10)
             {
                 if (rnd(40) == 0)
                 {
@@ -97070,8 +97140,8 @@ void label_2687()
                 return;
             }
         }
-        cdata(201, cc) = 100;
-        if (cdata(9, cc) == 10)
+        cdata_hate(cc) = 100;
+        if (cdata_relationship(cc) == 10)
         {
             p(0) = -3;
             p(1) = enemyteam;
@@ -97083,8 +97153,8 @@ void label_2687()
             p(1) = 1;
             p(2) = 16;
         }
-        i = cdata(29, cc);
-        if (cdata(9, i) == p && cdata(0, i) == 1 && i >= p(1)
+        i = cdata_enemy_id(cc);
+        if (cdata_relationship(i) == p && cdata_state(i) == 1 && i >= p(1)
             && i < p(1) + p(2))
         {
             if (rnd(10) != 0)
@@ -97093,34 +97163,35 @@ void label_2687()
                 goto label_2689_internal;
             }
         }
-        cdata(29, cc) = p(1);
+        cdata_enemy_id(cc) = p(1);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
             {
                 i = rnd(p(2)) + p(1);
-                if (cdata(0, i) == 1)
+                if (cdata_state(i) == 1)
                 {
-                    if (cdata(9, i) == p)
+                    if (cdata_relationship(i) == p)
                     {
-                        cdata(29, cc) = i;
+                        cdata_enemy_id(cc) = i;
                         break;
                     }
                 }
             }
         }
-        if (cdata(9, cdata(29, cc)) != p || cdata(0, cdata(29, cc)) != 1)
+        if (cdata_relationship(cdata_enemy_id(cc)) != p
+            || cdata_state(cdata_enemy_id(cc)) != 1)
         {
             f = 0;
             {
                 int cnt = p(1);
                 for (int cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
-                        if (cdata(9, cnt) == p)
+                        if (cdata_relationship(cnt) == p)
                         {
-                            cdata(29, cc) = cnt;
+                            cdata_enemy_id(cc) = cnt;
                             f = 1;
                             break;
                         }
@@ -97129,7 +97200,7 @@ void label_2687()
             }
             if (f == 0)
             {
-                if (cdata(9, cc) == 10)
+                if (cdata_relationship(cc) == 10)
                 {
                     petarenawin = 1;
                 }
@@ -97150,10 +97221,10 @@ void label_2687()
             {
                 if (gdata(258) != 0)
                 {
-                    if (cdata(0, gdata(259)) == 1)
+                    if (cdata_state(gdata(259)) == 1)
                     {
-                        cdata(29, cc) = gdata(259);
-                        cdata(201, cc) = 500;
+                        cdata_enemy_id(cc) = gdata(259);
+                        cdata_hate(cc) = 500;
                     }
                 }
             }
@@ -97161,25 +97232,25 @@ void label_2687()
     }
     if (gdata(183) != 0)
     {
-        if (cdata(29, cc) == gdata(183))
+        if (cdata_enemy_id(cc) == gdata(183))
         {
             if (rnd(3))
             {
-                cdata(29, cc) = 0;
+                cdata_enemy_id(cc) = 0;
             }
         }
-        if (cdata(29, cc) == 0)
+        if (cdata_enemy_id(cc) == 0)
         {
-            if (cdata(9, cc) <= -2)
+            if (cdata_relationship(cc) <= -2)
             {
                 if (rnd(3) == 0)
                 {
-                    cdata(29, cc) = gdata(183);
+                    cdata_enemy_id(cc) = gdata(183);
                 }
             }
         }
     }
-    tc = cdata(29, cc);
+    tc = cdata_enemy_id(cc);
     if (cdatan(4, cc) != ""s)
     {
         if (cbit(989, cc) == 0)
@@ -97193,27 +97264,27 @@ void label_2687()
             }
         }
     }
-    if (cdata(23, cc) != 0 || cbit(989, cc))
+    if (cdata_can_talk(cc) != 0 || cbit(989, cc))
     {
         if (cbit(965, cc) == 0)
         {
-            if (cdata(26, cc) % 5 == 0)
+            if (cdata_turn(cc) % 5 == 0)
             {
                 if (rnd(4) == 0)
                 {
-                    if (cdata(1, 0) > cdata(1, cc) - 10
-                        && cdata(1, 0) < cdata(1, cc) + 10)
+                    if (cdata_x(0) > cdata_x(cc) - 10
+                        && cdata_x(0) < cdata_x(cc) + 10)
                     {
-                        if (cdata(2, 0) > cdata(2, cc) - 10
-                            && cdata(2, 0) < cdata(2, cc) + 10)
+                        if (cdata_y(0) > cdata_y(cc) - 10
+                            && cdata_y(0) < cdata_y(cc) + 10)
                         {
-                            if (cdata(140, 0) != 6)
+                            if (cdata_continuous_action_id(0) != 6)
                             {
-                                if (cdata(201, cc) <= 0)
+                                if (cdata_hate(cc) <= 0)
                                 {
                                     customtalk(cc, 100);
                                 }
-                                if (cdata(201, cc) > 0)
+                                if (cdata_hate(cc) > 0)
                                 {
                                     customtalk(cc, 101);
                                 }
@@ -97224,27 +97295,27 @@ void label_2687()
             }
         }
     }
-    if (cdata(9, cc) >= 0)
+    if (cdata_relationship(cc) >= 0)
     {
-        if (cdata(263, 0))
+        if (cdata_choked(0))
         {
-            if (dist(cdata(1, 0), cdata(2, 0), cdata(1, cc), cdata(2, cc)) == 1)
+            if (dist(cdata_x(0), cdata_y(0), cdata_x(cc), cdata_y(cc)) == 1)
             {
-                x = cdata(1, 0);
-                y = cdata(2, 0);
+                x = cdata_x(0);
+                y = cdata_y(0);
                 label_2201();
                 return;
             }
         }
     }
 label_2688_internal:
-    if (cdata(211, cc) != 0)
+    if (cdata_ai_heal(cc) != 0)
     {
-        if (cdata(50, cc) < cdata(51, cc) / 4)
+        if (cdata_hp(cc) < cdata_max_hp(cc) / 4)
         {
-            if (cdata(55, cc) > 0 || rnd(5) == 0)
+            if (cdata_mp(cc) > 0 || rnd(5) == 0)
             {
-                efid = cdata(211, cc);
+                efid = cdata_ai_heal(cc);
                 if (efid >= 400 && efid < 467)
                 {
                     npccostmp = 1;
@@ -97270,24 +97341,24 @@ label_2688_internal:
             }
         }
     }
-    if (cdata(12, cc) == 0)
+    if (cdata_item_which_will_be_used(cc) == 0)
     {
         goto label_2689_internal;
     }
-    ci = cdata(12, cc);
+    ci = cdata_item_which_will_be_used(cc);
     if (inv_number(ci) == 0)
     {
-        cdata(12, cc) = 0;
+        cdata_item_which_will_be_used(cc) = 0;
         goto label_2689_internal;
     }
     a = refitem(inv_id(ci), 5);
-    if (cdata(9, cc) != 0)
+    if (cdata_relationship(cc) != 0)
     {
-        cdata(12, cc) = 0;
+        cdata_item_which_will_be_used(cc) = 0;
     }
     if (a == 57000)
     {
-        if (cdata(9, cc) == 10 && cdata(22, cc) > 6000)
+        if (cdata_relationship(cc) == 10 && cdata_nutrition(cc) > 6000)
         {
         }
         else
@@ -97306,12 +97377,12 @@ label_2688_internal:
         label_2197();
         return;
     }
-    cdata(12, cc) = 0;
+    cdata_item_which_will_be_used(cc) = 0;
 label_2689_internal:
-    if (cdata(201, cc) > 0 || cdata(9, cc) == 10)
+    if (cdata_hate(cc) > 0 || cdata_relationship(cc) == 10)
     {
-        distance = dist(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc));
-        if (cdata(253, cc) != 0)
+        distance = dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc));
+        if (cdata_blind(cc) != 0)
         {
             if (rnd(10) > 2)
             {
@@ -97319,7 +97390,7 @@ label_2689_internal:
                 return;
             }
         }
-        if (cdata(254, cc) != 0)
+        if (cdata_confused(cc) != 0)
         {
             if (rnd(10) > 3)
             {
@@ -97327,18 +97398,18 @@ label_2689_internal:
                 return;
             }
         }
-        if (cdata(9, cc) == 10)
+        if (cdata_relationship(cc) == 10)
         {
             if (tc == 0)
             {
-                if (map(cdata(1, cc), cdata(2, cc), 4) != 0)
+                if (map(cdata_x(cc), cdata_y(cc), 4) != 0)
                 {
-                    cell_itemoncell(cdata(1, cc), cdata(2, cc));
+                    cell_itemoncell(cdata_x(cc), cdata_y(cc));
                     if (stat == 1)
                     {
                         ci = rtval(1);
                         p = refitem(inv_id(ci), 5);
-                        if (cdata(22, cc) <= 6000)
+                        if (cdata_nutrition(cc) <= 6000)
                         {
                             if (p == 57000)
                             {
@@ -97393,7 +97464,7 @@ label_2689_internal:
                         }
                     }
                 }
-                if (cdata(80, cc) == gdata(20))
+                if (cdata_current_map(cc) == gdata(20))
                 {
                     if (cbit(969, cc) == 0)
                     {
@@ -97414,7 +97485,7 @@ label_2689_internal:
                 }
             }
         }
-        if (cdata(255, cc) != 0)
+        if (cdata_fear(cc) != 0)
         {
             retreat = 1;
             label_2693();
@@ -97424,7 +97495,7 @@ label_2689_internal:
         {
             retreat = 0;
         }
-        if (cdata(253, cc) != 0)
+        if (cdata_blind(cc) != 0)
         {
             if (rnd(3))
             {
@@ -97432,9 +97503,9 @@ label_2689_internal:
                 return;
             }
         }
-        if (distance != cdata(208, cc))
+        if (distance != cdata_ai_dist(cc))
         {
-            if (rnd(100) < cdata(207, cc))
+            if (rnd(100) < cdata_ai_move(cc))
             {
                 label_2693();
                 return;
@@ -97443,7 +97514,7 @@ label_2689_internal:
         label_2696();
         return;
     }
-    if (cdata(26, cc) % 10 == 1)
+    if (cdata_turn(cc) % 10 == 1)
     {
         searchfov = 5;
         f = 0;
@@ -97451,7 +97522,7 @@ label_2689_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (searchfov); cnt < cnt_end; ++cnt)
             {
-                y = cdata(2, cc) - 2 + cnt;
+                y = cdata_y(cc) - 2 + cnt;
                 if (y < 0 || y >= mdata(1))
                 {
                     continue;
@@ -97460,7 +97531,7 @@ label_2689_internal:
                     int cnt = 0;
                     for (int cnt_end = cnt + (searchfov); cnt < cnt_end; ++cnt)
                     {
-                        x = cdata(1, cc) - 2 + cnt;
+                        x = cdata_x(cc) - 2 + cnt;
                         if (x < 0 || x >= mdata(0))
                         {
                             continue;
@@ -97470,9 +97541,9 @@ label_2689_internal:
                         {
                             continue;
                         }
-                        if (cdata(69, cc) <= -3)
+                        if (cdata_original_relationship(cc) <= -3)
                         {
-                            if (cdata(9, c) > -3)
+                            if (cdata_relationship(c) > -3)
                             {
                                 if (cbit(979, c) == 0)
                                 {
@@ -97485,7 +97556,7 @@ label_2689_internal:
                         {
                             if (c >= 57)
                             {
-                                if (cdata(69, c) <= -3)
+                                if (cdata_original_relationship(c) <= -3)
                                 {
                                     if (cbit(979, c) == 0)
                                     {
@@ -97501,9 +97572,9 @@ label_2689_internal:
                 {
                     if (cbit(979, cc) == 0)
                     {
-                        cdata(29, cc) = c;
-                        cdata(201, cc) = 30;
-                        cdata(79, cc) = 218;
+                        cdata_enemy_id(cc) = c;
+                        cdata_hate(cc) = 30;
+                        cdata_emotion_icon(cc) = 218;
                         break;
                     }
                 }
@@ -97517,9 +97588,9 @@ label_2689_internal:
         label_1518();
         if (stat == 1)
         {
-            if (cdata(9, cc) == -3)
+            if (cdata_relationship(cc) == -3)
             {
-                cdata(201, cc) = 30;
+                cdata_hate(cc) = 30;
             }
         }
     }
@@ -97528,10 +97599,10 @@ label_2689_internal:
 }
 void label_2690()
 {
-    if (cdata(202, cc) == 4)
+    if (cdata_ai_calm(cc) == 4)
     {
         tc = 0;
-        distance = dist(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc));
+        distance = dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc));
         label_2693();
         return;
     }
@@ -97540,15 +97611,15 @@ void label_2690()
         label_2742();
         return;
     }
-    if (cdata(257, cc) != 0)
+    if (cdata_drunk(cc) != 0)
     {
         if (synccheck(cc, -1))
         {
             if (cdatan(2, cc) == u8"cat"s)
             {
-                if (cdata(257, cc) < 5)
+                if (cdata_drunk(cc) < 5)
                 {
-                    cdata(257, cc) += 40;
+                    cdata_drunk(cc) += 40;
                 }
             label_2691_internal:
                 if (jp)
@@ -97609,7 +97680,7 @@ label_2692_internal:
         {
             if (gdata(13) >= 22 || gdata(13) < 7)
             {
-                if (cdata(140, cc) == 0)
+                if (cdata_continuous_action_id(cc) == 0)
                 {
                     if (rnd(100) == 0)
                     {
@@ -97619,9 +97690,9 @@ label_2692_internal:
             }
         }
     }
-    if (cdata(12, cc) == 0)
+    if (cdata_item_which_will_be_used(cc) == 0)
     {
-        if (cdata(9, cc) != 10)
+        if (cdata_relationship(cc) != 10)
         {
             if (gdata(20) == 13)
             {
@@ -97645,22 +97716,22 @@ label_2692_internal:
                         itemcreate(cc, 0, -1, -1, 0);
                         if (stat == 1)
                         {
-                            cdata(12, cc) = ci;
+                            cdata_item_which_will_be_used(cc) = ci;
                         }
                     }
                 }
             }
             if (gdata(20) == 33 || gdata(20) == 29)
             {
-                if (cdata(27, cc) == 35 || cdata(27, cc) == 211)
+                if (cdata_id(cc) == 35 || cdata_id(cc) == 211)
                 {
                     if (synccheck(cc, -1))
                     {
-                        if (chipm(0, map(cdata(1, cc), cdata(2, cc), 0)) == 4)
+                        if (chipm(0, map(cdata_x(cc), cdata_y(cc), 0)) == 4)
                         {
                             if (rnd(4) == 0)
                             {
-                                if (cdata(0, gdata(259)) == 1)
+                                if (cdata_state(gdata(259)) == 1)
                                 {
                                     if (synccheck(gdata(259), -1))
                                     {
@@ -97668,8 +97739,8 @@ label_2692_internal:
                                         itemcreate(cc, 587, -1, -1, 0);
                                         if (stat == 1)
                                         {
-                                            tlocx = cdata(1, gdata(259));
-                                            tlocy = cdata(2, gdata(259));
+                                            tlocx = cdata_x(gdata(259));
+                                            tlocy = cdata_y(gdata(259));
                                             txtef(9);
                                             txt(lang(
                                                     u8"「化け物め！」"s,
@@ -97727,11 +97798,11 @@ label_2692_internal:
                             }
                             if (rnd(10) == 0)
                             {
-                                if (map(cdata(1, cc), cdata(2, cc), 4) == 0)
+                                if (map(cdata_x(cc), cdata_y(cc), 4) == 0)
                                 {
                                     flt();
                                     itemcreate(
-                                        -1, 541, cdata(1, cc), cdata(2, cc), 0);
+                                        -1, 541, cdata_x(cc), cdata_y(cc), 0);
                                     if (stat == 1)
                                     {
                                         snd(86);
@@ -97752,8 +97823,8 @@ label_2692_internal:
                                 itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    tlocx = cdata(1, 0);
-                                    tlocy = cdata(2, 0);
+                                    tlocx = cdata_x(0);
+                                    tlocy = cdata_y(0);
                                     txtef(9);
                                     txt(lang(u8" *クスクス* "s, u8"*grin*"s),
                                         lang(
@@ -97780,17 +97851,17 @@ label_2692_internal:
                     }
                 }
             }
-            if (cdata(22, cc) <= 6000)
+            if (cdata_nutrition(cc) <= 6000)
             {
-                if (cdata(6, cc) != msync || rnd(5))
+                if (cdata_vision_flag(cc) != msync || rnd(5))
                 {
                     if (cbit(986, cc) == 0)
                     {
-                        cdata(22, cc) += 5000;
+                        cdata_nutrition(cc) += 5000;
                     }
                     else
                     {
-                        cdata(22, cc) -= 3000;
+                        cdata_nutrition(cc) -= 3000;
                     }
                 }
                 else
@@ -97822,14 +97893,14 @@ label_2692_internal:
                         }
                         else
                         {
-                            cdata(12, cc) = ci;
+                            cdata_item_which_will_be_used(cc) = ci;
                             if (cbit(986, cc) == 0)
                             {
-                                cdata(22, cc) += 5000;
+                                cdata_nutrition(cc) += 5000;
                             }
                             else
                             {
-                                cdata(22, cc) -= 3000;
+                                cdata_nutrition(cc) -= 3000;
                             }
                         }
                     }
@@ -97837,9 +97908,9 @@ label_2692_internal:
             }
         }
     }
-    if (cdata(202, cc) == 5)
+    if (cdata_ai_calm(cc) == 5)
     {
-        if (cdata(27, cc) == 326)
+        if (cdata_id(cc) == 326)
         {
             if (rnd(5) == 0)
             {
@@ -97849,19 +97920,19 @@ label_2692_internal:
                 return;
             }
         }
-        if (cdata(27, cc) == 320 || cdata(27, cc) == 280)
+        if (cdata_id(cc) == 320 || cdata_id(cc) == 280)
         {
             if (synccheck(cc, -1))
             {
                 tc = 0;
-                distance = dist(
-                    cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc));
+                distance =
+                    dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc));
                 if (distance < 8)
                 {
                     if (cdatan(2, 0) == u8"snail"s)
                     {
-                        tlocx = cdata(1, 0);
-                        tlocy = cdata(2, 0);
+                        tlocx = cdata_x(0);
+                        tlocy = cdata_y(0);
                         flt();
                         itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
@@ -97882,7 +97953,7 @@ label_2692_internal:
                 }
             }
         }
-        if (cdata(27, cc) == 335 || cdata(27, cc) == 352)
+        if (cdata_id(cc) == 335 || cdata_id(cc) == 352)
         {
             if (rnd(10) == 0)
             {
@@ -97890,7 +97961,7 @@ label_2692_internal:
                     int cnt = 57;
                     for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata(0, cnt) != 1)
+                        if (cdata_state(cnt) != 1)
                         {
                             continue;
                         }
@@ -97899,19 +97970,19 @@ label_2692_internal:
                             continue;
                         }
                         if (dist(
-                                cdata(1, cc),
-                                cdata(2, cc),
-                                cdata(1, cnt),
-                                cdata(2, cnt))
+                                cdata_x(cc),
+                                cdata_y(cc),
+                                cdata_x(cnt),
+                                cdata_y(cnt))
                             < 6)
                         {
                             if (fov_los(
-                                    cdata(1, cc),
-                                    cdata(2, cc),
-                                    cdata(1, cnt),
-                                    cdata(2, cnt)))
+                                    cdata_x(cc),
+                                    cdata_y(cc),
+                                    cdata_x(cnt),
+                                    cdata_y(cnt)))
                             {
-                                cdata(29, cc) = cnt;
+                                cdata_enemy_id(cc) = cnt;
                                 tc = cnt;
                                 break;
                             }
@@ -97919,15 +97990,14 @@ label_2692_internal:
                     }
                 }
             }
-            distance =
-                dist(cdata(1, tc), cdata(2, tc), cdata(1, cc), cdata(2, cc));
+            distance = dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc));
             if (tc != 0)
             {
                 if (distance == 1)
                 {
-                    if (cdata(140, tc) == 0)
+                    if (cdata_continuous_action_id(tc) == 0)
                     {
-                        cdata(29, cc) = 0;
+                        cdata_enemy_id(cc) = 0;
                         label_2147();
                         label_2742();
                         return;
@@ -97940,47 +98010,51 @@ label_2692_internal:
                 }
             }
         }
-        cdata(3, cc) = rnd(3) - 1 + cdata(1, cc);
-        cdata(4, cc) = rnd(3) - 1 + cdata(2, cc);
-        cell_check(cdata(3, cc), cdata(4, cc));
+        cdata_next_x(cc) = rnd(3) - 1 + cdata_x(cc);
+        cdata_next_y(cc) = rnd(3) - 1 + cdata_y(cc);
+        cell_check(cdata_next_x(cc), cdata_next_y(cc));
         if (cellaccess == 1)
         {
             label_2205();
             return;
         }
     }
-    if (cdata(202, cc) == 1)
+    if (cdata_ai_calm(cc) == 1)
     {
-        cdata(3, cc) = rnd(3) - 1 + cdata(1, cc);
-        cdata(4, cc) = rnd(3) - 1 + cdata(2, cc);
-        cell_check(cdata(3, cc), cdata(4, cc));
+        cdata_next_x(cc) = rnd(3) - 1 + cdata_x(cc);
+        cdata_next_y(cc) = rnd(3) - 1 + cdata_y(cc);
+        cell_check(cdata_next_x(cc), cdata_next_y(cc));
         if (cellaccess == 1)
         {
             label_2205();
             return;
         }
     }
-    if (cdata(202, cc) == 2)
+    if (cdata_ai_calm(cc) == 2)
     {
         if (mdata(8) == 1
-            && dist(cdata(1, cc), cdata(2, cc), cdata(171, cc), cdata(172, cc))
+            && dist(
+                   cdata_x(cc),
+                   cdata_y(cc),
+                   cdata_initial_x(cc),
+                   cdata_initial_y(cc))
                 > 2)
         {
-            cdata(3, cc) = cdata(1, cc)
+            cdata_next_x(cc) = cdata_x(cc)
                 + rnd(2)
-                    * ((cdata(1, cc) > cdata(171, cc)) * -1
-                       + (cdata(1, cc) < cdata(171, cc)));
-            cdata(4, cc) = cdata(2, cc)
+                    * ((cdata_x(cc) > cdata_initial_x(cc)) * -1
+                       + (cdata_x(cc) < cdata_initial_x(cc)));
+            cdata_next_y(cc) = cdata_y(cc)
                 + rnd(2)
-                    * ((cdata(2, cc) > cdata(172, cc)) * -1
-                       + (cdata(2, cc) < cdata(172, cc)));
+                    * ((cdata_y(cc) > cdata_initial_y(cc)) * -1
+                       + (cdata_y(cc) < cdata_initial_y(cc)));
         }
         else
         {
-            cdata(3, cc) = rnd(3) - 1 + cdata(1, cc);
-            cdata(4, cc) = rnd(3) - 1 + cdata(2, cc);
+            cdata_next_x(cc) = rnd(3) - 1 + cdata_x(cc);
+            cdata_next_y(cc) = rnd(3) - 1 + cdata_y(cc);
         }
-        cell_check(cdata(3, cc), cdata(4, cc));
+        cell_check(cdata_next_x(cc), cdata_next_y(cc));
         if (cellaccess == 1)
         {
             label_2205();
@@ -98016,7 +98090,7 @@ void label_2693()
                             sell += inv_number(cnt);
                             sell(1) += p;
                             inv_number(cnt) = 0;
-                            cdata(30, cc) += p;
+                            cdata_gold(cc) += p;
                         }
                     }
                 }
@@ -98033,9 +98107,9 @@ void label_2693()
             }
             if (rnd(100) == 0)
             {
-                if (cdata(30, cc) >= cdata(38, cc) * 500)
+                if (cdata_gold(cc) >= cdata_level(cc) * 500)
                 {
-                    cdata(30, cc) -= cdata(38, cc) * 500;
+                    cdata_gold(cc) -= cdata_level(cc) * 500;
                     snd(61);
                     txtef(9);
                     txt(lang(
@@ -98076,18 +98150,18 @@ void label_2693()
     }
     if (tc == cc)
     {
-        cdata(29, cc) = 0;
+        cdata_enemy_id(cc) = 0;
         label_2742();
         return;
     }
     if (cdata(203, cc) <= 0)
     {
-        cdata(205, cc) = cdata(1, tc);
-        cdata(206, cc) = cdata(2, tc);
-        if (retreat || cdata(208, cc) > distance)
+        cdata(205, cc) = cdata_x(tc);
+        cdata(206, cc) = cdata_y(tc);
+        if (retreat || cdata_ai_dist(cc) > distance)
         {
-            cdata(205, cc) = cdata(1, cc) + (cdata(1, cc) - cdata(1, tc));
-            cdata(206, cc) = cdata(2, cc) + (cdata(2, cc) - cdata(2, tc));
+            cdata(205, cc) = cdata_x(cc) + (cdata_x(cc) - cdata_x(tc));
+            cdata(206, cc) = cdata_y(cc) + (cdata_y(cc) - cdata_y(tc));
         }
     }
     else
@@ -98095,12 +98169,12 @@ void label_2693()
         --cdata(203, cc);
     }
     blockedbychara = 0;
-    cdata(3, cc) = (cdata(205, cc) > cdata(1, cc))
-        - (cdata(205, cc) < cdata(1, cc)) + cdata(1, cc);
-    cdata(4, cc) = (cdata(206, cc) > cdata(2, cc))
-        - (cdata(206, cc) < cdata(2, cc)) + cdata(2, cc);
-    x = cdata(3, cc);
-    y = cdata(4, cc);
+    cdata_next_x(cc) = (cdata(205, cc) > cdata_x(cc))
+        - (cdata(205, cc) < cdata_x(cc)) + cdata_x(cc);
+    cdata_next_y(cc) = (cdata(206, cc) > cdata_y(cc))
+        - (cdata(206, cc) < cdata_y(cc)) + cdata_y(cc);
+    x = cdata_next_x(cc);
+    y = cdata_next_y(cc);
     cell_check(x, y);
     if (cellaccess == 1)
     {
@@ -98112,17 +98186,17 @@ void label_2693()
         tc = cellchara;
         if (relationbetween(cc, tc) == -3)
         {
-            cdata(29, cc) = tc;
-            cdata(201, cc) += 4;
+            cdata_enemy_id(cc) = tc;
+            cdata_hate(cc) += 4;
             label_2696();
             return;
         }
         else
         {
-            if (cdata(25, cc) > 3 && cdata(38, cc) > cdata(38, tc)
+            if (cdata_quality(cc) > 3 && cdata_level(cc) > cdata_level(tc)
                 || cbit(985, tc))
             {
-                if (cdata(29, cc) != tc)
+                if (cdata_enemy_id(cc) != tc)
                 {
                     cell_swap(cc, tc);
                     if (synccheck(cc, -1))
@@ -98132,9 +98206,9 @@ void label_2693()
                             name(cc) + u8" displace"s + _s(cc) + u8" "s
                                 + name(tc) + u8"."s));
                     }
-                    if (cdata(140, tc) == 1)
+                    if (cdata_continuous_action_id(tc) == 1)
                     {
-                        if (cdata(141, tc) > 0)
+                        if (cdata_continuous_action_turn(tc) > 0)
                         {
                             if (synccheck(cc, -1))
                             {
@@ -98155,9 +98229,9 @@ void label_2693()
     }
     if (cc > 16)
     {
-        if (cdata(25, cc) > 3)
+        if (cdata_quality(cc) > 3)
         {
-            if (cdata(9, cc) <= -2)
+            if (cdata_relationship(cc) <= -2)
             {
                 if (x >= 0)
                 {
@@ -98195,8 +98269,7 @@ void label_2693()
             }
         }
     }
-    if (abs(cdata(205, cc) - cdata(1, cc))
-        >= abs(cdata(206, cc) - cdata(2, cc)))
+    if (abs(cdata(205, cc) - cdata_x(cc)) >= abs(cdata(206, cc) - cdata_y(cc)))
     {
         label_2694();
         if (stat == 1)
@@ -98228,9 +98301,9 @@ void label_2693()
     }
     if (cdata(203, cc) > 0)
     {
-        cdata(3, cc) = rnd(3) - 1 + cdata(1, cc);
-        cdata(4, cc) = rnd(3) - 1 + cdata(2, cc);
-        cell_check(cdata(3, cc), cdata(4, cc));
+        cdata_next_x(cc) = rnd(3) - 1 + cdata_x(cc);
+        cdata_next_y(cc) = rnd(3) - 1 + cdata_y(cc);
+        cell_check(cdata_next_x(cc), cdata_next_y(cc));
         if (cellaccess == 1)
         {
             label_2205();
@@ -98250,23 +98323,23 @@ void label_2693()
         dir = dir(1 + rnd(2));
         if (dir == 1)
         {
-            cdata(205, cc) = cdata(1, cc) - 6;
-            cdata(206, cc) = cdata(2, tc);
+            cdata(205, cc) = cdata_x(cc) - 6;
+            cdata(206, cc) = cdata_y(tc);
         }
         if (dir == 2)
         {
-            cdata(205, cc) = cdata(1, cc) + 6;
-            cdata(206, cc) = cdata(2, tc);
+            cdata(205, cc) = cdata_x(cc) + 6;
+            cdata(206, cc) = cdata_y(tc);
         }
         if (dir == 3)
         {
-            cdata(206, cc) = cdata(2, cc) - 6;
-            cdata(205, cc) = cdata(1, tc);
+            cdata(206, cc) = cdata_y(cc) - 6;
+            cdata(205, cc) = cdata_x(tc);
         }
         if (dir == 0)
         {
-            cdata(206, cc) = cdata(2, cc) + 6;
-            cdata(205, cc) = cdata(1, tc);
+            cdata(206, cc) = cdata_y(cc) + 6;
+            cdata(205, cc) = cdata_x(tc);
         }
     }
     label_2742();
@@ -98274,9 +98347,9 @@ void label_2693()
 }
 int label_2694()
 {
-    if (cdata(205, cc) > cdata(1, cc))
+    if (cdata(205, cc) > cdata_x(cc))
     {
-        if (cdata(206, cc) > cdata(2, cc))
+        if (cdata(206, cc) > cdata_y(cc))
         {
             p = 1;
         }
@@ -98294,9 +98367,9 @@ int label_2694()
             return stat;
         }
     }
-    if (cdata(205, cc) < cdata(1, cc))
+    if (cdata(205, cc) < cdata_x(cc))
     {
-        if (cdata(206, cc) < cdata(2, cc))
+        if (cdata(206, cc) < cdata_y(cc))
         {
             p = 0;
         }
@@ -98319,9 +98392,9 @@ int label_2694()
 }
 int label_2695()
 {
-    if (cdata(206, cc) > cdata(2, cc))
+    if (cdata(206, cc) > cdata_y(cc))
     {
-        if (cdata(205, cc) > cdata(1, cc))
+        if (cdata(205, cc) > cdata_x(cc))
         {
             p = 1;
         }
@@ -98339,9 +98412,9 @@ int label_2695()
             return stat;
         }
     }
-    if (cdata(206, cc) < cdata(2, cc))
+    if (cdata(206, cc) < cdata_y(cc))
     {
-        if (cdata(205, cc) > cdata(1, cc))
+        if (cdata(205, cc) > cdata_x(cc))
         {
             p = 0;
         }
@@ -98368,30 +98441,27 @@ void label_2696()
     {
         pcattacker = cc;
     }
-    act = cdata(215 + rnd(cdata(212, cc) % 10), cc);
-    if (cdata(209, cc) != 0)
+    act = cdata(215 + rnd(cdata_ai_act_num(cc) % 10), cc);
+    if (cdata_ai_act_sub_freq(cc) != 0)
     {
-        if (cdata(209, cc) > rnd(100))
+        if (cdata_ai_act_sub_freq(cc) > rnd(100))
         {
-            if (cdata(212, cc) / 10 == 0)
+            if (cdata_ai_act_num(cc) / 10 == 0)
             {
             }
             else
             {
-                act = cdata(220 + rnd(cdata(212, cc) / 10), cc);
+                act = cdata(220 + rnd(cdata_ai_act_num(cc) / 10), cc);
             }
             if (act >= -10000 && act < -9995)
             {
                 if (distance < 8)
                 {
                     if (fov_los(
-                            cdata(1, cc),
-                            cdata(2, cc),
-                            cdata(1, tc),
-                            cdata(2, tc)))
+                            cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
                     {
-                        tlocx = cdata(1, tc);
-                        tlocy = cdata(2, tc);
+                        tlocx = cdata_x(tc);
+                        tlocy = cdata_y(tc);
                         if (act == -9999)
                         {
                             flt();
@@ -98447,9 +98517,9 @@ void label_2696()
     }
     if (act == -4)
     {
-        cdata(3, cc) = rnd(3) - 1 + cdata(1, cc);
-        cdata(4, cc) = rnd(3) - 1 + cdata(2, cc);
-        cell_check(cdata(3, cc), cdata(4, cc));
+        cdata_next_x(cc) = rnd(3) - 1 + cdata_x(cc);
+        cdata_next_y(cc) = rnd(3) - 1 + cdata_y(cc);
+        cell_check(cdata_next_x(cc), cdata_next_y(cc));
         if (cellaccess == 1)
         {
             label_2205();
@@ -98465,7 +98535,7 @@ void label_2696()
     {
         if (distance < 6)
         {
-            if (fov_los(cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc)))
+            if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
             {
                 label_2075();
                 if (stat == 1)
@@ -98482,11 +98552,12 @@ void label_2696()
         if (act < 467)
         {
             efid = act;
-            if (cdata(55, cc) < cdata(56, cc) / 7)
+            if (cdata_mp(cc) < cdata_max_mp(cc) / 7)
             {
-                if (rnd(3) || cc < 16 || cdata(25, cc) >= 4 || cbit(988, cc))
+                if (rnd(3) || cc < 16 || cdata_quality(cc) >= 4
+                    || cbit(988, cc))
                 {
-                    cdata(55, cc) += cdata(38, cc) / 4 + 5;
+                    cdata_mp(cc) += cdata_level(cc) / 4 + 5;
                     label_2742();
                     return;
                 }
@@ -98520,8 +98591,7 @@ void label_2696()
         {
             if (distance < 6)
             {
-                if (fov_los(
-                        cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc)))
+                if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
                 {
                     label_2075();
                     if (stat == 1)
@@ -98544,7 +98614,7 @@ void label_2696()
     }
     if (distance < 6)
     {
-        if (fov_los(cdata(1, cc), cdata(2, cc), cdata(1, tc), cdata(2, tc)))
+        if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
         {
             label_2075();
             if (stat == 1)
@@ -98555,7 +98625,7 @@ void label_2696()
             }
         }
     }
-    if (cdata(208, cc) <= distance)
+    if (cdata_ai_dist(cc) <= distance)
     {
         if (rnd(3) == 0)
         {
@@ -98565,9 +98635,9 @@ void label_2696()
     }
     if (rnd(5) == 0)
     {
-        --cdata(201, cc);
+        --cdata_hate(cc);
     }
-    if (rnd(100) < cdata(207, cc))
+    if (rnd(100) < cdata_ai_move(cc))
     {
         label_2693();
         return;
@@ -100781,13 +100851,13 @@ void label_2732()
         gdata(24) = 0;
         gdata(814) = 2;
         gdata(25) = 1000;
-        cdata(61, 0) = 2;
-        cdata(62, 0) = 1000;
-        cdata(63, 0) = 1000;
+        cdata_god(0) = 2;
+        cdata_piety_point(0) = 1000;
+        cdata_praying_point(0) = 1000;
         gdata(453) = 1000;
-        cdata(30, 0) += 1000000;
-        cdata(31, 0) = 30;
-        cdata(34, 0) = 65000;
+        cdata_gold(0) += 1000000;
+        cdata_platinum_coin(0) = 30;
+        cdata_fame(0) = 65000;
         gdata(252) = 100;
         r1 = 0;
         label_1477();
@@ -101114,7 +101184,7 @@ redo:
                         if (rnd(35) == 0)
                         {
                             p = 3;
-                            if (dist(dx, dy, cdata(1, 0), cdata(2, 0)) < 6)
+                            if (dist(dx, dy, cdata_x(0), cdata_y(0)) < 6)
                             {
                                 sound = 6;
                             }
@@ -101164,12 +101234,12 @@ redo:
     {
         snd(sound);
     }
-    gspd = cdata(11, 0) * (100 + cdata(37, 0)) / 100;
+    gspd = cdata_current_speed(0) * (100 + cdata_speed_percentage(0)) / 100;
     if (gspd < 10)
     {
         gspd = 10;
     }
-    turncost = (mdata(9) - cdata(10, 0)) / gspd + 1;
+    turncost = (mdata(9) - cdata_turn_cost(0)) / gspd + 1;
     if (evnum != 0)
     {
         evproc = 1;
@@ -101186,16 +101256,16 @@ redo:
         label_2733();
         return;
     }
-    if (cdata(0, 0) != 1)
+    if (cdata_state(0) != 1)
     {
         label_2752();
         return;
     }
     if (mdata(6) == 1)
     {
-        if (cdata(141, 0) > 2)
+        if (cdata_continuous_action_turn(0) > 2)
         {
-            cdata(10, 0) = mdata(9);
+            cdata_turn_cost(0) = mdata(9);
             goto label_2734_internal;
         }
     }
@@ -101203,16 +101273,17 @@ redo:
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata(0, cnt) != 1)
+            if (cdata_state(cnt) != 1)
             {
                 continue;
             }
-            spd = cdata(11, cnt) * (100 + cdata(37, cnt)) / 100;
+            spd = cdata_current_speed(cnt) * (100 + cdata_speed_percentage(cnt))
+                / 100;
             if (spd < 10)
             {
                 spd = 10;
             }
-            cdata(10, cnt) += spd * turncost;
+            cdata_turn_cost(cnt) += spd * turncost;
         }
     }
 label_2734_internal:
@@ -101303,8 +101374,8 @@ void label_2736()
     }
     if (mdata(6) == 1)
     {
-        gdata(5) = cdata(1, 0);
-        gdata(6) = cdata(2, 0);
+        gdata(5) = cdata_x(0);
+        gdata(6) = cdata_y(0);
     }
     --gdata(18);
     label_2735();
@@ -101447,7 +101518,7 @@ void label_2736()
                 {
                     if (mode == 0)
                     {
-                        if (cdata(141, 0) == 0)
+                        if (cdata_continuous_action_turn(0) == 0)
                         {
                             gdata(211) = 1;
                             ghelp = 11;
@@ -101465,7 +101536,7 @@ void label_2736()
                 {
                     if (mode == 0)
                     {
-                        if (cdata(141, 0) == 0)
+                        if (cdata_continuous_action_turn(0) == 0)
                         {
                             gdata(212) = 1;
                             ghelp = 12;
@@ -101483,7 +101554,7 @@ void label_2736()
                 {
                     if (mode == 0)
                     {
-                        if (cdata(141, 0) == 0)
+                        if (cdata_continuous_action_turn(0) == 0)
                         {
                             gdata(213) = 1;
                             ghelp = 13;
@@ -101541,7 +101612,7 @@ void label_2736()
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(209) = 1;
                         ghelp = 9;
@@ -101551,7 +101622,7 @@ void label_2736()
             }
         }
     }
-    if (cdata(22, 0) < 5000)
+    if (cdata_nutrition(0) < 5000)
     {
         if (cfg_extrahelp)
         {
@@ -101559,7 +101630,7 @@ void label_2736()
             {
                 if (mode == 0)
                 {
-                    if (cdata(141, 0) == 0)
+                    if (cdata_continuous_action_turn(0) == 0)
                     {
                         gdata(210) = 1;
                         ghelp = 10;
@@ -101654,26 +101725,26 @@ void label_2736()
         {
             if (rnd(40) == 0)
             {
-                --cdata(62, 0);
+                --cdata_piety_point(0);
             }
-            cdata(63, 0) += 4;
+            cdata_praying_point(0) += 4;
         }
         else
         {
             if (rnd(5) == 0)
             {
-                --cdata(62, 0);
+                --cdata_piety_point(0);
             }
-            cdata(63, 0) += 32;
+            cdata_praying_point(0) += 32;
         }
     }
-    if (cdata(62, 0) < 0)
+    if (cdata_piety_point(0) < 0)
     {
-        cdata(62, 0) = 0;
+        cdata_piety_point(0) = 0;
     }
-    if (cdata(141, 0) != 0)
+    if (cdata_continuous_action_turn(0) != 0)
     {
-        if (cdata(140, 0) != 3)
+        if (cdata_continuous_action_id(0) != 3)
         {
             label_1419();
         }
@@ -101696,15 +101767,15 @@ void label_2737(bool label_2738_flg)
             throw elona_turn_sequence{};
             return;
         }
-        if (cdata(0, ct) != 1)
+        if (cdata_state(ct) != 1)
         {
             ++ct;
             label_2737();
             return;
         }
-        if (cdata(10, ct) >= mdata(9))
+        if (cdata_turn_cost(ct) >= mdata(9))
         {
-            cdata(10, ct) -= mdata(9);
+            cdata_turn_cost(ct) -= mdata(9);
         }
         else
         {
@@ -101715,22 +101786,22 @@ void label_2737(bool label_2738_flg)
     }
 label_2738:
     cc = ct;
-    cdata(37, cc) = cdata(39, cc);
-    ++cdata(26, cc);
+    cdata_speed_percentage(cc) = cdata_speed_percentage_in_next_turn(cc);
+    ++cdata_turn(cc);
     label_27412();
     if (ct == 0)
     {
         tnew = 1;
         pcnoise = 0;
         refreshspeed(0);
-        p = cdata(26, 0) % 10;
+        p = cdata_turn(0) % 10;
         if (p == 1)
         {
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
                         r1 = cnt;
                         label_1464();
@@ -101750,7 +101821,7 @@ label_2738:
         }
         if (p == 4)
         {
-            if (cdata(140, 0) == 0)
+            if (cdata_continuous_action_id(0) == 0)
             {
                 healsp(0, 2);
             }
@@ -101773,7 +101844,7 @@ label_2738:
                     int cnt = 1;
                     for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata(0, cnt) != 1)
+                        if (cdata_state(cnt) != 1)
                         {
                             continue;
                         }
@@ -101790,7 +101861,7 @@ label_2738:
                         u8"One of your allies prevents you from returning."s));
                     goto label_2740_internal;
                 }
-                if (1 && cdata(45, 0) >= 4)
+                if (1 && cdata_inventory_weight_type(0) >= 4)
                 {
                     txt(lang(
                         u8"どこからか声が聞こえた。「悪いが重量オーバーだ」"s,
@@ -101833,7 +101904,7 @@ label_2738:
         }
     label_2740_internal:
         label_1754();
-        if (cdata(0, 0) != 1)
+        if (cdata_state(0) != 1)
         {
             label_2752();
             return;
@@ -101880,12 +101951,12 @@ label_2738:
         }
     }
     tc = cc;
-    if (map(cdata(1, tc), cdata(2, tc), 8) != 0)
+    if (map(cdata_x(tc), cdata_y(tc), 8) != 0)
     {
-        ef = map(cdata(1, tc), cdata(2, tc), 8) - 1;
+        ef = map(cdata_x(tc), cdata_y(tc), 8) - 1;
         if (mef(0, ef) == 3)
         {
-            if (cbit(5, tc) == 0 || cdata(262, tc) > 0)
+            if (cbit(5, tc) == 0 || cdata_gravity(tc) > 0)
             {
                 if (sdata(63, tc) / 50 < 7)
                 {
@@ -101936,7 +102007,7 @@ label_2738:
         }
         if (mef(0, ef) == 6)
         {
-            if (cbit(5, tc) == 0 || cdata(262, tc) > 0)
+            if (cbit(5, tc) == 0 || cdata_gravity(tc) > 0)
             {
                 if (synccheck(tc, -1))
                 {
@@ -101959,7 +102030,7 @@ label_2738:
                 dbmode = 15;
                 dbid = mef(7, ef);
                 stat = label_1275();
-                if (cdata(0, tc) == 0)
+                if (cdata_state(tc) == 0)
                 {
                     check_kill(mef(6, ef), tc);
                 }
@@ -101991,12 +102062,12 @@ label_2738:
             }
         }
     }
-    if (cdata(263, cc) > 0 || cdata(251, cc) > 0 || cdata(252, cc) > 0
-        || cdata(256, cc) >= 60)
+    if (cdata_choked(cc) > 0 || cdata_sleep(cc) > 0 || cdata_paralyzed(cc) > 0
+        || cdata_dimmed(cc) >= 60)
     {
         if (cc == 0)
         {
-            if (cdata(263, cc))
+            if (cdata_choked(cc))
             {
                 await(120);
             }
@@ -102008,7 +102079,7 @@ label_2738:
         label_2742();
         return;
     }
-    if (cdata(257, cc) != 0)
+    if (cdata_drunk(cc) != 0)
     {
         if (rnd(200) == 0)
         {
@@ -102018,24 +102089,24 @@ label_2738:
                     int cnt = 0;
                     for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata(0, cnt) != 1)
+                        if (cdata_state(cnt) != 1)
                         {
                             continue;
                         }
                         if (dist(
-                                cdata(1, cc),
-                                cdata(2, cc),
-                                cdata(1, cnt),
-                                cdata(2, cnt))
+                                cdata_x(cc),
+                                cdata_y(cc),
+                                cdata_x(cnt),
+                                cdata_y(cnt))
                             > 5)
                         {
                             continue;
                         }
                         if (fov_los(
-                                cdata(1, cc),
-                                cdata(2, cc),
-                                cdata(1, cnt),
-                                cdata(2, cnt))
+                                cdata_x(cc),
+                                cdata_y(cc),
+                                cdata_x(cnt),
+                                cdata_y(cnt))
                             == 0)
                         {
                             continue;
@@ -102085,9 +102156,9 @@ label_2738:
                                         cnvtalk(
                                             u8"Your time is over, drunk!"s)));
                                 }
-                                cdata(201, tc) = 20;
-                                cdata(29, tc) = cc;
-                                cdata(79, tc) = 218;
+                                cdata_hate(tc) = 20;
+                                cdata_enemy_id(tc) = cc;
+                                cdata_emotion_icon(tc) = 218;
                             }
                         }
                         break;
@@ -102096,7 +102167,7 @@ label_2738:
             }
         }
     }
-    if (cdata(257, cc) >= 45 || cdata(22, cc) > 35000)
+    if (cdata_drunk(cc) >= 45 || cdata_nutrition(cc) > 35000)
     {
         if (rnd(60) == 0)
         {
@@ -102105,12 +102176,13 @@ label_2738:
             return;
         }
     }
-    if (cdata(143, cc) == 1)
+    if (cdata_stops_continuous_action_if_damaged(cc) == 1)
     {
         if (cc == 0)
         {
-            if (cdata(140, cc) != 1 && cdata(140, cc) != 2
-                && cdata(140, cc) != 3)
+            if (cdata_continuous_action_id(cc) != 1
+                && cdata_continuous_action_id(cc) != 2
+                && cdata_continuous_action_id(cc) != 3)
             {
                 rtval = 0;
             }
@@ -102126,20 +102198,21 @@ label_2738:
             if (synccheck(cc, -1))
             {
                 txt(lang(
-                    name(cc) + u8"は"s + actlistn(cdata(140, cc))
+                    name(cc) + u8"は"s
+                        + actlistn(cdata_continuous_action_id(cc))
                         + u8"を中断した。"s,
                     name(cc) + u8" stop"s + _s(cc) + u8" "s
-                        + actlistn(cdata(140, cc)) + u8"."s));
+                        + actlistn(cdata_continuous_action_id(cc)) + u8"."s));
             }
             rowactend(cc);
         }
         screenupdate = -1;
         label_1419();
-        cdata(143, cc) = 0;
+        cdata_stops_continuous_action_if_damaged(cc) = 0;
     }
-    if (cdata(26, cc) % 25 == 0)
+    if (cdata_turn(cc) % 25 == 0)
     {
-        if (cdata(87, cc) != 0)
+        if (cdata_curse_power(cc) != 0)
         {
             label_1577();
         }
@@ -102152,53 +102225,53 @@ label_2738:
             label_1578();
         }
     }
-    if (cdata(140, cc) != 0)
+    if (cdata_continuous_action_id(cc) != 0)
     {
-        ci = cdata(142, cc);
-        --cdata(141, cc);
-        if (cdata(140, cc) == 7)
+        ci = cdata_continuous_action_item(cc);
+        --cdata_continuous_action_turn(cc);
+        if (cdata_continuous_action_id(cc) == 7)
         {
             at(40);
             label_2156();
         }
-        if (cdata(140, cc) == 5)
+        if (cdata_continuous_action_id(cc) == 5)
         {
             at(15);
             label_2159();
         }
-        if (cdata(140, cc) == 8)
+        if (cdata_continuous_action_id(cc) == 8)
         {
             at(15);
             label_2157();
         }
-        if (cdata(140, cc) == 9)
+        if (cdata_continuous_action_id(cc) == 9)
         {
             at(15);
             label_2158();
         }
-        if (cdata(140, cc) == 4)
+        if (cdata_continuous_action_id(cc) == 4)
         {
             at(5);
             label_2152();
         }
-        if (cdata(140, cc) == 1)
+        if (cdata_continuous_action_id(cc) == 1)
         {
             at(100);
             label_2198();
             return;
         }
-        if (cdata(140, cc) == 2)
+        if (cdata_continuous_action_id(cc) == 2)
         {
             at(25);
             label_2197();
             return;
         }
-        if (cdata(140, cc) == 11)
+        if (cdata_continuous_action_id(cc) == 11)
         {
             at(50);
             label_2147();
         }
-        if (cdata(140, cc) == 10)
+        if (cdata_continuous_action_id(cc) == 10)
         {
             if (gdata(91) == 103)
             {
@@ -102224,23 +102297,23 @@ label_2738:
             }
             label_2148();
         }
-        if (cdata(140, cc) == 12)
+        if (cdata_continuous_action_id(cc) == 12)
         {
             at(20);
             label_19342();
         }
-        if (cdata(140, cc) == 6)
+        if (cdata_continuous_action_id(cc) == 6)
         {
             at(40);
             label_2146();
         }
-        if (cdata(140, cc) == 3)
+        if (cdata_continuous_action_id(cc) == 3)
         {
             label_2153();
             label_2205();
             return;
         }
-        if (cdata(141, cc) > 0)
+        if (cdata_continuous_action_turn(cc) > 0)
         {
             label_2742();
             return;
@@ -102261,7 +102334,7 @@ label_2738:
         r1 = cc;
         label_1477();
     }
-    if (cdata(0, cc) == 1)
+    if (cdata_state(cc) == 1)
     {
         if (ct == 0)
         {
@@ -102280,19 +102353,19 @@ label_2738:
 void label_27412()
 {
 label_27411_internal:
-    cdata(79, cc) -= 100;
-    if (cdata(79, cc) < 0)
+    cdata_emotion_icon(cc) -= 100;
+    if (cdata_emotion_icon(cc) < 0)
     {
-        cdata(79, cc) = 0;
+        cdata_emotion_icon(cc) = 0;
     }
     if (mdata(14) == 2)
     {
         if (gdata(17) >= 3)
         {
-            cdata(259, cc) = 50;
+            cdata_wet(cc) = 50;
         }
     }
-    if (cdata(35, cc) >= cdata(36, cc))
+    if (cdata_experience(cc) >= cdata_required_experience(cc))
     {
         if (cc == 0)
         {
@@ -102309,7 +102382,7 @@ label_27411_internal:
 void label_2742()
 {
     cc = ct;
-    if (cdata(0, cc) != 1)
+    if (cdata_state(cc) != 1)
     {
         label_2737();
         return;
@@ -102329,7 +102402,7 @@ void label_2742()
                 label_2148();
             }
         }
-        if (cdata(45, 0) >= 3)
+        if (cdata_inventory_weight_type(0) >= 3)
         {
             if (rnd(20) == 0)
             {
@@ -102338,7 +102411,10 @@ void label_2742()
                     u8"Your backpack is squashing you!"s));
                 dmghp(
                     cc,
-                    cdata(51, cc) * (cdata(43, 0) * 10 / cdata(44, 0) + 10)
+                    cdata_max_hp(cc)
+                            * (cdata_inventory_weight(0) * 10
+                                   / cdata_max_inventory_weight(0)
+                               + 10)
                             / 200
                         + 1,
                     -6);
@@ -102351,12 +102427,12 @@ void label_2742()
     {
         if (mdata(6) != 1)
         {
-            cdata(22, cc) -= 16;
-            if (cdata(22, cc) < 6000)
+            cdata_nutrition(cc) -= 16;
+            if (cdata_nutrition(cc) < 6000)
             {
                 if (cbit(986, cc) == 0)
                 {
-                    cdata(22, cc) = 6000;
+                    cdata_nutrition(cc) = 6000;
                 }
             }
         }
@@ -102364,7 +102440,7 @@ void label_2742()
     if (gdata(801) > 0)
     {
         --gdata(801);
-        if (cdata(0, cc) != 1 || gdata(801) == 0)
+        if (cdata_state(cc) != 1 || gdata(801) == 0)
         {
             txtef(9);
             txt(lang(
@@ -102393,25 +102469,25 @@ void label_2743(bool label_2747_flg)
         {
             if (rnd(1000) == 0)
             {
-                txtgod(cdata(61, 0), 12);
+                txtgod(cdata_god(0), 12);
             }
         }
         gdata(808) = 0;
         tgloc = 0;
         if (gdata(183) != 0)
         {
-            cdata(1, gdata(183)) = cdata(1, 0);
-            cdata(2, gdata(183)) = cdata(2, 0);
+            cdata_x(gdata(183)) = cdata_x(0);
+            cdata_y(gdata(183)) = cdata_y(0);
         }
         if (mdata(6) == 1)
         {
-            map(cdata(1, 0), cdata(2, 0), 1) = 1;
+            map(cdata_x(0), cdata_y(0), 1) = 1;
         }
         if (gdata(85) >= 20000)
         {
             dmghp(0, 999999, -14);
         }
-        if (cdata(0, 0) != 1)
+        if (cdata_state(0) != 1)
         {
             label_2752();
             return;
@@ -102423,7 +102499,7 @@ void label_2743(bool label_2747_flg)
                 int cnt = 0;
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
-                    y = cdata(2, 0) + cnt - 1;
+                    y = cdata_y(0) + cnt - 1;
                     if (y < 0 || y <= mdata(1))
                     {
                         continue;
@@ -102432,7 +102508,7 @@ void label_2743(bool label_2747_flg)
                         int cnt = 0;
                         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                         {
-                            x = cdata(1, 0) + cnt - 1;
+                            x = cdata_x(0) + cnt - 1;
                             if (x < 0 || x <= mdata(0))
                             {
                                 continue;
@@ -102442,7 +102518,7 @@ void label_2743(bool label_2747_flg)
                                 p = map(x, y, 1) - 1;
                                 if (p != 0)
                                 {
-                                    if (cdata(9, p) <= -3)
+                                    if (cdata_relationship(p) <= -3)
                                     {
                                         gdata(30) = 0;
                                     }
@@ -102452,10 +102528,10 @@ void label_2743(bool label_2747_flg)
                     }
                 }
             }
-            x = cdata(1, 0);
-            y = cdata(2, 0);
-            cdata(3, 0) = x + dirxy(0, gdata(35));
-            cdata(4, 0) = y + dirxy(1, gdata(35));
+            x = cdata_x(0);
+            y = cdata_y(0);
+            cdata_next_x(0) = x + dirxy(0, gdata(35));
+            cdata_next_y(0) = y + dirxy(1, gdata(35));
             if (map(x, y, 5) != 0)
             {
                 gdata(30) = 0;
@@ -102464,7 +102540,7 @@ void label_2743(bool label_2747_flg)
             {
                 gdata(30) = 0;
             }
-            cell_check(cdata(1, cc) + 1, cdata(2, cc));
+            cell_check(cdata_x(cc) + 1, cdata_y(cc));
             if (cellaccess != gdata(33))
             {
                 if (cellchara > 16 || cellchara == -1)
@@ -102472,7 +102548,7 @@ void label_2743(bool label_2747_flg)
                     gdata(30) = 0;
                 }
             }
-            cell_check(cdata(1, cc) - 1, cdata(2, cc));
+            cell_check(cdata_x(cc) - 1, cdata_y(cc));
             if (cellaccess != gdata(31))
             {
                 if (cellchara > 16 || cellchara == -1)
@@ -102480,7 +102556,7 @@ void label_2743(bool label_2747_flg)
                     gdata(30) = 0;
                 }
             }
-            cell_check(cdata(1, cc), cdata(2, cc) + 1);
+            cell_check(cdata_x(cc), cdata_y(cc) + 1);
             if (cellaccess != gdata(34))
             {
                 if (cellchara > 16 || cellchara == -1)
@@ -102488,7 +102564,7 @@ void label_2743(bool label_2747_flg)
                     gdata(30) = 0;
                 }
             }
-            cell_check(cdata(1, cc), cdata(2, cc) - 1);
+            cell_check(cdata_x(cc), cdata_y(cc) - 1);
             if (cellaccess != gdata(32))
             {
                 if (cellchara > 16 || cellchara == -1)
@@ -102496,7 +102572,7 @@ void label_2743(bool label_2747_flg)
                     gdata(30) = 0;
                 }
             }
-            cell_check(cdata(3, 0), cdata(4, 0));
+            cell_check(cdata_next_x(0), cdata_next_y(0));
             if (cellaccess == 0)
             {
                 if (cellchara > 16 || cellchara == -1)
@@ -102537,9 +102613,9 @@ void label_2743(bool label_2747_flg)
                 int cnt = 1;
                 for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
-                        if (cdata(9, cnt) == 10)
+                        if (cdata_relationship(cnt) == 10)
                         {
                             f = 1;
                             break;
@@ -102568,7 +102644,7 @@ void label_2743(bool label_2747_flg)
                         {
                             if (followerin(cnt) == 1)
                             {
-                                if (cdata(0, cnt) == 6)
+                                if (cdata_state(cnt) == 6)
                                 {
                                     continue;
                                 }
@@ -102578,7 +102654,7 @@ void label_2743(bool label_2747_flg)
                         {
                             if (followerin(cnt) == 1)
                             {
-                                if (cdata(0, cnt) == 6)
+                                if (cdata_state(cnt) == 6)
                                 {
                                     if (rnd(5) == 0)
                                     {
@@ -102587,7 +102663,7 @@ void label_2743(bool label_2747_flg)
                                 }
                             }
                         }
-                        cdata(0, cnt) = followerexist(cnt);
+                        cdata_state(cnt) = followerexist(cnt);
                     }
                 }
                 label_1737();
@@ -102595,7 +102671,7 @@ void label_2743(bool label_2747_flg)
             }
         label_2744_internal:
             await(cfg_wait1);
-            cdata(83, 0) = 0;
+            cdata_direction(0) = 0;
             key_check();
             f = 0;
             {
@@ -102610,7 +102686,7 @@ void label_2743(bool label_2747_flg)
                     {
                         p = cnt;
                     }
-                    if (cdata(0, p) != 1)
+                    if (cdata_state(p) != 1)
                     {
                         continue;
                     }
@@ -102618,11 +102694,11 @@ void label_2743(bool label_2747_flg)
                     {
                         continue;
                     }
-                    if (cdata(9, p) != 10)
+                    if (cdata_relationship(p) != 10)
                     {
                         continue;
                     }
-                    if (cdata(0, camera) != 1 || camera == 0)
+                    if (cdata_state(camera) != 1 || camera == 0)
                     {
                         camera = p;
                         break;
@@ -102720,13 +102796,13 @@ void label_2743(bool label_2747_flg)
                 }
             }
         }
-        if (cbit(6, cdata(29, 0)) == 1)
+        if (cbit(6, cdata_enemy_id(0)) == 1)
         {
             if (cbit(7, 0) == 0)
             {
-                if (cdata(259, cdata(29, 0)) == 0)
+                if (cdata_wet(cdata_enemy_id(0)) == 0)
                 {
-                    cdata(29, 0) = 0;
+                    cdata_enemy_id(0) = 0;
                 }
             }
         }
@@ -102740,7 +102816,7 @@ label_2747:
     {
         if (gdata(185))
         {
-            txtgod(cdata(61, 0), 11);
+            txtgod(cdata_god(0), 11);
         }
         firstturn = 0;
     }
@@ -102865,7 +102941,7 @@ label_2747:
                     flt(100);
                     fltn(u8"cnpc"s);
                     characreate(-1, 0, -3, 0);
-                    cdatan(0, rc) += ""s + cdata(157, rc);
+                    cdatan(0, rc) += ""s + cdata_cnpc_id(rc);
                 }
             }
         }
@@ -102977,7 +103053,7 @@ label_2747:
     if (key == key_enter)
     {
         key = key_search;
-        cell_featread(cdata(1, cc), cdata(2, cc));
+        cell_featread(cdata_x(cc), cdata_y(cc));
         if (feat(1) == 11 || mdata(6) == 1)
         {
             key = key_godown;
@@ -103000,7 +103076,7 @@ label_2747:
                 {
                     continue;
                 }
-                if (inv_x(cnt) != cdata(1, cc) || inv_y(cnt) != cdata(2, cc))
+                if (inv_x(cnt) != cdata_x(cc) || inv_y(cnt) != cdata_y(cc))
                 {
                     continue;
                 }
@@ -103070,7 +103146,7 @@ label_2747:
         }
         if (p == 3)
         {
-            if (cdata(61, 0) != 0)
+            if (cdata_god(0) != 0)
             {
                 key = key_offer;
             }
@@ -103542,68 +103618,68 @@ label_2747:
     if (key == key_north)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0);
-        cdata(4, 0) = cdata(2, 0) - 1;
+        cdata_next_x(0) = cdata_x(0);
+        cdata_next_y(0) = cdata_y(0) - 1;
         gdata(35) = 3;
         dirsub = 0;
     }
     if (key == key_south)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0);
-        cdata(4, 0) = cdata(2, 0) + 1;
+        cdata_next_x(0) = cdata_x(0);
+        cdata_next_y(0) = cdata_y(0) + 1;
         gdata(35) = 0;
         dirsub = 4;
     }
     if (key == key_west)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0) - 1;
-        cdata(4, 0) = cdata(2, 0);
+        cdata_next_x(0) = cdata_x(0) - 1;
+        cdata_next_y(0) = cdata_y(0);
         gdata(35) = 1;
         dirsub = 6;
     }
     if (key == key_east)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0) + 1;
-        cdata(4, 0) = cdata(2, 0);
+        cdata_next_x(0) = cdata_x(0) + 1;
+        cdata_next_y(0) = cdata_y(0);
         gdata(35) = 2;
         dirsub = 2;
     }
     if (key == key_northwest)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0) - 1;
-        cdata(4, 0) = cdata(2, 0) - 1;
+        cdata_next_x(0) = cdata_x(0) - 1;
+        cdata_next_y(0) = cdata_y(0) - 1;
         gdata(35) = 3;
         dirsub = 7;
     }
     if (key == key_northeast)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0) + 1;
-        cdata(4, 0) = cdata(2, 0) - 1;
+        cdata_next_x(0) = cdata_x(0) + 1;
+        cdata_next_y(0) = cdata_y(0) - 1;
         gdata(35) = 3;
         dirsub = 1;
     }
     if (key == key_southwest)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0) - 1;
-        cdata(4, 0) = cdata(2, 0) + 1;
+        cdata_next_x(0) = cdata_x(0) - 1;
+        cdata_next_y(0) = cdata_y(0) + 1;
         gdata(35) = 0;
         dirsub = 5;
     }
     if (key == key_southeast)
     {
         p = 1;
-        cdata(3, 0) = cdata(1, 0) + 1;
-        cdata(4, 0) = cdata(2, 0) + 1;
+        cdata_next_x(0) = cdata_x(0) + 1;
+        cdata_next_y(0) = cdata_y(0) + 1;
         gdata(35) = 0;
         dirsub = 3;
     }
-    cdata(83, 0) = gdata(35);
+    cdata_direction(0) = gdata(35);
     if (p == 1)
     {
         label_2203();
@@ -103688,8 +103764,7 @@ void label_2748()
                                      ++cnt)
                                 {
                                     flt();
-                                    characreate(
-                                        -1, 37, cdata(1, 0), cdata(2, 0));
+                                    characreate(-1, 37, cdata_x(0), cdata_y(0));
                                 }
                             }
                             gdata(38) = -1;
@@ -103741,7 +103816,7 @@ label_27491:
         msg_clear();
         txt(u8"「お前がここに辿り着くことは」台座から、何かの声が聞こえる。"s);
         flt();
-        characreate(-1, 23, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 23, cdata_x(0), cdata_y(0));
         music = 69;
         label_0068();
         msg_halt();
@@ -103928,7 +104003,7 @@ void label_2752()
         mdatan(0) + u8"で"s + ndeathcause,
         cnven(ndeathcause) + u8" in "s + mdatan(0) + u8"."s);
     noteadd(s, 2);
-    s = ""s + calcscore() + u8","s + cdata(7, cc);
+    s = ""s + calcscore() + u8","s + cdata_image(cc);
     noteadd(s, 3);
     if (noteinfo(0) >= 320)
     {
@@ -104190,7 +104265,7 @@ void label_2754()
     case 1:
         label_27492();
         flt();
-        characreate(-1, 23, cdata(1, 0), cdata(2, 0));
+        characreate(-1, 23, cdata_x(0), cdata_y(0));
         goto label_2755_internal;
     case 27:
         if (gdata(20) == 35)
@@ -104284,9 +104359,9 @@ void label_2754()
             p = 166;
         }
         flt();
-        initlv = cdata(38, 0) * 2 / 3 + 1;
+        initlv = cdata_level(0) * 2 / 3 + 1;
         novoidlv = 1;
-        characreate(-1, p, cdata(1, cc), cdata(2, cc));
+        characreate(-1, p, cdata_x(cc), cdata_y(cc));
         label_2659();
         goto label_2755_internal;
     case 13:
@@ -104308,14 +104383,14 @@ void label_2754()
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata(38, marry) + 5), calcfixlv(3));
+                flt(calcobjlv(cdata_level(marry) + 5), calcfixlv(3));
                 flttypemajor = fsetchest(rnd(length(fsetchest)));
-                itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
             }
         }
-        itemcreate(-1, 559, cdata(1, 0), cdata(2, 0), 0);
+        itemcreate(-1, 559, cdata_x(0), cdata_y(0), 0);
         flt();
-        itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), rnd(3) + 2);
+        itemcreate(-1, 55, cdata_x(0), cdata_y(0), rnd(3) + 2);
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
@@ -104350,8 +104425,8 @@ void label_2754()
         initlv = gdata(22) / 4;
         characreate(-1, c, -3, 0);
         cbitmod(976, rc, 1);
-        cdata(9, rc) = -3;
-        cdata(69, rc) = -3;
+        cdata_relationship(rc) = -3;
+        cdata_original_relationship(rc) = -3;
         tc = rc;
         adata(20, gdata(20)) = tc;
         txtef(3);
@@ -104384,7 +104459,7 @@ void label_2754()
     }
         tc = rc;
         adata(20, gdata(20)) = tc;
-        cdatan(0, rc) += u8" Lv"s + cdata(38, rc);
+        cdatan(0, rc) += u8" Lv"s + cdata_level(rc);
         txt(lang(
             u8"どうやら最深層まで辿り着いたらしい…"s,
             u8"It seems you have reached the deepest level of this dungeon."s));
@@ -104402,20 +104477,20 @@ void label_2754()
         snd(51);
         flt(calcobjlv(), calcfixlv());
         flttypemajor = 54000;
-        itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+        itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
         flt();
-        itemcreate(-1, 236, cdata(1, 0), cdata(2, 0), 0);
+        itemcreate(-1, 236, cdata_x(0), cdata_y(0), 0);
         flt();
-        itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 200 + inv_number(ci) * 5);
+        itemcreate(-1, 54, cdata_x(0), cdata_y(0), 200 + inv_number(ci) * 5);
         flt();
         itemcreate(
             -1,
             55,
-            cdata(1, 0),
-            cdata(2, 0),
+            cdata_x(0),
+            cdata_y(0),
             limit(rnd(3) + gdata(22) / 10, 1, 6));
         flt();
-        itemcreate(-1, 239, cdata(1, 0), cdata(2, 0), 0);
+        itemcreate(-1, 239, cdata_x(0), cdata_y(0), 0);
         inv_param2(ci) = 0;
         txtef(2);
         txt(lang(
@@ -104432,7 +104507,7 @@ void label_2754()
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
-        cdata(34, 0) += gdata(74);
+        cdata_fame(0) += gdata(74);
         if (gdata(20) == 42)
         {
             adata(20, gdata(20)) = 0;
@@ -104478,7 +104553,7 @@ void label_2754()
     }
         goto label_2755_internal;
     case 6:
-        if (cdata(38, 0) > 5)
+        if (cdata_level(0) > 5)
         {
             {
                 int cnt = 10;
@@ -104497,7 +104572,7 @@ void label_2754()
                     }
                 }
             }
-            if (cdata(49, 0) < -30)
+            if (cdata_karma(0) < -30)
             {
                 modkarma(0, 10);
             }
@@ -104514,7 +104589,7 @@ void label_2754()
         }
         txtmore();
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
-        cdata(30, 0) -= cdata(30, 0) / 3;
+        cdata_gold(0) -= cdata_gold(0) / 3;
         decfame(0, 10);
         r1 = 0;
         label_1477();
@@ -104522,28 +104597,28 @@ void label_2754()
         goto label_2755_internal;
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
-        cdata(150, evdata1(evnum - (evnum != 0) * 1)) = 0;
-        cdata(0, evdata1(evnum - (evnum != 0) * 1)) = 0;
+        cdata_character_role(evdata1(evnum - (evnum != 0) * 1)) = 0;
+        cdata_state(evdata1(evnum - (evnum != 0) * 1)) = 0;
         flt();
         itemcreate(
             -1,
             55,
-            cdata(1, evdata1(evnum - (evnum != 0) * 1)),
-            cdata(2, evdata1(evnum - (evnum != 0) * 1)),
+            cdata_x(evdata1(evnum - (evnum != 0) * 1)),
+            cdata_y(evdata1(evnum - (evnum != 0) * 1)),
             4);
         gdata(453) = 1001;
         tc = findchara(221);
         if (tc != 0)
         {
-            if (cdata(0, tc) == 1)
+            if (cdata_state(tc) == 1)
             {
                 txtef(4);
                 txt(lang(
                     u8"パエル「おかあさんーー！！」"s,
                     cnvtalk(u8"M-mom...!!"s)));
-                cdata(9, tc) = -3;
-                cdata(201, tc) = 1000;
-                cdata(29, tc) = 0;
+                cdata_relationship(tc) = -3;
+                cdata_hate(tc) = 1000;
+                cdata_enemy_id(tc) = 0;
             }
         }
         goto label_2755_internal;
@@ -104575,12 +104650,12 @@ void label_2754()
                 for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
                 {
                     i = rnd(39) + 16;
-                    if (cdata(0, i) == 3)
+                    if (cdata_state(i) == 3)
                     {
                         if (cbit(969, i) == 0)
                         {
-                            cdata(80, i) != gdata(20);
-                            if (cdata(9, i) >= 0)
+                            cdata_current_map(i) != gdata(20);
+                            if (cdata_relationship(i) >= 0)
                             {
                                 if (rnd(25) < p)
                                 {
@@ -104590,14 +104665,14 @@ void label_2754()
                                 {
                                     tc = i;
                                     ++p;
-                                    if (cdata(17, tc) < 25)
+                                    if (cdata_impression(tc) < 25)
                                     {
                                         if (rnd(12) == 0)
                                         {
                                             break;
                                         }
                                     }
-                                    if (cdata(17, tc) < 0)
+                                    if (cdata_impression(tc) < 0)
                                     {
                                         if (rnd(4))
                                         {
@@ -104606,7 +104681,7 @@ void label_2754()
                                     }
                                     continue;
                                 }
-                                if (cdata(17, cnt) < cdata(17, i))
+                                if (cdata_impression(cnt) < cdata_impression(i))
                                 {
                                     tc = i;
                                     ++p;
@@ -104623,10 +104698,10 @@ void label_2754()
                     u8"It seems the guest has already left your house."s));
                 goto label_2755_internal;
             }
-            cdata(0, tc) = 1;
+            cdata_state(tc) = 1;
             rc = tc;
-            cxinit = cdata(1, 0);
-            cyinit = cdata(2, 0);
+            cxinit = cdata_x(0);
+            cyinit = cdata_y(0);
             label_1532();
         }
         else
@@ -104641,43 +104716,44 @@ void label_2754()
                         if (rnd(3))
                         {
                             characreate(-1, 333, -3, 0);
-                            cdata(150, rc) = 2005;
+                            cdata_character_role(rc) = 2005;
                             break;
                         }
                     }
                     if (rnd(10) == 0)
                     {
                         characreate(-1, 334, -3, 0);
-                        cdata(150, rc) = 2006;
+                        cdata_character_role(rc) = 2006;
                         break;
                     }
                     if (rnd(10) == 0)
                     {
                         characreate(-1, 1, -3, 0);
-                        cdata(150, rc) = 2003;
-                        cdata(151, rc) = limit(cdata(34, 0) / 100, 20, 100);
+                        cdata_character_role(rc) = 2003;
+                        cdata_shop_rank(rc) =
+                            limit(cdata_fame(0) / 100, 20, 100);
                         break;
                     }
                     if (rnd(4) == 0)
                     {
                         characreate(-1, 9, -3, 0);
-                        cdata(150, rc) = 2000;
+                        cdata_character_role(rc) = 2000;
                         break;
                     }
                     if (rnd(4) == 0)
                     {
                         characreate(-1, 174, -3, 0);
-                        cdata(150, rc) = 2001;
+                        cdata_character_role(rc) = 2001;
                         break;
                     }
                     characreate(-1, 16, -3, 0);
-                    cdata(150, rc) = 2002;
+                    cdata_character_role(rc) = 2002;
                     break;
                 }
             }
             tc = rc;
-            cdata(9, tc) = 0;
-            cdata(69, tc) = 0;
+            cdata_relationship(tc) = 0;
+            cdata_original_relationship(tc) = 0;
             cbitmod(964, tc, 1);
         }
         cbitmod(982, tc, 1);
@@ -104694,7 +104770,7 @@ void label_2754()
                 {
                     c = cnt - 1;
                 }
-                if (cdata(0, c) != 1)
+                if (cdata_state(c) != 1)
                 {
                     continue;
                 }
@@ -104769,11 +104845,11 @@ void label_2754()
                 {
                     cell_swap(c, -1, inv_x(p), inv_y(p));
                 }
-                cdata(83, c) = direction(
-                    cdata(1, c), cdata(2, c), cdata(1, tc), cdata(2, tc));
+                cdata_direction(c) =
+                    direction(cdata_x(c), cdata_y(c), cdata_x(tc), cdata_y(tc));
                 if (c == 0)
                 {
-                    gdata(35) = cdata(83, c);
+                    gdata(35) = cdata_direction(c);
                 }
             }
         }
@@ -104785,15 +104861,15 @@ void label_2754()
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
-                if (cdata(150, cnt) != 13)
+                if (cdata_character_role(cnt) != 13)
                 {
-                    if (cdata(150, cnt) != 3)
+                    if (cdata_character_role(cnt) != 3)
                     {
-                        cdata(79, cnt) = 2010;
+                        cdata_emotion_icon(cnt) = 2010;
                         txt(lang(
                             name(cnt) + u8"「目が！目がー！！」"s,
                             name(cnt) + u8" shout"s + _s(cnt) + u8" "s
@@ -104809,7 +104885,7 @@ void label_2754()
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata(0, cnt) != 1)
+                if (cdata_state(cnt) != 1)
                 {
                     continue;
                 }
@@ -104817,14 +104893,15 @@ void label_2754()
                 {
                     continue;
                 }
-                if (cdata(150, cnt) != 13)
+                if (cdata_character_role(cnt) != 13)
                 {
-                    if (cdata(150, cnt) != 3)
+                    if (cdata_character_role(cnt) != 3)
                     {
-                        if (cdata(150, cnt) != 0 || cdata(9, cnt) == 0
-                            || cdata(80, cnt) == gdata(20))
+                        if (cdata_character_role(cnt) != 0
+                            || cdata_relationship(cnt) == 0
+                            || cdata_current_map(cnt) == gdata(20))
                         {
-                            cdata(79, cnt) = 2006;
+                            cdata_emotion_icon(cnt) = 2006;
                             customtalk(cnt, 104);
                             if (stat == 0)
                             {
@@ -104866,11 +104943,11 @@ void label_2754()
                 int cnt = 0;
                 for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) != 1)
+                    if (cdata_state(cnt) != 1)
                     {
                         continue;
                     }
-                    if (cdata(150, cnt) == 18)
+                    if (cdata_character_role(cnt) == 18)
                     {
                         tc = cnt;
                         break;
@@ -105184,11 +105261,11 @@ void label_2754()
                 int cnt = 57;
                 for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata(0, cnt) == 1)
+                    if (cdata_state(cnt) == 1)
                     {
-                        cdata(9, cnt) = -3;
-                        cdata(29, cnt) = 0;
-                        cdata(201, cnt) = 250;
+                        cdata_relationship(cnt) = -3;
+                        cdata_enemy_id(cnt) = 0;
+                        cdata_hate(cnt) = 250;
                     }
                 }
             }
@@ -105204,8 +105281,8 @@ void label_2754()
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
                     flt();
-                    initlv = cdata(38, 0);
-                    characreate(-1, 215, cdata(1, 0), cdata(2, 0));
+                    initlv = cdata_level(0);
+                    characreate(-1, 215, cdata_x(0), cdata_y(0));
                 }
             }
         }
