@@ -25364,170 +25364,164 @@ int imeget()
 void gmes(const std::string& prm_715)
 {
     std::string m_at_m102;
-    std::string msg_at_m102;
+    std::string msg_at_m102 = prm_715 + u8"$end";
     int i_at_m102 = 0;
-    int xorg_at_m102 = 0;
-    int size_at_m102 = 0;
+    int xorg_at_m102 = gmesx;
+    int size_at_m102 = 14;
     elona_vector1<int> col_at_m102;
-    int lim_at_m102 = 0;
+    int lim_at_m102 = gmesx + gmesw;
     int p_at_m102 = 0;
-    int brwait_at_m102 = 0;
     std::string s_at_m102;
-    m_at_m102 = "";
-    msg_at_m102 = ""s + prm_715 + u8"$end"s;
-    i_at_m102 = 0;
-    xorg_at_m102 = gmesx;
-    size_at_m102 = 14;
     col_at_m102(0) = gmescol;
     col_at_m102(1) = gmescol(1);
     col_at_m102(2) = gmescol(2);
     col_at_m102(3) = 180;
     col_at_m102(4) = 160;
     col_at_m102(5) = 140;
-    lim_at_m102 = gmesx + gmesw;
     font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 0);
+
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        p_at_m102 = peek(msg_at_m102, i_at_m102);
+        int brwait_at_m102 = 0;
+        if (p_at_m102 >= 0x00 && p_at_m102 <= 0x7F)
+            p_at_m102 = 1;
+        else if (p_at_m102 >= 0xc2 && p_at_m102 <= 0xdf)
+            p_at_m102 = 2;
+        else if (p_at_m102 >= 0xe0 && p_at_m102 <= 0xef)
+            p_at_m102 = 3;
+        else if (p_at_m102 >= 0xf0 && p_at_m102 <= 0xf7)
+            p_at_m102 = 4;
+        else if (p_at_m102 >= 0xf8 && p_at_m102 <= 0xfb)
+            p_at_m102 = 5;
+        else if (p_at_m102 >= 0xfc && p_at_m102 <= 0xfd)
+            p_at_m102 = 6;
+        else
+            p_at_m102 = 1;
+        m_at_m102 = strmid(msg_at_m102, i_at_m102, p_at_m102);
+        i_at_m102 += p_at_m102;
+        if (m_at_m102 == u8"$"s)
         {
-            p_at_m102 = peek(msg_at_m102, i_at_m102);
-            brwait_at_m102 = 0;
-            if ((p_at_m102 >= 129 && p_at_m102 <= 159 || p_at_m102 >= 224)
-                && p_at_m102 <= 252)
+            s_at_m102 = strmid(msg_at_m102, i_at_m102, 3);
+            p_at_m102 += 3;
+            if (s_at_m102 == u8"end"s)
             {
-                p_at_m102 = 2;
+                break;
             }
-            else
-            {
-                p_at_m102 = 1;
-            }
-            m_at_m102 = strmid(msg_at_m102, i_at_m102, p_at_m102);
-            i_at_m102 += p_at_m102;
-            if (m_at_m102 == u8"$"s)
-            {
-                s_at_m102 = strmid(msg_at_m102, i_at_m102, 3);
-                p_at_m102 += 3;
-                if (s_at_m102 == u8"end"s)
-                {
-                    break;
-                }
-                continue;
-            }
-            else
-            {
-                if (m_at_m102 != u8"。"s && m_at_m102 != u8"、"s
-                    && m_at_m102 != u8"」"s && m_at_m102 != u8"』"s
-                    && m_at_m102 != u8"！"s && m_at_m102 != u8"？"s
-                    && m_at_m102 != u8"…"s)
-                {
-                }
-                else
-                {
-                    brwait_at_m102 = 1;
-                }
-            }
-            if (m_at_m102 == u8"<"s)
-            {
-                s_at_m102 = strmid(
-                    msg_at_m102,
-                    i_at_m102,
-                    instr(msg_at_m102, i_at_m102, u8">"s));
-                i_at_m102 += instr(msg_at_m102, i_at_m102, u8">"s) + 1;
-                if (s_at_m102 == u8"emp1"s)
-                {
-                    font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 4);
-                    col_at_m102(0) = 50;
-                    col_at_m102(1) = 50;
-                    col_at_m102(2) = 255;
-                }
-                if (s_at_m102 == u8"emp2"s)
-                {
-                    font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
-                    col_at_m102(0) = 40;
-                    col_at_m102(1) = 130;
-                    col_at_m102(2) = 40;
-                }
-                if (s_at_m102 == u8"title1"s)
-                {
-                    size_at_m102 = 12;
-                    font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
-                    col_at_m102(0) = 100;
-                    col_at_m102(1) = 50;
-                    col_at_m102(2) = 50;
-                }
-                if (s_at_m102 == u8"def"s)
-                {
-                    size_at_m102 = 14;
-                    font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 0);
-                    col_at_m102(0) = gmescol;
-                    col_at_m102(1) = gmescol(1);
-                    col_at_m102(2) = gmescol(2);
-                }
-                if (s_at_m102 == u8"p"s)
-                {
-                    gmesy += 24;
-                    gmesx = xorg_at_m102;
-                }
-                if (s_at_m102 == u8"br"s)
-                {
-                    gmesy += 16;
-                    gmesx = xorg_at_m102;
-                }
-                if (s_at_m102 == u8"b"s)
-                {
-                    font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
-                }
-                if (s_at_m102 == u8"green"s)
-                {
-                    col_at_m102(0) = 20;
-                    col_at_m102(1) = 120;
-                    col_at_m102(2) = 20;
-                }
-                if (s_at_m102 == u8"red"s)
-                {
-                    col_at_m102(0) = 120;
-                    col_at_m102(1) = 20;
-                    col_at_m102(2) = 20;
-                }
-                if (s_at_m102 == u8"col"s)
-                {
-                    col_at_m102(0) = gmescol;
-                    col_at_m102(1) = gmescol(1);
-                    col_at_m102(2) = gmescol(2);
-                    col_at_m102(3) = 180;
-                    col_at_m102(4) = 160;
-                    col_at_m102(5) = 140;
-                }
-                continue;
-            }
-            if (m_at_m102 == u8"^"s)
-            {
-                m_at_m102 = strmid(msg_at_m102, i_at_m102, 1);
-                ++i_at_m102;
-            }
-            if (brwait_at_m102 == 0)
-            {
-                if (gmesx >= lim_at_m102)
-                {
-                    gmesx = xorg_at_m102;
-                    gmesy += size_at_m102 + 2;
-                }
-            }
-            if (gmestype == 1)
-            {
-                color(col_at_m102(3), col_at_m102(4), col_at_m102(5));
-                pos(gmesx + 1, gmesy + 1);
-                mes(m_at_m102);
-            }
-            color(col_at_m102(0), col_at_m102(1), col_at_m102(2));
-            pos(gmesx, gmesy);
-            mes(m_at_m102);
-            gmesx += size_at_m102 / 2 * p_at_m102;
+            continue;
         }
+        else
+        {
+            if (m_at_m102 != u8"。"s && m_at_m102 != u8"、"s
+                && m_at_m102 != u8"」"s && m_at_m102 != u8"』"s
+                && m_at_m102 != u8"！"s && m_at_m102 != u8"？"s
+                && m_at_m102 != u8"…"s)
+            {
+            }
+            else
+            {
+                brwait_at_m102 = 1;
+            }
+        }
+        if (m_at_m102 == u8"<"s)
+        {
+            s_at_m102 = strmid(
+                msg_at_m102, i_at_m102, instr(msg_at_m102, i_at_m102, u8">"s));
+            i_at_m102 += instr(msg_at_m102, i_at_m102, u8">"s) + 1;
+            if (s_at_m102 == u8"emp1"s)
+            {
+                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 4);
+                col_at_m102(0) = 50;
+                col_at_m102(1) = 50;
+                col_at_m102(2) = 255;
+            }
+            if (s_at_m102 == u8"emp2"s)
+            {
+                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
+                col_at_m102(0) = 40;
+                col_at_m102(1) = 130;
+                col_at_m102(2) = 40;
+            }
+            if (s_at_m102 == u8"title1"s)
+            {
+                size_at_m102 = 12;
+                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
+                col_at_m102(0) = 100;
+                col_at_m102(1) = 50;
+                col_at_m102(2) = 50;
+            }
+            if (s_at_m102 == u8"def"s)
+            {
+                size_at_m102 = 14;
+                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 0);
+                col_at_m102(0) = gmescol;
+                col_at_m102(1) = gmescol(1);
+                col_at_m102(2) = gmescol(2);
+            }
+            if (s_at_m102 == u8"p"s)
+            {
+                gmesy += 24;
+                gmesx = xorg_at_m102;
+            }
+            if (s_at_m102 == u8"br"s)
+            {
+                gmesy += 16;
+                gmesx = xorg_at_m102;
+            }
+            if (s_at_m102 == u8"b"s)
+            {
+                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
+            }
+            if (s_at_m102 == u8"green"s)
+            {
+                col_at_m102(0) = 20;
+                col_at_m102(1) = 120;
+                col_at_m102(2) = 20;
+            }
+            if (s_at_m102 == u8"red"s)
+            {
+                col_at_m102(0) = 120;
+                col_at_m102(1) = 20;
+                col_at_m102(2) = 20;
+            }
+            if (s_at_m102 == u8"col"s)
+            {
+                col_at_m102(0) = gmescol;
+                col_at_m102(1) = gmescol(1);
+                col_at_m102(2) = gmescol(2);
+                col_at_m102(3) = 180;
+                col_at_m102(4) = 160;
+                col_at_m102(5) = 140;
+            }
+            continue;
+        }
+        if (m_at_m102 == u8"^"s)
+        {
+            m_at_m102 = strmid(msg_at_m102, i_at_m102, 1);
+            ++i_at_m102;
+        }
+        if (brwait_at_m102 == 0)
+        {
+            if (gmesx >= lim_at_m102)
+            {
+                gmesx = xorg_at_m102;
+                gmesy += size_at_m102 + 2;
+            }
+        }
+        if (gmestype == 1)
+        {
+            color(col_at_m102(3), col_at_m102(4), col_at_m102(5));
+            pos(gmesx + 1, gmesy + 1);
+            mes(m_at_m102);
+        }
+        color(col_at_m102(0), col_at_m102(1), col_at_m102(2));
+        pos(gmesx, gmesy);
+        mes(m_at_m102);
+        gmesx += size_at_m102 / 2 * p_at_m102;
     }
+
     gmesx = xorg_at_m102;
     gmesy += size_at_m102 + 4;
-    return;
 }
 void boxl(int prm_716, int prm_717, int prm_718, int prm_719)
 {
