@@ -2,6 +2,113 @@
 #include "variables.hpp"
 
 
+
+#define RACE(is_extra_race, name) \
+    do \
+    { \
+        if (val == (is_extra_race) ? 1 : 0) \
+        { \
+            listn(1, listmax) = (name); \
+            list(0, listmax) = (is_extra_race) ? 1 : 0; \
+            ++listmax; \
+        } \
+    } while (0)
+
+#define EXTRA_RACE(name) RACE(true, name)
+#define BASIC_RACE(name) RACE(false, name)
+
+
+
+namespace
+{
+
+
+void label_2297_dbmode1()
+{
+    BASIC_RACE(u8"yerles");
+    BASIC_RACE(u8"eulderna");
+    BASIC_RACE(u8"fairy");
+    BASIC_RACE(u8"dwarf");
+    BASIC_RACE(u8"juere");
+    BASIC_RACE(u8"elea");
+    BASIC_RACE(u8"snail");
+    BASIC_RACE(u8"lich");
+    BASIC_RACE(u8"goblin");
+    BASIC_RACE(u8"golem");
+    BASIC_RACE(u8"mutant");
+
+    EXTRA_RACE(u8"kobolt");
+    EXTRA_RACE(u8"orc");
+    EXTRA_RACE(u8"troll");
+    EXTRA_RACE(u8"lizardman");
+    EXTRA_RACE(u8"minotaur");
+    EXTRA_RACE(u8"norland");
+    EXTRA_RACE(u8"asura");
+    EXTRA_RACE(u8"slime");
+    EXTRA_RACE(u8"wolf");
+    EXTRA_RACE(u8"zombie");
+    EXTRA_RACE(u8"rabbit");
+    EXTRA_RACE(u8"sheep");
+    EXTRA_RACE(u8"frog");
+    EXTRA_RACE(u8"centipede");
+    EXTRA_RACE(u8"mandrake");
+    EXTRA_RACE(u8"beetle");
+    EXTRA_RACE(u8"mushroom");
+    EXTRA_RACE(u8"bat");
+    EXTRA_RACE(u8"ent");
+    EXTRA_RACE(u8"hound");
+    EXTRA_RACE(u8"ghost");
+    EXTRA_RACE(u8"spirit");
+    EXTRA_RACE(u8"eye");
+    EXTRA_RACE(u8"wyvern");
+    EXTRA_RACE(u8"wasp");
+    EXTRA_RACE(u8"giant");
+    EXTRA_RACE(u8"imp");
+    EXTRA_RACE(u8"hand");
+    EXTRA_RACE(u8"snake");
+    EXTRA_RACE(u8"drake");
+    EXTRA_RACE(u8"bear");
+    EXTRA_RACE(u8"armor");
+    EXTRA_RACE(u8"medusa");
+    EXTRA_RACE(u8"cupid");
+    EXTRA_RACE(u8"phantom");
+    EXTRA_RACE(u8"harpy");
+    EXTRA_RACE(u8"dragon");
+    EXTRA_RACE(u8"dinosaur");
+    EXTRA_RACE(u8"cerberus");
+    EXTRA_RACE(u8"spider");
+    EXTRA_RACE(u8"rock");
+    EXTRA_RACE(u8"crab");
+    EXTRA_RACE(u8"skeleton");
+    EXTRA_RACE(u8"piece");
+    EXTRA_RACE(u8"cat");
+    EXTRA_RACE(u8"dog");
+    EXTRA_RACE(u8"roran");
+    EXTRA_RACE(u8"rat");
+    EXTRA_RACE(u8"shell");
+    EXTRA_RACE(u8"catgod");
+    EXTRA_RACE(u8"machinegod");
+    EXTRA_RACE(u8"undeadgod");
+    EXTRA_RACE(u8"machine");
+    EXTRA_RACE(u8"wisp");
+    EXTRA_RACE(u8"chicken");
+    EXTRA_RACE(u8"stalker");
+    EXTRA_RACE(u8"catsister");
+    EXTRA_RACE(u8"yeek");
+    EXTRA_RACE(u8"yith");
+    EXTRA_RACE(u8"servant");
+    EXTRA_RACE(u8"horse");
+    EXTRA_RACE(u8"god");
+    EXTRA_RACE(u8"quickling");
+    EXTRA_RACE(u8"metal");
+    EXTRA_RACE(u8"bike");
+}
+
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -11,464 +118,10 @@ int label_2297()
 {
     if (dbmode == 1)
     {
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"kobolt"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"orc"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"troll"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"lizardman"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"minotaur"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"yerles"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"norland"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"eulderna"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"fairy"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"asura"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"slime"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"wolf"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"dwarf"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"juere"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"zombie"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"elea"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"rabbit"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"sheep"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"frog"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"centipede"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"snail"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"mandrake"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"beetle"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"mushroom"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"bat"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"ent"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"lich"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"hound"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"ghost"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"spirit"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"eye"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"wyvern"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"wasp"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"giant"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"imp"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"hand"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"snake"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"drake"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"goblin"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"bear"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"armor"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"medusa"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"cupid"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"phantom"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"harpy"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"dragon"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"dinosaur"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"cerberus"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"spider"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"golem"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"rock"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"crab"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"skeleton"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"piece"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"cat"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"dog"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"roran"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"rat"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"shell"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"catgod"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"machinegod"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"undeadgod"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"machine"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"wisp"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"chicken"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"stalker"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"catsister"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 0)
-        {
-            listn(1, listmax) = u8"mutant"s;
-            list(0, listmax) = 0;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"yeek"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"yith"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"servant"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"horse"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"god"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"quickling"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"metal"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
-        if (val == 1)
-        {
-            listn(1, listmax) = u8"bike"s;
-            list(0, listmax) = 1;
-            ++listmax;
-        }
+        label_2297_dbmode1();
         return 0;
     }
+
     if (dbidn == u8"kobolt"s)
     {
         if (dbmode == 16)
