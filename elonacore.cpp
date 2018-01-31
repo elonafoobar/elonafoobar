@@ -13850,16 +13850,6 @@ void label_0192()
     label_0034();
     label_0031();
     label_0478();
-    DIM3(rdata, 30, 20);
-    dup(roomexist, rdata(0, 0));
-    dup(roomx, rdata(0, 1));
-    dup(roomy, rdata(0, 2));
-    dup(roomwidth, rdata(0, 3));
-    dup(roomheight, rdata(0, 4));
-    dup(roomexit, rdata(0, 5));
-    dup(roomexitmax, rdata(0, 6));
-    dup(roomentrancex, rdata(0, 7));
-    dup(roomentrancey, rdata(0, 8));
     DIM2(idata, 8);
     DIM3(dirxy, 2, 4);
     dirxy(0, 3) = 0;

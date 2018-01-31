@@ -213,16 +213,6 @@ inline elona_dup2<int> eqring2{initeq, 0, 12};
 inline elona_dup2<int> eqamulet1{initeq, 0, 13};
 inline elona_dup2<int> eqamulet2{initeq, 0, 14};
 
-inline elona_dup2<int> roomexist{rdata, 0, 0};
-inline elona_dup2<int> roomx{rdata, 0, 1};
-inline elona_dup2<int> roomy{rdata, 0, 2};
-inline elona_dup2<int> roomwidth{rdata, 0, 3};
-inline elona_dup2<int> roomheight{rdata, 0, 4};
-inline elona_dup2<int> roomexit{rdata, 0, 5};
-inline elona_dup2<int> roomexitmax{rdata, 0, 6};
-inline elona_dup2<int> roomentrancex{rdata, 0, 7};
-inline elona_dup2<int> roomentrancey{rdata, 0, 8};
-
 
 
 } // namespace elona
