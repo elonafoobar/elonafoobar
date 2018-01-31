@@ -61,13 +61,10 @@ int label_2176()
                 {
                     animeload(11, tc);
                 }
-                else
+                else if (bdataref(0, p) == 2)
                 {
-                    if (bdataref(0, p) == 2)
-                    {
-                        animeid = 6;
-                        label_1426();
-                    }
+                    animeid = 6;
+                    label_1426();
                 }
                 if (efid == 625 || efid == 446)
                 {
@@ -170,12 +167,9 @@ int label_2176()
                         {
                             break;
                         }
-                        else
+                        else if (stat == -1)
                         {
-                            if (stat == -1)
-                            {
-                                continue;
-                            }
+                            continue;
                         }
                         if (dist(dx, dy, cdata_x(cc), cdata_y(cc))
                             > sdataref(3, efid) % 1000 + 1)
@@ -313,12 +307,9 @@ int label_2176()
                                             f = 1;
                                         }
                                     }
-                                    else
+                                    else if (cdata_relationship(tc) <= -1)
                                     {
-                                        if (cdata_relationship(tc) <= -1)
-                                        {
-                                            f = 1;
-                                        }
+                                        f = 1;
                                     }
                                     if (f == 1)
                                     {
@@ -345,12 +336,9 @@ int label_2176()
                                             f = 1;
                                         }
                                     }
-                                    else
+                                    else if (cdata_relationship(tc) <= -1)
                                     {
-                                        if (cdata_relationship(tc) <= -1)
-                                        {
-                                            f = 1;
-                                        }
+                                        f = 1;
                                     }
                                     if (f == 1)
                                     {
@@ -431,30 +419,26 @@ int label_2176()
                                             continue;
                                         }
                                     }
-                                    else
+                                    else if (synccheck(tc, -1))
                                     {
-                                        if (synccheck(tc, -1))
+                                        txtmore();
+                                        if (tc >= 16)
                                         {
-                                            txtmore();
-                                            if (tc >= 16)
-                                            {
-                                                gdata(809) = 2;
-                                                txt3rd = 1;
-                                                txt(lang(
-                                                    u8"ボールは"s + name(tc)
-                                                        + u8"に命中し"s,
-                                                    u8"The ball hits "s
-                                                        + name(tc)
-                                                        + u8" and"s));
-                                            }
-                                            else
-                                            {
-                                                txt(lang(
-                                                    u8"ボールが"s + name(tc)
-                                                        + u8"に命中した。"s,
-                                                    u8"The Ball hits "s
-                                                        + name(tc) + u8"."s));
-                                            }
+                                            gdata(809) = 2;
+                                            txt3rd = 1;
+                                            txt(lang(
+                                                u8"ボールは"s + name(tc)
+                                                    + u8"に命中し"s,
+                                                u8"The ball hits "s + name(tc)
+                                                    + u8" and"s));
+                                        }
+                                        else
+                                        {
+                                            txt(lang(
+                                                u8"ボールが"s + name(tc)
+                                                    + u8"に命中した。"s,
+                                                u8"The Ball hits "s + name(tc)
+                                                    + u8"."s));
                                         }
                                     }
                                     dmghp(tc, dmg, cc, ele, elep);
@@ -591,65 +575,56 @@ int label_2176()
                         }
                     }
                 }
-                else
+                else if (efid == 601)
                 {
-                    if (efid == 601)
+                    if (synccheck(cc, -1))
                     {
-                        if (synccheck(cc, -1))
+                        if (tc >= 16)
                         {
-                            if (tc >= 16)
-                            {
-                                gdata(809) = 2;
-                                txt(lang(
-                                    aln(cc) + name(tc) + u8"の血を吸い"s,
-                                    name(cc) + u8" suck"s + _s(cc) + u8" "s
-                                        + name(tc) + your(tc)
-                                        + u8" blood and"s));
-                            }
-                            else
-                            {
-                                txt(lang(
-                                    name(cc) + u8"に血を吸われた。"s,
-                                    name(cc) + u8" suck"s + _s(cc) + u8" "s
-                                        + name(tc) + your(tc) + u8" blood."s));
-                            }
+                            gdata(809) = 2;
+                            txt(lang(
+                                aln(cc) + name(tc) + u8"の血を吸い"s,
+                                name(cc) + u8" suck"s + _s(cc) + u8" "s
+                                    + name(tc) + your(tc) + u8" blood and"s));
                         }
+                        else
+                        {
+                            txt(lang(
+                                name(cc) + u8"に血を吸われた。"s,
+                                name(cc) + u8" suck"s + _s(cc) + u8" "s
+                                    + name(tc) + your(tc) + u8" blood."s));
+                        }
+                    }
+                }
+                else if (synccheck(cc, -1))
+                {
+                    if (tc >= 16)
+                    {
+                        gdata(809) = 2;
+                        txt(lang(
+                            aln(cc) + name(tc) + u8"を"s + elename(ele)
+                                + _melee(2, cdata_melee_attack_type(cc))
+                                + u8"で"s
+                                + _melee(0, cdata_melee_attack_type(cc)),
+                            name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
+                                + u8" with "s + his(cc) + u8" "s + elename(ele)
+                                + u8" "s
+                                + _melee(2, cdata_melee_attack_type(cc))
+                                + u8" and"s));
                     }
                     else
                     {
-                        if (synccheck(cc, -1))
-                        {
-                            if (tc >= 16)
-                            {
-                                gdata(809) = 2;
-                                txt(lang(
-                                    aln(cc) + name(tc) + u8"を"s + elename(ele)
-                                        + _melee(2, cdata_melee_attack_type(cc))
-                                        + u8"で"s
-                                        + _melee(
-                                              0, cdata_melee_attack_type(cc)),
-                                    name(cc) + u8" touch"s + _s(cc) + u8" "s
-                                        + name(tc) + u8" with "s + his(cc)
-                                        + u8" "s + elename(ele) + u8" "s
-                                        + _melee(2, cdata_melee_attack_type(cc))
-                                        + u8" and"s));
-                            }
-                            else
-                            {
-                                txt(lang(
-                                    name(tc) + u8"は"s + name(cc) + u8"に"s
-                                        + elename(ele)
-                                        + _melee(2, cdata_melee_attack_type(cc))
-                                        + u8"で"s
-                                        + _melee(
-                                              1, cdata_melee_attack_type(cc)),
-                                    name(cc) + u8" touch"s + _s(cc) + u8" "s
-                                        + name(tc) + u8" with "s + his(cc)
-                                        + u8" "s + elename(ele) + u8" "s
-                                        + _melee(2, cdata_melee_attack_type(cc))
-                                        + u8"."s));
-                            }
-                        }
+                        txt(lang(
+                            name(tc) + u8"は"s + name(cc) + u8"に"s
+                                + elename(ele)
+                                + _melee(2, cdata_melee_attack_type(cc))
+                                + u8"で"s
+                                + _melee(1, cdata_melee_attack_type(cc)),
+                            name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
+                                + u8" with "s + his(cc) + u8" "s + elename(ele)
+                                + u8" "s
+                                + _melee(2, cdata_melee_attack_type(cc))
+                                + u8"."s));
                     }
                 }
                 if (efid == 660)
@@ -846,18 +821,15 @@ int label_2176()
                 if (efid == 619)
                 {
                 }
-                else
+                else if (encfind(tc, 22) != -1)
                 {
-                    if (encfind(tc, 22) != -1)
+                    if (synccheck(tc, -1))
                     {
-                        if (synccheck(tc, -1))
-                        {
-                            txt(lang(
-                                u8"魔法の力がテレポートを防いだ。"s,
-                                u8"Magical field prevents teleportation."s));
-                        }
-                        goto label_2186_internal;
+                        txt(lang(
+                            u8"魔法の力がテレポートを防いだ。"s,
+                            u8"Magical field prevents teleportation."s));
                     }
+                    goto label_2186_internal;
                 }
                 if (efid == 635)
                 {
@@ -921,32 +893,24 @@ int label_2176()
                             cdata_next_y(tc) = cdata_y(tc)
                                 + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
                         }
+                        else if (efidprev == 619)
+                        {
+                            cdata_next_x(tc) =
+                                telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                            cdata_next_y(tc) =
+                                teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                        }
+                        else if (efidprev == 620)
+                        {
+                            cdata_next_x(tc) =
+                                telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                            cdata_next_y(tc) =
+                                teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                        }
                         else
                         {
-                            if (efidprev == 619)
-                            {
-                                cdata_next_x(tc) = telex + rnd((cnt / 8 + 2))
-                                    - rnd((cnt / 8 + 2));
-                                cdata_next_y(tc) = teley + rnd((cnt / 8 + 2))
-                                    - rnd((cnt / 8 + 2));
-                            }
-                            else
-                            {
-                                if (efidprev == 620)
-                                {
-                                    cdata_next_x(tc) = telex
-                                        + rnd((cnt / 8 + 2))
-                                        - rnd((cnt / 8 + 2));
-                                    cdata_next_y(tc) = teley
-                                        + rnd((cnt / 8 + 2))
-                                        - rnd((cnt / 8 + 2));
-                                }
-                                else
-                                {
-                                    cdata_next_x(tc) = rnd(mdata(0) - 2) + 1;
-                                    cdata_next_y(tc) = rnd(mdata(1) - 2) + 1;
-                                }
-                            }
+                            cdata_next_x(tc) = rnd(mdata(0) - 2) + 1;
+                            cdata_next_y(tc) = rnd(mdata(1) - 2) + 1;
                         }
                         cell_check(cdata_next_x(tc), cdata_next_y(tc));
                         if (cellaccess == 1)
@@ -963,39 +927,33 @@ int label_2176()
                                             + u8"."s));
                                 }
                             }
-                            else
+                            else if (efidprev == 620)
                             {
-                                if (efidprev == 620)
+                                if (synccheck(cc, -1))
                                 {
-                                    if (synccheck(cc, -1))
-                                    {
-                                        txtmore();
-                                        txt(lang(
-                                            name(tc) + u8"は引き寄せられた。"s,
-                                            name(tc) + u8" "s + is(tc)
-                                                + u8" drawn."s));
-                                    }
+                                    txtmore();
+                                    txt(lang(
+                                        name(tc) + u8"は引き寄せられた。"s,
+                                        name(tc) + u8" "s + is(tc)
+                                            + u8" drawn."s));
+                                }
+                            }
+                            else if (synccheck(cc, -1))
+                            {
+                                if (efidprev == 635)
+                                {
+                                    txtmore();
+                                    txt(lang(
+                                        u8"泥棒は笑って逃げた。"s,
+                                        u8"A thief escapes laughing."s));
                                 }
                                 else
                                 {
-                                    if (synccheck(cc, -1))
-                                    {
-                                        if (efidprev == 635)
-                                        {
-                                            txtmore();
-                                            txt(lang(
-                                                u8"泥棒は笑って逃げた。"s,
-                                                u8"A thief escapes laughing."s));
-                                        }
-                                        else
-                                        {
-                                            txt(lang(
-                                                name(tc) + u8"は突然消えた。"s,
-                                                u8"Suddenly, "s + name(tc)
-                                                    + u8" disappear"s + _s(tc)
-                                                    + u8"."s));
-                                        }
-                                    }
+                                    txt(lang(
+                                        name(tc) + u8"は突然消えた。"s,
+                                        u8"Suddenly, "s + name(tc)
+                                            + u8" disappear"s + _s(tc)
+                                            + u8"."s));
                                 }
                             }
                             rowactend(cc);
@@ -1368,19 +1326,16 @@ label_2181_internal:
                         cnvtalk(u8"Argh, the milk is cursed!"s)));
                 }
             }
+            else if (tc == 0)
+            {
+                txt(lang(
+                    u8"濃厚で病み付きになりそうな味だ。"s,
+                    u8"The taste is very thick, almost addictive."s));
+            }
             else
             {
-                if (tc == 0)
-                {
-                    txt(lang(
-                        u8"濃厚で病み付きになりそうな味だ。"s,
-                        u8"The taste is very thick, almost addictive."s));
-                }
-                else
-                {
-                    txtef(9);
-                    txt(lang(u8"「うまー」"s, cnvtalk(u8"Yummy!"s)));
-                }
+                txtef(9);
+                txt(lang(u8"「うまー」"s, cnvtalk(u8"Yummy!"s)));
             }
         }
         if (efstatus >= 1)
@@ -1512,14 +1467,11 @@ label_2181_internal:
                 dmghp(tc, rnd(20000), -15);
             }
         }
-        else
+        else if (synccheck(tc, -1))
         {
-            if (synccheck(tc, -1))
-            {
-                txtef(9);
-                txtmore();
-                txt(lang(u8"「しょっぱ〜」"s, cnvtalk(u8"Salty!"s)));
-            }
+            txtef(9);
+            txtmore();
+            txt(lang(u8"「しょっぱ〜」"s, cnvtalk(u8"Salty!"s)));
         }
         goto label_2186_internal;
     case 1130:
@@ -2067,21 +2019,18 @@ label_2181_internal:
                                 continue;
                             }
                         }
-                        else
+                        else if (p == -1)
                         {
-                            if (p == -1)
+                            if (efstatus >= 1)
                             {
-                                if (efstatus >= 1)
-                                {
-                                    if (rnd(3) == 0)
-                                    {
-                                        continue;
-                                    }
-                                }
-                                if (efid == 1144)
+                                if (rnd(3) == 0)
                                 {
                                     continue;
                                 }
+                            }
+                            if (efid == 1144)
+                            {
+                                continue;
                             }
                         }
                         trait(tid) += p;
@@ -2327,12 +2276,9 @@ label_2181_internal:
                 {
                     p = p / 2 + 1;
                 }
-                else
+                else if (inv_body_part(ci) == 0)
                 {
-                    if (inv_body_part(ci) == 0)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
                 if (p != 0)
                 {
@@ -2361,17 +2307,14 @@ label_2181_internal:
                 }
             }
         }
-        else
+        else if (p(1) != 0)
         {
-            if (p(1) != 0)
+            if (synccheck(tc, -1))
             {
-                if (synccheck(tc, -1))
-                {
-                    txt(lang(
-                        u8"身に付けている装備の幾つかが浄化された。"s,
-                        u8"The aura uncurses some of "s + his(tc)
-                            + u8" equipment."s));
-                }
+                txt(lang(
+                    u8"身に付けている装備の幾つかが浄化された。"s,
+                    u8"The aura uncurses some of "s + his(tc)
+                        + u8" equipment."s));
             }
         }
         if (p(2) != 0)
@@ -2712,19 +2655,16 @@ label_2181_internal:
                                         + u8" skill increases."s));
                             }
                         }
-                        else
+                        else if (synccheck(tc, -1))
                         {
-                            if (synccheck(tc, -1))
-                            {
-                                snd(117);
-                                txtef(3);
-                                txt(lang(
-                                    ""s + name(tc) + u8"の"s + skillname(p)
-                                        + u8"の技術の潜在能力が減少した。"s,
-                                    u8"The potential of "s + name(tc) + your(tc)
-                                        + u8" "s + skillname(p)
-                                        + u8" skill decreases."s));
-                            }
+                            snd(117);
+                            txtef(3);
+                            txt(lang(
+                                ""s + name(tc) + u8"の"s + skillname(p)
+                                    + u8"の技術の潜在能力が減少した。"s,
+                                u8"The potential of "s + name(tc) + your(tc)
+                                    + u8" "s + skillname(p)
+                                    + u8" skill decreases."s));
                         }
                         break;
                     }
@@ -3431,20 +3371,17 @@ label_2181_internal:
             label_2659();
             check_quest();
         }
+        else if (f == 0)
+        {
+            txt(lang(
+                name(tc) + u8"は抵抗した。"s,
+                name(tc) + u8" resist"s + _s(tc) + u8"."s));
+        }
         else
         {
-            if (f == 0)
-            {
-                txt(lang(
-                    name(tc) + u8"は抵抗した。"s,
-                    name(tc) + u8" resist"s + _s(tc) + u8"."s));
-            }
-            else
-            {
-                txt(lang(
-                    name(tc) + u8"は支配できない。"s,
-                    name(tc) + u8" cannot be charmed."s));
-            }
+            txt(lang(
+                name(tc) + u8"は支配できない。"s,
+                name(tc) + u8" cannot be charmed."s));
         }
         goto label_2186_internal;
     case 436:
@@ -3501,12 +3438,9 @@ label_2181_internal:
                 {
                     f = 0;
                 }
-                else
+                else if (chipm(7, map(x, y, 0)) & 4)
                 {
-                    if (chipm(7, map(x, y, 0)) & 4)
-                    {
-                        f = 0;
-                    }
+                    f = 0;
                 }
                 if (dist(tlocx, tlocy, x, y) >= p)
                 {
@@ -4004,20 +3938,17 @@ label_2181_internal:
             cbitmod(970, tc, 0);
             check_quest();
         }
+        else if (f == 0)
+        {
+            txt(lang(
+                name(tc) + u8"は抵抗した。"s,
+                name(tc) + u8" resist"s + _s(tc) + u8"."s));
+        }
         else
         {
-            if (f == 0)
-            {
-                txt(lang(
-                    name(tc) + u8"は抵抗した。"s,
-                    name(tc) + u8" resist"s + _s(tc) + u8"."s));
-            }
-            else
-            {
-                txt(lang(
-                    name(tc) + u8"は変化できない。"s,
-                    name(tc) + u8" cannot be changed."s));
-            }
+            txt(lang(
+                name(tc) + u8"は変化できない。"s,
+                name(tc) + u8" cannot be changed."s));
         }
         goto label_2186_internal;
     case 1140:
@@ -4172,12 +4103,9 @@ label_2181_internal:
                     {
                         f = 0;
                     }
-                    else
+                    else if (chipm(0, map(x, y, 0)) == 3)
                     {
-                        if (chipm(0, map(x, y, 0)) == 3)
-                        {
-                            f = 0;
-                        }
+                        f = 0;
                     }
                 }
             }
@@ -4415,12 +4343,9 @@ label_2181_internal:
                     {
                         continue;
                     }
-                    else
+                    else if (cdata_relationship(cc) != cdata_relationship(tc))
                     {
-                        if (cdata_relationship(cc) != cdata_relationship(tc))
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                 }
                 tc = cnt;
@@ -4506,49 +4431,42 @@ label_2181_internal:
                             u8"「このかたつむり野郎」"s,
                             u8"「すぐにミンチにしてやるよ」"s);
                     }
+                    else if (rnd(2))
+                    {
+                        txt(u8"「グシャグシャにしてやるわ」"s,
+                            u8"「地べたを這いずりなさい」"s,
+                            u8"「ウージッムシ♪ウージッムシ♪」"s,
+                            u8"「目障りよ」"s,
+                            u8"「もがけ。苦しめ！」"s,
+                            u8"「その下品な眼をくりぬくの」"s);
+                    }
                     else
                     {
-                        if (rnd(2))
-                        {
-                            txt(u8"「グシャグシャにしてやるわ」"s,
-                                u8"「地べたを這いずりなさい」"s,
-                                u8"「ウージッムシ♪ウージッムシ♪」"s,
-                                u8"「目障りよ」"s,
-                                u8"「もがけ。苦しめ！」"s,
-                                u8"「その下品な眼をくりぬくの」"s);
-                        }
-                        else
-                        {
-                            txt(u8"「このカタツムリが」"s,
-                                u8"「どうしたの？もう終わりなの？」"s,
-                                u8"「潔く、くたばりなさい」"s,
-                                u8"「生まれてきたことを後悔するのね」"s,
-                                u8"「このブタめ」"s,
-                                u8"「すぐにミンチにしてあげる」"s);
-                        }
+                        txt(u8"「このカタツムリが」"s,
+                            u8"「どうしたの？もう終わりなの？」"s,
+                            u8"「潔く、くたばりなさい」"s,
+                            u8"「生まれてきたことを後悔するのね」"s,
+                            u8"「このブタめ」"s,
+                            u8"「すぐにミンチにしてあげる」"s);
                     }
+                }
+                else if (rnd(2))
+                {
+                    txt(cnvtalk(u8"You suck!"s),
+                        cnvtalk(u8"You will die alone."s),
+                        cnvtalk(u8"Bow down before me."s),
+                        cnvtalk(u8"Go jump off a bridge."s),
+                        cnvtalk(u8"Bang your head against the wall!"s),
+                        cnvtalk(u8"Why do you sniff under your dog's tail?"s));
                 }
                 else
                 {
-                    if (rnd(2))
-                    {
-                        txt(cnvtalk(u8"You suck!"s),
-                            cnvtalk(u8"You will die alone."s),
-                            cnvtalk(u8"Bow down before me."s),
-                            cnvtalk(u8"Go jump off a bridge."s),
-                            cnvtalk(u8"Bang your head against the wall!"s),
-                            cnvtalk(
-                                u8"Why do you sniff under your dog's tail?"s));
-                    }
-                    else
-                    {
-                        txt(cnvtalk(
-                                u8"The world is against you because you are a unsavory decomposing virus."s),
-                            cnvtalk(
-                                u8"You are no better than a immoral guzzling bureaucrat."s),
-                            cnvtalk(u8"You are so lowly."s),
-                            cnvtalk(u8"Get off me."s));
-                    }
+                    txt(cnvtalk(
+                            u8"The world is against you because you are a unsavory decomposing virus."s),
+                        cnvtalk(
+                            u8"You are no better than a immoral guzzling bureaucrat."s),
+                        cnvtalk(u8"You are so lowly."s),
+                        cnvtalk(u8"Get off me."s));
                 }
             }
         }

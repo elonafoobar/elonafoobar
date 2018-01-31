@@ -2586,12 +2586,9 @@ label_1741_internal:
                         if (33 <= gdata(62) && gdata(62) < 66)
                         {
                         }
-                        else
+                        else if (rnd(3) == 0)
                         {
-                            if (rnd(3) == 0)
-                            {
-                                fixlv = 5;
-                            }
+                            fixlv = 5;
                         }
                     }
                     if (cnt < 4)
@@ -2652,13 +2649,10 @@ label_1741_internal:
                         flt();
                         characreate(-1, 2, 16, 6);
                     }
-                    else
+                    else if (npcmemory(0, 23) == 0)
                     {
-                        if (npcmemory(0, 23) == 0)
-                        {
-                            flt();
-                            characreate(-1, 23, 16, 6);
-                        }
+                        flt();
+                        characreate(-1, 23, 16, 6);
                     }
                     break;
                 }

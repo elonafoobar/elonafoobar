@@ -173,14 +173,11 @@ std::string cnven(const std::string& prm_252)
             }
         }
     }
-    else
+    else if (p_at_m1 >= 97)
     {
-        if (p_at_m1 >= 97)
+        if (p_at_m1 <= 122)
         {
-            if (p_at_m1 <= 122)
-            {
-                poke(s_at_m1, 0, p_at_m1 - 32);
-            }
+            poke(s_at_m1, 0, p_at_m1 - 32);
         }
     }
     return s_at_m1;
@@ -2107,16 +2104,13 @@ void label_0068()
     {
         DSSETVOLUME(13, cfg_svolume * 8 / 10);
     }
+    else if (gdata(22) == 1 || gdata(20) == 30)
+    {
+        DSSETVOLUME(13, cfg_svolume * 2 / 10);
+    }
     else
     {
-        if (gdata(22) == 1 || gdata(20) == 30)
-        {
-            DSSETVOLUME(13, cfg_svolume * 2 / 10);
-        }
-        else
-        {
-            DSSETVOLUME(13, 0);
-        }
+        DSSETVOLUME(13, 0);
     }
     if (gdata(20) == 11)
     {
@@ -2571,12 +2565,9 @@ void key_check(int prm_299)
         {
             prevjoy_at_m19 = -1;
         }
-        else
+        else if (prm_299 == 2)
         {
-            if (prm_299 == 2)
-            {
-                return;
-            }
+            return;
         }
     }
     if (quickkeywait)
@@ -2672,85 +2663,70 @@ void key_check(int prm_299)
                     key = ""s;
                 }
             }
-            else
+            else if (cfg_scroll == 0)
             {
-                if (cfg_scroll == 0)
+                if (keybd_wait < cfg_walkwait * cfg_startrun)
                 {
-                    if (keybd_wait < cfg_walkwait * cfg_startrun)
+                    if (keybd_wait % cfg_walkwait == 0)
                     {
-                        if (keybd_wait % cfg_walkwait == 0)
-                        {
-                        }
-                        else
-                        {
-                            key = "";
-                        }
                     }
                     else
                     {
-                        running = 1;
-                        if (keybd_wait < 100000)
-                        {
-                            if (keybd_wait % cfg_runwait != 0)
-                            {
-                                key = ""s;
-                            }
-                        }
+                        key = "";
                     }
                 }
                 else
                 {
-                    if (p_at_m19 == 0)
+                    running = 1;
+                    if (keybd_wait < 100000)
                     {
-                        if (keybd_wait < 10)
+                        if (keybd_wait % cfg_runwait != 0)
                         {
-                            if (keybd_wait != 0)
-                            {
-                                key = ""s;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (keybd_wait > cfg_startrun)
-                        {
-                            if (cfg_runscroll == 0)
-                            {
-                                if (keybd_wait % cfg_runwait == 0)
-                                {
-                                }
-                                else
-                                {
-                                    key = "";
-                                }
-                            }
-                            running = 1;
+                            key = ""s;
                         }
                     }
                 }
             }
-        }
-        else
-        {
-            if (keybd_wait < 14)
+            else if (p_at_m19 == 0)
             {
-                if (keybd_wait == 0 || keybd_wait == 7)
+                if (keybd_wait < 10)
                 {
-                }
-                else
-                {
-                    key = "";
-                }
-            }
-            else
-            {
-                if (keybd_wait < 1000)
-                {
-                    if (keybd_wait % 2 != 1)
+                    if (keybd_wait != 0)
                     {
                         key = ""s;
                     }
                 }
+            }
+            else if (keybd_wait > cfg_startrun)
+            {
+                if (cfg_runscroll == 0)
+                {
+                    if (keybd_wait % cfg_runwait == 0)
+                    {
+                    }
+                    else
+                    {
+                        key = "";
+                    }
+                }
+                running = 1;
+            }
+        }
+        else if (keybd_wait < 14)
+        {
+            if (keybd_wait == 0 || keybd_wait == 7)
+            {
+            }
+            else
+            {
+                key = "";
+            }
+        }
+        else if (keybd_wait < 1000)
+        {
+            if (keybd_wait % 2 != 1)
+            {
+                key = ""s;
             }
         }
         ++keybd_wait;
@@ -3468,32 +3444,26 @@ std::string his(int prm_322, int prm_323)
             {
                 return u8"あなたの"s;
             }
+            else if (cdata_sex(prm_322) == 0)
+            {
+                return u8"彼の"s;
+            }
             else
             {
-                if (cdata_sex(prm_322) == 0)
-                {
-                    return u8"彼の"s;
-                }
-                else
-                {
-                    return u8"彼女の"s;
-                }
+                return u8"彼女の"s;
             }
         }
         if (prm_322 == 0)
         {
             return u8"your"s;
         }
+        else if (cdata_sex(prm_322) == 0)
+        {
+            return u8"his"s;
+        }
         else
         {
-            if (cdata_sex(prm_322) == 0)
-            {
-                return u8"his"s;
-            }
-            else
-            {
-                return u8"her"s;
-            }
+            return u8"her"s;
         }
     }
     if (prm_322 < 0 || prm_322 >= 245)
@@ -5634,16 +5604,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"グロテスクな"s + n_at_m33 + u8"の肉"s,
                     u8"grotesque "s + n_at_m33 + u8" meat"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -5660,16 +5627,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"焼け焦げた"s + n_at_m33 + u8"の肉"s,
                     u8"charred "s + n_at_m33 + u8" meat"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -5685,16 +5649,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + n_at_m33 + u8"のこんがり肉"s, u8"roast "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -5711,16 +5672,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + n_at_m33 + u8"肉のオードブル"s,
                     u8"deep fried "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -5737,16 +5695,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + n_at_m33 + u8"のピリ辛炒め"s,
                     u8"skewer grilled "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -5762,16 +5717,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + n_at_m33 + u8"コロッケ"s, n_at_m33 + u8" croquette"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -5788,16 +5740,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + n_at_m33 + u8"のハンバーグ"s,
                     n_at_m33 + u8" hamburger"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -5814,16 +5763,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + n_at_m33 + u8"肉の大葉焼き"s,
                     n_at_m33 + u8" cutlet"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -5838,16 +5784,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + n_at_m33 + u8"ステーキ"s, n_at_m33 + u8" steak"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -5872,16 +5815,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"生ごみ同然の"s + s_at_m33,
                     u8"kitchen refuse "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -5896,16 +5836,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     u8"悪臭を放つ"s + s_at_m33, u8"smelly "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -5920,16 +5857,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"のサラダ"s, s_at_m33 + u8" salad"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -5944,16 +5878,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の炒め物"s, u8"fried "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -5970,16 +5901,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"風味の肉じゃが"s,
                     s_at_m33 + u8" roll"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -5994,16 +5922,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -6018,16 +5943,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の煮込み"s, s_at_m33 + u8" gratin"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -6044,16 +5966,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"シチュー"s,
                     u8"meat and "s + s_at_m33 + u8" stew"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -6068,16 +5987,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"風カレー"s, s_at_m33 + u8" curry"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -6102,16 +6018,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"食べてはならない"s + s_at_m33,
                     u8"dangerous "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -6126,16 +6039,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     u8"べっちょりした"s + s_at_m33, u8"doubtful "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -6152,16 +6062,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"のフルーツサラダ"s,
                     s_at_m33 + u8" jelly salad"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -6176,16 +6083,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"のプリン"s, s_at_m33 + u8" pudding"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -6202,16 +6106,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"シャーベット"s,
                     s_at_m33 + u8" sherbet"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -6227,16 +6128,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"シェイク"s, s_at_m33 + u8" ice cream"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -6251,16 +6149,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"クレープ"s, s_at_m33 + u8" crepe"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -6277,16 +6172,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"フルーツケーキ"s,
                     s_at_m33 + u8" fruit cake"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -6303,16 +6195,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"パフェ"s,
                     s_at_m33 + u8" grand parfait"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -6330,16 +6219,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"禁断の"s + n_at_m33, u8"risky "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -6356,16 +6242,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"のびてふにゃった"s + n_at_m33,
                     u8"exhausted "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -6377,16 +6260,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"サラダパスタ"s, u8"salad pasta"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -6397,16 +6277,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"うどん"s, u8"udon"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -6417,16 +6294,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"冷やし蕎麦"s, u8"soba"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -6438,16 +6312,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -6458,16 +6329,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"カルボナーラ"s, u8"carbonara"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -6478,16 +6346,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"ラーメン"s, u8"ramen"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -6499,16 +6364,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -6532,16 +6394,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     u8"原型を留めない"s + s_at_m33, u8"collapsed "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -6554,16 +6413,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"まずそうな"s + s_at_m33, u8"nasty "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -6578,16 +6434,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"クッキー"s, s_at_m33 + u8" cookie"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -6602,16 +6455,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"のゼリー"s, s_at_m33 + u8" jelly"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -6624,16 +6474,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(""s + s_at_m33 + u8"パイ"s, s_at_m33 + u8" pie"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -6648,16 +6495,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"まんじゅう"s, s_at_m33 + u8" bun"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -6674,16 +6518,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"風味のシュークリーム"s,
                     s_at_m33 + u8" cream puff"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -6698,16 +6539,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"のケーキ"s, s_at_m33 + u8" cake"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -6724,16 +6562,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     ""s + s_at_m33 + u8"風ザッハトルテ"s,
                     s_at_m33 + u8" sachertorte"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -6756,16 +6591,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の残骸"s, u8"leftover "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -6780,16 +6612,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     u8"骨だけ残った"s + s_at_m33, u8"bony "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -6804,16 +6633,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"のフライ"s, u8"fried "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -6828,16 +6654,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の煮込み"s, u8"stewed "s + s_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -6852,16 +6675,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"スープ"s, s_at_m33 + u8" soup"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -6876,16 +6696,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -6901,16 +6718,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"ソーセージ"s, s_at_m33 + u8" sausage"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -6925,16 +6739,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の刺身"s, s_at_m33 + u8" sashimi"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -6949,16 +6760,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     ""s + s_at_m33 + u8"の活け作り"s, s_at_m33 + u8" sushi"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -6976,16 +6784,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"恐怖の"s + n_at_m33, u8"fearsome "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -6998,16 +6803,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"ガチガチの"s + n_at_m33, u8"hard "s + n_at_m33);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -7019,16 +6821,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"くるみパン"s, u8"walnut bread"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -7039,16 +6838,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"アップルパイ"s, u8"apple pie"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -7059,16 +6855,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"サンドイッチ"s, u8"sandwich"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -7079,16 +6872,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"クロワッサン"s, u8"croissant"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -7100,16 +6890,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -7121,16 +6908,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"カレーパン"s, u8"chocolate babka"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -7142,16 +6926,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
             {
                 return lang(u8"メロンパン"s, u8"melon flavored bread"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -7180,16 +6961,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"グロテスクな"s + n_at_m33 + u8"の卵"s,
                     u8"grotesque "s + n_at_m33 + u8" egg"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 2)
@@ -7206,16 +6984,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"焦げた"s + n_at_m33 + u8"の卵"s,
                     u8"overcooked "s + n_at_m33 + u8" egg"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 3)
@@ -7232,16 +7007,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     n_at_m33 + u8"の卵の目玉焼き"s,
                     u8"fried "s + n_at_m33 + u8" egg"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 4)
@@ -7257,16 +7029,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     n_at_m33 + u8"風味のキッシュ"s, n_at_m33 + u8" egg toast"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 5)
@@ -7283,16 +7052,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"半熟"s + n_at_m33,
                     u8"soft boiled "s + n_at_m33 + u8" egg"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 6)
@@ -7309,16 +7075,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     n_at_m33 + u8"の卵入りスープ"s,
                     u8"soup with "s + n_at_m33 + u8" egg"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 7)
@@ -7335,16 +7098,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     u8"熟成"s + n_at_m33 + u8"チーズ"s,
                     u8"mature "s + n_at_m33 + u8" cheeze"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 8)
@@ -7361,16 +7121,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                     n_at_m33 + u8"のレアチーズケーキ"s,
                     n_at_m33 + u8" cheeze cake"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         if (prm_375 == 9)
@@ -7385,16 +7142,13 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
                 return lang(
                     n_at_m33 + u8"風オムライス"s, n_at_m33 + u8" omelet"s);
             }
+            else if (p_at_m33 == 1)
+            {
+                return "";
+            }
             else
             {
-                if (p_at_m33 == 1)
-                {
-                    return "";
-                }
-                else
-                {
-                    return "";
-                }
+                return "";
             }
         }
         return s_at_m33;
@@ -14375,38 +14129,35 @@ void create_pcpic(int prm_409, int prm_410)
         if (prm_409 == 0 && gdata(183) != 0 && pcc(16, prm_409) != 0)
         {
         }
-        else
+        else if (pcc(21, prm_409) == 0)
         {
-            if (pcc(21, prm_409) == 0)
+            exist(
+                fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
+                + u8".bmp"s);
+            if (strsize != -1)
             {
-                exist(
+                pos(128, 0);
+                picload(
                     fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
-                    + u8".bmp"s);
-                if (strsize != -1)
-                {
-                    pos(128, 0);
-                    picload(
-                        fs::u8path(u8"./graphic/pcc_leg_"s)
-                            + pcc(3, prm_409) % 1000 + u8".bmp"s,
-                        1);
-                    color(0, 0, 0);
-                    boxf(256, 0, 384, 198);
-                    gmode(4 - 1, -1, 256);
-                    color(43, 133, 133);
-                    pget(128, 0);
-                    pos(256, 0);
-                    gcopy(10 + prm_409, 128, 0, 128, 198);
-                    pos(256, 0);
-                    gfini(128, 198);
-                    gfdec2(
-                        c_col(0, pcc(3, prm_409) / 1000),
-                        c_col(1, pcc(3, prm_409) / 1000),
-                        c_col(2, pcc(3, prm_409) / 1000));
-                    gmode(2);
-                    color(0, 0, 0);
-                    pos(0, 0);
-                    gcopy(10 + prm_409, 256, 0, 128, 198);
-                }
+                        + u8".bmp"s,
+                    1);
+                color(0, 0, 0);
+                boxf(256, 0, 384, 198);
+                gmode(4 - 1, -1, 256);
+                color(43, 133, 133);
+                pget(128, 0);
+                pos(256, 0);
+                gcopy(10 + prm_409, 128, 0, 128, 198);
+                pos(256, 0);
+                gfini(128, 198);
+                gfdec2(
+                    c_col(0, pcc(3, prm_409) / 1000),
+                    c_col(1, pcc(3, prm_409) / 1000),
+                    c_col(2, pcc(3, prm_409) / 1000));
+                gmode(2);
+                color(0, 0, 0);
+                pos(0, 0);
+                gcopy(10 + prm_409, 256, 0, 128, 198);
             }
         }
         if (pcc(22, prm_409) == 0)
@@ -16391,14 +16142,11 @@ label_0227_internal:
                     {
                         randn2_at_m41 += u8" of"s;
                     }
-                    else
+                    else if (rnd(6) == 0)
                     {
-                        if (rnd(6) == 0)
-                        {
-                            randn2_at_m41 = u8"the "s + randn2_at_m41;
-                            rtval_at_m41 = 1;
-                            break;
-                        }
+                        randn2_at_m41 = u8"the "s + randn2_at_m41;
+                        rtval_at_m41 = 1;
+                        break;
                     }
                 }
                 randn2_at_m41 += u8" "s;
@@ -16484,27 +16232,24 @@ label_0228_internal:
                 s_at_m41 += s2_at_m41(rnd(10));
             }
         }
+        else if (rnd(2))
+        {
+            s2_at_m41(0) = u8"The army of "s;
+            s2_at_m41(1) = u8"The party of "s;
+            s2_at_m41(2) = u8"The house of "s;
+            s2_at_m41(3) = u8"Clan "s;
+            s_at_m41 = s2_at_m41(rnd(4)) + s_at_m41;
+        }
         else
         {
-            if (rnd(2))
-            {
-                s2_at_m41(0) = u8"The army of "s;
-                s2_at_m41(1) = u8"The party of "s;
-                s2_at_m41(2) = u8"The house of "s;
-                s2_at_m41(3) = u8"Clan "s;
-                s_at_m41 = s2_at_m41(rnd(4)) + s_at_m41;
-            }
-            else
-            {
-                s2_at_m41(0) = u8"Clan"s;
-                s2_at_m41(1) = u8"Party"s;
-                s2_at_m41(2) = u8"Band"s;
-                s2_at_m41(3) = u8"Gangs"s;
-                s2_at_m41(4) = u8"Gathering"s;
-                s2_at_m41(5) = u8"House"s;
-                s2_at_m41(6) = u8"Army"s;
-                s_at_m41 += u8" "s + s2_at_m41(rnd(7));
-            }
+            s2_at_m41(0) = u8"Clan"s;
+            s2_at_m41(1) = u8"Party"s;
+            s2_at_m41(2) = u8"Band"s;
+            s2_at_m41(3) = u8"Gangs"s;
+            s2_at_m41(4) = u8"Gathering"s;
+            s2_at_m41(5) = u8"House"s;
+            s2_at_m41(6) = u8"Army"s;
+            s_at_m41 += u8" "s + s2_at_m41(rnd(7));
         }
     }
     return s_at_m41;
@@ -17422,20 +17167,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 45)
@@ -17446,20 +17188,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 46)
@@ -17470,20 +17209,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 47)
@@ -17494,20 +17230,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 22)
@@ -17519,20 +17252,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 23)
@@ -17543,20 +17273,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 24)
@@ -17567,20 +17294,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 25)
@@ -17591,20 +17315,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 26)
@@ -17615,20 +17336,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 27)
@@ -17639,20 +17357,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 28)
@@ -17663,20 +17378,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 41)
@@ -17688,20 +17400,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 42)
@@ -17714,20 +17423,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 29)
@@ -17740,20 +17446,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 100);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 100);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 100;
-                return;
-            }
+            rtval(1) = val(1) / 100;
+            return;
         }
     }
     if (val == 30)
@@ -17766,20 +17469,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 31)
@@ -17792,20 +17492,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 48)
@@ -17818,20 +17515,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 32)
@@ -17842,20 +17536,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 33)
@@ -17867,20 +17558,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 34)
@@ -17891,20 +17579,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 35)
@@ -17917,20 +17602,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 36)
@@ -17943,20 +17625,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 37)
@@ -17967,20 +17646,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 38)
@@ -17992,20 +17668,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 39)
@@ -18018,20 +17691,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 44)
@@ -18044,20 +17714,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 50)
@@ -18070,20 +17737,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 51)
@@ -18096,20 +17760,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 40)
@@ -18120,20 +17781,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1));
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1));
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1);
-                return;
-            }
+            rtval(1) = val(1);
+            return;
         }
     }
     if (val == 43)
@@ -18145,20 +17803,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 49)
@@ -18171,20 +17826,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 52)
@@ -18197,20 +17849,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 53)
@@ -18223,20 +17872,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 54)
@@ -18249,20 +17895,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 55)
@@ -18273,20 +17916,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 56)
@@ -18298,20 +17938,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 57)
@@ -18324,20 +17961,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 58)
@@ -18350,20 +17984,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     if (val == 59)
@@ -18374,20 +18005,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 60)
@@ -18400,20 +18028,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(-1);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(-1);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = -1;
-                return;
-            }
+            rtval(1) = -1;
+            return;
         }
     }
     if (val == 61)
@@ -18426,20 +18051,17 @@ void label_0247()
         {
             return;
         }
+        else if (val(2) == 0)
+        {
+            s += u8" ["s;
+            putenclv(val(1) / 50);
+            s += u8"]"s;
+            return;
+        }
         else
         {
-            if (val(2) == 0)
-            {
-                s += u8" ["s;
-                putenclv(val(1) / 50);
-                s += u8"]"s;
-                return;
-            }
-            else
-            {
-                rtval(1) = val(1) / 50;
-                return;
-            }
+            rtval(1) = val(1) / 50;
+            return;
         }
     }
     return;
@@ -18474,12 +18096,9 @@ int randomenc(int prm_451)
                     {
                         continue;
                     }
-                    else
+                    else if (encflt(reftype, encref(4, cnt)) == 0)
                     {
-                        if (encflt(reftype, encref(4, cnt)) == 0)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                 }
             }
@@ -18640,23 +18259,17 @@ int encadd(
                 {
                     return 0;
                 }
-                else
-                {
-                    if (encflt(reftype, encref(4, enc_at_m48)) == 0)
-                    {
-                        return 0;
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (reftype == 25000)
-            {
-                if (prm_462 == 0)
+                else if (encflt(reftype, encref(4, enc_at_m48)) == 0)
                 {
                     return 0;
                 }
+            }
+        }
+        else if (reftype == 25000)
+        {
+            if (prm_462 == 0)
+            {
+                return 0;
             }
         }
     }
@@ -18726,12 +18339,9 @@ int encadd(
                             {
                                 continue;
                             }
-                            else
+                            else if (encflt(reftype, encprocref(4, cnt)) == 0)
                             {
-                                if (encflt(reftype, encprocref(4, cnt)) == 0)
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
                         }
                     }
@@ -20980,58 +20590,54 @@ void cell_refresh(int prm_493, int prm_494)
         wpoke(map(prm_493, prm_494, 4), 0, 363);
         wpoke(map(prm_493, prm_494, 4), 2, 0);
     }
-    else
+    else if (p_at_m55 > 1)
     {
-        if (p_at_m55 > 1)
+        n_at_m55(2) = 0;
         {
-            n_at_m55(2) = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
+                cnt2_at_m55 = cnt;
+                i_at_m55 = -1;
                 {
-                    cnt2_at_m55 = cnt;
-                    i_at_m55 = -1;
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (p_at_m55); cnt < cnt_end;
-                             ++cnt)
+                        if (cnt2_at_m55 == 1)
                         {
-                            if (cnt2_at_m55 == 1)
+                            if (cnt == n_at_m55(0))
                             {
-                                if (cnt == n_at_m55(0))
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
-                            if (cnt2_at_m55 == 2)
+                        }
+                        if (cnt2_at_m55 == 2)
+                        {
+                            if (cnt == n_at_m55(0) || cnt == n_at_m55(1))
                             {
-                                if (cnt == n_at_m55(0) || cnt == n_at_m55(1))
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
-                            if (inv_turn(floorstack(cnt)) > i_at_m55)
-                            {
-                                n_at_m55(cnt2_at_m55) = cnt;
-                                i_at_m55 = inv_turn(floorstack(cnt));
-                            }
+                        }
+                        if (inv_turn(floorstack(cnt)) > i_at_m55)
+                        {
+                            n_at_m55(cnt2_at_m55) = cnt;
+                            i_at_m55 = inv_turn(floorstack(cnt));
                         }
                     }
                 }
             }
-            map(prm_493, prm_494, 4) = floorstack(n_at_m55(0)) - 5080;
-            map(prm_493, prm_494, 4) += (floorstack(n_at_m55(1)) - 5080) * 1000;
-            if (p_at_m55 > 2)
-            {
-                map(prm_493, prm_494, 4) +=
-                    (floorstack(n_at_m55(2)) - 5080) * 1000000;
-            }
-            else
-            {
-                map(prm_493, prm_494, 4) += 999000000;
-            }
-            map(prm_493, prm_494, 4) *= -1;
         }
+        map(prm_493, prm_494, 4) = floorstack(n_at_m55(0)) - 5080;
+        map(prm_493, prm_494, 4) += (floorstack(n_at_m55(1)) - 5080) * 1000;
+        if (p_at_m55 > 2)
+        {
+            map(prm_493, prm_494, 4) +=
+                (floorstack(n_at_m55(2)) - 5080) * 1000000;
+        }
+        else
+        {
+            map(prm_493, prm_494, 4) += 999000000;
+        }
+        map(prm_493, prm_494, 4) *= -1;
     }
     return;
 }
@@ -21263,12 +20869,9 @@ int inv_weight_(int prm_507)
                 {
                     p_at_m57 += inv_weight(cnt) * inv_number(cnt);
                 }
-                else
+                else if (prm_507 == 0)
                 {
-                    if (prm_507 == 0)
-                    {
-                        gdata(80) += inv_weight(cnt) * inv_number(cnt) * -1;
-                    }
+                    gdata(80) += inv_weight(cnt) * inv_number(cnt) * -1;
                 }
             }
         }
@@ -21451,18 +21054,15 @@ void label_0311()
             s_at_m63 +=
                 lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
         }
+        else if (inv_subname(prm_518) == 0)
+        {
+            s_at_m63 += lang(u8"カスタム"s, ""s);
+        }
         else
         {
-            if (inv_subname(prm_518) == 0)
-            {
-                s_at_m63 += lang(u8"カスタム"s, ""s);
-            }
-            else
-            {
-                s_at_m63 += lang(
-                    u8"《"s + rpname(inv_subname(prm_518)) + u8"》の"s,
-                    u8" of <"s + rpname(inv_subname(prm_518)) + u8">"s);
-            }
+            s_at_m63 += lang(
+                u8"《"s + rpname(inv_subname(prm_518)) + u8"》の"s,
+                u8" of <"s + rpname(inv_subname(prm_518)) + u8">"s);
         }
     }
     if (a_at_m63 == 55000)
@@ -21474,24 +21074,16 @@ void label_0311()
                 u8" titled <Art of "s + skillname(inv_param1(prm_518))
                     + u8">"s);
         }
-        else
+        else if (inv_id(prm_518) == 668)
         {
-            if (inv_id(prm_518) == 668)
-            {
-                s_at_m63 += lang(u8"第"s, u8" of Rachel No."s)
-                    + inv_param2(prm_518) + lang(u8"巻目の"s, ""s);
-            }
-            else
-            {
-                if (inv_id(prm_518) == 24)
-                {
-                    s_at_m63 += lang(
-                        u8"《"s + booktitle(inv_param1(prm_518))
-                            + u8"》という題名の"s,
-                        u8" titled <"s + booktitle(inv_param1(prm_518))
-                            + u8">"s);
-                }
-            }
+            s_at_m63 += lang(u8"第"s, u8" of Rachel No."s) + inv_param2(prm_518)
+                + lang(u8"巻目の"s, ""s);
+        }
+        else if (inv_id(prm_518) == 24)
+        {
+            s_at_m63 += lang(
+                u8"《"s + booktitle(inv_param1(prm_518)) + u8"》という題名の"s,
+                u8" titled <"s + booktitle(inv_param1(prm_518)) + u8">"s);
         }
     }
     if (a_at_m63 == 60002)
@@ -21546,25 +21138,23 @@ void label_0311()
             }
             s_at_m63 += ""s + fishdatan(inv_subname(prm_518));
         }
-        else
+        else if (
+            a_at_m63 == 57000 || a_at_m63 == 62000 || inv_id(prm_518) == 503
+            || inv_id(prm_518) == 504 || inv_id(prm_518) == 575
+            || inv_id(prm_518) == 574)
         {
-            if (a_at_m63 == 57000 || a_at_m63 == 62000 || inv_id(prm_518) == 503
-                || inv_id(prm_518) == 504 || inv_id(prm_518) == 575
-                || inv_id(prm_518) == 574)
+            if (inv_subname(prm_518) < 0 || inv_subname(prm_518) >= 800)
             {
-                if (inv_subname(prm_518) < 0 || inv_subname(prm_518) >= 800)
+                s_at_m63 += u8"/bugged/"s;
+                return;
+            }
+            if (inv_own_state(prm_518) != 4)
+            {
+                s_at_m63 += lang(""s, u8" of "s)
+                    + refchara_str(inv_subname(prm_518), 2);
+                if (jp)
                 {
-                    s_at_m63 += u8"/bugged/"s;
-                    return;
-                }
-                if (inv_own_state(prm_518) != 4)
-                {
-                    s_at_m63 += lang(""s, u8" of "s)
-                        + refchara_str(inv_subname(prm_518), 2);
-                    if (jp)
-                    {
-                        s_at_m63 += u8"の"s;
-                    }
+                    s_at_m63 += u8"の"s;
                 }
             }
         }
@@ -21807,12 +21397,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                 s_at_m63 = s_at_m63 + s2_at_m63 + u8" "s + s3_at_m63 + u8" "s;
             }
         }
-        else
+        else if (num2_at_m63 > 1)
         {
-            if (num2_at_m63 > 1)
-            {
-                s_at_m63 = ""s + num2_at_m63 + u8" "s + s_at_m63;
-            }
+            s_at_m63 = ""s + num2_at_m63 + u8" "s + s_at_m63;
         }
     }
     if (inv_material(prm_518) == 35)
@@ -21925,13 +21512,10 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                                 + strblank;
                         }
                     }
-                    else
+                    else if (inv_subname(prm_518) < 40000)
                     {
-                        if (inv_subname(prm_518) < 40000)
-                        {
-                            s_at_m63 += egominorn(inv_subname(prm_518) - 20000)
-                                + strblank;
-                        }
+                        s_at_m63 +=
+                            egominorn(inv_subname(prm_518) - 20000) + strblank;
                     }
                 }
                 if (inv_quality(prm_518) != 6)
@@ -21963,80 +21547,73 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         s_at_m63 += iknownnameref(inv_id(prm_518));
     }
-    else
+    else if (inv_identification_state(prm_518) < 3)
     {
-        if (inv_identification_state(prm_518) < 3)
+        if (inv_quality(prm_518) < 4 || a_at_m63 >= 50000)
         {
-            if (inv_quality(prm_518) < 4 || a_at_m63 >= 50000)
-            {
-                s_at_m63 += ioriginalnameref(inv_id(prm_518));
-            }
-            else
-            {
-                s_at_m63 += iknownnameref(inv_id(prm_518));
-            }
+            s_at_m63 += ioriginalnameref(inv_id(prm_518));
         }
         else
         {
-            if (inv_quality(prm_518) == 6 || ibit(5, prm_518) == 1)
+            s_at_m63 += iknownnameref(inv_id(prm_518));
+        }
+    }
+    else if (inv_quality(prm_518) == 6 || ibit(5, prm_518) == 1)
+    {
+        if (jp)
+        {
+            s_at_m63 = u8"★"s + s_at_m63 + ioriginalnameref(inv_id(prm_518));
+        }
+        else
+        {
+            s_at_m63 += ioriginalnameref(inv_id(prm_518));
+        }
+    }
+    else
+    {
+        if (inv_quality(prm_518) >= 4)
+        {
+            if (jp)
             {
-                if (jp)
+                s_at_m63 = u8"☆"s + s_at_m63;
+            }
+        }
+        if (alpha_at_m63 == 1 && jp)
+        {
+            s_at_m63 += ialphanameref(inv_id(prm_518));
+        }
+        else
+        {
+            s_at_m63 += ioriginalnameref(inv_id(prm_518));
+        }
+        if (en)
+        {
+            if (a_at_m63 < 50000)
+            {
+                if (inv_subname(prm_518) >= 10000)
                 {
-                    s_at_m63 =
-                        u8"★"s + s_at_m63 + ioriginalnameref(inv_id(prm_518));
+                    if (inv_subname(prm_518) < 20000)
+                    {
+                        s_at_m63 +=
+                            u8" "s + egoname((inv_subname(prm_518) - 10000));
+                    }
                 }
-                else
-                {
-                    s_at_m63 += ioriginalnameref(inv_id(prm_518));
-                }
+            }
+        }
+        if (inv_subname(prm_518) >= 40000)
+        {
+            randomize(inv_subname(prm_518) - 40000);
+            if (inv_quality(prm_518) == 4)
+            {
+                s_at_m63 += lang(u8"『"s, u8" <"s) + random_title(1)
+                    + lang(u8"』"s, u8">"s);
             }
             else
             {
-                if (inv_quality(prm_518) >= 4)
-                {
-                    if (jp)
-                    {
-                        s_at_m63 = u8"☆"s + s_at_m63;
-                    }
-                }
-                if (alpha_at_m63 == 1 && jp)
-                {
-                    s_at_m63 += ialphanameref(inv_id(prm_518));
-                }
-                else
-                {
-                    s_at_m63 += ioriginalnameref(inv_id(prm_518));
-                }
-                if (en)
-                {
-                    if (a_at_m63 < 50000)
-                    {
-                        if (inv_subname(prm_518) >= 10000)
-                        {
-                            if (inv_subname(prm_518) < 20000)
-                            {
-                                s_at_m63 += u8" "s
-                                    + egoname((inv_subname(prm_518) - 10000));
-                            }
-                        }
-                    }
-                }
-                if (inv_subname(prm_518) >= 40000)
-                {
-                    randomize(inv_subname(prm_518) - 40000);
-                    if (inv_quality(prm_518) == 4)
-                    {
-                        s_at_m63 += lang(u8"『"s, u8" <"s) + random_title(1)
-                            + lang(u8"』"s, u8">"s);
-                    }
-                    else
-                    {
-                        s_at_m63 += lang(u8"《"s, u8" {"s) + random_title(1)
-                            + lang(u8"》"s, u8"}"s);
-                    }
-                    randomize();
-                }
+                s_at_m63 += lang(u8"《"s, u8" {"s) + random_title(1)
+                    + lang(u8"》"s, u8"}"s);
             }
+            randomize();
         }
     }
 label_0313_internal:
@@ -22049,21 +21626,18 @@ label_0313_internal:
             {
                 s_at_m63 = u8"the "s + s_at_m63;
             }
-            else
+            else if (num2_at_m63 == 1)
             {
-                if (num2_at_m63 == 1)
+                s4_at_m63 = strmid(s_at_m63, 0, 1);
+                if (s4_at_m63 == u8"a"s || s4_at_m63 == u8"o"s
+                    || s4_at_m63 == u8"i"s || s4_at_m63 == u8"u"s
+                    || s4_at_m63 == u8"e"s)
                 {
-                    s4_at_m63 = strmid(s_at_m63, 0, 1);
-                    if (s4_at_m63 == u8"a"s || s4_at_m63 == u8"o"s
-                        || s4_at_m63 == u8"i"s || s4_at_m63 == u8"u"s
-                        || s4_at_m63 == u8"e"s)
-                    {
-                        s_at_m63 = u8"an "s + s_at_m63;
-                    }
-                    else
-                    {
-                        s_at_m63 = u8"a "s + s_at_m63;
-                    }
+                    s_at_m63 = u8"an "s + s_at_m63;
+                }
+                else
+                {
+                    s_at_m63 = u8"a "s + s_at_m63;
                 }
             }
         }
@@ -22195,14 +21769,11 @@ label_0313_internal:
         {
             s_at_m63 += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
-        else
+        else if (inv_count(prm_518) == 0)
         {
-            if (inv_count(prm_518) == 0)
+            if (inv_param1(prm_518) == 0)
             {
-                if (inv_param1(prm_518) == 0)
-                {
-                    s_at_m63 += lang(u8"(空っぽ)"s, u8"(Empty)"s);
-                }
+                s_at_m63 += lang(u8"(空っぽ)"s, u8"(Empty)"s);
             }
         }
     }
@@ -22866,16 +22437,13 @@ void modrank(int prm_552, int prm_553, int prm_554)
             + rankn(10, prm_552) + s_at_m75 + u8") "s + lang(u8"《"s, u8"<"s)
             + ranktitle(prm_552) + lang(u8"》"s, u8">"s));
     }
-    else
+    else if (i_at_m75 > 0)
     {
-        if (i_at_m75 > 0)
-        {
-            txtef(2);
-            txtmore();
-            txt(lang(
-                u8"着実に次のランクに近づいている。"s,
-                u8"You are one step closer to the next rank."s));
-        }
+        txtef(2);
+        txtmore();
+        txt(lang(
+            u8"着実に次のランクに近づいている。"s,
+            u8"You are one step closer to the next rank."s));
     }
     return;
 }
@@ -23851,23 +23419,17 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
         }
     }
-    else
+    else if (ay_at_modfov == 1)
     {
-        if (ay_at_modfov == 1)
+        if (ax_at_modfov == 2)
         {
-            if (ax_at_modfov == 2)
+            if ((chipm(7, map(prm_629 + sx_at_modfov, prm_630, 0)) & 1) == 0)
             {
-                if ((chipm(7, map(prm_629 + sx_at_modfov, prm_630, 0)) & 1)
+                if ((chipm(7, map((prm_629 + sx_at_modfov), prm_630, 6) % 1000)
+                     & 1)
                     == 0)
                 {
-                    if ((chipm(
-                             7,
-                             map((prm_629 + sx_at_modfov), prm_630, 6) % 1000)
-                         & 1)
-                        == 0)
-                    {
-                        return 1;
-                    }
+                    return 1;
                 }
             }
         }
@@ -23906,28 +23468,25 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             tx_at_modfov += sx_at_modfov;
         }
+        else if (qy_at_modfov > f2_at_modfov)
+        {
+            ty_at_modfov += sy_at_modfov;
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+            {
+                return 0;
+            }
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            {
+                return 0;
+            }
+            qy_at_modfov -= f1_at_modfov;
+            tx_at_modfov += sx_at_modfov;
+        }
         else
         {
-            if (qy_at_modfov > f2_at_modfov)
-            {
-                ty_at_modfov += sy_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-                {
-                    return 0;
-                }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-                {
-                    return 0;
-                }
-                qy_at_modfov -= f1_at_modfov;
-                tx_at_modfov += sx_at_modfov;
-            }
-            else
-            {
-                ty_at_modfov += sy_at_modfov;
-                qy_at_modfov -= f1_at_modfov;
-                tx_at_modfov += sx_at_modfov;
-            }
+            ty_at_modfov += sy_at_modfov;
+            qy_at_modfov -= f1_at_modfov;
+            tx_at_modfov += sx_at_modfov;
         }
         goto label_0394_internal;
     label_0395_internal:
@@ -23966,28 +23525,25 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             ty_at_modfov += sy_at_modfov;
         }
+        else if (qx_at_modfov > f2_at_modfov)
+        {
+            tx_at_modfov += sx_at_modfov;
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+            {
+                return 0;
+            }
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            {
+                return 0;
+            }
+            qx_at_modfov -= f1_at_modfov;
+            ty_at_modfov += sy_at_modfov;
+        }
         else
         {
-            if (qx_at_modfov > f2_at_modfov)
-            {
-                tx_at_modfov += sx_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-                {
-                    return 0;
-                }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-                {
-                    return 0;
-                }
-                qx_at_modfov -= f1_at_modfov;
-                ty_at_modfov += sy_at_modfov;
-            }
-            else
-            {
-                tx_at_modfov += sx_at_modfov;
-                qx_at_modfov -= f1_at_modfov;
-                ty_at_modfov += sy_at_modfov;
-            }
+            tx_at_modfov += sx_at_modfov;
+            qx_at_modfov -= f1_at_modfov;
+            ty_at_modfov += sy_at_modfov;
         }
         goto label_0396_internal;
     }
@@ -24171,33 +23727,27 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             }
         }
     }
-    else
+    else if (ay_at_modfov == 1)
     {
-        if (ay_at_modfov == 1)
+        if (ax_at_modfov == 2)
         {
-            if (ax_at_modfov == 2)
+            if ((chipm(7, map(prm_633 + sx_at_modfov, prm_634, 0)) & 1) == 0)
             {
-                if ((chipm(7, map(prm_633 + sx_at_modfov, prm_634, 0)) & 1)
+                if ((chipm(7, map((prm_633 + sx_at_modfov), prm_634, 6) % 1000)
+                     & 1)
                     == 0)
                 {
-                    if ((chipm(
-                             7,
-                             map((prm_633 + sx_at_modfov), prm_634, 6) % 1000)
-                         & 1)
-                        == 0)
-                    {
-                        route(0, p_at_modfov) = 1;
-                        route(1, p_at_modfov) = sx_at_modfov;
-                        ++p_at_modfov;
-                        route(0, p_at_modfov) = 1;
-                        route(1, p_at_modfov) = 0;
-                        ++p_at_modfov;
-                        route(0, p_at_modfov) = 2;
-                        route(1, p_at_modfov) = sy_at_modfov;
-                        ++p_at_modfov;
-                        maxroute = p_at_modfov;
-                        return 1;
-                    }
+                    route(0, p_at_modfov) = 1;
+                    route(1, p_at_modfov) = sx_at_modfov;
+                    ++p_at_modfov;
+                    route(0, p_at_modfov) = 1;
+                    route(1, p_at_modfov) = 0;
+                    ++p_at_modfov;
+                    route(0, p_at_modfov) = 2;
+                    route(1, p_at_modfov) = sy_at_modfov;
+                    ++p_at_modfov;
+                    maxroute = p_at_modfov;
+                    return 1;
                 }
             }
         }
@@ -24245,40 +23795,37 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = sx_at_modfov;
             ++p_at_modfov;
         }
+        else if (qy_at_modfov > f2_at_modfov)
+        {
+            ty_at_modfov += sy_at_modfov;
+            route(0, p_at_modfov) = 2;
+            route(1, p_at_modfov) = sy_at_modfov;
+            ++p_at_modfov;
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+            {
+                return 0;
+            }
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            {
+                return 0;
+            }
+            qy_at_modfov -= f1_at_modfov;
+            tx_at_modfov += sx_at_modfov;
+            route(0, p_at_modfov) = 1;
+            route(1, p_at_modfov) = sx_at_modfov;
+            ++p_at_modfov;
+        }
         else
         {
-            if (qy_at_modfov > f2_at_modfov)
-            {
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-                {
-                    return 0;
-                }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-                {
-                    return 0;
-                }
-                qy_at_modfov -= f1_at_modfov;
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-            }
-            else
-            {
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-                qy_at_modfov -= f1_at_modfov;
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-            }
+            ty_at_modfov += sy_at_modfov;
+            route(0, p_at_modfov) = 2;
+            route(1, p_at_modfov) = sy_at_modfov;
+            ++p_at_modfov;
+            qy_at_modfov -= f1_at_modfov;
+            tx_at_modfov += sx_at_modfov;
+            route(0, p_at_modfov) = 1;
+            route(1, p_at_modfov) = sx_at_modfov;
+            ++p_at_modfov;
         }
         goto label_0407_internal;
     label_0408_internal:
@@ -24326,40 +23873,37 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = sy_at_modfov;
             ++p_at_modfov;
         }
+        else if (qx_at_modfov > f2_at_modfov)
+        {
+            tx_at_modfov += sx_at_modfov;
+            route(0, p_at_modfov) = 1;
+            route(1, p_at_modfov) = sx_at_modfov;
+            ++p_at_modfov;
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+            {
+                return 0;
+            }
+            if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+            {
+                return 0;
+            }
+            qx_at_modfov -= f1_at_modfov;
+            ty_at_modfov += sy_at_modfov;
+            route(0, p_at_modfov) = 2;
+            route(1, p_at_modfov) = sy_at_modfov;
+            ++p_at_modfov;
+        }
         else
         {
-            if (qx_at_modfov > f2_at_modfov)
-            {
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-                {
-                    return 0;
-                }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-                {
-                    return 0;
-                }
-                qx_at_modfov -= f1_at_modfov;
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-            }
-            else
-            {
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-                qx_at_modfov -= f1_at_modfov;
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-            }
+            tx_at_modfov += sx_at_modfov;
+            route(0, p_at_modfov) = 1;
+            route(1, p_at_modfov) = sx_at_modfov;
+            ++p_at_modfov;
+            qx_at_modfov -= f1_at_modfov;
+            ty_at_modfov += sy_at_modfov;
+            route(0, p_at_modfov) = 2;
+            route(1, p_at_modfov) = sy_at_modfov;
+            ++p_at_modfov;
         }
         goto label_0409_internal;
     }
@@ -25422,18 +24966,15 @@ void gmes(const std::string& prm_715)
             }
             continue;
         }
+        else if (
+            m_at_m102 != u8"。"s && m_at_m102 != u8"、"s && m_at_m102 != u8"」"s
+            && m_at_m102 != u8"』"s && m_at_m102 != u8"！"s
+            && m_at_m102 != u8"？"s && m_at_m102 != u8"…"s)
+        {
+        }
         else
         {
-            if (m_at_m102 != u8"。"s && m_at_m102 != u8"、"s
-                && m_at_m102 != u8"」"s && m_at_m102 != u8"』"s
-                && m_at_m102 != u8"！"s && m_at_m102 != u8"？"s
-                && m_at_m102 != u8"…"s)
-            {
-            }
-            else
-            {
-                brwait_at_m102 = 1;
-            }
+            brwait_at_m102 = 1;
         }
         if (m_at_m102 == u8"<"s)
         {
@@ -25849,16 +25390,13 @@ int direction(int prm_748, int prm_749, int prm_750, int prm_751)
             return 2;
         }
     }
+    else if (prm_749 > prm_751)
+    {
+        return 3;
+    }
     else
     {
-        if (prm_749 > prm_751)
-        {
-            return 3;
-        }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
 }
 void label_0478()
@@ -27442,12 +26980,9 @@ int relationbetween(int prm_760, int)
             return -3;
         }
     }
-    else
+    else if (cdata_relationship(prm_760) >= -2)
     {
-        if (cdata_relationship(prm_760) >= -2)
-        {
-            return -3;
-        }
+        return -3;
     }
     return 0;
 }
@@ -27485,14 +27020,11 @@ int customtalk(int prm_764, int prm_765)
         noteload(fs::u8path(u8"./user/talk/"s + cdatan(4, prm_764)));
         f_at_m116 = 1;
     }
-    else
+    else if (cdata_id(prm_764) == 343)
     {
-        if (cdata_id(prm_764) == 343)
-        {
-            f_at_m116 = 1;
-            buff_at_m116 = ""s + usertxt(cdata_cnpc_id(prm_764));
-            notesel(buff_at_m116);
-        }
+        f_at_m116 = 1;
+        buff_at_m116 = ""s + usertxt(cdata_cnpc_id(prm_764));
+        notesel(buff_at_m116);
     }
     if (f_at_m116)
     {
@@ -28002,12 +27534,9 @@ void chara_vanquish(int prm_773)
     {
         ride_end();
     }
-    else
+    else if (cdata_state(prm_773) == 1 || cdata_state(prm_773) == 10)
     {
-        if (cdata_state(prm_773) == 1 || cdata_state(prm_773) == 10)
-        {
-            map(cdata_x(prm_773), cdata_y(prm_773), 1) = 0;
-        }
+        map(cdata_x(prm_773), cdata_y(prm_773), 1) = 0;
     }
     cdata_state(prm_773) = 0;
     cdata_character_role(prm_773) = 0;
@@ -30276,13 +29805,10 @@ void check_kill(int prm_836, int prm_837)
                         cdata_emotion_icon(prm_836) = 317;
                     }
                 }
-                else
+                else if (rnd(10) == 0)
                 {
-                    if (rnd(10) == 0)
-                    {
-                        modimp(prm_836, 1);
-                        cdata_emotion_icon(prm_836) = 317;
-                    }
+                    modimp(prm_836, 1);
+                    cdata_emotion_icon(prm_836) = 317;
                 }
             }
         }
@@ -30513,20 +30039,17 @@ int item_fire(int prm_840, int prm_841)
                             {
                                 --inv_count(ti_at_m138);
                             }
-                            else
+                            else if (rnd(20) == 0)
                             {
-                                if (rnd(20) == 0)
+                                --inv_number(ti_at_m138);
+                                if (synccheck(prm_840, -1))
                                 {
-                                    --inv_number(ti_at_m138);
-                                    if (synccheck(prm_840, -1))
-                                    {
-                                        txt(lang(
-                                            itemname(ti_at_m138, 1)
-                                                + u8"は灰と化した。"s,
-                                            itemname(ti_at_m138, 1)
-                                                + u8" turns to dust."s));
-                                        break;
-                                    }
+                                    txt(lang(
+                                        itemname(ti_at_m138, 1)
+                                            + u8"は灰と化した。"s,
+                                        itemname(ti_at_m138, 1)
+                                            + u8" turns to dust."s));
+                                    break;
                                 }
                             }
                             continue;
@@ -30556,34 +30079,28 @@ int item_fire(int prm_840, int prm_841)
                             r1 = prm_840;
                             label_1477();
                         }
-                        else
-                        {
-                            if (synccheck(prm_840, -1))
-                            {
-                                txtef(8);
-                                txt(lang(
-                                    name(prm_840) + u8"の"s
-                                        + itemname(ci_at_m138, p_at_m138)
-                                        + u8"は灰と化した。"s,
-                                    name(prm_840) + your(prm_840) + u8" "s
-                                        + itemname(ci_at_m138, p_at_m138, 1)
-                                        + u8" turn"s + _s2(p_at_m138)
-                                        + u8" to dust."s));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (synccheck(inv_x(ci_at_m138), inv_y(ci_at_m138)))
+                        else if (synccheck(prm_840, -1))
                         {
                             txtef(8);
                             txt(lang(
-                                u8"地面の"s + itemname(ci_at_m138, p_at_m138)
+                                name(prm_840) + u8"の"s
+                                    + itemname(ci_at_m138, p_at_m138)
                                     + u8"は灰と化した。"s,
-                                itemname(ci_at_m138, p_at_m138)
-                                    + u8" on the ground turn"s + _s(p_at_m138)
+                                name(prm_840) + your(prm_840) + u8" "s
+                                    + itemname(ci_at_m138, p_at_m138, 1)
+                                    + u8" turn"s + _s2(p_at_m138)
                                     + u8" to dust."s));
                         }
+                    }
+                    else if (synccheck(inv_x(ci_at_m138), inv_y(ci_at_m138)))
+                    {
+                        txtef(8);
+                        txt(lang(
+                            u8"地面の"s + itemname(ci_at_m138, p_at_m138)
+                                + u8"は灰と化した。"s,
+                            itemname(ci_at_m138, p_at_m138)
+                                + u8" on the ground turn"s + _s(p_at_m138)
+                                + u8" to dust."s));
                     }
                     inv_number(ci_at_m138) -= p_at_m138;
                     cell_refresh(inv_x(ci_at_m138), inv_y(ci_at_m138));
@@ -30735,18 +30252,14 @@ int item_cold(int prm_844, int prm_845)
                         {
                             --inv_count(ti_at_m138);
                         }
-                        else
+                        else if (rnd(20) == 0)
                         {
-                            if (rnd(20) == 0)
-                            {
-                                txt(lang(
-                                    itemname(ti_at_m138, 1)
-                                        + u8"は粉々に砕けた。"s,
-                                    itemname(ti_at_m138, 1)
-                                        + u8" is broken to pieces."s));
-                                --inv_number(ti_at_m138);
-                                break;
-                            }
+                            txt(lang(
+                                itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
+                                itemname(ti_at_m138, 1)
+                                    + u8" is broken to pieces."s));
+                            --inv_number(ti_at_m138);
+                            break;
                         }
                         continue;
                     }
@@ -31282,16 +30795,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             dmg_at_m141 =
                 dmg_at_m141 * 150 / limit((r_at_m141 * 50 + 50), 40, 150);
         }
+        else if (r_at_m141 < 10)
+        {
+            dmg_at_m141 = dmg_at_m141 * 100 / (r_at_m141 * 50 + 50);
+        }
         else
         {
-            if (r_at_m141 < 10)
-            {
-                dmg_at_m141 = dmg_at_m141 * 100 / (r_at_m141 * 50 + 50);
-            }
-            else
-            {
-                dmg_at_m141 = 0;
-            }
+            dmg_at_m141 = 0;
         }
         dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, prm_853) / 2 + 50);
     }
@@ -31454,12 +30964,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        else
+        else if (cbit(985, prm_853))
         {
-            if (cbit(985, prm_853))
-            {
-                cdata_hp(prm_853) = cdata_max_hp(prm_853);
-            }
+            cdata_hp(prm_853) = cdata_max_hp(prm_853);
         }
     }
     if (cdata_hp(prm_853) >= 0)
@@ -31831,14 +31338,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     }
                 }
             }
-            else
+            else if (cdata_original_relationship(prm_855) <= -3)
             {
-                if (cdata_original_relationship(prm_855) <= -3)
+                if (cdata_hate(prm_853) == 0 || rnd(4) == 0)
                 {
-                    if (cdata_hate(prm_853) == 0 || rnd(4) == 0)
-                    {
-                        f_at_m141 = 1;
-                    }
+                    f_at_m141 = 1;
                 }
             }
             if (prm_855 != 0)
@@ -32304,21 +31808,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             cdata_state(prm_853) = 0;
         }
+        else if (cdata_character_role(prm_853) == 13)
+        {
+            cdata_state(prm_853) = 4;
+            cdata_time_to_revive(prm_853) = gdata(13) + gdata(12) * 24
+                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 24 + rnd(12);
+        }
         else
         {
-            if (cdata_character_role(prm_853) == 13)
-            {
-                cdata_state(prm_853) = 4;
-                cdata_time_to_revive(prm_853) = gdata(13) + gdata(12) * 24
-                    + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 24
-                    + rnd(12);
-            }
-            else
-            {
-                cdata_state(prm_853) = 2;
-                cdata_time_to_revive(prm_853) = gdata(13) + gdata(12) * 24
-                    + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 48;
-            }
+            cdata_state(prm_853) = 2;
+            cdata_time_to_revive(prm_853) = gdata(13) + gdata(12) * 24
+                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 48;
         }
         if (prm_853 != 0)
         {
@@ -32479,14 +31979,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     }
                     check_quest();
                 }
-                else
+                else if (gdata(20) == 42)
                 {
-                    if (gdata(20) == 42)
+                    if (adata(20, gdata(20)) == prm_853)
                     {
-                        if (adata(20, gdata(20)) == prm_853)
-                        {
-                            evadd(5);
-                        }
+                        evadd(5);
                     }
                 }
             }
@@ -33026,12 +32523,9 @@ int net_send(const std::string& prm_883, int prm_884)
         url_at_m147 = chatsendurl;
         msg_at_m147 = u8"&comment="s + chattemp;
     }
-    else
+    else if (gdata(828))
     {
-        if (gdata(828))
-        {
-            return 1;
-        }
+        return 1;
     }
     conurl_at_m147 = u8"hpcgi3.nifty.com"s;
     if (prm_884 == 1)
@@ -33592,12 +33086,9 @@ label_1401_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1402_internal:
     redraw(0);
@@ -34045,36 +33536,30 @@ void label_1421()
                 gcopy(3, 0, 440, 24, 16);
                 mes(sdata(10 + cnt, 0));
             }
-            else
+            else if (cnt == 8)
             {
-                if (cnt == 8)
+                pos(sx + 8, sy);
+                gcopy(3, 0, 440, 34, 16);
+                if (gspdorg > gspd)
                 {
-                    pos(sx + 8, sy);
-                    gcopy(3, 0, 440, 34, 16);
-                    if (gspdorg > gspd)
-                    {
-                        color(200, 0, 0);
-                    }
-                    else
-                    {
-                        if (gspdorg < gspd)
-                        {
-                            color(0, 120, 0);
-                        }
-                        else
-                        {
-                            color(0, 0, 0);
-                        }
-                    }
-                    mes(""s + gspd);
+                    color(200, 0, 0);
+                }
+                else if (gspdorg < gspd)
+                {
+                    color(0, 120, 0);
                 }
                 else
                 {
                     color(0, 0, 0);
-                    pos(sx + 14, sy);
-                    gcopy(3, 0, 440, 64, 16);
-                    mes(""s + cdata_dv(0) + u8"/"s + cdata_pv(0));
                 }
+                mes(""s + gspd);
+            }
+            else
+            {
+                color(0, 0, 0);
+                pos(sx + 14, sy);
+                gcopy(3, 0, 440, 64, 16);
+                mes(""s + cdata_dv(0) + u8"/"s + cdata_pv(0));
             }
         }
     }
@@ -34126,36 +33611,33 @@ void label_1421()
         mes(_hunger(12));
         sy -= 20;
     }
-    else
+    else if (cdata_nutrition(0) >= 1000)
     {
-        if (cdata_nutrition(0) >= 1000)
+        if (cdata_nutrition(0) <= 4000)
         {
-            if (cdata_nutrition(0) <= 4000)
-            {
-                color(200, 0, 0);
-            }
-            else
-            {
-                color(0, 0, 0);
-            }
-            if (_hunger(cdata_nutrition(0) / 1000) != ""s)
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_hunger(cdata_nutrition(0) / 1000));
-                sy -= 20;
-            }
+            color(200, 0, 0);
         }
         else
         {
-            color(250, 0, 0);
+            color(0, 0, 0);
+        }
+        if (_hunger(cdata_nutrition(0) / 1000) != ""s)
+        {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_hunger(0));
+            mes(_hunger(cdata_nutrition(0) / 1000));
             sy -= 20;
         }
+    }
+    else
+    {
+        color(250, 0, 0);
+        pos(sx, sy);
+        gcopy(3, 0, 416, 50 + en * 30, 15);
+        pos(sx + 6, sy + 1);
+        mes(_hunger(0));
+        sy -= 20;
     }
     if (cdata_sick(0) != 0)
     {
@@ -34273,24 +33755,21 @@ void label_1421()
             mes(_condim(2));
             sy -= 20;
         }
+        else if (cdata_dimmed(0) >= 30)
+        {
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_condim(1));
+            sy -= 20;
+        }
         else
         {
-            if (cdata_dimmed(0) >= 30)
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_condim(1));
-                sy -= 20;
-            }
-            else
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_condim);
-                sy -= 20;
-            }
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_condim);
+            sy -= 20;
         }
     }
     if (cdata_furious(0) != 0)
@@ -34324,24 +33803,21 @@ void label_1421()
             mes(_conbleed(2));
             sy -= 20;
         }
+        else if (cdata_bleeding(0) >= 10)
+        {
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_conbleed(1));
+            sy -= 20;
+        }
         else
         {
-            if (cdata_bleeding(0) >= 10)
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_conbleed(1));
-                sy -= 20;
-            }
-            else
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_conbleed);
-                sy -= 20;
-            }
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_conbleed);
+            sy -= 20;
         }
     }
     if (cdata_insane(0) != 0)
@@ -34355,24 +33831,21 @@ void label_1421()
             mes(_coninsane(2));
             sy -= 20;
         }
+        else if (cdata_insane(0) >= 25)
+        {
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_coninsane(1));
+            sy -= 20;
+        }
         else
         {
-            if (cdata_insane(0) >= 25)
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_coninsane(1));
-                sy -= 20;
-            }
-            else
-            {
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_coninsane);
-                sy -= 20;
-            }
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_coninsane);
+            sy -= 20;
         }
     }
     if (cdata_drunk(0) != 0)
@@ -34413,26 +33886,23 @@ void label_1421()
             mes(_sleep(2));
             sy -= 20;
         }
+        else if (gdata(90) >= 30)
+        {
+            color(100, 100, 0);
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_sleep(1));
+            sy -= 20;
+        }
         else
         {
-            if (gdata(90) >= 30)
-            {
-                color(100, 100, 0);
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_sleep(1));
-                sy -= 20;
-            }
-            else
-            {
-                color(0, 0, 0);
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_sleep);
-                sy -= 20;
-            }
+            color(0, 0, 0);
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_sleep);
+            sy -= 20;
         }
     }
     if (cdata_sp(0) < 50)
@@ -34446,26 +33916,23 @@ void label_1421()
             mes(_confatigue(2));
             sy -= 20;
         }
+        else if (cdata_sp(0) < 25)
+        {
+            color(80, 80, 0);
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_confatigue(1));
+            sy -= 20;
+        }
         else
         {
-            if (cdata_sp(0) < 25)
-            {
-                color(80, 80, 0);
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_confatigue(1));
-                sy -= 20;
-            }
-            else
-            {
-                color(60, 60, 0);
-                pos(sx, sy);
-                gcopy(3, 0, 416, 50 + en * 30, 15);
-                pos(sx + 6, sy + 1);
-                mes(_confatigue);
-                sy -= 20;
-            }
+            color(60, 60, 0);
+            pos(sx, sy);
+            gcopy(3, 0, 416, 50 + en * 30, 15);
+            pos(sx + 6, sy + 1);
+            mes(_confatigue);
+            sy -= 20;
         }
     }
     if (cdata_inventory_weight_type(0) != 0)
@@ -35104,14 +34571,11 @@ void label_1426()
                         ap(cnt) = -1;
                         continue;
                     }
-                    else
+                    else if (stat == 0)
                     {
-                        if (stat == 0)
-                        {
-                            ap(cnt) = -2;
-                            ap(20) = 4;
-                            continue;
-                        }
+                        ap(cnt) = -2;
+                        ap(20) = 4;
+                        continue;
                     }
                     if (dist(anidx, anidy, cdata_x(cc), cdata_y(cc))
                         > sdataref(3, efid) % 1000 + 1)
@@ -35211,46 +34675,40 @@ void label_1426()
             gcopy(1, 0, 1008, 22, 20);
             gsel(selcur);
         }
+        else if (aniref == 531)
+        {
+            pos(8, 1058 - chipc(3, aniref(1)));
+            gcopy(
+                5,
+                chipc(0, aniref(1)) + 8,
+                chipc(1, aniref(1)) + 2,
+                chipc(2, aniref(1)) - 16,
+                chipc(3, aniref(1)) - 8);
+            gmode(4 - 1, -1, 150);
+            color(0, 0, 0);
+            pos(0, 960 + (chipc(3, aniref(1)) == inf_tiles) * 48);
+            gcopy(
+                1,
+                144,
+                768 + (chipc(3, aniref(1)) > inf_tiles) * 48,
+                inf_tiles,
+                chipc(3, aniref(1)) + (chipc(3, aniref(1)) > inf_tiles) * 48);
+            gmode(2);
+            gsel(selcur);
+        }
         else
         {
-            if (aniref == 531)
-            {
-                pos(8, 1058 - chipc(3, aniref(1)));
-                gcopy(
-                    5,
-                    chipc(0, aniref(1)) + 8,
-                    chipc(1, aniref(1)) + 2,
-                    chipc(2, aniref(1)) - 16,
-                    chipc(3, aniref(1)) - 8);
-                gmode(4 - 1, -1, 150);
-                color(0, 0, 0);
-                pos(0, 960 + (chipc(3, aniref(1)) == inf_tiles) * 48);
-                gcopy(
-                    1,
-                    144,
-                    768 + (chipc(3, aniref(1)) > inf_tiles) * 48,
-                    inf_tiles,
-                    chipc(3, aniref(1))
-                        + (chipc(3, aniref(1)) > inf_tiles) * 48);
-                gmode(2);
-                gsel(selcur);
-            }
-            else
-            {
-                pos(0, 960);
-                gcopy(
-                    1,
-                    chipi(0, aniref),
-                    chipi(1, aniref),
-                    chipi(2, aniref),
-                    chipi(3, aniref));
-                gfini(chipi(2, aniref), chipi(3, aniref));
-                gfdec2(
-                    c_col(0, aniref(1)),
-                    c_col(1, aniref(1)),
-                    c_col(2, aniref(1)));
-                gsel(selcur);
-            }
+            pos(0, 960);
+            gcopy(
+                1,
+                chipi(0, aniref),
+                chipi(1, aniref),
+                chipi(2, aniref),
+                chipi(3, aniref));
+            gfini(chipi(2, aniref), chipi(3, aniref));
+            gfdec2(
+                c_col(0, aniref(1)), c_col(1, aniref(1)), c_col(2, aniref(1)));
+            gsel(selcur);
         }
         ax = (cdata_x(cc) - scx) * inf_tiles;
         ay = (cdata_y(cc) - scy) * inf_tiles;
@@ -35406,55 +34864,50 @@ void label_1426()
                 gcopy(1, 0, 1008, 22, 20);
                 gsel(selcur);
             }
+            else if (inv_image(aniref) % 1000 == 531)
+            {
+                pos(8, 1058 - chipc(3, inv_image(aniref) / 1000));
+                gcopy(
+                    5,
+                    chipc(0, inv_image(aniref) / 1000) + 8,
+                    chipc(1, inv_image(aniref) / 1000) + 2,
+                    chipc(2, inv_image(aniref) / 1000) - 16,
+                    chipc(3, inv_image(aniref) / 1000) - 8);
+                gmode(4 - 1, -1, 150);
+                color(0, 0, 0);
+                pos(0,
+                    960
+                        + (chipc(3, inv_image(aniref) / 1000) == inf_tiles)
+                            * 48);
+                gcopy(
+                    1,
+                    144,
+                    768 + (chipc(3, inv_image(aniref) / 1000) > inf_tiles) * 48,
+                    inf_tiles,
+                    chipc(3, inv_image(aniref) / 1000)
+                        + (chipc(3, inv_image(aniref) / 1000) > inf_tiles)
+                            * 48);
+                gmode(2);
+                gsel(selcur);
+            }
             else
             {
-                if (inv_image(aniref) % 1000 == 531)
-                {
-                    pos(8, 1058 - chipc(3, inv_image(aniref) / 1000));
-                    gcopy(
-                        5,
-                        chipc(0, inv_image(aniref) / 1000) + 8,
-                        chipc(1, inv_image(aniref) / 1000) + 2,
-                        chipc(2, inv_image(aniref) / 1000) - 16,
-                        chipc(3, inv_image(aniref) / 1000) - 8);
-                    gmode(4 - 1, -1, 150);
-                    color(0, 0, 0);
-                    pos(0,
-                        960
-                            + (chipc(3, inv_image(aniref) / 1000) == inf_tiles)
-                                * 48);
-                    gcopy(
-                        1,
-                        144,
-                        768
-                            + (chipc(3, inv_image(aniref) / 1000) > inf_tiles)
-                                * 48,
-                        inf_tiles,
-                        chipc(3, inv_image(aniref) / 1000)
-                            + (chipc(3, inv_image(aniref) / 1000) > inf_tiles)
-                                * 48);
-                    gmode(2);
-                    gsel(selcur);
-                }
-                else
-                {
-                    pos(0, 960);
-                    gcopy(
-                        1,
-                        chipi(0, inv_image(aniref) % 1000),
-                        chipi(1, inv_image(aniref) % 1000),
-                        chipi(2, inv_image(aniref) % 1000),
-                        chipi(3, inv_image(aniref) % 1000));
-                    gfini(
-                        chipi(2, inv_image(aniref) % 1000),
-                        chipi(3, inv_image(aniref) % 1000));
-                    gfdec2(
-                        c_col(0, inv_image(aniref) / 1000),
-                        c_col(1, inv_image(aniref) / 1000),
-                        c_col(2, inv_image(aniref) / 1000));
-                    gsel(selcur);
-                    snd(31);
-                }
+                pos(0, 960);
+                gcopy(
+                    1,
+                    chipi(0, inv_image(aniref) % 1000),
+                    chipi(1, inv_image(aniref) % 1000),
+                    chipi(2, inv_image(aniref) % 1000),
+                    chipi(3, inv_image(aniref) % 1000));
+                gfini(
+                    chipi(2, inv_image(aniref) % 1000),
+                    chipi(3, inv_image(aniref) % 1000));
+                gfdec2(
+                    c_col(0, inv_image(aniref) / 1000),
+                    c_col(1, inv_image(aniref) / 1000),
+                    c_col(2, inv_image(aniref) / 1000));
+                gsel(selcur);
+                snd(31);
             }
         }
         if (animeid == 1)
@@ -36392,24 +35845,18 @@ void label_1433()
     {
         sy = 2;
     }
-    else
+    else if (sy > 76)
     {
-        if (sy > 76)
-        {
-            sy = 76;
-        }
+        sy = 76;
     }
     sx = 120 * cdata_x(0) / mdata(0);
     if (sx < 2)
     {
         sx = 2;
     }
-    else
+    else if (sx > 112)
     {
-        if (sx > 112)
-        {
-            sx = 112;
-        }
+        sx = 112;
     }
     if (raderx != -1)
     {
@@ -36624,19 +36071,16 @@ void label_1438()
             scrollp = 9;
         }
     }
-    else
+    else if (keybd_wait > cfg_startrun)
     {
-        if (keybd_wait > cfg_startrun)
+        scrollp = 3;
+        if (cfg_runscroll == 0)
         {
-            scrollp = 3;
-            if (cfg_runscroll == 0)
-            {
-                return;
-            }
-            if (keybd_wait >= 100000)
-            {
-                scrollp = 1;
-            }
+            return;
+        }
+        if (keybd_wait >= 100000)
+        {
+            scrollp = 1;
         }
     }
     scxbk2 = scx;
@@ -36908,12 +36352,9 @@ void label_1446()
     {
         ap = fishanime(1);
     }
-    else
+    else if (fishanime >= 2)
     {
-        if (fishanime >= 2)
-        {
-            ap = 10;
-        }
+        ap = 10;
     }
     pos(sx, sy - 5 + ap);
     gcopy(9, 116, 18, 14, 10 - ap);
@@ -36968,16 +36409,13 @@ int carmor(int prm_890)
     {
         return 169;
     }
+    else if (cdata_sum_of_equipment_weight(prm_890) >= 15000)
+    {
+        return 170;
+    }
     else
     {
-        if (cdata_sum_of_equipment_weight(prm_890) >= 15000)
-        {
-            return 170;
-        }
-        else
-        {
-            return 171;
-        }
+        return 171;
     }
 }
 std::string cnveqweight(int prm_891)
@@ -36986,16 +36424,13 @@ std::string cnveqweight(int prm_891)
     {
         return lang(u8"(重装備)"s, u8"(Heavy)"s);
     }
+    else if (cdata_sum_of_equipment_weight(prm_891) >= 15000)
+    {
+        return lang(u8"(中装備)"s, u8"(Medium)"s);
+    }
     else
     {
-        if (cdata_sum_of_equipment_weight(prm_891) >= 15000)
-        {
-            return lang(u8"(中装備)"s, u8"(Medium)"s);
-        }
-        else
-        {
-            return lang(u8"(軽装備)"s, u8"(Light)"s);
-        }
+        return lang(u8"(軽装備)"s, u8"(Light)"s);
     }
 }
 int calcexpalive(int prm_892)
@@ -37475,13 +36910,10 @@ int calcattackhit(int prm_893)
                             / (10 + sdata(166, cc) / 5);
                     }
                 }
-                else
+                else if (inv_weight(cw) > 1500)
                 {
-                    if (inv_weight(cw) > 1500)
-                    {
-                        tohit -= (inv_weight(cw) - 1500 + 100)
-                            / (10 + sdata(166, cc) / 5);
-                    }
+                    tohit -= (inv_weight(cw) - 1500 + 100)
+                        / (10 + sdata(166, cc) / 5);
                 }
             }
         }
@@ -37674,20 +37106,17 @@ int calcattackdmg(int prm_894)
             dmgmulti = dmgmulti * rangemap(rangedist) / 100;
         }
     }
-    else
+    else if (cdata_equipment_type(cc) & 2)
     {
-        if (cdata_equipment_type(cc) & 2)
+        if (inv_weight(cw) >= 4000)
         {
-            if (inv_weight(cw) >= 4000)
-            {
-                dmgmulti *= 1.5;
-            }
-            else
-            {
-                dmgmulti *= 1.2;
-            }
-            dmgmulti += 0.03 * sdata(167, cc);
+            dmgmulti *= 1.5;
         }
+        else
+        {
+            dmgmulti *= 1.2;
+        }
+        dmgmulti += 0.03 * sdata(167, cc);
     }
     if (cc == 0)
     {
@@ -37737,18 +37166,15 @@ int calcattackdmg(int prm_894)
         {
             dmgmulti *= 1.25;
         }
+        else if (ammo != -1)
+        {
+            dmgmulti = dmgmulti
+                * limit((inv_weight(ammo) / 100 + 100), 100, 150) / 100;
+        }
         else
         {
-            if (ammo != -1)
-            {
-                dmgmulti = dmgmulti
-                    * limit((inv_weight(ammo) / 100 + 100), 100, 150) / 100;
-            }
-            else
-            {
-                dmgmulti = dmgmulti
-                    * limit((inv_weight(cw) / 200 + 100), 100, 150) / 100;
-            }
+            dmgmulti =
+                dmgmulti * limit((inv_weight(cw) / 200 + 100), 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
@@ -37902,16 +37328,13 @@ void label_1477()
             }
         }
     }
+    else if (cdata_id(r1) == 343)
+    {
+        memcpy(cdata, 450, r1, userdata, 40, cdata_cnpc_id(r1), 120);
+    }
     else
     {
-        if (cdata_id(r1) == 343)
-        {
-            memcpy(cdata, 450, r1, userdata, 40, cdata_cnpc_id(r1), 120);
-        }
-        else
-        {
-            memcpy(cdata, 450, r1, cbitorg, 0, cdata_id(r1), 120);
-        }
+        memcpy(cdata, 450, r1, cbitorg, 0, cdata_id(r1), 120);
     }
     {
         int cnt = 0;
@@ -37982,12 +37405,9 @@ void label_1477()
                 cdata_pv(r1) +=
                     inv_enhancement(rp) * 2 + (inv_curse_state(rp) == 1) * 2;
             }
-            else
+            else if (cdata(cnt, r1) / 10000 == 5)
             {
-                if (cdata(cnt, r1) / 10000 == 5)
-                {
-                    ++attacknum;
-                }
+                ++attacknum;
             }
             if (inv_curse_state(rp) == -1)
             {
@@ -38257,19 +37677,13 @@ void label_1477()
                 * (120 + elona_int(sqrt(sdata(168, r1))) * 2) / 100;
         }
     }
-    else
+    else if (attacknum == 1)
     {
-        if (attacknum == 1)
-        {
-            cdata_equipment_type(r1) += 2;
-        }
-        else
-        {
-            if (attacknum != 0)
-            {
-                cdata_equipment_type(r1) += 4;
-            }
-        }
+        cdata_equipment_type(r1) += 2;
+    }
+    else if (attacknum != 0)
+    {
+        cdata_equipment_type(r1) += 4;
     }
     cdata_max_mp(r1) =
         limit(
@@ -38445,26 +37859,23 @@ int calcitemvalue(int prm_898, int prm_899)
                 + 10;
         }
     }
+    else if (reftype_at_m153 >= 50000)
+    {
+        value_at_m153 = inv_value(prm_898);
+    }
     else
     {
-        if (reftype_at_m153 >= 50000)
+        if (inv_identification_state(prm_898) == 1)
+        {
+            value_at_m153 = inv_value(prm_898) * 2 / 10;
+        }
+        if (inv_identification_state(prm_898) == 2)
+        {
+            value_at_m153 = inv_value(prm_898) * 5 / 10;
+        }
+        if (inv_identification_state(prm_898) >= 3)
         {
             value_at_m153 = inv_value(prm_898);
-        }
-        else
-        {
-            if (inv_identification_state(prm_898) == 1)
-            {
-                value_at_m153 = inv_value(prm_898) * 2 / 10;
-            }
-            if (inv_identification_state(prm_898) == 2)
-            {
-                value_at_m153 = inv_value(prm_898) * 5 / 10;
-            }
-            if (inv_identification_state(prm_898) >= 3)
-            {
-                value_at_m153 = inv_value(prm_898);
-            }
         }
     }
     if (inv_identification_state(prm_898) >= 3)
@@ -38525,20 +37936,15 @@ int calcitemvalue(int prm_898, int prm_899)
         {
             value_at_m153 = value_at_m153 / 10;
         }
+        else if (reftype_at_m153 == 54000)
+        {
+            value_at_m153 = value_at_m153 / 5
+                + value_at_m153 * inv_count(prm_898) / (ichargelevel * 2 + 1);
+        }
         else
         {
-            if (reftype_at_m153 == 54000)
-            {
-                value_at_m153 = value_at_m153 / 5
-                    + value_at_m153 * inv_count(prm_898)
-                        / (ichargelevel * 2 + 1);
-            }
-            else
-            {
-                value_at_m153 = value_at_m153 / 2
-                    + value_at_m153 * inv_count(prm_898)
-                        / (ichargelevel * 3 + 1);
-            }
+            value_at_m153 = value_at_m153 / 2
+                + value_at_m153 * inv_count(prm_898) / (ichargelevel * 3 + 1);
         }
     }
     if (reftype_at_m153 == 72000)
@@ -39031,22 +38437,16 @@ int calcspellfail(int prm_920, int prm_921)
             p_at_m157 = 80;
         }
     }
-    else
+    else if (f_at_m157 == 170)
     {
-        if (f_at_m157 == 170)
+        if (p_at_m157 > 92)
         {
-            if (p_at_m157 > 92)
-            {
-                p_at_m157 = 92;
-            }
+            p_at_m157 = 92;
         }
-        else
-        {
-            if (p_at_m157 > 100)
-            {
-                p_at_m157 = 100;
-            }
-        }
+    }
+    else if (p_at_m157 > 100)
+    {
+        p_at_m157 = 100;
     }
     if (cdata_equipment_type(prm_921) & 4)
     {
@@ -39362,12 +38762,9 @@ int label_1515()
             return 1;
         }
     }
-    else
+    else if (rnd(4) != 0)
     {
-        if (rnd(4) != 0)
-        {
-            return 1;
-        }
+        return 1;
     }
     return 0;
 }
@@ -39753,21 +39150,18 @@ void label_1520()
             }
         }
     }
-    else
+    else if (cdata_related_quest_id(r1) != 0)
     {
-        if (cdata_related_quest_id(r1) != 0)
+        p = cdata_related_quest_id(r1) - 1;
+        if (qdata(15, p) > 0)
         {
-            p = cdata_related_quest_id(r1) - 1;
-            if (qdata(15, p) > 0)
+            cdata_emotion_icon(r1) = 122;
+        }
+        if (qdata(8, p) != 0)
+        {
+            if (cdata_turn(r1) % 2 == 1)
             {
-                cdata_emotion_icon(r1) = 122;
-            }
-            if (qdata(8, p) != 0)
-            {
-                if (cdata_turn(r1) % 2 == 1)
-                {
-                    cdata_emotion_icon(r1) = 123;
-                }
+                cdata_emotion_icon(r1) = 123;
             }
         }
     }
@@ -40027,34 +39421,25 @@ void label_1530()
         fixeq = 0;
         probeq = 10;
     }
+    else if (cdata_quality(rc) <= 2)
+    {
+        probeq = 3;
+        fixeq = 0;
+    }
+    else if (cdata_quality(rc) == 3)
+    {
+        probeq = 6;
+        fixeq = 0;
+    }
+    else if (cdata_quality(rc) == 4)
+    {
+        probeq = 8;
+        fixeq = 1;
+    }
     else
     {
-        if (cdata_quality(rc) <= 2)
-        {
-            probeq = 3;
-            fixeq = 0;
-        }
-        else
-        {
-            if (cdata_quality(rc) == 3)
-            {
-                probeq = 6;
-                fixeq = 0;
-            }
-            else
-            {
-                if (cdata_quality(rc) == 4)
-                {
-                    probeq = 8;
-                    fixeq = 1;
-                }
-                else
-                {
-                    probeq = 10;
-                    fixeq = 1;
-                }
-            }
-        }
+        probeq = 10;
+        fixeq = 1;
     }
     if (cequipment == 1)
     {
@@ -41156,14 +40541,11 @@ int label_1533()
             label_2299();
         }
     }
-    else
+    else if (dbid == 343)
     {
-        if (dbid == 343)
+        if (usernpcmax > 0)
         {
-            if (usernpcmax > 0)
-            {
-                cdata_cnpc_id(rc) = rnd(usernpcmax);
-            }
+            cdata_cnpc_id(rc) = rnd(usernpcmax);
         }
     }
     characreatehack = dbid + 1;
@@ -41601,12 +40983,9 @@ label_1545_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1546_internal:
     redraw(0);
@@ -42082,13 +41461,10 @@ label_1555_internal:
             ++cmlock(8);
             cmlock(p - 2) = 0;
         }
-        else
+        else if (cmlock(8) > 0)
         {
-            if (cmlock(8) > 0)
-            {
-                cmlock(p - 2) = 1;
-                --cmlock(8);
-            }
+            cmlock(p - 2) = 1;
+            --cmlock(8);
         }
         snd(20);
     }
@@ -43084,12 +42460,9 @@ void label_1573()
                         continue;
                     }
                 }
-                else
+                else if (rnd(5))
                 {
-                    if (rnd(5))
-                    {
-                        continue;
-                    }
+                    continue;
                 }
                 if (refitem(inv_id(ci), 10) == 1)
                 {
@@ -43098,12 +42471,9 @@ void label_1573()
                     {
                         continue;
                     }
-                    else
+                    else if (rnd(2))
                     {
-                        if (rnd(2))
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                 }
                 f = 0;
@@ -43135,14 +42505,11 @@ void label_1573()
                         }
                     }
                 }
-                else
+                else if (inv_identification_state(ci) >= 3)
                 {
-                    if (inv_identification_state(ci) >= 3)
+                    if (rnd(4))
                     {
-                        if (rnd(4))
-                        {
-                            f = 1;
-                        }
+                        f = 1;
                     }
                 }
                 if (f)
@@ -44459,12 +43826,9 @@ void label_1581()
     {
         label_0261();
     }
-    else
+    else if (inv_quality(ci) != 6)
     {
-        if (inv_quality(ci) != 6)
-        {
-            inv_quality(ci) = 2;
-        }
+        inv_quality(ci) = 2;
     }
     return;
 }
@@ -45255,18 +44619,14 @@ void label_1588()
                         fdlist(1, cnt) * (50 + inv_param2(ci) * 20) / 100;
                 }
             }
+            else if (inv_param2(ci) < 3)
+            {
+                fdlist(1, cnt) =
+                    fdlist(1, cnt) * ((3 - inv_param2(ci)) * 100 + 100) / 100;
+            }
             else
             {
-                if (inv_param2(ci) < 3)
-                {
-                    fdlist(1, cnt) = fdlist(1, cnt)
-                        * ((3 - inv_param2(ci)) * 100 + 100) / 100;
-                }
-                else
-                {
-                    fdlist(1, cnt) =
-                        fdlist(1, cnt) * 100 / (inv_param2(ci) * 50);
-                }
+                fdlist(1, cnt) = fdlist(1, cnt) * 100 / (inv_param2(ci) * 50);
             }
         }
     }
@@ -45367,16 +44727,13 @@ void label_1588()
             }
         }
     }
-    else
+    else if (inv_material(ci) == 35)
     {
-        if (inv_material(ci) == 35)
+        if (inv_param3(ci) < 0)
         {
-            if (inv_param3(ci) < 0)
-            {
-                txt(lang(
-                    name(cc) + u8"は渋い顔をした。"s,
-                    name(cc) + u8" looks glum."s));
-            }
+            txt(lang(
+                name(cc) + u8"は渋い顔をした。"s,
+                name(cc) + u8" looks glum."s));
         }
     }
     if (inv_id(ci) == 425)
@@ -45794,15 +45151,12 @@ void label_1588()
                     }
                 }
             }
-            else
+            else if (trait(41))
             {
-                if (trait(41))
-                {
-                    txt(lang(
-                        u8"人肉の方が好みだが…"s,
-                        u8"You would've rather eaten human flesh."s));
-                    nutrition = nutrition * 2 / 3;
-                }
+                txt(lang(
+                    u8"人肉の方が好みだが…"s,
+                    u8"You would've rather eaten human flesh."s));
+                nutrition = nutrition * 2 / 3;
             }
         }
     }
@@ -47152,13 +46506,11 @@ void map_placearena(int prm_939, int prm_940)
                     break;
                 }
             }
-            else
+            else if (
+                cdata_x(prm_939) >= 5 && cdata_y(prm_939) >= 6
+                && cdata_x(prm_939) < 12 && cdata_y(prm_939) < 12)
             {
-                if (cdata_x(prm_939) >= 5 && cdata_y(prm_939) >= 6
-                    && cdata_x(prm_939) < 12 && cdata_y(prm_939) < 12)
-                {
-                    break;
-                }
+                break;
             }
             map(cdata_x(prm_939), cdata_y(prm_939), 1) = 0;
         }
@@ -47953,14 +47305,11 @@ int map_createroom(int prm_966)
                                                 itemcreate(
                                                     -1, p(rnd(4)), x, y + 1, 0);
                                             }
-                                            else
+                                            else if (cnt % 2 == 1)
                                             {
-                                                if (cnt % 2 == 1)
-                                                {
-                                                    flt();
-                                                    itemcreate(
-                                                        -1, 584, x, y + 1, 0);
-                                                }
+                                                flt();
+                                                itemcreate(
+                                                    -1, 584, x, y + 1, 0);
                                             }
                                         }
                                         tile = 1;
@@ -47987,14 +47336,10 @@ int map_createroom(int prm_966)
                                             itemcreate(
                                                 -1, p(rnd(4)), x, y + 1, 0);
                                         }
-                                        else
+                                        else if (cnt % 2 == 1)
                                         {
-                                            if (cnt % 2 == 1)
-                                            {
-                                                flt();
-                                                itemcreate(
-                                                    -1, 584, x, y + 1, 0);
-                                            }
+                                            flt();
+                                            itemcreate(-1, 584, x, y + 1, 0);
                                         }
                                         tile = 1;
                                     }
@@ -51076,47 +50421,43 @@ void label_1714()
                     gcopy(1, 0, 1008, 22, 20);
                     gsel(selcur);
                 }
+                else if (p(1) == 531)
+                {
+                    pos(8, 1058 - chipc(3, inv_color(p)));
+                    gcopy(
+                        5,
+                        chipc(0, inv_color(p)) + 8,
+                        chipc(1, inv_color(p)) + 2,
+                        chipc(2, inv_color(p)) - 16,
+                        chipc(3, inv_color(p)) - 8);
+                    gmode(4 - 1, -1, 150);
+                    color(0, 0, 0);
+                    pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
+                    gcopy(
+                        1,
+                        144,
+                        768 + (chipc(3, inv_color(p)) > inf_tiles) * 48,
+                        inf_tiles,
+                        chipc(3, inv_color(p))
+                            + (chipc(3, inv_color(p)) > inf_tiles) * 48);
+                    gmode(2);
+                    gsel(selcur);
+                }
                 else
                 {
-                    if (p(1) == 531)
-                    {
-                        pos(8, 1058 - chipc(3, inv_color(p)));
-                        gcopy(
-                            5,
-                            chipc(0, inv_color(p)) + 8,
-                            chipc(1, inv_color(p)) + 2,
-                            chipc(2, inv_color(p)) - 16,
-                            chipc(3, inv_color(p)) - 8);
-                        gmode(4 - 1, -1, 150);
-                        color(0, 0, 0);
-                        pos(0,
-                            960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
-                        gcopy(
-                            1,
-                            144,
-                            768 + (chipc(3, inv_color(p)) > inf_tiles) * 48,
-                            inf_tiles,
-                            chipc(3, inv_color(p))
-                                + (chipc(3, inv_color(p)) > inf_tiles) * 48);
-                        gmode(2);
-                        gsel(selcur);
-                    }
-                    else
-                    {
-                        pos(0, 960);
-                        gcopy(
-                            1,
-                            chipi(0, p(1)),
-                            chipi(1, p(1)),
-                            chipi(2, p(1)),
-                            chipi(3, p(1)));
-                        gfini(chipi(2, p(1)), chipi(3, p(1)));
-                        gfdec2(
-                            c_col(0, inv_color(p)),
-                            c_col(1, inv_color(p)),
-                            c_col(2, inv_color(p)));
-                        gsel(selcur);
-                    }
+                    pos(0, 960);
+                    gcopy(
+                        1,
+                        chipi(0, p(1)),
+                        chipi(1, p(1)),
+                        chipi(2, p(1)),
+                        chipi(3, p(1)));
+                    gfini(chipi(2, p(1)), chipi(3, p(1)));
+                    gfdec2(
+                        c_col(0, inv_color(p)),
+                        c_col(1, inv_color(p)),
+                        c_col(2, inv_color(p)));
+                    gsel(selcur);
                 }
                 pos(wx + 37, cnt * 16 + wy + 138);
                 gmode(2, chipi(2, p(1)), chipi(3, p(1)));
@@ -52379,13 +51720,10 @@ void label_1735()
                     dbid = 271;
                     return;
                 }
-                else
+                else if (rnd(2) == 0)
                 {
-                    if (rnd(2) == 0)
-                    {
-                        dbid = 335;
-                        return;
-                    }
+                    dbid = 335;
+                    return;
                 }
             }
             if (gdata(20) == 36)
@@ -52854,29 +52192,23 @@ void label_1737()
                 u8"You were delivered to your home."s);
             label_2735();
         }
+        else if (adata(0, gdata(19)) == 1)
+        {
+            msgtemp += lang(
+                mapname(gdata(20)) + u8"に入った。"s,
+                u8"You entered "s + mapname(gdata(20)) + u8"."s);
+        }
+        else if (mdata(6) == 7)
+        {
+            msgtemp += lang(
+                mapname(gdata(20)) + u8"に戻った。"s,
+                u8"You returned to "s + mapname(gdata(20)));
+        }
         else
         {
-            if (adata(0, gdata(19)) == 1)
-            {
-                msgtemp += lang(
-                    mapname(gdata(20)) + u8"に入った。"s,
-                    u8"You entered "s + mapname(gdata(20)) + u8"."s);
-            }
-            else
-            {
-                if (mdata(6) == 7)
-                {
-                    msgtemp += lang(
-                        mapname(gdata(20)) + u8"に戻った。"s,
-                        u8"You returned to "s + mapname(gdata(20)));
-                }
-                else
-                {
-                    msgtemp += lang(
-                        mapname(gdata(19)) + u8"を後にした。"s,
-                        u8"You left "s + mapname(gdata(19)) + u8"."s);
-                }
-            }
+            msgtemp += lang(
+                mapname(gdata(19)) + u8"を後にした。"s,
+                u8"You left "s + mapname(gdata(19)) + u8"."s);
         }
         if (gdata(80) > gdata(82))
         {
@@ -54704,22 +54036,19 @@ void label_1754()
             }
             mdata(9) = 1000000;
         }
-        else
+        else if (mdata(9) == 1000000)
         {
-            if (mdata(9) == 1000000)
+            mdata(9) = 10000;
             {
-                mdata(9) = 10000;
+                int cnt = 0;
+                for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
-                    {
-                        cdata_turn_cost(cnt) = 0;
-                    }
+                    cdata_turn_cost(cnt) = 0;
                 }
-                txt(lang(
-                    u8"もうシェルターの中にいる必要は無い。"s,
-                    u8"You don't need to stay in the shelter any longer."s));
             }
+            txt(lang(
+                u8"もうシェルターの中にいる必要は無い。"s,
+                u8"You don't need to stay in the shelter any longer."s));
         }
     }
     if (adata(16, gdata(20)) == 101)
@@ -55459,12 +54788,9 @@ void tcgdrawcard(int prm_994, int prm_995)
             }
         }
     }
-    else
+    else if (prm_994 == dlist_at_tcg(0, dsc_at_tcg))
     {
-        if (prm_994 == dlist_at_tcg(0, dsc_at_tcg))
-        {
-            selected_at_tcg = 1;
-        }
+        selected_at_tcg = 1;
     }
     if (selected_at_tcg)
     {
@@ -55634,12 +54960,9 @@ label_1772_internal:
                 {
                     c_at_tcg = cc_at_tcg;
                 }
-                else
+                else if (c_at_tcg == cc_at_tcg)
                 {
-                    if (c_at_tcg == cc_at_tcg)
-                    {
-                        c_at_tcg = 0;
-                    }
+                    c_at_tcg = 0;
                 }
             }
             if (card_at_tcg(0, c_at_tcg) <= 0)
@@ -58148,12 +57471,9 @@ label_1841_internal:
     {
         f_at_tcg = -1;
     }
-    else
+    else if (i_at_tcg < 0)
     {
-        if (i_at_tcg < 0)
-        {
-            f_at_tcg = 1;
-        }
+        f_at_tcg = 1;
     }
     {
         int cnt = 0;
@@ -58710,12 +58030,9 @@ label_1857_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     s(0) = lang(u8"生産品の選択"s, u8"Production"s);
     s(1) = strhint2 + strhint3b;
@@ -58845,42 +58162,39 @@ label_1857_internal:
                 gcopy(1, 0, 1008, 22, 20);
                 gsel(selcur);
             }
+            else if (p(1) == 531)
+            {
+                pos(8, 1058 - chipc(3, 0));
+                gcopy(
+                    5,
+                    chipc(0, 0) + 8,
+                    chipc(1, 0) + 2,
+                    chipc(2, 0) - 16,
+                    chipc(3, 0) - 8);
+                gmode(4 - 1, -1, 150);
+                color(0, 0, 0);
+                pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
+                gcopy(
+                    1,
+                    144,
+                    768 + (chipc(3, 0) > inf_tiles) * 48,
+                    inf_tiles,
+                    chipc(3, 0) + (chipc(3, 0) > inf_tiles) * 48);
+                gmode(2);
+                gsel(selcur);
+            }
             else
             {
-                if (p(1) == 531)
-                {
-                    pos(8, 1058 - chipc(3, 0));
-                    gcopy(
-                        5,
-                        chipc(0, 0) + 8,
-                        chipc(1, 0) + 2,
-                        chipc(2, 0) - 16,
-                        chipc(3, 0) - 8);
-                    gmode(4 - 1, -1, 150);
-                    color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
-                    gcopy(
-                        1,
-                        144,
-                        768 + (chipc(3, 0) > inf_tiles) * 48,
-                        inf_tiles,
-                        chipc(3, 0) + (chipc(3, 0) > inf_tiles) * 48);
-                    gmode(2);
-                    gsel(selcur);
-                }
-                else
-                {
-                    pos(0, 960);
-                    gcopy(
-                        1,
-                        chipi(0, p(1)),
-                        chipi(1, p(1)),
-                        chipi(2, p(1)),
-                        chipi(3, p(1)));
-                    gfini(chipi(2, p(1)), chipi(3, p(1)));
-                    gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-                    gsel(selcur);
-                }
+                pos(0, 960);
+                gcopy(
+                    1,
+                    chipi(0, p(1)),
+                    chipi(1, p(1)),
+                    chipi(2, p(1)),
+                    chipi(3, p(1)));
+                gfini(chipi(2, p(1)), chipi(3, p(1)));
+                gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
+                gsel(selcur);
             }
             s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -59048,12 +58362,9 @@ label_1860_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     drawmenu();
 label_1861_internal:
@@ -59123,42 +58434,39 @@ label_1861_internal:
                 gcopy(1, 0, 1008, 22, 20);
                 gsel(selcur);
             }
+            else if (p(1) == 531)
+            {
+                pos(8, 1058 - chipc(3, 0));
+                gcopy(
+                    5,
+                    chipc(0, 0) + 8,
+                    chipc(1, 0) + 2,
+                    chipc(2, 0) - 16,
+                    chipc(3, 0) - 8);
+                gmode(4 - 1, -1, 150);
+                color(0, 0, 0);
+                pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
+                gcopy(
+                    1,
+                    144,
+                    768 + (chipc(3, 0) > inf_tiles) * 48,
+                    inf_tiles,
+                    chipc(3, 0) + (chipc(3, 0) > inf_tiles) * 48);
+                gmode(2);
+                gsel(selcur);
+            }
             else
             {
-                if (p(1) == 531)
-                {
-                    pos(8, 1058 - chipc(3, 0));
-                    gcopy(
-                        5,
-                        chipc(0, 0) + 8,
-                        chipc(1, 0) + 2,
-                        chipc(2, 0) - 16,
-                        chipc(3, 0) - 8);
-                    gmode(4 - 1, -1, 150);
-                    color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
-                    gcopy(
-                        1,
-                        144,
-                        768 + (chipc(3, 0) > inf_tiles) * 48,
-                        inf_tiles,
-                        chipc(3, 0) + (chipc(3, 0) > inf_tiles) * 48);
-                    gmode(2);
-                    gsel(selcur);
-                }
-                else
-                {
-                    pos(0, 960);
-                    gcopy(
-                        1,
-                        chipi(0, p(1)),
-                        chipi(1, p(1)),
-                        chipi(2, p(1)),
-                        chipi(3, p(1)));
-                    gfini(chipi(2, p(1)), chipi(3, p(1)));
-                    gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-                    gsel(selcur);
-                }
+                pos(0, 960);
+                gcopy(
+                    1,
+                    chipi(0, p(1)),
+                    chipi(1, p(1)),
+                    chipi(2, p(1)),
+                    chipi(3, p(1)));
+                gfini(chipi(2, p(1)), chipi(3, p(1)));
+                gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
+                gsel(selcur);
             }
             pos(wx + 47, wy + 69 + cnt * 19 + 2);
             gmode(2, inf_tiles, inf_tiles);
@@ -59417,12 +58725,9 @@ label_18671_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     gsel(2);
     gmode(0);
@@ -62179,12 +61484,9 @@ label_1894_internal:
                 efp = 200;
                 label_2176();
             }
-            else
+            else if (evid() == -1)
             {
-                if (evid() == -1)
-                {
-                    evadd(26);
-                }
+                evadd(26);
             }
         }
         s = lang(u8"呪いのつぶやき"s, u8"Cursed Whispering"s);
@@ -62771,16 +62073,13 @@ std::string rpmatname(int prm_1037)
     {
         s_at_m177 = ioriginalnameref(rpdata(20 + prm_1037, rpid));
     }
+    else if (rpdata(20 + prm_1037, rpid) < 10000)
+    {
+        s_at_m177 = rfnameorg(1, rpdata(20 + prm_1037, rpid) - 9000);
+    }
     else
     {
-        if (rpdata(20 + prm_1037, rpid) < 10000)
-        {
-            s_at_m177 = rfnameorg(1, rpdata(20 + prm_1037, rpid) - 9000);
-        }
-        else
-        {
-            s_at_m177 = fltname(rpdata(20 + prm_1037, rpid));
-        }
+        s_at_m177 = fltname(rpdata(20 + prm_1037, rpid));
     }
     if (rpdata(40 + prm_1037, rpid) == 0)
     {
@@ -63012,12 +62311,9 @@ int blendcheckmat(int prm_1044)
                             if (rpdata(2, rpid) > 0 && step_at_m181 == 0)
                             {
                             }
-                            else
+                            else if (inv_own_state(cnt) > 0)
                             {
-                                if (inv_own_state(cnt) > 0)
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
                             if (o_at_m181 == -1)
                             {
@@ -63114,12 +62410,9 @@ int blendmatnum(int prm_1045, int prm_1046)
                     if (rpdata(2, rpid) > 0 && prm_1046 == 0)
                     {
                     }
-                    else
+                    else if (inv_own_state(cnt) > 0)
                     {
-                        if (inv_own_state(cnt) > 0)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                     if (o_at_m182 == -1)
                     {
@@ -63207,12 +62500,9 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     if (rpdata(2, rpid) > 0 && step == 0)
                     {
                     }
-                    else
+                    else if (inv_own_state(cnt) > 0)
                     {
-                        if (inv_own_state(cnt) > 0)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                     if (o_at_m183 == -1)
                     {
@@ -63238,28 +62528,22 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                             continue;
                         }
                     }
-                    else
+                    else if (id_at_m183 < 10000)
                     {
-                        if (id_at_m183 < 10000)
+                        if (instr(
+                                rffilter_item(inv_id(cnt)),
+                                0,
+                                u8"/"s + rfnameorg(0, (id_at_m183 - 9000))
+                                    + u8"/"s)
+                                == -1
+                            && id_at_m183 != 9004)
                         {
-                            if (instr(
-                                    rffilter_item(inv_id(cnt)),
-                                    0,
-                                    u8"/"s + rfnameorg(0, (id_at_m183 - 9000))
-                                        + u8"/"s)
-                                    == -1
-                                && id_at_m183 != 9004)
-                            {
-                                continue;
-                            }
+                            continue;
                         }
-                        else
-                        {
-                            if (reftype_at_m183 != id_at_m183)
-                            {
-                                continue;
-                            }
-                        }
+                    }
+                    else if (reftype_at_m183 != id_at_m183)
+                    {
+                        continue;
                     }
                     if (step > 0)
                     {
@@ -63415,12 +62699,9 @@ void window_recipe_(
     {
         gfdec2(10, 20, 30);
     }
-    else
+    else if (step > i_at_m184 - 2)
     {
-        if (step > i_at_m184 - 2)
-        {
-            gfdec2(25, 30, 35);
-        }
+        gfdec2(25, 30, 35);
     }
     if (step == -1)
     {
@@ -63452,12 +62733,9 @@ void window_recipe_(
             {
                 gfdec2(10, 20, 30);
             }
-            else
+            else if (step > i_at_m184 - 2)
             {
-                if (step > i_at_m184 - 2)
-                {
-                    gfdec2(25, 30, 35);
-                }
+                gfdec2(25, 30, 35);
             }
             if (step <= cnt)
             {
@@ -63490,12 +62768,9 @@ void window_recipe_(
     {
         gfdec2(10, 20, 30);
     }
-    else
+    else if (step > i_at_m184 - 2)
     {
-        if (step > i_at_m184 - 2)
-        {
-            gfdec2(25, 30, 35);
-        }
+        gfdec2(25, 30, 35);
     }
     pos(dx_at_m184, dy_at_m184);
     mes(""s + i_at_m184 + u8"."s
@@ -63960,12 +63235,9 @@ label_1924_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     DIM2(blendchecklist, pagesize);
     {
@@ -64130,12 +63402,9 @@ label_1928_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     redraw(0);
     if (jp)
@@ -64220,46 +63489,43 @@ label_1928_internal:
                 gcopy(1, 0, 1008, 22, 20);
                 gsel(selcur);
             }
+            else if (p(1) == 531)
+            {
+                pos(8, 1058 - chipc(3, inv_color(p)));
+                gcopy(
+                    5,
+                    chipc(0, inv_color(p)) + 8,
+                    chipc(1, inv_color(p)) + 2,
+                    chipc(2, inv_color(p)) - 16,
+                    chipc(3, inv_color(p)) - 8);
+                gmode(4 - 1, -1, 150);
+                color(0, 0, 0);
+                pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
+                gcopy(
+                    1,
+                    144,
+                    768 + (chipc(3, inv_color(p)) > inf_tiles) * 48,
+                    inf_tiles,
+                    chipc(3, inv_color(p))
+                        + (chipc(3, inv_color(p)) > inf_tiles) * 48);
+                gmode(2);
+                gsel(selcur);
+            }
             else
             {
-                if (p(1) == 531)
-                {
-                    pos(8, 1058 - chipc(3, inv_color(p)));
-                    gcopy(
-                        5,
-                        chipc(0, inv_color(p)) + 8,
-                        chipc(1, inv_color(p)) + 2,
-                        chipc(2, inv_color(p)) - 16,
-                        chipc(3, inv_color(p)) - 8);
-                    gmode(4 - 1, -1, 150);
-                    color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
-                    gcopy(
-                        1,
-                        144,
-                        768 + (chipc(3, inv_color(p)) > inf_tiles) * 48,
-                        inf_tiles,
-                        chipc(3, inv_color(p))
-                            + (chipc(3, inv_color(p)) > inf_tiles) * 48);
-                    gmode(2);
-                    gsel(selcur);
-                }
-                else
-                {
-                    pos(0, 960);
-                    gcopy(
-                        1,
-                        chipi(0, p(1)),
-                        chipi(1, p(1)),
-                        chipi(2, p(1)),
-                        chipi(3, p(1)));
-                    gfini(chipi(2, p(1)), chipi(3, p(1)));
-                    gfdec2(
-                        c_col(0, inv_color(p)),
-                        c_col(1, inv_color(p)),
-                        c_col(2, inv_color(p)));
-                    gsel(selcur);
-                }
+                pos(0, 960);
+                gcopy(
+                    1,
+                    chipi(0, p(1)),
+                    chipi(1, p(1)),
+                    chipi(2, p(1)),
+                    chipi(3, p(1)));
+                gfini(chipi(2, p(1)), chipi(3, p(1)));
+                gfdec2(
+                    c_col(0, inv_color(p)),
+                    c_col(1, inv_color(p)),
+                    c_col(2, inv_color(p)));
+                gsel(selcur);
             }
             pos(wx + 37, wy + 69 + cnt * 19);
             gmode(2, chipi(2, p(1)), chipi(3, p(1)));
@@ -64413,23 +63679,17 @@ int label_1932()
             if (rpdata(2, rpid) > 0 && cnt == 0)
             {
             }
-            else
+            else if (rpresult)
             {
-                if (rpresult)
-                {
-                    --inv_number(rpref(10 + cnt * 2));
-                }
-                else
-                {
-                    if (rnd(3) == 0)
-                    {
-                        txt(lang(
-                            itemname(rpref(10 + cnt * 2), 1) + u8"を失った。"s,
-                            u8"You lose "s + itemname(rpref((10 + cnt * 2)), 1)
-                                + u8"."s));
-                        --inv_number(rpref(10 + cnt * 2));
-                    }
-                }
+                --inv_number(rpref(10 + cnt * 2));
+            }
+            else if (rnd(3) == 0)
+            {
+                txt(lang(
+                    itemname(rpref(10 + cnt * 2), 1) + u8"を失った。"s,
+                    u8"You lose "s + itemname(rpref((10 + cnt * 2)), 1)
+                        + u8"."s));
+                --inv_number(rpref(10 + cnt * 2));
             }
             cell_refresh(
                 inv_x(rpref(10 + cnt * 2)), inv_y(rpref(10 + cnt * 2)));
@@ -64619,23 +63879,20 @@ void label_1935()
     {
         item_separate(ci);
     }
+    else if (inv_number(ci) <= 1)
+    {
+        rpref(10) = -2;
+    }
     else
     {
-        if (inv_number(ci) <= 1)
+        int stat = item_separate(ci);
+        if (rpref(10) == stat)
         {
             rpref(10) = -2;
         }
         else
         {
-            int stat = item_separate(ci);
-            if (rpref(10) == stat)
-            {
-                rpref(10) = -2;
-            }
-            else
-            {
-                rpref(10) = stat;
-            }
+            rpref(10) = stat;
         }
     }
     switch (rpdata(0, rpid))
@@ -64879,20 +64136,17 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
                 rtvaln + u8"が落ちている。"s,
                 u8"You see "s + rtvaln + u8" here."s);
         }
+        else if (inv_own_state(rtval(1)) == 3)
+        {
+            return lang(
+                rtvaln + u8"が設置されている。"s,
+                ""s + rtvaln + u8" is constructed here."s);
+        }
         else
         {
-            if (inv_own_state(rtval(1)) == 3)
-            {
-                return lang(
-                    rtvaln + u8"が設置されている。"s,
-                    ""s + rtvaln + u8" is constructed here."s);
-            }
-            else
-            {
-                return lang(
-                    rtvaln + u8"がある。"s,
-                    u8"You see "s + rtvaln + u8" placed here."s);
-            }
+            return lang(
+                rtvaln + u8"がある。"s,
+                u8"You see "s + rtvaln + u8" placed here."s);
         }
     }
     else
@@ -65205,12 +64459,9 @@ label_1944_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1945_internal:
     redraw(0);
@@ -65521,12 +64772,9 @@ label_1948_internal:
                             {
                                 break;
                             }
-                            else
+                            else if (stat == -1)
                             {
-                                if (stat == -1)
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
                             sx = (dx - scx) * inf_tiles + inf_screenx;
                             sy = (dy - scy) * inf_tiles + inf_screeny;
@@ -65590,23 +64838,17 @@ label_1948_internal:
             {
                 cdata_x(0) = 0;
             }
-            else
+            else if (cdata_x(0) >= mdata(0))
             {
-                if (cdata_x(0) >= mdata(0))
-                {
-                    cdata_x(0) = mdata(0) - 1;
-                }
+                cdata_x(0) = mdata(0) - 1;
             }
             if (cdata_y(0) < 0)
             {
                 cdata_y(0) = 0;
             }
-            else
+            else if (cdata_y(0) >= mdata(1))
             {
-                if (cdata_y(0) >= mdata(1))
-                {
-                    cdata_y(0) = mdata(1) - 1;
-                }
+                cdata_y(0) = mdata(1) - 1;
             }
         }
         tlocx = tx + scx;
@@ -65614,24 +64856,18 @@ label_1948_internal:
         {
             tlocx = 0;
         }
-        else
+        else if (tlocx >= mdata(0))
         {
-            if (tlocx >= mdata(0))
-            {
-                tlocx = mdata(0) - 1;
-            }
+            tlocx = mdata(0) - 1;
         }
         tlocy = ty + scy;
         if (tlocy < 0)
         {
             tlocy = 0;
         }
-        else
+        else if (tlocy >= mdata(1))
         {
-            if (tlocy >= mdata(1))
-            {
-                tlocy = mdata(1) - 1;
-            }
+            tlocy = mdata(1) - 1;
         }
     }
     else
@@ -65733,12 +64969,9 @@ label_1948_internal:
                     u8"You target the ground."s));
             }
         }
-        else
+        else if (homemapmode == 0)
         {
-            if (homemapmode == 0)
-            {
-                snd(5);
-            }
+            snd(5);
         }
         scposval = 0;
         if (tlocinitx == 0 && tlocinity == 0)
@@ -65795,12 +65028,9 @@ label_1952_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1953_internal:
     if (cs != cs_bk)
@@ -65847,12 +65077,9 @@ label_1953_internal:
                                 {
                                     break;
                                 }
-                                else
+                                else if (stat == -1)
                                 {
-                                    if (stat == -1)
-                                    {
-                                        continue;
-                                    }
+                                    continue;
                                 }
                                 sx = (dx - scx) * inf_tiles + inf_screenx;
                                 sy = (dy - scy) * inf_tiles + inf_screeny;
@@ -66133,13 +65360,10 @@ label_1960_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-            txtnew();
-        }
+        page = 0;
+        txtnew();
     }
     if (allyctrl == 0)
     {
@@ -66588,12 +65812,9 @@ label_1965_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     s(0) = u8"自己の分析"s;
     s(1) = strhint2 + strhint3b;
@@ -66994,12 +66215,9 @@ label_196901_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     if (cs < 0)
     {
@@ -67144,16 +66362,13 @@ label_1970_internal:
                 {
                     color(0, 0, 0);
                 }
+                else if (trait(tid) > 0)
+                {
+                    color(0, 0, 200);
+                }
                 else
                 {
-                    if (trait(tid) > 0)
-                    {
-                        color(0, 0, 200);
-                    }
-                    else
-                    {
-                        color(200, 0, 0);
-                    }
+                    color(200, 0, 0);
                 }
             }
             else
@@ -67559,12 +66774,9 @@ label_1973_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     gsel(4);
     pos(0, 0);
@@ -67806,12 +67018,9 @@ label_1977_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1978_internal:
     redraw(0);
@@ -68039,12 +67248,9 @@ int label_1980()
                         }
                     }
                 }
-                else
+                else if (cdata_state(cnt) != 1)
                 {
-                    if (cdata_state(cnt) != 1)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
                 if (cnt < 16)
                 {
@@ -68077,12 +67283,9 @@ label_1981_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1982_internal:
     redraw(0);
@@ -68260,12 +67463,9 @@ label_1985_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1986_internal:
     redraw(0);
@@ -68430,12 +67630,9 @@ label_1989_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_1990_internal:
     redraw(0);
@@ -69465,12 +68662,9 @@ label_2008_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     drawmenu(1);
 label_2009_internal:
@@ -70025,12 +69219,9 @@ label_2015_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2016_internal:
     redraw(0);
@@ -70194,12 +69385,9 @@ label_2019_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2020_internal:
     redraw(0);
@@ -70360,12 +69548,9 @@ label_2023_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     wx = (windoww - 720) / 2 + inf_screenx;
     wy = winposy(468);
@@ -70484,12 +69669,9 @@ label_2028_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     drawmenu(1);
 label_2029_internal:
@@ -70732,16 +69914,13 @@ void label_2031()
                 }
             }
         }
+        else if (i == 461)
+        {
+            s += ""s + limit(bonus, 1, 100) + u8"%"s;
+        }
         else
         {
-            if (i == 461)
-            {
-                s += ""s + limit(bonus, 1, 100) + u8"%"s;
-            }
-            else
-            {
-                s += lang(u8"ﾊﾟﾜｰ"s, u8"Power:"s) + bonus;
-            }
+            s += lang(u8"ﾊﾟﾜｰ"s, u8"Power:"s) + bonus;
         }
         s += u8" "s;
     }
@@ -71045,14 +70224,11 @@ label_20331:
                     f = 1;
                 }
             }
-            else
+            else if (sdata(cnt, cc) == 0)
             {
-                if (sdata(cnt, cc) == 0)
+                if (sdataref(0, cnt) != 0)
                 {
-                    if (sdataref(0, cnt) != 0)
-                    {
-                        f = 1;
-                    }
+                    f = 1;
                 }
             }
             if (f)
@@ -71148,12 +70324,9 @@ label_2034_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     if (csctrl == 1)
     {
@@ -71719,24 +70892,21 @@ label_2035_internal:
                         pos(wx + 322 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
                         mes(s);
                     }
-                    else
+                    else if (sorg(i, cc) != sdata(i, cc))
                     {
-                        if (sorg(i, cc) != sdata(i, cc))
+                        i = sdata(i, cc) - sorg(i, cc);
+                        if (list(0, p) >= 50)
                         {
-                            i = sdata(i, cc) - sorg(i, cc);
-                            if (list(0, p) >= 50)
-                            {
-                                i = i / 50;
-                            }
-                            else
-                            {
-                                i = i / 5;
-                            }
-                            s = "";
-                            putenclv(i);
-                            pos(wx + 282, wy + 66 + cnt * 19 + 2);
-                            mes(s);
+                            i = i / 50;
                         }
+                        else
+                        {
+                            i = i / 5;
+                        }
+                        s = "";
+                        putenclv(i);
+                        pos(wx + 282, wy + 66 + cnt * 19 + 2);
+                        mes(s);
                     }
                 }
                 else
@@ -71787,42 +70957,39 @@ label_2035_internal:
             goto label_2034_internal;
         }
     }
-    else
+    else if (csctrl != 1)
     {
-        if (csctrl != 1)
+        if (key == key_mode2)
         {
-            if (key == key_mode2)
             {
+                int cnt = 0;
+                for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
-                    {
-                        i = list(0, pagesize * (page - 1) + cs);
-                        break;
-                    }
+                    i = list(0, pagesize * (page - 1) + cs);
+                    break;
                 }
-                if (i != -1)
+            }
+            if (i != -1)
+            {
+                p = 750;
                 {
-                    p = 750;
+                    int cnt = 750;
+                    for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                     {
-                        int cnt = 750;
-                        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                        if (gdata(cnt) % 10000 == 0)
                         {
-                            if (gdata(cnt) % 10000 == 0)
-                            {
-                                p = cnt;
-                            }
-                            if (gdata(cnt) == cc * 10000 + i)
-                            {
-                                p = cnt;
-                                i = 0;
-                                break;
-                            }
+                            p = cnt;
+                        }
+                        if (gdata(cnt) == cc * 10000 + i)
+                        {
+                            p = cnt;
+                            i = 0;
+                            break;
                         }
                     }
-                    gdata(p) = cc * 10000 + i;
-                    snd(20);
                 }
+                gdata(p) = cc * 10000 + i;
+                snd(20);
             }
         }
     }
@@ -72249,32 +71416,25 @@ label_2041_internal:
             pos(wx + 238, wy + 75);
             gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
         }
-        else
+        else if (cdata_portrait(cc) != -1)
         {
-            if (cdata_portrait(cc) != -1)
-            {
-                pos(wx + 238, wy + 75);
-                gzoom(
-                    80, 112, 7, abs((cdata_portrait(cc) + 2)) * 80, 0, 80, 112);
-            }
+            pos(wx + 238, wy + 75);
+            gzoom(80, 112, 7, abs((cdata_portrait(cc) + 2)) * 80, 0, 80, 112);
         }
+    }
+    else if (cbit(967, cc) == 1)
+    {
+        pos(wx + 280, wy + 130);
+        gmode(2, 32, 48);
+        grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
     }
     else
     {
-        if (cbit(967, cc) == 1)
-        {
-            pos(wx + 280, wy + 130);
-            gmode(2, 32, 48);
-            grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
-        }
-        else
-        {
-            i = cdata_image(cc) % 1000;
-            chara_preparepic(cdata_image(cc) % 1000, cdata_image(cc) / 1000);
-            pos(wx + 280, wy + 130);
-            gmode(2, chipc(2, i), chipc(3, i));
-            grotate(5, 0, 960, 0, chipc(2, i), chipc(3, i));
-        }
+        i = cdata_image(cc) % 1000;
+        chara_preparepic(cdata_image(cc) % 1000, cdata_image(cc) / 1000);
+        pos(wx + 280, wy + 130);
+        gmode(2, chipc(2, i), chipc(3, i));
+        grotate(5, 0, 960, 0, chipc(2, i), chipc(3, i));
     }
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -72298,16 +71458,13 @@ label_2041_internal:
                 {
                     s += u8" "s + rtval(2);
                 }
+                else if (rtval(2) == -1)
+                {
+                    s += u8" N/A"s;
+                }
                 else
                 {
-                    if (rtval(2) == -1)
-                    {
-                        s += u8" N/A"s;
-                    }
-                    else
-                    {
-                        s += u8" u"s + (abs(rtval(2)) - 1);
-                    }
+                    s += u8" u"s + (abs(rtval(2)) - 1);
                 }
             }
             cs_list(cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 19, 0);
@@ -72344,12 +71501,9 @@ label_2041_internal:
             key = ""s;
         }
     }
-    else
+    else if (key == key_enter)
     {
-        if (key == key_enter)
-        {
-            key = key_pageup;
-        }
+        key = key_pageup;
     }
     if (rtval == -1)
     {
@@ -72395,13 +71549,10 @@ label_2041_internal:
                 p = 1;
             }
         }
-        else
+        else if (pcc(rtval, cc) / 1000 < 21)
         {
-            if (pcc(rtval, cc) / 1000 < 21)
-            {
-                pcc(rtval, cc) += 1000;
-                p = 1;
-            }
+            pcc(rtval, cc) += 1000;
+            p = 1;
         }
     }
     if (key == key_pagedown)
@@ -72431,13 +71582,10 @@ label_2041_internal:
                 p = 1;
             }
         }
-        else
+        else if (pcc(rtval, cc) / 1000 > 0)
         {
-            if (pcc(rtval, cc) / 1000 > 0)
-            {
-                pcc(rtval, cc) -= 1000;
-                p = 1;
-            }
+            pcc(rtval, cc) -= 1000;
+            p = 1;
         }
     }
     create_pcpic(cc, 0);
@@ -72750,16 +71898,13 @@ void label_2049()
                                 + u8" is too heavy for two-wield fighting style."s));
                     }
                 }
-                else
+                else if (inv_weight(cw) > 1500)
                 {
-                    if (inv_weight(cw) > 1500)
-                    {
-                        txt(lang(
-                            u8"装備中の"s + itemname(cw)
-                                + u8"は片手で扱うには重すぎる。"s,
-                            itemname(cw)
-                                + u8" is too heavy for two-wield fighting style."s));
-                    }
+                    txt(lang(
+                        u8"装備中の"s + itemname(cw)
+                            + u8"は片手で扱うには重すぎる。"s,
+                        itemname(cw)
+                            + u8" is too heavy for two-wield fighting style."s));
                 }
             }
         }
@@ -72858,12 +72003,9 @@ label_2051_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2052_internal:
     redraw(0);
@@ -72977,49 +72119,43 @@ label_2052_internal:
                     gcopy(1, 0, 1008, 22, 20);
                     gsel(selcur);
                 }
+                else if (p(2) == 531)
+                {
+                    pos(8, 1058 - chipc(3, inv_color(p(1))));
+                    gcopy(
+                        5,
+                        chipc(0, inv_color(p(1))) + 8,
+                        chipc(1, inv_color(p(1))) + 2,
+                        chipc(2, inv_color(p(1))) - 16,
+                        chipc(3, inv_color(p(1))) - 8);
+                    gmode(4 - 1, -1, 150);
+                    color(0, 0, 0);
+                    pos(0, 960 + (chipc(3, inv_color(p(1))) == inf_tiles) * 48);
+                    gcopy(
+                        1,
+                        144,
+                        768 + (chipc(3, inv_color(p(1))) > inf_tiles) * 48,
+                        inf_tiles,
+                        chipc(3, inv_color(p(1)))
+                            + (chipc(3, inv_color(p(1))) > inf_tiles) * 48);
+                    gmode(2);
+                    gsel(selcur);
+                }
                 else
                 {
-                    if (p(2) == 531)
-                    {
-                        pos(8, 1058 - chipc(3, inv_color(p(1))));
-                        gcopy(
-                            5,
-                            chipc(0, inv_color(p(1))) + 8,
-                            chipc(1, inv_color(p(1))) + 2,
-                            chipc(2, inv_color(p(1))) - 16,
-                            chipc(3, inv_color(p(1))) - 8);
-                        gmode(4 - 1, -1, 150);
-                        color(0, 0, 0);
-                        pos(0,
-                            960
-                                + (chipc(3, inv_color(p(1))) == inf_tiles)
-                                    * 48);
-                        gcopy(
-                            1,
-                            144,
-                            768 + (chipc(3, inv_color(p(1))) > inf_tiles) * 48,
-                            inf_tiles,
-                            chipc(3, inv_color(p(1)))
-                                + (chipc(3, inv_color(p(1))) > inf_tiles) * 48);
-                        gmode(2);
-                        gsel(selcur);
-                    }
-                    else
-                    {
-                        pos(0, 960);
-                        gcopy(
-                            1,
-                            chipi(0, p(2)),
-                            chipi(1, p(2)),
-                            chipi(2, p(2)),
-                            chipi(3, p(2)));
-                        gfini(chipi(2, p(2)), chipi(3, p(2)));
-                        gfdec2(
-                            c_col(0, inv_color(p(1))),
-                            c_col(1, inv_color(p(1))),
-                            c_col(2, inv_color(p(1))));
-                        gsel(selcur);
-                    }
+                    pos(0, 960);
+                    gcopy(
+                        1,
+                        chipi(0, p(2)),
+                        chipi(1, p(2)),
+                        chipi(2, p(2)),
+                        chipi(3, p(2)));
+                    gfini(chipi(2, p(2)), chipi(3, p(2)));
+                    gfdec2(
+                        c_col(0, inv_color(p(1))),
+                        c_col(1, inv_color(p(1))),
+                        c_col(2, inv_color(p(1))));
+                    gsel(selcur);
                 }
                 pos(wx + 126, wy + 70 + cnt * 19);
                 gmode(2, inf_tiles, inf_tiles);
@@ -73873,12 +73009,9 @@ label_2069_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2070_internal:
     redraw(0);
@@ -73980,12 +73113,9 @@ int label_2072()
     {
         cdata_enemy_id(cc) = 0;
     }
-    else
+    else if (synccheck(cdata_enemy_id(cc), -1) == 0)
     {
-        if (synccheck(cdata_enemy_id(cc), -1) == 0)
-        {
-            cdata_enemy_id(cc) = 0;
-        }
+        cdata_enemy_id(cc) = 0;
     }
     if (cdata_enemy_id(cc) == 0)
     {
@@ -74905,30 +74035,21 @@ void label_2085()
             {
                 s += u8"superb"s;
             }
+            else if (p >= 150)
+            {
+                s += u8"great"s;
+            }
+            else if (p >= 100)
+            {
+                s += u8"good"s;
+            }
+            else if (p >= 50)
+            {
+                s += u8"bad"s;
+            }
             else
             {
-                if (p >= 150)
-                {
-                    s += u8"great"s;
-                }
-                else
-                {
-                    if (p >= 100)
-                    {
-                        s += u8"good"s;
-                    }
-                    else
-                    {
-                        if (p >= 50)
-                        {
-                            s += u8"bad"s;
-                        }
-                        else
-                        {
-                            s += u8"hopeless"s;
-                        }
-                    }
-                }
+                s += u8"hopeless"s;
             }
             s = fixtxt(s, 15);
             s = fixtxt(
@@ -75595,24 +74716,18 @@ void label_2091()
     {
         p = 5;
     }
-    else
+    else if (p > 50)
     {
-        if (p > 50)
-        {
-            p = 50;
-        }
+        p = 50;
     }
     i = (p - 250) / 8;
     if (i < 5)
     {
         i = 5;
     }
-    else
+    else if (i > 40)
     {
-        if (i > 40)
-        {
-            i = 40;
-        }
+        i = 40;
     }
     cdata_gold(0) += limit(cdata_gold(56) / 100, 1000, 100000);
     cdata_platinum_coin(0) += p;
@@ -78833,17 +77948,15 @@ void label_2146()
                             continue;
                         }
                     }
-                    else
+                    else if (
+                        dist(
+                            cdata_x(cc),
+                            cdata_y(cc),
+                            cdata_x(cnt),
+                            cdata_y(cnt))
+                        > 3)
                     {
-                        if (dist(
-                                cdata_x(cc),
-                                cdata_y(cc),
-                                cdata_x(cnt),
-                                cdata_y(cnt))
-                            > 3)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
                     if (cdata_interest(cnt) <= 0)
                     {
@@ -78995,12 +78108,9 @@ void label_2146()
                         {
                             cdata_quality_of_performance(cc) += p;
                         }
-                        else
+                        else if (rnd(2) == 0)
                         {
-                            if (rnd(2) == 0)
-                            {
-                                cdata_quality_of_performance(cc) -= p;
-                            }
+                            cdata_quality_of_performance(cc) -= p;
                         }
                     }
                     if (encfindspec(ci, 60) != -1)
@@ -79630,12 +78740,9 @@ void label_2148()
                     skillexp(inv_param1(ci), cc, 25);
                 }
             }
-            else
+            else if (rnd(p) == 0)
             {
-                if (rnd(p) == 0)
-                {
-                    skillexp(randattb(), cc, 25);
-                }
+                skillexp(randattb(), cc, 25);
             }
         }
         if (gdata(91) == 105)
@@ -80183,12 +79290,9 @@ void label_2151()
                 {
                     gdata(92) -= exp;
                 }
-                else
+                else if (cnt != 0)
                 {
-                    if (cnt != 0)
-                    {
-                        break;
-                    }
+                    break;
                 }
                 modgrowth(0, 10 + rnd(6), 1);
                 ++grown;
@@ -80244,12 +79348,9 @@ void label_2152()
         {
             f = 1;
         }
-        else
+        else if (rnd(2) == 0)
         {
-            if (rnd(2) == 0)
-            {
-                f = 1;
-            }
+            f = 1;
         }
         if (f == 1)
         {
@@ -80433,12 +79534,9 @@ void label_2153()
                     cdata_confused(0) = 10;
                 }
             }
-            else
+            else if (rnd(5) == 0)
             {
-                if (rnd(5) == 0)
-                {
-                    cdata_confused(0) = 10;
-                }
+                cdata_confused(0) = 10;
             }
         }
         cdata_blind(0) = 3;
@@ -80908,44 +80006,35 @@ void label_2159()
                     u8"You found something out of crushed heaps of rock."s));
                 gdata(250) = 3;
             }
-            else
+            else if (rtval != 0 && gdata(20) != 30)
             {
-                if (rtval != 0 && gdata(20) != 30)
+                if (rtval > 0)
                 {
-                    if (rtval > 0)
-                    {
-                        flt();
-                        itemcreate(-1, rtval, digx, digy, 0);
-                    }
-                    else
-                    {
-                        if (rtval == -1)
-                        {
-                            flt(calcobjlv(gdata(22)), calcfixlv(3));
-                            flttypemajor = 77000;
-                            itemcreate(-1, 0, digx, digy, 0);
-                        }
-                    }
-                    txt(lang(
-                        u8"何かを見つけた。"s,
-                        u8"You found something out of crushed heaps of rock."s));
+                    flt();
+                    itemcreate(-1, rtval, digx, digy, 0);
                 }
+                else if (rtval == -1)
+                {
+                    flt(calcobjlv(gdata(22)), calcfixlv(3));
+                    flttypemajor = 77000;
+                    itemcreate(-1, 0, digx, digy, 0);
+                }
+                txt(lang(
+                    u8"何かを見つけた。"s,
+                    u8"You found something out of crushed heaps of rock."s));
             }
             label_1457();
             rowactend(cc);
         }
-        else
+        else if (cdata_turn(cc) % 5 == 0)
         {
-            if (cdata_turn(cc) % 5 == 0)
-            {
-                txtmore();
-                txtef(4);
-                txt(lang(u8" *ざくっ* "s, u8"*clink*"s),
-                    lang(u8" *カキン* "s, u8"*smash*"s),
-                    lang(u8" *ごつっ* "s, u8"*thud*"s),
-                    lang(u8" *じゃり* "s, u8"*sing*"s),
-                    lang(u8" *♪* "s, u8"*sigh*"s));
-            }
+            txtmore();
+            txtef(4);
+            txt(lang(u8" *ざくっ* "s, u8"*clink*"s),
+                lang(u8" *カキン* "s, u8"*smash*"s),
+                lang(u8" *ごつっ* "s, u8"*thud*"s),
+                lang(u8" *じゃり* "s, u8"*sing*"s),
+                lang(u8" *♪* "s, u8"*sigh*"s));
         }
         return;
     }
@@ -81023,12 +80112,9 @@ void label_2161()
     {
         cell_refresh(inv_x(ci), inv_y(ci));
     }
-    else
+    else if (cc == 0)
     {
-        if (cc == 0)
-        {
-            label_1521();
-        }
+        label_1521();
     }
     if (cc == 0)
     {
@@ -81190,17 +80276,13 @@ int label_2163()
         {
             p = 50;
         }
+        else if (inv_id(ci) == 687)
+        {
+            p = 50 + inv_param1(ci) * 50 + inv_param1(ci) * inv_param1(ci) * 20;
+        }
         else
         {
-            if (inv_id(ci) == 687)
-            {
-                p = 50 + inv_param1(ci) * 50
-                    + inv_param1(ci) * inv_param1(ci) * 20;
-            }
-            else
-            {
-                p = sdataref(4, efid);
-            }
+            p = sdataref(4, efid);
         }
         cdata_continuous_action_turn(cc) = p / (2 + sdata(150, 0)) + 1;
         cdata_continuous_action_item(cc) = ci;
@@ -81540,25 +80622,22 @@ int label_2168()
             return 1;
         }
     }
-    else
+    else if (synccheck(cc, -1))
     {
-        if (synccheck(cc, -1))
+        if (cc == 0)
         {
-            if (cc == 0)
-            {
-                txt(lang(
-                    name(cc) + u8"は"s + skillname(efid) + u8"の"s
-                        + _cast(cdata_special_attack_type(cc)),
-                    name(cc) + u8" cast "s + skillname(efid) + u8"."s));
-                txtmore();
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"は"s + _cast(cdata_special_attack_type(cc)),
-                    name(cc) + ""s + _cast(cdata_special_attack_type(cc))));
-                txtmore();
-            }
+            txt(lang(
+                name(cc) + u8"は"s + skillname(efid) + u8"の"s
+                    + _cast(cdata_special_attack_type(cc)),
+                name(cc) + u8" cast "s + skillname(efid) + u8"."s));
+            txtmore();
+        }
+        else
+        {
+            txt(lang(
+                name(cc) + u8"は"s + _cast(cdata_special_attack_type(cc)),
+                name(cc) + ""s + _cast(cdata_special_attack_type(cc))));
+            txtmore();
         }
     }
     if (findbuff(cc, 2) != -1)
@@ -81679,12 +80758,9 @@ int label_2169()
         {
             cell_refresh(inv_x(ci), inv_y(ci));
         }
-        else
+        else if (tc == 0)
         {
-            if (tc == 0)
-            {
-                label_1521();
-            }
+            label_1521();
         }
     }
     cdata_nutrition(tc) += 150;
@@ -82050,12 +81126,9 @@ int label_2172()
         {
             r1 = r1 * 50 / 100;
         }
-        else
+        else if (rnd(2))
         {
-            if (rnd(2))
-            {
-                f = 1;
-            }
+            f = 1;
         }
         if (rnd((sdataref(4, efid) + 1)) / 2 <= r1)
         {
@@ -82082,14 +81155,11 @@ int label_2172()
         }
         label_1469();
     }
-    else
+    else if (synccheck(cc, -1))
     {
-        if (synccheck(cc, -1))
-        {
-            txt(lang(
-                name(cc) + u8"は杖をうまく使えなかった。"s,
-                name(cc) + u8" fail to use the power of the rod."s));
-        }
+        txt(lang(
+            name(cc) + u8"は杖をうまく使えなかった。"s,
+            name(cc) + u8" fail to use the power of the rod."s));
     }
 label_2173_internal:
     efsource = 0;
@@ -82715,15 +81785,12 @@ void label_2189()
                         u8"It falls on the ground and melts."s));
                 }
             }
-            else
+            else if (synccheck(tlocx, tlocy))
             {
-                if (synccheck(tlocx, tlocy))
-                {
-                    txtmore();
-                    txt(lang(
-                        u8"それは地面に落ちて砕けた。"s,
-                        u8"It falls on the ground and shatters."s));
-                }
+                txtmore();
+                txt(lang(
+                    u8"それは地面に落ちて砕けた。"s,
+                    u8"It falls on the ground and shatters."s));
             }
             if (inv_id(ci) == 772)
             {
@@ -83000,17 +82067,14 @@ int label_2192()
                             + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12;
                     }
                 }
-                else
+                else if (inv_param3(ti) != 0)
                 {
-                    if (inv_param3(ti) != 0)
+                    inv_param3(ti) = gdata(13) + gdata(12) * 24
+                        + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12
+                        + refitem(inv_id(ti), 19);
+                    if (inv_param2(ti) != 0)
                     {
-                        inv_param3(ti) = gdata(13) + gdata(12) * 24
-                            + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12
-                            + refitem(inv_id(ti), 19);
-                        if (inv_param2(ti) != 0)
-                        {
-                            inv_param3(ti) += 72;
-                        }
+                        inv_param3(ti) += 72;
                     }
                 }
             }
@@ -83352,22 +82416,18 @@ void label_2198()
             label_2743(false);
         }
     }
-    else
+    else if (itemusingfind(ci) != -1)
     {
-        if (itemusingfind(ci) != -1)
+        tc = itemusingfind(ci);
+        if (tc != cc)
         {
-            tc = itemusingfind(ci);
-            if (tc != cc)
+            rowactend(tc);
+            if (synccheck(cc, -1))
             {
-                rowactend(tc);
-                if (synccheck(cc, -1))
-                {
-                    txt(lang(
-                        name(cc) + u8"は"s + name(tc)
-                            + u8"の食べ物を横取りした。"s,
-                        name(cc) + u8" snatch"s + _s(cc) + u8" "s + name(tc)
-                            + your(tc) + u8" food."s));
-                }
+                txt(lang(
+                    name(cc) + u8"は"s + name(tc) + u8"の食べ物を横取りした。"s,
+                    name(cc) + u8" snatch"s + _s(cc) + u8" "s + name(tc)
+                        + your(tc) + u8" food."s));
             }
         }
     }
@@ -84123,12 +83183,9 @@ void label_2205()
                 {
                     encounterlv /= 2;
                 }
-                else
+                else if (gdata(17) == 1)
                 {
-                    if (gdata(17) == 1)
-                    {
-                        encounterlv = encounterlv * 3 / 2 + 10;
-                    }
+                    encounterlv = encounterlv * 3 / 2 + 10;
                 }
                 if (encounterlv < 0)
                 {
@@ -84246,14 +83303,11 @@ void label_2206()
                 }
             }
         }
-        else
+        else if (mdata(6) == 1)
         {
-            if (mdata(6) == 1)
-            {
-                addefmap(cdata_x(cc), cdata_y(cc), 2, 10, dirsub);
-                snd(81 + foot % 2);
-                ++foot;
-            }
+            addefmap(cdata_x(cc), cdata_y(cc), 2, 10, dirsub);
+            snd(81 + foot % 2);
+            ++foot;
         }
         if (map(x, y, 6) != 0)
         {
@@ -84715,13 +83769,10 @@ int label_2209()
         {
             txt(lang(u8"楽勝だ。"s, u8"Easy."s));
         }
-        else
+        else if (rnd(rnd(i * 2) + 1) < val)
         {
-            if (rnd(rnd(i * 2) + 1) < val)
-            {
-                txt(lang(u8"開錠に失敗した。"s, u8"You fail to unlock it."s));
-                f = 1;
-            }
+            txt(lang(u8"開錠に失敗した。"s, u8"You fail to unlock it."s));
+            f = 1;
         }
     }
     if (f)
@@ -85369,16 +84420,13 @@ void label_2215()
             {
                 snd(67);
             }
+            else if (mdata(12) == 9)
+            {
+                snd(71);
+            }
             else
             {
-                if (mdata(12) == 9)
-                {
-                    snd(71);
-                }
-                else
-                {
-                    snd(48);
-                }
+                snd(48);
             }
         }
     }
@@ -85500,51 +84548,45 @@ int label_2217()
             }
         }
     }
-    else
+    else if (ammoproc == 5)
     {
-        if (ammoproc == 5)
         {
+            int cnt = 0;
+            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+                label_2075();
+                ele = 0;
+                label_2076();
+                if (listmax == 0)
                 {
-                    label_2075();
-                    ele = 0;
-                    label_2076();
-                    if (listmax == 0)
+                    break;
+                }
+                tc = list(0, rnd(listmax));
+                if (cc == 0 || cdata_relationship(cc) >= 0)
+                {
+                    if (cdata_relationship(tc) >= 0)
                     {
-                        break;
-                    }
-                    tc = list(0, rnd(listmax));
-                    if (cc == 0 || cdata_relationship(cc) >= 0)
-                    {
-                        if (cdata_relationship(tc) >= 0)
-                        {
-                            if (cnt != 0)
-                            {
-                                cnt = cnt + (rnd(5) == 0) - 1;
-                                continue;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (cdata_relationship(tc) == -3)
+                        if (cnt != 0)
                         {
                             cnt = cnt + (rnd(5) == 0) - 1;
                             continue;
                         }
                     }
-                    extraattack = 0;
-                    label_22192();
                 }
+                else if (cdata_relationship(tc) == -3)
+                {
+                    cnt = cnt + (rnd(5) == 0) - 1;
+                    continue;
+                }
+                extraattack = 0;
+                label_22192();
             }
         }
-        else
-        {
-            extraattack = 0;
-            label_22192();
-        }
+    }
+    else
+    {
+        extraattack = 0;
+        label_22192();
     }
     if (ammoproc == 1)
     {
@@ -85722,18 +84764,15 @@ label_22191_internal:
                 {
                     s(1) = lang(""s, u8"The "s) + iknownnameref(inv_id(cw));
                 }
+                else if (inv_subname(cw) >= 40000)
+                {
+                    randomize(inv_subname(cw) - 40000);
+                    s(1) = random_title(1);
+                    randomize();
+                }
                 else
                 {
-                    if (inv_subname(cw) >= 40000)
-                    {
-                        randomize(inv_subname(cw) - 40000);
-                        s(1) = random_title(1);
-                        randomize();
-                    }
-                    else
-                    {
-                        s(1) = lang(""s, u8"The "s) + iknownnameref(inv_id(cw));
-                    }
+                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv_id(cw));
                 }
                 s(1) = lang(u8"『"s, u8"<"s) + s(1) + lang(u8"』"s, u8">"s);
                 if (synccheck(cc, -1))
@@ -86028,16 +85067,13 @@ label_22191_internal:
                     skillexp(166, cc, 20 / expmodifer, 0, 4);
                 }
             }
+            else if (attackskill == 111)
+            {
+                skillexp(152, cc, 10 / expmodifer, 0, 4);
+            }
             else
             {
-                if (attackskill == 111)
-                {
-                    skillexp(152, cc, 10 / expmodifer, 0, 4);
-                }
-                else
-                {
-                    skillexp(189, cc, 25 / expmodifer, 0, 4);
-                }
+                skillexp(189, cc, 25 / expmodifer, 0, 4);
             }
             if (cc == 0)
             {
@@ -86265,13 +85301,10 @@ label_22191_internal:
                 goto label_22191_internal;
             }
         }
-        else
+        else if (rnd(100) < cdata_extra_attack(cc))
         {
-            if (rnd(100) < cdata_extra_attack(cc))
-            {
-                ++extraattack;
-                goto label_22191_internal;
-            }
+            ++extraattack;
+            goto label_22191_internal;
         }
     }
     return;
@@ -86939,20 +85972,16 @@ void label_2227()
         {
             dipcursed(ci);
         }
+        else if (inv_id(ci) == 567)
+        {
+            txt(lang(u8"いいアイデアだ！しかし…"s, u8"A good idea! But..."s));
+        }
         else
         {
-            if (inv_id(ci) == 567)
-            {
-                txt(lang(
-                    u8"いいアイデアだ！しかし…"s, u8"A good idea! But..."s));
-            }
-            else
-            {
-                ibitmod(2, ci, 1);
-                txt(lang(
-                    itemname(ci) + u8"は熱から守られた。"s,
-                    itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
-            }
+            ibitmod(2, ci, 1);
+            txt(lang(
+                itemname(ci) + u8"は熱から守られた。"s,
+                itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
         }
         item_num(cidip, -1);
         label_2742();
@@ -87477,50 +86506,46 @@ void label_2228()
                             u8"あなたは自分を紐でくくってみた…"s,
                             u8"You leash yourself..."s));
                     }
+                    else if (cbit(968, tc) == 0)
+                    {
+                        if (tc >= 16)
+                        {
+                            if (rnd(5) == 0)
+                            {
+                                txt(lang(
+                                    name(tc)
+                                        + u8"が激しく抵抗したため紐は切れた。"s,
+                                    u8"The leash is cut as "s + name(tc)
+                                        + u8" resists."s));
+                                --inv_number(ci);
+                                cell_refresh(inv_x(ci), inv_y(ci));
+                                label_1521();
+                                goto label_2229_internal;
+                            }
+                        }
+                        cbitmod(968, tc, 1);
+                        txt(lang(
+                            u8"あなたは"s + name(tc)
+                                + u8"を紐でくくりつけた。"s,
+                            u8"You leash "s + name(tc) + u8"."s));
+                        txtef(9);
+                        txt(lang(
+                            name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
+                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
+                                + cnvtalk(u8"Pervert!"s)));
+                    }
                     else
                     {
-                        if (cbit(968, tc) == 0)
-                        {
-                            if (tc >= 16)
-                            {
-                                if (rnd(5) == 0)
-                                {
-                                    txt(lang(
-                                        name(tc)
-                                            + u8"が激しく抵抗したため紐は切れた。"s,
-                                        u8"The leash is cut as "s + name(tc)
-                                            + u8" resists."s));
-                                    --inv_number(ci);
-                                    cell_refresh(inv_x(ci), inv_y(ci));
-                                    label_1521();
-                                    goto label_2229_internal;
-                                }
-                            }
-                            cbitmod(968, tc, 1);
-                            txt(lang(
-                                u8"あなたは"s + name(tc)
-                                    + u8"を紐でくくりつけた。"s,
-                                u8"You leash "s + name(tc) + u8"."s));
-                            txtef(9);
-                            txt(lang(
-                                name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
-                                name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                    + cnvtalk(u8"Pervert!"s)));
-                        }
-                        else
-                        {
-                            cbitmod(968, tc, 0);
-                            txt(lang(
-                                u8"あなたは"s + name(tc)
-                                    + u8"にくくりつけた紐をほどいた。"s,
-                                u8"You unleash "s + name(tc) + u8"."s));
-                            txtef(9);
-                            txt(lang(
-                                name(tc)
-                                    + u8"は呻き声を洩らした。「はぁはぁ…」"s,
-                                name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                    + cnvtalk(u8"D-don't sto....N-nothing!"s)));
-                        }
+                        cbitmod(968, tc, 0);
+                        txt(lang(
+                            u8"あなたは"s + name(tc)
+                                + u8"にくくりつけた紐をほどいた。"s,
+                            u8"You unleash "s + name(tc) + u8"."s));
+                        txtef(9);
+                        txt(lang(
+                            name(tc) + u8"は呻き声を洩らした。「はぁはぁ…」"s,
+                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
+                                + cnvtalk(u8"D-don't sto....N-nothing!"s)));
                     }
                     animeload(8, tc);
                     f = 1;
@@ -89580,47 +88605,41 @@ void label_2244()
             p(2) = 14;
             p(3) = -1;
         }
+        else if (gdata(264) != 0)
+        {
+            p(0) = 10;
+            p(1) = 11;
+            p(2) = 12;
+            p(3) = -1;
+        }
+        else if (gdata(265) != 0)
+        {
+            p(0) = 12;
+            p(1) = 13;
+            p(2) = 11;
+            p(3) = 14;
+            p(4) = -1;
+        }
         else
         {
-            if (gdata(264) != 0)
+            plat = 4;
+            p(3) = -1;
+            i = rnd(6);
             {
-                p(0) = 10;
-                p(1) = 11;
-                p(2) = 12;
-                p(3) = -1;
-            }
-            else
-            {
-                if (gdata(265) != 0)
+                int cnt = 0;
+                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
-                    p(0) = 12;
-                    p(1) = 13;
-                    p(2) = 11;
-                    p(3) = 14;
-                    p(4) = -1;
-                }
-                else
-                {
-                    plat = 4;
-                    p(3) = -1;
-                    i = rnd(6);
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                        {
-                            p(cnt) = 10 + cnt + i;
-                        }
-                    }
-                    buff = lang(u8"鍛えている"s + _kana(2) +
-                            u8"冒険者として生き残るには、日ごろの鍛錬が大切"s +
-                            _da(2) + u8"わずかプラチナ"s + plat +
-                            u8"枚で、潜在能力を伸ばす特別な訓練を施してあげる"s +
-                            _yo(2),
-                        u8"Training! Training! At the end, only thing that saves your life is training! For only "s +
-                            plat +
-                            u8" platinum coins, I'll improve the potential of your talent."s);
+                    p(cnt) = 10 + cnt + i;
                 }
             }
+            buff = lang(u8"鍛えている"s + _kana(2) +
+                    u8"冒険者として生き残るには、日ごろの鍛錬が大切"s +
+                    _da(2) + u8"わずかプラチナ"s + plat +
+                    u8"枚で、潜在能力を伸ばす特別な訓練を施してあげる"s +
+                    _yo(2),
+                u8"Training! Training! At the end, only thing that saves your life is training! For only "s +
+                    plat +
+                    u8" platinum coins, I'll improve the potential of your talent."s);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = lang(u8"訓練しない"s, u8"Not today."s);
@@ -91049,20 +90068,18 @@ void label_2262()
         }
         label_2265();
     }
+    else if (
+        gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
+            + gdata(10) * 24 * 30 * 12
+        >= cdata_time_to_restore(tc))
+    {
+        label_2265();
+    }
     else
     {
-        if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
-                + gdata(10) * 24 * 30 * 12
-            >= cdata_time_to_restore(tc))
-        {
-            label_2265();
-        }
-        else
-        {
-            file = u8"shop"s + invfile + u8".s2"s;
-            fmode = 3;
-            label_2107();
-        }
+        file = u8"shop"s + invfile + u8".s2"s;
+        fmode = 3;
+        label_2107();
     }
     invfile = cdata_shop_store_id(tc);
     label_2264();
@@ -92055,12 +91072,9 @@ label_22711:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2272_internal:
     redraw(0);
@@ -92289,12 +91303,9 @@ label_2277_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2278_internal:
     redraw(0);
@@ -92483,12 +91494,9 @@ label_2282_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2283_internal:
     redraw(0);
@@ -94680,14 +93688,12 @@ void label_2667()
                     {
                         f = 0;
                     }
-                    else
+                    else if (
+                        inv_value(i)
+                        >= inv_value(
+                               cdata(bodylist((cnt + 1)), rc) % 10000 - 1))
                     {
-                        if (inv_value(i)
-                            >= inv_value(
-                                   cdata(bodylist((cnt + 1)), rc) % 10000 - 1))
-                        {
-                            f = 0;
-                        }
+                        f = 0;
                     }
                 }
                 if (f == 1)
@@ -95616,12 +94622,9 @@ void label_2677()
         {
             matgetmain(41, 1);
         }
-        else
+        else if (adata(23, gdata(66)) % 5 == 0)
         {
-            if (adata(23, gdata(66)) % 5 == 0)
-            {
-                matgetmain(40, 1);
-            }
+            matgetmain(40, 1);
         }
     }
     else
@@ -95668,12 +94671,9 @@ void label_2678()
         {
             matgetmain(41, 1);
         }
-        else
+        else if (adata(22, gdata(66)) % 5 == 0)
         {
-            if (adata(22, gdata(66)) % 5 == 0)
-            {
-                matgetmain(40, 1);
-            }
+            matgetmain(40, 1);
         }
     }
     if (gdata(70) == 1001 || gdata(70) == 1010)
@@ -96551,16 +95551,13 @@ label_2688_internal:
                         return;
                     }
                 }
-                else
+                else if (efid >= 600)
                 {
-                    if (efid >= 600)
+                    int stat = label_2174();
+                    if (stat == 1)
                     {
-                        int stat = label_2174();
-                        if (stat == 1)
-                        {
-                            label_2742();
-                            return;
-                        }
+                        label_2742();
+                        return;
                     }
                 }
             }
@@ -96777,17 +95774,14 @@ label_2689_internal:
                                 }
                             }
                         }
-                        else
+                        else if (c >= 57)
                         {
-                            if (c >= 57)
+                            if (cdata_original_relationship(c) <= -3)
                             {
-                                if (cdata_original_relationship(c) <= -3)
+                                if (cbit(979, c) == 0)
                                 {
-                                    if (cbit(979, c) == 0)
-                                    {
-                                        f = 1;
-                                        break;
-                                    }
+                                    f = 1;
+                                    break;
                                 }
                             }
                         }
@@ -97417,39 +96411,37 @@ void label_2693()
             label_2696();
             return;
         }
-        else
+        else if (
+            cdata_quality(cc) > 3 && cdata_level(cc) > cdata_level(tc)
+            || cbit(985, tc))
         {
-            if (cdata_quality(cc) > 3 && cdata_level(cc) > cdata_level(tc)
-                || cbit(985, tc))
+            if (cdata_enemy_id(cc) != tc)
             {
-                if (cdata_enemy_id(cc) != tc)
+                cell_swap(cc, tc);
+                if (synccheck(cc, -1))
                 {
-                    cell_swap(cc, tc);
-                    if (synccheck(cc, -1))
-                    {
-                        txt(lang(
-                            name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
-                            name(cc) + u8" displace"s + _s(cc) + u8" "s
-                                + name(tc) + u8"."s));
-                    }
-                    if (cdata_continuous_action_id(tc) == 1)
-                    {
-                        if (cdata_continuous_action_turn(tc) > 0)
-                        {
-                            if (synccheck(cc, -1))
-                            {
-                                txt(lang(
-                                    name(tc) + u8"は"s + name(cc)
-                                        + u8"を睨み付けた。"s,
-                                    name(tc) + u8" glare"s + _s(tc) + u8" "s
-                                        + name(cc) + u8"."s));
-                            }
-                            rowactend(tc);
-                        }
-                    }
-                    label_2742();
-                    return;
+                    txt(lang(
+                        name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
+                        name(cc) + u8" displace"s + _s(cc) + u8" "s + name(tc)
+                            + u8"."s));
                 }
+                if (cdata_continuous_action_id(tc) == 1)
+                {
+                    if (cdata_continuous_action_turn(tc) > 0)
+                    {
+                        if (synccheck(cc, -1))
+                        {
+                            txt(lang(
+                                name(tc) + u8"は"s + name(cc)
+                                    + u8"を睨み付けた。"s,
+                                name(tc) + u8" glare"s + _s(tc) + u8" "s
+                                    + name(cc) + u8"."s));
+                        }
+                        rowactend(tc);
+                    }
+                }
+                label_2742();
+                return;
             }
         }
     }
@@ -98369,12 +97361,9 @@ label_2704_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2705_internal:
     redraw(0);
@@ -98884,12 +97873,9 @@ void label_2710()
                 {
                     p += inf_maxlog;
                 }
-                else
+                else if (p >= inf_maxlog)
                 {
-                    if (p >= inf_maxlog)
-                    {
-                        p -= inf_maxlog;
-                    }
+                    p -= inf_maxlog;
                 }
                 if (p < 0)
                 {
@@ -98940,12 +97926,9 @@ void label_2710()
                 {
                     p += inf_maxlog;
                 }
-                else
+                else if (p >= inf_maxlog)
                 {
-                    if (p >= inf_maxlog)
-                    {
-                        p -= inf_maxlog;
-                    }
+                    p -= inf_maxlog;
                 }
                 if (p < 0)
                 {
@@ -99835,12 +98818,9 @@ label_2728_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
     wx = (windoww - 720) / 2 + inf_screenx;
     wy = winposy(468);
@@ -100815,12 +99795,9 @@ void label_2736()
             }
         }
     }
-    else
+    else if (gdata(20) != 30)
     {
-        if (gdata(20) != 30)
-        {
-            ++gdata(90);
-        }
+        ++gdata(90);
     }
     if (gdata(13) == 6)
     {
@@ -101141,12 +100118,9 @@ label_2738:
                     {
                         modcorrupt(5 + limit(gdata(4) / 20000, 0, 15));
                     }
-                    else
+                    else if (rnd(10) == 0)
                     {
-                        if (rnd(10) == 0)
-                        {
-                            modcorrupt(5);
-                        }
+                        modcorrupt(5);
                     }
                 }
                 if (gdata(29) == 0 || rnd(4) == 0)
@@ -101161,14 +100135,11 @@ label_2738:
                 }
             }
         }
-        else
+        else if (rnd(1500) == 0)
         {
-            if (rnd(1500) == 0)
+            if (adata(16, gdata(20)) != 7 && gdata(20) != 30)
             {
-                if (adata(16, gdata(20)) != 7 && gdata(20) != 30)
-                {
-                    modcorrupt(10);
-                }
+                modcorrupt(10);
             }
         }
     }
@@ -101500,23 +100471,17 @@ label_2738:
             {
                 at(40);
             }
+            else if (gdata(91) == 104)
+            {
+                at(40);
+            }
+            else if (gdata(91) == 105)
+            {
+                at(50);
+            }
             else
             {
-                if (gdata(91) == 104)
-                {
-                    at(40);
-                }
-                else
-                {
-                    if (gdata(91) == 105)
-                    {
-                        at(50);
-                    }
-                    else
-                    {
-                        at(20);
-                    }
-                }
+                at(20);
             }
             label_2148();
         }
@@ -101646,17 +100611,14 @@ void label_2742()
         label_1519();
         refreshspeed(cc);
     }
-    else
+    else if (mdata(6) != 1)
     {
-        if (mdata(6) != 1)
+        cdata_nutrition(cc) -= 16;
+        if (cdata_nutrition(cc) < 6000)
         {
-            cdata_nutrition(cc) -= 16;
-            if (cdata_nutrition(cc) < 6000)
+            if (cbit(986, cc) == 0)
             {
-                if (cbit(986, cc) == 0)
-                {
-                    cdata_nutrition(cc) = 6000;
-                }
+                cdata_nutrition(cc) = 6000;
             }
         }
     }
@@ -103261,12 +102223,9 @@ void label_2752()
                         {
                             page = cnt + 1;
                         }
-                        else
+                        else if (cnt + 1 == page)
                         {
-                            if (cnt + 1 == page)
-                            {
-                                page = cnt;
-                            }
+                            page = cnt;
                         }
                         {
                             int cnt = 1;
@@ -104037,12 +102996,9 @@ void label_2754()
                         {
                             break;
                         }
-                        else
+                        else if (cnt == i)
                         {
-                            if (cnt == i)
-                            {
-                                continue;
-                            }
+                            continue;
                         }
                         p(2) = dist(inv_x(cnt), inv_y(cnt), inv_x(i), inv_y(i));
                         if (p(2) < p(1))
@@ -104250,19 +103206,13 @@ void label_2754()
                 {
                     ++p(1);
                 }
-                else
+                else if (cnt < 12)
                 {
-                    if (cnt < 12)
-                    {
-                        p(1) = cnt / 2 % 2;
-                    }
-                    else
-                    {
-                        if (cnt >= 12)
-                        {
-                            p(1) = cnt % 3;
-                        }
-                    }
+                    p(1) = cnt / 2 % 2;
+                }
+                else if (cnt >= 12)
+                {
+                    p(1) = cnt % 3;
                 }
                 gmode(2, 96, 48);
                 pos(dx, dy - limit(cnt * 3 / 2, 0, 18) - 16);

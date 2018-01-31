@@ -314,26 +314,20 @@ label_2724_internal:
         key_quick = u8"z"s;
         key_zap = u8"Z"s;
     }
-    else
+    else if (cfg_zkey == 1)
     {
-        if (cfg_zkey == 1)
-        {
-            key_zap = u8"z"s;
-            key_quick = u8"Z"s;
-        }
+        key_zap = u8"z"s;
+        key_quick = u8"Z"s;
     }
     if (cfg_xkey == 0)
     {
         key_quickinv = u8"x"s;
         key_inventory = u8"X"s;
     }
-    else
+    else if (cfg_xkey == 1)
     {
-        if (cfg_xkey == 1)
-        {
-            key_inventory = u8"x"s;
-            key_quickinv = u8"X"s;
-        }
+        key_inventory = u8"x"s;
+        key_quickinv = u8"X"s;
     }
     redraw(0);
     cs_bk = -1;
@@ -342,12 +336,9 @@ label_2724_internal:
     {
         page = pagemax;
     }
-    else
+    else if (page > pagemax)
     {
-        if (page > pagemax)
-        {
-            page = 0;
-        }
+        page = 0;
     }
 label_2725_internal:
     redraw(0);
@@ -461,15 +452,12 @@ label_2725_internal:
             if (submenu == 5 && cnt > 0)
             {
             }
-            else
+            else if (submenu != 0)
             {
-                if (submenu != 0)
-                {
-                    pos(wx + 220, wy + 66 + cnt * 19 - 5);
-                    gcopy(3, 312, 336, 24, 24);
-                    pos(wx + 358, wy + 66 + cnt * 19 - 5);
-                    gcopy(3, 336, 336, 24, 24);
-                }
+                pos(wx + 220, wy + 66 + cnt * 19 - 5);
+                gcopy(3, 312, 336, 24, 24);
+                pos(wx + 358, wy + 66 + cnt * 19 - 5);
+                gcopy(3, 336, 336, 24, 24);
             }
             pos(wx + 250, wy + 66 + cnt * 19);
             color(0, 0, 0);
@@ -548,16 +536,13 @@ label_2725_internal:
                             mes(u8"Dont't run"s);
                         }
                     }
+                    else if (jp)
+                    {
+                        mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
+                    }
                     else
                     {
-                        if (jp)
-                        {
-                            mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
-                        }
-                        else
-                        {
-                            mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
-                        }
+                        mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
                     }
                 }
                 if (cnt == 5)
@@ -874,16 +859,13 @@ label_2725_internal:
                     }
                     mes(s(cfg_joypad));
                 }
+                else if (list(1, cnt) == -1)
+                {
+                    mes(lang(u8"未設定"s, u8"Unassigned"s));
+                }
                 else
                 {
-                    if (list(1, cnt) == -1)
-                    {
-                        mes(lang(u8"未設定"s, u8"Unassigned"s));
-                    }
-                    else
-                    {
-                        mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
-                    }
+                    mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
                 }
             }
             if (submenu == 6)
@@ -1141,12 +1123,9 @@ label_2725_internal:
                 {
                     cfg_extrahelp = 1;
                 }
-                else
+                else if (cfg_extrahelp < 0)
                 {
-                    if (cfg_extrahelp < 0)
-                    {
-                        cfg_extrahelp = 0;
-                    }
+                    cfg_extrahelp = 0;
                 }
                 snd(20);
                 valn(0) = u8"extraHelp."s;
@@ -1161,12 +1140,9 @@ label_2725_internal:
                 {
                     cfg_ignoredislike = 1;
                 }
-                else
+                else if (cfg_ignoredislike < 0)
                 {
-                    if (cfg_ignoredislike < 0)
-                    {
-                        cfg_ignoredislike = 0;
-                    }
+                    cfg_ignoredislike = 0;
                 }
                 snd(20);
                 valn(0) = u8"ignoreDislike."s;
@@ -1181,12 +1157,9 @@ label_2725_internal:
                 {
                     cfg_zkey = 2;
                 }
-                else
+                else if (cfg_zkey < 0)
                 {
-                    if (cfg_zkey < 0)
-                    {
-                        cfg_zkey = 0;
-                    }
+                    cfg_zkey = 0;
                 }
                 snd(20);
                 valn(0) = u8"zkey."s;
@@ -1201,12 +1174,9 @@ label_2725_internal:
                 {
                     cfg_xkey = 2;
                 }
-                else
+                else if (cfg_xkey < 0)
                 {
-                    if (cfg_xkey < 0)
-                    {
-                        cfg_xkey = 0;
-                    }
+                    cfg_xkey = 0;
                 }
                 snd(20);
                 valn(0) = u8"xkey."s;
@@ -1221,12 +1191,9 @@ label_2725_internal:
                 {
                     cfg_startrun = 20;
                 }
-                else
+                else if (cfg_startrun < 0)
                 {
-                    if (cfg_startrun < 0)
-                    {
-                        cfg_startrun = 0;
-                    }
+                    cfg_startrun = 0;
                 }
                 snd(20);
                 valn(0) = u8"startRun."s;
@@ -1241,12 +1208,9 @@ label_2725_internal:
                 {
                     cfg_walkwait = 10;
                 }
-                else
+                else if (cfg_walkwait < 1)
                 {
-                    if (cfg_walkwait < 1)
-                    {
-                        cfg_walkwait = 1;
-                    }
+                    cfg_walkwait = 1;
                 }
                 snd(20);
                 valn(0) = u8"walkWait."s;
@@ -1261,12 +1225,9 @@ label_2725_internal:
                 {
                     cfg_attackwait = 20;
                 }
-                else
+                else if (cfg_attackwait < 1)
                 {
-                    if (cfg_attackwait < 1)
-                    {
-                        cfg_attackwait = 1;
-                    }
+                    cfg_attackwait = 1;
                 }
                 snd(20);
                 valn(0) = u8"attackWait."s;
@@ -1284,12 +1245,9 @@ label_2725_internal:
                 {
                     cfg_sound2 = 2;
                 }
-                else
+                else if (cfg_sound2 < 0)
                 {
-                    if (cfg_sound2 < 0)
-                    {
-                        cfg_sound2 = 0;
-                    }
+                    cfg_sound2 = 0;
                 }
                 snd(20);
                 valn(0) = u8"sound."s;
@@ -1304,12 +1262,9 @@ label_2725_internal:
                 {
                     cfg_music2 = 2;
                 }
-                else
+                else if (cfg_music2 < 0)
                 {
-                    if (cfg_music2 < 0)
-                    {
-                        cfg_music2 = 0;
-                    }
+                    cfg_music2 = 0;
                 }
                 snd(20);
                 valn(0) = u8"music."s;
@@ -1324,12 +1279,9 @@ label_2725_internal:
                 {
                     cfg_fullscreen2 = 1;
                 }
-                else
+                else if (cfg_fullscreen2 < 0)
                 {
-                    if (cfg_fullscreen2 < 0)
-                    {
-                        cfg_fullscreen2 = 0;
-                    }
+                    cfg_fullscreen2 = 0;
                 }
                 snd(20);
                 valn(0) = u8"fullscreen."s;
@@ -1344,12 +1296,9 @@ label_2725_internal:
                 {
                     cfg_scroll = 1;
                 }
-                else
+                else if (cfg_scroll < 0)
                 {
-                    if (cfg_scroll < 0)
-                    {
-                        cfg_scroll = 0;
-                    }
+                    cfg_scroll = 0;
                 }
                 snd(20);
                 valn(0) = u8"scroll."s;
@@ -1364,12 +1313,9 @@ label_2725_internal:
                 {
                     cfg_alwayscenter = 1;
                 }
-                else
+                else if (cfg_alwayscenter < 0)
                 {
-                    if (cfg_alwayscenter < 0)
-                    {
-                        cfg_alwayscenter = 0;
-                    }
+                    cfg_alwayscenter = 0;
                 }
                 snd(20);
                 valn(0) = u8"alwaysCenter."s;
@@ -1384,12 +1330,9 @@ label_2725_internal:
                 {
                     cfg_heart = 1;
                 }
-                else
+                else if (cfg_heart < 0)
                 {
-                    if (cfg_heart < 0)
-                    {
-                        cfg_heart = 0;
-                    }
+                    cfg_heart = 0;
                 }
                 snd(20);
                 valn(0) = u8"heartbeat."s;
@@ -1404,12 +1347,9 @@ label_2725_internal:
                 {
                     cfg_attackanime = 1;
                 }
-                else
+                else if (cfg_attackanime < 0)
                 {
-                    if (cfg_attackanime < 0)
-                    {
-                        cfg_attackanime = 0;
-                    }
+                    cfg_attackanime = 0;
                 }
                 snd(20);
                 valn(0) = u8"attackAnime."s;
@@ -1424,12 +1364,9 @@ label_2725_internal:
                 {
                     cfg_env = 1;
                 }
-                else
+                else if (cfg_env < 0)
                 {
-                    if (cfg_env < 0)
-                    {
-                        cfg_env = 0;
-                    }
+                    cfg_env = 0;
                 }
                 snd(20);
                 valn(0) = u8"envEffect."s;
@@ -1444,12 +1381,9 @@ label_2725_internal:
                 {
                     cfg_shadow = 1;
                 }
-                else
+                else if (cfg_shadow < 0)
                 {
-                    if (cfg_shadow < 0)
-                    {
-                        cfg_shadow = 0;
-                    }
+                    cfg_shadow = 0;
                 }
                 snd(20);
                 valn(0) = u8"shadow."s;
@@ -1464,12 +1398,9 @@ label_2725_internal:
                 {
                     cfg_objectshadow = 1;
                 }
-                else
+                else if (cfg_objectshadow < 0)
                 {
-                    if (cfg_objectshadow < 0)
-                    {
-                        cfg_objectshadow = 0;
-                    }
+                    cfg_objectshadow = 0;
                 }
                 snd(20);
                 valn(0) = u8"objectShadow."s;
@@ -1511,12 +1442,9 @@ label_2725_internal:
                 {
                     i = 0;
                 }
-                else
+                else if (i > 4)
                 {
-                    if (i > 4)
-                    {
-                        i = 4;
-                    }
+                    i = 4;
                 }
                 windoww2 = x(i);
                 windowh2 = y(i);
@@ -1539,12 +1467,9 @@ label_2725_internal:
                 {
                     cfg_net = 1;
                 }
-                else
+                else if (cfg_net < 0)
                 {
-                    if (cfg_net < 0)
-                    {
-                        cfg_net = 0;
-                    }
+                    cfg_net = 0;
                 }
                 snd(20);
                 valn(0) = u8"net."s;
@@ -1559,12 +1484,9 @@ label_2725_internal:
                 {
                     cfg_netwish = 1;
                 }
-                else
+                else if (cfg_netwish < 0)
                 {
-                    if (cfg_netwish < 0)
-                    {
-                        cfg_netwish = 0;
-                    }
+                    cfg_netwish = 0;
                 }
                 snd(20);
                 valn(0) = u8"netWish."s;
@@ -1579,12 +1501,9 @@ label_2725_internal:
                 {
                     cfg_netchat = 1;
                 }
-                else
+                else if (cfg_netchat < 0)
                 {
-                    if (cfg_netchat < 0)
-                    {
-                        cfg_netchat = 0;
-                    }
+                    cfg_netchat = 0;
                 }
                 snd(20);
                 valn(0) = u8"netChat."s;
@@ -1602,12 +1521,9 @@ label_2725_internal:
                 {
                     cfg_runwait = 5;
                 }
-                else
+                else if (cfg_runwait < 2)
                 {
-                    if (cfg_runwait < 2)
-                    {
-                        cfg_runwait = 2;
-                    }
+                    cfg_runwait = 2;
                 }
                 snd(20);
                 valn(0) = u8"runWait."s;
@@ -1622,12 +1538,9 @@ label_2725_internal:
                 {
                     cfg_autonumlock = 1;
                 }
-                else
+                else if (cfg_autonumlock < 0)
                 {
-                    if (cfg_autonumlock < 0)
-                    {
-                        cfg_autonumlock = 0;
-                    }
+                    cfg_autonumlock = 0;
                 }
                 snd(20);
                 valn(0) = u8"autoNumlock."s;
@@ -1642,12 +1555,9 @@ label_2725_internal:
                 {
                     cfg_titleeffect = 1;
                 }
-                else
+                else if (cfg_titleeffect < 0)
                 {
-                    if (cfg_titleeffect < 0)
-                    {
-                        cfg_titleeffect = 0;
-                    }
+                    cfg_titleeffect = 0;
                 }
                 snd(20);
                 valn(0) = u8"titleEffect."s;
@@ -1662,12 +1572,9 @@ label_2725_internal:
                 {
                     cfg_scrsync = 25;
                 }
-                else
+                else if (cfg_scrsync < 2)
                 {
-                    if (cfg_scrsync < 2)
-                    {
-                        cfg_scrsync = 2;
-                    }
+                    cfg_scrsync = 2;
                 }
                 snd(20);
                 valn(0) = u8"scr_sync."s;
@@ -1682,12 +1589,9 @@ label_2725_internal:
                 {
                     cfg_runscroll = 1;
                 }
-                else
+                else if (cfg_runscroll < 0)
                 {
-                    if (cfg_runscroll < 0)
-                    {
-                        cfg_runscroll = 0;
-                    }
+                    cfg_runscroll = 0;
                 }
                 snd(20);
                 valn(0) = u8"scroll_run."s;
@@ -1702,12 +1606,9 @@ label_2725_internal:
                 {
                     cfg_autoturn = 2;
                 }
-                else
+                else if (cfg_autoturn < 0)
                 {
-                    if (cfg_autoturn < 0)
-                    {
-                        cfg_autoturn = 0;
-                    }
+                    cfg_autoturn = 0;
                 }
                 snd(20);
                 valn(0) = u8"autoTurnType."s;
@@ -1722,12 +1623,9 @@ label_2725_internal:
                 {
                     cfg_skiprandevents = 1;
                 }
-                else
+                else if (cfg_skiprandevents < 0)
                 {
-                    if (cfg_skiprandevents < 0)
-                    {
-                        cfg_skiprandevents = 0;
-                    }
+                    cfg_skiprandevents = 0;
                 }
                 snd(20);
                 valn(0) = u8"skipRandEvents."s;
@@ -1745,12 +1643,9 @@ label_2725_internal:
                 {
                     cfg_joypad = 1;
                 }
-                else
+                else if (cfg_joypad < 0)
                 {
-                    if (cfg_joypad < 0)
-                    {
-                        cfg_joypad = 0;
-                    }
+                    cfg_joypad = 0;
                 }
                 snd(20);
                 valn(0) = u8"joypad."s;
@@ -1768,12 +1663,9 @@ label_2725_internal:
                 {
                     cfg_msgaddtime = 1;
                 }
-                else
+                else if (cfg_msgaddtime < 0)
                 {
-                    if (cfg_msgaddtime < 0)
-                    {
-                        cfg_msgaddtime = 0;
-                    }
+                    cfg_msgaddtime = 0;
                 }
                 snd(20);
                 valn(0) = u8"msg_addTime."s;
@@ -1788,12 +1680,9 @@ label_2725_internal:
                 {
                     cfg_msgtrans = 5;
                 }
-                else
+                else if (cfg_msgtrans < 0)
                 {
-                    if (cfg_msgtrans < 0)
-                    {
-                        cfg_msgtrans = 0;
-                    }
+                    cfg_msgtrans = 0;
                 }
                 snd(20);
                 valn(0) = u8"msg_trans."s;
@@ -1811,12 +1700,9 @@ label_2725_internal:
                 {
                     cfg_language = 1;
                 }
-                else
+                else if (cfg_language < 0)
                 {
-                    if (cfg_language < 0)
-                    {
-                        cfg_language = 0;
-                    }
+                    cfg_language = 0;
                 }
                 snd(20);
                 valn(0) = u8"language."s;

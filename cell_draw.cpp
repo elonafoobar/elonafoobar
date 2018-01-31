@@ -199,62 +199,57 @@ void cell_draw()
                                             16,
                                             24);
                                     }
+                                    else if (chipm(0, ground_at_m85) == 3)
+                                    {
+                                        gmode(4, 32, 20, 146);
+                                        color(0, 0, 0);
+                                        pos(px_at_m85 + 24, py_at_m85 + 36);
+                                        grotate(
+                                            10,
+                                            ani_at_m85,
+                                            cdata_direction(0) * 48 + 28,
+                                            0,
+                                            24,
+                                            16);
+                                        gmode(2, 32, 28);
+                                        pos(px_at_m85 + 24, py_at_m85 + 16);
+                                        grotate(
+                                            10,
+                                            ani_at_m85,
+                                            cdata_direction(0) * 48,
+                                            0,
+                                            24,
+                                            24);
+                                    }
                                     else
                                     {
-                                        if (chipm(0, ground_at_m85) == 3)
+                                        gmode(6 - 1, -1, 110);
+                                        color(0, 0, 0);
+                                        pos(px_at_m85 + 8, py_at_m85 + 20);
+                                        gcopy(3, 240, 384, 32, 16);
+                                        if (fishanime == 3)
                                         {
-                                            gmode(4, 32, 20, 146);
-                                            color(0, 0, 0);
-                                            pos(px_at_m85 + 24, py_at_m85 + 36);
-                                            grotate(
-                                                10,
-                                                ani_at_m85,
-                                                cdata_direction(0) * 48 + 28,
-                                                0,
-                                                24,
-                                                16);
-                                            gmode(2, 32, 28);
-                                            pos(px_at_m85 + 24, py_at_m85 + 16);
-                                            grotate(
-                                                10,
-                                                ani_at_m85,
-                                                cdata_direction(0) * 48,
-                                                0,
-                                                24,
-                                                24);
-                                        }
-                                        else
-                                        {
-                                            gmode(6 - 1, -1, 110);
-                                            color(0, 0, 0);
-                                            pos(px_at_m85 + 8, py_at_m85 + 20);
-                                            gcopy(3, 240, 384, 32, 16);
-                                            if (fishanime == 3)
+                                            if (fishanime(1) % 8 < 4)
                                             {
-                                                if (fishanime(1) % 8 < 4)
-                                                {
-                                                    py_at_m85 -= fishanime(1)
-                                                        % 4
-                                                        * (fishanime(1) % 4);
-                                                }
-                                                else
-                                                {
-                                                    py_at_m85 += fishanime(1)
-                                                            % 4
-                                                            * (fishanime(1) % 4)
-                                                        - 9;
-                                                }
+                                                py_at_m85 -= fishanime(1) % 4
+                                                    * (fishanime(1) % 4);
                                             }
-                                            gmode(2, 32, 48);
-                                            pos(px_at_m85 + 24, py_at_m85 + 8);
-                                            grotate(
-                                                10,
-                                                ani_at_m85,
-                                                cdata_direction(0) * 48,
-                                                0,
-                                                24,
-                                                40);
+                                            else
+                                            {
+                                                py_at_m85 += fishanime(1) % 4
+                                                        * (fishanime(1) % 4)
+                                                    - 9;
+                                            }
                                         }
+                                        gmode(2, 32, 48);
+                                        pos(px_at_m85 + 24, py_at_m85 + 8);
+                                        grotate(
+                                            10,
+                                            ani_at_m85,
+                                            cdata_direction(0) * 48,
+                                            0,
+                                            24,
+                                            40);
                                     }
                                     gmode(2);
                                     color(0, 0, 0);
@@ -301,12 +296,9 @@ void cell_draw()
                             if (chipm(2, map(x_at_m85, y_at_m85 + 1, 2)) == 2)
                             {
                             }
-                            else
+                            else if (map(x_at_m85, y_at_m85 + 1, 2) != tile_fog)
                             {
-                                if (map(x_at_m85, y_at_m85 + 1, 2) != tile_fog)
-                                {
-                                    ground_at_m85 += 33;
-                                }
+                                ground_at_m85 += 33;
                             }
                         }
                     }
@@ -424,13 +416,10 @@ void cell_draw()
                                         pos(dx_at_m85 + 16, dy_at_m85 - 16);
                                         gcopy(3, 32, 624, 16, 16);
                                     }
-                                    else
+                                    else if (adata(6, p_at_m85) != 0)
                                     {
-                                        if (adata(6, p_at_m85) != 0)
-                                        {
-                                            pos(dx_at_m85 + 16, dy_at_m85 - 16);
-                                            gcopy(3, 48, 624, 16, 16);
-                                        }
+                                        pos(dx_at_m85 + 16, dy_at_m85 - 16);
+                                        gcopy(3, 48, 624, 16, 16);
                                     }
                                 }
                             }
@@ -487,57 +476,53 @@ void cell_draw()
                                     gcopy(1, 0, 1008, 22, 20);
                                     gsel(selcur);
                                 }
+                                else if (p_at_m85 == 531)
+                                {
+                                    pos(8, 1058 - chipc(3, p_at_m85(1)));
+                                    gcopy(
+                                        5,
+                                        chipc(0, p_at_m85(1)) + 8,
+                                        chipc(1, p_at_m85(1)) + 2,
+                                        chipc(2, p_at_m85(1)) - 16,
+                                        chipc(3, p_at_m85(1)) - 8);
+                                    gmode(4 - 1, -1, 150);
+                                    color(0, 0, 0);
+                                    pos(0,
+                                        960
+                                            + (chipc(3, p_at_m85(1))
+                                               == inf_tiles)
+                                                * 48);
+                                    gcopy(
+                                        1,
+                                        144,
+                                        768
+                                            + (chipc(3, p_at_m85(1))
+                                               > inf_tiles)
+                                                * 48,
+                                        inf_tiles,
+                                        chipc(3, p_at_m85(1))
+                                            + (chipc(3, p_at_m85(1))
+                                               > inf_tiles)
+                                                * 48);
+                                    gmode(2);
+                                    gsel(selcur);
+                                }
                                 else
                                 {
-                                    if (p_at_m85 == 531)
-                                    {
-                                        pos(8, 1058 - chipc(3, p_at_m85(1)));
-                                        gcopy(
-                                            5,
-                                            chipc(0, p_at_m85(1)) + 8,
-                                            chipc(1, p_at_m85(1)) + 2,
-                                            chipc(2, p_at_m85(1)) - 16,
-                                            chipc(3, p_at_m85(1)) - 8);
-                                        gmode(4 - 1, -1, 150);
-                                        color(0, 0, 0);
-                                        pos(0,
-                                            960
-                                                + (chipc(3, p_at_m85(1))
-                                                   == inf_tiles)
-                                                    * 48);
-                                        gcopy(
-                                            1,
-                                            144,
-                                            768
-                                                + (chipc(3, p_at_m85(1))
-                                                   > inf_tiles)
-                                                    * 48,
-                                            inf_tiles,
-                                            chipc(3, p_at_m85(1))
-                                                + (chipc(3, p_at_m85(1))
-                                                   > inf_tiles)
-                                                    * 48);
-                                        gmode(2);
-                                        gsel(selcur);
-                                    }
-                                    else
-                                    {
-                                        pos(0, 960);
-                                        gcopy(
-                                            1,
-                                            chipi(0, p_at_m85),
-                                            chipi(1, p_at_m85),
-                                            chipi(2, p_at_m85),
-                                            chipi(3, p_at_m85));
-                                        gfini(
-                                            chipi(2, p_at_m85),
-                                            chipi(3, p_at_m85));
-                                        gfdec2(
-                                            c_col(0, p_at_m85(1)),
-                                            c_col(1, p_at_m85(1)),
-                                            c_col(2, p_at_m85(1)));
-                                        gsel(selcur);
-                                    }
+                                    pos(0, 960);
+                                    gcopy(
+                                        1,
+                                        chipi(0, p_at_m85),
+                                        chipi(1, p_at_m85),
+                                        chipi(2, p_at_m85),
+                                        chipi(3, p_at_m85));
+                                    gfini(
+                                        chipi(2, p_at_m85), chipi(3, p_at_m85));
+                                    gfdec2(
+                                        c_col(0, p_at_m85(1)),
+                                        c_col(1, p_at_m85(1)),
+                                        c_col(2, p_at_m85(1)));
+                                    gsel(selcur);
                                 }
                                 gcopy(1, 0, 960, inf_tiles, inf_tiles);
                             }
@@ -614,57 +599,54 @@ void cell_draw()
                                         gcopy(1, 0, 1008, 22, 20);
                                         gsel(selcur);
                                     }
+                                    else if (p_at_m85 == 531)
+                                    {
+                                        pos(8, 1058 - chipc(3, i_at_m85));
+                                        gcopy(
+                                            5,
+                                            chipc(0, i_at_m85) + 8,
+                                            chipc(1, i_at_m85) + 2,
+                                            chipc(2, i_at_m85) - 16,
+                                            chipc(3, i_at_m85) - 8);
+                                        gmode(4 - 1, -1, 150);
+                                        color(0, 0, 0);
+                                        pos(0,
+                                            960
+                                                + (chipc(3, i_at_m85)
+                                                   == inf_tiles)
+                                                    * 48);
+                                        gcopy(
+                                            1,
+                                            144,
+                                            768
+                                                + (chipc(3, i_at_m85)
+                                                   > inf_tiles)
+                                                    * 48,
+                                            inf_tiles,
+                                            chipc(3, i_at_m85)
+                                                + (chipc(3, i_at_m85)
+                                                   > inf_tiles)
+                                                    * 48);
+                                        gmode(2);
+                                        gsel(selcur);
+                                    }
                                     else
                                     {
-                                        if (p_at_m85 == 531)
-                                        {
-                                            pos(8, 1058 - chipc(3, i_at_m85));
-                                            gcopy(
-                                                5,
-                                                chipc(0, i_at_m85) + 8,
-                                                chipc(1, i_at_m85) + 2,
-                                                chipc(2, i_at_m85) - 16,
-                                                chipc(3, i_at_m85) - 8);
-                                            gmode(4 - 1, -1, 150);
-                                            color(0, 0, 0);
-                                            pos(0,
-                                                960
-                                                    + (chipc(3, i_at_m85)
-                                                       == inf_tiles)
-                                                        * 48);
-                                            gcopy(
-                                                1,
-                                                144,
-                                                768
-                                                    + (chipc(3, i_at_m85)
-                                                       > inf_tiles)
-                                                        * 48,
-                                                inf_tiles,
-                                                chipc(3, i_at_m85)
-                                                    + (chipc(3, i_at_m85)
-                                                       > inf_tiles)
-                                                        * 48);
-                                            gmode(2);
-                                            gsel(selcur);
-                                        }
-                                        else
-                                        {
-                                            pos(0, 960);
-                                            gcopy(
-                                                1,
-                                                chipi(0, p_at_m85),
-                                                chipi(1, p_at_m85),
-                                                chipi(2, p_at_m85),
-                                                chipi(3, p_at_m85));
-                                            gfini(
-                                                chipi(2, p_at_m85),
-                                                chipi(3, p_at_m85));
-                                            gfdec2(
-                                                c_col(0, i_at_m85),
-                                                c_col(1, i_at_m85),
-                                                c_col(2, i_at_m85));
-                                            gsel(selcur);
-                                        }
+                                        pos(0, 960);
+                                        gcopy(
+                                            1,
+                                            chipi(0, p_at_m85),
+                                            chipi(1, p_at_m85),
+                                            chipi(2, p_at_m85),
+                                            chipi(3, p_at_m85));
+                                        gfini(
+                                            chipi(2, p_at_m85),
+                                            chipi(3, p_at_m85));
+                                        gfdec2(
+                                            c_col(0, i_at_m85),
+                                            c_col(1, i_at_m85),
+                                            c_col(2, i_at_m85));
+                                        gsel(selcur);
                                     }
                                     if (mdata(6) == 1)
                                     {
@@ -813,53 +795,47 @@ void cell_draw()
                                 gcopy(1, 0, 1008, 22, 20);
                                 gsel(selcur);
                             }
+                            else if (p_at_m85 == 531)
+                            {
+                                pos(8, 1058 - chipc(3, i_at_m85));
+                                gcopy(
+                                    5,
+                                    chipc(0, i_at_m85) + 8,
+                                    chipc(1, i_at_m85) + 2,
+                                    chipc(2, i_at_m85) - 16,
+                                    chipc(3, i_at_m85) - 8);
+                                gmode(4 - 1, -1, 150);
+                                color(0, 0, 0);
+                                pos(0,
+                                    960
+                                        + (chipc(3, i_at_m85) == inf_tiles)
+                                            * 48);
+                                gcopy(
+                                    1,
+                                    144,
+                                    768 + (chipc(3, i_at_m85) > inf_tiles) * 48,
+                                    inf_tiles,
+                                    chipc(3, i_at_m85)
+                                        + (chipc(3, i_at_m85) > inf_tiles)
+                                            * 48);
+                                gmode(2);
+                                gsel(selcur);
+                            }
                             else
                             {
-                                if (p_at_m85 == 531)
-                                {
-                                    pos(8, 1058 - chipc(3, i_at_m85));
-                                    gcopy(
-                                        5,
-                                        chipc(0, i_at_m85) + 8,
-                                        chipc(1, i_at_m85) + 2,
-                                        chipc(2, i_at_m85) - 16,
-                                        chipc(3, i_at_m85) - 8);
-                                    gmode(4 - 1, -1, 150);
-                                    color(0, 0, 0);
-                                    pos(0,
-                                        960
-                                            + (chipc(3, i_at_m85) == inf_tiles)
-                                                * 48);
-                                    gcopy(
-                                        1,
-                                        144,
-                                        768
-                                            + (chipc(3, i_at_m85) > inf_tiles)
-                                                * 48,
-                                        inf_tiles,
-                                        chipc(3, i_at_m85)
-                                            + (chipc(3, i_at_m85) > inf_tiles)
-                                                * 48);
-                                    gmode(2);
-                                    gsel(selcur);
-                                }
-                                else
-                                {
-                                    pos(0, 960);
-                                    gcopy(
-                                        1,
-                                        chipi(0, p_at_m85),
-                                        chipi(1, p_at_m85),
-                                        chipi(2, p_at_m85),
-                                        chipi(3, p_at_m85));
-                                    gfini(
-                                        chipi(2, p_at_m85), chipi(3, p_at_m85));
-                                    gfdec2(
-                                        c_col(0, i_at_m85),
-                                        c_col(1, i_at_m85),
-                                        c_col(2, i_at_m85));
-                                    gsel(selcur);
-                                }
+                                pos(0, 960);
+                                gcopy(
+                                    1,
+                                    chipi(0, p_at_m85),
+                                    chipi(1, p_at_m85),
+                                    chipi(2, p_at_m85),
+                                    chipi(3, p_at_m85));
+                                gfini(chipi(2, p_at_m85), chipi(3, p_at_m85));
+                                gfdec2(
+                                    c_col(0, i_at_m85),
+                                    c_col(1, i_at_m85),
+                                    c_col(2, i_at_m85));
+                                gsel(selcur);
                             }
                             if (mdata(6) == 1)
                             {
@@ -981,47 +957,43 @@ void cell_draw()
                                             16,
                                             24);
                                     }
+                                    else if (chipm(0, ground_at_m85) == 3)
+                                    {
+                                        gmode(4, 32, 20, 146);
+                                        color(0, 0, 0);
+                                        pos(dx_at_m85 + 24, dy_at_m85 + 36);
+                                        grotate(
+                                            10 + c_at_m85,
+                                            ani_at_m85,
+                                            cdata_direction(c_at_m85) * 48 + 28,
+                                            0,
+                                            24,
+                                            16);
+                                        gmode(2, 32, 28);
+                                        pos(dx_at_m85 + 24, dy_at_m85 + 16);
+                                        grotate(
+                                            10 + c_at_m85,
+                                            ani_at_m85,
+                                            cdata_direction(c_at_m85) * 48,
+                                            0,
+                                            24,
+                                            24);
+                                    }
                                     else
                                     {
-                                        if (chipm(0, ground_at_m85) == 3)
-                                        {
-                                            gmode(4, 32, 20, 146);
-                                            color(0, 0, 0);
-                                            pos(dx_at_m85 + 24, dy_at_m85 + 36);
-                                            grotate(
-                                                10 + c_at_m85,
-                                                ani_at_m85,
-                                                cdata_direction(c_at_m85) * 48
-                                                    + 28,
-                                                0,
-                                                24,
-                                                16);
-                                            gmode(2, 32, 28);
-                                            pos(dx_at_m85 + 24, dy_at_m85 + 16);
-                                            grotate(
-                                                10 + c_at_m85,
-                                                ani_at_m85,
-                                                cdata_direction(c_at_m85) * 48,
-                                                0,
-                                                24,
-                                                24);
-                                        }
-                                        else
-                                        {
-                                            gmode(6 - 1, -1, 110);
-                                            color(0, 0, 0);
-                                            pos(dx_at_m85 + 8, dy_at_m85 + 20);
-                                            gcopy(3, 240, 384, 32, 16);
-                                            gmode(2, 32, 48);
-                                            pos(dx_at_m85 + 24, dy_at_m85 + 8);
-                                            grotate(
-                                                10 + c_at_m85,
-                                                ani_at_m85,
-                                                cdata_direction(c_at_m85) * 48,
-                                                0,
-                                                24,
-                                                40);
-                                        }
+                                        gmode(6 - 1, -1, 110);
+                                        color(0, 0, 0);
+                                        pos(dx_at_m85 + 8, dy_at_m85 + 20);
+                                        gcopy(3, 240, 384, 32, 16);
+                                        gmode(2, 32, 48);
+                                        pos(dx_at_m85 + 24, dy_at_m85 + 8);
+                                        grotate(
+                                            10 + c_at_m85,
+                                            ani_at_m85,
+                                            cdata_direction(c_at_m85) * 48,
+                                            0,
+                                            24,
+                                            40);
                                     }
                                     gmode(2);
                                     color(0, 0, 0);
@@ -1297,36 +1269,31 @@ void cell_draw()
                             if (chipm(2, p_at_m85) == 2)
                             {
                             }
-                            else
+                            else if (p_at_m85 != tile_fog)
                             {
-                                if (p_at_m85 != tile_fog)
+                                if (dy_at_m85 > 20)
                                 {
-                                    if (dy_at_m85 > 20)
-                                    {
-                                        pos(dx_at_m85, dy_at_m85 - 12);
-                                        gcopy(
-                                            sel_at_m85,
-                                            ground_at_m85 % 33 * inf_tiles,
-                                            ground_at_m85 / 33 * inf_tiles,
-                                            inf_tiles
-                                                - (dx_at_m85
-                                                   > windoww - inf_tiles)
-                                                    * (dx_at_m85 + inf_tiles
-                                                       - windoww),
-                                            12);
-                                        pos(dx_at_m85
-                                                + (dx_at_m85 < 0) * -dx_at_m85,
-                                            dy_at_m85 - 20);
-                                        gfini(
-                                            inf_tiles
-                                                - (dx_at_m85
-                                                   > windoww - inf_tiles)
-                                                    * (dx_at_m85 + inf_tiles
-                                                       - windoww)
-                                                + (dx_at_m85 < 0) * dx_at_m85,
-                                            8);
-                                        gfdec2(25, 25, 25);
-                                    }
+                                    pos(dx_at_m85, dy_at_m85 - 12);
+                                    gcopy(
+                                        sel_at_m85,
+                                        ground_at_m85 % 33 * inf_tiles,
+                                        ground_at_m85 / 33 * inf_tiles,
+                                        inf_tiles
+                                            - (dx_at_m85 > windoww - inf_tiles)
+                                                * (dx_at_m85 + inf_tiles
+                                                   - windoww),
+                                        12);
+                                    pos(dx_at_m85
+                                            + (dx_at_m85 < 0) * -dx_at_m85,
+                                        dy_at_m85 - 20);
+                                    gfini(
+                                        inf_tiles
+                                            - (dx_at_m85 > windoww - inf_tiles)
+                                                * (dx_at_m85 + inf_tiles
+                                                   - windoww)
+                                            + (dx_at_m85 < 0) * dx_at_m85,
+                                        8);
+                                    gfdec2(25, 25, 25);
                                 }
                             }
                         }

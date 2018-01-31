@@ -2,8 +2,8 @@
 
 #include <optional>
 #include <random>
-#include <vector>
 #include <utility>
+#include <vector>
 
 
 
@@ -52,4 +52,4 @@ private:
 
 
 
-}
+} // namespace elona
