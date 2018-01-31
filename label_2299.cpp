@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
@@ -3564,6 +3565,13 @@ const character_generation_info character_generation_info_table[] = {
 };
 
 
+struct character_id
+{
+    int id;
+    int cnpcid; // It is used only if id equals 343.
+};
+
+
 } // namespace
 
 
@@ -3574,8 +3582,7 @@ namespace elona
 
 void label_2299()
 {
-    dbsum = 0;
-    dbmax = 0;
+    weighted_random_sampler<character_id> sampler;
 
     for (const auto& info : character_generation_info_table)
     {
@@ -3603,12 +3610,11 @@ void label_2299()
             if (!ok)
                 continue;
         }
-        dbsum += info.rarity
-                / (500 + std::abs(info.level - objlv) * info.coefficient)
-            + 1;
-        dblist(0, dbmax) = info.id;
-        dblist(1, dbmax) = dbsum;
-        ++dbmax;
+        sampler.add(
+            {info.id, 0},
+            info.rarity
+                    / (500 + std::abs(info.level - objlv) * info.coefficient)
+                + 1);
     }
 
     if (!cmshade)
@@ -3638,44 +3644,19 @@ void label_2299()
                 if (!ok)
                     continue;
             }
-            dbsum += std::clamp(userdata(6, i), 1'000, 500'000)
-                    / (500 + std::abs(userdata(2, i) - objlv) * 400)
-                + 1;
-            unlist(dbmax) = i;
-            dblist(0, dbmax) = 343;
-            dblist(1, dbmax) = dbsum;
-            ++dbmax;
+            sampler.add(
+                {343, i},
+                std::clamp(userdata(6, i), 1'000, 500'000)
+                        / (500 + std::abs(userdata(2, i) - objlv) * 400)
+                    + 1);
         }
     }
 
-    if (dbsum != 0)
+    const auto [id, cnpcid] = sampler.get().value_or(character_id{0, 0});
+    dbid = id;
+    if (id == 343)
     {
-        // FIXME: do not use dbtmp
-        exrand_rnd(dbtmp, dbsum);
-        for (int i = 0; i < dbmax; ++i)
-        {
-            if (dblist(1, i) > dbtmp)
-            {
-                dbid = dblist(0, i);
-                break;
-            }
-        }
-        for (int i = 0; i < dbmax; ++i)
-        {
-            if (dblist(1, i) > dbtmp)
-            {
-                dbid = dblist(0, i);
-                if (dbid == 343)
-                {
-                    cdata_cnpc_id(rc) = unlist(i);
-                }
-                break;
-            }
-        }
-    }
-    else
-    {
-        dbid = 0;
+        cdata_cnpc_id(rc) = cnpcid;
     }
 }
 

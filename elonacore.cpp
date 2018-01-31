@@ -13693,7 +13693,6 @@ void label_0192()
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
     DIM3(dblist, 2, 800);
-    DIM2(unlist, 800);
     SDIM3(csv, 1000, 40);
     SDIM1(filemod);
     SDIM2(csvbuff, 10000);
@@ -70770,7 +70769,7 @@ void label_2031()
 }
 void label_2032()
 {
-    dbmax = 0;
+    int dbmax = 0;
     dblist(0, dbmax) = 159;
     ++dbmax;
     dblist(0, dbmax) = 173;
@@ -80480,8 +80479,8 @@ void label_2154()
         return;
     }
     ci = cdata_continuous_action_item(0);
-    dbmax = 0;
-    dbsum = 0;
+    int dbmax = 0;
+    int dbsum = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
@@ -80504,6 +80503,7 @@ void label_2154()
     fish = 1;
     if (dbsum != 0)
     {
+        int dbtmp;
         exrand_rnd(dbtmp, dbsum);
         {
             int cnt = 0;
@@ -88321,7 +88321,7 @@ int label_2230()
         return 0;
     }
     randomize(cdata_id(tc));
-    dbmax = 0;
+    int dbmax = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
@@ -88361,7 +88361,7 @@ int label_2230()
 }
 int label_2231()
 {
-    dbmax = 0;
+    int dbmax = 0;
     s(1) = refchara_str(cdata_id(tc), 8);
     if (instr(s(1), 0, u8"/man/"s) != -1)
     {

@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
@@ -7169,8 +7170,7 @@ namespace elona
 
 void label_0481()
 {
-    dbmax = 0;
-    dbsum = 0;
+    weighted_random_sampler<int> sampler;
 
     for (const auto& info : item_generation_info_table)
     {
@@ -7197,31 +7197,14 @@ void label_0481()
             if (!ok)
                 continue;
         }
-        dbsum += info.rarity
-                / (1000 + std::abs(info.level - objlv) * info.coefficient)
-            + 1;
-        dblist(0, dbmax) = info.id;
-        dblist(1, dbmax) = dbsum;
-        ++dbmax;
+        sampler.add(
+            info.id,
+            info.rarity
+                    / (1000 + std::abs(info.level - objlv) * info.coefficient)
+                + 1);
     }
 
-    if (dbsum != 0)
-    {
-        // FIXME: do not use dbtmp
-        exrand_rnd(dbtmp, dbsum);
-        for (int i = 0; i < dbmax; ++i)
-        {
-            if (dblist(1, i) > dbtmp)
-            {
-                dbid = dblist(0, i);
-                break;
-            }
-        }
-    }
-    else
-    {
-        dbid = 25;
-    }
+    dbid = sampler.get().value_or(25);
 }
 
 
