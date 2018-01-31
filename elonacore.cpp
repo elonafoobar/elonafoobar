@@ -39582,11 +39582,11 @@ int calcspellcoststock(int prm_924, int prm_925)
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
     elona_vector1<int> p_at_m161;
-    elona_dup2<int> sdatadup_at_m161{sdata, prm_926 + 600, prm_927};
+    sdata_at_m161 = sdata(prm_926 + 600, prm_927);
     if (prm_926 >= 100)
     {
         p_at_m161 = prm_928 * 5;
-        if (sdatadup_at_m161 / 1000000 == 0)
+        if (sdata_at_m161 / 1000000 == 0)
         {
             p_at_m161 += 100;
         }
@@ -39625,11 +39625,11 @@ void skillinit(int prm_926, int prm_927, int prm_928)
         p_at_m161(1) = prm_928;
         p_at_m161 = 100;
     }
-    if (sdatadup_at_m161 / 1000000 + p_at_m161(1) > 2000)
+    if (sdata_at_m161 / 1000000 + p_at_m161(1) > 2000)
     {
-        p_at_m161(1) = 2000 - sdatadup_at_m161 / 1000000;
+        p_at_m161(1) = 2000 - sdata_at_m161 / 1000000;
     }
-    sdatadup_at_m161 += limit(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
+    sdata(prm_926 + 600, prm_927) += limit(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
     return;
 }
 void label_1512()
