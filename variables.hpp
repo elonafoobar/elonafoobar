@@ -1364,7 +1364,6 @@ inline std::string dbm;
 inline std::string deckrefn_at_tcg;
 inline std::string defload;
 inline std::string devfile;
-inline std::string exedir;
 inline std::string filedsc;
 inline std::string fileext;
 inline std::string fmapfile;

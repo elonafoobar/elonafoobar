@@ -11,7 +11,7 @@ int label_2107()
     time_begin = timeGetTime() / 1000;
     if (fmode == 8 || fmode == 7)
     {
-        folder = exedir + u8"save\\"s + playerid + u8"\\"s;
+        folder = fs::u8path(u8"./save/"s + playerid + u8"/");
         if (fmode == 8)
         {
             fread = 0;
@@ -358,12 +358,12 @@ int label_2107()
         if (fmode == 14)
         {
             fread = 0;
-            folder = exedir + u8"tmp\\"s;
+            folder = fs::u8path(u8"./tmp/");
         }
         if (fmode == 15)
         {
             fread = 1;
-            folder = exedir + u8"save\\"s + geneuse + u8"\\"s;
+            folder = fs::u8path(u8"./save/"s + geneuse + u8"/");
         }
         if (fmode == 14)
         {
@@ -537,7 +537,7 @@ int label_2107()
     }
     if (fmode == 2 || fmode == 1)
     {
-        folder = exedir + u8"tmp\\"s;
+        folder = fs::u8path(u8"./tmp/");
         if (fmode == 2)
         {
             fread = 0;
@@ -684,7 +684,7 @@ int label_2107()
     }
     if (fmode == 20 || fmode == 19)
     {
-        folder = exedir + u8"user\\"s;
+        folder = fs::u8path(u8"./user/");
         if (fmode == 20)
         {
             fread = 0;
@@ -777,7 +777,7 @@ int label_2107()
     }
     if (fmode == 22 || fmode == 21)
     {
-        folder = exedir + u8"user\\"s;
+        folder = fs::u8path(u8"./user/");
         if (fmode == 22)
         {
             fread = 0;
@@ -1136,7 +1136,7 @@ int label_2107()
     }
     if (fmode == 4 || fmode == 3)
     {
-        folder = exedir + u8"tmp\\"s;
+        folder = fs::u8path(u8"./tmp/");
         if (fmode == 4)
         {
             fread = 0;
@@ -1198,7 +1198,7 @@ int label_2107()
     }
     if (fmode == 18 || fmode == 17)
     {
-        folder = exedir + u8"tmp\\"s;
+        folder = fs::u8path(u8"./tmp/");
         if (fmode == 18)
         {
             fread = 0;
@@ -1267,7 +1267,7 @@ int label_2107()
     }
     if (fmode == 10)
     {
-        if (dirlist(buff, exedir + u8"tmp\\*.*"s) == 0)
+        if (dirlist(buff, fs::u8path(u8"./tmp/*.*"s)) == 0)
         {
             return 0;
         }
@@ -1277,7 +1277,7 @@ int label_2107()
             for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
             {
                 noteget(file, cnt);
-                file = exedir + u8"tmp\\"s + file;
+                file = fs::u8path(u8"./tmp/"s + file);
                 exist(file);
                 if (strsize != -1)
                 {
@@ -1288,7 +1288,7 @@ int label_2107()
     }
     if (fmode == 9)
     {
-        folder = exedir + u8"save\\"s + playerid;
+        folder = fs::u8path(u8"./save/"s + playerid);
         if (dirlist(buff, folder + u8"\\*.*"s) != 0)
         {
             notesel(buff);
@@ -1307,13 +1307,13 @@ int label_2107()
     {
         if (fmode == 12)
         {
-            exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
+            exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
             if (strsize == -1)
             {
                 return 0;
             }
         }
-        file = exedir + u8"tmp\\map_"s + mid + u8".s2"s;
+        file = fs::u8path(u8"./tmp/map_"s + mid + u8".s2");
         exist(file);
         if (strsize == -1)
         {
@@ -1323,26 +1323,26 @@ int label_2107()
         fileadd(file, 1);
         if (fmode == 11)
         {
-            file = exedir + u8"tmp\\cdata_"s + mid + u8".s2"s;
+            file = fs::u8path(u8"./tmp/cdata_"s + mid + u8".s2");
             elona_delete(file);
             fileadd(file, 1);
-            file = exedir + u8"tmp\\sdata_"s + mid + u8".s2"s;
+            file = fs::u8path(u8"./tmp/sdata_"s + mid + u8".s2");
             elona_delete(file);
             fileadd(file, 1);
-            file = exedir + u8"tmp\\cdatan_"s + mid + u8".s2"s;
+            file = fs::u8path(u8"./tmp/cdatan_"s + mid + u8".s2");
             elona_delete(file);
             fileadd(file, 1);
-            file = exedir + u8"tmp\\inv_"s + mid + u8".s2"s;
+            file = fs::u8path(u8"./tmp/inv_"s + mid + u8".s2");
             elona_delete(file);
             fileadd(file, 1);
         }
-        file = exedir + u8"tmp\\mdata_"s + mid + u8".s2"s;
+        file = fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2");
         elona_delete(file);
         fileadd(file, 1);
-        file = exedir + u8"tmp\\mdatan_"s + mid + u8".s2"s;
+        file = fs::u8path(u8"./tmp/mdatan_"s + mid + u8".s2");
         elona_delete(file);
         fileadd(file, 1);
-        file = exedir + u8"tmp\\mef_"s + mid + u8".s2"s;
+        file = fs::u8path(u8"./tmp/mef_"s + mid + u8".s2");
         elona_delete(file);
         fileadd(file, 1);
     }
@@ -1355,7 +1355,7 @@ int label_2107()
                 adata(cnt, area) = 0;
             }
         }
-        folder = exedir + u8"tmp"s;
+        folder = fs::u8path(u8"./tmp");
         if (dirlist(buff, folder + u8"\\*_"s + area + u8"_*.*"s) != 0)
         {
             notesel(buff);

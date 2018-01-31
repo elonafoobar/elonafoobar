@@ -33,15 +33,6 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 
 
 
-std::string to_unix_filename(const std::string& source)
-{
-    std::string ret{source};
-    std::replace(std::begin(ret), std::end(ret), '\\', '/');
-    return ret;
-}
-
-
-
 std::vector<std::string_view> parse_records(std::string_view line)
 {
     std::vector<std::string_view> ret;
@@ -599,11 +590,11 @@ void label_2716()
     };
 
 
-    std::fstream file{to_unix_filename(exedir + u8"\\config.txt"s)};
+    std::fstream file{fs::u8path(u8"./config.txt")};
     if (!file)
     {
-        throw config_loading_error{
-            "Failed to open: "s + to_unix_filename(exedir + u8"\\config.txt"s)};
+        throw config_loading_error{u8"Failed to open: "s
+                                   + fs::u8path(u8"./config.txt").u8string()};
     }
 
     std::string line;
@@ -667,7 +658,7 @@ void label_2716()
     {
         redraw(0);
         buffer(4);
-        picload(exedir + u8"graphic\\lang.bmp"s);
+        picload(fs::u8path(u8"./graphic/lang.bmp"));
         gsel(0);
         gmode(0);
         p = 0;

@@ -33,7 +33,6 @@ namespace elona
 
 int main()
 {
-    exedir = dirinfo(1) + u8"\\"s;
     devfile = "";
     randomize();
     randseed = rnd(2000);
@@ -1927,7 +1926,7 @@ void label_0066()
     {
         cfg_svolume = DSGETMASTERVOLUME();
     }
-    folder = exedir + u8"sound\\"s;
+    folder = fs::u8path(u8"./sound/");
     sndload(folder + u8"exitmap1.wav"s, 49);
     sndload(folder + u8"book1.wav"s, 59);
     sndload(folder + u8"write1.wav"s, 44);
@@ -2051,7 +2050,7 @@ void label_0066()
 }
 void label_0067()
 {
-    s = exedir + u8"user\\music\\musiclist.txt"s;
+    s = fs::u8path(u8"./user/music/musiclist.txt");
     exist(s);
     if (strsize == -1)
     {
@@ -2266,16 +2265,16 @@ void label_0068()
         if (cfg_music == 1)
         {
             DMSTOP();
-            DMLOADFNAME(exedir + u8"sound\\gm_on.mid"s, 0);
+            DMLOADFNAME(fs::u8path(u8"./sound/gm_on.mid"), 0);
             DMPLAY(1, 0);
         }
         if (music != -1)
         {
-            musicfolder = exedir + u8"user\\music\\"s;
+            musicfolder = fs::u8path(u8"./user/music/");
             exist(musicfolder + musicfile(music));
             if (strsize == -1)
             {
-                musicfolder = exedir + u8"sound\\"s;
+                musicfolder = fs::u8path(u8"./sound/");
                 exist(musicfolder + musicfile(music));
                 if (strsize == -1)
                 {
@@ -4976,8 +4975,8 @@ void snfood(std::string& prm_360)
 void txtsetlastword()
 {
     notesel(buff);
-    noteload(
-        exedir + u8"user\\"s + lang(u8"lastwords.txt"s, u8"lastwords-e.txt"s));
+    noteload(fs::u8path(
+        u8"./user/"s + lang(u8"lastwords.txt"s, u8"lastwords-e.txt"s)));
     noteget(lastword, rnd(noteinfo(0) + 1));
     return;
 }
@@ -11269,7 +11268,7 @@ void label_0174()
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     if (noteinfo(0) <= 1)
     {
-        noteload(exedir + u8"data\\talk.txt"s);
+        noteload(fs::u8path(u8"./data/talk.txt"));
         p = instr(buff, 0, u8"%DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
         buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     }
@@ -11284,7 +11283,7 @@ void label_0175()
 {
     buff = "";
     notesel(buff);
-    noteload(exedir + u8"data\\talk.txt"s);
+    noteload(fs::u8path(u8"./data/talk.txt"));
     p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
     label_0174();
     return;
@@ -11293,7 +11292,7 @@ void label_0176()
 {
     buff = "";
     notesel(buff);
-    noteload(exedir + u8"data\\talk.txt"s);
+    noteload(fs::u8path(u8"./data/talk.txt"));
     p = -1;
     {
         int cnt = 0;
@@ -13571,47 +13570,47 @@ void label_0192()
     tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
-    exist(exedir + u8"config.txt"s);
+    exist(fs::u8path(u8"./config.txt"));
     if (strsize == -1)
     {
         bcopy(
-            exedir + u8"original\\"s + u8"config.txt"s,
-            exedir + u8"config.txt"s);
+            fs::u8path(u8"./original/config.txt"s),
+            fs::u8path(u8"./config.txt"s));
     }
-    exist(exedir + u8"user\\export.txt"s);
+    exist(fs::u8path(u8"./user/export.txt"));
     if (strsize == -1)
     {
         bcopy(
-            exedir + u8"original\\"s + u8"export.txt"s,
-            exedir + u8"user\\export.txt"s);
+            fs::u8path(u8"./original/export.txt"s),
+            fs::u8path(u8"./user/export.txt"s));
     }
-    exist(exedir + u8"user\\lastwords.txt"s);
+    exist(fs::u8path(u8"./user/lastwords.txt"));
     if (strsize == -1)
     {
         bcopy(
-            exedir + u8"original\\"s + u8"lastwords.txt"s,
-            exedir + u8"user\\lastwords.txt"s);
+            fs::u8path(u8"./original/lastwords.txt"s),
+            fs::u8path(u8"./user/lastwords.txt"s));
     }
-    exist(exedir + u8"user\\lastwords-e.txt"s);
+    exist(fs::u8path(u8"./user/lastwords-e.txt"));
     if (strsize == -1)
     {
         bcopy(
-            exedir + u8"original\\"s + u8"lastwords-e.txt"s,
-            exedir + u8"user\\lastwords-e.txt"s);
+            fs::u8path(u8"./original/lastwords-e.txt"s),
+            fs::u8path(u8"./user/lastwords-e.txt"s));
     }
-    exist(exedir + u8"user\\music\\musiclist.txt"s);
+    exist(fs::u8path(u8"./user/music/musiclist.txt"));
     if (strsize == -1)
     {
         bcopy(
-            exedir + u8"original\\"s + u8"musiclist.txt"s,
-            exedir + u8"user\\music\\musiclist.txt"s);
+            fs::u8path(u8"./original/musiclist.txt"s),
+            fs::u8path(u8"./user/music/musiclist.txt"s));
     }
-    exist(exedir + u8"user\\graphic\\face1.bmp"s);
+    exist(fs::u8path(u8"./user/graphic/face1.bmp"));
     if (strsize == -1)
     {
         bcopy(
-            exedir + u8"original\\"s + u8"face1.bmp"s,
-            exedir + u8"user\\graphic\\face1.bmp"s);
+            fs::u8path(u8"./original/face1.bmp"s),
+            fs::u8path(u8"./user/graphic/face1.bmp"s));
     }
     label_2140();
     SDIM3(s, 160, 40);
@@ -13641,7 +13640,7 @@ void label_0192()
     redraw(1);
     onkey_0();
     buffer(3, 1440, 800);
-    picload(exedir + u8"\\graphic\\interface"s + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/interface"s + devfile + u8".bmp"), 1);
     buffer(4, windoww, windowh);
     cfg_exlog = 1;
     if (cfg_exlog)
@@ -13678,9 +13677,9 @@ void label_0192()
         }
         gsel(0);
     }
-    folder = exedir + u8"user\\graphic\\"s;
+    folder = fs::u8path(u8"./user/graphic/");
     buffer(1, 1584, 1200);
-    picload(exedir + u8"\\graphic\\item"s + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/item"s + devfile + u8".bmp"), 1);
     if (inf_tiles != 48)
     {
         pos(0, 0);
@@ -13899,7 +13898,7 @@ void label_0192()
     mesbox(keylog, 0, 0, 1, 10);
     SDIM1(buffboard);
     notesel(buffboard);
-    noteload(exedir + u8"data\\board.txt"s);
+    noteload(fs::u8path(u8"./data/board.txt"));
     SDIM1(filter_item);
     SDIM1(rffilter_item);
     SDIM1(ioriginalnameref);
@@ -14151,13 +14150,13 @@ void create_pcpic(int prm_409, int prm_410)
         if (pcc(24, prm_409) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + u8"mantle"s + u8"_"s
-                + pcc(4, prm_409) % 1000 + u8".bmp"s);
+                fs::u8path(u8"./graphic/pcc_mantle_"s) + pcc(4, prm_409) % 1000
+                + u8".bmp"s);
             if (strsize != -1)
             {
                 pos(128, 0);
                 picload(
-                    exedir + u8"\\graphic\\pcc_"s + u8"mantle"s + u8"_"s
+                    fs::u8path(u8"./graphic/pcc_mantle_"s)
                         + pcc(4, prm_409) % 1000 + u8".bmp"s,
                     1);
                 color(0, 0, 0);
@@ -14181,14 +14180,14 @@ void create_pcpic(int prm_409, int prm_410)
         }
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"hairbk"s + u8"_"s
-        + pcc(1, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_hairbk_"s) + pcc(1, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"hairbk"s + u8"_"s
-                + pcc(1, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_hairbk_"s) + pcc(1, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14211,14 +14210,14 @@ void create_pcpic(int prm_409, int prm_410)
     if (prm_409 == 0 && gdata(183) != 0 && pcc(16, prm_409) != 0)
     {
         exist(
-            exedir + u8"\\graphic\\pcc_"s + u8"ridebk"s + u8"_"s
-            + pcc(16, prm_409) % 1000 + u8".bmp"s);
+            fs::u8path(u8"./graphic/pcc_ridebk_"s) + pcc(16, prm_409) % 1000
+            + u8".bmp"s);
         if (strsize != -1)
         {
             pos(128, 0);
             picload(
-                exedir + u8"\\graphic\\pcc_"s + u8"ridebk"s + u8"_"s
-                    + pcc(16, prm_409) % 1000 + u8".bmp"s,
+                fs::u8path(u8"./graphic/pcc_ridebk_"s) + pcc(16, prm_409) % 1000
+                    + u8".bmp"s,
                 1);
             color(0, 0, 0);
             boxf(256, 0, 384, 198);
@@ -14242,14 +14241,14 @@ void create_pcpic(int prm_409, int prm_410)
     else
     {
         exist(
-            exedir + u8"\\graphic\\pcc_"s + u8"body"s + u8"_"s
-            + pcc(15, prm_409) % 1000 + u8".bmp"s);
+            fs::u8path(u8"./graphic/pcc_body_"s) + pcc(15, prm_409) % 1000
+            + u8".bmp"s);
         if (strsize != -1)
         {
             pos(128, 0);
             picload(
-                exedir + u8"\\graphic\\pcc_"s + u8"body"s + u8"_"s
-                    + pcc(15, prm_409) % 1000 + u8".bmp"s,
+                fs::u8path(u8"./graphic/pcc_body_"s) + pcc(15, prm_409) % 1000
+                    + u8".bmp"s,
                 1);
             color(0, 0, 0);
             boxf(256, 0, 384, 198);
@@ -14271,14 +14270,14 @@ void create_pcpic(int prm_409, int prm_410)
         }
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"eye"s + u8"_"s
-        + pcc(14, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_eye_"s) + pcc(14, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"eye"s + u8"_"s
-                + pcc(14, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_eye_"s) + pcc(14, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14304,14 +14303,14 @@ void create_pcpic(int prm_409, int prm_410)
     else
     {
         exist(
-            exedir + u8"\\graphic\\pcc_"s + u8"pants"s + u8"_"s
-            + pcc(7, prm_409) % 1000 + u8".bmp"s);
+            fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
+            + u8".bmp"s);
         if (strsize != -1)
         {
             pos(128, 0);
             picload(
-                exedir + u8"\\graphic\\pcc_"s + u8"pants"s + u8"_"s
-                    + pcc(7, prm_409) % 1000 + u8".bmp"s,
+                fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
+                    + u8".bmp"s,
                 1);
             color(0, 0, 0);
             boxf(256, 0, 384, 198);
@@ -14333,14 +14332,14 @@ void create_pcpic(int prm_409, int prm_410)
         }
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"cloth"s + u8"_"s
-        + pcc(9, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_cloth_"s) + pcc(9, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"cloth"s + u8"_"s
-                + pcc(9, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_cloth_"s) + pcc(9, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14365,13 +14364,13 @@ void create_pcpic(int prm_409, int prm_410)
         if (pcc(20, prm_409) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + u8"chest"s + u8"_"s
-                + pcc(2, prm_409) % 1000 + u8".bmp"s);
+                fs::u8path(u8"./graphic/pcc_chest_"s) + pcc(2, prm_409) % 1000
+                + u8".bmp"s);
             if (strsize != -1)
             {
                 pos(128, 0);
                 picload(
-                    exedir + u8"\\graphic\\pcc_"s + u8"chest"s + u8"_"s
+                    fs::u8path(u8"./graphic/pcc_chest_"s)
                         + pcc(2, prm_409) % 1000 + u8".bmp"s,
                     1);
                 color(0, 0, 0);
@@ -14401,13 +14400,13 @@ void create_pcpic(int prm_409, int prm_410)
             if (pcc(21, prm_409) == 0)
             {
                 exist(
-                    exedir + u8"\\graphic\\pcc_"s + u8"leg"s + u8"_"s
-                    + pcc(3, prm_409) % 1000 + u8".bmp"s);
+                    fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
+                    + u8".bmp"s);
                 if (strsize != -1)
                 {
                     pos(128, 0);
                     picload(
-                        exedir + u8"\\graphic\\pcc_"s + u8"leg"s + u8"_"s
+                        fs::u8path(u8"./graphic/pcc_leg_"s)
                             + pcc(3, prm_409) % 1000 + u8".bmp"s,
                         1);
                     color(0, 0, 0);
@@ -14433,13 +14432,13 @@ void create_pcpic(int prm_409, int prm_410)
         if (pcc(22, prm_409) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + u8"belt"s + u8"_"s
-                + pcc(5, prm_409) % 1000 + u8".bmp"s);
+                fs::u8path(u8"./graphic/pcc_belt_"s) + pcc(5, prm_409) % 1000
+                + u8".bmp"s);
             if (strsize != -1)
             {
                 pos(128, 0);
                 picload(
-                    exedir + u8"\\graphic\\pcc_"s + u8"belt"s + u8"_"s
+                    fs::u8path(u8"./graphic/pcc_belt_"s)
                         + pcc(5, prm_409) % 1000 + u8".bmp"s,
                     1);
                 color(0, 0, 0);
@@ -14464,13 +14463,13 @@ void create_pcpic(int prm_409, int prm_410)
         if (pcc(23, prm_409) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + u8"glove"s + u8"_"s
-                + pcc(8, prm_409) % 1000 + u8".bmp"s);
+                fs::u8path(u8"./graphic/pcc_glove_"s) + pcc(8, prm_409) % 1000
+                + u8".bmp"s);
             if (strsize != -1)
             {
                 pos(128, 0);
                 picload(
-                    exedir + u8"\\graphic\\pcc_"s + u8"glove"s + u8"_"s
+                    fs::u8path(u8"./graphic/pcc_glove_"s)
                         + pcc(8, prm_409) % 1000 + u8".bmp"s,
                     1);
                 color(0, 0, 0);
@@ -14498,13 +14497,13 @@ void create_pcpic(int prm_409, int prm_410)
         if (gdata(183) != 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + u8"ride"s + u8"_"s
-                + pcc(16, prm_409) % 1000 + u8".bmp"s);
+                fs::u8path(u8"./graphic/pcc_ride_"s) + pcc(16, prm_409) % 1000
+                + u8".bmp"s);
             if (strsize != -1)
             {
                 pos(128, 0);
                 picload(
-                    exedir + u8"\\graphic\\pcc_"s + u8"ride"s + u8"_"s
+                    fs::u8path(u8"./graphic/pcc_ride_"s)
                         + pcc(16, prm_409) % 1000 + u8".bmp"s,
                     1);
                 color(0, 0, 0);
@@ -14532,13 +14531,13 @@ void create_pcpic(int prm_409, int prm_410)
         if (pcc(24, prm_409) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + u8"mantlebk"s + u8"_"s
+                fs::u8path(u8"./graphic/pcc_mantlebk_"s)
                 + pcc(4, prm_409) % 1000 + u8".bmp"s);
             if (strsize != -1)
             {
                 pos(128, 0);
                 picload(
-                    exedir + u8"\\graphic\\pcc_"s + u8"mantlebk"s + u8"_"s
+                    fs::u8path(u8"./graphic/pcc_mantlebk_"s)
                         + pcc(4, prm_409) % 1000 + u8".bmp"s,
                     1);
                 color(0, 0, 0);
@@ -14562,14 +14561,14 @@ void create_pcpic(int prm_409, int prm_410)
         }
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"hair"s + u8"_"s
-        + pcc(1, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_hair_"s) + pcc(1, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"hair"s + u8"_"s
-                + pcc(1, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_hair_"s) + pcc(1, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14590,14 +14589,14 @@ void create_pcpic(int prm_409, int prm_410)
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"subhair"s + u8"_"s
-        + pcc(10, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_subhair_"s) + pcc(10, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"subhair"s + u8"_"s
-                + pcc(10, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_subhair_"s) + pcc(10, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14618,14 +14617,14 @@ void create_pcpic(int prm_409, int prm_410)
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"etc"s + u8"_"s
-        + pcc(11, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(11, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"etc"s + u8"_"s
-                + pcc(11, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(11, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14646,14 +14645,14 @@ void create_pcpic(int prm_409, int prm_410)
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"etc"s + u8"_"s
-        + pcc(12, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(12, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"etc"s + u8"_"s
-                + pcc(12, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(12, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -14674,14 +14673,14 @@ void create_pcpic(int prm_409, int prm_410)
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
     exist(
-        exedir + u8"\\graphic\\pcc_"s + u8"etc"s + u8"_"s
-        + pcc(13, prm_409) % 1000 + u8".bmp"s);
+        fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(13, prm_409) % 1000
+        + u8".bmp"s);
     if (strsize != -1)
     {
         pos(128, 0);
         picload(
-            exedir + u8"\\graphic\\pcc_"s + u8"etc"s + u8"_"s
-                + pcc(13, prm_409) % 1000 + u8".bmp"s,
+            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(13, prm_409) % 1000
+                + u8".bmp"s,
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
@@ -16238,7 +16237,7 @@ void label_0221()
 {
     SDIM3(randn1, 30, 20);
     notesel(titlebuff);
-    noteload(lang(u8"data\\ndata.csv"s, u8"data\\ndata-e.csv"s));
+    noteload(fs::u8path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s)));
     SDIM4(rnlist, 20, 15, noteinfo(0));
     {
         int cnt = 0;
@@ -16257,7 +16256,7 @@ void label_0221()
         }
     }
     notesel(titlebuff);
-    noteload(u8"data\\name.csv"s);
+    noteload(fs::u8path(u8"data/name.csv"s));
     SDIM3(rn1, 15, noteinfo(0));
     SDIM3(rn2, 15, noteinfo(0));
     {
@@ -27496,14 +27495,14 @@ int customtalk(int prm_764, int prm_765)
     f_at_m116 = 0;
     if (cbit(989, prm_764))
     {
-        exist(exedir + u8"user\\talk\\"s + cdatan(4, prm_764));
+        exist(fs::u8path(u8"./user/talk/"s + cdatan(4, prm_764)));
         if (strsize == -1)
         {
             return 0;
         }
         SDIM2(buff_at_m116, strsize);
         notesel(buff_at_m116);
-        noteload(exedir + u8"user\\talk\\"s + cdatan(4, prm_764));
+        noteload(fs::u8path(u8"./user/talk/"s + cdatan(4, prm_764)));
         f_at_m116 = 1;
     }
     else
@@ -28826,7 +28825,7 @@ void animeload(int prm_807, int prm_808)
     dx_at_m133 = (cdata_x(prm_808) - scx) * inf_tiles + inf_screenx;
     dy_at_m133 = (cdata_y(prm_808) - scy) * inf_tiles + inf_screeny;
     gsel(7);
-    picload(exedir + u8"graphic\\anime"s + prm_807 + u8".bmp"s);
+    picload(fs::u8path(u8"./graphic/anime"s + prm_807 + u8".bmp"));
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -28927,70 +28926,70 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime18.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime18.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 51)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime19.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime19.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 50)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime20.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime20.bmp"));
         dy_at_m133(1) = -20;
     }
     if (prm_811 == 56)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime22.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime22.bmp"));
         dy_at_m133(1) = -24;
     }
     if (prm_811 == 53)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime21.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime21.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 54)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime23.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime23.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 57)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime24.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime24.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 59)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime25.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime25.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 58)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime26.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime26.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 55 || prm_811 == 63)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(exedir + u8"graphic\\anime27.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime27.bmp"));
         dy_at_m133(1) = -16;
     }
     gmode(2);
@@ -33335,7 +33334,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     std::string s_at_m147;
     netinit();
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    file_at_m147 = exedir + u8"user\\net.tmp"s;
+    file_at_m147 = fs::u8path(u8"./user/net.tmp");
     exist(file_at_m147);
     if (strsize != -1)
     {
@@ -33419,15 +33418,15 @@ int net_dllist(const std::string& prm_886, int prm_887)
 }
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
-    exist(exedir + u8"user\\"s + prm_889);
+    exist(fs::u8path(u8"./user/"s + prm_889));
     if (strsize != -1)
     {
-        elona_delete(exedir + u8"user\\"s + prm_889);
+        elona_delete(fs::u8path(u8"./user/"s + prm_889));
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    netdlname(exedir + u8"user\\"s + prm_889);
+    netdlname(fs::u8path(u8"./user/"s + prm_889));
     netload(prm_888);
-    exist(exedir + u8"user\\"s + prm_889);
+    exist(fs::u8path(u8"./user/"s + prm_889));
     if (strsize == -1)
     {
         return 0;
@@ -33447,14 +33446,14 @@ void label_1398()
     }
     else
     {
-        noteload(exedir + u8"server.txt"s);
+        noteload(fs::u8path(u8"./server.txt"));
         netbuf = serverlist;
         dialog(""s + serverlist);
     }
     p = instr(netbuf, 0, u8"%"s);
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
-    notesave(exedir + u8"server.txt"s);
+    notesave(fs::u8path(u8"./server.txt"));
     if (jp)
     {
         chatreadurl = u8"http://www."s + cgiurl2 + u8"/log.txt"s;
@@ -33534,7 +33533,7 @@ label_14001_internal:
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
     }
     gsel(0);
@@ -34577,22 +34576,22 @@ void label_1422()
     pos(0, 0);
     if (cdata_continuous_action_id(0) == 5)
     {
-        picload(exedir + u8"\\graphic\\anime1.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime1.bmp"));
     }
     if (cdata_continuous_action_id(0) == 7)
     {
         if (rowactre)
         {
-            picload(exedir + u8"\\graphic\\anime2.bmp"s);
+            picload(fs::u8path(u8"./graphic/anime2.bmp"));
         }
     }
     if (cdata_continuous_action_id(0) == 8)
     {
-        picload(exedir + u8"\\graphic\\anime3.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime3.bmp"));
     }
     if (cdata_continuous_action_id(0) == 9)
     {
-        picload(exedir + u8"\\graphic\\anime4.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime4.bmp"));
     }
     gsel(0);
     return;
@@ -34925,7 +34924,7 @@ void label_1426()
         gsel(selcur);
         snd(35);
         gsel(7);
-        picload(exedir + u8"graphic\\anime7.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime7.bmp"));
         pos(0, 0);
         gfini(480, 48);
         gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
@@ -34993,7 +34992,7 @@ void label_1426()
     case 2:
         snd(34);
         gsel(7);
-        picload(exedir + u8"graphic\\anime5.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime5.bmp"));
         pos(0, 96);
         gfini(480, 48);
         gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
@@ -35103,7 +35102,7 @@ void label_1426()
         anidx = cdata_x(cc);
         anidy = cdata_y(cc);
         gsel(7);
-        picload(exedir + u8"graphic\\anime6.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime6.bmp"));
         pos(0, 0);
         gfini(480, 48);
         gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
@@ -35641,7 +35640,7 @@ void label_1426()
         if (critical)
         {
             gsel(7);
-            picload(exedir + u8"graphic\\anime28.bmp"s);
+            picload(fs::u8path(u8"./graphic/anime28.bmp"));
         }
         gmode(2);
         gsel(0);
@@ -35709,7 +35708,7 @@ void label_1426()
             goto label_1427_internal;
         }
         gsel(7);
-        picload(exedir + u8"graphic\\anime13.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime13.bmp"));
         gsel(4);
         gmode(0);
         pos(0, 0);
@@ -35743,7 +35742,7 @@ void label_1426()
         goto label_1427_internal;
     case 19:
         gsel(7);
-        picload(exedir + u8"graphic\\anime12.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime12.bmp"));
         gsel(4);
         pos(0, 0);
         gmode(0);
@@ -35884,7 +35883,7 @@ void label_1426()
         goto label_1427_internal;
     case 22:
         gsel(7);
-        picload(exedir + u8"graphic\\anime17.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime17.bmp"));
         gsel(4);
         pos(0, 0);
         gmode(0);
@@ -35975,7 +35974,7 @@ void label_1426()
         goto label_1427_internal;
     case 21:
         gsel(7);
-        picload(exedir + u8"graphic\\anime16.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime16.bmp"));
         gsel(4);
         pos(0, 0);
         gmode(0);
@@ -41520,7 +41519,7 @@ void label_1541()
     cm = 1;
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\void.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gsel(2);
     {
@@ -41528,14 +41527,14 @@ void label_1541()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(exedir + u8"graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
     }
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_cm.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_cm.bmp"), 1);
     gsel(0);
-    dirlist(buff, exedir + u8"save\\*"s, 5);
+    dirlist(buff, fs::u8path(u8"./save/*"s), 5);
     notesel(buff);
     if (noteinfo() >= 5)
     {
@@ -42427,7 +42426,7 @@ label_1565_internal:
         cmname = randomname();
     }
     playerid = u8"sav_"s + cmname;
-    dirlist(buff, exedir + u8"save\\*"s, 5);
+    dirlist(buff, fs::u8path(u8"./save/*"s), 5);
     notesel(buff);
     f = 0;
     {
@@ -42473,7 +42472,7 @@ void label_1566()
     redraw(0);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\void.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gsel(0);
     gmode(0);
@@ -43035,7 +43034,7 @@ void label_1572()
     biten(4) = lang(u8"セミ"s, u8"locust"s);
     biten(5) = lang(u8"ヘラクレス"s, u8"beetle"s);
     notesel(buff);
-    noteload(exedir + u8"data\\book.txt"s);
+    noteload(fs::u8path(u8"./data/book.txt"));
     p = instr(buff, 0, u8"%DEFINE"s);
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
@@ -46856,7 +46855,7 @@ int dist_town()
 }
 void map_initcustom(const std::string& prm_934)
 {
-    fmapfile = exedir + u8"map\\"s + prm_934;
+    fmapfile = fs::u8path(u8"./map/"s + prm_934);
     fmode = 5;
     label_2107();
     map_tileset(mdata(12));
@@ -46924,7 +46923,7 @@ void map_reload(const std::string& prm_935)
 {
     int y_at_m166 = 0;
     int x_at_m166 = 0;
-    fmapfile = exedir + u8"map\\"s + prm_935;
+    fmapfile = fs::u8path(u8"./map/"s + prm_935);
     fmode = 16;
     label_2107();
     {
@@ -51002,7 +51001,7 @@ void label_1714()
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 pos(cnt % 4 * 180, cnt / 4 * 300);
-                picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+                picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
             }
         }
         gsel(0);
@@ -51747,7 +51746,7 @@ void label_1725()
         label_2107();
     }
     file = u8"shop"s + 5 + u8".s2"s;
-    exist(exedir + u8"tmp\\"s + file);
+    exist(fs::u8path(u8"./tmp/"s + file));
     if (strsize != -1)
     {
         fmode = 3;
@@ -52965,7 +52964,7 @@ void label_1737()
     else
     {
         label_1738();
-        exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
+        exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
         if (strsize != -1)
         {
             fmode = 11;
@@ -53314,7 +53313,7 @@ void label_1746()
     if (mdata(2) != mtilefilecur)
     {
         pos(0, 0);
-        picload(exedir + u8"\\graphic\\map"s + mdata(2) + u8".bmp"s, 1);
+        picload(fs::u8path(u8"./graphic/map"s + mdata(2) + u8".bmp"), 1);
         mtilefilecur = mdata(2);
         label_0201();
     }
@@ -56708,15 +56707,15 @@ void tcginit()
     selectmode_at_tcg = -1;
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_card.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_card.bmp"), 1);
     gsel(7);
-    picload(exedir + u8"graphic\\interface2.bmp"s);
+    picload(fs::u8path(u8"./graphic/interface2.bmp"));
     gsel(2);
     pos(0, 0);
-    picload(exedir + u8"graphic\\card0.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/card0.bmp"), 1);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\bg_card.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
     label_1826();
     tcgdrawbg();
     return;
@@ -56836,7 +56835,7 @@ label_1812_internal:
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
         {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            file_at_tcg = ""s + exedir + u8"tmp\\deck_"s + cnt + u8".s2"s;
+            file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
             exist(file_at_tcg);
             if (strsize == -1)
             {
@@ -56869,7 +56868,7 @@ label_1812_internal:
     {
         DIM2(deck, 1000);
         curdeck = rtval;
-        file = ""s + exedir + u8"tmp\\deck_"s + curdeck + u8".s2"s;
+        file = fs::u8path(u8"./tmp/deck_"s) + curdeck + u8".s2"s;
         exist(file);
         if (strsize != -1)
         {
@@ -57188,7 +57187,7 @@ void label_1823()
     int m_at_tcg = 0;
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\bg_card.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(255, 255, 255);
@@ -57548,7 +57547,7 @@ void label_1828()
 {
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\bg_card.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
     gsel(0);
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
@@ -57823,7 +57822,7 @@ label_1830_internal:
             label_2131();
             if (rtval == 0)
             {
-                file = ""s + exedir + u8"tmp\\deck_"s + curdeck + u8".s2"s;
+                file = fs::u8path(u8"./tmp/deck_"s) + curdeck + u8".s2"s;
                 fmode = 23;
                 label_2107();
             }
@@ -57846,7 +57845,7 @@ int label_1835()
 {
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\bg_card.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
     label_1826();
     return rtval_at_tcg;
 }
@@ -59051,7 +59050,7 @@ void label_1859()
     redraw(0);
     gsel(7);
     pos(0, 0);
-    picload(exedir + u8"graphic\\ie_scroll.bmp"s);
+    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     snd(92);
     drawmenu();
@@ -59305,7 +59304,7 @@ void atxinit()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(exedir + u8"\\graphic\\"s + atxbg + u8".bmp"s, 1);
+        picload(fs::u8path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
         pos(0, inf_msgh);
         gzoom(windoww, windowh - inf_verh - inf_msgh, 4, 0, 0, 240, 160);
         gmode(2);
@@ -61130,7 +61129,7 @@ void label_1886()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\bg_altar.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/bg_altar.bmp"), 1);
     pos(0, 0);
     gzoom(windoww, windowh - inf_verh, 4, 0, 0, 600, 400, 1);
     gsel(0);
@@ -62429,7 +62428,7 @@ int label_1896()
     gsel(7);
     gmode(0);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\"s + file + u8".bmp"s, 0);
+    picload(fs::u8path(u8"./graphic/"s + file + u8".bmp"), 0);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -62579,7 +62578,7 @@ void label_1901()
     fmode = 4;
     label_2107();
     file = u8"shop"s + 4 + u8".s2"s;
-    exist(exedir + u8"tmp\\"s + file);
+    exist(fs::u8path(u8"./tmp/"s + file));
     if (strsize != -1)
     {
         fmode = 3;
@@ -63854,7 +63853,7 @@ void label_1922()
     rpid = 0;
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_blend.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_blend.bmp"), 1);
     gsel(0);
     clear_rprefmat();
 label_1923:
@@ -65132,7 +65131,7 @@ void label_1942()
         }
     }
     userfile = u8"temp.eum"s;
-    bload(exedir + u8"user\\"s + userfile, headtemp, 1024);
+    bload(fs::u8path(u8"./user/"s + userfile), headtemp, 1024);
     notesel(headtemp);
     noteget(s, 5);
     noteget(s(1), 6);
@@ -65161,7 +65160,7 @@ label_19431_internal:
     cc = 0;
     cs_bk = -1;
     SDIM2(headtemp, 1024);
-    folder = exedir + u8"user\\"s;
+    folder = fs::u8path(u8"./user/");
     if (comctrl == 0 || comctrl == 2)
     {
         dirlist(buff, folder + u8"*.eum"s);
@@ -65325,7 +65324,7 @@ label_1945_internal:
                 u8"Selected item is incompatible."s));
             goto label_1944_internal;
         }
-        folder = exedir + u8"user\\"s;
+        folder = fs::u8path(u8"./user/");
         if (listn(1, p) == u8"net"s)
         {
             if (comctrl == 1)
@@ -65375,7 +65374,7 @@ label_1945_internal:
             if (a == 1)
             {
                 userfile = listn(1, cs + pagesize * page);
-                exist(exedir + u8"user\\"s + userfile);
+                exist(fs::u8path(u8"./user/"s + userfile));
                 if (strsize == -1)
                 {
                     goto label_1944_internal;
@@ -65397,7 +65396,7 @@ label_1945_internal:
                 label_2131();
                 if (rtval == 0)
                 {
-                    elona_delete(exedir + u8"user\\"s + userfile);
+                    elona_delete(fs::u8path(u8"./user/"s + userfile));
                     goto label_19431_internal;
                 }
                 goto label_1944_internal;
@@ -66379,7 +66378,8 @@ label_1961_internal:
                 {
                     if (adata(16, gdata(20)) == 102)
                     {
-                        s = u8"   "s + sdata(17, i) + u8" / "s + sdata(156, i);
+                        s = u8"   "s + sdata(17, i) + u8" / " + s
+                            + sdata(156, i);
                     }
                     if (adata(16, gdata(20)) == 31)
                     {
@@ -66702,7 +66702,7 @@ void label_1968()
     redraw(0);
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_feat.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_feat.bmp"), 1);
     gsel(0);
     windowshadow = 1;
     return;
@@ -67588,7 +67588,7 @@ label_1973_internal:
     }
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\book.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     pos(wx, wy);
     gcopy(4, 0, 0, 736, 448);
@@ -67795,7 +67795,7 @@ void label_1976()
     label_2056();
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_board.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_board.bmp"), 1);
     gsel(0);
     redraw(0);
     gsel(4);
@@ -69474,7 +69474,7 @@ void label_2007()
     label_2056();
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_skill.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_skill.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2008_internal:
@@ -69948,7 +69948,7 @@ void label_2012()
     {
         gsel(4);
         pos(0, 0);
-        picload(exedir + u8"graphic\\face1"s + devfile + u8".bmp"s, 1);
+        picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
         gsel(0);
         ccbk = cc;
         cc = tc;
@@ -70010,7 +70010,7 @@ int label_2014()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
     }
     gsel(0);
@@ -70020,7 +70020,7 @@ int label_2014()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    folder = exedir + u8"user\\talk\\"s;
+    folder = fs::u8path(u8"./user/talk/");
     dirlist(buff, folder + u8"*.txt"s);
     notesel(buff);
     list(0, 0) = -999;
@@ -70173,7 +70173,7 @@ int label_2018()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
     }
     gsel(0);
@@ -70306,8 +70306,8 @@ label_2020_internal:
         file = ""s + userfile;
         label_2095();
         bcopy(
-            exedir + u8"user\\"s + listn(1, listmax),
-            exedir + u8"user\\"s + listn(0, listmax) + u8".npc"s);
+            fs::u8path(u8"./user/"s + listn(1, listmax)),
+            fs::u8path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
         label_2105();
         {
             int cnt = 0;
@@ -70352,10 +70352,10 @@ void label_2022()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\book.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     notesel(buff);
-    noteload(exedir + u8"data\\book.txt"s);
+    noteload(fs::u8path(u8"./data/book.txt"));
     p = instr(buff, 0, ""s + inv_param1(ci) + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
     {
@@ -70493,7 +70493,7 @@ void label_2027()
     redraw(0);
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_spell.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_spell.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2028_internal:
@@ -71104,7 +71104,7 @@ label_20331:
     }
     label_2056();
     gsel(7);
-    picload(exedir + u8"graphic\\ie_sheet.bmp"s);
+    picload(fs::u8path(u8"./graphic/ie_sheet.bmp"));
     gsel(0);
     wx = (windoww - 700) / 2 + inf_screenx;
     wy = winposy(400) - 10;
@@ -71128,10 +71128,10 @@ label_20331:
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\face1"s + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
     if (cdata_portrait(cc) < 0)
     {
-        s = exedir + u8"user\\graphic\\face"s + abs((cdata_portrait(cc) + 1))
+        s = fs::u8path(u8"./user/graphic/face"s) + abs((cdata_portrait(cc) + 1))
             + u8".bmp"s;
         exist(s);
         if (cdata_portrait(cc) != -1)
@@ -71284,7 +71284,7 @@ label_2035_internal:
         }
         else
         {
-            s = exedir + u8"user\\graphic\\face"s
+            s = fs::u8path(u8"./user/graphic/face"s)
                 + abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
             exist(s);
             if (cdata_portrait(cc) != -1)
@@ -72129,7 +72129,7 @@ int label_2039()
     windowanime(wx, wy, ww, wh, 10, 7);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\face1"s + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
     buffer(7, 800, 112);
     color(0, 0, 0);
     boxf();
@@ -72137,7 +72137,7 @@ int label_2039()
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            s = exedir + u8"user\\graphic\\face"s + (cnt + 1) + u8".bmp"s;
+            s = fs::u8path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp");
             exist(s);
             if (strsize != -1)
             {
@@ -72148,7 +72148,7 @@ int label_2039()
     }
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_mirror.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_mirror.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2040_internal:
@@ -72407,7 +72407,7 @@ label_2041_internal:
         if (rtval(1) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + rtvaln + u8"_"s
+                fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
                 + (pcc(rtval, cc) % 1000 + 1) + u8".bmp"s);
             if (strsize != -1)
             {
@@ -72443,7 +72443,7 @@ label_2041_internal:
         if (rtval(1) == 0)
         {
             exist(
-                exedir + u8"\\graphic\\pcc_"s + rtvaln + u8"_"s
+                fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
                 + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s);
             if (pcc(rtval, cc) % 1000 == 1 && rtval != 15 || strsize != -1)
             {
@@ -72868,7 +72868,7 @@ void label_2050()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_wear.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_wear.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2051_internal:
@@ -74722,7 +74722,7 @@ void label_2084()
         fileext = u8"eum"s;
         filedsc = u8"Elona User Map"s;
         int stat = _fdialog(
-            fileext, 17, filedsc, exedir + u8"user"s, u8"default.eum"s);
+            fileext, 17, filedsc, fs::u8path(u8"./user"s), u8"default.eum"s);
         if (stat == 0)
         {
             return;
@@ -74790,7 +74790,11 @@ void label_2084()
         filedsc = u8"Elona Pet Team"s;
         {
             int stat = _fdialog(
-                fileext, 17, filedsc, exedir + u8"user"s, u8"default.ept"s);
+                fileext,
+                17,
+                filedsc,
+                fs::u8path(u8"./user"s),
+                u8"default.ept"s);
             if (stat == 0)
             {
                 return;
@@ -74854,7 +74858,7 @@ void label_2084()
     }
     if (rtval == 5)
     {
-        exec(exedir + u8"user\\export.txt"s, 16);
+        exec(fs::u8path(u8"./user/export.txt"), 16);
     }
     return;
 }
@@ -75116,7 +75120,7 @@ void label_2085()
             }
         }
     }
-    s = exedir + u8"\\save\\"s + playerid + u8".txt"s;
+    s = fs::u8path(u8"./save/"s + playerid + u8".txt");
     notesave(s);
     exec(s, 16);
     return;
@@ -75376,7 +75380,7 @@ void label_2089()
     }
     if (gdata(96) < 975)
     {
-        file = exedir + u8"tmp\\"s;
+        file = fs::u8path(u8"./tmp/");
         exist(file + u8"mdata_5_103.s2"s);
         if (strsize != -1)
         {
@@ -75512,8 +75516,8 @@ void label_2089()
                         adata(cnt, p) = 0;
                     }
                 }
-                folder = exedir + u8"tmp"s;
-                if (dirlist(buff, folder + u8"\\*_"s + p + u8"_*.*"s) != 0)
+                folder = fs::u8path(u8"./tmp");
+                if (dirlist(buff, folder + u8"/*_"s + p + u8"_*.*"s) != 0)
                 {
                     notesel(buff);
                     {
@@ -75532,10 +75536,10 @@ void label_2089()
                             {
                                 p3 = p - 100 + 300;
                             }
-                            file_cnv = folder + u8"\\"s
+                            file_cnv = folder + u8"/"s
                                 + strmid(file, 0, (p1 + 1)) + p3
                                 + strmid(file, (p1 + p2 + 1), 20);
-                            file = folder + u8"\\"s + file;
+                            file = folder + u8"/"s + file;
                             bcopy(file, file_cnv);
                             fileadd(file_cnv);
                             elona_delete(file);
@@ -75754,7 +75758,7 @@ void zipadd(const std::string& prm_1062)
 void label_2095()
 {
     p = 12;
-    folder = exedir + u8"user\\"s;
+    folder = fs::u8path(u8"./user/");
     bload(folder + file, headtemp, 1024);
     label_2720();
     exist(folder + file);
@@ -75980,7 +75984,7 @@ void label_2104()
 }
 void label_2105()
 {
-    dirlist(buff, exedir + u8"user\\*.npc"s);
+    dirlist(buff, fs::u8path(u8"./user/*.npc"s));
     notesel(buff);
     usernpcmax = noteinfo(0);
     if (usernpcmax >= 100)
@@ -75994,7 +75998,7 @@ void label_2105()
     gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\character"s + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/character"s + devfile + u8".bmp"), 1);
     gmode(0);
     fread = 1;
     func_1(buff, 1);
@@ -76005,16 +76009,16 @@ void label_2105()
         {
             noteget(s, cnt);
             cnt2 = tg;
-            unzip2(exedir + u8"user\\"s, s);
+            unzip2(fs::u8path(u8"./user/"), s);
             if (fread == 0)
             {
-                zOpen(hgz, exedir + u8"user\\npc1.t"s, 1, 3);
+                zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 1, 3);
                 zWrite(userdata, hgz, 280, tg);
                 zClose(hgz);
             }
             else
             {
-                zOpen(hgz, exedir + u8"user\\npc1.t"s, 0);
+                zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 0);
                 zRead(userdata, hgz, 280, tg);
                 zClose(hgz);
             }
@@ -76022,25 +76026,25 @@ void label_2105()
             SDIM2(txtbuff, userdata(1, tg));
             if (fread == 0)
             {
-                zOpen(hgz, exedir + u8"user\\npc2.t"s, 1, 3);
+                zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 1, 3);
                 zWrite(bmpbuff, hgz, userdata(0, tg));
                 zClose(hgz);
             }
             else
             {
-                zOpen(hgz, exedir + u8"user\\npc2.t"s, 0);
+                zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 0);
                 zRead(bmpbuff, hgz, userdata(0, tg));
                 zClose(hgz);
             }
             if (fread == 0)
             {
-                zOpen(hgz, exedir + u8"user\\npc3.t"s, 1, 3);
+                zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 1, 3);
                 zWrite(txtbuff, hgz, userdata(1, tg));
                 zClose(hgz);
             }
             else
             {
-                zOpen(hgz, exedir + u8"user\\npc3.t"s, 0);
+                zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 0);
                 zRead(txtbuff, hgz, userdata(1, tg));
                 zClose(hgz);
             }
@@ -76150,7 +76154,7 @@ void label_2105()
     label_2111();
     label_2110();
     gsel(5);
-    folder = exedir + u8"user\\graphic\\"s;
+    folder = fs::u8path(u8"./user/graphic/");
     dirlist(buff, folder + u8"chara_*.bmp"s);
     notesel(buff);
     {
@@ -76175,7 +76179,7 @@ void label_2106()
     redraw(1);
     fileext = u8"txt"s;
     filedsc = u8"Custom Npc Text"s;
-    int stat = _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
+    int stat = _fdialog(fileext, 16, filedsc, fs::u8path(u8"./user"s), ""s);
     if (stat == 0)
     {
         return;
@@ -76195,7 +76199,7 @@ void label_2106()
     fileext = u8"bmp"s;
     filedsc = u8"Bit Map File"s;
     {
-        int stat = _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
+        int stat = _fdialog(fileext, 16, filedsc, fs::u8path(u8"./user"s), ""s);
         if (stat == 0)
         {
             return;
@@ -76213,37 +76217,37 @@ void label_2106()
     bload(bmpfile, bmpbuff);
     if (fread == 0)
     {
-        zOpen(hgz, exedir + u8"user\\npc1.t"s, 1, 3);
+        zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 1, 3);
         zWrite(userdata, hgz, 280, cun);
         zClose(hgz);
     }
     else
     {
-        zOpen(hgz, exedir + u8"user\\npc1.t"s, 0);
+        zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 0);
         zRead(userdata, hgz, 280, cun);
         zClose(hgz);
     }
     if (fread == 0)
     {
-        zOpen(hgz, exedir + u8"user\\npc2.t"s, 1, 3);
+        zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 1, 3);
         zWrite(bmpbuff, hgz, userdata(0, cun));
         zClose(hgz);
     }
     else
     {
-        zOpen(hgz, exedir + u8"user\\npc2.t"s, 0);
+        zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 0);
         zRead(bmpbuff, hgz, userdata(0, cun));
         zClose(hgz);
     }
     if (fread == 0)
     {
-        zOpen(hgz, exedir + u8"user\\npc3.t"s, 1, 3);
+        zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 1, 3);
         zWrite(txtbuff, hgz, userdata(1, cun));
         zClose(hgz);
     }
     else
     {
-        zOpen(hgz, exedir + u8"user\\npc3.t"s, 0);
+        zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 0);
         zRead(txtbuff, hgz, userdata(1, cun));
         zClose(hgz);
     }
@@ -76268,7 +76272,7 @@ void label_2106()
         dialog(u8"The name is too long."s);
         return;
     }
-    zipinit2(exedir + u8"user\\"s, s + u8".npc"s);
+    zipinit2(fs::u8path(u8"./user/"s), s + u8".npc");
     zipadd2(u8"npc1.t"s);
     zipadd2(u8"npc2.t"s);
     zipadd2(u8"npc3.t"s);
@@ -76295,7 +76299,7 @@ void label_2106()
     txt(lang(
         name(rc) + u8"は興奮して襲い掛かってきた。"s,
         name(rc) + u8" is excited and attacks you."s));
-    folder = exedir + u8"user\\"s;
+    folder = fs::u8path(u8"./user/");
     label_2111();
     return;
 }
@@ -76370,38 +76374,38 @@ void label_2109()
 }
 void label_2110()
 {
-    dirlist(buff, exedir + u8"user\\_tmp_*.npc"s);
+    dirlist(buff, fs::u8path(u8"./user/_tmp_*.npc"s));
     notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
-            elona_delete(exedir + u8"user\\"s + file);
+            elona_delete(fs::u8path(u8"./user/"s + file));
         }
     }
-    dirlist(buff, exedir + u8"user\\!tmp*.npc"s);
+    dirlist(buff, fs::u8path(u8"./user/!tmp*.npc"s));
     notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
-            elona_delete(exedir + u8"user\\"s + file);
+            elona_delete(fs::u8path(u8"./user/"s + file));
         }
     }
     return;
 }
 void label_2111()
 {
-    dirlist(buff, exedir + u8"user\\*.t"s);
+    dirlist(buff, fs::u8path(u8"./user/*.t"s));
     notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
-            elona_delete(exedir + u8"user\\"s + file);
+            elona_delete(fs::u8path(u8"./user/"s + file));
         }
     }
     return;
@@ -76411,7 +76415,7 @@ void label_2112()
     filemod = "";
     fmode = 10;
     label_2107();
-    folder = exedir + u8"save\\"s + playerid + u8"\\"s;
+    folder = fs::u8path(u8"./save/"s + playerid + u8"/");
     notesel(buff);
     exist(folder + u8"filelist.txt"s);
     if (strsize == -1)
@@ -76429,7 +76433,7 @@ void label_2112()
             noteget(s, cnt);
             if (instr(s, 0, u8".s2"s) != -1)
             {
-                bcopy(folder + s, exedir + u8"tmp\\"s + s);
+                bcopy(folder + s, fs::u8path(u8"./tmp/"s + s));
             }
         }
     }
@@ -76471,7 +76475,7 @@ void label_2113()
     file = u8"inv_"s + mid + u8".s2"s;
     fmode = 4;
     label_2107();
-    file = exedir + u8"save\\"s + playerid;
+    file = fs::u8path(u8"./save/"s + playerid);
     dirlist(save_buff, file, 5);
     notesel(save_buff);
     save_f = 0;
@@ -76494,7 +76498,7 @@ void label_2113()
     else
     {
     }
-    file += u8"\\"s;
+    file += u8"/"s;
     notesel(filemod);
     {
         int cnt = 0;
@@ -76527,9 +76531,9 @@ void label_2113()
     fmode = 8;
     label_2107();
     filemod = "";
-    dirlist(buff, exedir + u8"tmp\\*.*"s);
+    dirlist(buff, fs::u8path(u8"./tmp/*.*"s));
     notesel(buff);
-    notesave(exedir + u8"save\\"s + playerid + u8"\\filelist.txt"s);
+    notesave(fs::u8path(u8"./save/"s + playerid + u8"/filelist.txt"));
     return;
 }
 void label_2114()
@@ -76568,13 +76572,13 @@ void label_2115()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
     }
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\title"s + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/title"s + devfile + u8".bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
@@ -76643,7 +76647,7 @@ void label_2115()
     }
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_title.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_title.bmp"), 1);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -76764,7 +76768,7 @@ void label_2118()
     redraw(0);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\void.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gsel(0);
     gmode(0);
@@ -76780,7 +76784,7 @@ void label_2118()
         s = u8"Which save game do you want to continue?"s;
     }
     label_1425();
-    file = exedir + u8"save\\*"s;
+    file = fs::u8path(u8"./save/*");
     dirlist(buff, file, 5);
     notesel(buff);
     keyrange = 0;
@@ -76789,7 +76793,7 @@ void label_2118()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            file = exedir + u8"save\\"s + s + u8"\\header.txt"s;
+            file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
             exist(file);
             if (strsize == -1)
             {
@@ -76959,7 +76963,7 @@ void label_2121()
     redraw(0);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\void.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gsel(0);
     gmode(0);
@@ -76975,7 +76979,7 @@ void label_2121()
         s = u8"Which gene do you want to incarnate?"s;
     }
     label_1425();
-    file = exedir + u8"save\\*"s;
+    file = fs::u8path(u8"./save/*");
     dirlist(buff, file, 5);
     notesel(buff);
     keyrange = 0;
@@ -76985,7 +76989,7 @@ void label_2121()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            file = exedir + u8"save\\"s + s + u8"\\gene_header.txt"s;
+            file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
             exist(file);
             await();
             if (strsize == -1)
@@ -80018,7 +80022,7 @@ void label_2150()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\bg_night.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/bg_night.bmp"), 1);
     pos(0, 0);
     gzoom(windoww, windowh - inf_verh, 4, 0, 0, 640, 480, 1);
     gsel(0);
@@ -80544,7 +80548,7 @@ void label_2156()
         fishstat = 0;
         gsel(9);
         pos(0, 0);
-        picload(exedir + u8"\\graphic\\fishing.bmp"s);
+        picload(fs::u8path(u8"./graphic/fishing.bmp"));
         gsel(0);
         return;
     }
@@ -82901,7 +82905,7 @@ int label_2192()
                 {
                     midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv_count(ci));
-                    exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
+                    exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
                     if (strsize != -1)
                     {
                         fmode = 11;
@@ -84878,7 +84882,7 @@ void label_2212()
         fmode = 4;
         label_2107();
         file = u8"shop"s + invfile + u8".s2"s;
-        exist(exedir + u8"tmp\\"s + file);
+        exist(fs::u8path(u8"./tmp/"s + file));
         if (strsize != -1)
         {
             fmode = 3;
@@ -88761,9 +88765,9 @@ void label_2241()
 {
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\face1.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
     gsel(7);
-    picload(exedir + u8"graphic\\ie_chat.bmp"s);
+    picload(fs::u8path(u8"./graphic/ie_chat.bmp"));
     gsel(0);
     return;
 }
@@ -90171,7 +90175,7 @@ void label_2249()
         label_1441();
         gsel(4);
         pos(0, 0);
-        picload(exedir + u8"graphic\\face1"s + devfile + u8".bmp"s, 1);
+        picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
         gsel(0);
         cdata_blind(0) = 0;
         txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
@@ -90914,7 +90918,7 @@ void label_22610()
     }
     else
     {
-        s = exedir + u8"user\\graphic\\face"s + abs((cdata_portrait(tc) + 1))
+        s = fs::u8path(u8"./user/graphic/face"s) + abs((cdata_portrait(tc) + 1))
             + u8".bmp"s;
         exist(s);
         if (strsize == -1 || cdata_portrait(tc) == -1)
@@ -92055,7 +92059,7 @@ label_22711:
     redraw(0);
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_politics.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     label_1421();
@@ -92281,13 +92285,13 @@ void label_2276()
     redraw(0);
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_politics.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     label_1421();
     gsel(7);
     pos(0, 0);
-    picload(exedir + u8"graphic\\ie_scroll.bmp"s);
+    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -92475,13 +92479,13 @@ label_2281_internal:
     redraw(0);
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"graphic\\deco_politics.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     label_1421();
     gsel(7);
     pos(0, 0);
-    picload(exedir + u8"graphic\\ie_scroll.bmp"s);
+    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -95989,7 +95993,7 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        folder = exedir + u8"sound\\"s;
+        folder = fs::u8path(u8"./sound/");
         sndload(folder + s(1), 28);
         snd(28);
         goto label_2682_internal;
@@ -96021,7 +96025,7 @@ label_2684_internal:
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\"s + file + devfile + u8".bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/"s + file + devfile + u8".bmp"), 1);
     pos(0, y1);
     gzoom(windoww, y2 - y1, 4, 0, 0, 640, 480);
     gmode(2);
@@ -98215,11 +98219,11 @@ void label_2701()
 {
     gsel(3);
     pos(960, 96);
-    picload(exedir + u8"\\graphic\\deco_help.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/deco_help.bmp"), 1);
     gsel(0);
     page = 0;
     notesel(buff);
-    noteload(exedir + u8"data\\exhelp.txt"s);
+    noteload(fs::u8path(u8"./data/exhelp.txt"));
     p = instr(buff, 0, u8"%"s + ghelp + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
     {
@@ -98345,7 +98349,7 @@ void label_2703()
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 pos(cnt % 4 * 180, cnt / 4 * 300);
-                picload(exedir + u8"graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+                picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
             }
         }
         gsel(0);
@@ -98356,8 +98360,8 @@ void label_2703()
         cs_bk2 = cs;
     }
     notesel(buff);
-    noteload(
-        exedir + u8"data\\"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s));
+    noteload(fs::u8path(
+        u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s)));
     list(0, 0) = 0;
     listn(0, 0) = lang(u8"キーの一覧"s, u8"Key List"s);
     ++listmax;
@@ -98689,7 +98693,7 @@ void label_2707()
     redraw(0);
     gsel(7);
     pos(0, 0);
-    picload(exedir + u8"graphic\\ie_scroll.bmp"s);
+    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -98927,7 +98931,7 @@ void label_2710()
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 pos(cnt % 4 * 180, cnt / 4 * 300);
-                picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+                picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
             }
         }
         gsel(0);
@@ -99030,7 +99034,7 @@ label_2711_internal:
 void label_2713()
 {
     notesel(note_buff);
-    noteload(exedir + u8"\\config.txt"s);
+    noteload(fs::u8path(u8"./config.txt"));
     f = 0;
     {
         int cnt = 0;
@@ -99072,7 +99076,7 @@ void label_2713()
     {
         noteadd(""s + valn + u8" \""s + valn(1) + u8"\""s);
     }
-    notesave(exedir + u8"\\config.txt"s);
+    notesave(fs::u8path(u8"./config.txt"));
     return;
 }
 void label_2714()
@@ -99102,7 +99106,7 @@ void label_2715()
     key_select(17) = u8"r"s;
     key_select(18) = u8"s"s;
     notesel(note_buff);
-    noteload(exedir + u8"\\config.txt"s);
+    noteload(fs::u8path(u8"./config.txt"));
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -99655,7 +99659,7 @@ void label_2715()
 void label_2719()
 {
     notesel(note_buff);
-    noteload(exedir + u8"\\user\\export.txt"s);
+    noteload(fs::u8path(u8"./user/export.txt"));
     usertitle = "";
     usermsg = "";
     userpassword = u8"nyaa"s;
@@ -99809,10 +99813,10 @@ void label_2727()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\book.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/book.bmp"), 1);
     gsel(7);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\g1.bmp"s, 0);
+    picload(fs::u8path(u8"./graphic/g1.bmp"), 0);
     gsel(0);
     listmax = 0;
     page = 0;
@@ -99997,10 +100001,10 @@ void label_2731()
     }
     if (defload != ""s)
     {
-        exist(exedir + u8"save\\"s + defload + u8"\\header.txt"s);
+        exist(fs::u8path(u8"./save/"s + defload + u8"/header.txt"));
         if (strsize == -1)
         {
-            exist(exedir + u8"save\\sav_"s + defload + u8"\\header.txt"s);
+            exist(fs::u8path(u8"./save/sav_"s + defload + u8"/header.txt"));
             if (strsize != -1)
             {
                 defload = u8"sav_"s + defload;
@@ -102154,7 +102158,7 @@ label_2747:
         {
             buffer(3, 1440, 800);
             picload(
-                exedir + u8"\\graphic\\interface"s + devfile + u8".bmp"s, 1);
+                fs::u8path(u8"./graphic/interface"s + devfile + u8".bmp"s), 1);
             gsel(0);
             label_1893();
         }
@@ -103094,14 +103098,14 @@ label_27491:
     redraw(0);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\void.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gsel(0);
     label_1443();
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"\\graphic\\g1.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/g1.bmp"), 1);
     gsel(0);
     s = lang(
         ""s + cdatan(1, 0) + cdatan(0, 0)
@@ -103224,7 +103228,7 @@ void label_2752()
     }
     buff = "";
     notesel(buff);
-    file = exedir + u8"save\\bone"s;
+    file = fs::u8path(u8"./save/bone");
     exist(file + u8".txt"s);
     if (strsize != -1)
     {
@@ -103314,7 +103318,7 @@ void label_2752()
     redraw(0);
     gsel(4);
     pos(0, 0);
-    picload(exedir + u8"graphic\\void.bmp"s, 1);
+    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gsel(0);
     label_2753();
     s = lang(
@@ -104208,13 +104212,13 @@ void label_2754()
         msg_halt();
         gsel(7);
         pos(0, 0);
-        picload(exedir + u8"graphic\\bg22.bmp"s);
+        picload(fs::u8path(u8"./graphic/bg22.bmp"));
         gsel(4);
         pos(windoww / 2 - 1, windowh / 2 - 1);
         gmode(0, 640, 480);
         grotate(7, 0, 0, 0, windoww + 4, windowh + 4);
         gsel(7);
-        picload(exedir + u8"graphic\\anime9.bmp"s);
+        picload(fs::u8path(u8"./graphic/anime9.bmp"));
         gsel(0);
         dx = windoww / 2;
         dy = (windowh - inf_verh) / 2;

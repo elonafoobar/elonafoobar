@@ -49,7 +49,7 @@ void label_2723()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(exedir + u8"\\graphic\\g"s + (cnt + 1) + u8".bmp"s, 1);
+            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
     }
     gsel(0);
@@ -64,7 +64,7 @@ void label_2723()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(exedir + u8"\\graphic\\title"s + devfile + u8".bmp"s, 1);
+        picload(fs::u8path(u8"./graphic/title"s + devfile + u8".bmp"), 1);
         gzoom(windoww, windowh, 4, 0, 0, 800, 600);
         gsel(0);
         gmode(0);

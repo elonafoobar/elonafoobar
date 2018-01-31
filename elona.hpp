@@ -12,6 +12,14 @@
 #include "macro_cdata.hpp"
 #include "macro_inv.hpp"
 
+#if __has_include(<filesystem>)
+#include <filesystem>
+namespace fs = std::filesystem;
+#else
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
+
 
 namespace elona
 {
@@ -67,6 +75,12 @@ struct elona_vector1
     operator T&()
     {
         return storage.at(0);
+    }
+
+
+    operator fs::path()
+    {
+        return fs::u8path(storage.at(0));
     }
 
 
@@ -348,7 +362,7 @@ void await(int msec = 0);
 void axobj(int, const std::string&, int, int);
 
 
-void bcopy(const std::string& from, const std::string& to);
+void bcopy(const fs::path& from, const fs::path& to);
 
 // fullscreen
 void bgscr(int window_id, int width, int height, int, int);
@@ -380,7 +394,7 @@ void color(int v);
 
 void delcom(int);
 
-void elona_delete(const std::string& filename);
+void elona_delete(const fs::path& filename);
 
 int dialog(const std::string& message, int = 0);
 
@@ -388,7 +402,7 @@ int dialog(const std::string& message, int = 0);
 std::string dirinfo(int n);
 
 
-int dirlist(std::string& out, const std::string& pattern, int = 0);
+int dirlist(std::string& out, const fs::path& pattern, int = 0);
 
 double elona_double(const std::string& s);
 
@@ -397,7 +411,7 @@ double elona_double(int n);
 void exec(const std::string&, int);
 
 
-void exist(const std::string& filename);
+void exist(const fs::path& filename);
 
 
 double expf(double x);
@@ -413,7 +427,7 @@ void gcopy(
 
 void getkey(int& out, int key);
 
-std::string getpath(const std::string& source, int mode);
+std::string getpath(const fs::path& source, int mode);
 
 void getstr(
     std::string& out,
@@ -518,7 +532,7 @@ void mesbox(
     int style,
     int max_input_size = -1);
 
-void mkdir(const std::string& path);
+void mkdir(const fs::path& path);
 
 void mmload(const std::string& file, int id, int mode = 0);
 
@@ -541,9 +555,9 @@ void noteget(std::string& out, size_t index);
 
 int noteinfo(int = 0);
 
-void noteload(const std::string&);
+void noteload(const fs::path&);
 
-void notesave(const std::string&);
+void notesave(const fs::path&);
 
 int notesel(std::string&);
 
@@ -566,7 +580,7 @@ std::uint8_t peek(elona_vector1<int> v, size_t index = 0);
 
 void pget(int x, int y);
 
-void picload(const std::string& file, int immediately = 0);
+void picload(const fs::path& file, int immediately = 0);
 
 void poke(std::string& str, size_t index, char c);
 
@@ -792,26 +806,22 @@ void end();
 
 
 
+void bload(const fs::path& filename, std::string& data, int size = 0, int = 0);
 void bload(
-    const std::string& filename,
-    std::string& data,
-    int size = 0,
-    int = 0);
-void bload(
-    const std::string& filename,
+    const fs::path& filename,
     int& data,
     int size = sizeof(int),
     int = 0);
 void bload(
-    const std::string& filename,
+    const fs::path& filename,
     elona_vector1<int>& data,
     int size = 0,
     int = 0);
 
 
-void bsave(const std::string& filename, const std::string& data);
-void bsave(const std::string& filename, int data);
-void bsave(const std::string& filename, elona_vector1<int>& data);
+void bsave(const fs::path& filename, const std::string& data);
+void bsave(const fs::path& filename, int data);
+void bsave(const fs::path& filename, elona_vector1<int>& data);
 
 
 void memcpy_(
@@ -822,7 +832,7 @@ void memcpy_(
     int src_offset = 0);
 
 
-void zOpen(int& handle, const std::string& filename, int mode, int = 0);
+void zOpen(int& handle, const fs::path& filename, int mode, int = 0);
 
 
 void zWrite(elona_vector1<int>&, int, int size);
