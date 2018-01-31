@@ -939,6 +939,72 @@ void gmode(int mode, int width, int height, int alpha)
     detail::current_tex_buffer().color.a = std::clamp(alpha, 0, 255);
 }
 
+template <typename T>
+constexpr T rad2deg(T rad)
+{
+    return rad * 180.0 / 3.14159265358979323846264;
+}
+
+void grotate2(
+    int window_id,
+    int src_x,
+    int src_y,
+    double angle,
+    int dst_width,
+    int dst_height)
+{
+    detail::set_blend_mode();
+    snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+        detail::tex_buffers[window_id].texture,
+        detail::current_tex_buffer().color.a));
+
+    if (window_id == detail::current_buffer)
+    {
+        assert(0);
+    }
+
+    ::SDL_Rect src_rect{
+        src_x,
+        src_y,
+        detail::current_tex_buffer().width == -1
+            ? dst_width
+            : detail::current_tex_buffer().width,
+        detail::current_tex_buffer().height == -1
+            ? dst_height
+            : detail::current_tex_buffer().height,
+    };
+    ::SDL_Rect dst_rect{
+        detail::current_tex_buffer().x - dst_width / 2,
+        detail::current_tex_buffer().y - dst_height / 2,
+        dst_width,
+        dst_height,
+    };
+
+    switch (Application::instance().renderer().blend_mode())
+    {
+    case BlendMode::none:
+        snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
+            detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_NONE));
+        break;
+    case BlendMode::blend:
+        snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
+            detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_BLEND));
+        break;
+    case BlendMode::add:
+        snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
+            detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_ADD));
+        break;
+    }
+    snail::detail::enforce_sdl(::SDL_RenderCopyEx(
+        Application::instance().renderer().ptr(),
+        detail::tex_buffers[window_id].texture,
+        &src_rect,
+        &dst_rect,
+        rad2deg(angle),
+        nullptr,
+        ::SDL_FLIP_NONE));
+}
+
 void grotate(
     int window_id,
     int src_x,
@@ -947,6 +1013,12 @@ void grotate(
     int dst_width,
     int dst_height)
 {
+    if (angle != 0)
+    {
+        grotate2(window_id, src_x, src_y, angle, dst_width, dst_height);
+        return;
+    }
+
     detail::set_blend_mode();
     snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
         detail::tex_buffers[window_id].texture,
