@@ -13758,22 +13758,6 @@ void label_0192()
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
     buffer(7, 24, 24);
     buffer(9, 24, 24);
-    DIM3(initeq, 2, 50);
-    dup(eqhelm, initeq(0, 0));
-    dup(eqweapon1, initeq(0, 1));
-    dup(eqshield, initeq(0, 2));
-    dup(eqrange, initeq(0, 3));
-    dup(eqammo, initeq(0, 4));
-    dup(eqweapon2, initeq(0, 5));
-    dup(eqarmor, initeq(0, 6));
-    dup(eqglove, initeq(0, 7));
-    dup(eqboots, initeq(0, 8));
-    dup(eqcloack, initeq(0, 9));
-    dup(eqgirdle, initeq(0, 10));
-    dup(eqring1, initeq(0, 11));
-    dup(eqring2, initeq(0, 12));
-    dup(eqamulet1, initeq(0, 13));
-    dup(eqamulet2, initeq(0, 14));
     DIM3(cmapdata, 5, 400);
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
@@ -13850,16 +13834,6 @@ void label_0192()
     label_0034();
     label_0031();
     label_0478();
-    DIM3(rdata, 30, 20);
-    dup(roomexist, rdata(0, 0));
-    dup(roomx, rdata(0, 1));
-    dup(roomy, rdata(0, 2));
-    dup(roomwidth, rdata(0, 3));
-    dup(roomheight, rdata(0, 4));
-    dup(roomexit, rdata(0, 5));
-    dup(roomexitmax, rdata(0, 6));
-    dup(roomentrancex, rdata(0, 7));
-    dup(roomentrancey, rdata(0, 8));
     DIM2(idata, 8);
     DIM3(dirxy, 2, 4);
     dirxy(0, 3) = 0;
@@ -39608,11 +39582,11 @@ int calcspellcoststock(int prm_924, int prm_925)
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
     elona_vector1<int> p_at_m161;
-    elona_dup2<int> sdatadup_at_m161{sdata, prm_926 + 600, prm_927};
+    int sdata_at_m161 = sdata(prm_926 + 600, prm_927);
     if (prm_926 >= 100)
     {
         p_at_m161 = prm_928 * 5;
-        if (sdatadup_at_m161 / 1000000 == 0)
+        if (sdata_at_m161 / 1000000 == 0)
         {
             p_at_m161 += 100;
         }
@@ -39651,11 +39625,12 @@ void skillinit(int prm_926, int prm_927, int prm_928)
         p_at_m161(1) = prm_928;
         p_at_m161 = 100;
     }
-    if (sdatadup_at_m161 / 1000000 + p_at_m161(1) > 2000)
+    if (sdata_at_m161 / 1000000 + p_at_m161(1) > 2000)
     {
-        p_at_m161(1) = 2000 - sdatadup_at_m161 / 1000000;
+        p_at_m161(1) = 2000 - sdata_at_m161 / 1000000;
     }
-    sdatadup_at_m161 += limit(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
+    sdata(prm_926 + 600, prm_927) +=
+        limit(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
     return;
 }
 void label_1512()
@@ -40532,7 +40507,23 @@ void label_1530()
             }
         }
     }
-    initeq.clear();
+
+    eqhelm.clear();
+    eqweapon1.clear();
+    eqshield.clear();
+    eqrange.clear();
+    eqammo.clear();
+    eqweapon2.clear();
+    eqarmor.clear();
+    eqglove.clear();
+    eqboots.clear();
+    eqcloack.clear();
+    eqgirdle.clear();
+    eqring1.clear();
+    eqring2.clear();
+    eqamulet1.clear();
+    eqamulet2.clear();
+
     if (mode == 1)
     {
         fixeq = 0;
@@ -40792,7 +40783,25 @@ void label_1530()
             {
                 if (rnd(2) == 0)
                 {
-                    initeq(1, rnd(20)) = 3;
+                    switch (rnd(20))
+                    {
+                    case 0: eqhelm(1) = 3; break;
+                    case 1: eqweapon1(1) = 3; break;
+                    case 2: eqshield(1) = 3; break;
+                    case 3: eqrange(1) = 3; break;
+                    case 4: eqammo(1) = 3; break;
+                    case 5: eqweapon2(1) = 3; break;
+                    case 6: eqarmor(1) = 3; break;
+                    case 7: eqglove(1) = 3; break;
+                    case 8: eqboots(1) = 3; break;
+                    case 9: eqcloack(1) = 3; break;
+                    case 10: eqgirdle(1) = 3; break;
+                    case 11: eqring1(1) = 3; break;
+                    case 12: eqring2(1) = 3; break;
+                    case 13: eqamulet1(1) = 3; break;
+                    case 14: eqamulet2(1) = 3; break;
+                    default: break;
+                    }
                 }
                 if (rnd(2) == 0)
                 {
@@ -99704,67 +99713,6 @@ void label_2713()
 }
 void label_2714()
 {
-    SDIM3(key_buff, 4, 65);
-    dup(key_identify, key_buff(2));
-    dup(key_pageup, key_buff(3));
-    dup(key_pagedown, key_buff(4));
-    dup(key_cancel, key_buff(5));
-    dup(key_help, key_buff(6));
-    dup(key_msglog, key_buff(7));
-    dup(key_enter, key_buff(8));
-    dup(key_save, key_buff(9));
-    dup(key_north, key_buff(10));
-    dup(key_northeast, key_buff(11));
-    dup(key_east, key_buff(12));
-    dup(key_southeast, key_buff(13));
-    dup(key_south, key_buff(14));
-    dup(key_southwest, key_buff(15));
-    dup(key_west, key_buff(16));
-    dup(key_northwest, key_buff(17));
-    dup(key_skill, key_buff(18));
-    dup(key_close, key_buff(19));
-    dup(key_cast, key_buff(20));
-    dup(key_drink, key_buff(22));
-    dup(key_read, key_buff(23));
-    dup(key_zap, key_buff(24));
-    dup(key_fire, key_buff(25));
-    dup(key_search, key_buff(26));
-    dup(key_target, key_buff(27));
-    dup(key_dig, key_buff(28));
-    dup(key_wait, key_buff(30));
-    dup(key_inventory, key_buff(31));
-    dup(key_drop, key_buff(32));
-    dup(key_get, key_buff(33));
-    dup(key_wipe, key_buff(34));
-    dup(key_charainfo, key_buff(35));
-    dup(key_eat, key_buff(36));
-    dup(key_wear, key_buff(37));
-    dup(key_godown, key_buff(38));
-    dup(key_goup, key_buff(39));
-    dup(key_interact, key_buff(40));
-    dup(key_rest, key_buff(41));
-    dup(key_use, key_buff(42));
-    dup(key_bash, key_buff(43));
-    dup(key_open, key_buff(44));
-    dup(key_dip, key_buff(45));
-    dup(key_pray, key_buff(46));
-    dup(key_offer, key_buff(47));
-    dup(key_journal, key_buff(48));
-    dup(key_material, key_buff(49));
-    dup(key_quick, key_buff(50));
-    dup(key_get2, key_buff(51));
-    dup(key_trait, key_buff(52));
-    dup(key_look, key_buff(53));
-    dup(key_give, key_buff(54));
-    dup(key_prev, key_buff(55));
-    dup(key_next, key_buff(56));
-    dup(key_quickinv, key_buff(57));
-    dup(key_throw, key_buff(58));
-    dup(key_esc, key_buff(59));
-    dup(key_alt, key_buff(60));
-    dup(key_mode, key_buff(61));
-    dup(key_ammo, key_buff(62));
-    dup(key_mode2, key_buff(63));
     SDIM3(jkey, 2, 12);
     return;
 }
