@@ -66,7 +66,7 @@ label_17401:
         exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
         if (strsize != -1)
         {
-            dialog(
+            int stat = dialog(
                 lang(
                     u8"マップを初期化しますか？（注：ゲームに影響が出る可能性があります。エラーが出てマップが読み込めない場合のみ、必ず元のセーブのバックアップをとった上で実行してください。）"s,
                     u8"Initialize this map? (Warning, only do this if an error occurs when loading this map. Make sure make a backup of the current save folder before doing this.)"s),
@@ -2526,7 +2526,7 @@ label_1741_internal:
                 for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
                 {
                     flt(qdata(5, rq), 3);
-                    characreate(-1, 0, cdata_x(0), cdata_y(0));
+                    int stat = characreate(-1, 0, cdata_x(0), cdata_y(0));
                     if (stat != 0)
                     {
                         cdata_hate(rc) = 30;

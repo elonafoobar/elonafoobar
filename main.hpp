@@ -43,18 +43,14 @@ void label_2737(bool = true);
 int label_2654();
 
 
-void _fdialog(
-    std::string& prm_710,
-    int prm_711,
-    std::string& prm_712,
-    const std::string& prm_713,
-    const std::string& prm_714)
+int _fdialog(
+    std::string&,
+    int,
+    std::string&,
+    const std::string&,
+    const std::string&)
 {
-    (void)prm_710;
-    (void)prm_711;
-    (void)prm_712;
-    (void)prm_713;
-    (void)prm_714;
+    return 0;
 }
 
 

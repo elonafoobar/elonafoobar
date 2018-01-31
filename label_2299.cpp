@@ -9,12 +9,6 @@ int label_2654();
 
 void label_2299()
 {
-    if (dbmode != 1)
-    {
-        stat = label_2654();
-        return;
-        return;
-    }
     dbsum = 0;
     dbmax = 0;
     if (1 > objlv)

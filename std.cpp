@@ -629,8 +629,9 @@ void elona_delete(const std::string& filename)
     fs::remove_all(to_unix_filename(filename));
 }
 
-void dialog(const std::string& message, int)
+int dialog(const std::string& message, int)
 {
+    return 0;
 }
 
 // TODO
@@ -1773,12 +1774,14 @@ void ematan(int, int, int)
 }
 
 
-void aplsel(const std::string&)
+int aplsel(const std::string&)
 {
+    return 0;
 }
 
-void aplobj(const std::string&, int)
+int aplobj(const std::string&, int)
 {
+    return 0;
 }
 
 void apledit(int, int, int)
@@ -2027,8 +2030,9 @@ void GetSaveFileNameA()
 {
 }
 
-void DSINIT()
+int DSINIT()
 {
+    return 0;
 }
 
 void DSEND()
@@ -2057,16 +2061,19 @@ void DSSETVOLUME(int, int)
 }
 
 
-void DSGETMASTERVOLUME()
+int DSGETMASTERVOLUME()
 {
+    return 100;
 }
 
-void CHECKPLAY(int id)
+int CHECKPLAY(int id)
 {
+    return 0;
 }
 
-void DMINIT()
+int DMINIT()
 {
+    return 0;
 }
 
 void DMEND()
@@ -2090,8 +2097,9 @@ void DIINIT()
 {
 }
 
-void DIGETJOYNUM()
+int DIGETJOYNUM()
 {
+    return 0;
 }
 
 
@@ -2115,20 +2123,23 @@ int HMMBITCHECK(int x, int n)
 }
 
 
-void sockopen(int, const std::string&, int)
+int sockopen(int, const std::string&, int)
 {
+    return 0;
 }
 
 void sockclose()
 {
 }
 
-void sockget(const std::string&, int)
+int sockget(const std::string&, int)
 {
+    return 0;
 }
 
-void sockput(const std::string&)
+int sockput(const std::string&)
 {
+    return 0;
 }
 
 void netinit()

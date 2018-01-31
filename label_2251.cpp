@@ -10,7 +10,7 @@ void label_2251()
     if (buff == ""s)
     {
         label_0176();
-        customtalk(tc, 106);
+        int stat = customtalk(tc, 106);
         if (stat)
         {
             label_0173();
@@ -296,7 +296,7 @@ void label_2251()
             lang(u8"免罪符を買いたい"s, u8"I want to buy an indulgence."s);
         ++listmax;
     }
-    tradecheck(tc);
+    int stat = tradecheck(tc);
     if (stat)
     {
         list(0, listmax) = 20;
@@ -306,7 +306,7 @@ void label_2251()
     }
     if (cdata_character_role(tc) == 14)
     {
-        clientguide();
+        int stat = clientguide();
         if (stat != 0)
         {
             {
@@ -851,7 +851,7 @@ void label_2251()
         }
         invctrl(0) = 20;
         invctrl(1) = 0;
-        label_20592();
+        int stat = label_20592();
         if (stat == 0)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
@@ -866,7 +866,7 @@ void label_2251()
     {
         if (gdata(183) != 0)
         {
-            cell_findspace(cdata_x(0), cdata_y(0), 1);
+            int stat = cell_findspace(cdata_x(0), cdata_y(0), 1);
             if (stat == 0)
             {
                 txt(lang(
@@ -1012,7 +1012,7 @@ void label_2251()
         if (chatval == 49)
         {
             comctrl = 1;
-            label_19432();
+            int stat = label_19432();
             if (stat == 0)
             {
                 buff = lang(
@@ -1087,7 +1087,7 @@ void label_2251()
             }
         }
         allyctrl = 2;
-        label_1959();
+        int stat = label_1959();
         if (stat == -1)
         {
             buff = lang(
@@ -1136,7 +1136,7 @@ void label_2251()
     }
     if (chatval == 25)
     {
-        label_2665();
+        int stat = label_2665();
         ti = stat;
         item_copy(deliver(1), ti);
         inv_number(ti) = 1;
@@ -1157,7 +1157,7 @@ void label_2251()
     }
     if (chatval == 26)
     {
-        label_2665();
+        int stat = label_2665();
         ti = stat;
         item_copy(supply, ti);
         inv_number(ti) = 1;
@@ -1278,7 +1278,7 @@ void label_2251()
     if (chatval == 33)
     {
         allyctrl = 0;
-        label_1959();
+        int stat = label_1959();
         if (stat != -1)
         {
             rc = stat;
@@ -1450,7 +1450,7 @@ void label_2251()
     if (chatval == 37)
     {
         allyctrl = 1;
-        label_1959();
+        int stat = label_1959();
         if (stat != -1)
         {
             rc = stat;
@@ -1734,7 +1734,7 @@ void label_2251()
     {
         tcchat = tc;
         allyctrl = 4;
-        label_1959();
+        int stat = label_1959();
         if (stat != -1)
         {
             rc = stat;

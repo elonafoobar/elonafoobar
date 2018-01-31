@@ -583,7 +583,7 @@ label_20591:
     }
     if (invctrl == 19)
     {
-        item_find(60002, 2);
+        int stat = item_find(60002, 2);
         if (stat == -1)
         {
             ++msgdup;
@@ -625,8 +625,7 @@ label_20591:
         if (invsubroutine == 1)
         {
             invsubroutine = 0;
-            stat = 0;
-            return stat;
+            return 0;
         }
         label_1419();
         label_2743(false);
@@ -637,8 +636,7 @@ label_20591:
         if (listmax == 0)
         {
             label_2742();
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (returnfromidentify == 0)
@@ -707,7 +705,7 @@ label_20591:
         }
         if (invctrl == 28)
         {
-            item_find(622, 3, 1);
+            int stat = item_find(622, 3, 1);
             if (stat != -1)
             {
                 p = inv_number(stat);
@@ -771,7 +769,7 @@ label_2060_internal:
         cc = 0;
         if (f == 0)
         {
-            inv_find(invsc, 0);
+            int stat = inv_find(invsc, 0);
             if (stat == -1)
             {
                 txt(lang(
@@ -1226,7 +1224,7 @@ label_2061_internal:
             cc = 0;
         }
     label_2062_internal:
-        cargocheck();
+        int stat = cargocheck();
         if (stat == 0)
         {
             goto label_2061_internal;
@@ -1306,8 +1304,7 @@ label_2061_internal:
                 goto label_20591;
             }
             label_2742();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22
             || invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5))
@@ -1359,7 +1356,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    actionsp(0, 10);
+                    int stat = actionsp(0, 10);
                     if (stat == 0)
                     {
                         txt(lang(
@@ -1383,7 +1380,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    actionsp(0, 10);
+                    int stat = actionsp(0, 10);
                     if (stat == 0)
                     {
                         txt(lang(
@@ -1530,7 +1527,7 @@ label_2061_internal:
                     }
                 }
             }
-            label_2192();
+            int stat = label_2192();
             if (stat == 0)
             {
                 goto label_20591;
@@ -1538,8 +1535,7 @@ label_2061_internal:
             if (stat == -1)
             {
                 label_2742();
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (invctrl == 22)
             {
@@ -1560,8 +1556,7 @@ label_2061_internal:
                 {
                     ++gdata(812);
                     invsubroutine = 0;
-                    stat = 1;
-                    return stat;
+                    return 1;
                 }
             }
             screenupdate = -1;
@@ -1596,8 +1591,7 @@ label_2061_internal:
                 label_2743(false);
             }
             label_2198();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 6)
         {
@@ -1650,8 +1644,7 @@ label_2061_internal:
             }
             menucycle = 1;
             label_2050();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 7)
         {
@@ -1659,8 +1652,7 @@ label_2061_internal:
             label_1419();
             savecycle();
             label_2197();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 8)
         {
@@ -1668,8 +1660,7 @@ label_2061_internal:
             label_1419();
             savecycle();
             label_2199();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 9)
         {
@@ -1677,8 +1668,7 @@ label_2061_internal:
             label_1419();
             savecycle();
             label_2200();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 10)
         {
@@ -1895,8 +1885,7 @@ label_2061_internal:
                 }
                 label_1419();
                 label_2742();
-                stat = 0;
-                return stat;
+                return 0;
             }
             snd(27);
             txt(lang(
@@ -1909,7 +1898,7 @@ label_2061_internal:
         {
             screenupdate = -1;
             label_1419();
-            item_identify(ci, -1, efp);
+            int stat = item_identify(ci, -1, efp);
             if (stat == 0)
             {
                 txt(lang(
@@ -1937,23 +1926,20 @@ label_2061_internal:
             }
             item_stack(0, ci, 1);
             invsubroutine = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (invctrl == 14)
         {
             savecycle();
             label_2228();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 16)
         {
             screenupdate = -1;
             label_1419();
             invsubroutine = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (invctrl == 15)
         {
@@ -1961,8 +1947,7 @@ label_2061_internal:
             label_1419();
             savecycle();
             label_2212();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 17)
         {
@@ -1978,8 +1963,7 @@ label_2061_internal:
             screenupdate = -1;
             label_1419();
             label_2227();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 19)
         {
@@ -1995,8 +1979,7 @@ label_2061_internal:
             label_1419();
             savecycle();
             label_1891();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 20)
         {
@@ -2052,15 +2035,13 @@ label_2061_internal:
             label_1477();
             label_1521();
             invsubroutine = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (invctrl == 23)
         {
             item_separate(ci);
             invsubroutine = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (invctrl == 24)
         {
@@ -2231,7 +2212,7 @@ label_2061_internal:
         if (invctrl == 26)
         {
             savecycle();
-            label_1947();
+            int stat = label_1947();
             if (stat != 1)
             {
                 if (stat == 0)
@@ -2252,15 +2233,13 @@ label_2061_internal:
                 label_2743(false);
             }
             label_2189();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 27)
         {
             label_2237();
             invsubroutine = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (invctrl == 28)
         {
@@ -2273,7 +2252,7 @@ label_2061_internal:
                 snd(27);
                 goto label_20591;
             }
-            item_find(622, 3, 1);
+            int stat = item_find(622, 3, 1);
             if (stat != -1)
             {
                 i = stat;
@@ -2488,8 +2467,7 @@ label_2061_internal:
         if (invsubroutine == 1)
         {
             invsubroutine = 0;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 6)
         {
@@ -2497,14 +2475,12 @@ label_2061_internal:
             label_1419();
             menucycle = 1;
             label_2050();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)
         {
             label_2264();
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (invally == 1)
         {
@@ -2514,8 +2490,7 @@ label_2061_internal:
         {
             dropcontinue = 0;
             label_2742();
-            stat = 0;
-            return stat;
+            return 0;
         }
         screenupdate = 0;
         label_1419();

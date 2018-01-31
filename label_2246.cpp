@@ -3059,7 +3059,7 @@ void label_2246()
                 u8"Upgrade your cart? It's not something I get excited about but if you can give me "s
                     + calccargoupdatecost()
                     + u8" small medals, I'll think about it."s);
-            item_find(622, 3, 1);
+            int stat = item_find(622, 3, 1);
             if (stat != -1)
             {
                 ci = stat;
@@ -3226,7 +3226,7 @@ void label_2246()
             buff = lang(
                 u8"おかあさんがひどい病気で…お医者さんはエーテル病だから手に負えないって…"s,
                 u8"Mommy is really sick... but the doctor said she has the ether plague and he can't do anything..."s);
-            label_2248();
+            int stat = label_2248();
             if (stat == 0)
             {
                 label_2256();
@@ -3294,7 +3294,7 @@ void label_2246()
                     u8"さん。おかげで、おかあさんの身体も良くなっています。でもまだ、もとどおりに元気になるには時間がかかるみたいなの…"s,
                 u8"Ah, hi "s + cdatan(0, 0) +
                     u8". Thanks to you Mommy's been getting better! But... it still looks like she needs more time before she's really healthy."s);
-            label_2248();
+            int stat = label_2248();
             if (stat == 0)
             {
                 label_2256();
@@ -3314,7 +3314,7 @@ void label_2246()
             buff = lang(
                 u8"おかあさん、最近すごく調子いいの！お医者さんも、もう大丈夫だろうって。最近は、近所の子供達もお見舞いに来てくれるんだよ。はやく、おかあさんやみんなと遊びたいな〜。"s,
                 u8"Mommy looks a lot better these days! The doctor said she's gonna be okay. Even the other kids have come to visit her in the past few weeks. I want mommy to be able to play with us soon..."s);
-            label_2248();
+            int stat = label_2248();
             if (stat == 0)
             {
                 label_2256();
@@ -3335,7 +3335,7 @@ void label_2246()
                     u8"さん…おかあさんが…！おかあさんが…急に具合が悪くなって…身体がおかしくなって…あぁ…神様…"s,
                 ""s + cdatan(0, 0) +
                     u8"! It's mommy... something's wrong! Suddenly she started acting strange and... now her body is changing and... oh gods..."s);
-            label_2248();
+            int stat = label_2248();
             if (stat == 0)
             {
                 label_2256();
@@ -3505,7 +3505,7 @@ void label_2246()
                 buff = lang(
                     u8"ああ、もうこんな時期になったのね。パエルったら、私のことなんか気にせずお祭りを楽しんでくればいいのに。元気な頃は、よく二人でジュア様の像にお参りしていたのよ。"s,
                     u8"Oh, it's already this time of the year. Poor Pael, she should stop worring about me and go to the festival. We used to visit the St.Jure's statue and pray together around this time."s);
-                inv_find(559, 0);
+                int stat = inv_find(559, 0);
                 if (stat != -1)
                 {
                     list(0, listmax) = 2;
@@ -3521,7 +3521,7 @@ void label_2246()
                 label_2257();
                 if (chatval == 2)
                 {
-                    inv_find(559, 0);
+                    int stat = inv_find(559, 0);
                     --inv_number(stat);
                     txt(lang(
                         u8"エーテル抗体を1本渡した。"s,
@@ -3595,7 +3595,7 @@ void label_2246()
             buff = lang(
                 u8"こんなこと、あなたにだから頼めるのよ。どうか、この苦しみを終わらせてください…"s,
                 u8"Please, I'm begging you. Please put me out of my misery..."s);
-            inv_find(559, 0);
+            int stat = inv_find(559, 0);
             if (stat != -1)
             {
                 list(0, listmax) = 2;
@@ -3639,7 +3639,7 @@ void label_2246()
             }
             if (chatval == 2)
             {
-                inv_find(559, 0);
+                int stat = inv_find(559, 0);
                 --inv_number(stat);
                 txt(lang(
                     u8"エーテル抗体を1本渡した。"s,
@@ -3876,7 +3876,7 @@ void label_2246()
                 return;
             }
             allyctrl = 1;
-            label_1959();
+            int stat = label_1959();
             if (stat == -1)
             {
                 listmax = 0;
@@ -7666,7 +7666,7 @@ void label_2246()
                             if (f)
                             {
                                 flt(cdata_level(0) * 3 / 2, calcfixlv(3));
-                                itemcreate(-1, cnt, -1, -1, 0);
+                                int stat = itemcreate(-1, cnt, -1, -1, 0);
                                 if (stat == 1)
                                 {
                                     if (inv_quality(ci) < 4)
@@ -7874,47 +7874,49 @@ void label_2246()
             label_2256();
             return;
         }
-        inv_find(771, 0);
-        if (stat != -1)
         {
-            buff = lang(
-                u8"それはカプセル・ドラッグ！…なあ、それ譲ってくれよ。"s,
-                u8"That-that's a capsule drag! ...hey, you want to give it to me?"s);
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"譲る"s, u8"Take it."s);
-            ++listmax;
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"断る"s, u8"Nope."s);
-            ++listmax;
-            chatesc = 1;
-            label_2257();
-            if (chatval == 1)
+            int stat = inv_find(771, 0);
+            if (stat != -1)
             {
-                inv_find(771, 0);
-                --inv_number(stat);
-                txt(lang(
-                    u8"カプセルドラッグを1錠渡した。"s,
-                    u8"You hand him a capsule drag."s));
-                snd(13);
-                listmax = 0;
-                buff = lang(u8"いいねえ。"s, u8"Great, you are great."s);
-                tc = tc * 1 + 0;
+                buff = lang(
+                    u8"それはカプセル・ドラッグ！…なあ、それ譲ってくれよ。"s,
+                    u8"That-that's a capsule drag! ...hey, you want to give it to me?"s);
+                list(0, listmax) = 1;
+                listn(0, listmax) = lang(u8"譲る"s, u8"Take it."s);
+                ++listmax;
                 list(0, listmax) = 0;
-                listn(0, listmax) = strbye;
+                listn(0, listmax) = lang(u8"断る"s, u8"Nope."s);
                 ++listmax;
                 chatesc = 1;
                 label_2257();
-                if (scenemode)
+                if (chatval == 1)
                 {
-                    if (scene_cut == 1)
+                    int stat = inv_find(771, 0);
+                    --inv_number(stat);
+                    txt(lang(
+                        u8"カプセルドラッグを1錠渡した。"s,
+                        u8"You hand him a capsule drag."s));
+                    snd(13);
+                    listmax = 0;
+                    buff = lang(u8"いいねえ。"s, u8"Great, you are great."s);
+                    tc = tc * 1 + 0;
+                    list(0, listmax) = 0;
+                    listn(0, listmax) = strbye;
+                    ++listmax;
+                    chatesc = 1;
+                    label_2257();
+                    if (scenemode)
                     {
-                        label_2256();
-                        return;
+                        if (scene_cut == 1)
+                        {
+                            label_2256();
+                            return;
+                        }
                     }
+                    ++gdata(474);
+                    label_2256();
+                    return;
                 }
-                ++gdata(474);
-                label_2256();
-                return;
             }
         }
         listmax = 0;

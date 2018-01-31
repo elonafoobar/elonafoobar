@@ -382,7 +382,7 @@ void delcom(int);
 
 void elona_delete(const std::string& filename);
 
-void dialog(const std::string& message, int = 0);
+int dialog(const std::string& message, int = 0);
 
 // TODO
 std::string dirinfo(int n);
@@ -638,9 +638,9 @@ void gfinc(int r, int g, int b);
 void ematan(int, int, int);
 
 
-void aplsel(const std::string&);
+int aplsel(const std::string&);
 
-void aplobj(const std::string&, int);
+int aplobj(const std::string&, int);
 
 void apledit(int, int, int = 0);
 
@@ -651,7 +651,7 @@ void GetOpenFileNameA();
 
 void GetSaveFileNameA();
 
-void DSINIT();
+int DSINIT();
 
 void DSEND();
 
@@ -667,11 +667,11 @@ void DSSTOP(int);
 void DSSETVOLUME(int, int);
 
 
-void DSGETMASTERVOLUME();
+int DSGETMASTERVOLUME();
 
-void CHECKPLAY(int id);
+int CHECKPLAY(int id);
 
-void DMINIT();
+int DMINIT();
 
 void DMEND();
 
@@ -684,7 +684,7 @@ void DMSTOP();
 
 void DIINIT();
 
-void DIGETJOYNUM();
+int DIGETJOYNUM();
 
 
 void DIGETJOYSTATE(int, int);
@@ -696,13 +696,13 @@ void HMMBITOFF(int&, int);
 int HMMBITCHECK(int, int);
 
 
-void sockopen(int, const std::string&, int);
+int sockopen(int, const std::string&, int);
 
 void sockclose();
 
-void sockget(const std::string&, int);
+int sockget(const std::string&, int);
 
-void sockput(const std::string&);
+int sockput(const std::string&);
 
 void netinit();
 

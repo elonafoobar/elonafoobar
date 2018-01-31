@@ -172,18 +172,14 @@ int refclass(int prm_261, int prm_262)
     dbmode = 16;
     dbidn = cdatan(3, prm_261);
     dbspec = prm_262;
-    label_2298();
-    stat = stat;
-    return stat;
+    return label_2298();
 }
 int refrace(const std::string& prm_263, int prm_264)
 {
     dbmode = 16;
     dbidn = prm_263;
     dbspec = prm_264;
-    label_2297();
-    stat = stat;
-    return stat;
+    return label_2297();
 }
 std::string ranktitle(int prm_265)
 {
@@ -1094,8 +1090,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 * prm_271 * 5 / 100;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 461)
     {
@@ -1104,8 +1099,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = limit((rs_at_m9 * 5 + prm_271) / 20 + 40, 40, 100);
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 411)
     {
@@ -1114,8 +1108,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 * prm_271 * 10 / 100;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 400)
     {
@@ -1124,8 +1117,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = prm_271 / 30;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 401)
     {
@@ -1134,8 +1126,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = prm_271 / 15;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 405)
     {
@@ -1144,8 +1135,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = prm_271 / 10;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 402)
     {
@@ -1154,8 +1144,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = prm_271 / 6;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 403)
     {
@@ -1164,8 +1153,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = prm_271 / 2;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 406)
     {
@@ -1174,8 +1162,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 * 5 + prm_271 * 2;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 407)
     {
@@ -1184,8 +1171,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 * 5 + prm_271 * 3 / 2;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 623)
     {
@@ -1194,8 +1180,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 624)
     {
@@ -1204,8 +1189,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 414)
     {
@@ -1214,8 +1198,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 60;
         elep = 100 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 459)
     {
@@ -1224,8 +1207,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 60;
         elep = 100 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 418)
     {
@@ -1234,8 +1216,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 53;
         elep = 200 + prm_271 / 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 415)
     {
@@ -1244,8 +1225,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 56;
         elep = 200 + prm_271 / 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 417)
     {
@@ -1254,8 +1234,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 59;
         elep = 200 + prm_271 / 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 416)
     {
@@ -1264,8 +1243,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 58;
         elep = 200 + prm_271 / 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 419)
     {
@@ -1274,8 +1252,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 51;
         elep = 180 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 420)
     {
@@ -1284,8 +1261,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 50;
         elep = 180 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 421)
     {
@@ -1294,8 +1270,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 52;
         elep = 180 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 422)
     {
@@ -1304,8 +1279,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 53;
         elep = 180 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 423)
     {
@@ -1314,8 +1288,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 54;
         elep = 180 + prm_271 / 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 431)
     {
@@ -1324,8 +1297,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 51;
         elep = 150 + prm_271 / 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 432)
     {
@@ -1334,8 +1306,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 50;
         elep = 150 + prm_271 / 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 433)
     {
@@ -1344,8 +1315,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 59;
         elep = 150 + prm_271 / 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 434)
     {
@@ -1354,8 +1324,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 57;
         elep = 150 + prm_271 / 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 460)
     {
@@ -1364,8 +1333,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 60;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 404)
     {
@@ -1374,8 +1342,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = prm_271 / 10;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 644)
     {
@@ -1383,12 +1350,10 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         dice2 = 15 + rs_at_m9 / 5 + 1;
         bonus = ele == 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 601)
     {
@@ -1397,8 +1362,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 4;
         ele = 56;
         elep = 200;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 612)
     {
@@ -1407,8 +1371,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 15;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 602)
     {
@@ -1417,8 +1380,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 50;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 603)
     {
@@ -1427,8 +1389,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 51;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 604)
     {
@@ -1437,8 +1398,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 52;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 605)
     {
@@ -1447,8 +1407,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 53;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 606)
     {
@@ -1457,8 +1416,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 59;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 608)
     {
@@ -1467,8 +1425,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 56;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 610)
     {
@@ -1477,8 +1434,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 55;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 607)
     {
@@ -1487,8 +1443,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 57;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 609)
     {
@@ -1497,8 +1452,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 58;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 611)
     {
@@ -1507,32 +1461,27 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = rs_at_m9 / 8;
         ele = 54;
         elep = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 613)
     {
         dice1 = 1 + rs_at_m9 / 10;
         dice2 = 4;
         bonus = ep == 0;
-        stat = 1;
-        return stat;
+        return 1;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 614)
     {
         dice1 = 1 + rs_at_m9 / 10;
         dice2 = 4;
         bonus = ep == 0;
-        stat = 1;
-        return stat;
+        return 1;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 617)
     {
@@ -1541,8 +1490,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 0;
         elep = 100 + rs_at_m9 * 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 618)
     {
@@ -1551,8 +1499,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 0;
         elep = 100 + rs_at_m9 * 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 615)
     {
@@ -1561,8 +1508,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 55;
         elep = rs_at_m9 * 4 + 20;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 616)
     {
@@ -1571,20 +1517,17 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 58;
         elep = rs_at_m9 * 4 + 20;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 636)
     {
         dice1 = 1 + rs_at_m9 / 20;
         dice2 = 11;
         bonus = elep == 0;
-        stat = 1;
-        return stat;
+        return 1;
         ele = 0;
         elep = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_269 == 655)
     {
@@ -1593,26 +1536,21 @@ int calcskill(int prm_269, int prm_270, int prm_271)
         bonus = 0;
         ele = 57;
         elep = 150 + prm_271 / 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int sorg(int prm_272, int prm_273)
 {
-    stat = sdata((prm_272 + 600), prm_273) / 1000000;
-    return stat;
+    return sdata((prm_272 + 600), prm_273) / 1000000;
 }
 int randskill()
 {
-    stat = rnd(40) + 150;
-    return stat;
+    return rnd(40) + 150;
 }
 int randattb()
 {
-    stat = rnd(8) + 10;
-    return stat;
+    return rnd(8) + 10;
 }
 void label_0041()
 {
@@ -1675,9 +1613,7 @@ void label_0043()
 }
 int ibit(int prm_274, int prm_275)
 {
-    stat = HMMBITCHECK(inv(35 + prm_274 / 32, prm_275), prm_274 % 32);
-    stat = stat;
-    return stat;
+    return HMMBITCHECK(inv(35 + prm_274 / 32, prm_275), prm_274 % 32);
 }
 void ibitmod(int prm_276, int prm_277, int prm_278)
 {
@@ -1694,8 +1630,7 @@ int refitem(int prm_279, int prm_280)
     dbmode = 16;
     dbid = prm_279;
     dbspec = prm_280;
-    stat = label_1275();
-    return stat;
+    return label_1275();
 }
 int iequiploc(int prm_281)
 {
@@ -1703,66 +1638,53 @@ int iequiploc(int prm_281)
     p_at_m13 = refitem(inv_id(prm_281), 5);
     if (p_at_m13 == 12000)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (p_at_m13 == 34000)
     {
-        stat = 2;
-        return stat;
+        return 2;
     }
     if (p_at_m13 == 20000)
     {
-        stat = 3;
-        return stat;
+        return 3;
     }
     if (p_at_m13 == 16000)
     {
-        stat = 4;
-        return stat;
+        return 4;
     }
     if (p_at_m13 == 10000)
     {
-        stat = 5;
-        return stat;
+        return 5;
     }
     if (p_at_m13 == 14000)
     {
-        stat = 5;
-        return stat;
+        return 5;
     }
     if (p_at_m13 == 32000)
     {
-        stat = 6;
-        return stat;
+        return 6;
     }
     if (p_at_m13 == 22000)
     {
-        stat = 7;
-        return stat;
+        return 7;
     }
     if (p_at_m13 == 18000)
     {
-        stat = 9;
-        return stat;
+        return 9;
     }
     if (p_at_m13 == 24000)
     {
-        stat = 10;
-        return stat;
+        return 10;
     }
     if (p_at_m13 == 25000)
     {
-        stat = 11;
-        return stat;
+        return 11;
     }
     if (p_at_m13 == 19000)
     {
-        stat = 8;
-        return stat;
+        return 8;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void setunid(int prm_282, int prm_283)
 {
@@ -1792,8 +1714,7 @@ int getunid(int prm_284)
         cdata_cnpc_id(prm_284) = usernpcmax;
         cdatan(0, prm_284) = lang(u8"残りカス"s, u8"a garbage"s);
     }
-    stat = f_at_m14;
-    return stat;
+    return f_at_m14;
 }
 int findunid(const std::string& prm_285)
 {
@@ -1809,33 +1730,27 @@ int findunid(const std::string& prm_285)
             }
         }
     }
-    stat = f_at_m14;
-    return stat;
+    return f_at_m14;
 }
 int synccheck(int prm_286, int prm_287)
 {
     if (prm_287 == -1)
     {
-        stat = cdata_vision_flag(prm_286) == msync || prm_286 == gdata(183);
-        return stat;
+        return cdata_vision_flag(prm_286) == msync || prm_286 == gdata(183);
     }
     if (mapsync(prm_286, prm_287) == msync)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int evid()
 {
     if (evnum <= 0)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
-    stat = evlist(evnum - 1);
-    return stat;
+    return evlist(evnum - 1);
 }
 int evfind(int prm_288)
 {
@@ -1851,8 +1766,7 @@ int evfind(int prm_288)
             }
         }
     }
-    stat = f_at_m17;
-    return stat;
+    return f_at_m17;
 }
 void evadd(int prm_289, int prm_290, int prm_291)
 {
@@ -1927,8 +1841,7 @@ void snd(int prm_296, int prm_297, int prm_298)
                     int cnt = 7;
                     for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
                     {
-                        CHECKPLAY(cnt);
-                        if (stat)
+                        if (CHECKPLAY(cnt))
                         {
                             if (soundlist(cnt - 7) == sound_at_m18)
                             {
@@ -1946,8 +1859,7 @@ void snd(int prm_296, int prm_297, int prm_298)
                     int cnt = 7;
                     for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
                     {
-                        CHECKPLAY(cnt);
-                        if (stat == 0)
+                        if (CHECKPLAY(cnt) == 0)
                         {
                             sound_at_m18 = cnt;
                             soundlist(cnt - 7) = sound_at_m18;
@@ -1980,8 +1892,7 @@ void label_0066()
     DIM2(soundlist, 6);
     if (cfg_sound == 1)
     {
-        DSGETMASTERVOLUME();
-        cfg_svolume = stat;
+        cfg_svolume = DSGETMASTERVOLUME();
     }
     folder = exedir + u8"sound\\"s;
     sndload(folder + u8"exitmap1.wav"s, 49);
@@ -2113,7 +2024,7 @@ void label_0067()
     {
         return;
     }
-    stat = notesel(buff);
+    notesel(buff);
     noteload(s);
     {
         int cnt = 0;
@@ -2546,23 +2457,19 @@ void key_check(int prm_299)
     {
         j_at_m19 = 0;
         DIGETJOYSTATE(j_at_m19, 0);
-        stat = HMMBITCHECK(j_at_m19, 0);
-        if (stat)
+        if (HMMBITCHECK(j_at_m19, 0))
         {
             p_at_m19 += 2;
         }
-        stat = HMMBITCHECK(j_at_m19, 1);
-        if (stat)
+        if (HMMBITCHECK(j_at_m19, 1))
         {
             p_at_m19 += 8;
         }
-        stat = HMMBITCHECK(j_at_m19, 2);
-        if (stat)
+        if (HMMBITCHECK(j_at_m19, 2))
         {
             p_at_m19 += 1;
         }
-        stat = HMMBITCHECK(j_at_m19, 3);
-        if (stat)
+        if (HMMBITCHECK(j_at_m19, 3))
         {
             p_at_m19 += 4;
         }
@@ -2571,8 +2478,7 @@ void key_check(int prm_299)
             int cnt = 0;
             for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
-                stat = HMMBITCHECK(j_at_m19, 4 + cnt);
-                if (stat)
+                if (HMMBITCHECK(j_at_m19, 4 + cnt))
                 {
                     a_at_m19 = 1;
                     if (jkey(cnt) == key_alter)
@@ -3804,16 +3710,13 @@ int roundmargin(int prm_345, int prm_346)
 {
     if (prm_345 > prm_346)
     {
-        stat = prm_345 - rnd((prm_345 - prm_346));
-        return stat;
+        return prm_345 - rnd((prm_345 - prm_346));
     }
     if (prm_345 < prm_346)
     {
-        stat = prm_345 + rnd((prm_346 - prm_345));
-        return stat;
+        return prm_345 + rnd((prm_346 - prm_345));
     }
-    stat = prm_345;
-    return stat;
+    return prm_345;
 }
 void at(int prm_347)
 {
@@ -5039,7 +4942,7 @@ void snfood(std::string& prm_360)
 }
 void txtsetlastword()
 {
-    stat = notesel(buff);
+    notesel(buff);
     noteload(
         exedir + u8"user\\"s + lang(u8"lastwords.txt"s, u8"lastwords-e.txt"s));
     noteget(lastword, rnd(noteinfo(0) + 1));
@@ -5093,13 +4996,11 @@ int limitmax(int prm_362, int prm_363)
 {
     if (prm_362 > prm_363)
     {
-        stat = prm_363;
-        return stat;
+        return prm_363;
     }
     else
     {
-        stat = prm_362;
-        return stat;
+        return prm_362;
     }
 }
 void label_0140()
@@ -11349,7 +11250,7 @@ void label_0174()
 void label_0175()
 {
     buff = "";
-    stat = notesel(buff);
+    notesel(buff);
     noteload(exedir + u8"data\\talk.txt"s);
     p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
     label_0174();
@@ -11358,7 +11259,7 @@ void label_0175()
 void label_0176()
 {
     buff = "";
-    stat = notesel(buff);
+    notesel(buff);
     noteload(exedir + u8"data\\talk.txt"s);
     p = -1;
     {
@@ -11559,7 +11460,7 @@ void label_0180()
             u8"第一部メインクエスト完了"s,
             u8"You have completed the main quest."s);
     }
-    stat = talk_conv(s1, 40 - en * 4);
+    talk_conv(s1, 40 - en * 4);
     buff += s1;
     noteadd(""s);
     return;
@@ -11591,7 +11492,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのミシェスに、スライムの退治を頼まれた。スライムの巣窟は、ミシェスの家のすぐ南の家のようだ。"s,
                 u8"Miches of Vernis asked me to investigate the house just south of her home."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11603,7 +11504,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのミシェスに頼まれたスライムの退治を完了した。あとは報告するだけだ。"s,
                 u8"I've wiped out the putit's nest. I have to visit Miches of Vernis to report it."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11628,7 +11529,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのシーナが勤める酒場に、酒泥棒が頻出しているらしい。盗賊団を壊滅させてシーナに報告しよう。"s,
                 u8"Bandits have been stealing things in Vernis. I need to find and destroy their hideout."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11640,7 +11541,7 @@ void label_0181()
             s1 = lang(
                 u8"酒樽を盗んでいたごろつき団を殲滅した。あとはヴェルニースのシーナに報告するだけだ。"s,
                 u8"Those bandits are no more. All I have to do now is bring the news to Shena of Vernis."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11665,7 +11566,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのリリアンに、迷子の子犬ポピーを捜すよう頼まれた。どうやら子犬はヴェルニースのすぐ東にある洞窟にいるらしい。"s,
                 u8"Rilian of Vernis asked me to find her puppy named poppy in the puppy's cave located east of Vernis."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11690,7 +11591,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのロイターに金になる仕事を持ちかけられた。何やら危険な仕事のようだ。万全の準備を整えてからロイターに話し掛けよう。"s,
                 u8"Loyter of Vernis has a dangerous, yet highly profitable job for me. I need to prepare well before talking to him again."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11702,7 +11603,7 @@ void label_0181()
             s1 = lang(
                 u8"実験場の全ての敵を殲滅しなければならない。"s,
                 u8"I need to eliminate all of the monsters in the test ground."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11714,7 +11615,7 @@ void label_0181()
             s1 = lang(
                 u8"実験を生き延びて完了させた。ヴェルニースのロイターに報告しよう。"s,
                 u8"I've survived the nightmare. Now to meet Loyer of Vernis to receive the reward."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11739,7 +11640,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11751,7 +11652,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11763,7 +11664,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11775,7 +11676,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11787,7 +11688,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11799,7 +11700,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11811,7 +11712,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11823,7 +11724,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11835,7 +11736,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11847,7 +11748,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11872,7 +11773,7 @@ void label_0181()
             s1 = lang(
                 u8"カプールのラファエロに嫁を持ってくるよう頼まれた。なんという下劣な男だ。"s,
                 u8"I was asked by Raphael of Port Kapul to bring my wife. What a moron."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11897,7 +11798,7 @@ void label_0181()
             s1 = lang(
                 u8"ヨウィンのタムに、家の猫退治を依頼された。家は南の畑のあたりにあるそうだ。"s,
                 u8"Tam of Yowyn asked me to eliminate the cats in his house. The house is located southern part of Yowyn."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11909,7 +11810,7 @@ void label_0181()
             s1 = lang(
                 u8"タムの家の中の猫を退治した。あとはヨウィンでタムに報告するだけだ。"s,
                 u8"I've freed Tam's house from the cats. To get the reward, I need to speak Tam again in Yowyn."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11934,7 +11835,7 @@ void label_0181()
             s1 = lang(
                 u8"ヨウィンのギルバート大佐に、ジューア解放軍の援護を求められた。準備が整い次第、大佐に話し掛けよう。"s,
                 u8"Carnel Gilbert of Yowyn asked me to help the Juere freedom force fight the Yerles Army. I should speak to him again when I'm ready."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11946,7 +11847,7 @@ void label_0181()
             s1 = lang(
                 u8"イェルスの防衛軍を殲滅しなければならない。"s,
                 u8"I need to destroy the Yerles Army."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11958,7 +11859,7 @@ void label_0181()
             s1 = lang(
                 u8"防衛線を見事に突破した。ヨウィンのギルバート大佐に報告しよう。"s,
                 u8"I've won the war. Now to bring the good news to carnel Gilbert."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11983,7 +11884,7 @@ void label_0181()
             s1 = lang(
                 u8"ヨウィンのアインクに騎士昇格試験の手伝いを頼まれた。ヨウィンの西にあるイークの洞窟に住むイークの首領を倒せばいいそうだ。"s,
                 u8"Ainc of Yowyn asked me to help his promotion task. I need to enter the Yeek's dungeon which is located west of Yowyn and kill the chief."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11995,7 +11896,7 @@ void label_0181()
             s1 = lang(
                 u8"イークの首領を無事討伐した。ヨウィンのアインクに報告しよう。"s,
                 u8"I've defeated the chief of Yeek. I should head back to Yowyn and report to Ainc."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12020,7 +11921,7 @@ void label_0181()
             s1 = lang(
                 u8"カプールのアーノルドに、カミカゼ特攻隊に耐えるパルミア軍への援軍を頼まれた。準備が整い次第、アーノルドに話し掛けよう。"s,
                 u8"Arnord of Port Kapul asked me to help the isolated Palmian 10th regiment from massive Kamikaze attacks. I should prepare and speak to Arnord when ready."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12032,7 +11933,7 @@ void label_0181()
             s1 = lang(
                 u8"パルミア軍が撤退を完了するまでの間、カミカゼ特攻隊の猛攻に耐えなければならない。パルミア軍が撤退したら、知らせが入るはずだ。"s,
                 u8"I have to hold the battle line to gain time while the Palmian army retreats. A messenger will inform me when it's done."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12044,7 +11945,7 @@ void label_0181()
             s1 = lang(
                 u8"カミカゼ特攻隊の猛攻に耐えきった。カプールのアーノルドに報告しよう。"s,
                 u8"I survived the kamikaze attack. I have to bring the good news to Arnord of Port Kapul."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12069,7 +11970,7 @@ void label_0181()
             s1 = lang(
                 u8"パルミアのミーアは、稀少猫シルバーキャットが欲しいらしい。なんとか捕まえて、ミーアに渡そう。"s,
                 u8"Mia of Palmia wants a silver cat, a very rare cat. If I happen to capture one, I should bring it to Mia."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12094,7 +11995,7 @@ void label_0181()
             s1 = lang(
                 u8"ルミエストのレントンが、レイチェルという童話作家によって描かれた絵本を探している。絵本は全部で4巻あるらしい。全て見つけたら、レントンに報告しよう。"s,
                 u8"Renton of Lumiest is looking for the fairy tale books written by Rachael. I should bring it to him if I happen to find one. There're total of 4 books in the series."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12119,7 +12020,7 @@ void label_0181()
             s1 = lang(
                 u8"ピラミッドに出入りする資格を得た。ピラミッドはカプールの北にあり、中には古代の秘宝が眠っているといわれている。"s,
                 u8"I've got a invitation to the pyramid. The pyramid is located north of Port Kapul and it is rumored that it holds great treasure."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12145,7 +12046,7 @@ void label_0181()
             s1 = lang(
                 u8"ダルフィのノエルにパルミアの街に爆弾をしかけるように依頼された。爆弾をパルミアの宿屋の部屋にあるぬいぐるみにしかけよう。"s,
                 u8"Noel of Derphy asked me to set up a bomb in Palmia. I need to place it right on the teddy bear in the inn."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12157,7 +12058,7 @@ void label_0181()
             s1 = lang(
                 u8"見事にパルミアを壊滅させた。あとはダルフィのノエルの元に戻り、報告するだけだ。"s,
                 u8"I have successfully destroyed Palmia. Now all I need to report back to Noel in Derphy."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12185,7 +12086,7 @@ void label_0181()
                     + u8"個の捕獲済みモンスターボールを届ける必要がある。"s,
                 u8"Icolle of Port Kapul asked me to bring 5 filled monster balls. I still need to bring him "s
                     + (6 - gdata(464)) + u8" of them."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12210,7 +12111,7 @@ void label_0181()
             s1 = lang(
                 u8"ルミエストのバルザックに、下水道の清掃を頼まれた。下水道の入り口は宿屋の近くにあるみたいだ。。"s,
                 u8"Balzak of Lumiest wants me to sweep the entire sewer. I can find the entrance to the sewer around the inn."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12222,7 +12123,7 @@ void label_0181()
             s1 = lang(
                 u8"下水道の大掃除を完了した。あとはルミエストのバルザックに報告するだけだ。"s,
                 u8"I've finished sweeping the sewer. I need to report it to Balzak of Lumiest."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12249,7 +12150,7 @@ void label_0181()
                     gdata(266) + u8"ギルドポイントを獲得する必要がある。"s,
                 u8"To join the Mages Guild, I need to gather "s + gdata(266) +
                     u8" more guild points and talk to the guild guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12274,7 +12175,7 @@ void label_0181()
             s1 = lang(
                 u8"盗賊ギルドに加入するには、税金を4ヶ月以上滞納した状態で、ダルフィのギルドの番人に話しかける必要がある。"s,
                 u8"To join the Thieves Guild, I need to not pay tax for 4 months, that means I'll be a criminal for sure."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12302,7 +12203,7 @@ void label_0181()
                 u8"To join the Fighters Guild, I need to slay "s + gdata(267) +
                     u8" more "s + refchara_str(gdata(268), 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12330,7 +12231,7 @@ void label_0181()
                 u8"To raise the rank in the Mages Guild, you need to gather "s +
                     gdata(266) +
                     u8" more guild points and talk to the guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12358,7 +12259,7 @@ void label_0181()
                 u8"To raise the rank in the Fighters Guild, I need to slay "s +
                     gdata(267) + u8" more "s + refchara_str(gdata(268), 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12386,7 +12287,7 @@ void label_0181()
                 u8"To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of "s +
                     gdata(269) +
                     u8" gold pices and talk to the guild guard in Derphy."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12411,7 +12312,7 @@ void label_0181()
             s1 = lang(
                 u8"パルミアのコネリー少将に、ミノタウロスの首領の退治を頼まれた。ミノタウロスの巣窟は、ヨウィンの南にあるみたいだ。"s,
                 u8"General Conery wants me to hunt the chief of minotaur. The nest is located south of Yowyn."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12423,7 +12324,7 @@ void label_0181()
             s1 = lang(
                 u8"ミノタウロスの首領を無事討伐した。パルミアのコネリー少将に報告しよう。"s,
                 u8"I've killed the chief of minotaur. I should head back to Palmia and speak to General Conery."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12448,7 +12349,7 @@ void label_0181()
             s1 = lang(
                 u8"アクリ・テオラの謎の科学者に、リトルシスターを連れてくるよう頼まれた。捕獲するためには、ビッグダディを倒し、捕獲玉をリトルにぶつける必要がある。"s,
                 u8"A strange scientist asked me to bring little sisters to her. To capture a little sister, I need to kill Big Daddy first then throw the little ball at her."s);
-            stat = talk_conv(s1, 40 - en * 4);
+            talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12478,11 +12379,11 @@ void label_0182()
 }
 void label_0183()
 {
-    stat = notesel(buffboard);
+    notesel(buffboard);
     SDIM1(buff2);
     p = instr(buffboard, 0, s + u8","s + lang(u8"JP"s, u8"EN"s));
     buff2 = strmid(buffboard, p, instr(buffboard, p, u8"%END"s));
-    stat = notesel(buff2);
+    notesel(buff2);
     if (noteinfo(0) <= 1)
     {
         buff2 = u8"no txt"s;
@@ -12494,7 +12395,7 @@ void label_0183()
     s(3) = strmid(buff2, 0, p);
     if (val == 2)
     {
-        stat = notesel(buff);
+        notesel(buff);
         return;
     }
     buff2 = strmid(buff2, p + 1, strlen(buff2) - p - 1);
@@ -12692,7 +12593,7 @@ void label_0184()
         }
         buff += nquestdate + u8"\n"s;
         s(5) = lang(u8"報酬: "s, u8"Reward  : "s) + s(5);
-        stat = talk_conv(s(5), 40 - en * 10);
+        talk_conv(s(5), 40 - en * 10);
         buff += s(5) + u8"\n"s;
         if (qdata(8, rq) == 3)
         {
@@ -12704,7 +12605,7 @@ void label_0184()
         {
             s(4) = lang(u8"内容: "s, u8"Detail  : "s) + s(6);
         }
-        stat = talk_conv(s(4), 40 - en * 10);
+        talk_conv(s(4), 40 - en * 10);
         buff += s(4) + u8"\n"s;
     }
     if (val == 3)
@@ -12907,7 +12808,7 @@ void addnews2(const std::string& prm_401, int prm_402)
         txtef(13);
         txt(u8"[News] "s + n_at_m36);
     }
-    stat = talk_conv(n_at_m36, 38 - en * 5);
+    talk_conv(n_at_m36, 38 - en * 5);
     newsbuff += n_at_m36 + u8"\n"s;
     return;
 }
@@ -13941,7 +13842,7 @@ void label_0192()
     gsel(0);
     gmode(2);
     text_set();
-    stat = notesel(msg_log);
+    notesel(msg_log);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (inf_maxlog - 2); cnt < cnt_end; ++cnt)
@@ -13964,7 +13865,7 @@ void label_0192()
     pos(-40, -40);
     mesbox(keylog, 0, 0, 1, 10);
     SDIM1(buffboard);
-    stat = notesel(buffboard);
+    notesel(buffboard);
     noteload(exedir + u8"data\\board.txt"s);
     SDIM1(filter_item);
     SDIM1(rffilter_item);
@@ -14009,16 +13910,14 @@ void label_0192()
     label_2105();
     if (cfg_music == 1)
     {
-        DMINIT();
-        if (stat == 0)
+        if (DMINIT() == 0)
         {
             cfg_music = 2;
         }
     }
     if (cfg_sound == 1)
     {
-        DSINIT();
-        if (stat == 0)
+        if (DSINIT() == 0)
         {
             cfg_sound = 2;
         }
@@ -14026,8 +13925,7 @@ void label_0192()
     if (cfg_joypad == 1)
     {
         DIINIT();
-        DIGETJOYNUM();
-        if (stat == 0)
+        if (DIGETJOYNUM() == 0)
         {
             cfg_joypad = 0;
         }
@@ -15990,8 +15888,7 @@ int servecard(int prm_427)
     }
     if (cardid_at_cardcontrol == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     {
         int cnt = 0;
@@ -16053,8 +15950,7 @@ int servecard(int prm_427)
             redraw(1);
         }
     }
-    stat = cardid_at_cardcontrol;
-    return stat;
+    return cardid_at_cardcontrol;
 }
 void showcardholder()
 {
@@ -16090,8 +15986,7 @@ int opencard2(int prm_428, int prm_429)
     {
         if (card_at_cardcontrol(2, prm_428) == 0)
         {
-            stat = prm_428;
-            return stat;
+            return prm_428;
         }
     }
     snd(71);
@@ -16129,8 +16024,7 @@ int opencard2(int prm_428, int prm_429)
     card_at_cardcontrol(2, prm_428) = 0;
     showcard2(prm_428, prm_429);
     redraw(1);
-    stat = prm_428;
-    return stat;
+    return prm_428;
 }
 int trashcard(int prm_430)
 {
@@ -16177,8 +16071,7 @@ int trashcard(int prm_430)
             }
         }
     }
-    stat = prm_430;
-    return stat;
+    return prm_430;
 }
 int cpscore(int prm_431)
 {
@@ -16218,8 +16111,7 @@ int cpscore(int prm_431)
             }
         }
     }
-    stat = i_at_cardcontrol;
-    return stat;
+    return i_at_cardcontrol;
 }
 int lastcard(int prm_432)
 {
@@ -16236,8 +16128,7 @@ int lastcard(int prm_432)
             c_at_cardcontrol = cardplayer_at_cardcontrol(10 + cnt, prm_432);
         }
     }
-    stat = c_at_cardcontrol;
-    return stat;
+    return c_at_cardcontrol;
 }
 int cpblackcard(int prm_433)
 {
@@ -16254,8 +16145,7 @@ int cpblackcard(int prm_433)
             }
         }
     }
-    stat = c_at_cardcontrol;
-    return stat;
+    return c_at_cardcontrol;
 }
 int cpcardnum(int prm_434)
 {
@@ -16271,8 +16161,7 @@ int cpcardnum(int prm_434)
             }
         }
     }
-    stat = c_at_cardcontrol;
-    return stat;
+    return c_at_cardcontrol;
 }
 int pileremain()
 {
@@ -16287,8 +16176,7 @@ int pileremain()
             }
         }
     }
-    stat = p_at_cardcontrol;
-    return stat;
+    return p_at_cardcontrol;
 }
 void csvsort(
     elona_vector1<std::string>& prm_435,
@@ -16316,7 +16204,7 @@ void csvsort(
 void label_0221()
 {
     SDIM3(randn1, 30, 20);
-    stat = notesel(titlebuff);
+    notesel(titlebuff);
     noteload(lang(u8"data\\ndata.csv"s, u8"data\\ndata-e.csv"s));
     SDIM4(rnlist, 20, 15, noteinfo(0));
     {
@@ -16335,7 +16223,7 @@ void label_0221()
             }
         }
     }
-    stat = notesel(titlebuff);
+    notesel(titlebuff);
     noteload(u8"data\\name.csv"s);
     SDIM3(rn1, 15, noteinfo(0));
     SDIM3(rn2, 15, noteinfo(0));
@@ -16759,8 +16647,7 @@ int calcobjlv(int prm_443)
             objlv_at_m43 = rnd(3) + 1;
         }
     }
-    stat = objlv_at_m43;
-    return stat;
+    return objlv_at_m43;
 }
 int calcfixlv(int prm_444)
 {
@@ -16799,8 +16686,7 @@ int calcfixlv(int prm_444)
     {
         fixlv_at_m43 = 5;
     }
-    stat = fixlv_at_m43;
-    return stat;
+    return fixlv_at_m43;
 }
 void flt(int prm_445, int prm_446)
 {
@@ -16851,23 +16737,19 @@ void fltn(const std::string& prm_447)
 }
 int discsetmc()
 {
-    stat = rnd(40);
-    return stat;
+    return rnd(40);
 }
 int fltsetdungeon()
 {
     if (rnd(20) == 0)
     {
-        stat = fsetrare(rnd(length(fsetrare)));
-        return stat;
+        return fsetrare(rnd(length(fsetrare)));
     }
     if (rnd(3) == 0)
     {
-        stat = fsetwear(rnd(length(fsetwear)));
-        return stat;
+        return fsetwear(rnd(length(fsetwear)));
     }
-    stat = fsetitem(rnd(length(fsetitem)));
-    return stat;
+    return fsetitem(rnd(length(fsetitem)));
 }
 int randomele()
 {
@@ -16892,8 +16774,7 @@ int randomele()
             }
         }
     }
-    stat = p_at_m45;
-    return stat;
+    return p_at_m45;
 }
 void putenclv(int prm_448)
 {
@@ -16917,50 +16798,42 @@ int encflt(int prm_449, int prm_450)
     {
         if ((prm_449 >= 12000 && prm_449 < 24000) == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         else
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (prm_450 == 1)
     {
         if ((prm_449 >= 30000 && prm_449 < 50000) == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         else
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (prm_450 == 3)
     {
         if ((prm_449 >= 12000 && prm_449 < 24000) == 1 || prm_449 == 10000)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         else
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (prm_449 == prm_450)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     else
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
 }
 void label_0246()
@@ -18606,8 +18479,7 @@ int randomenc(int prm_451)
     }
     if (max_at_m47 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     i_at_m47 = 0;
     exrand_rnd(p_at_m47, sum_at_m47);
@@ -18622,16 +18494,14 @@ int randomenc(int prm_451)
             }
         }
     }
-    stat = i_at_m47;
-    return stat;
+    return i_at_m47;
 }
 int randomenclv(int prm_452)
 {
     int enclv_at_m47 = 0;
     enclv_at_m47 = limit(prm_452, 0, 4);
     enclv_at_m47 = rnd(enclv_at_m47 + 1);
-    stat = enclv_at_m47;
-    return stat;
+    return enclv_at_m47;
 }
 int randomencp(int prm_453)
 {
@@ -18641,8 +18511,7 @@ int randomencp(int prm_453)
     {
         encp_at_m47 = encp_at_m47 * prm_453 / 100;
     }
-    stat = encp_at_m47;
-    return stat;
+    return encp_at_m47;
 }
 void sortenc(int prm_454)
 {
@@ -18739,8 +18608,7 @@ int encadd(
     int i_at_m48 = 0;
     if (prm_459 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_459 >= 10000)
     {
@@ -18758,15 +18626,13 @@ int encadd(
             {
                 if (encref(4, enc_at_m48) == 0)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 else
                 {
                     if (encflt(reftype, encref(4, enc_at_m48)) == 0)
                     {
-                        stat = 0;
-                        return stat;
+                        return 0;
                     }
                 }
             }
@@ -18777,8 +18643,7 @@ int encadd(
             {
                 if (prm_462 == 0)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
         }
@@ -18866,8 +18731,7 @@ int encadd(
             }
             if (max_at_m48 == 0)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             i_at_m48 = 0;
             exrand_rnd(p_at_m48, sum_at_m48);
@@ -18915,15 +18779,13 @@ int encadd(
     }
     if (i_at_m48 == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (inv_enchantment_id(prm_458, i_at_m48) == enc_at_m48)
     {
         if (reftype == 25000)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (prm_462)
         {
@@ -18937,8 +18799,7 @@ int encadd(
     {
         rtval(0) = enc_at_m48;
         rtval(1) = encp_at_m48;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (inv_enchantment_id(prm_458, i_at_m48) == enc_at_m48)
     {
@@ -18959,8 +18820,7 @@ int encadd(
         inv_value(prm_458) = inv_value(prm_458) * encref(1, p_at_m48) / 100;
     }
     sortenc(prm_458);
-    stat = 1;
-    return stat;
+    return 1;
 }
 void egoadd(int prm_465, int prm_466)
 {
@@ -20241,7 +20101,7 @@ void label_0265()
     originalvalue = inv_value(ci) * 100 / mtref(1, p);
     dbid = inv_id(ci);
     dbmode = 10;
-    stat = label_1275();
+    label_1275();
     inv_value(ci) = originalvalue;
     if (fixmaterial != 0)
     {
@@ -20754,10 +20614,8 @@ int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
     val(0) = prm_467;
     val(1) = prm_469;
     val(2) = prm_470;
-    label_1582();
     itemcreatehack = 0;
-    stat = stat;
-    return stat;
+    return label_1582();
 }
 void inv_getheader(int prm_472)
 {
@@ -20781,16 +20639,13 @@ int inv_getowner(int prm_473)
 {
     if (prm_473 < 200)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_473 >= 5080)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
-    stat = (prm_473 - 200) / 20 + 1;
-    return stat;
+    return (prm_473 - 200) / 20 + 1;
 }
 int inv_find(int prm_474, int prm_475)
 {
@@ -20812,8 +20667,7 @@ int inv_find(int prm_474, int prm_475)
             }
         }
     }
-    stat = f_at_m52;
-    return stat;
+    return f_at_m52;
 }
 int item_find(int prm_476, int prm_477, int prm_478)
 {
@@ -20893,8 +20747,7 @@ int item_find(int prm_476, int prm_477, int prm_478)
             }
         }
     }
-    stat = p_at_m52;
-    return stat;
+    return p_at_m52;
 }
 int encfind(int prm_479, int prm_480)
 {
@@ -20929,8 +20782,7 @@ int encfind(int prm_479, int prm_480)
             }
         }
     }
-    stat = f_at_m53;
-    return stat;
+    return f_at_m53;
 }
 int encfindspec(int prm_481, int prm_482)
 {
@@ -20950,8 +20802,7 @@ int encfindspec(int prm_481, int prm_482)
             }
         }
     }
-    stat = f_at_m53;
-    return stat;
+    return f_at_m53;
 }
 void itemlist(int prm_483, int prm_484)
 {
@@ -21001,8 +20852,7 @@ int itemusingfind(int prm_485, int prm_486)
             }
         }
     }
-    stat = f_at_m54;
-    return stat;
+    return f_at_m54;
 }
 int itemfind(int prm_487, int prm_488, int prm_489)
 {
@@ -21025,8 +20875,7 @@ int itemfind(int prm_487, int prm_488, int prm_489)
                 }
             }
         }
-        stat = f_at_m54;
-        return stat;
+        return f_at_m54;
     }
     else
     {
@@ -21045,8 +20894,7 @@ int itemfind(int prm_487, int prm_488, int prm_489)
                 }
             }
         }
-        stat = f_at_m54;
-        return stat;
+        return f_at_m54;
     }
 }
 int mapitemfind(int prm_490, int prm_491, int prm_492)
@@ -21074,8 +20922,7 @@ int mapitemfind(int prm_490, int prm_491, int prm_492)
             }
         }
     }
-    stat = f_at_m54;
-    return stat;
+    return f_at_m54;
 }
 void cell_refresh(int prm_493, int prm_494)
 {
@@ -21260,8 +21107,7 @@ int inv_getspace(int prm_503)
             }
         }
     }
-    stat = p_at_m57;
-    return stat;
+    return p_at_m57;
 }
 int inv_sum(int prm_504)
 {
@@ -21277,8 +21123,7 @@ int inv_sum(int prm_504)
             }
         }
     }
-    stat = p_at_m57;
-    return stat;
+    return p_at_m57;
 }
 void item_compress(int)
 {
@@ -21386,8 +21231,7 @@ int inv_getfreeid(int prm_506)
             }
         }
     }
-    stat = p_at_m57;
-    return stat;
+    return p_at_m57;
 }
 int inv_weight_(int prm_507)
 {
@@ -21417,8 +21261,7 @@ int inv_weight_(int prm_507)
             }
         }
     }
-    stat = p_at_m57;
-    return stat;
+    return p_at_m57;
 }
 void item_num(int prm_508, int prm_509)
 {
@@ -21442,8 +21285,7 @@ int item_separate(int& prm_510)
     int ti_at_m59 = 0;
     if (inv_number(prm_510) <= 1)
     {
-        stat = prm_510;
-        return stat;
+        return prm_510;
     }
     ti_at_m59 = inv_getfreeid(inv_getowner(prm_510));
     if (ti_at_m59 == -1)
@@ -21455,8 +21297,7 @@ int item_separate(int& prm_510)
             txt(lang(
                 u8"何かが地面に落ちて消えた…"s,
                 u8"Something falls to the ground and desappear..."s));
-            stat = prm_510;
-            return stat;
+            return prm_510;
         }
     }
     item_copy(prm_510, ti_at_m59);
@@ -21481,8 +21322,7 @@ int item_separate(int& prm_510)
             label_1521();
         }
     }
-    stat = ti_at_m59;
-    return stat;
+    return ti_at_m59;
 }
 int chara_unequip(int prm_511)
 {
@@ -21490,20 +21330,17 @@ int chara_unequip(int prm_511)
     int c_at_m59 = 0;
     if (inv_body_part(prm_511) == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     p_at_m59 = inv_body_part(prm_511);
     c_at_m59 = inv_getowner(prm_511);
     if (c_at_m59 == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     cdata(p_at_m59, c_at_m59) = cdata(p_at_m59, c_at_m59) / 10000 * 10000;
     inv_body_part(prm_511) = 0;
-    stat = 1;
-    return stat;
+    return 1;
 }
 int item_identify(int prm_512, int prm_513, int prm_514)
 {
@@ -21526,8 +21363,7 @@ int item_identify(int prm_512, int prm_513, int prm_514)
     if (idlv_at_m60 == -1 || inv_identification_state(prm_512) >= idlv_at_m60)
     {
         idtresult = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     inv_identification_state(prm_512) = idlv_at_m60;
     if (inv_identification_state(prm_512) >= 1)
@@ -21535,8 +21371,7 @@ int item_identify(int prm_512, int prm_513, int prm_514)
         itemmemory(0, inv_id(prm_512)) = 1;
     }
     idtresult = idlv_at_m60;
-    stat = idtresult;
-    return stat;
+    return idtresult;
 }
 void item_checkknown(int prm_515)
 {
@@ -22466,8 +22301,7 @@ int item_stack(int prm_525, int prm_526, int prm_527)
     {
         if (refitem(inv_id(prm_526), 5) < 50000)
         {
-            stat = p_at_m65;
-            return stat;
+            return p_at_m65;
         }
     }
     {
@@ -22553,8 +22387,7 @@ int item_stack(int prm_525, int prm_526, int prm_527)
                     + inv_number(ti) + u8")"s));
         }
     }
-    stat = p_at_m65;
-    return stat;
+    return p_at_m65;
 }
 void colorres(int)
 {
@@ -22696,8 +22529,7 @@ int cargocheck()
 {
     if (refitem(inv_id(ci), 10) == 0)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (mdata(6) != 1 && mdata(6) != 5 && mdata(6) != 3 && mdata(6) != 4
         && mdata(6) != 6 && mdata(6) != 2)
@@ -22707,13 +22539,11 @@ int cargocheck()
             u8"荷車の荷物は街か野外でしか操作できない。"s,
             u8"You can only use cargo items on the surface."s));
         snd(27);
-        stat = 0;
-        return stat;
+        return 0;
     }
     else
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
 }
 void rndshuffle(elona_vector1<int>& prm_534)
@@ -22739,18 +22569,15 @@ int dist(int prm_535, int prm_536, int prm_537, int prm_538)
     int d_at_m69 = 0;
     d_at_m69 = (prm_535 - prm_537) * (prm_535 - prm_537)
         + (prm_536 - prm_538) * (prm_536 - prm_538);
-    stat = elona_int(sqrt(d_at_m69));
-    return stat;
+    return elona_int(sqrt(d_at_m69));
 }
 int winposy(int prm_539, int prm_540)
 {
     if (prm_540 == 0)
     {
-        stat = ((inf_screenh + 1) * inf_tiles - prm_539) / 2 + 8;
-        return stat;
+        return ((inf_screenh + 1) * inf_tiles - prm_539) / 2 + 8;
     }
-    stat = (windowh - prm_539) / 2;
-    return stat;
+    return (windowh - prm_539) / 2;
 }
 void cutname(std::string& prm_541, int prm_542)
 {
@@ -23042,13 +22869,11 @@ void modrank(int prm_552, int prm_553, int prm_554)
 }
 int sexp(int prm_555, int prm_556)
 {
-    stat = sdata((prm_555 + 600), prm_556) % 1000000 / 1000;
-    return stat;
+    return sdata((prm_555 + 600), prm_556) % 1000000 / 1000;
 }
 int sgrowth(int prm_557, int prm_558)
 {
-    stat = sdata((prm_557 + 600), prm_558) % 1000;
-    return stat;
+    return sdata((prm_557 + 600), prm_558) % 1000;
 }
 void modgrowth(int prm_559, int prm_560, int prm_561)
 {
@@ -23111,8 +22936,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
     growth_at_m77 = sgrowth(prm_566, prm_567);
     if (growth_at_m77 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (exp_at_m77 >= 1000)
     {
@@ -23143,8 +22967,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
         }
         r1 = prm_567;
         label_1477();
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (exp_at_m77 < 0)
     {
@@ -23189,26 +23012,22 @@ int skillmod(int prm_566, int prm_567, int prm_568)
         }
         r1 = prm_567;
         label_1477();
-        stat = 1;
-        return stat;
+        return 1;
     }
     sdata(prm_566 + 600, prm_567) =
         limit(lv_at_m77, 0, 2000) * 1000000 + exp_at_m77 * 1000 + growth_at_m77;
-    stat = 0;
-    return stat;
+    return 0;
 }
 int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
 {
     int exp2_at_m77 = 0;
     if (sorg(prm_569, prm_570) == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_571 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (sdataref(0, prm_569) != 0)
     {
@@ -23218,8 +23037,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
     growth_at_m77 = sgrowth(prm_569, prm_570);
     if (growth_at_m77 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_571 > 0)
     {
@@ -23243,8 +23061,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             }
             else
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
     }
@@ -23306,8 +23123,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         }
         r1 = prm_570;
         label_1477();
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (exp_at_m77 < 0)
     {
@@ -23353,13 +23169,11 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         }
         r1 = prm_570;
         label_1477();
-        stat = 1;
-        return stat;
+        return 1;
     }
     sdata(prm_569 + 600, prm_570) =
         limit(lv_at_m77, 0, 2000) * 1000000 + exp_at_m77 * 1000 + growth_at_m77;
-    stat = 0;
-    return stat;
+    return 0;
 }
 int calcfame(int prm_574, int prm_575)
 {
@@ -23370,8 +23184,7 @@ int calcfame(int prm_574, int prm_575)
     {
         p_at_m77 = rnd(5) + 1;
     }
-    stat = p_at_m77;
-    return stat;
+    return p_at_m77;
 }
 int decfame(int prm_576, int prm_577)
 {
@@ -23382,8 +23195,7 @@ int decfame(int prm_576, int prm_577)
     {
         cdata_fame(prm_576) = 0;
     }
-    stat = p_at_m77;
-    return stat;
+    return p_at_m77;
 }
 int getworker(int prm_578, int prm_579)
 {
@@ -23411,8 +23223,7 @@ int getworker(int prm_578, int prm_579)
             }
         }
     }
-    stat = p_at_m78;
-    return stat;
+    return p_at_m78;
 }
 void removeworker(int prm_580)
 {
@@ -23434,8 +23245,7 @@ void removeworker(int prm_580)
 }
 int calcshopreform()
 {
-    stat = mdata(18) * 100 + 1000;
-    return stat;
+    return mdata(18) * 100 + 1000;
 }
 void delmef(int prm_581)
 {
@@ -23576,8 +23386,7 @@ int cell_featread(int prm_598, int prm_599, int)
     feat(1) = map(prm_598, prm_599, 6) / 1000 % 100;
     feat(2) = map(prm_598, prm_599, 6) / 100000 % 100;
     feat(3) = map(prm_598, prm_599, 6) / 10000000;
-    stat = 0;
-    return stat;
+    return 0;
 }
 void cell_featclear(int prm_601, int prm_602)
 {
@@ -23695,8 +23504,7 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
     {
         if (route(0, (prm_614 + 1) % maxroute) != route(0, prm_614 % maxroute))
         {
-            stat = -1;
-            return stat;
+            return -1;
         }
     }
     if (prm_614 >= maxroute)
@@ -23704,37 +23512,31 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
         if (prm_612 < scx || prm_613 < scy || prm_612 >= scx + inf_screenw
             || prm_613 >= scy + inf_screenh)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (prm_612 < 0 || prm_613 < 0 || prm_612 >= mdata(0)
             || prm_613 >= mdata(1))
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(prm_612, prm_613, 0)) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (map(prm_612, prm_613, 6) != 0)
         {
             cell_featread(prm_612, prm_613);
             if (chipm(7, feat) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
     }
     if (route(1, prm_614 % maxroute) == 0)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int breath_list()
 {
@@ -23830,8 +23632,7 @@ int breath_list()
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void draw_emo(int prm_615, int prm_616, int prm_617)
 {
@@ -23884,8 +23685,7 @@ int cell_itemlist(int prm_625, int prm_626)
             }
         }
     }
-    stat = rtval;
-    return stat;
+    return rtval;
 }
 int cell_itemoncell(int prm_627, int prm_628)
 {
@@ -23906,8 +23706,7 @@ int cell_itemoncell(int prm_627, int prm_628)
             }
         }
     }
-    stat = rtval;
-    return stat;
+    return rtval;
 }
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
@@ -23917,8 +23716,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
     ax_at_modfov = abs(dx_at_modfov);
     if (ax_at_modfov < 2 && ay_at_modfov < 2)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (dx_at_modfov == 0)
     {
@@ -23932,13 +23730,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
             if (chipm(7, map(prm_629, ty_at_modfov, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             ++ty_at_modfov;
             goto label_0386_internal;
@@ -23955,20 +23751,17 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
             if (chipm(7, map(prm_629, ty_at_modfov, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             --ty_at_modfov;
             goto label_0388_internal;
         }
     label_0389_internal:
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (dy_at_modfov == 0)
     {
@@ -23982,13 +23775,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
             if (chipm(7, map(tx_at_modfov, prm_630, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             ++tx_at_modfov;
             goto label_0390_internal;
@@ -24005,20 +23796,17 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
             if (chipm(7, map(tx_at_modfov, prm_630, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             --tx_at_modfov;
             goto label_0392_internal;
         }
     label_0393_internal:
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (dx_at_modfov < 0)
     {
@@ -24046,8 +23834,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                      && 1)
                     == 0)
                 {
-                    stat = 1;
-                    return stat;
+                    return 1;
                 }
             }
         }
@@ -24067,8 +23854,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                          && 1)
                         == 0)
                     {
-                        stat = 1;
-                        return stat;
+                        return 1;
                     }
                 }
             }
@@ -24097,13 +23883,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         qy_at_modfov += m_at_modfov;
         if (qy_at_modfov < f2_at_modfov)
@@ -24117,13 +23901,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 ty_at_modfov += sy_at_modfov;
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 qy_at_modfov -= f1_at_modfov;
                 tx_at_modfov += sx_at_modfov;
@@ -24157,18 +23939,15 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         if (prm_632 - ty_at_modfov == 0)
         {
             goto label_0397_internal;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         qx_at_modfov += m_at_modfov;
         if (qx_at_modfov < f2_at_modfov)
@@ -24182,13 +23961,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
                 tx_at_modfov += sx_at_modfov;
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 qx_at_modfov -= f1_at_modfov;
                 ty_at_modfov += sy_at_modfov;
@@ -24203,8 +23980,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         goto label_0396_internal;
     }
 label_0397_internal:
-    stat = 1;
-    return stat;
+    return 1;
 }
 int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
 {
@@ -24219,8 +23995,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(0, 0) = 2;
             route(1, 0) = 0;
             maxroute = 1;
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     ay_at_modfov = abs(dy_at_modfov);
@@ -24241,13 +24016,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             }
             if (chipm(7, map(prm_633, ty_at_modfov, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             ++ty_at_modfov;
             route(0, p_at_modfov) = 2;
@@ -24270,13 +24043,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             }
             if (chipm(7, map(prm_633, ty_at_modfov, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             --ty_at_modfov;
             route(0, p_at_modfov) = 2;
@@ -24286,8 +24057,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         }
     label_0402_internal:
         maxroute = p_at_modfov;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (dy_at_modfov == 0)
     {
@@ -24304,13 +24074,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             }
             if (chipm(7, map(tx_at_modfov, prm_634, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             ++tx_at_modfov;
             route(0, p_at_modfov) = 1;
@@ -24333,13 +24101,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             }
             if (chipm(7, map(tx_at_modfov, prm_634, 0)) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) && 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             --tx_at_modfov;
             route(0, p_at_modfov) = 1;
@@ -24349,8 +24115,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         }
     label_0406_internal:
         maxroute = p_at_modfov;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (dx_at_modfov < 0)
     {
@@ -24389,8 +24154,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                     route(1, p_at_modfov) = sx_at_modfov;
                     ++p_at_modfov;
                     maxroute = p_at_modfov;
-                    stat = 1;
-                    return stat;
+                    return 1;
                 }
             }
         }
@@ -24420,8 +24184,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                         route(1, p_at_modfov) = sy_at_modfov;
                         ++p_at_modfov;
                         maxroute = p_at_modfov;
-                        stat = 1;
-                        return stat;
+                        return 1;
                     }
                 }
             }
@@ -24456,13 +24219,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         qy_at_modfov += m_at_modfov;
         if (qy_at_modfov < f2_at_modfov)
@@ -24482,13 +24243,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 ++p_at_modfov;
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 qy_at_modfov -= f1_at_modfov;
                 tx_at_modfov += sx_at_modfov;
@@ -24537,18 +24296,15 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         if (prm_636 - ty_at_modfov == 0)
         {
             goto label_0410_internal;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         qx_at_modfov += m_at_modfov;
         if (qx_at_modfov < f2_at_modfov)
@@ -24568,13 +24324,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 ++p_at_modfov;
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 qx_at_modfov -= f1_at_modfov;
                 ty_at_modfov += sy_at_modfov;
@@ -24599,8 +24353,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
     }
 label_0410_internal:
     maxroute = p_at_modfov;
-    stat = 1;
-    return stat;
+    return 1;
 }
 void display_customkey(
     const std::string& prm_637,
@@ -25210,13 +24963,11 @@ int role(int prm_686, int prm_687, int prm_688)
             d_at_m97 += rnd(prm_687) + 1;
         }
     }
-    stat = d_at_m97 + prm_688;
-    return stat;
+    return d_at_m97 + prm_688;
 }
 int rolemax(int prm_689, int prm_690, int prm_691)
 {
-    stat = prm_689 * prm_690 + prm_691;
-    return stat;
+    return prm_689 * prm_690 + prm_691;
 }
 void page_save()
 {
@@ -25250,7 +25001,7 @@ void fileadd(const std::string& prm_692, int prm_693)
         q_at_m98(0) = u8"#"s;
         q_at_m98(1) = u8"*"s;
     }
-    stat = notesel(filemod);
+    notesel(filemod);
     p_at_m98 = instr(filemod, 0, prm_692);
     if (p_at_m98 != -1)
     {
@@ -25274,7 +25025,7 @@ void fileadd(const std::string& prm_692, int prm_693)
 }
 void arrayfile()
 {
-    stat = notesel(tmp);
+    notesel(tmp);
     tmp = "";
     if (fread == 1)
     {
@@ -25608,8 +25359,7 @@ int imeget()
     himc_at_ime_control = ImmGetContext(hwnd);
     imesw_at_ime_control = ImmGetOpenStatus(himc_at_ime_control);
     ImmReleaseContext(hwnd, himc_at_ime_control);
-    stat = imesw_at_ime_control;
-    return stat;
+    return imesw_at_ime_control;
 }
 void gmes(const std::string& prm_715)
 {
@@ -26086,26 +25836,22 @@ int direction(int prm_748, int prm_749, int prm_750, int prm_751)
     {
         if (prm_748 > prm_750)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         else
         {
-            stat = 2;
-            return stat;
+            return 2;
         }
     }
     else
     {
         if (prm_749 > prm_751)
         {
-            stat = 3;
-            return stat;
+            return 3;
         }
         else
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
 }
@@ -26534,8 +26280,7 @@ int prodcheck()
             }
         }
     }
-    stat = f_at_m110;
-    return stat;
+    return f_at_m110;
 }
 int calcweaponfix(int prm_752)
 {
@@ -26559,20 +26304,17 @@ int calcweaponfix(int prm_752)
         rangemap(3) = 100;
         rangemap(4) = 80;
         rangemap(5) = 60;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 781)
     {
         pierce = 40;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 759)
     {
         pierce = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 758)
     {
@@ -26581,26 +26323,22 @@ int calcweaponfix(int prm_752)
         rangemap(1) = 90;
         rangemap(2) = 70;
         rangemap(3) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 741)
     {
         pierce = 20;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 739)
     {
         pierce = 65;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 735)
     {
         pierce = 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 725)
     {
@@ -26608,8 +26346,7 @@ int calcweaponfix(int prm_752)
         rangemap(0) = 60;
         rangemap(1) = 100;
         rangemap(2) = 70;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 718)
     {
@@ -26617,8 +26354,7 @@ int calcweaponfix(int prm_752)
         rangemap(0) = 50;
         rangemap(1) = 100;
         rangemap(2) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 716)
     {
@@ -26626,8 +26362,7 @@ int calcweaponfix(int prm_752)
         rangemap(0) = 60;
         rangemap(1) = 100;
         rangemap(2) = 70;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 714)
     {
@@ -26637,8 +26372,7 @@ int calcweaponfix(int prm_752)
         rangemap(2) = 90;
         rangemap(3) = 80;
         rangemap(4) = 60;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 713)
     {
@@ -26646,34 +26380,29 @@ int calcweaponfix(int prm_752)
         rangemap(0) = 60;
         rangemap(1) = 100;
         rangemap(2) = 70;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 678)
     {
         pierce = 10;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 677)
     {
         pierce = 30;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 675)
     {
         pierce = 15;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 674)
     {
         pierce = 30;
         rangemap(0) = 100;
         rangemap(1) = 40;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 673)
     {
@@ -26687,8 +26416,7 @@ int calcweaponfix(int prm_752)
         rangemap(6) = 70;
         rangemap(7) = 60;
         rangemap(8) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 633)
     {
@@ -26696,8 +26424,7 @@ int calcweaponfix(int prm_752)
         rangemap(0) = 50;
         rangemap(1) = 100;
         rangemap(2) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 514)
     {
@@ -26710,8 +26437,7 @@ int calcweaponfix(int prm_752)
         rangemap(5) = 100;
         rangemap(6) = 100;
         rangemap(7) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 512)
     {
@@ -26723,16 +26449,14 @@ int calcweaponfix(int prm_752)
         rangemap(4) = 100;
         rangemap(5) = 100;
         rangemap(6) = 100;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 496)
     {
         pierce = 30;
         rangemap(0) = 100;
         rangemap(1) = 60;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 482)
     {
@@ -26744,26 +26468,22 @@ int calcweaponfix(int prm_752)
         rangemap(4) = 70;
         rangemap(5) = 60;
         rangemap(6) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 359)
     {
         pierce = 40;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 266)
     {
         pierce = 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 235)
     {
         pierce = 30;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 231)
     {
@@ -26774,8 +26494,7 @@ int calcweaponfix(int prm_752)
         rangemap(3) = 90;
         rangemap(4) = 80;
         rangemap(5) = 70;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 230)
     {
@@ -26785,38 +26504,32 @@ int calcweaponfix(int prm_752)
         rangemap(2) = 100;
         rangemap(3) = 80;
         rangemap(4) = 60;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 228)
     {
         pierce = 25;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 225)
     {
         pierce = 10;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 224)
     {
         pierce = 20;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 213)
     {
         pierce = 25;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 211)
     {
         pierce = 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 210)
     {
@@ -26824,8 +26537,7 @@ int calcweaponfix(int prm_752)
         rangemap(0) = 60;
         rangemap(1) = 100;
         rangemap(2) = 70;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 207)
     {
@@ -26839,32 +26551,27 @@ int calcweaponfix(int prm_752)
         rangemap(6) = 70;
         rangemap(7) = 60;
         rangemap(8) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 206)
     {
         pierce = 20;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 73)
     {
         pierce = 20;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 64)
     {
         pierce = 15;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 63)
     {
         pierce = 15;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 60)
     {
@@ -26873,8 +26580,7 @@ int calcweaponfix(int prm_752)
         rangemap(1) = 90;
         rangemap(2) = 70;
         rangemap(3) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 58)
     {
@@ -26888,35 +26594,29 @@ int calcweaponfix(int prm_752)
         rangemap(6) = 70;
         rangemap(7) = 60;
         rangemap(8) = 50;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 57)
     {
         pierce = 25;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 56)
     {
         pierce = 10;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 2)
     {
         pierce = 10;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_752 == 1)
     {
         pierce = 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_1280()
 {
@@ -26941,8 +26641,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 51;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 501)
     {
@@ -26953,8 +26652,7 @@ int label_1280()
         matneed(1) = 2;
         matneed(2) = 44;
         matneed(3) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 500)
     {
@@ -26965,8 +26663,7 @@ int label_1280()
         matneed(1) = 2;
         matneed(2) = 38;
         matneed(3) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 455)
     {
@@ -26979,8 +26676,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 7;
         matneed(5) = 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 411)
     {
@@ -26993,8 +26689,7 @@ int label_1280()
         matneed(3) = 1;
         matneed(4) = 23;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 408)
     {
@@ -27007,8 +26702,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 21;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 407)
     {
@@ -27021,8 +26715,7 @@ int label_1280()
         matneed(3) = 3;
         matneed(4) = 42;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 405)
     {
@@ -27035,8 +26728,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 52;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 403)
     {
@@ -27049,8 +26741,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 10;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 402)
     {
@@ -27061,8 +26752,7 @@ int label_1280()
         matneed(1) = 7;
         matneed(2) = 45;
         matneed(3) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 401)
     {
@@ -27075,8 +26765,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 21;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 400)
     {
@@ -27089,8 +26778,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 2;
         matneed(5) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 399)
     {
@@ -27103,8 +26791,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 20;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 395)
     {
@@ -27117,8 +26804,7 @@ int label_1280()
         matneed(3) = 1;
         matneed(4) = 44;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 390)
     {
@@ -27131,8 +26817,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 30;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 389)
     {
@@ -27145,8 +26830,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 17;
         matneed(5) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 388)
     {
@@ -27159,8 +26843,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 23;
         matneed(5) = 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 384)
     {
@@ -27173,8 +26856,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 16;
         matneed(5) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 362)
     {
@@ -27187,8 +26869,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 30;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 287)
     {
@@ -27201,8 +26882,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 25;
         matneed(5) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 286)
     {
@@ -27213,8 +26893,7 @@ int label_1280()
         matneed(1) = 4;
         matneed(2) = 14;
         matneed(3) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 285)
     {
@@ -27225,8 +26904,7 @@ int label_1280()
         matneed(1) = 4;
         matneed(2) = 15;
         matneed(3) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 253)
     {
@@ -27235,8 +26913,7 @@ int label_1280()
         matval(2) = 100;
         matneed(0) = 5;
         matneed(1) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 245)
     {
@@ -27249,8 +26926,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 4;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 242)
     {
@@ -27263,8 +26939,7 @@ int label_1280()
         matneed(3) = 1;
         matneed(4) = 23;
         matneed(5) = 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 236)
     {
@@ -27277,8 +26952,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 2;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 209)
     {
@@ -27291,8 +26965,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 16;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 175)
     {
@@ -27305,8 +26978,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 54;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 123)
     {
@@ -27319,8 +26991,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 50;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 122)
     {
@@ -27333,8 +27004,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 20;
         matneed(5) = 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 120)
     {
@@ -27347,8 +27017,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 50;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 119)
     {
@@ -27361,8 +27030,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 54;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 76)
     {
@@ -27375,8 +27043,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 42;
         matneed(5) = 4;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 75)
     {
@@ -27389,8 +27056,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 14;
         matneed(5) = 5;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 74)
     {
@@ -27403,8 +27069,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 42;
         matneed(5) = 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 72)
     {
@@ -27417,8 +27082,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 42;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 71)
     {
@@ -27429,8 +27093,7 @@ int label_1280()
         matneed(1) = 3;
         matneed(2) = 42;
         matneed(3) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 70)
     {
@@ -27443,8 +27106,7 @@ int label_1280()
         matneed(3) = 1;
         matneed(4) = 15;
         matneed(5) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 69)
     {
@@ -27455,8 +27117,7 @@ int label_1280()
         matneed(1) = 3;
         matneed(2) = 15;
         matneed(3) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 68)
     {
@@ -27467,8 +27128,7 @@ int label_1280()
         matneed(1) = 3;
         matneed(2) = 14;
         matneed(3) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 66)
     {
@@ -27481,8 +27141,7 @@ int label_1280()
         matneed(3) = 5;
         matneed(4) = 18;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 65)
     {
@@ -27495,8 +27154,7 @@ int label_1280()
         matneed(3) = 3;
         matneed(4) = 31;
         matneed(5) = 6;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 19)
     {
@@ -27509,8 +27167,7 @@ int label_1280()
         matneed(3) = 4;
         matneed(4) = 29;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 18)
     {
@@ -27523,8 +27180,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 49;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 16)
     {
@@ -27537,8 +27193,7 @@ int label_1280()
         matneed(3) = 2;
         matneed(4) = 4;
         matneed(5) = 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 14)
     {
@@ -27549,8 +27204,7 @@ int label_1280()
         matneed(1) = 2;
         matneed(2) = 49;
         matneed(3) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (matid == 8)
     {
@@ -27563,11 +27217,9 @@ int label_1280()
         matneed(3) = 3;
         matneed(4) = 50;
         matneed(5) = 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = -1;
-    return stat;
+    return -1;
 }
 void fixaiact(int prm_753)
 {
@@ -27607,147 +27259,124 @@ int eleinfo(int prm_754, int prm_755)
     {
         if (prm_755 == 0)
         {
-            stat = 3;
-            return stat;
+            return 3;
         }
         else
         {
-            stat = 108;
-            return stat;
+            return 108;
         }
     }
     if (prm_754 == 51)
     {
         if (prm_755 == 0)
         {
-            stat = 12;
-            return stat;
+            return 12;
         }
         else
         {
-            stat = 106;
-            return stat;
+            return 106;
         }
     }
     if (prm_754 == 52)
     {
         if (prm_755 == 0)
         {
-            stat = 5;
-            return stat;
+            return 5;
         }
         else
         {
-            stat = 107;
-            return stat;
+            return 107;
         }
     }
     if (prm_754 == 59)
     {
         if (prm_755 == 0)
         {
-            stat = 8;
-            return stat;
+            return 8;
         }
         else
         {
-            stat = 114;
-            return stat;
+            return 114;
         }
     }
     if (prm_754 == 53)
     {
         if (prm_755 == 0)
         {
-            stat = 4;
-            return stat;
+            return 4;
         }
         else
         {
-            stat = 115;
-            return stat;
+            return 115;
         }
     }
     if (prm_754 == 58)
     {
         if (prm_755 == 0)
         {
-            stat = 9;
-            return stat;
+            return 9;
         }
         else
         {
-            stat = 111;
-            return stat;
+            return 111;
         }
     }
     if (prm_754 == 57)
     {
         if (prm_755 == 0)
         {
-            stat = 11;
-            return stat;
+            return 11;
         }
         else
         {
-            stat = 112;
-            return stat;
+            return 112;
         }
     }
     if (prm_754 == 54)
     {
         if (prm_755 == 0)
         {
-            stat = 10;
-            return stat;
+            return 10;
         }
         else
         {
-            stat = 113;
-            return stat;
+            return 113;
         }
     }
     if (prm_754 == 55)
     {
         if (prm_755 == 0)
         {
-            stat = 2;
-            return stat;
+            return 2;
         }
         else
         {
-            stat = 110;
-            return stat;
+            return 110;
         }
     }
     if (prm_754 == 56)
     {
         if (prm_755 == 0)
         {
-            stat = 7;
-            return stat;
+            return 7;
         }
         else
         {
-            stat = 109;
-            return stat;
+            return 109;
         }
     }
     if (prm_754 == 63)
     {
         if (prm_755 == 0)
         {
-            stat = 2;
-            return stat;
+            return 2;
         }
         else
         {
-            stat = 110;
-            return stat;
+            return 110;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
 {
@@ -27771,7 +27400,7 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
         dbid = prm_757;
     }
     rc = prm_756;
-    label_1533();
+    int stat = label_1533();
     initlv = 0;
     voidlv = 0;
     characreatehack = 0;
@@ -27781,8 +27410,7 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
         {
             cdata_state(rc) = 0;
             --npcmemory(1, cdata_id(rc));
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (rc != 0)
         {
@@ -27795,11 +27423,9 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
     else
     {
         rc = 56;
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int relationbetween(int prm_760, int)
 {
@@ -27807,20 +27433,17 @@ int relationbetween(int prm_760, int)
     {
         if (cdata_relationship(prm_760) <= -3)
         {
-            stat = -3;
-            return stat;
+            return -3;
         }
     }
     else
     {
         if (cdata_relationship(prm_760) >= -2)
         {
-            stat = -3;
-            return stat;
+            return -3;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 std::string calcage(int prm_762)
 {
@@ -27849,11 +27472,10 @@ int customtalk(int prm_764, int prm_765)
         exist(exedir + u8"user\\talk\\"s + cdatan(4, prm_764));
         if (strsize == -1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         SDIM2(buff_at_m116, strsize);
-        stat = notesel(buff_at_m116);
+        notesel(buff_at_m116);
         noteload(exedir + u8"user\\talk\\"s + cdatan(4, prm_764));
         f_at_m116 = 1;
     }
@@ -27863,7 +27485,7 @@ int customtalk(int prm_764, int prm_765)
         {
             f_at_m116 = 1;
             buff_at_m116 = ""s + usertxt(cdata_cnpc_id(prm_764));
-            stat = notesel(buff_at_m116);
+            notesel(buff_at_m116);
         }
     }
     if (f_at_m116)
@@ -27916,24 +27538,20 @@ int customtalk(int prm_764, int prm_765)
             }
         }
         noteunsel();
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_765 == 106)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata_can_talk(prm_764) != 0)
     {
         dbid = cdata_id(prm_764);
         dbmode = prm_765;
-        label_2299();
-        stat = 1;
-        return stat;
+        label_2654();
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int findchara(int prm_766)
 {
@@ -27956,8 +27574,7 @@ int findchara(int prm_766)
             }
         }
     }
-    stat = p_at_m117;
-    return stat;
+    return p_at_m117;
 }
 int findally(int prm_767)
 {
@@ -27977,53 +27594,43 @@ int findally(int prm_767)
             }
         }
     }
-    stat = p_at_m117;
-    return stat;
+    return p_at_m117;
 }
 int implevel(int prm_768)
 {
     if (prm_768 < 10)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_768 < 25)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_768 < 40)
     {
-        stat = 2;
-        return stat;
+        return 2;
     }
     if (prm_768 < 75)
     {
-        stat = 3;
-        return stat;
+        return 3;
     }
     if (prm_768 < 100)
     {
-        stat = 4;
-        return stat;
+        return 4;
     }
     if (prm_768 < 150)
     {
-        stat = 5;
-        return stat;
+        return 5;
     }
     if (prm_768 < 200)
     {
-        stat = 6;
-        return stat;
+        return 6;
     }
     if (prm_768 < 300)
     {
-        stat = 7;
-        return stat;
+        return 7;
     }
-    stat = 8;
-    return stat;
+    return 8;
 }
 void modimp(int prm_769, int prm_770)
 {
@@ -28104,8 +27711,7 @@ int exist_questtarget()
             }
         }
     }
-    stat = f_at_m119;
-    return stat;
+    return f_at_m119;
 }
 void check_quest()
 {
@@ -28484,8 +28090,7 @@ int get_freechara()
             }
         }
     }
-    stat = f_at_m125;
-    return stat;
+    return f_at_m125;
 }
 int get_freeally()
 {
@@ -28504,8 +28109,7 @@ int get_freeally()
             break;
         }
     }
-    stat = f_at_m125;
-    return stat;
+    return f_at_m125;
 }
 void del_chara(int prm_783)
 {
@@ -28707,8 +28311,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     label_2666();
     r1 = tc_at_m125;
     label_1477();
-    stat = prm_784;
-    return stat;
+    return prm_784;
 }
 void hostileaction(int prm_787, int prm_788)
 {
@@ -28969,8 +28572,7 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
             }
         }
     }
-    stat = f_at_m130;
-    return stat;
+    return f_at_m130;
 }
 int findbuff(int prm_799, int prm_800)
 {
@@ -28991,8 +28593,7 @@ int findbuff(int prm_799, int prm_800)
             }
         }
     }
-    stat = f_at_m131;
-    return stat;
+    return f_at_m131;
 }
 int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
 {
@@ -29001,8 +28602,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     int f_at_m132 = 0;
     if (prm_804 <= 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     p_at_m132 = -1;
     {
@@ -29041,8 +28641,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
             txt(lang(
                 u8"しかし、効果はなかった。"s,
                 u8"But it produces no effect."s));
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     fixeddur_at_m132 = prm_804;
@@ -29089,8 +28688,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
                 txt(lang(
                     u8"ホーリーヴェイルが呪いを防いだ。"s,
                     u8"The holy veil repels the hex."s));
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
         if (f_at_m132 == 1)
@@ -29103,8 +28701,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
                     name(prm_801) + u8" resist"s + _s(prm_801)
                         + u8" the hex."s));
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (cc == 0)
         {
@@ -29124,8 +28721,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     cdata(280 + p_at_m132 * 3 + 2, prm_801) = fixeddur_at_m132;
     r1 = prm_801;
     label_1477();
-    stat = 0;
-    return stat;
+    return 0;
 }
 void delbuff(int prm_805, int prm_806)
 {
@@ -29666,7 +29262,7 @@ void modcorrupt(int prm_815)
                         await();
                         tid = rnd(17) + 200;
                         traitmode = 0;
-                        label_0042();
+                        int stat = label_0042();
                         if (stat == 0 || traitref != 3)
                         {
                             continue;
@@ -29747,7 +29343,7 @@ void modcorrupt(int prm_815)
                             }
                         }
                         traitmode = 0;
-                        label_0042();
+                        int stat = label_0042();
                         if (stat == 0 || traitref != 3)
                         {
                             continue;
@@ -29826,8 +29422,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 6;
         if (p_at_con > 0)
@@ -29850,8 +29445,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 5)
     {
@@ -29874,8 +29468,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 7;
         if (p_at_con > 0)
@@ -29899,8 +29492,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 3)
     {
@@ -29919,8 +29511,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 10;
         if (p_at_con > 0)
@@ -29944,8 +29535,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 1)
     {
@@ -29964,8 +29554,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 5;
         if (p_at_con > 0)
@@ -29989,8 +29578,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 2)
     {
@@ -30009,8 +29597,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 4;
         if (p_at_con > 0)
@@ -30034,8 +29621,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 6)
     {
@@ -30062,8 +29648,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 7;
         if (p_at_con > 0)
@@ -30080,8 +29665,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                     name(prm_818) + u8" "s + is(prm_818) + u8" frightened."s));
             }
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 7)
     {
@@ -30100,8 +29684,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         label_1346();
         if (f_at_con == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         p_at_con = p_at_con / 8;
         if (p_at_con > 0)
@@ -30124,8 +29707,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 9)
     {
@@ -30155,8 +29737,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 8)
     {
@@ -30180,8 +29761,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata_drunk(prm_818) += p_at_con;
             }
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 11)
     {
@@ -30207,8 +29787,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             rowactend(prm_818);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (prm_819 == 12)
     {
@@ -30232,11 +29811,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata_sick(prm_818) += p_at_con / 10 + 1;
             }
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_1346()
 {
@@ -30787,8 +30364,7 @@ int item_fire(int prm_840, int prm_841)
     {
         if (sdata(50, prm_840) / 50 >= 6 || cdata_quality(prm_840) >= 4)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         inv_getheader(prm_840);
         {
@@ -30818,8 +30394,7 @@ int item_fire(int prm_840, int prm_841)
     }
     if (max_at_m138 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     f_at_m138 = 0;
     {
@@ -31012,8 +30587,7 @@ int item_fire(int prm_840, int prm_841)
         }
     }
     label_1521();
-    stat = f_at_m138;
-    return stat;
+    return f_at_m138;
 }
 void mapitem_fire(int prm_842, int prm_843)
 {
@@ -31043,7 +30617,7 @@ void mapitem_fire(int prm_842, int prm_843)
     }
     if (ci_at_m138 != -1)
     {
-        item_fire(-1, ci_at_m138);
+        int stat = item_fire(-1, ci_at_m138);
         if (stat == 1)
         {
             if (map(prm_842, prm_843, 8) == 0)
@@ -31069,8 +30643,7 @@ int item_cold(int prm_844, int prm_845)
     {
         if (sdata(51, prm_844) / 50 >= 6 || cdata_quality(prm_844) >= 4)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         inv_getheader(prm_844);
         {
@@ -31100,8 +30673,7 @@ int item_cold(int prm_844, int prm_845)
     }
     if (max_at_m138 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     f_at_m138 = 0;
     {
@@ -31186,8 +30758,7 @@ int item_cold(int prm_844, int prm_845)
         }
     }
     label_1521();
-    stat = f_at_m138;
-    return stat;
+    return f_at_m138;
 }
 void mapitem_cold(int prm_846, int prm_847)
 {
@@ -31242,8 +30813,7 @@ int copy_chara(int prm_848)
     }
     if (c_at_m139 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     f_at_m139 = 0;
     {
@@ -31274,8 +30844,7 @@ int copy_chara(int prm_848)
     }
     if (f_at_m139 == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     del_chara(c_at_m139);
     memcpy(sdata, 0, c_at_m139, sdata, 0, prm_848, 4800);
@@ -31306,8 +30875,7 @@ int copy_chara(int prm_848)
     cbitmod(975, c_at_m139, 0);
     cbitmod(981, c_at_m139, 1);
     cbitmod(985, c_at_m139, 0);
-    stat = 1;
-    return stat;
+    return 1;
 }
 void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
 {
@@ -31687,8 +31255,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     if (cdata_state(prm_853) != 1)
     {
         label_1370();
-        stat = 0;
-        return stat;
+        return 0;
     }
     dmg_at_m141 = prm_854 * (1 + (cdata_furious(prm_853) > 0));
     if (prm_855 >= 0)
@@ -32159,8 +31726,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (cfg_heart == 1)
                     {
-                        CHECKPLAY(32);
-                        if (stat == 0)
+                        if (CHECKPLAY(32) == 0)
                         {
                             snd(32);
                         }
@@ -32186,7 +31752,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (mdata(6) != 1)
                     {
-                        copy_chara(prm_853);
+                        int stat = copy_chara(prm_853);
                         if (stat == 1)
                         {
                             txt(lang(
@@ -32212,7 +31778,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         if (mdata(6) != 1)
                         {
-                            copy_chara(prm_853);
+                            int stat = copy_chara(prm_853);
                             if (stat == 1)
                             {
                                 txt(lang(
@@ -33015,12 +32581,10 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
         label_1370();
-        stat = 0;
-        return stat;
+        return 0;
     }
     label_1370();
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1370()
 {
@@ -33071,8 +32635,7 @@ int dmgmp(int prm_858, int prm_859)
             d_at_m142 = d_at_m142 / 5;
             if (d_at_m142 < 10)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
         }
         txt(lang(
@@ -33080,22 +32643,19 @@ int dmgmp(int prm_858, int prm_859)
             u8"Magic reaction hurts "s + name(prm_858) + u8"!"s));
         dmghp(prm_858, d_at_m142, -2);
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int dmgsp(int prm_860, int prm_861)
 {
     if (prm_860 != 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata_sp(prm_860) >= -100)
     {
         cdata_sp(prm_860) -= prm_861;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void healsan(int prm_862, int prm_863)
 {
@@ -33112,8 +32672,7 @@ int dmgsan(int prm_864, int prm_865)
     int dmg_at_m143 = 0;
     if (cdata_quality(prm_864) >= 4)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     r_at_m143 = sdata(54, prm_864) / 50;
     if (r_at_m143 <= 0)
@@ -33122,8 +32681,7 @@ int dmgsan(int prm_864, int prm_865)
     }
     if (r_at_m143 > 10)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     dmg_at_m143 = prm_865 / r_at_m143;
     if (prm_864 < 16)
@@ -33146,28 +32704,24 @@ int dmgsan(int prm_864, int prm_865)
     {
         dmgcon(prm_864, 11, 100);
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int actionsp(int prm_866, int prm_867)
 {
     if (prm_866 != 0)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (cdata_sp(prm_866) < 50)
     {
         if (cdata_sp(prm_866) < rnd(75))
         {
             dmgsp(prm_866, prm_867);
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     dmgsp(prm_866, prm_867);
-    stat = 1;
-    return stat;
+    return 1;
 }
 int advfavoriteskill(int prm_868)
 {
@@ -33191,16 +32745,14 @@ int advfavoriteskill(int prm_868)
         }
     }
     randomize();
-    stat = i_at_m145;
-    return stat;
+    return i_at_m145;
 }
 int advfavoritestat(int prm_869)
 {
     randomize(prm_869);
     i_at_m145 = rnd(8) + 10;
     randomize();
-    stat = i_at_m145;
-    return stat;
+    return i_at_m145;
 }
 void modweight(int prm_870, int prm_871, int prm_872)
 {
@@ -33346,7 +32898,8 @@ void chara_vomit(int prm_876)
         if (rnd(p_at_m146 * p_at_m146 * p_at_m146) == 0 || prm_876 == 0)
         {
             flt();
-            itemcreate(-1, 704, cdata_x(prm_876), cdata_y(prm_876), 0);
+            int stat =
+                itemcreate(-1, 704, cdata_x(prm_876), cdata_y(prm_876), 0);
             if (stat != 0)
             {
                 if (prm_876 != 0)
@@ -33427,12 +32980,10 @@ int chara_anorexia(int prm_879)
 {
     if (cbit(986, prm_879) == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     chara_vomit(prm_879);
-    stat = 1;
-    return stat;
+    return 1;
 }
 void sickifcursed(int prm_880, int prm_881, int prm_882)
 {
@@ -33456,8 +33007,7 @@ int net_send(const std::string& prm_883, int prm_884)
     std::string msg_at_m147;
     if (cfg_net == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     chattemp = prm_883;
     if (prm_884 == 0)
@@ -33474,8 +33024,7 @@ int net_send(const std::string& prm_883, int prm_884)
     {
         if (gdata(828))
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     conurl_at_m147 = u8"hpcgi3.nifty.com"s;
@@ -33495,29 +33044,30 @@ int net_send(const std::string& prm_883, int prm_884)
     {
         conurl_at_m147 = cgiurl2;
     }
-    sockopen(0, conurl_at_m147, 80);
-    if (stat)
     {
-        sockclose();
-        txt(u8"["s + stat + u8"]"s
-            + lang(
-                  u8"ネットに繋がっていない。"s,
-                  u8"You need an internet connection."s));
-        stat = 0;
-        return stat;
+        int stat = sockopen(0, conurl_at_m147, 80);
+        if (stat)
+        {
+            sockclose();
+            txt(u8"["s + stat + u8"]"s
+                + lang(
+                      u8"ネットに繋がっていない。"s,
+                      u8"You need an internet connection."s));
+            return 0;
+        }
     }
-    sockput(u8"GET "s + url_at_m147 + msg_at_m147 +
-        u8" HTTP/1.0\nHost:www.nifty.com???\nUser-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x 4.90)\n\n"s);
-    if (stat)
     {
-        sockclose();
-        txt(lang(u8"送信に失敗した。"s, u8"Failed to send a message."s));
-        stat = 0;
-        return stat;
+        int stat = sockput(u8"GET "s + url_at_m147 + msg_at_m147 +
+        u8" HTTP/1.0\nHost:www.nifty.com???\nUser-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x 4.90)\n\n"s);
+        if (stat)
+        {
+            sockclose();
+            txt(lang(u8"送信に失敗した。"s, u8"Failed to send a message."s));
+            return 0;
+        }
     }
     sockclose();
-    stat = 1;
-    return stat;
+    return 1;
 }
 int net_read(int prm_885)
 {
@@ -33537,8 +33087,7 @@ int net_read(int prm_885)
     netbuf = "";
     if (cfg_net == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_885 == 5)
     {
@@ -33570,21 +33119,23 @@ int net_read(int prm_885)
         url_at_m147 = u8"http://homepage3.nifty.com/rfish/file/server.txt"s;
         conurl_at_m147 = u8"homepage3.nifty.com"s;
     }
-    sockopen(0, conurl_at_m147, 80);
-    if (stat)
     {
-        sockclose();
-        stat = 0;
-        return stat;
+        int stat = sockopen(0, conurl_at_m147, 80);
+        if (stat)
+        {
+            sockclose();
+            return 0;
+        }
     }
-    sockput(
-        u8"GET "s + url_at_m147
-        + u8" HTTP/1.0\nHost:???\nUser-Agent: HSP ver3.0\n\n"s);
-    if (stat)
     {
-        sockclose();
-        stat = 0;
-        return stat;
+        int stat = sockput(
+            u8"GET "s + url_at_m147
+            + u8" HTTP/1.0\nHost:???\nUser-Agent: HSP ver3.0\n\n"s);
+        if (stat)
+        {
+            sockclose();
+            return 0;
+        }
     }
     a_at_m147 = "";
     sz_at_m147 = 0;
@@ -33599,31 +33150,29 @@ label_1393_internal:
         {
             txt(u8"[Chat Skipped]"s);
             sockclose();
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
-    sockget(a_at_m147, 64);
-    if (stat)
     {
-        sockclose();
-        stat = 0;
-        return stat;
+        int stat = sockget(a_at_m147, 64);
+        if (stat)
+        {
+            sockclose();
+            return 0;
+        }
     }
     b_at_m147 = peek(a_at_m147, 0);
     if (b_at_m147 == 0)
     {
         goto label_1394_internal;
-        stat = 0;
-        return stat;
+        return 0;
     }
     netbuf += a_at_m147;
     sz_at_m147 += 64;
     if (sz_at_m147 > 30000)
     {
         goto label_1394_internal;
-        stat = 0;
-        return stat;
+        return 0;
     }
     goto label_1393_internal;
 label_1394_internal:
@@ -33747,8 +33296,7 @@ label_1394_internal:
     {
         lastchat = count_latest_at_m147;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int net_dllist(const std::string& prm_886, int prm_887)
 {
@@ -33771,10 +33319,9 @@ int net_dllist(const std::string& prm_886, int prm_887)
     exist(file_at_m147);
     if (strsize == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = notesel(netbuf);
+    notesel(netbuf);
     noteload(file_at_m147);
     exist(file_at_m147);
     size_at_m147 = strsize;
@@ -33841,8 +33388,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
             ++p_at_m147;
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
@@ -33857,19 +33403,17 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
     exist(exedir + u8"user\\"s + prm_889);
     if (strsize == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1398()
 {
     SDIM1(cgiurl2);
     SDIM1(cgiurl3);
     SDIM2(serverlist, 200);
-    stat = notesel(serverlist);
-    net_read(4);
+    notesel(serverlist);
+    int stat = net_read(4);
     if (stat == 1 && cfg_serverlist == 0)
     {
         serverlist = netbuf;
@@ -34208,8 +33752,7 @@ label_1402_internal:
     }
     if (key == key_cancel)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_1402_internal;
 }
@@ -35549,7 +35092,7 @@ void label_1426()
             {
                 if (ap(20) == -1)
                 {
-                    route_info(anidx, anidy, cnt);
+                    int stat = route_info(anidx, anidy, cnt);
                     if (stat == -1)
                     {
                         ap(cnt) = -1;
@@ -37417,20 +36960,17 @@ int carmor(int prm_890)
 {
     if (cdata_sum_of_equipment_weight(prm_890) >= 35000)
     {
-        stat = 169;
-        return stat;
+        return 169;
     }
     else
     {
         if (cdata_sum_of_equipment_weight(prm_890) >= 15000)
         {
-            stat = 170;
-            return stat;
+            return 170;
         }
         else
         {
-            stat = 171;
-            return stat;
+            return 171;
         }
     }
 }
@@ -37454,8 +36994,7 @@ std::string cnveqweight(int prm_891)
 }
 int calcexpalive(int prm_892)
 {
-    stat = prm_892 * 100;
-    return stat;
+    return prm_892 * 100;
 }
 void label_1452()
 {
@@ -37984,22 +37523,19 @@ int calcattackhit(int prm_893)
     }
     if (prm_893 == 1)
     {
-        stat = tohit;
-        return stat;
+        return tohit;
     }
     evade = sdata(13, tc) / 3 + sdata(173, tc) + cdata_dv(tc) + 25;
     if (prm_893 == 2)
     {
-        stat = evade;
-        return stat;
+        return evade;
     }
     if (cdata_dimmed(tc) != 0)
     {
         if (rnd(4) == 0)
         {
             critical = 1;
-            stat = 1;
-            return stat;
+            return 1;
         }
         evade /= 2;
     }
@@ -38013,8 +37549,7 @@ int calcattackhit(int prm_893)
     }
     if (cdata_sleep(tc) != 0)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (cdata_confused(cc) != 0 || cdata_dimmed(cc) != 0)
     {
@@ -38036,24 +37571,21 @@ int calcattackhit(int prm_893)
             {
                 if (rnd(sdata(187, tc) + 250) > 100)
                 {
-                    stat = -2;
-                    return stat;
+                    return -2;
                 }
             }
             if (evaderef > 200)
             {
                 if (rnd(sdata(187, tc) + 250) > 150)
                 {
-                    stat = -2;
-                    return stat;
+                    return -2;
                 }
             }
             if (evaderef > 150)
             {
                 if (rnd(sdata(187, tc) + 250) > 200)
                 {
-                    stat = -2;
-                    return stat;
+                    return -2;
                 }
             }
         }
@@ -38061,42 +37593,34 @@ int calcattackhit(int prm_893)
     if (rnd(5000) < sdata(13, cc) + 50)
     {
         critical = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (cdata_rate_of_critical_hit(cc) > rnd(200))
     {
         critical = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (rnd(20) == 1)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     if (rnd(20) == 0)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tohit < 1)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     if (evade < 1)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (rnd(tohit) > rnd(evade * 3 / 2))
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = -1;
-    return stat;
+    return -1;
 }
 int calcattackdmg(int prm_894)
 {
@@ -38168,8 +37692,7 @@ int calcattackdmg(int prm_894)
     }
     if (prm_894 == 1)
     {
-        stat = damage;
-        return stat;
+        return damage;
     }
     prot = cdata_pv(tc) + sdata(carmor(tc), tc) + sdata(12, tc) / 10;
     if (prot > 0)
@@ -38193,8 +37716,7 @@ int calcattackdmg(int prm_894)
     }
     if (prm_894 == 2)
     {
-        stat = prot;
-        return stat;
+        return prot;
     }
     if (dmgfix < -100)
     {
@@ -38294,8 +37816,7 @@ int calcattackdmg(int prm_894)
     {
         damage = 0;
     }
-    stat = damage;
-    return stat;
+    return damage;
 }
 void cnvbonus(int prm_895, int prm_896)
 {
@@ -38824,101 +38345,81 @@ int calcmedalvalue(int prm_897)
 {
     if (inv_id(prm_897) == 430)
     {
-        stat = 5;
-        return stat;
+        return 5;
     }
     if (inv_id(prm_897) == 431)
     {
-        stat = 8;
-        return stat;
+        return 8;
     }
     if (inv_id(prm_897) == 502)
     {
-        stat = 7;
-        return stat;
+        return 7;
     }
     if (inv_id(prm_897) == 480)
     {
-        stat = 20;
-        return stat;
+        return 20;
     }
     if (inv_id(prm_897) == 421)
     {
-        stat = 15;
-        return stat;
+        return 15;
     }
     if (inv_id(prm_897) == 603)
     {
-        stat = 20;
-        return stat;
+        return 20;
     }
     if (inv_id(prm_897) == 615)
     {
-        stat = 5;
-        return stat;
+        return 5;
     }
     if (inv_id(prm_897) == 559)
     {
-        stat = 10;
-        return stat;
+        return 10;
     }
     if (inv_id(prm_897) == 516)
     {
-        stat = 3;
-        return stat;
+        return 3;
     }
     if (inv_id(prm_897) == 616)
     {
-        stat = 18;
-        return stat;
+        return 18;
     }
     if (inv_id(prm_897) == 623)
     {
-        stat = 85;
-        return stat;
+        return 85;
     }
     if (inv_id(prm_897) == 624)
     {
-        stat = 25;
-        return stat;
+        return 25;
     }
     if (inv_id(prm_897) == 505)
     {
-        stat = 12;
-        return stat;
+        return 12;
     }
     if (inv_id(prm_897) == 625)
     {
-        stat = 11;
-        return stat;
+        return 11;
     }
     if (inv_id(prm_897) == 626)
     {
-        stat = 30;
-        return stat;
+        return 30;
     }
     if (inv_id(prm_897) == 627)
     {
-        stat = 55;
-        return stat;
+        return 55;
     }
     if (inv_id(prm_897) == 56)
     {
-        stat = 65;
-        return stat;
+        return 65;
     }
     if (inv_id(prm_897) == 742)
     {
-        stat = 72;
-        return stat;
+        return 72;
     }
     if (inv_id(prm_897) == 760)
     {
-        stat = 94;
-        return stat;
+        return 94;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int calcitemvalue(int prm_898, int prm_899)
 {
@@ -39005,8 +38506,7 @@ int calcitemvalue(int prm_898, int prm_899)
                 {
                     value_at_m153 = value_at_m153 * 65 / 100;
                 }
-                stat = value_at_m153;
-                return stat;
+                return value_at_m153;
             }
         }
     }
@@ -39014,7 +38514,7 @@ int calcitemvalue(int prm_898, int prm_899)
     {
         dbid = inv_id(prm_898);
         dbmode = 2;
-        stat = label_1275();
+        label_1275();
         if (inv_count(prm_898) < 0)
         {
             value_at_m153 = value_at_m153 / 10;
@@ -39106,8 +38606,7 @@ int calcitemvalue(int prm_898, int prm_899)
     {
         value_at_m153 = 1;
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calcinvestvalue(int)
 {
@@ -39119,20 +38618,17 @@ int calcinvestvalue(int)
         value_at_m153 = 500000;
     }
     value_at_m153 = value_at_m153 * 100 / (100 + sdata(160, 0) * 10) + 200;
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calcguiltvalue(int)
 {
     value_at_m153 =
         (-cdata_karma(0) + -30) * (cdata_fame(0) / 2 + cdata_level(0) * 200);
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calchireadv(int prm_902)
 {
-    stat = 250 + cdata_level(prm_902) * cdata_level(prm_902) * 30;
-    return stat;
+    return 250 + cdata_level(prm_902) * cdata_level(prm_902) * 30;
 }
 int calchirecost(int prm_903)
 {
@@ -39179,8 +38675,7 @@ int calchirecost(int prm_903)
             value_at_m153 = 0;
         }
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 void generatemoney(int prm_904)
 {
@@ -39260,8 +38755,7 @@ int calccostbuilding()
                 25,
                 200)
         / 100;
-    stat = cost_at_m153;
-    return stat;
+    return cost_at_m153;
 }
 int calccosttax()
 {
@@ -39275,14 +38769,12 @@ int calccosttax()
                 25,
                 200)
         / 100;
-    stat = cost_at_m153;
-    return stat;
+    return cost_at_m153;
 }
 int calcmealvalue()
 {
     value_at_m153 = 140;
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calccostreload(int prm_905, int prm_906)
 {
@@ -39336,18 +38828,15 @@ int calccostreload(int prm_905, int prm_906)
             }
         }
     }
-    stat = cost_at_m153;
-    return stat;
+    return cost_at_m153;
 }
 int calccargoupdate()
 {
-    stat = 10000;
-    return stat;
+    return 10000;
 }
 int calccargoupdatecost()
 {
-    stat = (gdata(82) - gdata(81)) / 10000 + 1;
-    return stat;
+    return (gdata(82) - gdata(81)) / 10000 + 1;
 }
 int calcidentifyvalue(int prm_907)
 {
@@ -39384,8 +38873,7 @@ int calcidentifyvalue(int prm_907)
     {
         value_at_m153 /= 2;
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calctraincost(int prm_908, int prm_909, int prm_910)
 {
@@ -39394,8 +38882,7 @@ int calctraincost(int prm_908, int prm_909, int prm_910)
     {
         value_at_m153 /= 2;
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calclearncost(int, int, int prm_913)
 {
@@ -39404,19 +38891,16 @@ int calclearncost(int, int, int prm_913)
     {
         value_at_m153 = value_at_m153 * 2 / 3;
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calcresurrectvalue(int prm_914)
 {
     if (cdata_state(prm_914) != 6)
     {
-        stat = 100;
-        return stat;
+        return 100;
     }
     value_at_m153 = cdata_level(prm_914) * cdata_level(prm_914) * 15;
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calcslavevalue(int prm_915)
 {
@@ -39430,8 +38914,7 @@ int calcslavevalue(int prm_915)
     {
         value_at_m153 = 10;
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calcrestorecost()
 {
@@ -39440,16 +38923,14 @@ int calcrestorecost()
     {
         value_at_m153 /= 2;
     }
-    stat = value_at_m153;
-    return stat;
+    return value_at_m153;
 }
 int calcinitgold(int prm_917)
 {
     int lootrich_at_m155 = 0;
     if (prm_917 < 0)
     {
-        stat = rnd(gdata(22) * 25 * (gdata(20) != 30) + 10) + 1;
-        return stat;
+        return rnd(gdata(22) * 25 * (gdata(20) != 30) + 10) + 1;
     }
     lootrich_at_m155 = -1;
     if (cdata_id(prm_917) == 183)
@@ -39466,11 +38947,9 @@ int calcinitgold(int prm_917)
     }
     if (lootrich_at_m155 != -1)
     {
-        stat = lootrich_at_m155 * 500 + rnd((1000 + lootrich_at_m155 * 1000));
-        return stat;
+        return lootrich_at_m155 * 500 + rnd((1000 + lootrich_at_m155 * 1000));
     }
-    stat = rnd(cdata_level(prm_917) * 25 + 10) + 1;
-    return stat;
+    return rnd(cdata_level(prm_917) * 25 + 10) + 1;
 }
 int calcspellpower(int prm_918, int prm_919)
 {
@@ -39478,27 +38957,22 @@ int calcspellpower(int prm_918, int prm_919)
     {
         if (sdataref(0, prm_918) != 0)
         {
-            stat = sdataref(0, prm_918) * 6 + 10;
-            return stat;
+            return sdataref(0, prm_918) * 6 + 10;
         }
-        stat = 100;
-        return stat;
+        return 100;
     }
     if (prm_919 == 0)
     {
-        stat = sdata(prm_918, prm_919) * 10 + 50;
-        return stat;
+        return sdata(prm_918, prm_919) * 10 + 50;
     }
     if (sdata(172, prm_919) == 0)
     {
         if (prm_919 >= 16)
         {
-            stat = cdata_level(prm_919) * 6 + 10;
-            return stat;
+            return cdata_level(prm_919) * 6 + 10;
         }
     }
-    stat = sdata(172, prm_919) * 6 + 10;
-    return stat;
+    return sdata(172, prm_919) * 6 + 10;
 }
 int calcspellfail(int prm_920, int prm_921)
 {
@@ -39509,13 +38983,11 @@ int calcspellfail(int prm_920, int prm_921)
     {
         if (gdata(183) == prm_921)
         {
-            stat = 95 - limit((30 - sdata(301, 0) / 2), 0, 30);
-            return stat;
+            return 95 - limit((30 - sdata(301, 0) / 2), 0, 30);
         }
         else
         {
-            stat = 95;
-            return stat;
+            return 95;
         }
     }
     i_at_m157 = 4;
@@ -39582,8 +39054,7 @@ int calcspellfail(int prm_920, int prm_921)
     {
         p_at_m157 = 0;
     }
-    stat = p_at_m157;
-    return stat;
+    return p_at_m157;
 }
 int calcspellcostmp(int prm_922, int prm_923)
 {
@@ -39595,8 +39066,7 @@ int calcspellcostmp(int prm_922, int prm_923)
             || prm_922 == 466)
         {
             cost_at_m158 = sdataref(2, prm_922);
-            stat = cost_at_m158;
-            return stat;
+            return cost_at_m158;
         }
         cost_at_m158 =
             sdataref(2, prm_922) * (100 + sdata(prm_922, prm_923) * 3) / 100
@@ -39607,8 +39077,7 @@ int calcspellcostmp(int prm_922, int prm_923)
         cost_at_m158 =
             sdataref(2, prm_922) * (50 + cdata_level(prm_923) * 3) / 100;
     }
-    stat = cost_at_m158;
-    return stat;
+    return cost_at_m158;
 }
 int calcspellcoststock(int prm_924, int prm_925)
 {
@@ -39624,8 +39093,7 @@ int calcspellcoststock(int prm_924, int prm_925)
     {
         cost_at_m159 = 1;
     }
-    stat = cost_at_m159;
-    return stat;
+    return cost_at_m159;
 }
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
@@ -39791,8 +39259,7 @@ int label_1513()
     }
     if (f == 1)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (rnd(4) == 0)
     {
@@ -39810,8 +39277,7 @@ int label_1513()
         {
             dmgmp(cc, cdata_max_mp(cc) / 3);
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(4) == 0)
     {
@@ -39829,8 +39295,7 @@ int label_1513()
             }
         }
         dmgcon(cc, 5, 100);
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(4) == 0)
     {
@@ -39845,7 +39310,7 @@ int label_1513()
             for (int cnt_end = cnt + (2 + rnd(3)); cnt < cnt_end; ++cnt)
             {
                 flt(calcobjlv(cdata_level(0) * 3 / 2 + 3), calcfixlv(2));
-                characreate(-1, 0, cdata_x(cc), cdata_y(cc));
+                int stat = characreate(-1, 0, cdata_x(cc), cdata_y(cc));
                 if (stat != 0)
                 {
                     if (cdata_relationship(cc) <= -3)
@@ -39856,8 +39321,7 @@ int label_1513()
                 }
             }
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (synccheck(cc, -1))
     {
@@ -39868,45 +39332,38 @@ int label_1513()
     tc = cc;
     efid = 408;
     label_2176();
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_1514()
 {
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc)) > rnd(gdata(22) * 8 + 60))
     {
         label_1461();
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_1515()
 {
     if (feat(2) == 7)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cc < 16)
     {
         if (rnd(refdiff + 1) < sdata(13, cc) + sdata(159, cc) * 4)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     else
     {
         if (rnd(4) != 0)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_1516()
 {
@@ -39919,11 +39376,9 @@ int label_1517()
         > rnd(gdata(22) * 12 + 100))
     {
         label_1516();
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_1518()
 {
@@ -39934,15 +39389,13 @@ int label_1518()
         {
             if (cdata_hate(r2) > 0)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             p = dist(cdata_x(r1), cdata_y(r1), cdata_x(r2), cdata_y(r2)) * 150
                 + (sdata(157, r1) * 100 + 150) + 1;
             if (rnd(p) < rnd(sdata(13, r2) * 60 + 150))
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
         }
     }
@@ -39950,12 +39403,10 @@ int label_1518()
     {
         if (rnd(150) < pcnoise)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_1519()
 {
@@ -40385,8 +39836,7 @@ int calcscore()
     {
         p = 0;
     }
-    stat = p;
-    return stat;
+    return p;
 }
 void calcpartyscore()
 {
@@ -40495,36 +39945,29 @@ int eqweaponlight()
 {
     if (rnd(2))
     {
-        stat = 10003;
-        return stat;
+        return 10003;
     }
     if (rnd(2))
     {
-        stat = 10009;
-        return stat;
+        return 10009;
     }
-    stat = 10004;
-    return stat;
+    return 10004;
 }
 int eqweaponheavy()
 {
     if (rnd(3) == 0)
     {
-        stat = 10001;
-        return stat;
+        return 10001;
     }
     if (rnd(3) == 0)
     {
-        stat = 10010;
-        return stat;
+        return 10010;
     }
     if (rnd(3) == 0)
     {
-        stat = 10008;
-        return stat;
+        return 10008;
     }
-    stat = 10005;
-    return stat;
+    return 10005;
 }
 void eqrandweaponmage(int prm_929)
 {
@@ -40864,7 +40307,7 @@ void label_1530()
     {
         dbmode = 4;
         dbid = cdata_id(rc);
-        label_2299();
+        label_2654();
     }
     if (eqtwohand)
     {
@@ -41384,7 +40827,7 @@ void label_1530()
             {
                 flt();
                 nostack = 1;
-                itemcreate(rc, 772, -1, -1, 0);
+                int stat = itemcreate(rc, 772, -1, -1, 0);
                 if (stat != 0)
                 {
                     inv_number(ci) += rnd(4);
@@ -41662,8 +41105,7 @@ int label_1533()
         if (rc == -1)
         {
             rc = 56;
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     del_chara(rc);
@@ -41755,7 +41197,7 @@ int label_1533()
     else
     {
         dbmode = 3;
-        label_2299();
+        label_2654();
     }
     if (cmshade)
     {
@@ -41765,8 +41207,7 @@ int label_1533()
     cdata_quality(rc) = fixlv;
     label_1535();
     rtval = rc;
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1534()
 {
@@ -42067,8 +41508,8 @@ void label_1541()
     pos(960, 96);
     picload(exedir + u8"graphic\\deco_cm.bmp"s, 1);
     gsel(0);
-    stat = dirlist(buff, exedir + u8"save\\*"s, 5);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"save\\*"s, 5);
+    notesel(buff);
     if (noteinfo() >= 5)
     {
         redraw(0);
@@ -42683,7 +42124,7 @@ void label_1557(bool label_1558_flg)
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        label_19672();
+        int stat = label_19672();
         label_1566();
         if (stat == -1)
         {
@@ -42838,17 +42279,19 @@ label_1561_internal:
         mes(u8"Gene from "s + geneuse);
     }
     cbitmod(967, 0, 1);
-    label_2039();
-    if (stat == 0)
     {
-        label_1566();
-        label_1557(false);
-    }
-    if (stat == -1)
-    {
-        label_2703();
-        label_1566();
-        goto label_1561_internal;
+        int stat = label_2039();
+        if (stat == 0)
+        {
+            label_1566();
+            label_1557(false);
+        }
+        if (stat == -1)
+        {
+            label_2703();
+            label_1566();
+            goto label_1561_internal;
+        }
     }
     label_1566();
     cmportrait = cdata_portrait(rc);
@@ -42888,12 +42331,14 @@ label_1563_internal:
     mode = 1;
     csctrl = 1;
     menucycle = 0;
-    label_20332();
-    if (stat == 0)
     {
-        nowindowanime = 1;
-        label_1566();
-        goto label_1563_internal;
+        int stat = label_20332();
+        if (stat == 0)
+        {
+            nowindowanime = 1;
+            label_1566();
+            goto label_1563_internal;
+        }
     }
     redraw(0);
     gsel(2);
@@ -42955,8 +42400,8 @@ label_1565_internal:
         cmname = randomname();
     }
     playerid = u8"sav_"s + cmname;
-    stat = dirlist(buff, exedir + u8"save\\*"s, 5);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"save\\*"s, 5);
+    notesel(buff);
     f = 0;
     {
         int cnt = 0;
@@ -43038,7 +42483,7 @@ void label_1567(int CNT)
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     tx = wx + 230;
     ty = wy + 62;
-    stat = talk_conv(buff, 60 + en * 2);
+    talk_conv(buff, 60 + en * 2);
     color(0, 0, 0);
     pos(tx - 20, ty);
     mes(buff);
@@ -43232,18 +42677,15 @@ int convertartifact(int prm_930, int prm_931)
     std::string n_at_m163;
     if (refitem(inv_id(prm_930), 5) >= 50000)
     {
-        stat = prm_930;
-        return stat;
+        return prm_930;
     }
     if (inv_quality(prm_930) != 6)
     {
-        stat = prm_930;
-        return stat;
+        return prm_930;
     }
     if (inv_body_part(prm_930) != 0)
     {
-        stat = prm_930;
-        return stat;
+        return prm_930;
     }
     f_at_m163 = 0;
     {
@@ -43285,8 +42727,7 @@ int convertartifact(int prm_930, int prm_931)
     }
     if (f_at_m163 == 0)
     {
-        stat = prm_930;
-        return stat;
+        return prm_930;
     }
     n_at_m163 = ""s + itemname(prm_930);
 label_1569_internal:
@@ -43297,16 +42738,14 @@ label_1569_internal:
     if (inv_quality(prm_930) != 6)
     {
         goto label_1570_internal;
-        stat = 0;
-        return stat;
+        return 0;
     }
     goto label_1569_internal;
 label_1570_internal:
     txt(lang(
         n_at_m163 + u8"は"s + itemname(ci) + u8"に形を変えた。"s,
         n_at_m163 + u8" turns its shape into "s + itemname(ci) + u8"."s));
-    stat = prm_930;
-    return stat;
+    return prm_930;
 }
 void label_1572()
 {
@@ -43568,7 +43007,7 @@ void label_1572()
     biten(3) = lang(u8"トンボ"s, u8"dragonfly"s);
     biten(4) = lang(u8"セミ"s, u8"locust"s);
     biten(5) = lang(u8"ヘラクレス"s, u8"beetle"s);
-    stat = notesel(buff);
+    notesel(buff);
     noteload(exedir + u8"data\\book.txt"s);
     p = instr(buff, 0, u8"%DEFINE"s);
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -43746,7 +43185,7 @@ void label_1573()
                 }
                 inv_x(ci) = cdata_x(rc);
                 inv_y(ci) = cdata_y(rc);
-                item_stack(-1, ci);
+                int stat = item_stack(-1, ci);
                 if (stat == 0)
                 {
                     ti = inv_getfreeid(-1);
@@ -43890,7 +43329,7 @@ void label_1573()
             inv_x(ci) = cdata_x(rc);
             inv_y(ci) = cdata_y(rc);
             itemturn(ci);
-            item_stack(-1, ci);
+            int stat = item_stack(-1, ci);
             if (stat == 0)
             {
                 ti = inv_getfreeid(-1);
@@ -44271,7 +43710,7 @@ label_1575_internal:
         || 0)
     {
         flt();
-        itemcreate(-1, 204, cdata_x(rc), cdata_y(rc), 0);
+        int stat = itemcreate(-1, 204, cdata_x(rc), cdata_y(rc), 0);
         if (stat != 0)
         {
             remain_make(ci, rc);
@@ -44448,7 +43887,7 @@ label_1575_internal:
         if (rnd(50) == 0)
         {
             flt();
-            itemcreate(-1, 672, cdata_x(rc), cdata_y(rc), 0);
+            int stat = itemcreate(-1, 672, cdata_x(rc), cdata_y(rc), 0);
             if (stat != 0)
             {
                 inv_param1(ci) = 169;
@@ -44523,7 +43962,7 @@ label_1575_internal:
             {
                 flt();
                 nostack = 1;
-                itemcreate(-1, 772, cdata_x(rc), cdata_y(rc), 0);
+                int stat = itemcreate(-1, 772, cdata_x(rc), cdata_y(rc), 0);
                 if (rnd(2))
                 {
                     if (stat != 0)
@@ -44745,7 +44184,7 @@ void label_1578()
             flt();
             initlv = cdata_level(cc) / 2 + 1;
             novoidlv = 1;
-            characreate(-1, 330, cdata_x(cc), cdata_y(cc));
+            int stat = characreate(-1, 330, cdata_x(cc), cdata_y(cc));
             if (stat != 0)
             {
                 if (strlen_u(cdatan(0, cc)) > 10
@@ -45038,8 +44477,7 @@ int label_1582()
     ci = inv_getfreeid(val);
     if (ci == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     item_delete(ci);
     if (val == -1 && mode != 6)
@@ -45106,8 +44544,7 @@ int label_1582()
         }
         if (p == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (dbid == -1)
@@ -45155,9 +44592,9 @@ int label_1582()
     }
     itemcreatehack = dbid + 1;
     dbmode = 3;
-    stat = label_1275();
+    label_1275();
     dbmode = 2;
-    stat = label_1275();
+    label_1275();
     inv_color(ci) = icolref(inv_id(ci));
     if (inv_color(ci) == 1)
     {
@@ -45265,8 +44702,7 @@ int label_1582()
         {
             cdata_gold(val) += inv_number(ci);
             inv_number(ci) = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (inv_id(ci) == 729)
@@ -45424,20 +44860,18 @@ int label_1582()
     }
     else
     {
-        item_stack(val, ci);
+        int stat = item_stack(val, ci);
         if (stat == 1)
         {
             ci = ti;
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (val == -1)
     {
         cell_refresh(inv_x(ci), inv_y(ci));
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1583()
 {
@@ -45463,7 +44897,7 @@ void lovemiracle(int prm_932)
     flt();
     if (rnd(2))
     {
-        itemcreate(-1, 573, cdata_x(prm_932), cdata_y(prm_932), 0);
+        int stat = itemcreate(-1, 573, cdata_x(prm_932), cdata_y(prm_932), 0);
         if (stat)
         {
             inv_subname(ci) = cdata_id(prm_932);
@@ -45476,7 +44910,7 @@ void lovemiracle(int prm_932)
     }
     else
     {
-        itemcreate(-1, 574, cdata_x(prm_932), cdata_y(prm_932), 0);
+        int stat = itemcreate(-1, 574, cdata_x(prm_932), cdata_y(prm_932), 0);
         if (stat)
         {
             inv_subname(ci) = cdata_id(prm_932);
@@ -46371,7 +45805,7 @@ void label_1588()
     {
         dbmode = 12;
         dbid = inv_subname(ci);
-        label_2299();
+        label_2654();
     }
     {
         int cnt = 0;
@@ -47391,8 +46825,7 @@ int dist_town()
             }
         }
     }
-    stat = p_at_m165;
-    return stat;
+    return p_at_m165;
 }
 void map_initcustom(const std::string& prm_934)
 {
@@ -47412,7 +46845,7 @@ void map_initcustom(const std::string& prm_934)
             if (cmapdata(4, cnt) == 0)
             {
                 flt();
-                itemcreate(
+                int stat = itemcreate(
                     -1,
                     cmapdata(0, cnt),
                     cmapdata(1, cnt),
@@ -47522,7 +46955,8 @@ void map_reload(const std::string& prm_935)
                 if (map(x_at_m166, y_at_m166, 4) == 0)
                 {
                     flt();
-                    itemcreate(-1, cmapdata(0, cnt), x_at_m166, y_at_m166, 0);
+                    int stat = itemcreate(
+                        -1, cmapdata(0, cnt), x_at_m166, y_at_m166, 0);
                     if (stat != 0)
                     {
                         inv_own_state(ci) = cmapdata(3, cnt);
@@ -47795,16 +47229,13 @@ int map_digcheck(int prm_953, int prm_954)
     if (prm_953 < 1 || prm_954 < 1 || prm_953 > mdata(0) - 2
         || prm_954 > mdata(1) - 2)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (map(prm_953, prm_954, 0) == 100)
     {
-        stat = 100;
-        return stat;
+        return 100;
     }
-    stat = map(prm_953, prm_954, 0) == 0;
-    return stat;
+    return map(prm_953, prm_954, 0) == 0;
 }
 void map_nextdir1(int prm_955, int prm_956)
 {
@@ -48154,8 +47585,7 @@ int map_digtoentrance1(
             }
         }
     }
-    stat = f_at_m168;
-    return stat;
+    return f_at_m168;
 }
 void map_setfog(int, int)
 {
@@ -48278,8 +47708,7 @@ int map_createroom(int prm_966)
 {
     if (roomsum >= 30)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_966 == 0)
     {
@@ -48448,8 +47877,7 @@ int map_createroom(int prm_966)
     }
     if (f == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(2) == 0)
     {
@@ -48588,8 +48016,7 @@ int map_createroom(int prm_966)
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int map_placeupstairs(int prm_967, int prm_968)
 {
@@ -48606,15 +48033,13 @@ int map_placeupstairs(int prm_967, int prm_968)
     cell_featset(x_at_m169, y_at_m169, tile_upstairs, 10);
     mdata(5) = y_at_m169 * 1000 + x_at_m169;
     rdroomupstair = cr;
-    stat = 1;
-    return stat;
+    return 1;
 }
 int map_placedownstairs(int prm_969, int prm_970)
 {
     if (gdata(22) >= adata(10, gdata(20)))
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_969 == 0)
     {
@@ -48629,8 +48054,7 @@ int map_placedownstairs(int prm_969, int prm_970)
     cell_featset(x_at_m169, y_at_m169, tile_downstairs, 11);
     mdata(4) = y_at_m169 * 1000 + x_at_m169;
     rdroomdownstair = cr;
-    stat = 1;
-    return stat;
+    return 1;
 }
 void map_randsite(int prm_971, int prm_972)
 {
@@ -48774,8 +48198,7 @@ label_1652_internal:
     if (p_at_m170 >= 3)
     {
         label_1653();
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_973 == 0)
     {
@@ -48803,31 +48226,26 @@ label_1652_internal:
             {
                 if (trap_at_m170 == 6)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (trap_at_m170 == 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (trap_at_m170 == 5)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
             if (gdata(22) <= 25)
             {
                 if (trap_at_m170 == 7)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
             cell_featset(dx_at_m170, dy_at_m170, 0, 14, trap_at_m170);
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     p_at_m170 += 1;
@@ -48835,8 +48253,7 @@ label_1652_internal:
 }
 int label_1653()
 {
-    stat = 0;
-    return stat;
+    return 0;
 }
 int map_web(int prm_977, int prm_978, int prm_979)
 {
@@ -48847,8 +48264,7 @@ label_1655_internal:
     if (p_at_m170 >= 3)
     {
         label_1656();
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_977 == 0)
     {
@@ -48865,8 +48281,7 @@ label_1655_internal:
         if (map(dx_at_m170, dy_at_m170, 6) == 0)
         {
             addmef(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     p_at_m170 += 1;
@@ -48874,8 +48289,7 @@ label_1655_internal:
 }
 int label_1656()
 {
-    stat = 0;
-    return stat;
+    return 0;
 }
 int map_barrel(int prm_980, int prm_981)
 {
@@ -48886,8 +48300,7 @@ label_1658_internal:
     if (p_at_m170 >= 3)
     {
         label_1659();
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (prm_980 == 0)
     {
@@ -48904,8 +48317,7 @@ label_1658_internal:
         if (map(dx_at_m170, dy_at_m170, 6) == 0)
         {
             cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     p_at_m170 += 1;
@@ -48913,8 +48325,7 @@ label_1658_internal:
 }
 int label_1659()
 {
-    stat = 0;
-    return stat;
+    return 0;
 }
 int map_connectroom()
 {
@@ -48923,10 +48334,10 @@ label_1662_internal:
     if (cr >= roomsum - 1)
     {
         label_1663();
-        stat = 0;
-        return stat;
+        return 0;
     }
     p = cr + 1;
+    int stat = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (rnd(rdroomentrance + 1) + 1); cnt < cnt_end;
@@ -48997,23 +48408,21 @@ label_1662_internal:
                     }
                 }
             }
-            map_digtoentrance1(tx, ty, dx, dy, 1);
+            stat = map_digtoentrance1(tx, ty, dx, dy, 1);
         }
     }
     if (stat == 0)
     {
         roomexist(cr) = 0;
         roomexist(p) = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     cr += 1;
     goto label_1662_internal;
 }
 int label_1663()
 {
-    stat = 1;
-    return stat;
+    return 1;
 }
 void map_makedoor()
 {
@@ -49322,13 +48731,14 @@ label_16951_internal:
             return;
         }
     }
+    int stat = 1;
     if (rdtype == 2)
     {
         label_1701();
     }
     if (rdtype == 1)
     {
-        label_1698();
+        stat = label_1698();
     }
     if (rdtype == 4)
     {
@@ -49393,7 +48803,7 @@ label_16951_internal:
                         itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
                     }
                     label_1735();
-                    characreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
+                    int stat = characreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
                     if (stat == 1)
                     {
                         if (gdata(22) > 3)
@@ -49615,7 +49025,7 @@ void label_1696()
         for (int cnt_end = cnt + (10 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             label_1735();
-            characreate(-1, 0, -3, 0);
+            int stat = characreate(-1, 0, -3, 0);
             if (stat != 0)
             {
                 cdata_relationship(rc) = -3;
@@ -49771,24 +49181,23 @@ int label_1697()
             characreate(-1, 0, -3, 0);
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1698()
 {
     map_initialize();
-    map_createroom(1);
+    int stat = map_createroom(1);
     if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     map_placeupstairs();
-    map_createroom(1);
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = map_createroom(1);
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
     map_placedownstairs();
     {
@@ -49798,15 +49207,15 @@ int label_1698()
             map_createroom(1);
         }
     }
-    map_connectroom();
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = map_connectroom();
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
     map_makedoor();
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1699()
 {
@@ -49833,18 +49242,18 @@ int label_1699()
             }
         }
     }
-    map_createroom(2);
+    int stat = map_createroom(2);
     if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     map_placeupstairs();
-    map_createroom(2);
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = map_createroom(2);
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
     map_placedownstairs();
     {
@@ -49884,8 +49293,7 @@ int label_1699()
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1700()
 {
@@ -49915,18 +49323,18 @@ int label_1700()
             }
         }
     }
-    map_createroom(2);
+    int stat = map_createroom(2);
     if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     map_placeupstairs();
-    map_createroom(2);
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = map_createroom(2);
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
     map_placedownstairs();
     {
@@ -49966,8 +49374,7 @@ int label_1700()
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1701()
 {
@@ -50024,18 +49431,18 @@ int label_1701()
             map(dx, dy, 0) = 3;
         }
     }
-    map_createroom();
+    int stat = map_createroom();
     if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     map_placeupstairs();
-    map_createroom();
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = map_createroom();
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
     map_placedownstairs();
     {
@@ -50094,8 +49501,7 @@ int label_1701()
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1702()
 {
@@ -50133,8 +49539,7 @@ int label_1702()
     }
     map_placeupstairs(p, rnd(mdata(1) - 4) + 2);
     map_placedownstairs(p(1), rnd(mdata(1) - 4) + 2);
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1703()
 {
@@ -50493,8 +49898,7 @@ int label_1703()
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1704()
 {
@@ -51514,7 +50918,7 @@ void label_1714()
     val(1) = prompty;
     val(2) = 240;
     val(3) = 1;
-    label_2131();
+    int stat = label_2131();
     if (stat == 0)
     {
         label_1419();
@@ -51541,7 +50945,7 @@ void label_1714()
             {
                 await();
                 homemakewall = 1;
-                label_1947();
+                int stat = label_1947();
                 if (stat == -1)
                 {
                     break;
@@ -51739,10 +51143,12 @@ void label_1714()
         txtnew();
         txt(lang(u8"誰を移動させる？"s, u8"Move who?"s));
         allyctrl = 0;
-        label_1980();
-        if (stat == -1)
         {
-            goto label_1722_internal;
+            int stat = label_1980();
+            if (stat == -1)
+            {
+                goto label_1722_internal;
+            }
         }
         if (cdata_relationship(stat) <= -3)
         {
@@ -51762,10 +51168,12 @@ void label_1714()
         txt(lang(
             cdatan(0, tc) + u8"をどこに移動させる？"s,
             u8"Where do you want to move "s + cdatan(0, tc) + u8"?"s));
-        label_1947();
-        if (stat == -1)
         {
-            goto label_1717_internal;
+            int stat = label_1947();
+            if (stat == -1)
+            {
+                goto label_1717_internal;
+            }
         }
         if (chipm(7, map(tlocx, tlocy, 0)) && 4 || map(tlocx, tlocy, 1) != 0)
         {
@@ -51793,51 +51201,53 @@ void label_1714()
         goto label_1722_internal;
     case 4:
         allyctrl = 3;
-        label_1959();
-        if (stat != -1)
         {
-            c = stat;
-            snd(20);
-            txtnew();
-            if (getworker(gdata(20), c) == c)
+            int stat = label_1959();
+            if (stat != -1)
             {
-                if (gdata(20) == 7)
+                c = stat;
+                snd(20);
+                txtnew();
+                if (getworker(gdata(20), c) == c)
                 {
-                    cdata_current_map(c) = 0;
-                    txt(lang(
-                        cdatan(0, c) + u8"の滞在を取り消した。"s,
-                        cdatan(0, c) + u8" "s + is(c)
-                            + u8" no longer staying at your home."s));
+                    if (gdata(20) == 7)
+                    {
+                        cdata_current_map(c) = 0;
+                        txt(lang(
+                            cdatan(0, c) + u8"の滞在を取り消した。"s,
+                            cdatan(0, c) + u8" "s + is(c)
+                                + u8" no longer staying at your home."s));
+                    }
+                    else
+                    {
+                        removeworker(gdata(20));
+                        txt(lang(
+                            cdatan(0, c) + u8"を役目から外した。"s,
+                            u8"You remove "s + cdatan(0, c) + u8" from "s
+                                + his(c) + u8" job."s));
+                    }
                 }
                 else
                 {
-                    removeworker(gdata(20));
-                    txt(lang(
-                        cdatan(0, c) + u8"を役目から外した。"s,
-                        u8"You remove "s + cdatan(0, c) + u8" from "s + his(c)
-                            + u8" job."s));
+                    if (gdata(20) == 7)
+                    {
+                        cdata_initial_x(c) = cdata_x(c);
+                        cdata_initial_y(c) = cdata_y(c);
+                        txt(lang(
+                            cdatan(0, c) + u8"を滞在させた。"s,
+                            cdatan(0, c) + u8" stay"s + _s(c)
+                                + u8" at your home now."s));
+                    }
+                    else
+                    {
+                        removeworker(gdata(20));
+                        txt(lang(
+                            cdatan(0, c) + u8"を任命した。"s,
+                            cdatan(0, c) + u8" take"s + _s(c)
+                                + u8" charge of the job now."s));
+                    }
+                    cdata_current_map(c) = gdata(20);
                 }
-            }
-            else
-            {
-                if (gdata(20) == 7)
-                {
-                    cdata_initial_x(c) = cdata_x(c);
-                    cdata_initial_y(c) = cdata_y(c);
-                    txt(lang(
-                        cdatan(0, c) + u8"を滞在させた。"s,
-                        cdatan(0, c) + u8" stay"s + _s(c)
-                            + u8" at your home now."s));
-                }
-                else
-                {
-                    removeworker(gdata(20));
-                    txt(lang(
-                        cdatan(0, c) + u8"を任命した。"s,
-                        cdatan(0, c) + u8" take"s + _s(c)
-                            + u8" charge of the job now."s));
-                }
-                cdata_current_map(c) = gdata(20);
             }
         }
         goto label_1722_internal;
@@ -51904,7 +51314,7 @@ void label_1714()
                 dbid = isethire(hire);
                 randomize(gdata(12) + cnt);
                 flt(20);
-                characreate(-1, dbid, -3, 0);
+                int stat = characreate(-1, dbid, -3, 0);
                 if (stat == 0)
                 {
                     continue;
@@ -51980,7 +51390,7 @@ void label_1714()
         txtnew();
         txt(lang(u8"誰を雇用する？"s, u8"Who do you want to hire?"s));
         allyctrl = 1;
-        label_1980();
+        int stat = label_1980();
         if (stat != -1)
         {
             tc = stat;
@@ -52344,7 +51754,7 @@ void label_1725()
                 {
                     flt(list(0, cnt2), list(1, cnt2));
                     flttypemajor = elona_int(listn(0, cnt2));
-                    itemcreate(-1, 0, -1, -1, 0);
+                    int stat = itemcreate(-1, 0, -1, -1, 0);
                     if (stat == 0)
                     {
                         f = 0;
@@ -52473,7 +51883,7 @@ void label_1727()
     rc = 56;
     fixlv = 2;
     dbmode = 3;
-    label_2299();
+    label_2654();
     ++dblist(val, cdata_id(56));
     if (fixlv == 6)
     {
@@ -52709,8 +52119,7 @@ int cbreeder(int prm_984)
     s_at_m173 = refchara_str(cdata_id(prm_984), 8);
     p_at_m173 = refrace(cdatan(2, prm_984), 9);
     p_at_m173 = p_at_m173 * 100 / (100 + cdata_level(prm_984) * 5);
-    stat = p_at_m173;
-    return stat;
+    return p_at_m173;
 }
 void label_1733()
 {
@@ -52764,11 +52173,13 @@ void label_1733()
             {
                 dbid = 176;
             }
-            characreate(-1, dbid, 4 + rnd(11), 4 + rnd(8));
-            if (stat != 0)
             {
-                cbitmod(960, rc, 1);
-                ++livestock;
+                int stat = characreate(-1, dbid, 4 + rnd(11), 4 + rnd(8));
+                if (stat != 0)
+                {
+                    cbitmod(960, rc, 1);
+                    ++livestock;
+                }
             }
         label_1734_internal:
             egg = 0;
@@ -52841,7 +52252,7 @@ void label_1733()
                         if (f)
                         {
                             ++egg;
-                            itemcreate(-1, 573, x, y, 0);
+                            int stat = itemcreate(-1, 573, x, y, 0);
                             if (stat)
                             {
                                 inv_subname(ci) = cdata_id(cnt);
@@ -52871,7 +52282,7 @@ void label_1733()
                         if (f)
                         {
                             ++egg;
-                            itemcreate(-1, 574, x, y, 0);
+                            int stat = itemcreate(-1, 574, x, y, 0);
                             if (stat)
                             {
                                 inv_subname(ci) = cdata_id(cnt);
@@ -52887,7 +52298,7 @@ void label_1733()
                         }
                         if (f)
                         {
-                            itemcreate(-1, 575, x, y, 0);
+                            int stat = itemcreate(-1, 575, x, y, 0);
                             if (stat)
                             {
                                 inv_subname(ci) = cdata_id(cnt);
@@ -53849,7 +53260,7 @@ void label_1745()
                             if (inv_sum(rc) < 8)
                             {
                                 flt(calcobjlv(cdata_level(rc)), calcfixlv(2));
-                                itemcreate(rc, 0, -1, -1, 0);
+                                int stat = itemcreate(rc, 0, -1, -1, 0);
                                 if (stat != 0)
                                 {
                                     if (inv_weight(ci) <= 0
@@ -54028,8 +53439,7 @@ int label_1747()
         }
     }
     label_1749();
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1748()
 {
@@ -55083,8 +54493,7 @@ int label_1753()
             break;
         }
     }
-    stat = p;
-    return stat;
+    return p;
 }
 void label_1754()
 {
@@ -55131,7 +54540,7 @@ void label_1754()
                 {
                     flt();
                     objlv = 1;
-                    characreate(-1, dbid, -3, 0);
+                    int stat = characreate(-1, dbid, -3, 0);
                     if (stat != 0)
                     {
                         cdata_relationship(rc) = -1;
@@ -55444,186 +54853,223 @@ void label_1755()
     if (adata(29, gdata(20)) == 1)
     {
         flt();
-        itemcreate(-1, 763, 29, 16, 0);
+        int stat = itemcreate(-1, 763, 29, 16, 0);
         if (stat != 0)
         {
             inv_own_state(ci) = 1;
         }
-        flt();
-        itemcreate(-1, 686, 29, 16, 0);
-        if (stat != 0)
         {
-            inv_own_state(ci) = 1;
-        }
-        flt();
-        itemcreate(-1, 171, 29, 17, 0);
-        if (stat != 0)
-        {
-            inv_param1(ci) = 6;
-            inv_own_state(ci) = 1;
-        }
-        flt();
-        itemcreate(-1, 756, 29, 17, 0);
-        if (stat != 0)
-        {
-            inv_own_state(ci) = 5;
-        }
-        flt();
-        characreate(-1, 345, 48, 19);
-        if (stat != 0)
-        {
-            cdata_character_role(rc) = 3;
-            cbitmod(991, rc, 1);
-        }
-        flt();
-        characreate(-1, 348, 30, 17);
-        if (stat != 0)
-        {
-            cdata_character_role(rc) = 3;
-            cbitmod(991, rc, 1);
-        }
-        flt();
-        characreate(-1, 174, 38, 19);
-        if (stat != 0)
-        {
-            cbitmod(991, rc, 1);
-            cbitmod(985, rc, 1);
-            cdatan(0, rc) = lang(u8"オパートスの信者"s, u8"Opatos Fanatic"s);
-            if (rnd(2))
+            flt();
+            int stat = itemcreate(-1, 686, 29, 16, 0);
+            if (stat != 0)
             {
-                cdatan(0, rc) = lang(u8"マニの信者"s, u8"Mani Fanatic"s);
+                inv_own_state(ci) = 1;
             }
-            else
+        }
+        {
+            flt();
+            int stat = itemcreate(-1, 171, 29, 17, 0);
+            if (stat != 0)
             {
+                inv_param1(ci) = 6;
+                inv_own_state(ci) = 1;
+            }
+        }
+        {
+            flt();
+            int stat = itemcreate(-1, 756, 29, 17, 0);
+            if (stat != 0)
+            {
+                inv_own_state(ci) = 5;
+            }
+        }
+        {
+            flt();
+            int stat = characreate(-1, 345, 48, 19);
+            if (stat != 0)
+            {
+                cdata_character_role(rc) = 3;
+                cbitmod(991, rc, 1);
+            }
+        }
+        {
+            flt();
+            int stat = characreate(-1, 348, 30, 17);
+            if (stat != 0)
+            {
+                cdata_character_role(rc) = 3;
+                cbitmod(991, rc, 1);
+            }
+        }
+        {
+            flt();
+            int stat = characreate(-1, 174, 38, 19);
+            if (stat != 0)
+            {
+                cbitmod(991, rc, 1);
+                cbitmod(985, rc, 1);
                 cdatan(0, rc) =
-                    lang(u8"エヘカトルの信者"s, u8"Ehekatl Fanatic"s);
+                    lang(u8"オパートスの信者"s, u8"Opatos Fanatic"s);
+                if (rnd(2))
+                {
+                    cdatan(0, rc) = lang(u8"マニの信者"s, u8"Mani Fanatic"s);
+                }
+                else
+                {
+                    cdatan(0, rc) =
+                        lang(u8"エヘカトルの信者"s, u8"Ehekatl Fanatic"s);
+                }
             }
         }
-        flt();
-        characreate(-1, 347, 35, 19);
-        if (stat != 0)
         {
-            cbitmod(991, rc, 1);
+            flt();
+            int stat = characreate(-1, 347, 35, 19);
+            if (stat != 0)
+            {
+                cbitmod(991, rc, 1);
+            }
         }
-        flt();
-        characreate(-1, 347, 37, 18);
-        if (stat != 0)
         {
-            cbitmod(991, rc, 1);
+            flt();
+            int stat = characreate(-1, 347, 37, 18);
+            if (stat != 0)
+            {
+                cbitmod(991, rc, 1);
+            }
         }
-        flt();
-        characreate(-1, 347, 37, 21);
-        if (stat != 0)
         {
-            cbitmod(991, rc, 1);
+            flt();
+            int stat = characreate(-1, 347, 37, 21);
+            if (stat != 0)
+            {
+                cbitmod(991, rc, 1);
+            }
         }
-        flt();
-        characreate(-1, 347, 39, 20);
-        if (stat != 0)
         {
-            cbitmod(991, rc, 1);
+            flt();
+            int stat = characreate(-1, 347, 39, 20);
+            if (stat != 0)
+            {
+                cbitmod(991, rc, 1);
+            }
         }
-        flt();
-        characreate(-1, 347, 38, 21);
-        if (stat != 0)
         {
-            cbitmod(991, rc, 1);
+            flt();
+            int stat = characreate(-1, 347, 38, 21);
+            if (stat != 0)
+            {
+                cbitmod(991, rc, 1);
+            }
         }
-        flt();
-        characreate(-1, 70, 17, 8);
-        if (stat != 0)
         {
-            cdata_ai_calm(rc) = 3;
-            cbitmod(991, rc, 1);
-            cdata_character_role(rc) = 1002;
-            cdata_shop_rank(rc) = 10;
-            snfood(cdatan(0, rc));
+            flt();
+            int stat = characreate(-1, 70, 17, 8);
+            if (stat != 0)
+            {
+                cdata_ai_calm(rc) = 3;
+                cbitmod(991, rc, 1);
+                cdata_character_role(rc) = 1002;
+                cdata_shop_rank(rc) = 10;
+                snfood(cdatan(0, rc));
+            }
         }
-        flt();
-        characreate(-1, 239, 25, 8);
-        if (stat != 0)
         {
-            cdata_ai_calm(rc) = 3;
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cbitmod(991, rc, 1);
-            cdata_character_role(rc) = 1018;
-            cdata_shop_rank(rc) = 30;
-            cdatan(0, rc) = randomname();
-            cdatan(0, rc) = lang(
-                u8"おみやげ屋の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+            flt();
+            int stat = characreate(-1, 239, 25, 8);
+            if (stat != 0)
+            {
+                cdata_ai_calm(rc) = 3;
+                cdata_relationship(rc) = 0;
+                cdata_original_relationship(rc) = 0;
+                cbitmod(991, rc, 1);
+                cdata_character_role(rc) = 1018;
+                cdata_shop_rank(rc) = 30;
+                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = lang(
+                    u8"おみやげ屋の"s + cdatan(0, rc),
+                    sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+            }
         }
-        flt();
-        characreate(-1, 271, 24, 22);
-        if (stat != 0)
         {
-            cdata_ai_calm(rc) = 3;
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cbitmod(991, rc, 1);
-            cdata_character_role(rc) = 1018;
-            cdata_shop_rank(rc) = 30;
-            cdatan(0, rc) = randomname();
-            cdatan(0, rc) = lang(
-                u8"おみやげ屋の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+            flt();
+            int stat = characreate(-1, 271, 24, 22);
+            if (stat != 0)
+            {
+                cdata_ai_calm(rc) = 3;
+                cdata_relationship(rc) = 0;
+                cdata_original_relationship(rc) = 0;
+                cbitmod(991, rc, 1);
+                cdata_character_role(rc) = 1018;
+                cdata_shop_rank(rc) = 30;
+                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = lang(
+                    u8"おみやげ屋の"s + cdatan(0, rc),
+                    sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+            }
         }
-        flt();
-        characreate(-1, 1, 38, 12);
-        if (stat != 0)
         {
-            cdata_ai_calm(rc) = 3;
-            cdata_character_role(rc) = 1007;
-            cdata_shop_rank(rc) = 10;
-            snblack(cdatan(0, rc));
-            cbitmod(991, rc, 1);
+            flt();
+            int stat = characreate(-1, 1, 38, 12);
+            if (stat != 0)
+            {
+                cdata_ai_calm(rc) = 3;
+                cdata_character_role(rc) = 1007;
+                cdata_shop_rank(rc) = 10;
+                snblack(cdatan(0, rc));
+                cbitmod(991, rc, 1);
+            }
         }
-        flt();
-        characreate(-1, 271, 28, 9);
-        if (stat != 0)
         {
-            cdata_ai_calm(rc) = 3;
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cbitmod(991, rc, 1);
-            cdata_character_role(rc) = 1022;
-            cdata_shop_rank(rc) = 30;
-            cdatan(0, rc) = randomname();
-            cdatan(0, rc) = lang(
-                u8"屋台商人の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the street vendor"s);
+            flt();
+            int stat = characreate(-1, 271, 28, 9);
+            if (stat != 0)
+            {
+                cdata_ai_calm(rc) = 3;
+                cdata_relationship(rc) = 0;
+                cdata_original_relationship(rc) = 0;
+                cbitmod(991, rc, 1);
+                cdata_character_role(rc) = 1022;
+                cdata_shop_rank(rc) = 30;
+                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = lang(
+                    u8"屋台商人の"s + cdatan(0, rc),
+                    sncnv(cdatan(0, rc)) + u8"the street vendor"s);
+            }
         }
-        flt();
-        characreate(-1, 271, 29, 24);
-        if (stat != 0)
         {
-            cdata_ai_calm(rc) = 3;
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cbitmod(991, rc, 1);
-            cdata_character_role(rc) = 1022;
-            cdata_shop_rank(rc) = 30;
-            cdatan(0, rc) = randomname();
-            cdatan(0, rc) = lang(
-                u8"屋台商人屋の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the street vendor"s);
+            flt();
+            int stat = characreate(-1, 271, 29, 24);
+            if (stat != 0)
+            {
+                cdata_ai_calm(rc) = 3;
+                cdata_relationship(rc) = 0;
+                cdata_original_relationship(rc) = 0;
+                cbitmod(991, rc, 1);
+                cdata_character_role(rc) = 1022;
+                cdata_shop_rank(rc) = 30;
+                cdatan(0, rc) = randomname();
+                cdatan(0, rc) = lang(
+                    u8"屋台商人屋の"s + cdatan(0, rc),
+                    sncnv(cdatan(0, rc)) + u8"the street vendor"s);
+            }
         }
         {
             int cnt = 0;
             for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 349, -3, 0);
+                int stat = characreate(-1, 349, -3, 0);
                 if (stat != 0)
                 {
                     cbitmod(991, rc, 1);
                 }
                 flt();
-                characreate(-1, 350, -3, 0);
-                if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    int stat = characreate(-1, 350, -3, 0);
+                    if (stat != 0)
+                    {
+                        cbitmod(991, rc, 1);
+                    }
                 }
             }
         }
@@ -55632,7 +55078,7 @@ void label_1755()
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 326, -3, 0);
+                int stat = characreate(-1, 326, -3, 0);
                 if (stat != 0)
                 {
                     cbitmod(991, rc, 1);
@@ -55644,28 +55090,34 @@ void label_1755()
             for (int cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 335, -3, 0);
+                int stat = characreate(-1, 335, -3, 0);
                 if (stat != 0)
                 {
                     cbitmod(991, rc, 1);
                 }
-                flt();
-                characreate(-1, 185, -3, 0);
-                if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    flt();
+                    int stat = characreate(-1, 185, -3, 0);
+                    if (stat != 0)
+                    {
+                        cbitmod(991, rc, 1);
+                    }
                 }
-                flt();
-                characreate(-1, 274, -3, 0);
-                if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    flt();
+                    int stat = characreate(-1, 274, -3, 0);
+                    if (stat != 0)
+                    {
+                        cbitmod(991, rc, 1);
+                    }
                 }
-                flt();
-                characreate(-1, 174, -3, 0);
-                if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    flt();
+                    int stat = characreate(-1, 174, -3, 0);
+                    if (stat != 0)
+                    {
+                        cbitmod(991, rc, 1);
+                    }
                 }
             }
         }
@@ -55674,16 +55126,18 @@ void label_1755()
             for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 332, -3, 0);
+                int stat = characreate(-1, 332, -3, 0);
                 if (stat != 0)
                 {
                     cbitmod(991, rc, 1);
                 }
-                flt();
-                characreate(-1, 185, -3, 0);
-                if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    flt();
+                    int stat = characreate(-1, 185, -3, 0);
+                    if (stat != 0)
+                    {
+                        cbitmod(991, rc, 1);
+                    }
                 }
             }
         }
@@ -55705,9 +55159,7 @@ void label_1755()
 }
 int cdbit(int prm_985, int prm_986)
 {
-    stat = HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
-    stat = stat;
-    return stat;
+    return HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
 }
 void cdbitmod(int prm_987, int prm_988, int prm_989)
 {
@@ -55842,11 +55294,10 @@ int card_ref(int prm_991)
             s_at_tcg += lang(u8"スキル:"s, u8"Skill:"s);
         }
         s_at_tcg += cdrefn_at_tcg(cardrefskill);
-        stat = talk_conv(s_at_tcg, 95);
+        talk_conv(s_at_tcg, 95);
         rtvaln += u8"\n"s + s_at_tcg;
     }
-    stat = dbid;
-    return stat;
+    return dbid;
 }
 void makecardlist()
 {
@@ -56438,7 +55889,7 @@ void efllistadd(
 }
 int create_card(int prm_1002, int prm_1003)
 {
-    card_ref(prm_1003);
+    int stat = card_ref(prm_1003);
     card_at_tcg(18, prm_1002) = stat;
     card_at_tcg(9, prm_1002) = cardreftype;
     card_at_tcg(10, prm_1002) = cardrefcost;
@@ -56451,8 +55902,7 @@ int create_card(int prm_1002, int prm_1003)
     cardn_at_tcg(0, prm_1002) = cardrefrace;
     card_at_tcg(20, prm_1002) = cardrefskillcost;
     card_at_tcg(23, prm_1002) = cardrefdomain;
-    stat = prm_1002;
-    return stat;
+    return prm_1002;
 }
 void cardpos(int prm_1004, int prm_1005)
 {
@@ -56634,16 +56084,13 @@ int gameover()
 {
     if (cpdata_at_tcg(4, 1) <= 0)
     {
-        stat = 2;
-        return stat;
+        return 2;
     }
     if (cpdata_at_tcg(4, 0) <= 0)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int getholdersum(int prm_1012)
 {
@@ -56662,8 +56109,7 @@ int getholdersum(int prm_1012)
             }
         }
     }
-    stat = p_at_tcg;
-    return stat;
+    return p_at_tcg;
 }
 int getspotsum(int prm_1013)
 {
@@ -56682,8 +56128,7 @@ int getspotsum(int prm_1013)
             }
         }
     }
-    stat = p_at_tcg;
-    return stat;
+    return p_at_tcg;
 }
 int getdecksum(int prm_1014)
 {
@@ -56702,81 +56147,66 @@ int getdecksum(int prm_1014)
             }
         }
     }
-    stat = p_at_tcg;
-    return stat;
+    return p_at_tcg;
 }
 int cardcandeclareattack(int prm_1015)
 {
     if (card_at_tcg(0, prm_1015) != 1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (card_at_tcg(9, prm_1015) != 10)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdbit(0, prm_1015))
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int cardcanblock(int prm_1016)
 {
     if (card_at_tcg(0, prm_1016) != 1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (card_at_tcg(9, prm_1016) != 10)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdbit(0, prm_1016))
     {
         if (card_at_tcg(14, prm_1016) != -4)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int cardcanuseskill(int prm_1017)
 {
     if (card_at_tcg(0, prm_1017) != 1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (card_at_tcg(9, prm_1017) != 10)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdbit(0, prm_1017))
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (card_at_tcg(20, prm_1017) == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (card_at_tcg(20, prm_1017) > cpdata_at_tcg(5, card_at_tcg(1, prm_1017)))
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void getrandomcard(int prm_1018)
 {
@@ -56861,7 +56291,7 @@ void saccard(int prm_1019, int prm_1020)
     }
     ++cpdata_at_tcg(6, prm_1020);
     ++cpdata_at_tcg(5, prm_1020);
-    card_ref(500 + card_at_tcg(23, prm_1019) * 2 + rnd(2));
+    int stat = card_ref(500 + card_at_tcg(23, prm_1019) * 2 + rnd(2));
     create_card(prm_1019, stat);
     cdbitmod(1, prm_1019, 1);
     card_at_tcg(4, prm_1019) = landix_at_tcg(prm_1020)
@@ -57081,8 +56511,7 @@ int putcard(int prm_1024, int prm_1025)
                 lang(u8"これ以上は場に出せない。"s, u8"Your field is full."s),
                 40);
         }
-        stat = -1;
-        return stat;
+        return -1;
     }
     if (card_at_tcg(10, prm_1024) > cpdata_at_tcg(5, prm_1025))
     {
@@ -57093,8 +56522,7 @@ int putcard(int prm_1024, int prm_1025)
                 lang(u8"マナが足りない。"s, u8"You don't have enough mana."s),
                 40);
         }
-        stat = -3;
-        return stat;
+        return -3;
     }
     cpdata_at_tcg(5, prm_1025) -= card_at_tcg(10, prm_1024);
     if (prm_1025 == 0)
@@ -57142,8 +56570,7 @@ int putcard(int prm_1024, int prm_1025)
         card_at_tcg(0, prm_1024) = 4;
         makecardlist();
         label_1823();
-        stat = 1;
-        return stat;
+        return 1;
     }
     p_at_tcg = getspotsum(prm_1025);
     card_at_tcg(0, prm_1024) = 1;
@@ -57155,8 +56582,7 @@ int putcard(int prm_1024, int prm_1025)
     tcgdraw();
     makecardlist();
     opencard(prm_1024);
-    stat = 1;
-    return stat;
+    return 1;
 }
 void tcgdrawbg()
 {
@@ -57270,9 +56696,8 @@ void tcginit()
 }
 int calcstartcard(int prm_1026)
 {
-    stat = 6 - (cpdata_at_tcg(9, prm_1026) > 2)
+    return 6 - (cpdata_at_tcg(9, prm_1026) > 2)
         - (cpdata_at_tcg(9, prm_1026) > 3) - (cpdata_at_tcg(9, prm_1026) > 4);
-    return stat;
 }
 void calcstartattb(int prm_1027)
 {
@@ -57480,7 +56905,7 @@ void tcgmain()
                 for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
                 {
                     cc_at_tcg = rp_at_tcg * 40 + cnt;
-                    card_ref(rnd(1000));
+                    int stat = card_ref(rnd(1000));
                     if (cardrefcost == 0)
                     {
                         --cnt;
@@ -58396,8 +57821,7 @@ int label_1835()
     pos(0, 0);
     picload(exedir + u8"graphic\\bg_card.bmp"s, 1);
     label_1826();
-    stat = rtval_at_tcg;
-    return stat;
+    return rtval_at_tcg;
 }
 void label_1836()
 {
@@ -58926,15 +58350,13 @@ int label_1845()
 {
     if (sac_at_tcg > 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (getholdersum(cp_at_tcg) <= cpdata_at_tcg(6, cp_at_tcg) / 4 + 1)
     {
         if (rnd(4))
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     f_at_tcg = 0;
@@ -58965,11 +58387,9 @@ int label_1845()
     {
         saccard(cc_at_tcg, cp_at_tcg);
         tcgdraw();
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_18462()
 {
@@ -59029,7 +58449,7 @@ label_1847_internal:
         }
         else
         {
-            label_1845();
+            int stat = label_1845();
             if (stat == 1)
             {
                 goto label_18461;
@@ -59059,7 +58479,7 @@ void label_1848()
     {
         if (sac_at_tcg == 0)
         {
-            label_1845();
+            int stat = label_1845();
             if (stat == 1)
             {
                 label_18462();
@@ -59137,8 +58557,7 @@ int random_material(int prm_1028, int prm_1029)
             }
         }
     }
-    stat = f_at_m174;
-    return stat;
+    return f_at_m174;
 }
 void matgetmain(int prm_1030, int prm_1031, int prm_1032)
 {
@@ -59218,7 +58637,7 @@ label_18551_internal:
             for (int cnt_end = cnt + (maxitemid); cnt < cnt_end; ++cnt)
             {
                 matid = cnt;
-                label_1280();
+                int stat = label_1280();
                 if (stat == -1)
                 {
                     continue;
@@ -59838,7 +59257,7 @@ void atxinit()
 {
     if (atxthrough == 0)
     {
-        stat = notesel(atbuff);
+        notesel(atbuff);
         atbuff = "";
     }
     atxthrough = 0;
@@ -60948,7 +60367,7 @@ void label_1879()
                     int cnt = 0;
                     for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                     {
-                        servecard(cnt % 2);
+                        int stat = servecard(cnt % 2);
                         if (cnt != 2)
                         {
                             opencard2(stat);
@@ -60966,7 +60385,7 @@ void label_1879()
                         if (cpscore(0) < cpscore(1)
                             || cpscore(0) - rnd(5) <= 11)
                         {
-                            servecard(0);
+                            int stat = servecard(0);
                             opencard2(stat);
                             --cnt;
                             continue;
@@ -61078,7 +60497,7 @@ void label_1879()
             }
             if (rtval == 1)
             {
-                servecard(1);
+                int stat = servecard(1);
                 p = stat;
                 {
                     int cnt = 0;
@@ -61094,7 +60513,7 @@ void label_1879()
                                         u8"このカードは悪い予感がする…"s,
                                         u8"I have a bad feeling about this card..."s));
                                     trashcard(p);
-                                    servecard(1);
+                                    int stat = servecard(1);
                                     p = stat;
                                 }
                             }
@@ -61106,7 +60525,7 @@ void label_1879()
             if (rtval == 2)
             {
                 trashcard(lastcard(1));
-                servecard(1);
+                int stat = servecard(1);
                 opencard2(stat);
                 p = 20;
                 if (stake == 5)
@@ -61228,8 +60647,7 @@ int modpiety(int prm_1035)
         txt(lang(
             u8"あなたの信仰は既に限界まで高まっている。"s,
             u8" Your God becomes indifferent to your gift."s));
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (gdata(807) == 4)
     {
@@ -61256,8 +60674,7 @@ int modpiety(int prm_1035)
         }
     }
     cdata_piety_point(0) += prm_1035 / (1 + (gdata(20) == 35) * 9);
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1882()
 {
@@ -62160,7 +61577,7 @@ void label_1891()
     snd(121);
     animeid = 7;
     label_1426();
-    item_find(60002);
+    int stat = item_find(60002);
     if (stat != -1)
     {
         ti = stat;
@@ -62324,18 +61741,15 @@ int label_1893()
     id(1) = 0;
     if (gspd < 10)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbg_skipevent)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (mode == 12)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (mode == 9)
     {
@@ -62414,14 +61828,12 @@ int label_1893()
     {
         if (cdata_continuous_action_id(0) != 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (mdata(6) == 5)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(30) == 0)
     {
@@ -62466,8 +61878,7 @@ int label_1893()
     {
         if (rnd(40))
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         goto label_1894_internal;
     }
@@ -62482,8 +61893,7 @@ int label_1893()
 label_1894_internal:
     if (id == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     cc = 0;
     tc = 0;
@@ -62957,8 +62367,7 @@ label_1894_internal:
 label_1895_internal:
     cc = 0;
     label_1422();
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_1896()
 {
@@ -62970,8 +62379,7 @@ int label_1896()
             txt(""s + buff);
             txt(lang(u8"「"s, u8"\""s) + listn(0, 0) + lang(u8"」"s, u8"\""s));
             rtval = -1;
-            stat = rtval;
-            return stat;
+            return rtval;
         }
     }
     keyhalt = 1;
@@ -63000,8 +62408,8 @@ int label_1896()
     gsel(0);
     snd(62);
     dx = tx + 36;
-    stat = talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
-    stat = notesel(buff);
+    talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
+    notesel(buff);
     dy = ty + noteinfo(0) * 15 + 80 + listmax * 20;
 label_1897_internal:
     redraw(0);
@@ -63086,16 +62494,14 @@ label_1897_internal:
     if (rtval != -1)
     {
         label_1898();
-        stat = 0;
-        return stat;
+        return 0;
     }
     goto label_1897_internal;
 }
 int label_1898()
 {
     key = "";
-    stat = rtval;
-    return stat;
+    return rtval;
 }
 int calcincome(int prm_1036)
 {
@@ -63137,8 +62543,7 @@ int calcincome(int prm_1036)
     {
         p_at_m176 = p_at_m176 * 15 / 100;
     }
-    stat = p_at_m176;
-    return stat;
+    return p_at_m176;
 }
 void label_1901()
 {
@@ -63308,7 +62713,7 @@ void label_1901()
                         + u8"ヶ月滞納した罪で訴えられた。"s,
                     u8"You have been accused for being in arrears with your tax for"s
                         + (gdata(179) - 1) + u8" months."s));
-                decfame(0, 50);
+                int stat = decfame(0, 50);
                 p = stat;
                 txtmore();
                 txtef(3);
@@ -63397,22 +62802,18 @@ int blendcheckext(int prm_1038, int prm_1039)
         p_at_m178 = rpdata((40 + prm_1039), rpid) % 10000;
         if (p_at_m178 < 0 || p_at_m178 >= 800)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (inv_subname(prm_1038) == p_at_m178)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         else
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 std::string rpsuccessrate(int prm_1040)
 {
@@ -63558,8 +62959,7 @@ int rpdiff(int, int prm_1042, int prm_1043)
     {
         p1_at_m180 = 100;
     }
-    stat = p1_at_m180;
-    return stat;
+    return p1_at_m180;
 }
 int blendcheckmat(int prm_1044)
 {
@@ -63627,7 +63027,7 @@ int blendcheckmat(int prm_1044)
                             }
                             if (rpdata(40 + rp_at_m181, rpid))
                             {
-                                blendcheckext(cnt, rp_at_m181);
+                                int stat = blendcheckext(cnt, rp_at_m181);
                                 if (stat == 0)
                                 {
                                     continue;
@@ -63677,8 +63077,7 @@ int blendcheckmat(int prm_1044)
             }
         }
     }
-    stat = f_at_m181;
-    return stat;
+    return f_at_m181;
 }
 int blendmatnum(int prm_1045, int prm_1046)
 {
@@ -63726,7 +63125,7 @@ int blendmatnum(int prm_1045, int prm_1046)
                     }
                     if (rpdata(40 + prm_1046, rpid))
                     {
-                        blendcheckext(cnt, prm_1046);
+                        int stat = blendcheckext(cnt, prm_1046);
                         if (stat == 0)
                         {
                             continue;
@@ -63763,8 +63162,7 @@ int blendmatnum(int prm_1045, int prm_1046)
             }
         }
     }
-    stat = m_at_m182;
-    return stat;
+    return m_at_m182;
 }
 int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
 {
@@ -63821,7 +63219,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     reftype_at_m183 = refitem(inv_id(cnt), 5);
                     if (rpdata(40 + prm_1048, rpid))
                     {
-                        blendcheckext(cnt, prm_1048);
+                        int stat = blendcheckext(cnt, prm_1048);
                         if (stat == 0)
                         {
                             continue;
@@ -64057,7 +63455,7 @@ void window_recipe_(
             }
             if (step <= cnt)
             {
-                blendmatnum(rpdata(20 + cnt, rpid), cnt);
+                int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
                 p_at_m184 = stat;
                 s_at_m184 = lang(
                                 rpmatname(cnt) + u8"を加える"s,
@@ -64542,8 +63940,10 @@ label_1923:
         return;
     }
     rppage = 1;
-    blendlist(list, step);
-    listmax = stat;
+    {
+        int stat = blendlist(list, step);
+        listmax = stat;
+    }
     label_2056();
     goto label_1927_internal;
     return;
@@ -64987,8 +64387,7 @@ int label_1931()
             }
         }
     }
-    stat = f;
-    return stat;
+    return f;
 }
 int label_1932()
 {
@@ -65031,8 +64430,7 @@ int label_1932()
         }
     }
     label_1521();
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_1933()
 {
@@ -65053,7 +64451,8 @@ void label_1933()
         {
             flt();
             nostack = 1;
-            itemcreate(-1, rpdata(0, rpid), cdata_x(0), cdata_y(0), 0);
+            int stat =
+                itemcreate(-1, rpdata(0, rpid), cdata_x(0), cdata_y(0), 0);
             if (stat != 0)
             {
                 {
@@ -65162,7 +64561,7 @@ label_19341_internal:
                 --cdata_continuous_action_turn(cc);
                 if (cdata_continuous_action_turn(cc) <= 0)
                 {
-                    label_1931();
+                    int stat = label_1931();
                     if (stat == 0)
                     {
                         txt(lang(
@@ -65188,7 +64587,7 @@ label_19341_internal:
         mode = 0;
         return;
     }
-    label_1931();
+    int stat = label_1931();
     if (stat == 0)
     {
         txt(lang(
@@ -65222,7 +64621,7 @@ void label_1935()
         }
         else
         {
-            item_separate(ci);
+            int stat = item_separate(ci);
             if (rpref(10) == stat)
             {
                 rpref(10) = -2;
@@ -65392,7 +64791,7 @@ void label_1935()
         {
             --gdata(260);
             flt();
-            itemcreate(0, 516, -1, -1, 0);
+            int stat = itemcreate(0, 516, -1, -1, 0);
             if (stat != 0)
             {
                 inv_curse_state(ci) = 1;
@@ -65436,7 +64835,7 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
 {
     elona_vector1<int> p_at_m185;
     elona_vector1<int> i_at_m185;
-    cell_itemoncell(prm_1055, prm_1056);
+    int stat = cell_itemoncell(prm_1055, prm_1056);
     if (stat <= 3)
     {
         if (map(prm_1055, prm_1056, 5) < 0)
@@ -65595,57 +64994,48 @@ int key_direction()
     if (key == key_north)
     {
         --kdy;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_south)
     {
         ++kdy;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_west)
     {
         --kdx;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_east)
     {
         ++kdx;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_northwest)
     {
         --kdx;
         --kdy;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_northeast)
     {
         ++kdx;
         --kdy;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_southwest)
     {
         --kdx;
         ++kdy;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_southeast)
     {
         ++kdx;
         ++kdy;
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_1942()
 {
@@ -65692,7 +65082,7 @@ void label_1942()
         }
     }
     listmax = 0;
-    net_dllist(u8".eum"s, 0);
+    int stat = net_dllist(u8".eum"s, 0);
     if (listmax == 0 || stat == 0)
     {
         txt(lang(
@@ -65702,19 +65092,21 @@ void label_1942()
         label_2743(false);
     }
     p = rnd(listmax);
-    net_dl(""s + list(1, p) + u8".eum"s, u8"temp.eum"s);
-    usermapid = list(1, p);
-    if (stat == 0)
     {
-        txt(lang(
-            u8"ファイルの取得に失敗した。"s,
-            u8"Failed to retreive designated files."s));
-        label_1419();
-        label_2743(false);
+        int stat = net_dl(""s + list(1, p) + u8".eum"s, u8"temp.eum"s);
+        usermapid = list(1, p);
+        if (stat == 0)
+        {
+            txt(lang(
+                u8"ファイルの取得に失敗した。"s,
+                u8"Failed to retreive designated files."s));
+            label_1419();
+            label_2743(false);
+        }
     }
     userfile = u8"temp.eum"s;
     bload(exedir + u8"user\\"s + userfile, headtemp, 1024);
-    stat = notesel(headtemp);
+    notesel(headtemp);
     noteget(s, 5);
     noteget(s(1), 6);
     username = ""s + s;
@@ -65745,16 +65137,16 @@ label_19431_internal:
     folder = exedir + u8"user\\"s;
     if (comctrl == 0 || comctrl == 2)
     {
-        stat = dirlist(buff, folder + u8"*.eum"s);
+        dirlist(buff, folder + u8"*.eum"s);
     }
     if (comctrl == 1)
     {
-        stat = dirlist(buff, folder + u8"*.ept"s);
+        dirlist(buff, folder + u8"*.ept"s);
     }
-    stat = notesel(buff);
+    notesel(buff);
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
             if (file == u8"temp.eum"s || file == u8"temp.ept"s)
@@ -65762,7 +65154,7 @@ label_19431_internal:
                 continue;
             }
             bload(folder + file, headtemp, 1024);
-            stat = notesel(headtemp);
+            notesel(headtemp);
             noteget(s, 0);
             noteget(s(1), 1);
             noteget(s(2), 4);
@@ -65917,7 +65309,7 @@ label_1945_internal:
             {
                 s = u8".eum"s;
             }
-            net_dl(""s + list(1, p) + s, u8"temp"s + s);
+            int stat = net_dl(""s + list(1, p) + s, u8"temp"s + s);
             usermapid = list(1, p);
             if (stat == 0)
             {
@@ -65933,7 +65325,7 @@ label_1945_internal:
             userfile = listn(1, p);
         }
         bload(folder + userfile, headtemp, 1024);
-        stat = notesel(headtemp);
+        notesel(headtemp);
         noteget(s, 5);
         noteget(s(1), 6);
         if (comctrl == 0 || comctrl == 2)
@@ -65946,8 +65338,7 @@ label_1945_internal:
             rtval(0) = elona_int(s);
             rtval(1) = elona_int(s(1));
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     getkey(a, 8);
     if (ginfo(2) == 0)
@@ -66007,8 +65398,7 @@ label_1945_internal:
     if (key == key_cancel)
     {
         label_1419();
-        stat = 0;
-        return stat;
+        return 0;
     }
     goto label_1945_internal;
 }
@@ -66120,7 +65510,7 @@ label_1948_internal:
                         int cnt = 0;
                         for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
                         {
-                            route_info(dx, dy, cnt);
+                            int stat = route_info(dx, dy, cnt);
                             if (stat == 0)
                             {
                                 break;
@@ -66185,7 +65575,7 @@ label_1948_internal:
         }
         tx = limit((mousex - inf_screenx), 0, windoww) / 48;
         ty = limit((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
-        key_direction();
+        int stat = key_direction();
         if (stat == 1)
         {
             cdata_x(0) += kdx;
@@ -66240,7 +65630,7 @@ label_1948_internal:
     }
     else
     {
-        key_direction();
+        int stat = key_direction();
         if (stat == 1)
         {
             x = tlocx + kdx;
@@ -66352,8 +65742,7 @@ label_1948_internal:
         }
         tlocinitx = 0;
         tlocinity = 0;
-        stat = cansee;
-        return stat;
+        return cansee;
     }
     if (key == key_cancel)
     {
@@ -66361,8 +65750,7 @@ label_1948_internal:
         tlocinity = 0;
         scposval = 0;
         label_1419();
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_1948_internal;
 }
@@ -66448,7 +65836,7 @@ label_1953_internal:
                             for (int cnt_end = cnt + (100); cnt < cnt_end;
                                  ++cnt)
                             {
-                                route_info(dx, dy, cnt);
+                                int stat = route_info(dx, dy, cnt);
                                 if (stat == 0)
                                 {
                                     break;
@@ -66976,27 +66364,31 @@ label_1961_internal:
                     if (rc != 0)
                     {
                         tc = i;
-                        label_2231();
-                        if (stat == -1)
                         {
-                            s = lang(u8"なし"s, u8"None"s);
-                        }
-                        else
-                        {
-                            s = bodyn(rtval);
+                            int stat = label_2231();
+                            if (stat == -1)
+                            {
+                                s = lang(u8"なし"s, u8"None"s);
+                            }
+                            else
+                            {
+                                s = bodyn(rtval);
+                            }
                         }
                         s += u8"/"s;
-                        label_2230();
-                        if (stat == 0)
                         {
-                            s += lang(u8"なし"s, u8"None"s);
-                        }
-                        else
-                        {
-                            s += ""s + skillname(rtval);
-                            if (rtval(1) != -1)
+                            int stat = label_2230();
+                            if (stat == 0)
                             {
-                                s += u8", "s + skillname(rtval(1));
+                                s += lang(u8"なし"s, u8"None"s);
+                            }
+                            else
+                            {
+                                s += ""s + skillname(rtval);
+                                if (rtval(1) != -1)
+                                {
+                                    s += u8", "s + skillname(rtval(1));
+                                }
                             }
                         }
                     }
@@ -67072,8 +66464,7 @@ label_1961_internal:
                     goto label_1961_internal;
                 }
                 snd(20);
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (cdata_state(p) == 6)
             {
@@ -67105,8 +66496,7 @@ label_1961_internal:
             }
             goto label_1960_internal;
         }
-        stat = p;
-        return stat;
+        return p;
     }
     if (key == key_pageup)
     {
@@ -67128,8 +66518,7 @@ label_1961_internal:
     }
     if (key == key_cancel)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_1961_internal;
 }
@@ -67151,7 +66540,7 @@ void label_1964()
     cs_bk = -1;
     snd(26);
     buff = "";
-    stat = notesel(buff);
+    notesel(buff);
     del_chara(56);
     r1 = 56;
     cdata_piety_point(r1) = cdata_piety_point(0);
@@ -67258,17 +66647,14 @@ label_1966_internal:
     }
     goto label_1966_internal;
 }
-void label_19672()
+int label_19672()
 {
-label_19671:
     label_1968();
-    label_196902();
-    return;
+    return label_196902();
 }
-void label_1969()
+int label_1969()
 {
-    label_196902();
-    return;
+    return label_196902();
 }
 void label_1968()
 {
@@ -67315,7 +66701,7 @@ label_196901_internal:
             }
             traitmode = 0;
             tid = cnt;
-            label_0042();
+            int stat = label_0042();
             if (stat == 0)
             {
                 continue;
@@ -67382,7 +66768,7 @@ label_196901_internal:
             }
             tid = i;
             traitmode = 0;
-            label_0042();
+            int stat = label_0042();
             featrq = stat;
             s = "";
             if (list(1, cnt) < 10000)
@@ -67527,8 +66913,7 @@ label_196901_internal:
     if (dump_return == 1)
     {
         dump_return = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     xnotesel(buff);
     buff = "";
@@ -67562,7 +66947,7 @@ label_196901_internal:
             }
         }
     }
-    stat = notesel(buff);
+    notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -67746,7 +67131,7 @@ label_1970_internal:
             {
                 tid = i;
                 traitmode = 0;
-                label_0042();
+                int stat = label_0042();
                 featrq = stat;
                 if (trait(tid) == 0)
                 {
@@ -67840,8 +67225,7 @@ label_1970_internal:
                     {
                         if (gdata(93) == 0)
                         {
-                            stat = 1;
-                            return stat;
+                            return 1;
                         }
                     }
                     else
@@ -67883,26 +67267,22 @@ label_1970_internal:
                 {
                     csctrl = 0;
                     label_20332();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (curmenu == 1)
                 {
                     label_2050();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (curmenu == 2)
                 {
                     label_19672();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (curmenu == 3)
                 {
                     label_1859();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
         }
@@ -67965,8 +67345,7 @@ label_1970_internal:
     {
         if (mode == 1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         label_1419();
         label_2743(false);
@@ -67977,8 +67356,7 @@ label_1970_internal:
         if (p)
         {
             label_2703();
-            stat = -1;
-            return stat;
+            return -1;
         }
     }
     goto label_1970_internal;
@@ -67999,7 +67377,7 @@ void label_1972()
     {
         buff = u8"No news"s;
     }
-    stat = notesel(buff);
+    notesel(buff);
     noteadd(u8" - News - "s, 0);
     noteadd(""s, 1);
     if (noteinfo(0) / (pagesize / 2) % 2 == 1)
@@ -68487,7 +67865,7 @@ label_1978_internal:
             cutname(s(4), 20);
             pos(wx + 392, y + 2);
             mes(s(4));
-            stat = talk_conv(buff, 70);
+            talk_conv(buff, 70);
             p(0) = qdata(5, rq) / 5 + 1;
             p(1) = 14;
             {
@@ -68817,8 +68195,7 @@ label_1982_internal:
     }
     if (p != -1)
     {
-        stat = p;
-        return stat;
+        return p;
     }
     if (key == key_pageup)
     {
@@ -68840,8 +68217,7 @@ label_1982_internal:
     }
     if (key == key_cancel)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_1982_internal;
 }
@@ -69012,8 +68388,7 @@ label_1986_internal:
     }
     if (key == key_cancel)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_1986_internal;
 }
@@ -69270,19 +68645,16 @@ label_1994_internal:
         {
             if (val == 3)
             {
-                stat = p;
-                return stat;
+                return p;
             }
             cmaka = listn(0, p);
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (key == key_cancel)
     {
         snd(26);
-        stat = 0;
-        return stat;
+        return 0;
     }
     goto label_1994_internal;
 }
@@ -69413,7 +68785,7 @@ void label_1997()
         }
         txt(lang(u8"新しい異名は？"s, u8"What's your new alias?"s));
         val = 0;
-        label_1993();
+        int stat = label_1993();
         if (stat == 1)
         {
             txt(lang(
@@ -69977,7 +69349,7 @@ void label_2004()
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
     val = 0;
-    label_2127();
+    int stat = label_2127();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -70016,7 +69388,7 @@ void label_2005()
         u8"どの方向に体当たりする？ "s,
         u8"Which direction do you want to bash? "s));
     val = 0;
-    label_2127();
+    int stat = label_2127();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -70028,7 +69400,7 @@ void label_2005()
 }
 void label_2006()
 {
-    label_2174();
+    int stat = label_2174();
     if (stat == 0)
     {
         label_1419();
@@ -70302,7 +69674,7 @@ void label_2011()
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     label_1419();
     val = 0;
-    label_2127();
+    int stat = label_2127();
     if (stat == 0)
     {
         txt(strinteractfail);
@@ -70349,7 +69721,7 @@ void label_2012()
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
     val = 0;
-    label_2127();
+    int stat = label_2127();
     if (stat == 0)
     {
         txt(strinteractfail);
@@ -70450,11 +69822,13 @@ void label_2012()
     val(1) = prompty;
     val(2) = 200;
     val(3) = 1;
-    label_2131();
-    if (stat == 0)
     {
-        label_1419();
-        label_2743(false);
+        int stat = label_2131();
+        if (stat == 0)
+        {
+            label_1419();
+            label_2743(false);
+        }
     }
     p = rtval;
     screenupdate = -1;
@@ -70620,8 +69994,8 @@ int label_2014()
     cc = 0;
     cs_bk = -1;
     folder = exedir + u8"user\\talk\\"s;
-    stat = dirlist(buff, folder + u8"*.txt"s);
-    stat = notesel(buff);
+    dirlist(buff, folder + u8"*.txt"s);
+    notesel(buff);
     list(0, 0) = -999;
     listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
     ++listmax;
@@ -70733,13 +70107,11 @@ label_2016_internal:
         {
             cbitmod(989, tc, 0);
             cdatan(4, tc) = "";
-            stat = 1;
-            return stat;
+            return 1;
         }
         cbitmod(989, tc, 1);
         cdatan(4, tc) = listn(0, p);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_pageup)
     {
@@ -70761,8 +70133,7 @@ label_2016_internal:
     }
     if (key == key_cancel)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_2016_internal;
 }
@@ -70923,8 +70294,7 @@ label_2020_internal:
         }
         label_2111();
         label_2110();
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_pageup)
     {
@@ -70946,8 +70316,7 @@ label_2020_internal:
     }
     if (key == key_cancel)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     goto label_2020_internal;
 }
@@ -70958,7 +70327,7 @@ void label_2022()
     pos(0, 0);
     picload(exedir + u8"graphic\\book.bmp"s, 1);
     gsel(0);
-    stat = notesel(buff);
+    notesel(buff);
     noteload(exedir + u8"data\\book.txt"s);
     p = instr(buff, 0, ""s + inv_param1(ci) + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
@@ -71062,7 +70431,7 @@ label_2024_internal:
 void label_2026()
 {
     tc = cc;
-    label_2167();
+    int stat = label_2167();
     if (stat == 0)
     {
         label_2743(false);
@@ -71328,7 +70697,7 @@ void label_2031()
         s = ""s + dur + lang(u8"ﾀｰﾝ "s, u8"t "s) + buffdesc;
         return;
     }
-    calcskill(i, cc, calcspellpower(i, cc));
+    int stat = calcskill(i, cc, calcspellpower(i, cc));
     if (cc == 0)
     {
         if (trait(165) != 0)
@@ -72455,13 +71824,11 @@ label_2035_internal:
         if (key == key_enter)
         {
             snd(103);
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (key == key_cancel)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         goto label_2035_internal;
     }
@@ -72487,8 +71854,7 @@ label_2035_internal:
                 screenupdate = -1;
                 label_1419();
                 tc = tcbk;
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (cdata_skill_bonus(0) < 1 || p < 0 || p < 100)
             {
@@ -72554,20 +71920,17 @@ label_2035_internal:
                 if (curmenu == 1)
                 {
                     label_2050();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (curmenu == 2)
                 {
                     label_19672();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (curmenu == 3)
                 {
                     label_1859();
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
         }
@@ -72585,8 +71948,7 @@ label_2035_internal:
             screenupdate = -1;
             label_1419();
             tc = tcbk;
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     goto label_2035_internal;
@@ -72968,8 +72330,7 @@ label_2041_internal:
         if (key == key_enter)
         {
             create_pcpic(cc, 1);
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (key == key_pageup || key == key_pagedown)
         {
@@ -73076,16 +72437,14 @@ label_2041_internal:
     if (key == key_cancel)
     {
         create_pcpic(cc, 1);
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (mode == 1)
     {
         getkey(p, 112);
         if (p)
         {
-            stat = -1;
-            return stat;
+            return -1;
         }
     }
     goto label_2041_internal;
@@ -73230,8 +72589,7 @@ label_2045_internal:
     {
         snd(20);
         create_pcpic(cc, 1);
-        stat = 1;
-        return stat;
+        return 1;
     }
     goto label_2045_internal;
 }
@@ -73276,7 +72634,7 @@ void label_2047()
         label_2048();
     }
     attacknum = 0;
-    label_2075();
+    int stat = label_2075();
     if (stat == 1)
     {
         s(1) = lang(u8"射撃"s, u8"Dist"s);
@@ -73849,7 +73207,7 @@ void label_2054()
     {
         if (gdata(20) != 35 || 0)
         {
-            cell_itemoncell(cdata_x(0), cdata_y(0));
+            int stat = cell_itemoncell(cdata_x(0), cdata_y(0));
             if (stat == 0)
             {
                 cell_featread(cdata_x(0), cdata_y(0));
@@ -73948,42 +73306,47 @@ void label_2054()
             }
         }
     }
-    cell_itemoncell(cdata_x(0), cdata_y(0));
-    if (stat == 0)
     {
-        if (mdata(6) == 3 || mdata(6) == 2)
+        int stat = cell_itemoncell(cdata_x(0), cdata_y(0));
+        if (stat == 0)
         {
-            if (chipm(0, map(cdata_x(0), cdata_y(0), 0)) == 4)
+            if (mdata(6) == 3 || mdata(6) == 2)
             {
-                snd(83);
-                txt(lang(
-                    u8"雪をかきあつめた。"s,
-                    u8"You rake up a handful of snow."s));
-                actionsp(0, 10);
-                if (stat == 0)
+                if (chipm(0, map(cdata_x(0), cdata_y(0), 0)) == 4)
                 {
+                    snd(83);
                     txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
+                        u8"雪をかきあつめた。"s,
+                        u8"You rake up a handful of snow."s));
+                    int stat = actionsp(0, 10);
+                    if (stat == 0)
+                    {
+                        txt(lang(
+                            u8"疲労し過ぎて失敗した！"s,
+                            u8"You are too exhausted!"s));
+                        label_2742();
+                        return;
+                    }
+                    flt();
+                    {
+                        int stat = itemcreate(0, 587, -1, -1, 0);
+                        if (stat != 0)
+                        {
+                            inv_curse_state(ci) = 0;
+                            inv_identification_state(ci) = 3;
+                            item_stack(0, ci, 1);
+                        }
+                    }
                     label_2742();
                     return;
                 }
-                flt();
-                itemcreate(0, 587, -1, -1, 0);
-                if (stat != 0)
-                {
-                    inv_curse_state(ci) = 0;
-                    inv_identification_state(ci) = 3;
-                    item_stack(0, ci, 1);
-                }
-                label_2742();
-                return;
             }
+            ++msgdup;
+            txt(lang(
+                u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
+            label_1419();
+            label_2743(false);
         }
-        ++msgdup;
-        txt(lang(u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
-        label_1419();
-        label_2743(false);
     }
     ci = rtval(1);
     if (rtval > 1)
@@ -74016,16 +73379,18 @@ void label_2054()
         label_2743(false);
     }
     in = inv_number(ci);
-    label_2192();
-    if (stat == 1 || stat == -1)
     {
-        label_2742();
-        return;
-    }
-    else
-    {
-        label_1419();
-        label_2743(false);
+        int stat = label_2192();
+        if (stat == 1 || stat == -1)
+        {
+            label_2742();
+            return;
+        }
+        else
+        {
+            label_1419();
+            label_2743(false);
+        }
     }
 }
 void label_2055()
@@ -74216,9 +73581,9 @@ void label_2068()
     getinheritance(ci, inhlist, inhmax);
     dbid = inv_id(ci);
     dbmode = 2;
-    stat = label_1275();
+    label_1275();
     dbmode = 17;
-    stat = label_1275();
+    label_1275();
     if (inv_identification_state(ci) >= 3)
     {
         buf = trimdesc(description(3), 1);
@@ -74424,7 +73789,7 @@ void label_2068()
                     listn(0, p) = "";
                     ++p;
                     buf = trimdesc(description(cnt), 2);
-                    stat = notesel(buf);
+                    notesel(buf);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
@@ -74667,15 +74032,13 @@ int label_2072()
                 u8"ターゲットが見当たらない。"s, u8"You find no target."s));
             label_1419();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata_enemy_id(cc) < 0)
     {
         cdata_enemy_id(cc) = 0;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2073()
 {
@@ -74700,20 +74063,18 @@ int label_2073()
     if (rtval == 0)
     {
         label_1419();
-        stat = 1;
-        return stat;
+        return 1;
     }
     else
     {
         label_1419();
-        stat = 0;
-        return stat;
+        return 0;
     }
 }
 void label_2074()
 {
     cc = 0;
-    label_2072();
+    int stat = label_2072();
     if (stat == 0)
     {
         label_2743(false);
@@ -74721,39 +74082,41 @@ void label_2074()
     tc = cdata_enemy_id(0);
     if (cdata_relationship(tc) >= 0)
     {
-        label_2073();
+        int stat = label_2073();
         if (stat == 0)
         {
             label_2743(false);
         }
     }
-    label_2075();
-    if (stat == -1)
     {
-        ++msgdup;
-        txt(lang(
-            u8"射撃用の道具を装備していない。"s,
-            u8"You need to equip a firing weapon."s));
-        label_1419();
-        label_2743(false);
-    }
-    if (stat == -2)
-    {
-        ++msgdup;
-        txt(lang(
-            u8"矢/弾丸を装備する必要がある。"s,
-            u8"You need to equip ammos or arrows."s));
-        label_1419();
-        label_2743(false);
-    }
-    if (stat == -3)
-    {
-        ++msgdup;
-        txt(lang(
-            u8"矢/弾丸の種類が適していない。"s,
-            u8"You're equipped with wrong type of ammos."s));
-        label_1419();
-        label_2743(false);
+        int stat = label_2075();
+        if (stat == -1)
+        {
+            ++msgdup;
+            txt(lang(
+                u8"射撃用の道具を装備していない。"s,
+                u8"You need to equip a firing weapon."s));
+            label_1419();
+            label_2743(false);
+        }
+        if (stat == -2)
+        {
+            ++msgdup;
+            txt(lang(
+                u8"矢/弾丸を装備する必要がある。"s,
+                u8"You need to equip ammos or arrows."s));
+            label_1419();
+            label_2743(false);
+        }
+        if (stat == -3)
+        {
+            ++msgdup;
+            txt(lang(
+                u8"矢/弾丸の種類が適していない。"s,
+                u8"You're equipped with wrong type of ammos."s));
+            label_1419();
+            label_2743(false);
+        }
     }
     label_2217();
     label_2742();
@@ -74785,29 +74148,25 @@ int label_2075()
     if (cw == -1)
     {
         cw = 0;
-        stat = -1;
-        return stat;
+        return -1;
     }
     if (ammo == -1)
     {
         if (inv_skill(cw) != 111)
         {
             cw = 0;
-            stat = -2;
-            return stat;
+            return -2;
         }
     }
     if (ammo != -1)
     {
         if (inv_skill(cw) != inv_skill(ammo))
         {
-            stat = -3;
-            return stat;
+            return -3;
         }
     }
     attackskill = inv_skill(cw);
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2076()
 {
@@ -75026,12 +74385,11 @@ int label_2080()
             }
         }
     }
-    stat = f;
-    return stat;
+    return f;
 }
 void label_2081()
 {
-    label_2080();
+    int stat = label_2080();
     if (stat == 1)
     {
         txt(lang(
@@ -75200,7 +74558,7 @@ void label_2082()
             {
                 p = 416;
             }
-            itemcreate(-1, p, cdata_x(cc), cdata_y(cc), 0);
+            int stat = itemcreate(-1, p, cdata_x(cc), cdata_y(cc), 0);
             if (stat != 0)
             {
                 inv_param2(ci) = 0;
@@ -75242,15 +74600,13 @@ int label_2083()
             label_2131();
             if (rtval != 0)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
     }
     gdata(91) = 104;
     label_2148();
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2084()
 {
@@ -75338,7 +74694,8 @@ void label_2084()
         redraw(1);
         fileext = u8"eum"s;
         filedsc = u8"Elona User Map"s;
-        _fdialog(fileext, 17, filedsc, exedir + u8"user"s, u8"default.eum"s);
+        int stat = _fdialog(
+            fileext, 17, filedsc, exedir + u8"user"s, u8"default.eum"s);
         if (stat == 0)
         {
             return;
@@ -75367,10 +74724,12 @@ void label_2084()
         arenaop(0) = 1;
         arenaop(1) = 6;
         allyctrl = 2;
-        label_1959();
-        if (stat == -1)
         {
-            return;
+            int stat = label_1959();
+            if (stat == -1)
+            {
+                return;
+            }
         }
         lv = 0;
         n = 0;
@@ -75402,10 +74761,13 @@ void label_2084()
         redraw(1);
         fileext = u8"ept"s;
         filedsc = u8"Elona Pet Team"s;
-        _fdialog(fileext, 17, filedsc, exedir + u8"user"s, u8"default.ept"s);
-        if (stat == 0)
         {
-            return;
+            int stat = _fdialog(
+                fileext, 17, filedsc, exedir + u8"user"s, u8"default.ept"s);
+            if (stat == 0)
+            {
+                return;
+            }
         }
         userfile = refstr;
         label_2109();
@@ -75418,7 +74780,7 @@ void label_2084()
     if (rtval == 2)
     {
         val = 2;
-        label_1993();
+        int stat = label_1993();
         if (stat == 0)
         {
             return;
@@ -75479,7 +74841,7 @@ void label_2085()
     dbmode = 2;
     label_2298();
     buff = "";
-    stat = notesel(buff);
+    notesel(buff);
     noteadd(
         u8"Elona Version 1.22 キャラクター情報 "s + gdata(10) + u8"年"s
         + gdata(11) + u8"月"s + gdata(12) + u8"日 "s + gdata(13) + u8"時"s
@@ -76124,13 +75486,13 @@ void label_2089()
                     }
                 }
                 folder = exedir + u8"tmp"s;
-                stat = dirlist(buff, folder + u8"\\*_"s + p + u8"_*.*"s);
-                if (stat != 0)
+                if (dirlist(buff, folder + u8"\\*_"s + p + u8"_*.*"s) != 0)
                 {
-                    stat = notesel(buff);
+                    notesel(buff);
                     {
                         int cnt = 0;
-                        for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+                        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
+                             ++cnt)
                         {
                             noteget(file, cnt);
                             p1 = instr(file, 0, u8"_"s);
@@ -76591,8 +75953,8 @@ void label_2104()
 }
 void label_2105()
 {
-    stat = dirlist(buff, exedir + u8"user\\*.npc"s);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"user\\*.npc"s);
+    notesel(buff);
     usernpcmax = noteinfo(0);
     if (usernpcmax >= 100)
     {
@@ -76762,11 +76124,11 @@ void label_2105()
     label_2110();
     gsel(5);
     folder = exedir + u8"user\\graphic\\"s;
-    stat = dirlist(buff, folder + u8"chara_*.bmp"s);
-    stat = notesel(buff);
+    dirlist(buff, folder + u8"chara_*.bmp"s);
+    notesel(buff);
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
             p = elona_int(strmid(file, 6, instr(file, 6, u8"."s)));
@@ -76786,7 +76148,7 @@ void label_2106()
     redraw(1);
     fileext = u8"txt"s;
     filedsc = u8"Custom Npc Text"s;
-    _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
+    int stat = _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
     if (stat == 0)
     {
         return;
@@ -76805,10 +76167,12 @@ void label_2106()
     redraw(1);
     fileext = u8"bmp"s;
     filedsc = u8"Bit Map File"s;
-    _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
-    if (stat == 0)
     {
-        return;
+        int stat = _fdialog(fileext, 16, filedsc, exedir + u8"user"s, ""s);
+        if (stat == 0)
+        {
+            return;
+        }
     }
     bmpfile = refstr;
     exist(bmpfile);
@@ -76979,21 +76343,21 @@ void label_2109()
 }
 void label_2110()
 {
-    stat = dirlist(buff, exedir + u8"user\\_tmp_*.npc"s);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"user\\_tmp_*.npc"s);
+    notesel(buff);
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
             elona_delete(exedir + u8"user\\"s + file);
         }
     }
-    stat = dirlist(buff, exedir + u8"user\\!tmp*.npc"s);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"user\\!tmp*.npc"s);
+    notesel(buff);
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
             elona_delete(exedir + u8"user\\"s + file);
@@ -77003,11 +76367,11 @@ void label_2110()
 }
 void label_2111()
 {
-    stat = dirlist(buff, exedir + u8"user\\*.t"s);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"user\\*.t"s);
+    notesel(buff);
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(file, cnt);
             elona_delete(exedir + u8"user\\"s + file);
@@ -77021,11 +76385,11 @@ void label_2112()
     fmode = 10;
     label_2107();
     folder = exedir + u8"save\\"s + playerid + u8"\\"s;
-    stat = notesel(buff);
+    notesel(buff);
     exist(folder + u8"filelist.txt"s);
     if (strsize == -1)
     {
-        stat = dirlist(buff, folder + u8"*.*"s);
+        dirlist(buff, folder + u8"*.*"s);
     }
     else
     {
@@ -77081,8 +76445,8 @@ void label_2113()
     fmode = 4;
     label_2107();
     file = exedir + u8"save\\"s + playerid;
-    stat = dirlist(save_buff, file, 5);
-    stat = notesel(save_buff);
+    dirlist(save_buff, file, 5);
+    notesel(save_buff);
     save_f = 0;
     {
         int cnt = 0;
@@ -77104,7 +76468,7 @@ void label_2113()
     {
     }
     file += u8"\\"s;
-    stat = notesel(filemod);
+    notesel(filemod);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -77136,8 +76500,8 @@ void label_2113()
     fmode = 8;
     label_2107();
     filemod = "";
-    stat = dirlist(buff, exedir + u8"tmp\\*.*"s);
-    stat = notesel(buff);
+    dirlist(buff, exedir + u8"tmp\\*.*"s);
+    notesel(buff);
     notesave(exedir + u8"save\\"s + playerid + u8"\\filelist.txt"s);
     return;
 }
@@ -77390,8 +76754,8 @@ void label_2118()
     }
     label_1425();
     file = exedir + u8"save\\*"s;
-    stat = dirlist(buff, file, 5);
-    stat = notesel(buff);
+    dirlist(buff, file, 5);
+    notesel(buff);
     keyrange = 0;
     {
         int cnt = 0;
@@ -77585,8 +76949,8 @@ void label_2121()
     }
     label_1425();
     file = exedir + u8"save\\*"s;
-    stat = dirlist(buff, file, 5);
-    stat = notesel(buff);
+    dirlist(buff, file, 5);
+    notesel(buff);
     keyrange = 0;
     listmax = 0;
     {
@@ -77846,24 +77210,28 @@ label_21261_internal:
         pos(x + 4, y + 4);
         gfini(dx - 1, 35);
         gfdec(60, 60, 60);
-        aplsel(u8"Elona ver 1.22"s);
-        if (stat == 1)
         {
-            dialog(u8"Failed to get WINDOW ID"s, 1);
-            clrobj(1);
-            cfg_msg_box = 0;
-            goto label_21261_internal;
+            int stat = aplsel(u8"Elona ver 1.22"s);
+            if (stat == 1)
+            {
+                dialog(u8"Failed to get WINDOW ID"s, 1);
+                clrobj(1);
+                cfg_msg_box = 0;
+                goto label_21261_internal;
+            }
         }
-        aplobj(""s, 1);
-        if (stat == 1)
         {
-            dialog(u8"Failed to get OBJECT ID"s, 1);
-            clrobj(1);
-            cfg_msg_box = 0;
-            goto label_21261_internal;
+            int stat = aplobj(""s, 1);
+            if (stat == 1)
+            {
+                dialog(u8"Failed to get OBJECT ID"s, 1);
+                clrobj(1);
+                cfg_msg_box = 0;
+                goto label_21261_internal;
+            }
         }
     }
-    stat = notesel(inputlog);
+    notesel(inputlog);
     p(1) = 2;
     ime_esc = 0;
     onkey_1();
@@ -78044,8 +77412,7 @@ label_2128_internal:
         tlocx = x;
         tlocy = y;
         keyhalt = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (key == key_north)
     {
@@ -78118,19 +77485,16 @@ label_2128_internal:
             x = cdata_x(0);
             y = cdata_y(0);
             keyhalt = 1;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (x == cdata_x(0) && y == cdata_y(0))
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         tlocx = x;
         tlocy = y;
         keyhalt = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     goto label_2128_internal;
 }
@@ -78267,8 +77631,7 @@ label_2132_internal:
     {
         promptmax = 0;
         cs = csprev;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (val(3) != 0)
     {
@@ -78276,15 +77639,14 @@ label_2132_internal:
         {
             promptmax = 0;
             cs = csprev;
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     goto label_2132_internal;
 }
 void label_2134()
 {
-    stat = notesel(dbm);
+    notesel(dbm);
     buff = "";
     if (dbm == ""s)
     {
@@ -78964,10 +78326,8 @@ void label_2139()
 }
 void label_2140()
 {
-    stat = CreateMutexA(0, 0, u8"Elona"s);
-    mutex_handle = stat;
-    stat = func_3();
-    if (stat == 183)
+    mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
+    if (func_3() == 183)
     {
         dialog(
             lang(
@@ -78983,33 +78343,27 @@ int efstatusfix(int prm_1072, int prm_1073, int prm_1074, int prm_1075)
 {
     if (efstatus <= -2)
     {
-        stat = prm_1072;
-        return stat;
+        return prm_1072;
     }
     if (efstatus == -1)
     {
-        stat = prm_1073;
-        return stat;
+        return prm_1073;
     }
     if (efstatus == 0)
     {
-        stat = prm_1074;
-        return stat;
+        return prm_1074;
     }
-    stat = prm_1075;
-    return stat;
+    return prm_1075;
 }
 int label_2143()
 {
     if (map(cdata_x(0), cdata_y(0), 6) == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (feat(1) >= 24 && feat(1) <= 28)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     atxspot = 11;
     atxlv = gdata(22);
@@ -79139,8 +78493,7 @@ int label_2143()
         rowactend(cc);
         map(cdata_x(0), cdata_y(0), 6) = 0;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_2144()
 {
@@ -79210,7 +78563,7 @@ label_21451_internal:
             }
             if (feat(0) != tile_trap && cc == 0)
             {
-                label_1514();
+                int stat = label_1514();
                 if (stat == 1)
                 {
                     refx = movx;
@@ -79227,7 +78580,7 @@ label_21451_internal:
                 {
                     if (sdata(175, cc) != 0)
                     {
-                        label_1517();
+                        int stat = label_1517();
                         if (stat == 1)
                         {
                             label_2144();
@@ -79242,7 +78595,7 @@ label_21451_internal:
                     }
                 }
             }
-            label_1515();
+            int stat = label_1515();
             if (stat == 1)
             {
                 if (synccheck(cc, -1))
@@ -79758,7 +79111,8 @@ void label_2146()
                                                 dbid = 55;
                                             }
                                         }
-                                        itemcreate(-1, dbid, x, y, 1);
+                                        int stat =
+                                            itemcreate(-1, dbid, x, y, 1);
                                         if (stat != 0)
                                         {
                                             --inv_number(ci);
@@ -79926,7 +79280,7 @@ void label_2147()
     }
     if (cc == 0)
     {
-        actionsp(0, 1 + rnd(2));
+        int stat = actionsp(0, 1 + rnd(2));
         if (stat == 0)
         {
             txt(lang(u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
@@ -81646,7 +81000,7 @@ void label_2161()
     {
         item_identify(ci, 1);
     }
-    chara_unequip(ci);
+    int stat = chara_unequip(ci);
     if (stat == 1)
     {
         r1 = cc;
@@ -81806,8 +81160,7 @@ int label_2163()
                 txt(lang(
                     u8"それは既に解読済みだ。"s,
                     u8"You already have decoded the book."s));
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
         if (cdata_blind(cc) != 0)
@@ -81818,8 +81171,7 @@ int label_2163()
                     name(cc) + u8"は何も見えない。"s,
                     name(cc) + u8" can see nothing."s));
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         cdata_continuous_action_id(cc) = 2;
         if (inv_id(ci) == 783)
@@ -81848,8 +81200,7 @@ int label_2163()
                     + itemname(ci, 1) + u8"."s));
         }
         item_separate(ci);
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata_continuous_action_turn(cc) > 0)
     {
@@ -81858,8 +81209,7 @@ int label_2163()
         label_1458();
         if (inv_id(ci) == 783)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (inv_id(ci) == 687)
         {
@@ -81880,7 +81230,7 @@ int label_2163()
         {
             r2 = r2 * 150 / 100;
         }
-        label_1513();
+        int stat = label_1513();
         ci = cibkread;
         if (stat == 0)
         {
@@ -81909,8 +81259,7 @@ int label_2163()
                 }
             }
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (synccheck(cc, -1))
     {
@@ -81923,8 +81272,7 @@ int label_2163()
         if (inv_param1(ci) == 0)
         {
             rowactend(cc);
-            stat = 1;
-            return stat;
+            return 1;
         }
         txt(lang(
             itemname(ci, 1) + u8"を覚えた！"s, u8"You learned the recipe!"s));
@@ -81938,8 +81286,7 @@ int label_2163()
                 itemname(ci, 1) + u8" falls apart."s));
         }
         rowactend(cc);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (inv_id(ci) == 687)
     {
@@ -81987,8 +81334,7 @@ int label_2163()
         }
     }
     rowactend(cc);
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2164()
 {
@@ -82000,8 +81346,7 @@ int label_2164()
                 name(cc) + u8"は何も見えない。"s,
                 name(cc) + u8" can see nothing."s));
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (inv_id(ci) == 742)
     {
@@ -82009,21 +81354,18 @@ int label_2164()
         txt(lang(
             u8"すくつの探索を許可する、という内容の文面が形式的に書いてある。"s,
             u8"According to the card, you are permitted to explore the void now."s));
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (inv_id(ci) == 563)
     {
-        label_2083();
+        int stat = label_2083();
         if (stat == 1)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         else
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (inv_id(ci) == 668)
@@ -82032,14 +81374,12 @@ int label_2164()
         txt(lang(
             u8"レイチェルという作家による、心あたたまる童話集だ。"s,
             u8"It's a lovely fairy tale written by Rachel."s));
-        stat = 1;
-        return stat;
+        return 1;
     }
     tc = cc;
     item_identify(ci, 1);
     label_2022();
-    stat = 1;
-    return stat;
+    return 1;
 }
 int calcmagiccontrol(int prm_1076, int prm_1077)
 {
@@ -82068,31 +81408,27 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
                             + u8"."s));
                 }
                 skillexp(188, prm_1076, 8, 4);
-                stat = 1;
-                return stat;
+                return 1;
             }
             skillexp(188, prm_1076, 30, 2);
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_2167()
 {
     spellbk = efid;
     ccbk = cc;
-    label_2168();
+    int stat = label_2168();
     if (stat == 1)
     {
         cc = ccbk;
         r1 = cc;
         r2 = spellbk;
         label_1462();
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_2168()
 {
@@ -82122,19 +81458,17 @@ int label_2168()
             {
                 label_1419();
                 efsource = 0;
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
         screenupdate = -1;
         label_1419();
     }
-    label_2175();
+    int stat = label_2175();
     if (stat == 0)
     {
         efsource = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cc != 0)
     {
@@ -82143,14 +81477,12 @@ int label_2168()
             if (cdata_relationship(cc) == 10 || gdata(20) == 40)
             {
                 efsource = 0;
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (gdata(4) % 10 > 4)
             {
                 efsource = 0;
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
     }
@@ -82176,8 +81508,7 @@ int label_2168()
         if (cdata_state(cc) != 1)
         {
             efsource = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (cdata_confused(cc) != 0 || cdata_dimmed(cc) != 0)
@@ -82190,12 +81521,11 @@ int label_2168()
                     + u8" to cast a spell in confusion."s));
             txtmore();
         }
-        label_1513();
+        int stat = label_1513();
         if (stat == 0)
         {
             efsource = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     else
@@ -82228,8 +81558,7 @@ int label_2168()
                 u8"The mist of silence interrupts a spell."s));
         }
         efsource = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (rnd(100) >= calcspellfail(efid, cc))
     {
@@ -82242,15 +81571,13 @@ int label_2168()
             label_1426();
         }
         efsource = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (noeffect == 1)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         efsource = 0;
-        stat = 1;
-        return stat;
+        return 1;
     }
     efp = calcspellpower(efid, cc);
     p = encfind(cc, 34);
@@ -82272,7 +81599,7 @@ int label_2168()
                 label_2176();
                 if (cdata_state(tc) != 1)
                 {
-                    label_2072();
+                    int stat = label_2072();
                     if (stat == 0)
                     {
                         break;
@@ -82294,8 +81621,7 @@ int label_2168()
     {
         label_2176();
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2169()
 {
@@ -82360,8 +81686,7 @@ int label_2169()
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2170()
 {
@@ -82370,8 +81695,7 @@ int label_2170()
     {
         valn = itemname(ci);
         txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
-        stat = 1;
-        return stat;
+        return 1;
     }
     snd(17);
     valn = itemname(ci);
@@ -82577,8 +81901,7 @@ int label_2170()
             txt(lang(
                 itemname(ci) + u8"は完全に干上がった。"s,
                 itemname(ci) + u8" has completely dried up."s));
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (inv_param1(ci) < -5)
@@ -82587,8 +81910,7 @@ int label_2170()
             itemname(ci) + u8"は干上がった。"s,
             itemname(ci) + u8" has dried up."s));
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2171()
 {
@@ -82606,8 +81928,7 @@ int label_2171()
                 name(cc) + u8" can see nothing."s));
         }
         efsource = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata_dimmed(cc) != 0 || cdata_confused(cc) != 0)
     {
@@ -82620,8 +81941,7 @@ int label_2171()
                     name(cc) + u8" stagger"s + _s(cc) + u8"."s));
             }
             efsource = 0;
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (synccheck(cc, -1))
@@ -82653,8 +81973,7 @@ int label_2171()
             item_identify(ci, 1);
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2172()
 {
@@ -82667,8 +81986,7 @@ int label_2172()
                 u8"You zap "s + itemname(ci, 1) + u8"."s));
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     efstatus = inv_curse_state(ci);
     if (efstatus >= 1)
@@ -82676,12 +81994,11 @@ int label_2172()
         efstatus = 0;
     }
     efsource = 1;
-    label_2175();
+    int stat = label_2175();
     if (stat == 0)
     {
         efsource = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (efid >= 400 && efid < 467)
     {
@@ -82769,14 +82086,12 @@ label_2173_internal:
         if (ci >= 5080)
         {
             cell_refresh(inv_x(ci), inv_y(ci));
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     item_separate(ci);
     --inv_count(ci);
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2174()
 {
@@ -82801,15 +82116,15 @@ int label_2174()
                     }
                 }
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
-    label_2175();
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = label_2175();
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
     if (sdataref(3, efid) / 1000 * 1000 != 3000
         && sdataref(3, efid) / 1000 * 1000 != 10000)
@@ -82825,8 +82140,7 @@ int label_2174()
                         name(cc) + u8" shake"s + _s(cc) + u8" "s + his(cc)
                             + u8" head."s));
                 }
-                stat = 1;
-                return stat;
+                return 1;
             }
         }
     }
@@ -82842,8 +82156,7 @@ int label_2174()
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
                     dmgsp(0, sdataref(2, efid) / 2 + 1);
-                    stat = 1;
-                    return stat;
+                    return 1;
                 }
             }
             dmgsp(
@@ -82857,18 +82170,17 @@ int label_2174()
         if (efid != 300)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
-    label_2176();
-    if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        int stat = label_2176();
+        if (stat == 0)
+        {
+            return 0;
+        }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2175()
 {
@@ -82876,8 +82188,7 @@ int label_2175()
     if (efid > 661)
     {
         tc = cc;
-        stat = 1;
-        return stat;
+        return 1;
     }
     tg = sdataref(3, efid) / 1000 * 1000;
     if (efsource == 1)
@@ -82892,8 +82203,7 @@ int label_2175()
         if (cc == 0)
         {
             tc = 0;
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (tg == 8000)
@@ -82903,18 +82213,16 @@ int label_2175()
             tc = 0;
             txt(lang(u8"どの方向？"s, u8"Which direction?"s));
             label_1419();
-            label_2127();
+            int stat = label_2127();
             if (stat == 0)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (map(tlocx, tlocy, 1) == 0)
             {
                 noeffect = 1;
                 obvious = 0;
-                stat = 1;
-                return stat;
+                return 1;
             }
             tc = map(tlocx, tlocy, 1) - 1;
         }
@@ -82923,14 +82231,12 @@ int label_2175()
             if (dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
                 > sdataref(3, efid) % 1000 + 1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             tlocx = cdata_x(tc);
             tlocy = cdata_y(tc);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tg == 7000 || tg == 9000 && tgloc == 1 && cc == 0)
     {
@@ -82938,7 +82244,8 @@ int label_2175()
         {
             if (tg == 9000)
             {
-                if (fov_los(cdata_x(cc), cdata_y(cc), tglocx, tglocy) == 0)
+                if (int stat =
+                        fov_los(cdata_x(cc), cdata_y(cc), tglocx, tglocy) == 0)
                 {
                     if (stat == 0)
                     {
@@ -82948,15 +82255,14 @@ int label_2175()
                         label_1419();
                     }
                     obvious = 0;
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 tlocx = tglocx;
                 tlocy = tglocy;
             }
             else
             {
-                label_1947();
+                int stat = label_1947();
                 if (stat != 1)
                 {
                     if (stat == 0)
@@ -82967,8 +82273,7 @@ int label_2175()
                         label_1419();
                     }
                     obvious = 0;
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
         }
@@ -82977,14 +82282,12 @@ int label_2175()
             if (fov_los(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
                 == 0)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             tlocx = cdata_x(tc);
             tlocy = cdata_y(tc);
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tg == 3000 || tg == 10000)
     {
@@ -82995,43 +82298,38 @@ int label_2175()
                 if (dist(cdata_x(tc), cdata_y(tc), cdata_x(cc), cdata_y(cc))
                     > sdataref(3, efid) % 1000 + 1)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
                 if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc))
                     == 0)
                 {
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
         }
         tc = cc;
         tlocx = cdata_x(cc);
         tlocy = cdata_y(cc);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tg == 2000 || tg == 6000 || tg == 9000)
     {
         if (cc == 0)
         {
-            label_2072();
+            int stat = label_2072();
             if (stat == 0)
             {
                 obvious = 0;
-                stat = 0;
-                return stat;
+                return 0;
             }
             tc = cdata_enemy_id(0);
             if (cdata_relationship(tc) >= 0)
             {
-                label_2073();
+                int stat = label_2073();
                 if (stat == 0)
                 {
                     obvious = 0;
-                    stat = 0;
-                    return stat;
+                    return 0;
                 }
             }
         }
@@ -83044,18 +82342,15 @@ int label_2175()
                 txt(lang(u8"射程距離外だ。"s, u8"It's out of range."s));
                 label_1419();
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)) == 0)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         tlocx = cdata_x(tc);
         tlocy = cdata_y(tc);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tg == 5000)
     {
@@ -83075,18 +82370,16 @@ int label_2175()
             }
             label_1419();
             val = 0;
-            label_2127();
+            int stat = label_2127();
             if (stat == 0)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 obvious = 0;
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2187()
 {
@@ -83353,7 +82646,7 @@ void label_2189()
                 cc = tc;
                 dbmode = 15;
                 dbid = inv_id(ci);
-                stat = label_1275();
+                label_1275();
                 cc = ccthrowpotion;
                 label_2742();
                 return;
@@ -83476,7 +82769,7 @@ void label_2189()
 }
 void label_2190()
 {
-    item_find(60002);
+    int stat = item_find(60002);
     if (stat != -1)
     {
         ci = stat;
@@ -83519,8 +82812,7 @@ int label_2192()
             {
                 cdata_platinum_coin(cc) += in;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (cc == 0)
@@ -83535,8 +82827,7 @@ int label_2192()
                         u8"それは"s + name(gdata(183)) + u8"が使用中だ。"s,
                         name(gdata(183)) + u8" "s + is(gdata(183))
                             + u8" using it."s));
-                    stat = 1;
-                    return stat;
+                    return 1;
                 }
             }
         }
@@ -83551,13 +82842,11 @@ int label_2192()
                         txt(lang(
                             u8"バックパックが一杯だ。"s,
                             u8"Your inventory is full."s));
-                        stat = 0;
-                        return stat;
+                        return 0;
                     }
                     gdata(91) = 103;
                     label_2148();
-                    stat = -1;
-                    return stat;
+                    return -1;
                 }
             }
         }
@@ -83598,8 +82887,7 @@ int label_2192()
             }
             else
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
         if (inv_getfreeid(cc) == -1)
@@ -83607,8 +82895,7 @@ int label_2192()
             txt(lang(
                 u8"バックパックには、もうアイテムを入れる余裕がない。"s,
                 u8"Your inventory is full."s));
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     inumbk = inv_number(ci) - in;
@@ -83623,7 +82910,7 @@ int label_2192()
                 {
                     dbmode = 14;
                     dbid = inv_id(ci);
-                    stat = label_1275();
+                    label_1275();
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
                             + u8"から魔力を吸い取った。"s,
@@ -83662,7 +82949,7 @@ int label_2192()
         inv_own_state(ci) = 0;
     }
     ibitmod(12, ci, 0);
-    item_stack(cc, ci);
+    int stat = item_stack(cc, ci);
     if (stat == 0)
     {
         ti = inv_getfreeid(cc);
@@ -83681,8 +82968,7 @@ int label_2192()
                     u8"バックパックには、もうアイテムを入れる余裕がない。"s,
                     u8"Your inventory is full."s));
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         item_copy(ci, ti);
         inv_number(ti) = in;
@@ -83850,7 +83136,7 @@ int label_2192()
                 }
             }
         }
-        convertartifact(ti);
+        int stat = convertartifact(ti);
         ti = stat;
         if (adata(16, gdata(20)) == 101)
         {
@@ -83872,8 +83158,7 @@ int label_2192()
     {
         label_1521();
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2193()
 {
@@ -83882,7 +83167,7 @@ int label_2193()
     inv_x(ci) = cdata_x(cc);
     inv_y(ci) = cdata_y(cc);
     itemturn(ci);
-    item_stack(-1, ci);
+    int stat = item_stack(-1, ci);
     if (stat == 0 || dropval == 0)
     {
         ti = inv_getfreeid(-1);
@@ -83892,8 +83177,7 @@ int label_2193()
                 u8"もう周りに物を置くスペースがない！ "s,
                 u8"The place is too crowded. You can't drop stuff anymore."s));
             label_1419();
-            stat = 0;
-            return stat;
+            return 0;
         }
         item_copy(ci, ti);
     }
@@ -83917,7 +83201,7 @@ int label_2193()
     label_1521();
     if (inv_id(ti) == 516)
     {
-        item_find(60002, 0);
+        int stat = item_find(60002, 0);
         if (stat != -1)
         {
             p = stat;
@@ -83953,25 +83237,21 @@ int label_2193()
         mdata(20) = 1;
         label_0068();
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 int label_2194()
 {
     if (ci == -1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata(body, r1) % 10000 != 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (inv_body_part(ci) != 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     item_separate(ci);
     if (r1 == 0)
@@ -83980,8 +83260,7 @@ int label_2194()
     }
     inv_body_part(ci) = body;
     cdata(body, r1) = cdata(body, r1) / 10000 * 10000 + ci + 1;
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2195()
 {
@@ -84034,7 +83313,7 @@ void label_2197()
     efid = 0;
     dbmode = 13;
     dbid = inv_id(ci);
-    stat = label_1275();
+    label_1275();
     if (efid == 1115)
     {
         label_1712();
@@ -84047,7 +83326,7 @@ void label_2198()
 {
     if (cc == 0)
     {
-        cargocheck();
+        int stat = cargocheck();
         if (stat == 0)
         {
             label_1419();
@@ -84089,7 +83368,7 @@ void label_2199()
 {
     dbmode = 15;
     dbid = inv_id(ci);
-    stat = label_1275();
+    label_1275();
     label_2742();
     return;
 }
@@ -84097,8 +83376,8 @@ void label_2200()
 {
     dbmode = 14;
     dbid = inv_id(ci);
-    stat = label_1275();
-    label_2172();
+    label_1275();
+    int stat = label_2172();
     if (stat == 0)
     {
         label_1419();
@@ -84159,7 +83438,7 @@ void label_2201()
             {
                 if (cdata_relationship(tc) >= 0)
                 {
-                    label_2073();
+                    int stat = label_2073();
                     if (stat == 0)
                     {
                         label_2743(false);
@@ -85126,7 +84405,7 @@ void label_2207()
             u8"You can't perform the action while in the debug mode."s));
         label_2743(false);
     }
-    item_find(631, 3, -1);
+    int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
         if (mdata(6) == 3 || mdata(6) == 2)
@@ -85334,7 +84613,7 @@ void label_2207()
     }
     if (movelevelbystairs == 1)
     {
-        actionsp(0, 15);
+        int stat = actionsp(0, 15);
         if (stat == 0 || cdata_inventory_weight_type(0) >= 3)
         {
             if (stat == 0 || rnd(5 - cdata_inventory_weight_type(0)) == 0)
@@ -85365,7 +84644,7 @@ void label_2207()
         if (feat(2) + feat(3) * 100 == 35)
         {
             comctrl = 0;
-            label_19432();
+            int stat = label_19432();
             if (stat == 1)
             {
                 label_2114();
@@ -85384,30 +84663,31 @@ void label_2207()
 }
 int label_2209()
 {
-    item_find(636, 3);
+    int stat = item_find(636, 3);
     if (stat == -1)
     {
         txt(lang(
             u8"ロックピックを所持していない。"s,
             u8"You don't have lockpicks."s));
-        stat = 0;
-        return stat;
+        return 0;
     }
     ti = stat;
     txt(lang(u8"ロックピックを使用した。"s, u8"You use a lockpick."s));
     txtmore();
     snd(22);
-    item_find(637, 3);
-    if (stat != -1)
     {
-        i = sdata(158, 0) * 150 / 100 + 5;
-        txt(lang(
-            u8"スケルトンキーも使用した。"s,
-            u8"You also use the skeleton key."s));
-    }
-    else
-    {
-        i = sdata(158, 0);
+        int stat = item_find(637, 3);
+        if (stat != -1)
+        {
+            i = sdata(158, 0) * 150 / 100 + 5;
+            txt(lang(
+                u8"スケルトンキーも使用した。"s,
+                u8"You also use the skeleton key."s));
+        }
+        else
+        {
+            i = sdata(158, 0);
+        }
     }
     f = 0;
     if (i * 2 < val)
@@ -85458,22 +84738,18 @@ int label_2209()
         if (rtval == 0)
         {
             label_2209();
-            stat = 0;
-            return stat;
+            return 0;
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     goto label_2211_internal;
-    stat = 0;
-    return stat;
+    return 0;
 label_2211_internal:
     txtmore();
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
     r1 = cc;
     label_1460();
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2212()
 {
@@ -85648,7 +84924,7 @@ void label_2212()
         if (inv_param2(ci) != 0)
         {
             val = inv_param2(ci);
-            label_2209();
+            int stat = label_2209();
             if (stat == 0)
             {
                 screenupdate = -1;
@@ -85927,7 +85203,7 @@ void label_2214()
                 txt(lang(u8" *チリリリリーン* "s, u8"*ring ring ring*"s));
             }
             flt();
-            characreate(-1, 328 + rnd(2), cdata_x(cc), cdata_y(cc));
+            int stat = characreate(-1, 328 + rnd(2), cdata_x(cc), cdata_y(cc));
             if (stat != 0)
             {
                 if (cdata_relationship(cc) <= -3)
@@ -85947,7 +85223,7 @@ void label_2214()
                     u8"The pack contains your younger sister!"s));
             }
             flt();
-            characreate(-1, 176, cdata_x(cc), cdata_y(cc));
+            int stat = characreate(-1, 176, cdata_x(cc), cdata_y(cc));
             if (stat != 0)
             {
                 cdata_gold(rc) = 5000;
@@ -85981,7 +85257,8 @@ void label_2214()
             for (int cnt_end = cnt + (2 + rnd(3)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                characreate(-1, 328 + rnd(2), cdata_x(cc), cdata_y(cc));
+                int stat =
+                    characreate(-1, 328 + rnd(2), cdata_x(cc), cdata_y(cc));
                 if (stat != 0)
                 {
                     if (cdata_relationship(cc) <= -3)
@@ -86034,7 +85311,7 @@ void label_2215()
         if (cc == 0)
         {
             val = feat(2);
-            label_2209();
+            int stat = label_2209();
             if (stat == 0)
             {
                 screenupdate = -1;
@@ -86116,7 +85393,7 @@ void label_2216()
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
     label_1419();
     val = 0;
-    label_2127();
+    int stat = label_2127();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -86177,8 +85454,7 @@ int label_2217()
                                 u8"You are too exhausted!"s));
                             dmgsp(0, encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
-                            stat = 1;
-                            return stat;
+                            return 1;
                         }
                     }
                     dmgsp(0, rnd(encammoref(2, ammoproc) + 1));
@@ -86199,7 +85475,7 @@ int label_2217()
                 label_22192();
                 if (cdata_state(tc) != 1)
                 {
-                    label_2072();
+                    int stat = label_2072();
                     if (stat == 0)
                     {
                         break;
@@ -86268,8 +85544,7 @@ int label_2217()
     }
     attackvar = 0;
     ammoproc = -1;
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_2218()
 {
@@ -86281,7 +85556,7 @@ void label_2218()
             {
                 if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
                 {
-                    label_2075();
+                    int stat = label_2075();
                     if (stat == 1)
                     {
                         label_2217();
@@ -87258,7 +86533,7 @@ void label_2221()
                             {
                                 if (feat(0) == 0)
                                 {
-                                    label_1514();
+                                    int stat = label_1514();
                                     if (stat == 1)
                                     {
                                         label_2222();
@@ -87270,7 +86545,7 @@ void label_2221()
                             }
                             if (feat(1) == 22)
                             {
-                                label_1514();
+                                int stat = label_1514();
                                 if (stat == 1 || 0)
                                 {
                                     label_2223();
@@ -87512,7 +86787,7 @@ void label_2227()
                 {
                     --gdata(260);
                     flt();
-                    itemcreate(0, 516, -1, -1, 0);
+                    int stat = itemcreate(0, 516, -1, -1, 0);
                     if (stat != 0)
                     {
                         inv_curse_state(ci) = 1;
@@ -87820,7 +87095,7 @@ void label_2228()
                     randomize(inv_subname(ci) + inv_param1(ci) * 10 + cnt);
                     exrand_randomize(
                         inv_subname(ci) + inv_param1(ci) * 10 + cnt);
-                    encadd(
+                    int stat = encadd(
                         ci, randomenc(randomenclv(4)), randomencp(), 0, 0, 1);
                     if (stat != 0)
                     {
@@ -87885,7 +87160,7 @@ void label_2228()
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    encadd(ci, 45, 50);
+                    int stat = encadd(ci, 45, 50);
                     if (stat == 0)
                     {
                         inv_enchantment_id(ci, 14) = 0;
@@ -87971,10 +87246,12 @@ void label_2228()
         val(1) = prompty;
         val(2) = 260;
         val(3) = 1;
-        label_2131();
-        if (stat == 0)
         {
-            goto label_2229_internal;
+            int stat = label_2131();
+            if (stat == 0)
+            {
+                goto label_2229_internal;
+            }
         }
         if (rtval == 0)
         {
@@ -88023,22 +87300,24 @@ void label_2228()
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         val = 0;
-        label_2127();
-        f = 0;
-        if (stat != 0)
         {
-            if (map(x, y, 1) > 0)
+            int stat = label_2127();
+            f = 0;
+            if (stat != 0)
             {
-                tc = map(x, y, 1) - 1;
-                if (tc < 16)
+                if (map(x, y, 1) > 0)
                 {
-                    screenupdate = -1;
-                    label_1419();
-                    ccbk = cc;
-                    cc = tc;
-                    label_2044();
-                    cc = ccbk;
-                    f = 1;
+                    tc = map(x, y, 1) - 1;
+                    if (tc < 16)
+                    {
+                        screenupdate = -1;
+                        label_1419();
+                        ccbk = cc;
+                        cc = tc;
+                        label_2044();
+                        cc = ccbk;
+                        f = 1;
+                    }
                 }
             }
         }
@@ -88097,7 +87376,8 @@ void label_2228()
         label_1477();
         goto label_2229_internal;
     case 9:
-        label_2083();
+    {
+        int stat = label_2083();
         if (stat == 1)
         {
             label_2742();
@@ -88108,17 +87388,20 @@ void label_2228()
             label_1419();
             label_2743(false);
         }
+    }
         goto label_2229_internal;
     case 5:
         txt(lang(u8"何に聴診器を当てる？"s, u8"Auscultate who?"s));
         label_1419();
         val = 0;
-        label_2127();
-        if (stat == 0)
         {
-            txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
-            label_1419();
-            label_2743(false);
+            int stat = label_2127();
+            if (stat == 0)
+            {
+                txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+                label_1419();
+                label_2743(false);
+            }
         }
         tc = map(x, y, 1) - 1;
         if (tc == 0)
@@ -88168,65 +87451,68 @@ void label_2228()
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
         label_1419();
         val = 0;
-        label_2127();
-        f = 0;
-        if (stat != 0)
         {
-            if (map(x, y, 1) > 0)
+            int stat = label_2127();
+            f = 0;
+            if (stat != 0)
             {
-                tc = map(x, y, 1) - 1;
-                if (tc == 0)
+                if (map(x, y, 1) > 0)
                 {
-                    txt(lang(
-                        u8"あなたは自分を紐でくくってみた…"s,
-                        u8"You leash yourself..."s));
-                }
-                else
-                {
-                    if (cbit(968, tc) == 0)
+                    tc = map(x, y, 1) - 1;
+                    if (tc == 0)
                     {
-                        if (tc >= 16)
-                        {
-                            if (rnd(5) == 0)
-                            {
-                                txt(lang(
-                                    name(tc)
-                                        + u8"が激しく抵抗したため紐は切れた。"s,
-                                    u8"The leash is cut as "s + name(tc)
-                                        + u8" resists."s));
-                                --inv_number(ci);
-                                cell_refresh(inv_x(ci), inv_y(ci));
-                                label_1521();
-                                goto label_2229_internal;
-                            }
-                        }
-                        cbitmod(968, tc, 1);
                         txt(lang(
-                            u8"あなたは"s + name(tc)
-                                + u8"を紐でくくりつけた。"s,
-                            u8"You leash "s + name(tc) + u8"."s));
-                        txtef(9);
-                        txt(lang(
-                            name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
-                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"Pervert!"s)));
+                            u8"あなたは自分を紐でくくってみた…"s,
+                            u8"You leash yourself..."s));
                     }
                     else
                     {
-                        cbitmod(968, tc, 0);
-                        txt(lang(
-                            u8"あなたは"s + name(tc)
-                                + u8"にくくりつけた紐をほどいた。"s,
-                            u8"You unleash "s + name(tc) + u8"."s));
-                        txtef(9);
-                        txt(lang(
-                            name(tc) + u8"は呻き声を洩らした。「はぁはぁ…」"s,
-                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"D-don't sto....N-nothing!"s)));
+                        if (cbit(968, tc) == 0)
+                        {
+                            if (tc >= 16)
+                            {
+                                if (rnd(5) == 0)
+                                {
+                                    txt(lang(
+                                        name(tc)
+                                            + u8"が激しく抵抗したため紐は切れた。"s,
+                                        u8"The leash is cut as "s + name(tc)
+                                            + u8" resists."s));
+                                    --inv_number(ci);
+                                    cell_refresh(inv_x(ci), inv_y(ci));
+                                    label_1521();
+                                    goto label_2229_internal;
+                                }
+                            }
+                            cbitmod(968, tc, 1);
+                            txt(lang(
+                                u8"あなたは"s + name(tc)
+                                    + u8"を紐でくくりつけた。"s,
+                                u8"You leash "s + name(tc) + u8"."s));
+                            txtef(9);
+                            txt(lang(
+                                name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
+                                name(tc) + u8" gasp"s + _s(tc) + u8", "s
+                                    + cnvtalk(u8"Pervert!"s)));
+                        }
+                        else
+                        {
+                            cbitmod(968, tc, 0);
+                            txt(lang(
+                                u8"あなたは"s + name(tc)
+                                    + u8"にくくりつけた紐をほどいた。"s,
+                                u8"You unleash "s + name(tc) + u8"."s));
+                            txtef(9);
+                            txt(lang(
+                                name(tc)
+                                    + u8"は呻き声を洩らした。「はぁはぁ…」"s,
+                                name(tc) + u8" gasp"s + _s(tc) + u8", "s
+                                    + cnvtalk(u8"D-don't sto....N-nothing!"s)));
+                        }
                     }
+                    animeload(8, tc);
+                    f = 1;
                 }
-                animeload(8, tc);
-                f = 1;
             }
         }
         if (f == 0)
@@ -88246,60 +87532,62 @@ void label_2228()
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         label_1419();
         val = 0;
-        label_2127();
-        f = 0;
-        if (stat != 0)
         {
-            if (map(x, y, 1) > 0)
+            int stat = label_2127();
+            f = 0;
+            if (stat != 0)
             {
-                tc = map(x, y, 1) - 1;
-                if (cdata_hp(tc) >= cdata_max_hp(tc) / 5)
+                if (map(x, y, 1) > 0)
                 {
-                    txt(lang(
-                        u8"もっと弱らせないと吊るせない。"s,
-                        u8"The target needs to be weakened."s));
-                    label_2743(false);
-                }
-                if (tc != 0)
-                {
-                    if (tc < 16)
+                    tc = map(x, y, 1) - 1;
+                    if (cdata_hp(tc) >= cdata_max_hp(tc) / 5)
                     {
                         txt(lang(
-                            u8"仲間を吊るすなんてとんでもない！"s,
-                            u8"Hanging your ally is a brutal idea!"s));
+                            u8"もっと弱らせないと吊るせない。"s,
+                            u8"The target needs to be weakened."s));
                         label_2743(false);
                     }
+                    if (tc != 0)
+                    {
+                        if (tc < 16)
+                        {
+                            txt(lang(
+                                u8"仲間を吊るすなんてとんでもない！"s,
+                                u8"Hanging your ally is a brutal idea!"s));
+                            label_2743(false);
+                        }
+                    }
+                    if (cbit(985, tc))
+                    {
+                        txt(lang(
+                            u8"それは既に吊るされている。"s,
+                            u8"It's already hanged up."s));
+                        label_2743(false);
+                    }
+                    if (tc == 0)
+                    {
+                        txt(lang(
+                            u8"あなたは自分を吊るそうと思ったがやめた…"s,
+                            u8"You try to hang yourself but rethink..."s));
+                    }
+                    else
+                    {
+                        snd(58);
+                        cbitmod(985, tc, 1);
+                        txt(lang(
+                            u8"あなたは"s + name(tc) + u8"を吊るした。"s,
+                            u8"You hang up "s + name(tc) + u8"."s));
+                        txt(lang(
+                            name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
+                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
+                                + cnvtalk(u8"Pervert!"s)));
+                        animeload(8, tc);
+                        --inv_number(ci);
+                        cell_refresh(inv_x(ci), inv_y(ci));
+                        label_1521();
+                    }
+                    f = 1;
                 }
-                if (cbit(985, tc))
-                {
-                    txt(lang(
-                        u8"それは既に吊るされている。"s,
-                        u8"It's already hanged up."s));
-                    label_2743(false);
-                }
-                if (tc == 0)
-                {
-                    txt(lang(
-                        u8"あなたは自分を吊るそうと思ったがやめた…"s,
-                        u8"You try to hang yourself but rethink..."s));
-                }
-                else
-                {
-                    snd(58);
-                    cbitmod(985, tc, 1);
-                    txt(lang(
-                        u8"あなたは"s + name(tc) + u8"を吊るした。"s,
-                        u8"You hang up "s + name(tc) + u8"."s));
-                    txt(lang(
-                        name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
-                        name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                            + cnvtalk(u8"Pervert!"s)));
-                    animeload(8, tc);
-                    --inv_number(ci);
-                    cell_refresh(inv_x(ci), inv_y(ci));
-                    label_1521();
-                }
-                f = 1;
             }
         }
         if (f == 0)
@@ -88420,10 +87708,12 @@ void label_2228()
             goto label_2229_internal;
         }
         allyctrl = 0;
-        label_2018();
-        if (stat != 1)
         {
-            goto label_2229_internal;
+            int stat = label_2018();
+            if (stat != 1)
+            {
+                goto label_2229_internal;
+            }
         }
         snd(118);
         --inv_number(ci);
@@ -88444,11 +87734,13 @@ void label_2228()
             u8"突然、あなたの目の前に異次元へのゲートが現れた。"s,
             u8"Suddenly, a strange gate opens."s));
         comctrl = 2;
-        label_19432();
-        if (stat == 1)
         {
-            label_2114();
-            return;
+            int stat = label_19432();
+            if (stat == 1)
+            {
+                label_2114();
+                return;
+            }
         }
         goto label_2229_internal;
     case 49:
@@ -88770,26 +88062,30 @@ void label_2228()
         txtmore();
         rc = 0;
         allyctrl = 5;
-        label_1959();
-        if (stat == -1)
         {
-            label_2742();
-            return;
+            int stat = label_1959();
+            if (stat == -1)
+            {
+                label_2742();
+                return;
+            }
+            rc = stat;
         }
-        rc = stat;
         txtnew();
         txt(lang(
             u8"遺伝子を取り出す仲間を選ぶ必要がある。この仲間は合成後、永久に失われる。"s,
             u8"Choose a gene. Once you extract a gene, the subject will be lost forever."s));
         txtmore();
         allyctrl = 5;
-        label_1959();
-        if (stat == -1)
         {
-            label_2742();
-            return;
+            int stat = label_1959();
+            if (stat == -1)
+            {
+                label_2742();
+                return;
+            }
+            tc = stat;
         }
-        tc = stat;
         label_1419();
         txtnew();
         txt(lang(
@@ -88824,35 +88120,40 @@ void label_2228()
         animeid = 20;
         anic = rc;
         label_1426();
-        label_2231();
-        if (stat != -1)
         {
-            cdata(stat, rc) = rtval * 10000;
-            txtef(2);
-            txt(lang(
-                cdatan(0, rc) + u8"は新しい"s + bodyn(rtval) + u8"を得た！"s,
-                cdatan(0, rc) + u8" gains new "s + bodyn(rtval) + u8"!"s));
-            r1 = rc;
-            label_1452();
-        }
-        label_2230();
-        if (stat != 0)
-        {
+            int stat = label_2231();
+            if (stat != -1)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+                cdata(stat, rc) = rtval * 10000;
+                txtef(2);
+                txt(lang(
+                    cdatan(0, rc) + u8"は新しい"s + bodyn(rtval)
+                        + u8"を得た！"s,
+                    cdatan(0, rc) + u8" gains new "s + bodyn(rtval) + u8"!"s));
+                r1 = rc;
+                label_1452();
+            }
+        }
+        {
+            int stat = label_2230();
+            if (stat != 0)
+            {
                 {
-                    if (rtval(cnt) == -1)
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
                     {
-                        break;
+                        if (rtval(cnt) == -1)
+                        {
+                            break;
+                        }
+                        skillgain(rc, rtval(cnt), 1);
+                        txtef(2);
+                        txt(lang(
+                            cdatan(0, rc) + u8"は"s + skillname(rtval(cnt))
+                                + u8"の技術を覚えた！"s,
+                            cdatan(0, rc) + u8" learns "s
+                                + skillname(rtval(cnt)) + u8" skill!"s));
                     }
-                    skillgain(rc, rtval(cnt), 1);
-                    txtef(2);
-                    txt(lang(
-                        cdatan(0, rc) + u8"は"s + skillname(rtval(cnt))
-                            + u8"の技術を覚えた！"s,
-                        cdatan(0, rc) + u8" learns "s + skillname(rtval(cnt))
-                            + u8" skill!"s));
                 }
             }
         }
@@ -88958,7 +88259,8 @@ void label_2228()
         txt(lang(u8"デッキをしまった。"s, u8"You put away the deck."s));
         goto label_2229_internal;
     case 38:
-        inv_find(701, 0);
+    {
+        int stat = inv_find(701, 0);
         if (stat == -1)
         {
             txt(lang(
@@ -88966,6 +88268,7 @@ void label_2228()
             label_1419();
             label_2743(false);
         }
+    }
         snd(71);
         --inv_number(ci);
         cell_refresh(inv_x(ci), inv_y(ci));
@@ -88984,8 +88287,7 @@ int label_2230()
 {
     if (cbit(23, tc) || cbit(27, tc))
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     randomize(cdata_id(tc));
     dbmax = 0;
@@ -89024,8 +88326,7 @@ int label_2230()
         }
     }
     randomize();
-    stat = dbmax;
-    return stat;
+    return dbmax;
 }
 int label_2231()
 {
@@ -89033,13 +88334,11 @@ int label_2231()
     s(1) = refchara_str(cdata_id(tc), 8);
     if (instr(s(1), 0, u8"/man/"s) != -1)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     if (cbit(23, tc) || cbit(27, tc))
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     rtval(1) = -1;
     {
@@ -89054,8 +88353,7 @@ int label_2231()
     }
     if (rtval(1) == -1)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     {
         int cnt = 100;
@@ -89075,8 +88373,7 @@ int label_2231()
     }
     if (dbmax == 0)
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
     randomize(cdata_id(tc));
     {
@@ -89108,8 +88405,7 @@ int label_2231()
     if (f == 0)
     {
         randomize();
-        stat = rtval(1);
-        return stat;
+        return rtval(1);
     }
     DIM3(dblist, 2, 800);
     {
@@ -89145,13 +88441,11 @@ int label_2231()
     randomize();
     if (f == -1)
     {
-        stat = rtval(1);
-        return stat;
+        return rtval(1);
     }
     else
     {
-        stat = -1;
-        return stat;
+        return -1;
     }
 }
 void label_2232()
@@ -89408,8 +88702,7 @@ int clientguide(int)
             }
         }
     }
-    stat = j_at_m193;
-    return stat;
+    return j_at_m193;
 }
 int tradecheck(int prm_1081)
 {
@@ -89435,8 +88728,7 @@ int tradecheck(int prm_1081)
             }
         }
     }
-    stat = j_at_m193;
-    return stat;
+    return j_at_m193;
 }
 void label_2241()
 {
@@ -89690,7 +88982,7 @@ void label_2244()
                 }
             }
             flt();
-            itemcreate(-1, 752, cdata_x(0), cdata_y(0), 0);
+            int stat = itemcreate(-1, 752, cdata_x(0), cdata_y(0), 0);
             if (stat != 0)
             {
                 inv_param3(ci) = cdata_impression(tc) + rnd(50);
@@ -89824,13 +89116,13 @@ void label_2244()
         {
             if (cdata_impression(tc) >= 150)
             {
-                advfavoriteskill(tc);
+                int stat = advfavoriteskill(tc);
                 csskill = rtval(rnd(stat));
                 if (cdata_impression(tc) >= 300)
                 {
                     if (rnd(3) == 0)
                     {
-                        advfavoritestat(tc);
+                        int stat = advfavoritestat(tc);
                         csskill = stat;
                     }
                 }
@@ -90091,7 +89383,7 @@ void label_2244()
         }
         if (rnd(8) == 0)
         {
-            advfavoriteskill(tc);
+            int stat = advfavoriteskill(tc);
             csskill = rtval(rnd(stat));
             listmax = 0;
             buff = lang(
@@ -90117,7 +89409,7 @@ void label_2244()
         }
         if (rnd(10) == 0)
         {
-            advfavoritestat(tc);
+            int stat = advfavoritestat(tc);
             csskill = stat;
             listmax = 0;
             buff = lang(
@@ -90657,10 +89949,9 @@ int label_2248()
     label_2257();
     if (chatval != 1)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
-    inv_find(559, 0);
+    int stat = inv_find(559, 0);
     if (stat == -1)
     {
         listmax = 0;
@@ -90676,12 +89967,10 @@ int label_2248()
             if (scene_cut == 1)
             {
                 label_2256();
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     --inv_number(stat);
     txt(lang(u8"エーテル抗体を1本渡した。"s, u8"You give her a potion."s));
@@ -90702,12 +89991,10 @@ int label_2248()
         if (scene_cut == 1)
         {
             label_2256();
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2249()
 {
@@ -91180,7 +90467,7 @@ void label_2252()
                     }
                     flt(qdata(5, rq) + cnt, 1);
                     fltn(u8"man"s);
-                    characreate(56, dbid, -3, 0);
+                    int stat = characreate(56, dbid, -3, 0);
                     f = stat;
                     if (f == 1)
                     {
@@ -91570,7 +90857,7 @@ void label_22600()
         label_1419();
         cs = 0;
     }
-    stat = talk_conv(buff, 56 - en * 3);
+    talk_conv(buff, 56 - en * 3);
     chatpicloaded = 0;
     redraw(0);
     wx = (windoww - 600) / 2 + inf_screenx;
@@ -91708,7 +90995,7 @@ void label_22610()
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(20, 10, 5);
-    stat = notesel(buff);
+    notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -92311,7 +91598,7 @@ void label_2265()
                     continue;
                 }
             }
-            itemcreate(-1, dbid, -1, -1, 0);
+            int stat = itemcreate(-1, dbid, -1, -1, 0);
             if (stat == 0)
             {
                 break;
@@ -93758,15 +93045,13 @@ int label_2298()
         ++listmax;
         listn(1, listmax) = u8"claymore"s;
         ++listmax;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == ""s)
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"warrior"s)
     {
@@ -93774,11 +93059,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -93801,8 +93084,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -93836,8 +93118,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"thief"s)
     {
@@ -93845,11 +93126,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 7;
-                return stat;
+                return 7;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -93872,8 +93151,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -93904,8 +93182,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"wizard"s)
     {
@@ -93913,11 +93190,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 2;
-                return stat;
+                return 2;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -93940,8 +93215,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -93971,8 +93245,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"farmer"s)
     {
@@ -93980,11 +93253,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94007,8 +93278,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94038,8 +93308,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"predator"s)
     {
@@ -94047,11 +93316,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94072,8 +93339,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -94095,8 +93361,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"archer"s)
     {
@@ -94104,11 +93369,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 3;
-                return stat;
+                return 3;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94131,8 +93394,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94163,8 +93425,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"warmage"s)
     {
@@ -94172,11 +93433,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 5;
-                return stat;
+                return 5;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94199,8 +93458,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94230,8 +93488,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"tourist"s)
     {
@@ -94239,11 +93496,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94266,8 +93521,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94290,8 +93544,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"pianist"s)
     {
@@ -94299,11 +93552,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 3;
-                return stat;
+                return 3;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94326,8 +93577,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94356,8 +93606,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"gunner"s)
     {
@@ -94365,11 +93614,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 4;
-                return stat;
+                return 4;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94390,8 +93637,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -94417,8 +93663,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"priest"s)
     {
@@ -94426,11 +93671,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 6;
-                return stat;
+                return 6;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94453,8 +93696,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94484,8 +93726,7 @@ int label_2298()
     {
         classname = u8"なし"s;
         cequipment = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"claymore"s)
     {
@@ -94493,11 +93734,9 @@ int label_2298()
         {
             if (dbspec == 4)
             {
-                stat = 8;
-                return stat;
+                return 8;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
@@ -94520,8 +93759,7 @@ int label_2298()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -94546,8 +93784,7 @@ int label_2298()
             skillinit(150, rc, 4);
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_2655()
 {
@@ -95075,10 +94312,9 @@ int label_2659()
         txt(lang(
             u8"仲間の最大数に達しているため、仲間にできなかった…"s,
             u8"Your party is already full. You can't invite someone anymore."s));
-        stat = -1;
-        return stat;
+        return -1;
     }
-    relocate_chara(rc, f);
+    int stat = relocate_chara(rc, f);
     oc = stat;
     cdata_relationship(rc) = 10;
     cdata_original_relationship(rc) = 10;
@@ -95093,8 +94329,7 @@ int label_2659()
     txt(lang(
         cdatan(0, rc) + u8"が仲間に加わった！"s,
         cdatan(0, rc) + u8" join"s + _s(rc) + u8" your party!"s));
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2660()
 {
@@ -95264,7 +94499,7 @@ void label_2662()
             }
         }
     }
-    stat = notesel(newsbuff);
+    notesel(newsbuff);
     if (noteinfo(0) > 195)
     {
         {
@@ -95318,8 +94553,7 @@ int label_2664()
     }
     if (f == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     flt(cdata_level(rc), 4);
     if (rnd(3) == 0)
@@ -95330,11 +94564,10 @@ int label_2664()
     {
         flttypemajor = fsetitem(rnd(length(fsetitem)));
     }
-    itemcreate(rc, 0, -1, -1, 0);
+    int stat = itemcreate(rc, 0, -1, -1, 0);
     if (stat == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     inv_identification_state(ci) = 3;
     if (inv_quality(ci) >= 4)
@@ -95346,16 +94579,14 @@ int label_2664()
         }
     }
     label_2667();
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_2665()
 {
     p = inv_getfreeid(tc);
     if (p != -1)
     {
-        stat = p;
-        return stat;
+        return p;
     }
     {
         int cnt = 0;
@@ -95373,8 +94604,7 @@ int label_2665()
             }
         }
     }
-    stat = p;
-    return stat;
+    return p;
 }
 void label_2666()
 {
@@ -95573,7 +94803,7 @@ void label_2668()
             {
                 break;
             }
-            itemcreate(rc, 0, -1, -1, 0);
+            int stat = itemcreate(rc, 0, -1, -1, 0);
             if (stat == 0)
             {
                 break;
@@ -95727,8 +94957,7 @@ int label_2672()
     qdata(7, rq) = 0;
     if (rnd(3) == 0)
     {
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(14) == 0)
     {
@@ -95754,7 +94983,7 @@ int label_2672()
                 }
                 flt(40, 2);
                 flttypemajor = fsetcollect(rnd(length(fsetcollect)));
-                itemcreate(n, 0, -1, -1, 0);
+                int stat = itemcreate(n, 0, -1, -1, 0);
                 if (stat != 0)
                 {
                     inv_count(ci) = rq;
@@ -95783,8 +95012,7 @@ int label_2672()
             qdata(9, rq) = rnd(3) + 2;
             qdata(5, rq) = cdata_level(i) / 3;
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (cdata_fame(0) >= 30000)
     {
@@ -95822,8 +95050,7 @@ int label_2672()
             qdata(7, rq) = 5;
             qdata(9, rq) = -1;
             rewardfix = 140;
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (cdata_fame(0) >= 50000)
@@ -95862,8 +95089,7 @@ int label_2672()
             qdata(7, rq) = 1;
             qdata(9, rq) = -1;
             rewardfix = 175;
-            stat = 0;
-            return stat;
+            return 0;
         }
     }
     if (rnd(11) == 0)
@@ -95931,8 +95157,7 @@ int label_2672()
         {
             rewardfix = rewardfix * 180 / 100;
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(23) == 0 || gdata(20) == 15 && rnd(8) == 0)
     {
@@ -95952,8 +95177,7 @@ int label_2672()
         qdata(13, rq) = 0;
         qdata(9, rq) = -1;
         rewardfix = 0;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(30) == 0 || gdata(20) == 12 && rnd(2) == 0)
     {
@@ -95972,8 +95196,7 @@ int label_2672()
         qdata(12, rq) = 15000 + qdata(5, rq) * 2500;
         qdata(13, rq) = 0;
         rewardfix = 60 + qdata(5, rq) * 2;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(8) == 0)
     {
@@ -95992,8 +95215,7 @@ int label_2672()
         qdata(7, rq) = 1;
         qdata(9, rq) = -1;
         rewardfix = 135;
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(6) == 0)
     {
@@ -96075,8 +95297,7 @@ int label_2672()
             qdata(9, rq) = rnd(12) + 3;
             qdata(5, rq) = limit(rewardfix / 20 + 1, 1, 25);
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(6) == 0)
     {
@@ -96116,8 +95337,7 @@ int label_2672()
         qdata(13, rq) = rnd(7) + 3;
         qdata(5, rq) = qdata(13, rq) * 3;
         rewardfix = 60 + qdata(5, rq);
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (rnd(5) == 0)
     {
@@ -96132,11 +95352,9 @@ int label_2672()
         qdata(11, rq) = dbid;
         qdata(5, rq) = limit(rnd(cdata_level(0) + 5) + 1, 1, 30);
         rewardfix = 65 + qdata(5, rq);
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = 1;
-    return stat;
+    return 1;
 }
 void label_2673()
 {
@@ -96328,7 +95546,7 @@ void label_2676()
         qdata(3, rq) = 0;
         qdata(8, rq) = 0;
     }
-    decfame(0, 40);
+    int stat = decfame(0, 40);
     p = stat;
     txtmore();
     txtef(3);
@@ -96400,7 +95618,7 @@ void label_2677()
         txt(lang(u8"あなたのチームは敗北した。"s, u8"Your team is defeated."s));
         adata(23, gdata(66)) = 0;
         modrank(1, -100);
-        decfame(0, 60);
+        int stat = decfame(0, 60);
         p = stat;
         if (arenaop == 0)
         {
@@ -96601,7 +95819,7 @@ void label_2680()
     file = u8"void"s;
     y1 = 60;
     y2 = windowh - 60;
-    stat = notesel(buff);
+    notesel(buff);
     noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
     s = u8"{"s + sceneid + u8"}"s;
     scidx = instr(buff, 0, s);
@@ -96623,7 +95841,7 @@ label_2681:
         label_2685();
         return;
     }
-    stat = notesel(buff);
+    notesel(buff);
     noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
     cs = 0;
     key_list = key_enter;
@@ -96955,11 +96173,9 @@ int ai_check()
     }
     if (cellaccess == 1)
     {
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_2687()
 {
@@ -97316,7 +96532,7 @@ label_2688_internal:
                 if (efid >= 400 && efid < 467)
                 {
                     npccostmp = 1;
-                    label_2167();
+                    int stat = label_2167();
                     if (stat == 1)
                     {
                         label_2742();
@@ -97327,7 +96543,7 @@ label_2688_internal:
                 {
                     if (efid >= 600)
                     {
-                        label_2174();
+                        int stat = label_2174();
                         if (stat == 1)
                         {
                             label_2742();
@@ -97401,7 +96617,7 @@ label_2689_internal:
             {
                 if (map(cdata_x(cc), cdata_y(cc), 4) != 0)
                 {
-                    cell_itemoncell(cdata_x(cc), cdata_y(cc));
+                    int stat = cell_itemoncell(cdata_x(cc), cdata_y(cc));
                     if (stat == 1)
                     {
                         ci = rtval(1);
@@ -97448,7 +96664,7 @@ label_2689_internal:
                                         in = inv_number(ci);
                                         if (gdata(183) != cc)
                                         {
-                                            label_2192();
+                                            int stat = label_2192();
                                             if (stat == 1)
                                             {
                                                 label_2742();
@@ -97582,7 +96798,7 @@ label_2689_internal:
     {
         r1 = tc;
         r2 = cc;
-        label_1518();
+        int stat = label_1518();
         if (stat == 1)
         {
             if (cdata_relationship(cc) == -3)
@@ -97710,7 +96926,7 @@ label_2692_internal:
                                 flttypeminor = 52002;
                             }
                         }
-                        itemcreate(cc, 0, -1, -1, 0);
+                        int stat = itemcreate(cc, 0, -1, -1, 0);
                         if (stat == 1)
                         {
                             cdata_item_which_will_be_used(cc) = ci;
@@ -97733,7 +96949,8 @@ label_2692_internal:
                                     if (synccheck(gdata(259), -1))
                                     {
                                         flt();
-                                        itemcreate(cc, 587, -1, -1, 0);
+                                        int stat =
+                                            itemcreate(cc, 587, -1, -1, 0);
                                         if (stat == 1)
                                         {
                                             tlocx = cdata_x(gdata(259));
@@ -97785,7 +97002,7 @@ label_2692_internal:
                                 if (f == 1)
                                 {
                                     flt();
-                                    itemcreate(cc, 587, -1, -1, 0);
+                                    int stat = itemcreate(cc, 587, -1, -1, 0);
                                     if (stat == 1)
                                     {
                                         label_2189();
@@ -97798,7 +97015,7 @@ label_2692_internal:
                                 if (map(cdata_x(cc), cdata_y(cc), 4) == 0)
                                 {
                                     flt();
-                                    itemcreate(
+                                    int stat = itemcreate(
                                         -1, 541, cdata_x(cc), cdata_y(cc), 0);
                                     if (stat == 1)
                                     {
@@ -97817,7 +97034,7 @@ label_2692_internal:
                             if (rnd(12) == 0)
                             {
                                 flt();
-                                itemcreate(cc, 587, -1, -1, 0);
+                                int stat = itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
                                     tlocx = cdata_x(0);
@@ -97878,7 +97095,7 @@ label_2692_internal:
                     {
                         flttypeminor = 52002;
                     }
-                    itemcreate(cc, p(1), -1, -1, 0);
+                    int stat = itemcreate(cc, p(1), -1, -1, 0);
                     if (stat == 1)
                     {
                         if (inv_id(ci) == 577)
@@ -97931,7 +97148,7 @@ label_2692_internal:
                         tlocx = cdata_x(0);
                         tlocy = cdata_y(0);
                         flt();
-                        itemcreate(cc, 698, -1, -1, 0);
+                        int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
                         {
                             if (synccheck(cc, -1))
@@ -98268,32 +97485,40 @@ void label_2693()
     }
     if (abs(cdata(205, cc) - cdata_x(cc)) >= abs(cdata(206, cc) - cdata_y(cc)))
     {
-        label_2694();
-        if (stat == 1)
         {
-            label_2205();
-            return;
+            int stat = label_2694();
+            if (stat == 1)
+            {
+                label_2205();
+                return;
+            }
         }
-        label_2695();
-        if (stat == 1)
         {
-            label_2205();
-            return;
+            int stat = label_2695();
+            if (stat == 1)
+            {
+                label_2205();
+                return;
+            }
         }
     }
     else
     {
-        label_2695();
-        if (stat == 1)
         {
-            label_2205();
-            return;
+            int stat = label_2695();
+            if (stat == 1)
+            {
+                label_2205();
+                return;
+            }
         }
-        label_2694();
-        if (stat == 1)
         {
-            label_2205();
-            return;
+            int stat = label_2694();
+            if (stat == 1)
+            {
+                label_2205();
+                return;
+            }
         }
     }
     if (cdata(203, cc) > 0)
@@ -98357,11 +97582,10 @@ int label_2694()
         dir(0) = 2;
         dir(1) = 0;
         dir(2) = 3;
-        ai_check();
+        int stat = ai_check();
         if (stat == 1)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (cdata(205, cc) < cdata_x(cc))
@@ -98377,15 +97601,13 @@ int label_2694()
         dir(0) = 1;
         dir(1) = 0;
         dir(2) = 3;
-        ai_check();
+        int stat = ai_check();
         if (stat == 1)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 int label_2695()
 {
@@ -98402,11 +97624,10 @@ int label_2695()
         dir(0) = 0;
         dir(1) = 1;
         dir(2) = 2;
-        ai_check();
+        int stat = ai_check();
         if (stat == 1)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
     if (cdata(206, cc) < cdata_y(cc))
@@ -98422,15 +97643,13 @@ int label_2695()
         dir(0) = 3;
         dir(1) = 1;
         dir(2) = 2;
-        ai_check();
+        int stat = ai_check();
         if (stat == 1)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 void label_2696()
 {
@@ -98459,11 +97678,12 @@ void label_2696()
                     {
                         tlocx = cdata_x(tc);
                         tlocy = cdata_y(tc);
+                        int stat = 0;
                         if (act == -9999)
                         {
                             flt();
                             flttypemajor = 52000;
-                            itemcreate(
+                            stat = itemcreate(
                                 cc,
                                 isetthrowpotionminor(
                                     rnd(length(isetthrowpotionminor))),
@@ -98475,7 +97695,7 @@ void label_2696()
                         {
                             flt();
                             flttypemajor = 52000;
-                            itemcreate(
+                            stat = itemcreate(
                                 cc,
                                 isetthrowpotionmajor(
                                     rnd(length(isetthrowpotionmajor))),
@@ -98487,7 +97707,7 @@ void label_2696()
                         {
                             flt();
                             flttypemajor = 52000;
-                            itemcreate(
+                            stat = itemcreate(
                                 cc,
                                 isetthrowpotiongreater(
                                     rnd(length(isetthrowpotiongreater))),
@@ -98498,7 +97718,7 @@ void label_2696()
                         if (act == -9996)
                         {
                             flt();
-                            itemcreate(cc, 698, -1, -1, 0);
+                            stat = itemcreate(cc, 698, -1, -1, 0);
                         }
                         if (stat == 1)
                         {
@@ -98534,7 +97754,7 @@ void label_2696()
         {
             if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
             {
-                label_2075();
+                int stat = label_2075();
                 if (stat == 1)
                 {
                     label_2217();
@@ -98560,7 +97780,7 @@ void label_2696()
                 }
             }
             npccostmp = 1;
-            label_2167();
+            int stat = label_2167();
             if (stat == 1)
             {
                 label_2742();
@@ -98571,7 +97791,7 @@ void label_2696()
     if (act >= 600)
     {
         efid = act;
-        label_2174();
+        int stat = label_2174();
         if (stat == 1)
         {
             label_2742();
@@ -98590,7 +97810,7 @@ void label_2696()
             {
                 if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
                 {
-                    label_2075();
+                    int stat = label_2075();
                     if (stat == 1)
                     {
                         label_2217();
@@ -98613,7 +97833,7 @@ void label_2696()
     {
         if (fov_los(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc)))
         {
-            label_2075();
+            int stat = label_2075();
             if (stat == 1)
             {
                 label_2217();
@@ -98971,7 +98191,7 @@ void label_2701()
     picload(exedir + u8"\\graphic\\deco_help.bmp"s, 1);
     gsel(0);
     page = 0;
-    stat = notesel(buff);
+    notesel(buff);
     noteload(exedir + u8"data\\exhelp.txt"s);
     p = instr(buff, 0, u8"%"s + ghelp + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
@@ -99108,7 +98328,7 @@ void label_2703()
         cs = 3;
         cs_bk2 = cs;
     }
-    stat = notesel(buff);
+    notesel(buff);
     noteload(
         exedir + u8"data\\"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s));
     list(0, 0) = 0;
@@ -99456,7 +98676,7 @@ void label_2707()
     showscroll(wx, wy, ww, wh);
     net_read();
     buff = "";
-    stat = notesel(buff);
+    notesel(buff);
     header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
     {
         int cnt = 0;
@@ -99505,8 +98725,7 @@ void label_2707()
                 }
                 break;
             }
-            stat = talk_conv(s, (ww - 110 - en * 50) / 7);
-            i += stat;
+            i += talk_conv(s, (ww - 110 - en * 50) / 7);
             pos(wx + 48, (19 - i) * 16 + wy + 48);
             mes(s);
             ++i;
@@ -99783,7 +99002,7 @@ label_2711_internal:
 }
 void label_2713()
 {
-    stat = notesel(note_buff);
+    notesel(note_buff);
     noteload(exedir + u8"\\config.txt"s);
     f = 0;
     {
@@ -99855,7 +99074,7 @@ void label_2715()
     key_select(16) = u8"q"s;
     key_select(17) = u8"r"s;
     key_select(18) = u8"s"s;
-    stat = notesel(note_buff);
+    notesel(note_buff);
     noteload(exedir + u8"\\config.txt"s);
     {
         int cnt = 0;
@@ -100408,7 +99627,7 @@ void label_2715()
 }
 void label_2719()
 {
-    stat = notesel(note_buff);
+    notesel(note_buff);
     noteload(exedir + u8"\\user\\export.txt"s);
     usertitle = "";
     usermsg = "";
@@ -100532,7 +99751,7 @@ void label_2719()
 }
 void label_2720()
 {
-    stat = notesel(headtemp);
+    notesel(headtemp);
     noteget(s, 1);
     username = ""s + s;
     noteget(s, 5);
@@ -100556,8 +99775,7 @@ int cnvjkey(const std::string& prm_1092)
             }
         }
     }
-    stat = p_at_m198 + 1;
-    return stat;
+    return p_at_m198 + 1;
 }
 void label_2727()
 {
@@ -100574,7 +99792,7 @@ void label_2727()
     pagesize = 12;
     cs = 0;
     cc = 0;
-    stat = notesel(buff);
+    notesel(buff);
     noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
     p = 0;
     {
@@ -101052,25 +100270,31 @@ void label_2732()
         flt();
         itemcreate(0, 766, -1, -1, 0);
         flt();
-        itemcreate(0, 752, -1, -1, 0);
-        if (stat != 0)
         {
-            inv_param3(ci) = 240;
-            inv_number(ci) = 50;
+            int stat = itemcreate(0, 752, -1, -1, 0);
+            if (stat != 0)
+            {
+                inv_param3(ci) = 240;
+                inv_number(ci) = 50;
+            }
         }
         flt();
-        itemcreate(0, 755, -1, -1, 0);
-        if (stat != 0)
         {
-            inv_param3(ci) = 240;
-            inv_number(ci) = 50;
+            int stat = itemcreate(0, 755, -1, -1, 0);
+            if (stat != 0)
+            {
+                inv_param3(ci) = 240;
+                inv_number(ci) = 50;
+            }
         }
         flt();
-        itemcreate(0, 756, -1, -1, 0);
-        if (stat != 0)
         {
-            inv_param3(ci) = 240;
-            inv_number(ci) = 50;
+            int stat = itemcreate(0, 756, -1, -1, 0);
+            if (stat != 0)
+            {
+                inv_param3(ci) = 240;
+                inv_number(ci) = 50;
+            }
         }
         {
             int cnt = 0;
@@ -101873,7 +101097,7 @@ label_2738:
                         goto label_2740_internal;
                     }
                 }
-                label_2080();
+                int stat = label_2080();
                 if (stat == 1)
                 {
                     txtmore();
@@ -101971,7 +101195,7 @@ label_2738:
                             hostileaction(0, tc);
                         }
                     }
-                    dmghp(
+                    int stat = dmghp(
                         tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, 63, mef(5, ef));
                     if (stat == 0)
                     {
@@ -101996,7 +101220,8 @@ label_2738:
                     hostileaction(0, tc);
                 }
             }
-            dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+            int stat =
+                dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
             if (stat == 0)
             {
                 check_kill(mef(6, ef), tc);
@@ -102026,7 +101251,7 @@ label_2738:
                 efstatus = mef(8, ef);
                 dbmode = 15;
                 dbid = mef(7, ef);
-                stat = label_1275();
+                label_1275();
                 if (cdata_state(tc) == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -102777,7 +102002,7 @@ void label_2743(bool label_2747_flg)
                     {
                         dbmode = 15;
                         dbid = inv_id(ci);
-                        stat = label_1275();
+                        label_1275();
                     }
                 }
             }
@@ -102839,7 +102064,7 @@ label_2747:
                 if (chatturn % 250 == 1)
                 {
                     net_read();
-                    stat = notesel(chatnew);
+                    notesel(chatnew);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
@@ -103982,7 +103207,7 @@ void label_2752()
         lastword = lang(u8"「"s, u8"\""s) + inputlog + lang(u8"」"s, u8"\""s);
     }
     buff = "";
-    stat = notesel(buff);
+    notesel(buff);
     file = exedir + u8"save\\bone"s;
     exist(file + u8".txt"s);
     if (strsize != -1)
@@ -104122,7 +103347,7 @@ void label_2752()
 }
 void label_2753()
 {
-    stat = notesel(buff);
+    notesel(buff);
     redraw(0);
     gmode(0);
     pos(0, 0);
@@ -104442,7 +103667,7 @@ void label_2754()
             label_1735();
             fixlv = 4;
             initlv = gdata(22) + rnd(5);
-            characreate(-1, 0, -3, 0);
+            int stat = characreate(-1, 0, -3, 0);
             if (stat == 0)
             {
                 continue;
@@ -104899,7 +104124,7 @@ void label_2754()
                             || cdata_current_map(cnt) == gdata(20))
                         {
                             cdata_emotion_icon(cnt) = 2006;
-                            customtalk(cnt, 104);
+                            int stat = customtalk(cnt, 104);
                             if (stat == 0)
                             {
                                 ++i;
@@ -105225,7 +104450,7 @@ void label_2754()
                     {
                         fltnrace = u8"giant"s;
                     }
-                    characreate(-1, 0, x, y);
+                    int stat = characreate(-1, 0, x, y);
                     if (stat != 0)
                     {
                         cbitmod(964, rc, 1);
@@ -105293,16 +104518,14 @@ int refchara(int prm_258, int prm_259)
     dbmode = 16;
     dbid = prm_258;
     dbspec = prm_259;
-    label_2299();
-    stat = stat;
-    return stat;
+    return label_2654();
 }
 std::string refchara_str(int prm_0258, int prm_0259)
 {
     dbmode = 16;
     dbid = prm_0258;
     dbspec = prm_0259;
-    label_2299();
+    label_2654();
     return refstr;
 }
 
