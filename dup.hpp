@@ -197,22 +197,4 @@ struct elona_dup2
 
 
 
-inline elona_dup2<int> eqhelm{initeq, 0, 0};
-inline elona_dup2<int> eqweapon1{initeq, 0, 1};
-inline elona_dup2<int> eqshield{initeq, 0, 2};
-inline elona_dup2<int> eqrange{initeq, 0, 3};
-inline elona_dup2<int> eqammo{initeq, 0, 4};
-inline elona_dup2<int> eqweapon2{initeq, 0, 5};
-inline elona_dup2<int> eqarmor{initeq, 0, 6};
-inline elona_dup2<int> eqglove{initeq, 0, 7};
-inline elona_dup2<int> eqboots{initeq, 0, 8};
-inline elona_dup2<int> eqcloack{initeq, 0, 9};
-inline elona_dup2<int> eqgirdle{initeq, 0, 10};
-inline elona_dup2<int> eqring1{initeq, 0, 11};
-inline elona_dup2<int> eqring2{initeq, 0, 12};
-inline elona_dup2<int> eqamulet1{initeq, 0, 13};
-inline elona_dup2<int> eqamulet2{initeq, 0, 14};
-
-
-
 } // namespace elona

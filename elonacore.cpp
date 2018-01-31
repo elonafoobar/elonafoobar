@@ -13758,22 +13758,6 @@ void label_0192()
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
     buffer(7, 24, 24);
     buffer(9, 24, 24);
-    DIM3(initeq, 2, 50);
-    dup(eqhelm, initeq(0, 0));
-    dup(eqweapon1, initeq(0, 1));
-    dup(eqshield, initeq(0, 2));
-    dup(eqrange, initeq(0, 3));
-    dup(eqammo, initeq(0, 4));
-    dup(eqweapon2, initeq(0, 5));
-    dup(eqarmor, initeq(0, 6));
-    dup(eqglove, initeq(0, 7));
-    dup(eqboots, initeq(0, 8));
-    dup(eqcloack, initeq(0, 9));
-    dup(eqgirdle, initeq(0, 10));
-    dup(eqring1, initeq(0, 11));
-    dup(eqring2, initeq(0, 12));
-    dup(eqamulet1, initeq(0, 13));
-    dup(eqamulet2, initeq(0, 14));
     DIM3(cmapdata, 5, 400);
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
@@ -40522,7 +40506,23 @@ void label_1530()
             }
         }
     }
-    initeq.clear();
+
+    eqhelm.clear();
+    eqweapon1.clear();
+    eqshield.clear();
+    eqrange.clear();
+    eqammo.clear();
+    eqweapon2.clear();
+    eqarmor.clear();
+    eqglove.clear();
+    eqboots.clear();
+    eqcloack.clear();
+    eqgirdle.clear();
+    eqring1.clear();
+    eqring2.clear();
+    eqamulet1.clear();
+    eqamulet2.clear();
+
     if (mode == 1)
     {
         fixeq = 0;
@@ -40782,7 +40782,25 @@ void label_1530()
             {
                 if (rnd(2) == 0)
                 {
-                    initeq(1, rnd(20)) = 3;
+                    switch (rnd(20))
+                    {
+                    case 0: eqhelm(1) = 3; break;
+                    case 1: eqweapon1(1) = 3; break;
+                    case 2: eqshield(1) = 3; break;
+                    case 3: eqrange(1) = 3; break;
+                    case 4: eqammo(1) = 3; break;
+                    case 5: eqweapon2(1) = 3; break;
+                    case 6: eqarmor(1) = 3; break;
+                    case 7: eqglove(1) = 3; break;
+                    case 8: eqboots(1) = 3; break;
+                    case 9: eqcloack(1) = 3; break;
+                    case 10: eqgirdle(1) = 3; break;
+                    case 11: eqring1(1) = 3; break;
+                    case 12: eqring2(1) = 3; break;
+                    case 13: eqamulet1(1) = 3; break;
+                    case 14: eqamulet2(1) = 3; break;
+                    default: break;
+                    }
                 }
                 if (rnd(2) == 0)
                 {
