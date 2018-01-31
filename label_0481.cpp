@@ -6,11 +6,6 @@ namespace elona
 {
 void label_0481()
 {
-    if (dbmode != 1)
-    {
-        label_1275();
-        return;
-    }
     dbmax = 0;
     dbsum = 0;
     if (1 > objlv)

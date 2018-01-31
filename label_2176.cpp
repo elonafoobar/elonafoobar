@@ -3815,7 +3815,7 @@ label_2181_internal:
         {
             dbid = inv(3, ci);
             dbmode = 2;
-            label_0481();
+            label_1275();
             if (ichargelevel < 1 || inv(3, ci) == 290 || inv(3, ci) == 480
                 || inv(3, ci) == 289 || inv(3, ci) == 732
                 || inv(3, ci) == 687 && inv(26, ci) != 0)
@@ -3908,7 +3908,7 @@ label_2181_internal:
         {
             dbid = inv(3, ci);
             dbmode = 2;
-            label_0481();
+            label_1275();
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)

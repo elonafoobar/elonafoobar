@@ -1697,7 +1697,7 @@ int refitem(int prm_279, int prm_280)
     dbmode = 16;
     dbid = prm_279;
     dbspec = prm_280;
-    label_0481();
+    label_1275();
     stat = stat;
     return stat;
 }
@@ -20240,7 +20240,7 @@ void label_0265()
     originalvalue = inv(1, ci) * 100 / mtref(1, p);
     dbid = inv(3, ci);
     dbmode = 10;
-    label_0481();
+    label_1275();
     inv(1, ci) = originalvalue;
     if (fixmaterial != 0)
     {
@@ -38970,7 +38970,7 @@ int calcitemvalue(int prm_898, int prm_899)
     {
         dbid = inv(3, prm_898);
         dbmode = 2;
-        label_0481();
+        label_1275();
         if (inv(9, prm_898) < 0)
         {
             value_at_m153 = value_at_m153 / 10;
@@ -45096,9 +45096,9 @@ int label_1582()
     }
     itemcreatehack = dbid + 1;
     dbmode = 3;
-    label_0481();
+    label_1275();
     dbmode = 2;
-    label_0481();
+    label_1275();
     inv(22, ci) = icolref(inv(3, ci));
     if (inv(22, ci) == 1)
     {
@@ -74143,9 +74143,9 @@ void label_2068()
     getinheritance(ci, inhlist, inhmax);
     dbid = inv(3, ci);
     dbmode = 2;
-    label_0481();
+    label_1275();
     dbmode = 17;
-    label_0481();
+    label_1275();
     if (inv(8, ci) >= 3)
     {
         buf = trimdesc(description(3), 1);
@@ -83263,7 +83263,7 @@ void label_2189()
                 cc = tc;
                 dbmode = 15;
                 dbid = inv(3, ci);
-                label_0481();
+                label_1275();
                 cc = ccthrowpotion;
                 label_2742();
                 return;
@@ -83533,7 +83533,7 @@ int label_2192()
                 {
                     dbmode = 14;
                     dbid = inv(3, ci);
-                    label_0481();
+                    label_1275();
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
                             + u8"から魔力を吸い取った。"s,
@@ -83944,7 +83944,7 @@ void label_2197()
     efid = 0;
     dbmode = 13;
     dbid = inv(3, ci);
-    label_0481();
+    label_1275();
     if (efid == 1115)
     {
         label_1712();
@@ -83999,7 +83999,7 @@ void label_2199()
 {
     dbmode = 15;
     dbid = inv(3, ci);
-    label_0481();
+    label_1275();
     label_2742();
     return;
 }
@@ -84007,7 +84007,7 @@ void label_2200()
 {
     dbmode = 14;
     dbid = inv(3, ci);
-    label_0481();
+    label_1275();
     label_2172();
     if (stat == 0)
     {
@@ -101907,7 +101907,7 @@ label_2738:
                 efstatus = mef(8, ef);
                 dbmode = 15;
                 dbid = mef(7, ef);
-                label_0481();
+                label_1275();
                 if (cdata(0, tc) == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -102653,7 +102653,7 @@ void label_2743(bool label_2747_flg)
                     {
                         dbmode = 15;
                         dbid = inv(3, ci);
-                        label_0481();
+                        label_1275();
                     }
                 }
             }

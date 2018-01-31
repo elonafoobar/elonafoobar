@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 int label_1275()
 {
     if (dbid == 792)
