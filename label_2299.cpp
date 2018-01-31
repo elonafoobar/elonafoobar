@@ -16366,7 +16366,7 @@ label_2653_internal:
                     dbid = dblist(0, cnt);
                     if (dbid == 343)
                     {
-                        cdata(157, rc) = unlist(cnt);
+                        cdata_cnpc_id(rc) = unlist(cnt);
                     }
                     break;
                 }

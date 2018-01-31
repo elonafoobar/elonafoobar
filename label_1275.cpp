@@ -12,19 +12,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 200;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 792;
-            inv(2, ci) = 695;
+            inv_id(ci) = 792;
+            inv_image(ci) = 695;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 8;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -87,31 +87,31 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 14;
-            inv(13, ci) = -25;
-            inv(12, ci) = 20;
-            inv(14, ci) = -42;
-            inv(15, ci) = 30;
-            inv(24, ci) = 10;
-            inv(1, ci) = 72000;
-            inv(7, ci) = 22500;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 14;
+            inv_hit_bonus(ci) = -25;
+            inv_damage_bonus(ci) = 20;
+            inv_dv(ci) = -42;
+            inv_pv(ci) = 30;
+            inv_material(ci) = 10;
+            inv_value(ci) = 72000;
+            inv_weight(ci) = 22500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 791;
-            inv(2, ci) = 697;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 791;
+            inv_image(ci) = 697;
             reftype = 10000;
             reftypeminor = 10001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 57;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 61;
             fixeditemenc(3) = 200;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -175,19 +175,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 790;
-            inv(2, ci) = 555;
+            inv_id(ci) = 790;
+            inv_image(ci) = 555;
             reftype = 59000;
             reftypeminor = 59500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -256,19 +256,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 789;
-            inv(2, ci) = 554;
+            inv_id(ci) = 789;
+            inv_image(ci) = 554;
             reftype = 59000;
             reftypeminor = 59500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -337,24 +337,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 17;
-            inv(13, ci) = -18;
-            inv(12, ci) = 10;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2000;
-            inv(7, ci) = 700;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 17;
+            inv_hit_bonus(ci) = -18;
+            inv_damage_bonus(ci) = 10;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 700;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 108;
-            inv(3, ci) = 788;
-            inv(2, ci) = 402;
+            inv_skill(ci) = 108;
+            inv_id(ci) = 788;
+            inv_image(ci) = 402;
             reftype = 24000;
             reftypeminor = 24001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -396,7 +396,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -431,20 +431,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 350;
-            inv(7, ci) = 350;
+            inv_value(ci) = 350;
+            inv_weight(ci) = 350;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 787;
-            inv(2, ci) = 552;
+            inv_id(ci) = 787;
+            inv_image(ci) = 552;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 5;
-            inv(27, ci) = 720;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 5;
+            inv_param3(ci) = 720;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -509,19 +509,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50;
-            inv(7, ci) = 120;
+            inv_value(ci) = 50;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 786;
-            inv(2, ci) = 551;
+            inv_id(ci) = 786;
+            inv_image(ci) = 551;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -586,19 +586,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 80;
-            inv(7, ci) = 80;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 785;
-            inv(2, ci) = 553;
+            inv_id(ci) = 785;
+            inv_image(ci) = 553;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -663,18 +663,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 550;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 550;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 784;
-            inv(2, ci) = 549;
+            inv_id(ci) = 784;
+            inv_image(ci) = 549;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -739,18 +739,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 50;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 783;
-            inv(2, ci) = 550;
+            inv_id(ci) = 783;
+            inv_image(ci) = 550;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -824,18 +824,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 150;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 150;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 782;
-            inv(2, ci) = 360;
+            inv_id(ci) = 782;
+            inv_image(ci) = 360;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -900,24 +900,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 14;
-            inv(13, ci) = 5;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2400;
-            inv(7, ci) = 400;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 14;
+            inv_hit_bonus(ci) = 5;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 101;
-            inv(3, ci) = 781;
-            inv(2, ci) = 546;
+            inv_skill(ci) = 101;
+            inv_id(ci) = 781;
+            inv_image(ci) = 546;
             reftype = 10000;
             reftypeminor = 10003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -982,18 +982,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 23000;
-            inv(7, ci) = 4200;
+            inv_value(ci) = 23000;
+            inv_weight(ci) = 4200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 780;
-            inv(2, ci) = 545;
+            inv_id(ci) = 780;
+            inv_image(ci) = 545;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1058,18 +1058,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 16000;
-            inv(7, ci) = 1800;
+            inv_value(ci) = 16000;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 779;
-            inv(2, ci) = 544;
+            inv_id(ci) = 779;
+            inv_image(ci) = 544;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1134,19 +1134,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4900;
-            inv(7, ci) = 9000;
+            inv_value(ci) = 4900;
+            inv_weight(ci) = 9000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 778;
-            inv(2, ci) = 543;
+            inv_id(ci) = 778;
+            inv_image(ci) = 543;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1211,22 +1211,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 777;
-            inv(2, ci) = 682;
+            inv_id(ci) = 777;
+            inv_image(ci) = 682;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 26;
+            inv_function(ci) = 26;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 240;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 240;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -1292,22 +1292,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 776;
-            inv(2, ci) = 681;
+            inv_id(ci) = 776;
+            inv_image(ci) = 681;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 26;
+            inv_function(ci) = 26;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 240;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 240;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -1373,20 +1373,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 160;
-            inv(7, ci) = 250;
+            inv_value(ci) = 160;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 775;
-            inv(2, ci) = 542;
+            inv_id(ci) = 775;
+            inv_image(ci) = 542;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(26, ci) = 8;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1452,18 +1452,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7200;
-            inv(7, ci) = 23800;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 23800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 774;
-            inv(2, ci) = 683;
+            inv_id(ci) = 774;
+            inv_image(ci) = 683;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1528,18 +1528,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 773;
-            inv(2, ci) = 541;
+            inv_id(ci) = 773;
+            inv_image(ci) = 541;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1604,21 +1604,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 90;
-            inv(7, ci) = 330;
+            inv_material(ci) = 35;
+            inv_value(ci) = 90;
+            inv_weight(ci) = 330;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 772;
-            inv(2, ci) = 540;
+            inv_id(ci) = 772;
+            inv_image(ci) = 540;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 32;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 32;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1684,18 +1684,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 100;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 771;
-            inv(2, ci) = 679;
+            inv_id(ci) = 771;
+            inv_image(ci) = 679;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -1771,18 +1771,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 50;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 770;
-            inv(2, ci) = 678;
+            inv_id(ci) = 770;
+            inv_image(ci) = 678;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1858,18 +1858,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1650;
-            inv(7, ci) = 530;
+            inv_value(ci) = 1650;
+            inv_weight(ci) = 530;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 769;
-            inv(2, ci) = 677;
+            inv_id(ci) = 769;
+            inv_image(ci) = 677;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -1934,18 +1934,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 400;
-            inv(7, ci) = 150;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 150;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 768;
-            inv(2, ci) = 676;
+            inv_id(ci) = 768;
+            inv_image(ci) = 676;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2010,19 +2010,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 250;
-            inv(7, ci) = 800;
+            inv_value(ci) = 250;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 767;
-            inv(2, ci) = 675;
+            inv_id(ci) = 767;
+            inv_image(ci) = 675;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2091,18 +2091,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 48500;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 48500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 766;
-            inv(2, ci) = 684;
+            inv_id(ci) = 766;
+            inv_image(ci) = 684;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2167,18 +2167,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 48500;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 48500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 765;
-            inv(2, ci) = 685;
+            inv_id(ci) = 765;
+            inv_image(ci) = 685;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2243,18 +2243,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 9900;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 9900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 764;
-            inv(2, ci) = 674;
+            inv_id(ci) = 764;
+            inv_image(ci) = 674;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2319,18 +2319,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3600;
-            inv(7, ci) = 85000;
+            inv_value(ci) = 3600;
+            inv_weight(ci) = 85000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 763;
-            inv(2, ci) = 673;
+            inv_id(ci) = 763;
+            inv_image(ci) = 673;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2395,18 +2395,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 760;
-            inv(7, ci) = 280;
+            inv_value(ci) = 760;
+            inv_weight(ci) = 280;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 762;
-            inv(2, ci) = 672;
+            inv_id(ci) = 762;
+            inv_image(ci) = 672;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2471,24 +2471,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 35000;
-            inv(7, ci) = 45000;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 45000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 761;
-            inv(2, ci) = 76;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 761;
+            inv_image(ci) = 76;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 60;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(19, ci) = 17;
+            inv_function(ci) = 17;
             ibitmod(5, ci, 1);
-            inv(25, ci) = 200;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 200;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -2554,21 +2554,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 75000;
-            inv(7, ci) = 5000;
+            inv_value(ci) = 75000;
+            inv_weight(ci) = 5000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 760;
-            inv(2, ci) = 629;
+            inv_id(ci) = 760;
+            inv_image(ci) = 629;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 49;
+            inv_function(ci) = 49;
             ibitmod(5, ci, 1);
-            inv(25, ci) = rnd(20000) + 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = rnd(20000) + 1;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -2638,22 +2638,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 5;
-            inv(24, ci) = 8;
-            inv(1, ci) = 4800;
-            inv(7, ci) = 600;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 5;
+            inv_material(ci) = 8;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 600;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 759;
-            inv(2, ci) = 671;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 759;
+            inv_image(ci) = 671;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2718,27 +2718,27 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 24;
-            inv(13, ci) = 14;
-            inv(12, ci) = 26;
-            inv(24, ci) = 10;
-            inv(1, ci) = 25000;
-            inv(7, ci) = 950;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 24;
+            inv_hit_bonus(ci) = 14;
+            inv_damage_bonus(ci) = 26;
+            inv_material(ci) = 10;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 950;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 758;
-            inv(2, ci) = 419;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 758;
+            inv_image(ci) = 419;
             reftype = 24000;
             reftypeminor = 24020;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 35;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -2804,20 +2804,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(12, ci) = 8;
-            inv(14, ci) = 2;
-            inv(15, ci) = 7;
-            inv(24, ci) = 20;
-            inv(1, ci) = 15000;
-            inv(7, ci) = 2400;
+            inv_damage_bonus(ci) = 8;
+            inv_dv(ci) = 2;
+            inv_pv(ci) = 7;
+            inv_material(ci) = 20;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 757;
-            inv(2, ci) = 480;
+            inv_id(ci) = 757;
+            inv_image(ci) = 480;
             reftype = 12000;
             reftypeminor = 12001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 59;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 50;
@@ -2830,7 +2830,7 @@ int label_1275()
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -2896,19 +2896,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 350;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 350;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 756;
-            inv(2, ci) = 670;
+            inv_id(ci) = 756;
+            inv_image(ci) = 670;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -2973,19 +2973,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 800;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 755;
-            inv(2, ci) = 669;
+            inv_id(ci) = 755;
+            inv_image(ci) = 669;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3050,18 +3050,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3200;
-            inv(7, ci) = 720;
+            inv_value(ci) = 3200;
+            inv_weight(ci) = 720;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 754;
-            inv(2, ci) = 668;
+            inv_id(ci) = 754;
+            inv_image(ci) = 668;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3126,18 +3126,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7800;
-            inv(7, ci) = 9800;
+            inv_value(ci) = 7800;
+            inv_weight(ci) = 9800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 753;
-            inv(2, ci) = 667;
+            inv_id(ci) = 753;
+            inv_image(ci) = 667;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3202,18 +3202,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1650;
-            inv(7, ci) = 80;
+            inv_value(ci) = 1650;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 752;
-            inv(2, ci) = 666;
+            inv_id(ci) = 752;
+            inv_image(ci) = 666;
             reftype = 72000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3278,18 +3278,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150000;
-            inv(7, ci) = 7500;
+            inv_value(ci) = 150000;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 751;
-            inv(2, ci) = 664;
+            inv_id(ci) = 751;
+            inv_image(ci) = 664;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3354,18 +3354,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150000;
-            inv(7, ci) = 7500;
+            inv_value(ci) = 150000;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 750;
-            inv(2, ci) = 665;
+            inv_id(ci) = 750;
+            inv_image(ci) = 665;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3430,20 +3430,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 50;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 749;
-            inv(2, ci) = 686;
+            inv_id(ci) = 749;
+            inv_image(ci) = 686;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 48;
+            inv_function(ci) = 48;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3508,21 +3508,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 7500;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 748;
-            inv(2, ci) = 662;
+            inv_id(ci) = 748;
+            inv_image(ci) = 662;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 47;
+            inv_function(ci) = 47;
             ibitmod(5, ci, 1);
             ibitmod(16, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3591,20 +3591,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 80;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 747;
-            inv(2, ci) = 333;
+            inv_id(ci) = 747;
+            inv_image(ci) = 333;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(26, ci) = rnd(4) + 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_param2(ci) = rnd(4) + 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3677,24 +3677,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 746;
-            inv(2, ci) = 657;
+            inv_id(ci) = 746;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 1132;
-            inv(26, ci) = 100;
-            inv(27, ci) = 24;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1132;
+            inv_param2(ci) = 100;
+            inv_param3(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3758,24 +3758,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 745;
-            inv(2, ci) = 657;
+            inv_id(ci) = 745;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 1132;
-            inv(26, ci) = 100;
-            inv(27, ci) = 24;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1132;
+            inv_param2(ci) = 100;
+            inv_param3(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3839,24 +3839,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 744;
-            inv(2, ci) = 657;
+            inv_id(ci) = 744;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 1132;
-            inv(26, ci) = 100;
-            inv(27, ci) = 24;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1132;
+            inv_param2(ci) = 100;
+            inv_param3(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -3920,24 +3920,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 743;
-            inv(2, ci) = 657;
+            inv_id(ci) = 743;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 1132;
-            inv(26, ci) = 100;
-            inv(27, ci) = 24;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1132;
+            inv_param2(ci) = 100;
+            inv_param3(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4001,19 +4001,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 742;
-            inv(2, ci) = 308;
+            inv_id(ci) = 742;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -4089,22 +4089,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 6;
-            inv(11, ci) = 6;
-            inv(13, ci) = 3;
-            inv(12, ci) = 2;
-            inv(24, ci) = 20;
-            inv(1, ci) = 40000;
-            inv(7, ci) = 2500;
+            inv_dice_x(ci) = 6;
+            inv_dice_y(ci) = 6;
+            inv_hit_bonus(ci) = 3;
+            inv_damage_bonus(ci) = 2;
+            inv_material(ci) = 20;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 741;
-            inv(2, ci) = 501;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 741;
+            inv_image(ci) = 501;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 20050;
             fixeditemenc(1) = 550;
             fixeditemenc(2) = 70052;
@@ -4115,7 +4115,7 @@ int label_1275()
             fixeditemenc(7) = 720;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -4181,19 +4181,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 2;
-            inv(15, ci) = 14;
-            inv(24, ci) = 21;
-            inv(1, ci) = 1200;
-            inv(7, ci) = 150;
+            inv_dv(ci) = 2;
+            inv_pv(ci) = 14;
+            inv_material(ci) = 21;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 150;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 740;
-            inv(2, ci) = 488;
+            inv_id(ci) = 740;
+            inv_image(ci) = 488;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 56;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 30181;
@@ -4202,7 +4202,7 @@ int label_1275()
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -4268,22 +4268,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 25;
-            inv(11, ci) = 16;
-            inv(13, ci) = -460;
-            inv(12, ci) = 32;
-            inv(24, ci) = 8;
-            inv(1, ci) = 30000;
-            inv(7, ci) = 376500;
+            inv_dice_x(ci) = 25;
+            inv_dice_y(ci) = 16;
+            inv_hit_bonus(ci) = -460;
+            inv_damage_bonus(ci) = 32;
+            inv_material(ci) = 8;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 376500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 107;
-            inv(3, ci) = 739;
-            inv(2, ci) = 425;
+            inv_skill(ci) = 107;
+            inv_id(ci) = 739;
+            inv_image(ci) = 425;
             reftype = 10000;
             reftypeminor = 10011;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80002;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70054;
@@ -4298,7 +4298,7 @@ int label_1275()
             fixeditemenc(11) = 350;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -4364,19 +4364,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 250;
-            inv(7, ci) = 50;
+            inv_value(ci) = 250;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 738;
-            inv(2, ci) = 539;
+            inv_id(ci) = 738;
+            inv_image(ci) = 539;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4441,18 +4441,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 737;
-            inv(2, ci) = 470;
+            inv_id(ci) = 737;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4528,18 +4528,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 120;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 736;
-            inv(2, ci) = 354;
+            inv_id(ci) = 736;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4615,26 +4615,26 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 17;
-            inv(13, ci) = 3;
-            inv(12, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 4000;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 17;
+            inv_hit_bonus(ci) = 3;
+            inv_damage_bonus(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 4000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 107;
-            inv(3, ci) = 735;
-            inv(2, ci) = 421;
+            inv_skill(ci) = 107;
+            inv_id(ci) = 735;
+            inv_image(ci) = 421;
             reftype = 10000;
             reftypeminor = 10011;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80025;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4700,18 +4700,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 3400;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 3400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 734;
-            inv(2, ci) = 220;
+            inv_id(ci) = 734;
+            inv_image(ci) = 220;
             reftype = 72000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4776,19 +4776,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 8500;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 8500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 733;
-            inv(2, ci) = 563;
+            inv_id(ci) = 733;
+            inv_image(ci) = 563;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 45;
-            inv(29, ci) = 0;
+            inv_function(ci) = 45;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -4854,19 +4854,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 732;
-            inv(2, ci) = 429;
+            inv_id(ci) = 732;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -4944,19 +4944,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 731;
-            inv(2, ci) = 429;
+            inv_id(ci) = 731;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -5033,19 +5033,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 1;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 1;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 730;
-            inv(2, ci) = 538;
+            inv_id(ci) = 730;
+            inv_image(ci) = 538;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -5110,18 +5110,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 1000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 1000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 729;
-            inv(2, ci) = 391;
+            inv_id(ci) = 729;
+            inv_image(ci) = 391;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -5186,19 +5186,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 2;
-            inv(15, ci) = 15;
-            inv(24, ci) = 7;
-            inv(1, ci) = 15000;
-            inv(7, ci) = 1250;
+            inv_dv(ci) = 2;
+            inv_pv(ci) = 15;
+            inv_material(ci) = 7;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 1250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 728;
-            inv(2, ci) = 474;
+            inv_id(ci) = 728;
+            inv_image(ci) = 474;
             reftype = 19000;
             reftypeminor = 19001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 55;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 20056;
@@ -5207,7 +5207,7 @@ int label_1275()
             fixeditemenc(5) = 350;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -5273,27 +5273,27 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(12, ci) = 14;
-            inv(15, ci) = 1;
-            inv(24, ci) = 33;
-            inv(1, ci) = 17500;
-            inv(7, ci) = 950;
+            inv_damage_bonus(ci) = 14;
+            inv_pv(ci) = 1;
+            inv_material(ci) = 33;
+            inv_value(ci) = 17500;
+            inv_weight(ci) = 950;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 727;
-            inv(2, ci) = 453;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 727;
+            inv_image(ci) = 453;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 54;
             fixeditemenc(1) = 1000;
             fixeditemenc(2) = 20058;
             fixeditemenc(3) = 450;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -5359,20 +5359,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = -1;
-            inv(15, ci) = 35;
-            inv(24, ci) = 43;
-            inv(1, ci) = 7500;
-            inv(7, ci) = 2850;
+            inv_dv(ci) = -1;
+            inv_pv(ci) = 35;
+            inv_material(ci) = 43;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 2850;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 726;
-            inv(2, ci) = 393;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 726;
+            inv_image(ci) = 393;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 30183;
             fixeditemenc(1) = -450;
             fixeditemenc(2) = 52;
@@ -5381,7 +5381,7 @@ int label_1275()
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -5447,21 +5447,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 112;
-            inv(13, ci) = -28;
-            inv(24, ci) = 32;
-            inv(1, ci) = 25000;
-            inv(7, ci) = 75000;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 112;
+            inv_hit_bonus(ci) = -28;
+            inv_material(ci) = 32;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 75000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 725;
-            inv(2, ci) = 76;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 725;
+            inv_image(ci) = 76;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 70059;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 30183;
@@ -5470,7 +5470,7 @@ int label_1275()
             fixeditemenc(5) = 450;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -5536,19 +5536,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 1;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 1;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 724;
-            inv(2, ci) = 538;
+            inv_id(ci) = 724;
+            inv_image(ci) = 538;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -5614,25 +5614,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(12, ci) = 4;
-            inv(24, ci) = 21;
-            inv(1, ci) = 9500;
-            inv(7, ci) = 400;
+            inv_damage_bonus(ci) = 4;
+            inv_material(ci) = 21;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 723;
-            inv(2, ci) = 486;
+            inv_id(ci) = 723;
+            inv_image(ci) = 486;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 50;
             fixeditemenc(1) = 600;
             fixeditemenc(2) = 30166;
             fixeditemenc(3) = 650;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -5698,25 +5698,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 12;
-            inv(24, ci) = 33;
-            inv(1, ci) = 9500;
-            inv(7, ci) = 400;
+            inv_hit_bonus(ci) = 12;
+            inv_material(ci) = 33;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 722;
-            inv(2, ci) = 486;
+            inv_id(ci) = 722;
+            inv_image(ci) = 486;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 51;
             fixeditemenc(1) = 600;
             fixeditemenc(2) = 30109;
             fixeditemenc(3) = 700;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -5782,22 +5782,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 721;
-            inv(2, ci) = 687;
+            inv_id(ci) = 721;
+            inv_image(ci) = 687;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 43;
+            inv_function(ci) = 43;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 480;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 480;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -5863,19 +5863,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 25000;
-            inv(7, ci) = 31000;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 31000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 720;
-            inv(2, ci) = 649;
+            inv_id(ci) = 720;
+            inv_image(ci) = 649;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 200;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 200;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -5945,22 +5945,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 14;
-            inv(13, ci) = 1;
-            inv(12, ci) = 16;
-            inv(24, ci) = 25;
-            inv(1, ci) = 45000;
-            inv(7, ci) = 6500;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 14;
+            inv_hit_bonus(ci) = 1;
+            inv_damage_bonus(ci) = 16;
+            inv_material(ci) = 25;
+            inv_value(ci) = 45000;
+            inv_weight(ci) = 6500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 719;
-            inv(2, ci) = 698;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 719;
+            inv_image(ci) = 698;
             reftype = 10000;
             reftypeminor = 10001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 250;
             fixeditemenc(2) = 39;
@@ -5969,7 +5969,7 @@ int label_1275()
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -6035,22 +6035,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 47;
-            inv(13, ci) = 7;
-            inv(12, ci) = 4;
-            inv(24, ci) = 2;
-            inv(1, ci) = 94000;
-            inv(7, ci) = 250;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 47;
+            inv_hit_bonus(ci) = 7;
+            inv_damage_bonus(ci) = 4;
+            inv_material(ci) = 2;
+            inv_value(ci) = 94000;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 718;
-            inv(2, ci) = 630;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 718;
+            inv_image(ci) = 630;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 70054;
@@ -6063,7 +6063,7 @@ int label_1275()
             fixeditemenc(9) = 500;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -6130,19 +6130,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6800;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 6800;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 717;
-            inv(2, ci) = 657;
+            inv_id(ci) = 717;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 42;
-            inv(29, ci) = 0;
+            inv_function(ci) = 42;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6207,23 +6207,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 42;
-            inv(24, ci) = 31;
-            inv(1, ci) = 9500;
-            inv(7, ci) = 7500;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 42;
+            inv_material(ci) = 31;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 716;
-            inv(2, ci) = 424;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 716;
+            inv_image(ci) = 424;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -6289,19 +6289,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6800;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 6800;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 715;
-            inv(2, ci) = 657;
+            inv_id(ci) = 715;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 41;
-            inv(29, ci) = 0;
+            inv_function(ci) = 41;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6366,24 +6366,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 550;
-            inv(7, ci) = 850;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 550;
+            inv_weight(ci) = 850;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 714;
-            inv(2, ci) = 537;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 714;
+            inv_image(ci) = 537;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80024;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6448,25 +6448,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 20;
-            inv(13, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 750;
-            inv(7, ci) = 400;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 20;
+            inv_hit_bonus(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 713;
-            inv(2, ci) = 536;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 713;
+            inv_image(ci) = 536;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 70061;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6531,18 +6531,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 500000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 712;
-            inv(2, ci) = 308;
+            inv_id(ci) = 712;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6616,18 +6616,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 711;
-            inv(2, ci) = 354;
+            inv_id(ci) = 711;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6703,19 +6703,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 710;
-            inv(2, ci) = 429;
+            inv_id(ci) = 710;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -6792,18 +6792,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 709;
-            inv(2, ci) = 470;
+            inv_id(ci) = 709;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6879,18 +6879,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 6000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 708;
-            inv(2, ci) = 429;
+            inv_id(ci) = 708;
+            inv_image(ci) = 429;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -6967,24 +6967,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 35000;
-            inv(7, ci) = 4500;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 4500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 707;
-            inv(2, ci) = 699;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 707;
+            inv_image(ci) = 699;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 49;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(19, ci) = 17;
+            inv_function(ci) = 17;
             ibitmod(5, ci, 1);
-            inv(25, ci) = 180;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 180;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -7050,18 +7050,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 120;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 706;
-            inv(2, ci) = 354;
+            inv_id(ci) = 706;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7137,18 +7137,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 8;
-            inv(24, ci) = 10;
-            inv(1, ci) = 50;
-            inv(7, ci) = 250;
+            inv_dv(ci) = 8;
+            inv_material(ci) = 10;
+            inv_value(ci) = 50;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 705;
-            inv(2, ci) = 486;
+            inv_id(ci) = 705;
+            inv_image(ci) = 486;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 48;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 10017;
@@ -7157,7 +7157,7 @@ int label_1275()
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -7223,18 +7223,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 400;
-            inv(7, ci) = 100;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 704;
-            inv(2, ci) = 535;
+            inv_id(ci) = 704;
+            inv_image(ci) = 535;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7311,19 +7311,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 20;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 703;
-            inv(2, ci) = 534;
+            inv_id(ci) = 703;
+            inv_image(ci) = 534;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 39;
-            inv(29, ci) = 0;
+            inv_function(ci) = 39;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7389,20 +7389,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 150;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 150;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 702;
-            inv(2, ci) = 301;
+            inv_id(ci) = 702;
+            inv_image(ci) = 301;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(26, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -7469,19 +7469,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2200;
-            inv(7, ci) = 20;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 701;
-            inv(2, ci) = 533;
+            inv_id(ci) = 701;
+            inv_image(ci) = 533;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 37;
-            inv(29, ci) = 0;
+            inv_function(ci) = 37;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7546,18 +7546,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = 20;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 700;
-            inv(2, ci) = 532;
+            inv_id(ci) = 700;
+            inv_image(ci) = 532;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7632,19 +7632,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 3000;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 3000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 699;
-            inv(2, ci) = 658;
+            inv_id(ci) = 699;
+            inv_image(ci) = 658;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7709,18 +7709,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 50;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 698;
-            inv(2, ci) = 365;
+            inv_id(ci) = 698;
+            inv_image(ci) = 365;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -7796,19 +7796,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 12500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 697;
-            inv(2, ci) = 429;
+            inv_id(ci) = 697;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -7886,19 +7886,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 14200;
-            inv(7, ci) = 380;
+            inv_value(ci) = 14200;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 696;
-            inv(2, ci) = 429;
+            inv_id(ci) = 696;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -7976,26 +7976,26 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 70;
-            inv(13, ci) = -35;
-            inv(24, ci) = 15;
-            inv(1, ci) = 50000;
-            inv(7, ci) = 14000;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 70;
+            inv_hit_bonus(ci) = -35;
+            inv_material(ci) = 15;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 102;
-            inv(3, ci) = 695;
-            inv(2, ci) = 399;
+            inv_skill(ci) = 102;
+            inv_id(ci) = 695;
+            inv_image(ci) = 399;
             reftype = 10000;
             reftypeminor = 10010;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 750;
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -8061,18 +8061,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 694;
-            inv(2, ci) = 659;
+            inv_id(ci) = 694;
+            inv_image(ci) = 659;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8137,21 +8137,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 30000;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 30000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 693;
-            inv(2, ci) = 395;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 693;
+            inv_image(ci) = 395;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 175;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 175;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8217,21 +8217,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 850;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 850;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 692;
-            inv(2, ci) = 394;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 692;
+            inv_image(ci) = 394;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 70;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 70;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8296,21 +8296,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 8500;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 8500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 691;
-            inv(2, ci) = 393;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 691;
+            inv_image(ci) = 393;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 130;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 130;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8376,21 +8376,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 18000;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 18000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 690;
-            inv(2, ci) = 392;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 690;
+            inv_image(ci) = 392;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 150;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 150;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8456,19 +8456,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5000;
-            inv(7, ci) = 22000;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 22000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 689;
-            inv(2, ci) = 688;
+            inv_id(ci) = 689;
+            inv_image(ci) = 688;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 36;
-            inv(29, ci) = 0;
+            inv_function(ci) = 36;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8535,19 +8535,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 26000;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 26000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 688;
-            inv(2, ci) = 689;
+            inv_id(ci) = 688;
+            inv_image(ci) = 689;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 35;
-            inv(29, ci) = 0;
+            inv_function(ci) = 35;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8613,19 +8613,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 687;
-            inv(2, ci) = 429;
+            inv_id(ci) = 687;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -8700,22 +8700,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 686;
-            inv(2, ci) = 690;
+            inv_id(ci) = 686;
+            inv_image(ci) = 690;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 34;
+            inv_function(ci) = 34;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 720;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 720;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -8781,19 +8781,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 1400;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 685;
-            inv(2, ci) = 658;
+            inv_id(ci) = 685;
+            inv_image(ci) = 658;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 33;
-            inv(29, ci) = 0;
+            inv_function(ci) = 33;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8863,20 +8863,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 20000;
-            inv(7, ci) = 25000;
+            inv_value(ci) = 20000;
+            inv_weight(ci) = 25000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 684;
-            inv(2, ci) = 691;
+            inv_id(ci) = 684;
+            inv_image(ci) = 691;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 32;
+            inv_function(ci) = 32;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -8941,24 +8941,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 683;
-            inv(2, ci) = 657;
+            inv_id(ci) = 683;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 1132;
-            inv(26, ci) = 100;
-            inv(27, ci) = 24;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1132;
+            inv_param2(ci) = 100;
+            inv_param3(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -9024,22 +9024,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 682;
-            inv(2, ci) = 657;
+            inv_id(ci) = 682;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 31;
+            inv_function(ci) = 31;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -9105,24 +9105,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 681;
-            inv(2, ci) = 657;
+            inv_id(ci) = 681;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 404;
-            inv(26, ci) = 400;
-            inv(27, ci) = 8;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 404;
+            inv_param2(ci) = 400;
+            inv_param3(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -9188,24 +9188,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 680;
-            inv(2, ci) = 657;
+            inv_id(ci) = 680;
+            inv_image(ci) = 657;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 30;
+            inv_function(ci) = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(25, ci) = 446;
-            inv(26, ci) = 300;
-            inv(27, ci) = 12;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 446;
+            inv_param2(ci) = 300;
+            inv_param3(ci) = 12;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -9271,22 +9271,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 30;
-            inv(13, ci) = -3;
-            inv(12, ci) = 2;
-            inv(24, ci) = 31;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 6500;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 30;
+            inv_hit_bonus(ci) = -3;
+            inv_damage_bonus(ci) = 2;
+            inv_material(ci) = 31;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 6500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 103;
-            inv(3, ci) = 679;
-            inv(2, ci) = 504;
+            inv_skill(ci) = 103;
+            inv_id(ci) = 679;
+            inv_image(ci) = 504;
             reftype = 10000;
             reftypeminor = 10005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80013;
@@ -9299,7 +9299,7 @@ int label_1275()
             fixeditemenc(9) = 400;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9365,24 +9365,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 6;
-            inv(13, ci) = 13;
-            inv(12, ci) = 18;
-            inv(14, ci) = 18;
-            inv(15, ci) = 13;
-            inv(24, ci) = 21;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 400;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 6;
+            inv_hit_bonus(ci) = 13;
+            inv_damage_bonus(ci) = 18;
+            inv_dv(ci) = 18;
+            inv_pv(ci) = 13;
+            inv_material(ci) = 21;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 101;
-            inv(3, ci) = 678;
-            inv(2, ci) = 400;
+            inv_skill(ci) = 101;
+            inv_id(ci) = 678;
+            inv_image(ci) = 400;
             reftype = 10000;
             reftypeminor = 10003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 41;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 35;
@@ -9395,7 +9395,7 @@ int label_1275()
             fixeditemenc(9) = 600;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9461,23 +9461,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 7;
-            inv(11, ci) = 5;
-            inv(13, ci) = 12;
-            inv(12, ci) = 11;
-            inv(14, ci) = 4;
-            inv(24, ci) = 25;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 4400;
+            inv_dice_x(ci) = 7;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 12;
+            inv_damage_bonus(ci) = 11;
+            inv_dv(ci) = 4;
+            inv_material(ci) = 25;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 4400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 104;
-            inv(3, ci) = 677;
-            inv(2, ci) = 415;
+            inv_skill(ci) = 104;
+            inv_id(ci) = 677;
+            inv_image(ci) = 415;
             reftype = 10000;
             reftypeminor = 10007;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80023;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80012;
@@ -9490,7 +9490,7 @@ int label_1275()
             fixeditemenc(9) = 150;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9556,24 +9556,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 14;
-            inv(13, ci) = 6;
-            inv(12, ci) = 2;
-            inv(14, ci) = 11;
-            inv(15, ci) = 4;
-            inv(24, ci) = 20;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 900;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 14;
+            inv_hit_bonus(ci) = 6;
+            inv_damage_bonus(ci) = 2;
+            inv_dv(ci) = 11;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 20;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 105;
-            inv(3, ci) = 676;
-            inv(2, ci) = 425;
+            inv_skill(ci) = 105;
+            inv_id(ci) = 676;
+            inv_image(ci) = 425;
             reftype = 10000;
             reftypeminor = 10006;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80000;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70050;
@@ -9590,7 +9590,7 @@ int label_1275()
             fixeditemenc(13) = 250;
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9656,22 +9656,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 38;
-            inv(13, ci) = 5;
-            inv(12, ci) = 2;
-            inv(24, ci) = 14;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 850;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 38;
+            inv_hit_bonus(ci) = 5;
+            inv_damage_bonus(ci) = 2;
+            inv_material(ci) = 14;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 850;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 107;
-            inv(3, ci) = 675;
-            inv(2, ci) = 421;
+            inv_skill(ci) = 107;
+            inv_id(ci) = 675;
+            inv_image(ci) = 421;
             reftype = 10000;
             reftypeminor = 10011;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 30184;
             fixeditemenc(1) = 600;
             fixeditemenc(2) = 42;
@@ -9688,7 +9688,7 @@ int label_1275()
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9754,22 +9754,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 8;
-            inv(11, ci) = 9;
-            inv(13, ci) = 7;
-            inv(12, ci) = 2;
-            inv(24, ci) = 13;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 2800;
+            inv_dice_x(ci) = 8;
+            inv_dice_y(ci) = 9;
+            inv_hit_bonus(ci) = 7;
+            inv_damage_bonus(ci) = 2;
+            inv_material(ci) = 13;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 2800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 674;
-            inv(2, ci) = 514;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 674;
+            inv_image(ci) = 514;
             reftype = 24000;
             reftypeminor = 24020;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80017;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 43;
@@ -9780,7 +9780,7 @@ int label_1275()
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9846,22 +9846,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 23;
-            inv(13, ci) = 4;
-            inv(12, ci) = 11;
-            inv(24, ci) = 8;
-            inv(1, ci) = 35000;
-            inv(7, ci) = 800;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 23;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 11;
+            inv_material(ci) = 8;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 108;
-            inv(3, ci) = 673;
-            inv(2, ci) = 404;
+            inv_skill(ci) = 108;
+            inv_id(ci) = 673;
+            inv_image(ci) = 404;
             reftype = 24000;
             reftypeminor = 24001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80014;
             fixeditemenc(1) = 200;
             fixeditemenc(2) = 80005;
@@ -9872,7 +9872,7 @@ int label_1275()
             fixeditemenc(7) = 300;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -9938,20 +9938,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5000;
-            inv(7, ci) = 1000;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 1000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 672;
-            inv(2, ci) = 656;
+            inv_id(ci) = 672;
+            inv_image(ci) = 656;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 29;
+            inv_function(ci) = 29;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -10019,20 +10019,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 120000;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 120000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 671;
-            inv(2, ci) = 632;
+            inv_id(ci) = 671;
+            inv_image(ci) = 632;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 28;
+            inv_function(ci) = 28;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -10103,19 +10103,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = -7000;
+            inv_value(ci) = 750;
+            inv_weight(ci) = -7000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 670;
-            inv(2, ci) = 132;
+            inv_id(ci) = 670;
+            inv_image(ci) = 132;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -10184,19 +10184,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = -35000;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = -35000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 669;
-            inv(2, ci) = 92;
+            inv_id(ci) = 669;
+            inv_image(ci) = 92;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -10265,20 +10265,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 80;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 668;
-            inv(2, ci) = 333;
+            inv_id(ci) = 668;
+            inv_image(ci) = 333;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(26, ci) = rnd(4) + 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_param2(ci) = rnd(4) + 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -10352,19 +10352,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 900;
-            inv(7, ci) = 500;
+            inv_value(ci) = 900;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 667;
-            inv(2, ci) = 391;
+            inv_id(ci) = 667;
+            inv_image(ci) = 391;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -10429,22 +10429,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 666;
-            inv(2, ci) = 692;
+            inv_id(ci) = 666;
+            inv_image(ci) = 692;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 27;
+            inv_function(ci) = 27;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 120;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 120;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -10510,22 +10510,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 665;
-            inv(2, ci) = 680;
+            inv_id(ci) = 665;
+            inv_image(ci) = 680;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 26;
+            inv_function(ci) = 26;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv(27, ci) = 240;
-            inv(29, ci) = 0;
+            inv_param3(ci) = 240;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -10592,21 +10592,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1000;
-            inv(1, ci) = 50000;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 664;
-            inv(2, ci) = 489;
+            inv_id(ci) = 664;
+            inv_image(ci) = 489;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 10018;
             fixeditemenc(1) = 400 + rnd((rnd(1000) + 1));
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -10673,19 +10673,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 25000;
-            inv(7, ci) = 2500;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 663;
-            inv(2, ci) = 654;
+            inv_id(ci) = 663;
+            inv_image(ci) = 654;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -10751,20 +10751,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 440;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 440;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 662;
-            inv(2, ci) = 189;
+            inv_id(ci) = 662;
+            inv_image(ci) = 189;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -10831,19 +10831,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 16;
-            inv(15, ci) = 7;
-            inv(24, ci) = 1;
-            inv(1, ci) = 25000;
-            inv(7, ci) = 650;
+            inv_dv(ci) = 16;
+            inv_pv(ci) = 7;
+            inv_material(ci) = 1;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 650;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 661;
-            inv(2, ci) = 459;
+            inv_id(ci) = 661;
+            inv_image(ci) = 459;
             reftype = 18000;
             reftypeminor = 18002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 43;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 29;
@@ -10854,7 +10854,7 @@ int label_1275()
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -10920,19 +10920,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 660;
-            inv(2, ci) = 429;
+            inv_id(ci) = 660;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -11009,18 +11009,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 1000;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 1000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 659;
-            inv(2, ci) = 653;
+            inv_id(ci) = 659;
+            inv_image(ci) = 653;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11085,18 +11085,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 500;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 658;
-            inv(2, ci) = 652;
+            inv_id(ci) = 658;
+            inv_image(ci) = 652;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11161,18 +11161,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 657;
-            inv(2, ci) = 651;
+            inv_id(ci) = 657;
+            inv_image(ci) = 651;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11237,18 +11237,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3000;
-            inv(7, ci) = 7900;
+            inv_value(ci) = 3000;
+            inv_weight(ci) = 7900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 656;
-            inv(2, ci) = 650;
+            inv_id(ci) = 656;
+            inv_image(ci) = 650;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11313,20 +11313,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 655;
-            inv(2, ci) = 168;
+            inv_id(ci) = 655;
+            inv_image(ci) = 168;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -11393,19 +11393,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 16000;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 16000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 654;
-            inv(2, ci) = 649;
+            inv_id(ci) = 654;
+            inv_image(ci) = 649;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 160;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 160;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11474,18 +11474,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 600;
-            inv(7, ci) = 150000;
+            inv_value(ci) = 600;
+            inv_weight(ci) = 150000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 653;
-            inv(2, ci) = 648;
+            inv_id(ci) = 653;
+            inv_image(ci) = 648;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11550,18 +11550,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 652;
-            inv(2, ci) = 647;
+            inv_id(ci) = 652;
+            inv_image(ci) = 647;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11626,18 +11626,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 8400;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 8400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 651;
-            inv(2, ci) = 646;
+            inv_id(ci) = 651;
+            inv_image(ci) = 646;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11702,18 +11702,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 650;
-            inv(2, ci) = 645;
+            inv_id(ci) = 650;
+            inv_image(ci) = 645;
             reftype = 60001;
             reftypeminor = 60001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11788,18 +11788,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 4000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 4000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 649;
-            inv(2, ci) = 644;
+            inv_id(ci) = 649;
+            inv_image(ci) = 644;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11864,19 +11864,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 5000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 5000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 648;
-            inv(2, ci) = 643;
+            inv_id(ci) = 648;
+            inv_image(ci) = 643;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -11941,18 +11941,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5000;
-            inv(7, ci) = 7800;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 7800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 647;
-            inv(2, ci) = 642;
+            inv_id(ci) = 647;
+            inv_image(ci) = 642;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12017,18 +12017,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 4500;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 4500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 646;
-            inv(2, ci) = 641;
+            inv_id(ci) = 646;
+            inv_image(ci) = 641;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12093,18 +12093,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9500;
-            inv(7, ci) = 11000;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 11000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 645;
-            inv(2, ci) = 640;
+            inv_id(ci) = 645;
+            inv_image(ci) = 640;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12169,18 +12169,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 2000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 644;
-            inv(2, ci) = 639;
+            inv_id(ci) = 644;
+            inv_image(ci) = 639;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12245,19 +12245,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 2000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 643;
-            inv(2, ci) = 638;
+            inv_id(ci) = 643;
+            inv_image(ci) = 638;
             reftype = 59000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 130;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 130;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12326,18 +12326,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 4800;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 4800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 642;
-            inv(2, ci) = 637;
+            inv_id(ci) = 642;
+            inv_image(ci) = 637;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12402,19 +12402,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 2500;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 641;
-            inv(2, ci) = 636;
+            inv_id(ci) = 641;
+            inv_image(ci) = 636;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -12480,19 +12480,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8000;
-            inv(7, ci) = 2000;
+            inv_value(ci) = 8000;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 640;
-            inv(2, ci) = 635;
+            inv_id(ci) = 640;
+            inv_image(ci) = 635;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 25;
-            inv(29, ci) = 0;
+            inv_function(ci) = 25;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12558,20 +12558,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 720;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 720;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 639;
-            inv(2, ci) = 172;
+            inv_id(ci) = 639;
+            inv_image(ci) = 172;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -12639,18 +12639,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 450;
-            inv(7, ci) = 20;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 638;
-            inv(2, ci) = 470;
+            inv_id(ci) = 638;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12726,19 +12726,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150000;
-            inv(7, ci) = 400;
+            inv_value(ci) = 150000;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 637;
-            inv(2, ci) = 633;
+            inv_id(ci) = 637;
+            inv_image(ci) = 633;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             fixlv = 6;
             return 0;
         }
@@ -12805,18 +12805,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 400;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 636;
-            inv(2, ci) = 634;
+            inv_id(ci) = 636;
+            inv_image(ci) = 634;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12882,19 +12882,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 9800;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 9800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 635;
-            inv(2, ci) = 632;
+            inv_id(ci) = 635;
+            inv_image(ci) = 632;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 24;
-            inv(29, ci) = 0;
+            inv_function(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -12964,19 +12964,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 634;
-            inv(2, ci) = 631;
+            inv_id(ci) = 634;
+            inv_image(ci) = 631;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 23;
-            inv(29, ci) = 0;
+            inv_function(ci) = 23;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13045,24 +13045,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 35;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 25000;
-            inv(7, ci) = 500;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 35;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 633;
-            inv(2, ci) = 630;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 633;
+            inv_image(ci) = 630;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 70054;
             fixeditemenc(1) = 800;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13128,18 +13128,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40000;
-            inv(7, ci) = 5;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 5;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 632;
-            inv(2, ci) = 470;
+            inv_id(ci) = 632;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13215,18 +13215,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50;
-            inv(7, ci) = 5000000;
+            inv_value(ci) = 50;
+            inv_weight(ci) = 5000000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 631;
-            inv(2, ci) = 566;
+            inv_id(ci) = 631;
+            inv_image(ci) = 566;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13291,19 +13291,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 5000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 5000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 630;
-            inv(2, ci) = 629;
+            inv_id(ci) = 630;
+            inv_image(ci) = 629;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 21;
-            inv(29, ci) = 0;
+            inv_function(ci) = 21;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13373,20 +13373,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7200;
-            inv(7, ci) = 3500;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 3500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 629;
-            inv(2, ci) = 628;
+            inv_id(ci) = 629;
+            inv_image(ci) = 628;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 20;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_function(ci) = 20;
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -13457,19 +13457,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 7000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 628;
-            inv(2, ci) = 429;
+            inv_id(ci) = 628;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -13547,19 +13547,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 4;
-            inv(15, ci) = 15;
-            inv(24, ci) = 7;
-            inv(1, ci) = 40000;
-            inv(7, ci) = 1500;
+            inv_dv(ci) = 4;
+            inv_pv(ci) = 15;
+            inv_material(ci) = 7;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 627;
-            inv(2, ci) = 480;
+            inv_id(ci) = 627;
+            inv_image(ci) = 480;
             reftype = 12000;
             reftypeminor = 12001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 25;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 35;
@@ -13574,7 +13574,7 @@ int label_1275()
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -13640,19 +13640,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 626;
-            inv(2, ci) = 354;
+            inv_id(ci) = 626;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13728,19 +13728,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 8000;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 8000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 625;
-            inv(2, ci) = 627;
+            inv_id(ci) = 625;
+            inv_image(ci) = 627;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13805,19 +13805,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 624;
-            inv(2, ci) = 429;
+            inv_id(ci) = 624;
+            inv_image(ci) = 429;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13893,19 +13893,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 623;
-            inv(2, ci) = 429;
+            inv_id(ci) = 623;
+            inv_image(ci) = 429;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -13981,19 +13981,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 1;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 1;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 622;
-            inv(2, ci) = 165;
+            inv_id(ci) = 622;
+            inv_image(ci) = 165;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14060,18 +14060,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 621;
-            inv(2, ci) = 252;
+            inv_id(ci) = 621;
+            inv_image(ci) = 252;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14148,18 +14148,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 50;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 620;
-            inv(2, ci) = 354;
+            inv_id(ci) = 620;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14236,18 +14236,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 1250;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 1250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 619;
-            inv(2, ci) = 310;
+            inv_id(ci) = 619;
+            inv_image(ci) = 310;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14310,21 +14310,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 1200;
-            inv(7, ci) = 1250;
+            inv_material(ci) = 35;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 1250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 618;
-            inv(2, ci) = 310;
+            inv_id(ci) = 618;
+            inv_image(ci) = 310;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14366,7 +14366,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -14398,18 +14398,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 250;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 617;
-            inv(2, ci) = 569;
+            inv_id(ci) = 617;
+            inv_image(ci) = 569;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14472,19 +14472,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 14500;
-            inv(7, ci) = 6500;
+            inv_value(ci) = 14500;
+            inv_weight(ci) = 6500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 616;
-            inv(2, ci) = 384;
+            inv_id(ci) = 616;
+            inv_image(ci) = 384;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14549,19 +14549,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 100;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 615;
-            inv(2, ci) = 383;
+            inv_id(ci) = 615;
+            inv_image(ci) = 383;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14626,18 +14626,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 8000;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 8000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 614;
-            inv(2, ci) = 568;
+            inv_id(ci) = 614;
+            inv_image(ci) = 568;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14702,19 +14702,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 35000;
-            inv(7, ci) = 24000;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 24000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 613;
-            inv(2, ci) = 569;
+            inv_id(ci) = 613;
+            inv_image(ci) = 569;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 180;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 180;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14783,18 +14783,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 2000;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 612;
-            inv(2, ci) = 382;
+            inv_id(ci) = 612;
+            inv_image(ci) = 382;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14859,19 +14859,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 611;
-            inv(2, ci) = 107;
+            inv_id(ci) = 611;
+            inv_image(ci) = 107;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 8;
-            inv(29, ci) = 0;
+            inv_function(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -14936,18 +14936,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 5600;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 5600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 610;
-            inv(2, ci) = 380;
+            inv_id(ci) = 610;
+            inv_image(ci) = 380;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15012,18 +15012,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 700;
-            inv(7, ci) = 1600;
+            inv_value(ci) = 700;
+            inv_weight(ci) = 1600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 609;
-            inv(2, ci) = 379;
+            inv_id(ci) = 609;
+            inv_image(ci) = 379;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15088,18 +15088,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 608;
-            inv(2, ci) = 378;
+            inv_id(ci) = 608;
+            inv_image(ci) = 378;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15164,18 +15164,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2600;
-            inv(7, ci) = 4200;
+            inv_value(ci) = 2600;
+            inv_weight(ci) = 4200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 607;
-            inv(2, ci) = 377;
+            inv_id(ci) = 607;
+            inv_image(ci) = 377;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15240,20 +15240,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9500;
-            inv(7, ci) = 8250;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 8250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 606;
-            inv(2, ci) = 376;
+            inv_id(ci) = 606;
+            inv_image(ci) = 376;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 225;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 225;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15318,18 +15318,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2200;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 605;
-            inv(2, ci) = 375;
+            inv_id(ci) = 605;
+            inv_image(ci) = 375;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15394,18 +15394,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 400;
-            inv(7, ci) = 800;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 604;
-            inv(2, ci) = 374;
+            inv_id(ci) = 604;
+            inv_image(ci) = 374;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15470,20 +15470,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 2400;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 603;
-            inv(2, ci) = 373;
+            inv_id(ci) = 603;
+            inv_image(ci) = 373;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
+            inv_function(ci) = 44;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15548,19 +15548,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 185000;
-            inv(7, ci) = 350000;
+            inv_value(ci) = 185000;
+            inv_weight(ci) = 350000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 602;
-            inv(2, ci) = 372;
+            inv_id(ci) = 602;
+            inv_image(ci) = 372;
             reftype = 60001;
             reftypeminor = 60001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 100;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15635,18 +15635,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 120;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 601;
-            inv(2, ci) = 371;
+            inv_id(ci) = 601;
+            inv_image(ci) = 371;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15711,19 +15711,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 150000;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 150000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 600;
-            inv(2, ci) = 370;
+            inv_id(ci) = 600;
+            inv_image(ci) = 370;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15788,18 +15788,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 35000;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 35000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 599;
-            inv(2, ci) = 570;
+            inv_id(ci) = 599;
+            inv_image(ci) = 570;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15864,19 +15864,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = -11000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = -11000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 598;
-            inv(2, ci) = 134;
+            inv_id(ci) = 598;
+            inv_image(ci) = 134;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -15945,19 +15945,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = -60000;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = -60000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 597;
-            inv(2, ci) = 570;
+            inv_id(ci) = 597;
+            inv_image(ci) = 570;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16026,18 +16026,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 4800;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 4800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 596;
-            inv(2, ci) = 369;
+            inv_id(ci) = 596;
+            inv_image(ci) = 369;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16103,18 +16103,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 16000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 16000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 595;
-            inv(2, ci) = 571;
+            inv_id(ci) = 595;
+            inv_image(ci) = 571;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16179,18 +16179,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 18000;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 18000;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 594;
-            inv(2, ci) = 572;
+            inv_id(ci) = 594;
+            inv_image(ci) = 572;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16255,18 +16255,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7200;
-            inv(7, ci) = 250000;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 250000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 593;
-            inv(2, ci) = 573;
+            inv_id(ci) = 593;
+            inv_image(ci) = 573;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16331,18 +16331,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 180;
-            inv(7, ci) = 3400;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 3400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 592;
-            inv(2, ci) = 368;
+            inv_id(ci) = 592;
+            inv_image(ci) = 368;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16407,18 +16407,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 400;
-            inv(7, ci) = 8500;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 8500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 591;
-            inv(2, ci) = 366;
+            inv_id(ci) = 591;
+            inv_image(ci) = 366;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16483,18 +16483,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 4800;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 4800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 590;
-            inv(2, ci) = 367;
+            inv_id(ci) = 590;
+            inv_image(ci) = 367;
             reftype = 64000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16559,18 +16559,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 28000;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 28000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 589;
-            inv(2, ci) = 574;
+            inv_id(ci) = 589;
+            inv_image(ci) = 574;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16635,18 +16635,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 588;
-            inv(2, ci) = 575;
+            inv_id(ci) = 588;
+            inv_image(ci) = 575;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16711,19 +16711,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 50;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 587;
-            inv(2, ci) = 365;
+            inv_id(ci) = 587;
+            inv_image(ci) = 365;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 14;
-            inv(29, ci) = 0;
+            inv_function(ci) = 14;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16799,18 +16799,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7200;
-            inv(7, ci) = 250000;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 250000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 586;
-            inv(2, ci) = 576;
+            inv_id(ci) = 586;
+            inv_image(ci) = 576;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16875,18 +16875,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 585;
-            inv(2, ci) = 364;
+            inv_id(ci) = 585;
+            inv_image(ci) = 364;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -16951,18 +16951,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 200;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 584;
-            inv(2, ci) = 353;
+            inv_id(ci) = 584;
+            inv_image(ci) = 353;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17027,20 +17027,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 200;
-            inv(7, ci) = 150;
+            inv_value(ci) = 200;
+            inv_weight(ci) = 150;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 583;
-            inv(2, ci) = 352;
+            inv_id(ci) = 583;
+            inv_image(ci) = 352;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 13;
-            inv(25, ci) = 100;
-            inv(29, ci) = 0;
+            inv_function(ci) = 13;
+            inv_param1(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17110,19 +17110,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 582;
-            inv(2, ci) = 429;
+            inv_id(ci) = 582;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -17199,19 +17199,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 800;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 581;
-            inv(2, ci) = 471;
+            inv_id(ci) = 581;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 6 + rnd(6) - rnd(6);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 6 + rnd(6) - rnd(6);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -17287,18 +17287,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1600;
-            inv(7, ci) = 10200;
+            inv_value(ci) = 1600;
+            inv_weight(ci) = 10200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 580;
-            inv(2, ci) = 236;
+            inv_id(ci) = 580;
+            inv_image(ci) = 236;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17363,18 +17363,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 579;
-            inv(2, ci) = 577;
+            inv_id(ci) = 579;
+            inv_image(ci) = 577;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17440,19 +17440,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 578;
-            inv(2, ci) = 348;
+            inv_id(ci) = 578;
+            inv_image(ci) = 348;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 11;
-            inv(29, ci) = 0;
+            inv_function(ci) = 11;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17521,18 +17521,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 400;
-            inv(7, ci) = 50;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 577;
-            inv(2, ci) = 223;
+            inv_id(ci) = 577;
+            inv_image(ci) = 223;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17609,19 +17609,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 576;
-            inv(2, ci) = 516;
+            inv_id(ci) = 576;
+            inv_image(ci) = 516;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 10;
-            inv(29, ci) = 0;
+            inv_function(ci) = 10;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17691,18 +17691,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 25;
-            inv(7, ci) = 80;
+            inv_value(ci) = 25;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 575;
-            inv(2, ci) = 340;
+            inv_id(ci) = 575;
+            inv_image(ci) = 340;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17767,18 +17767,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 300;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 300;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 574;
-            inv(2, ci) = 339;
+            inv_id(ci) = 574;
+            inv_image(ci) = 339;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17854,20 +17854,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 300;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 300;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 573;
-            inv(2, ci) = 338;
+            inv_id(ci) = 573;
+            inv_image(ci) = 338;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 8000;
-            inv(27, ci) = 240;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 8000;
+            inv_param3(ci) = 240;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -17932,18 +17932,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 80000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 80000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 572;
-            inv(2, ci) = 308;
+            inv_id(ci) = 572;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -18017,19 +18017,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 640;
-            inv(7, ci) = 450;
+            inv_value(ci) = 640;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 571;
-            inv(2, ci) = 337;
+            inv_id(ci) = 571;
+            inv_image(ci) = 337;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 5;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 5;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -18094,19 +18094,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 800;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 570;
-            inv(2, ci) = 471;
+            inv_id(ci) = 570;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -18182,19 +18182,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 5800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 569;
-            inv(2, ci) = 429;
+            inv_id(ci) = 569;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -18271,19 +18271,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 800;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 568;
-            inv(2, ci) = 335;
+            inv_id(ci) = 568;
+            inv_image(ci) = 335;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 12 + rnd(12) - rnd(12);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -18350,19 +18350,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 800;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 567;
-            inv(2, ci) = 335;
+            inv_id(ci) = 567;
+            inv_image(ci) = 335;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 12 + rnd(12) - rnd(12);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -18429,18 +18429,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1900;
-            inv(7, ci) = 120;
+            inv_value(ci) = 1900;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 566;
-            inv(2, ci) = 354;
+            inv_id(ci) = 566;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -18516,19 +18516,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 800;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 565;
-            inv(2, ci) = 471;
+            inv_id(ci) = 565;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -18604,19 +18604,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 564;
-            inv(2, ci) = 429;
+            inv_id(ci) = 564;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -18693,19 +18693,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 80;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 563;
-            inv(2, ci) = 334;
+            inv_id(ci) = 563;
+            inv_image(ci) = 334;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -18779,19 +18779,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 20000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 20000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 562;
-            inv(2, ci) = 332;
+            inv_id(ci) = 562;
+            inv_image(ci) = 332;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 8;
-            inv(29, ci) = 0;
+            inv_function(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -18861,18 +18861,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7200;
-            inv(7, ci) = 20000;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 20000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 561;
-            inv(2, ci) = 197;
+            inv_id(ci) = 561;
+            inv_image(ci) = 197;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -18938,19 +18938,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 20000;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 20000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 560;
-            inv(2, ci) = 331;
+            inv_id(ci) = 560;
+            inv_image(ci) = 331;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19015,18 +19015,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 100000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 559;
-            inv(2, ci) = 354;
+            inv_id(ci) = 559;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19103,25 +19103,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 2;
-            inv(15, ci) = 2;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 17000;
-            inv(7, ci) = 50;
+            inv_dv(ci) = 2;
+            inv_pv(ci) = 2;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 17000;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 558;
-            inv(2, ci) = 489;
+            inv_id(ci) = 558;
+            inv_image(ci) = 489;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 31;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 20057;
             fixeditemenc(3) = 100;
             fixeditemenc(4) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19186,23 +19186,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 7;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 18000;
-            inv(7, ci) = 400;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 18000;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 557;
-            inv(2, ci) = 422;
+            inv_id(ci) = 557;
+            inv_image(ci) = 422;
             reftype = 20000;
             reftypeminor = 20001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 30;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19267,23 +19267,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 7;
-            inv(15, ci) = 2;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 24000;
-            inv(7, ci) = 300;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 2;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 24000;
+            inv_weight(ci) = 300;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 556;
-            inv(2, ci) = 460;
+            inv_id(ci) = 556;
+            inv_image(ci) = 460;
             reftype = 18000;
             reftypeminor = 18002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 29;
             fixeditemenc(1) = 500;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19349,19 +19349,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6500;
-            inv(7, ci) = 12500;
+            inv_value(ci) = 6500;
+            inv_weight(ci) = 12500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 555;
-            inv(2, ci) = 330;
+            inv_id(ci) = 555;
+            inv_image(ci) = 330;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 7;
-            inv(29, ci) = 0;
+            inv_function(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19431,20 +19431,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 42;
-            inv(1, ci) = 3500;
-            inv(7, ci) = 40;
+            inv_material(ci) = 42;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 554;
-            inv(2, ci) = 323;
+            inv_id(ci) = 554;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19490,7 +19490,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -19524,20 +19524,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 41;
-            inv(1, ci) = 4500;
-            inv(7, ci) = 40;
+            inv_material(ci) = 41;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 553;
-            inv(2, ci) = 323;
+            inv_id(ci) = 553;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19583,7 +19583,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -19617,23 +19617,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 4;
-            inv(15, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 18000;
-            inv(7, ci) = 500;
+            inv_dv(ci) = 4;
+            inv_pv(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 18000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 552;
-            inv(2, ci) = 326;
+            inv_id(ci) = 552;
+            inv_image(ci) = 326;
             reftype = 20000;
             reftypeminor = 20001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19698,19 +19698,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5600;
-            inv(7, ci) = 800;
+            inv_value(ci) = 5600;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 551;
-            inv(2, ci) = 471;
+            inv_id(ci) = 551;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -19786,19 +19786,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 5800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 550;
-            inv(2, ci) = 429;
+            inv_id(ci) = 550;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -19875,18 +19875,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 549;
-            inv(2, ci) = 470;
+            inv_id(ci) = 549;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -19962,19 +19962,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 548;
-            inv(2, ci) = 429;
+            inv_id(ci) = 548;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -20051,18 +20051,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6400;
-            inv(7, ci) = 20000;
+            inv_value(ci) = 6400;
+            inv_weight(ci) = 20000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 547;
-            inv(2, ci) = 325;
+            inv_id(ci) = 547;
+            inv_image(ci) = 325;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20127,19 +20127,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 6800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 546;
-            inv(2, ci) = 429;
+            inv_id(ci) = 546;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -20217,19 +20217,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 800;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 545;
-            inv(2, ci) = 471;
+            inv_id(ci) = 545;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 7 + rnd(7) - rnd(7);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 7 + rnd(7) - rnd(7);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -20305,20 +20305,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 544;
-            inv(2, ci) = 516;
+            inv_id(ci) = 544;
+            inv_image(ci) = 516;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 6;
-            inv(25, ci) = discsetmc();
-            inv(29, ci) = 0;
+            inv_function(ci) = 6;
+            inv_param1(ci) = discsetmc();
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20388,18 +20388,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 543;
-            inv(2, ci) = 308;
+            inv_id(ci) = 543;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20473,18 +20473,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 45000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 45000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 542;
-            inv(2, ci) = 308;
+            inv_id(ci) = 542;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20559,18 +20559,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 200;
-            inv(7, ci) = 8500;
+            inv_value(ci) = 200;
+            inv_weight(ci) = 8500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 541;
-            inv(2, ci) = 134;
+            inv_id(ci) = 541;
+            inv_image(ci) = 134;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20635,18 +20635,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7000;
-            inv(7, ci) = 2500;
+            inv_value(ci) = 7000;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 540;
-            inv(2, ci) = 130;
+            inv_id(ci) = 540;
+            inv_image(ci) = 130;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20711,18 +20711,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 25000;
-            inv(7, ci) = 48000;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 48000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 539;
-            inv(2, ci) = 578;
+            inv_id(ci) = 539;
+            inv_image(ci) = 578;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20788,18 +20788,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 450;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 538;
-            inv(2, ci) = 131;
+            inv_id(ci) = 538;
+            inv_image(ci) = 131;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20864,18 +20864,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8200;
-            inv(7, ci) = 500;
+            inv_value(ci) = 8200;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 537;
-            inv(2, ci) = 92;
+            inv_id(ci) = 537;
+            inv_image(ci) = 92;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -20940,18 +20940,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8500;
-            inv(7, ci) = 2000;
+            inv_value(ci) = 8500;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 536;
-            inv(2, ci) = 81;
+            inv_id(ci) = 536;
+            inv_image(ci) = 81;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21017,18 +21017,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 5800;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 5800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 535;
-            inv(2, ci) = 83;
+            inv_id(ci) = 535;
+            inv_image(ci) = 83;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21093,18 +21093,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 534;
-            inv(2, ci) = 582;
+            inv_id(ci) = 534;
+            inv_image(ci) = 582;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21169,18 +21169,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 85000;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 85000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 533;
-            inv(2, ci) = 581;
+            inv_id(ci) = 533;
+            inv_image(ci) = 581;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21245,18 +21245,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9400;
-            inv(7, ci) = 45000;
+            inv_value(ci) = 9400;
+            inv_weight(ci) = 45000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 532;
-            inv(2, ci) = 584;
+            inv_id(ci) = 532;
+            inv_image(ci) = 584;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21321,18 +21321,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8500;
-            inv(7, ci) = 68000;
+            inv_value(ci) = 8500;
+            inv_weight(ci) = 68000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 531;
-            inv(2, ci) = 583;
+            inv_id(ci) = 531;
+            inv_image(ci) = 583;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21398,18 +21398,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 900;
-            inv(7, ci) = 28000;
+            inv_value(ci) = 900;
+            inv_weight(ci) = 28000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 530;
-            inv(2, ci) = 587;
+            inv_id(ci) = 530;
+            inv_image(ci) = 587;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21474,18 +21474,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 39000;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 39000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 529;
-            inv(2, ci) = 588;
+            inv_id(ci) = 529;
+            inv_image(ci) = 588;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21550,18 +21550,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 28000;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 28000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 528;
-            inv(2, ci) = 589;
+            inv_id(ci) = 528;
+            inv_image(ci) = 589;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21626,18 +21626,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 20000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 20000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 527;
-            inv(2, ci) = 590;
+            inv_id(ci) = 527;
+            inv_image(ci) = 590;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21703,20 +21703,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 42000;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 42000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 526;
-            inv(2, ci) = 591;
+            inv_id(ci) = 526;
+            inv_image(ci) = 591;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = rnd(5) + 2;
-            inv(26, ci) = isetfruit(rnd(length(isetfruit)));
-            inv(29, ci) = 0;
+            inv_param1(ci) = rnd(5) + 2;
+            inv_param2(ci) = isetfruit(rnd(length(isetfruit)));
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21781,18 +21781,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 35000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 35000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 525;
-            inv(2, ci) = 592;
+            inv_id(ci) = 525;
+            inv_image(ci) = 592;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21857,18 +21857,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 38000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 38000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 524;
-            inv(2, ci) = 593;
+            inv_id(ci) = 524;
+            inv_image(ci) = 593;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -21933,18 +21933,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 700;
-            inv(7, ci) = 45000;
+            inv_value(ci) = 700;
+            inv_weight(ci) = 45000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 523;
-            inv(2, ci) = 527;
+            inv_id(ci) = 523;
+            inv_image(ci) = 527;
             reftype = 80000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22009,19 +22009,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 200000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 200000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 522;
-            inv(2, ci) = 308;
+            inv_id(ci) = 522;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22095,19 +22095,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 140000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 140000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 521;
-            inv(2, ci) = 308;
+            inv_id(ci) = 521;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22181,22 +22181,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 9;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 4500;
-            inv(7, ci) = 500;
+            inv_dv(ci) = 9;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 520;
-            inv(2, ci) = 522;
+            inv_id(ci) = 520;
+            inv_image(ci) = 522;
             reftype = 20000;
             reftypeminor = 20001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22261,18 +22261,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 120;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 519;
-            inv(2, ci) = 354;
+            inv_id(ci) = 519;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22349,19 +22349,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6000;
-            inv(7, ci) = 800;
+            inv_value(ci) = 6000;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 518;
-            inv(2, ci) = 471;
+            inv_id(ci) = 518;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -22437,19 +22437,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 800;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 517;
-            inv(2, ci) = 471;
+            inv_id(ci) = 517;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -22525,18 +22525,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 50;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 516;
-            inv(2, ci) = 354;
+            inv_id(ci) = 516;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22612,18 +22612,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 515;
-            inv(2, ci) = 470;
+            inv_id(ci) = 515;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22699,22 +22699,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 10;
-            inv(13, ci) = -20;
-            inv(12, ci) = 15;
-            inv(24, ci) = 8;
-            inv(1, ci) = 60000;
-            inv(7, ci) = 8500;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 10;
+            inv_hit_bonus(ci) = -20;
+            inv_damage_bonus(ci) = 15;
+            inv_material(ci) = 8;
+            inv_value(ci) = 60000;
+            inv_weight(ci) = 8500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 514;
-            inv(2, ci) = 520;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 514;
+            inv_image(ci) = 520;
             reftype = 24000;
             reftypeminor = 24021;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80003;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80004;
@@ -22727,7 +22727,7 @@ int label_1275()
             fixeditemenc(9) = 300;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -22793,23 +22793,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 3;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 150;
-            inv(7, ci) = 800;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 3;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 513;
-            inv(2, ci) = 521;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 513;
+            inv_image(ci) = 521;
             reftype = 25000;
             reftypeminor = 25030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22874,24 +22874,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 12;
-            inv(13, ci) = 5;
-            inv(12, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 1500;
-            inv(7, ci) = 1200;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 12;
+            inv_hit_bonus(ci) = 5;
+            inv_damage_bonus(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 512;
-            inv(2, ci) = 520;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 512;
+            inv_image(ci) = 520;
             reftype = 24000;
             reftypeminor = 24021;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -22933,7 +22933,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -22967,19 +22967,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 511;
-            inv(2, ci) = 308;
+            inv_id(ci) = 511;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 100 + rnd(200);
-            inv(29, ci) = 0;
+            inv_param1(ci) = 100 + rnd(200);
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23028,7 +23028,7 @@ int label_1275()
         if (dbmode == 13)
         {
             efid = 1128;
-            efp = inv(25, ci);
+            efp = inv_param1(ci);
             label_2171();
             return -1;
         }
@@ -23056,18 +23056,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 20000;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 20000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 510;
-            inv(2, ci) = 253;
+            inv_id(ci) = 510;
+            inv_image(ci) = 253;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23133,18 +23133,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 14000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 14000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 509;
-            inv(2, ci) = 470;
+            inv_id(ci) = 509;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23220,18 +23220,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 8000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 508;
-            inv(2, ci) = 470;
+            inv_id(ci) = 508;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23307,18 +23307,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 14000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 14000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 507;
-            inv(2, ci) = 470;
+            inv_id(ci) = 507;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23394,18 +23394,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 8000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 506;
-            inv(2, ci) = 470;
+            inv_id(ci) = 506;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23481,19 +23481,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 505;
-            inv(2, ci) = 429;
+            inv_id(ci) = 505;
+            inv_image(ci) = 429;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23569,19 +23569,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 200;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 504;
-            inv(2, ci) = 528;
+            inv_id(ci) = 504;
+            inv_image(ci) = 528;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 38;
-            inv(29, ci) = 0;
+            inv_function(ci) = 38;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23646,18 +23646,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 2500;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 503;
-            inv(2, ci) = 531;
+            inv_id(ci) = 503;
+            inv_image(ci) = 531;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23722,18 +23722,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 20000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 20000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 502;
-            inv(2, ci) = 470;
+            inv_id(ci) = 502;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23809,18 +23809,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 501;
-            inv(2, ci) = 470;
+            inv_id(ci) = 501;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23896,18 +23896,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 600;
-            inv(7, ci) = 20;
+            inv_value(ci) = 600;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 500;
-            inv(2, ci) = 470;
+            inv_id(ci) = 500;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -23983,19 +23983,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = 500;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 499;
-            inv(2, ci) = 519;
+            inv_id(ci) = 499;
+            inv_image(ci) = 519;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24060,19 +24060,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 350;
-            inv(7, ci) = 180;
+            inv_value(ci) = 350;
+            inv_weight(ci) = 180;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 498;
-            inv(2, ci) = 518;
+            inv_id(ci) = 498;
+            inv_image(ci) = 518;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24137,19 +24137,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 440;
-            inv(7, ci) = 200;
+            inv_value(ci) = 440;
+            inv_weight(ci) = 200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 497;
-            inv(2, ci) = 517;
+            inv_id(ci) = 497;
+            inv_image(ci) = 517;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 5;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 5;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24214,24 +24214,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 8;
-            inv(13, ci) = 4;
-            inv(12, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 800;
-            inv(7, ci) = 1500;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 496;
-            inv(2, ci) = 514;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 496;
+            inv_image(ci) = 514;
             reftype = 24000;
             reftypeminor = 24020;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24273,7 +24273,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24307,18 +24307,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 495;
-            inv(2, ci) = 516;
+            inv_id(ci) = 495;
+            inv_image(ci) = 516;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24360,7 +24360,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24394,18 +24394,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 494;
-            inv(2, ci) = 515;
+            inv_id(ci) = 494;
+            inv_image(ci) = 515;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24447,7 +24447,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24481,18 +24481,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 8000;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 8000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 493;
-            inv(2, ci) = 513;
+            inv_id(ci) = 493;
+            inv_image(ci) = 513;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24559,18 +24559,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3100;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 3100;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 492;
-            inv(2, ci) = 512;
+            inv_id(ci) = 492;
+            inv_image(ci) = 512;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24612,7 +24612,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24646,18 +24646,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 95000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 95000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 491;
-            inv(2, ci) = 511;
+            inv_id(ci) = 491;
+            inv_image(ci) = 511;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24699,7 +24699,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24733,18 +24733,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3200;
-            inv(7, ci) = 150000;
+            inv_value(ci) = 3200;
+            inv_weight(ci) = 150000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 490;
-            inv(2, ci) = 510;
+            inv_id(ci) = 490;
+            inv_image(ci) = 510;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24786,7 +24786,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24820,18 +24820,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1600;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 1600;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 489;
-            inv(2, ci) = 509;
+            inv_id(ci) = 489;
+            inv_image(ci) = 509;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24873,7 +24873,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24907,19 +24907,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 120000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 120000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 488;
-            inv(2, ci) = 506;
+            inv_id(ci) = 488;
+            inv_image(ci) = 506;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 9;
-            inv(29, ci) = 0;
+            inv_function(ci) = 9;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -24961,7 +24961,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -24996,18 +24996,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 45000;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 45000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 487;
-            inv(2, ci) = 508;
+            inv_id(ci) = 487;
+            inv_image(ci) = 508;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25049,7 +25049,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -25083,18 +25083,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3600;
-            inv(7, ci) = 150000;
+            inv_value(ci) = 3600;
+            inv_weight(ci) = 150000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 486;
-            inv(2, ci) = 507;
+            inv_id(ci) = 486;
+            inv_image(ci) = 507;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25136,7 +25136,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -25170,19 +25170,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 800;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 485;
-            inv(2, ci) = 471;
+            inv_id(ci) = 485;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -25258,19 +25258,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 484;
-            inv(2, ci) = 429;
+            inv_id(ci) = 484;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -25348,24 +25348,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 8;
-            inv(13, ci) = 2;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 150;
-            inv(7, ci) = 3500;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 3500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 109;
-            inv(3, ci) = 483;
-            inv(2, ci) = 412;
+            inv_skill(ci) = 109;
+            inv_id(ci) = 483;
+            inv_image(ci) = 412;
             reftype = 25000;
             reftypeminor = 25002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25430,24 +25430,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 18;
-            inv(13, ci) = 4;
-            inv(12, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 2800;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 18;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 2800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 109;
-            inv(3, ci) = 482;
-            inv(2, ci) = 498;
+            inv_skill(ci) = 109;
+            inv_id(ci) = 482;
+            inv_image(ci) = 498;
             reftype = 24000;
             reftypeminor = 24003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25489,7 +25489,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -25524,19 +25524,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 28000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 28000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 481;
-            inv(2, ci) = 429;
+            inv_id(ci) = 481;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -25613,19 +25613,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 16000;
-            inv(7, ci) = 800;
+            inv_value(ci) = 16000;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 480;
-            inv(2, ci) = 471;
+            inv_id(ci) = 480;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -25701,18 +25701,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 9000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 479;
-            inv(2, ci) = 470;
+            inv_id(ci) = 479;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25788,19 +25788,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 250;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 478;
-            inv(2, ci) = 493;
+            inv_id(ci) = 478;
+            inv_image(ci) = 493;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 5;
-            inv(29, ci) = 0;
+            inv_function(ci) = 5;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25870,19 +25870,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1000;
-            inv(1, ci) = 5200;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 5200;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 477;
-            inv(2, ci) = 489;
+            inv_id(ci) = 477;
+            inv_image(ci) = 489;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -25948,19 +25948,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1000;
-            inv(1, ci) = 450;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 476;
-            inv(2, ci) = 490;
+            inv_id(ci) = 476;
+            inv_image(ci) = 490;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26025,20 +26025,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(15, ci) = 2;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 450;
-            inv(7, ci) = 50;
+            inv_pv(ci) = 2;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 475;
-            inv(2, ci) = 491;
+            inv_id(ci) = 475;
+            inv_image(ci) = 491;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26103,20 +26103,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(12, ci) = 2;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 450;
-            inv(7, ci) = 50;
+            inv_damage_bonus(ci) = 2;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 474;
-            inv(2, ci) = 492;
+            inv_id(ci) = 474;
+            inv_image(ci) = 492;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26182,19 +26182,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1000;
-            inv(1, ci) = 5000;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 473;
-            inv(2, ci) = 483;
+            inv_id(ci) = 473;
+            inv_image(ci) = 483;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26259,19 +26259,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1000;
-            inv(1, ci) = 1800;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 472;
-            inv(2, ci) = 484;
+            inv_id(ci) = 472;
+            inv_image(ci) = 484;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26336,20 +26336,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(12, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 2000;
-            inv(7, ci) = 50;
+            inv_damage_bonus(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 471;
-            inv(2, ci) = 485;
+            inv_id(ci) = 471;
+            inv_image(ci) = 485;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26414,20 +26414,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(15, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2200;
-            inv(7, ci) = 50;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 470;
-            inv(2, ci) = 486;
+            inv_id(ci) = 470;
+            inv_image(ci) = 486;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26493,20 +26493,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 4;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 4400;
-            inv(7, ci) = 50;
+            inv_dv(ci) = 4;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 469;
-            inv(2, ci) = 487;
+            inv_id(ci) = 469;
+            inv_image(ci) = 487;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26571,20 +26571,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 4400;
-            inv(7, ci) = 50;
+            inv_hit_bonus(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 468;
-            inv(2, ci) = 488;
+            inv_id(ci) = 468;
+            inv_image(ci) = 488;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26650,21 +26650,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 8;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 9600;
-            inv(7, ci) = 1800;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 8;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 9600;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 467;
-            inv(2, ci) = 482;
+            inv_id(ci) = 467;
+            inv_image(ci) = 482;
             reftype = 12000;
             reftypeminor = 12001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26729,21 +26729,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 3;
-            inv(15, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 600;
-            inv(7, ci) = 1600;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 600;
+            inv_weight(ci) = 1600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 466;
-            inv(2, ci) = 479;
+            inv_id(ci) = 466;
+            inv_image(ci) = 479;
             reftype = 12000;
             reftypeminor = 12001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26808,21 +26808,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 1;
-            inv(15, ci) = 7;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2200;
-            inv(7, ci) = 2000;
+            inv_dv(ci) = 1;
+            inv_pv(ci) = 7;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 465;
-            inv(2, ci) = 480;
+            inv_id(ci) = 465;
+            inv_image(ci) = 480;
             reftype = 12000;
             reftypeminor = 12001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26887,21 +26887,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 4;
-            inv(15, ci) = 7;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 4800;
-            inv(7, ci) = 2400;
+            inv_dv(ci) = 4;
+            inv_pv(ci) = 7;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 464;
-            inv(2, ci) = 481;
+            inv_id(ci) = 464;
+            inv_image(ci) = 481;
             reftype = 12000;
             reftypeminor = 12001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -26966,21 +26966,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 1;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 400;
-            inv(7, ci) = 500;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 1;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 463;
-            inv(2, ci) = 413;
+            inv_id(ci) = 463;
+            inv_image(ci) = 413;
             reftype = 12000;
             reftypeminor = 12002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27046,21 +27046,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 7;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 3500;
-            inv(7, ci) = 1500;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 462;
-            inv(2, ci) = 476;
+            inv_id(ci) = 462;
+            inv_image(ci) = 476;
             reftype = 20000;
             reftypeminor = 20001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27125,21 +27125,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 4;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 1400;
-            inv(7, ci) = 1800;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 461;
-            inv(2, ci) = 475;
+            inv_id(ci) = 461;
+            inv_image(ci) = 475;
             reftype = 20000;
             reftypeminor = 20001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27205,21 +27205,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 3;
-            inv(15, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 3900;
-            inv(7, ci) = 1400;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 3900;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 460;
-            inv(2, ci) = 474;
+            inv_id(ci) = 460;
+            inv_image(ci) = 474;
             reftype = 19000;
             reftypeminor = 19001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27284,21 +27284,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2400;
-            inv(7, ci) = 650;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 650;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 459;
-            inv(2, ci) = 474;
+            inv_id(ci) = 459;
+            inv_image(ci) = 474;
             reftype = 19000;
             reftypeminor = 19001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27364,20 +27364,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(15, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 4800;
-            inv(7, ci) = 1400;
+            inv_pv(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 458;
-            inv(2, ci) = 461;
+            inv_id(ci) = 458;
+            inv_image(ci) = 461;
             reftype = 18000;
             reftypeminor = 18001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27442,21 +27442,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 6;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 3500;
-            inv(7, ci) = 650;
+            inv_dv(ci) = 6;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 650;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 457;
-            inv(2, ci) = 459;
+            inv_id(ci) = 457;
+            inv_image(ci) = 459;
             reftype = 18000;
             reftypeminor = 18002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27521,21 +27521,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 2;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 1500;
-            inv(7, ci) = 450;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 2;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 456;
-            inv(2, ci) = 473;
+            inv_id(ci) = 456;
+            inv_image(ci) = 473;
             reftype = 18000;
             reftypeminor = 18002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27600,21 +27600,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 3;
-            inv(15, ci) = 1;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 260;
-            inv(7, ci) = 250;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 1;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 260;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 455;
-            inv(2, ci) = 473;
+            inv_id(ci) = 455;
+            inv_image(ci) = 473;
             reftype = 18000;
             reftypeminor = 18002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27679,22 +27679,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = -1;
-            inv(15, ci) = 10;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 18000;
-            inv(7, ci) = 2400;
+            inv_dv(ci) = -1;
+            inv_pv(ci) = 10;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 18000;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 454;
-            inv(2, ci) = 458;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 454;
+            inv_image(ci) = 458;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27759,22 +27759,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = -3;
-            inv(15, ci) = 13;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 10000;
-            inv(7, ci) = 3500;
+            inv_dv(ci) = -3;
+            inv_pv(ci) = 13;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 3500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 453;
-            inv(2, ci) = 457;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 453;
+            inv_image(ci) = 457;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27839,22 +27839,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 2;
-            inv(15, ci) = 8;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 7500;
-            inv(7, ci) = 1400;
+            inv_dv(ci) = 2;
+            inv_pv(ci) = 8;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 452;
-            inv(2, ci) = 456;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 452;
+            inv_image(ci) = 456;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27919,22 +27919,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 3;
-            inv(15, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2500;
-            inv(7, ci) = 1000;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 1000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 451;
-            inv(2, ci) = 455;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 451;
+            inv_image(ci) = 455;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -27999,22 +27999,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 4;
-            inv(15, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 1200;
-            inv(7, ci) = 1500;
+            inv_dv(ci) = 4;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 450;
-            inv(2, ci) = 454;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 450;
+            inv_image(ci) = 454;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28079,22 +28079,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 3;
-            inv(15, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1200;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 449;
-            inv(2, ci) = 453;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 449;
+            inv_image(ci) = 453;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28159,23 +28159,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 4;
-            inv(12, ci) = 2;
-            inv(14, ci) = 3;
-            inv(15, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 950;
-            inv(7, ci) = 1300;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 2;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 950;
+            inv_weight(ci) = 1300;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 448;
-            inv(2, ci) = 452;
+            inv_id(ci) = 448;
+            inv_image(ci) = 452;
             reftype = 22000;
             reftypeminor = 22001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28241,22 +28241,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 3;
-            inv(14, ci) = 3;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 280;
-            inv(7, ci) = 200;
+            inv_hit_bonus(ci) = 3;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 447;
-            inv(2, ci) = 451;
+            inv_id(ci) = 447;
+            inv_image(ci) = 451;
             reftype = 22000;
             reftypeminor = 22003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28322,23 +28322,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 3;
-            inv(12, ci) = 3;
-            inv(14, ci) = 3;
-            inv(15, ci) = 7;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 1800;
-            inv(7, ci) = 1800;
+            inv_hit_bonus(ci) = 3;
+            inv_damage_bonus(ci) = 3;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 7;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 446;
-            inv(2, ci) = 414;
+            inv_id(ci) = 446;
+            inv_image(ci) = 414;
             reftype = 22000;
             reftypeminor = 22001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28403,23 +28403,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 5;
-            inv(12, ci) = 1;
-            inv(14, ci) = 5;
-            inv(15, ci) = 4;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 800;
-            inv(7, ci) = 450;
+            inv_hit_bonus(ci) = 5;
+            inv_damage_bonus(ci) = 1;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 445;
-            inv(2, ci) = 448;
+            inv_id(ci) = 445;
+            inv_image(ci) = 448;
             reftype = 22000;
             reftypeminor = 22003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28484,21 +28484,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 14;
-            inv(15, ci) = 15;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 7200;
-            inv(7, ci) = 1600;
+            inv_dv(ci) = 14;
+            inv_pv(ci) = 15;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 1600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 444;
-            inv(2, ci) = 447;
+            inv_id(ci) = 444;
+            inv_image(ci) = 447;
             reftype = 16000;
             reftypeminor = 16003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28563,21 +28563,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 15;
-            inv(15, ci) = 11;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 5500;
-            inv(7, ci) = 2800;
+            inv_dv(ci) = 15;
+            inv_pv(ci) = 11;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 5500;
+            inv_weight(ci) = 2800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 443;
-            inv(2, ci) = 446;
+            inv_id(ci) = 443;
+            inv_image(ci) = 446;
             reftype = 16000;
             reftypeminor = 16003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28642,21 +28642,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 13;
-            inv(15, ci) = 9;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 2000;
-            inv(7, ci) = 1500;
+            inv_dv(ci) = 13;
+            inv_pv(ci) = 9;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 442;
-            inv(2, ci) = 445;
+            inv_id(ci) = 442;
+            inv_image(ci) = 445;
             reftype = 16000;
             reftypeminor = 16003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28721,21 +28721,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 10;
-            inv(15, ci) = 8;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 1200;
-            inv(7, ci) = 1800;
+            inv_dv(ci) = 10;
+            inv_pv(ci) = 8;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 441;
-            inv(2, ci) = 444;
+            inv_id(ci) = 441;
+            inv_image(ci) = 444;
             reftype = 16000;
             reftypeminor = 16003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28800,21 +28800,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 18;
-            inv(15, ci) = 8;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 9500;
-            inv(7, ci) = 1200;
+            inv_dv(ci) = 18;
+            inv_pv(ci) = 8;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 9500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 440;
-            inv(2, ci) = 443;
+            inv_id(ci) = 440;
+            inv_image(ci) = 443;
             reftype = 16000;
             reftypeminor = 16003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28880,21 +28880,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 7;
-            inv(15, ci) = 19;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 8000;
-            inv(7, ci) = 5200;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 19;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 8000;
+            inv_weight(ci) = 5200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 439;
-            inv(2, ci) = 442;
+            inv_id(ci) = 439;
+            inv_image(ci) = 442;
             reftype = 16000;
             reftypeminor = 16001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -28959,21 +28959,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 7;
-            inv(15, ci) = 17;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 4500;
-            inv(7, ci) = 5500;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 17;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 5500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 438;
-            inv(2, ci) = 441;
+            inv_id(ci) = 438;
+            inv_image(ci) = 441;
             reftype = 16000;
             reftypeminor = 16001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29038,21 +29038,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 6;
-            inv(15, ci) = 14;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2400;
-            inv(7, ci) = 5000;
+            inv_dv(ci) = 6;
+            inv_pv(ci) = 14;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 5000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 437;
-            inv(2, ci) = 440;
+            inv_id(ci) = 437;
+            inv_image(ci) = 440;
             reftype = 16000;
             reftypeminor = 16001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29117,21 +29117,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 6;
-            inv(15, ci) = 21;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 12500;
-            inv(7, ci) = 7500;
+            inv_dv(ci) = 6;
+            inv_pv(ci) = 21;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 12500;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 436;
-            inv(2, ci) = 410;
+            inv_id(ci) = 436;
+            inv_image(ci) = 410;
             reftype = 16000;
             reftypeminor = 16001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29196,21 +29196,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 12;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 1500;
-            inv(7, ci) = 6500;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 12;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 6500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 435;
-            inv(2, ci) = 409;
+            inv_id(ci) = 435;
+            inv_image(ci) = 409;
             reftype = 16000;
             reftypeminor = 16001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29275,19 +29275,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 20000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 20000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 434;
-            inv(2, ci) = 429;
+            inv_id(ci) = 434;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -29364,18 +29364,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 433;
-            inv(2, ci) = 354;
+            inv_id(ci) = 433;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29451,18 +29451,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 432;
-            inv(2, ci) = 354;
+            inv_id(ci) = 432;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29538,18 +29538,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 431;
-            inv(2, ci) = 470;
+            inv_id(ci) = 431;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29625,18 +29625,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 430;
-            inv(2, ci) = 470;
+            inv_id(ci) = 430;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29713,18 +29713,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150;
-            inv(7, ci) = 120;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 429;
-            inv(2, ci) = 354;
+            inv_id(ci) = 429;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29801,19 +29801,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 2400;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 428;
-            inv(2, ci) = 324;
+            inv_id(ci) = 428;
+            inv_image(ci) = 324;
             reftype = 59000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29883,19 +29883,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 480;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 480;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 427;
-            inv(2, ci) = 170;
+            inv_id(ci) = 427;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 58005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 7;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 7;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -29960,19 +29960,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 120;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 426;
-            inv(2, ci) = 170;
+            inv_id(ci) = 426;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 58005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30037,19 +30037,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 680;
-            inv(7, ci) = 260;
+            inv_value(ci) = 680;
+            inv_weight(ci) = 260;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 425;
-            inv(2, ci) = 170;
+            inv_id(ci) = 425;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 58005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30114,19 +30114,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 900;
-            inv(7, ci) = 220;
+            inv_value(ci) = 900;
+            inv_weight(ci) = 220;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 424;
-            inv(2, ci) = 170;
+            inv_id(ci) = 424;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 58005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30191,19 +30191,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 210;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 210;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 423;
-            inv(2, ci) = 170;
+            inv_id(ci) = 423;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 58005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30268,19 +30268,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1050;
-            inv(7, ci) = 250;
+            inv_value(ci) = 1050;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 422;
-            inv(2, ci) = 170;
+            inv_id(ci) = 422;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 58005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30345,20 +30345,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 40;
-            inv(1, ci) = 120000;
-            inv(7, ci) = 40;
+            inv_material(ci) = 40;
+            inv_value(ci) = 120000;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 421;
-            inv(2, ci) = 323;
+            inv_id(ci) = 421;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30404,7 +30404,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30438,20 +30438,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 39;
-            inv(1, ci) = 2500;
-            inv(7, ci) = 40;
+            inv_material(ci) = 39;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 420;
-            inv(2, ci) = 323;
+            inv_id(ci) = 420;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30497,7 +30497,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30531,20 +30531,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 38;
-            inv(1, ci) = 1800;
-            inv(7, ci) = 40;
+            inv_material(ci) = 38;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 419;
-            inv(2, ci) = 323;
+            inv_id(ci) = 419;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30590,7 +30590,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30624,20 +30624,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 37;
-            inv(1, ci) = 280;
-            inv(7, ci) = 40;
+            inv_material(ci) = 37;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 418;
-            inv(2, ci) = 323;
+            inv_id(ci) = 418;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30683,7 +30683,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30717,20 +30717,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 36;
-            inv(1, ci) = 240;
-            inv(7, ci) = 40;
+            inv_material(ci) = 36;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 417;
-            inv(2, ci) = 323;
+            inv_id(ci) = 417;
+            inv_image(ci) = 323;
             reftype = 57000;
             reftypeminor = 58500;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30776,7 +30776,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -30810,18 +30810,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 416;
-            inv(2, ci) = 322;
+            inv_id(ci) = 416;
+            inv_image(ci) = 322;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30886,18 +30886,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 415;
-            inv(2, ci) = 322;
+            inv_id(ci) = 415;
+            inv_image(ci) = 322;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -30962,18 +30962,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 30000;
-            inv(7, ci) = 140000;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 140000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 414;
-            inv(2, ci) = 321;
+            inv_id(ci) = 414;
+            inv_image(ci) = 321;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31043,18 +31043,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 140000;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 140000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 413;
-            inv(2, ci) = 320;
+            inv_id(ci) = 413;
+            inv_image(ci) = 320;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31123,19 +31123,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 800;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 412;
-            inv(2, ci) = 471;
+            inv_id(ci) = 412;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -31211,18 +31211,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 350;
-            inv(7, ci) = 20;
+            inv_value(ci) = 350;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 411;
-            inv(2, ci) = 470;
+            inv_id(ci) = 411;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31298,19 +31298,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 410;
-            inv(2, ci) = 429;
+            inv_id(ci) = 410;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -31387,19 +31387,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 340;
-            inv(7, ci) = -1500;
+            inv_value(ci) = 340;
+            inv_weight(ci) = -1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 409;
-            inv(2, ci) = 251;
+            inv_id(ci) = 409;
+            inv_image(ci) = 251;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 5;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 5;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31468,19 +31468,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = -32000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = -32000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 408;
-            inv(2, ci) = 68;
+            inv_id(ci) = 408;
+            inv_image(ci) = 68;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31549,19 +31549,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = -16000;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = -16000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 407;
-            inv(2, ci) = 208;
+            inv_id(ci) = 407;
+            inv_image(ci) = 208;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31630,19 +31630,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 350;
-            inv(7, ci) = -7500;
+            inv_value(ci) = 350;
+            inv_weight(ci) = -7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 406;
-            inv(2, ci) = 316;
+            inv_id(ci) = 406;
+            inv_image(ci) = 316;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31711,19 +31711,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2800;
-            inv(7, ci) = -48000;
+            inv_value(ci) = 2800;
+            inv_weight(ci) = -48000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 405;
-            inv(2, ci) = 161;
+            inv_id(ci) = 405;
+            inv_image(ci) = 161;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31792,19 +31792,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = -10000;
+            inv_value(ci) = 800;
+            inv_weight(ci) = -10000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 404;
-            inv(2, ci) = 312;
+            inv_id(ci) = 404;
+            inv_image(ci) = 312;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31873,19 +31873,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2200;
-            inv(7, ci) = -12000;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = -12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 403;
-            inv(2, ci) = 269;
+            inv_id(ci) = 403;
+            inv_image(ci) = 269;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -31954,19 +31954,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 550;
-            inv(7, ci) = -4800;
+            inv_value(ci) = 550;
+            inv_weight(ci) = -4800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 402;
-            inv(2, ci) = 202;
+            inv_id(ci) = 402;
+            inv_image(ci) = 202;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 5;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 5;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32035,19 +32035,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4000;
-            inv(7, ci) = -50000;
+            inv_value(ci) = 4000;
+            inv_weight(ci) = -50000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 401;
-            inv(2, ci) = 292;
+            inv_id(ci) = 401;
+            inv_image(ci) = 292;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32116,19 +32116,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 420;
-            inv(7, ci) = -10000;
+            inv_value(ci) = 420;
+            inv_weight(ci) = -10000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 400;
-            inv(2, ci) = 72;
+            inv_id(ci) = 400;
+            inv_image(ci) = 72;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32197,19 +32197,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 700;
-            inv(7, ci) = -6500;
+            inv_value(ci) = 700;
+            inv_weight(ci) = -6500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 399;
-            inv(2, ci) = 67;
+            inv_id(ci) = 399;
+            inv_image(ci) = 67;
             reftype = 92000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32278,18 +32278,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 20;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 398;
-            inv(2, ci) = 470;
+            inv_id(ci) = 398;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32365,19 +32365,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 397;
-            inv(2, ci) = 429;
+            inv_id(ci) = 397;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -32454,19 +32454,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 396;
-            inv(2, ci) = 429;
+            inv_id(ci) = 396;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -32543,18 +32543,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 20;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 395;
-            inv(2, ci) = 470;
+            inv_id(ci) = 395;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32630,18 +32630,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 394;
-            inv(2, ci) = 438;
+            inv_id(ci) = 394;
+            inv_image(ci) = 438;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32706,19 +32706,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 393;
-            inv(2, ci) = 319;
+            inv_id(ci) = 393;
+            inv_image(ci) = 319;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 3;
-            inv(29, ci) = 0;
+            inv_function(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32788,18 +32788,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 50;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 392;
-            inv(2, ci) = 223;
+            inv_id(ci) = 392;
+            inv_image(ci) = 223;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -32875,19 +32875,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4100;
-            inv(7, ci) = 800;
+            inv_value(ci) = 4100;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 391;
-            inv(2, ci) = 471;
+            inv_id(ci) = 391;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -32963,18 +32963,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 20;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 390;
-            inv(2, ci) = 470;
+            inv_id(ci) = 390;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -33050,18 +33050,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 20;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 389;
-            inv(2, ci) = 470;
+            inv_id(ci) = 389;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -33137,18 +33137,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 350;
-            inv(7, ci) = 20;
+            inv_value(ci) = 350;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 388;
-            inv(2, ci) = 470;
+            inv_id(ci) = 388;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -33224,19 +33224,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 9800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 387;
-            inv(2, ci) = 429;
+            inv_id(ci) = 387;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -33313,19 +33313,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 386;
-            inv(2, ci) = 429;
+            inv_id(ci) = 386;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -33402,19 +33402,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3600;
-            inv(7, ci) = 800;
+            inv_value(ci) = 3600;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 385;
-            inv(2, ci) = 471;
+            inv_id(ci) = 385;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 6 + rnd(6) - rnd(6);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 6 + rnd(6) - rnd(6);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -33490,18 +33490,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 384;
-            inv(2, ci) = 470;
+            inv_id(ci) = 384;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -33577,19 +33577,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 11000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 11000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 383;
-            inv(2, ci) = 429;
+            inv_id(ci) = 383;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -33666,18 +33666,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 30;
-            inv(7, ci) = 120;
+            inv_value(ci) = 30;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 382;
-            inv(2, ci) = 354;
+            inv_id(ci) = 382;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -33753,19 +33753,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 6400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 381;
-            inv(2, ci) = 429;
+            inv_id(ci) = 381;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -33842,19 +33842,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 380;
-            inv(2, ci) = 429;
+            inv_id(ci) = 380;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -33931,18 +33931,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 450;
-            inv(7, ci) = 120;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 379;
-            inv(2, ci) = 354;
+            inv_id(ci) = 379;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -34019,19 +34019,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2600;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2600;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 378;
-            inv(2, ci) = 429;
+            inv_id(ci) = 378;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -34109,19 +34109,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4200;
-            inv(7, ci) = 800;
+            inv_value(ci) = 4200;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 377;
-            inv(2, ci) = 471;
+            inv_id(ci) = 377;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -34197,18 +34197,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 30;
-            inv(7, ci) = 120;
+            inv_value(ci) = 30;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 376;
-            inv(2, ci) = 354;
+            inv_id(ci) = 376;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -34284,18 +34284,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 850;
-            inv(7, ci) = 120;
+            inv_value(ci) = 850;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 375;
-            inv(2, ci) = 354;
+            inv_id(ci) = 375;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -34372,19 +34372,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 374;
-            inv(2, ci) = 429;
+            inv_id(ci) = 374;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -34462,19 +34462,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 373;
-            inv(2, ci) = 429;
+            inv_id(ci) = 373;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -34551,18 +34551,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 700;
-            inv(7, ci) = 120;
+            inv_value(ci) = 700;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 372;
-            inv(2, ci) = 354;
+            inv_id(ci) = 372;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -34639,19 +34639,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 371;
-            inv(2, ci) = 429;
+            inv_id(ci) = 371;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -34729,18 +34729,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 120;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 370;
-            inv(2, ci) = 354;
+            inv_id(ci) = 370;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -34816,19 +34816,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 369;
-            inv(2, ci) = 429;
+            inv_id(ci) = 369;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -34905,18 +34905,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40;
-            inv(7, ci) = 120;
+            inv_value(ci) = 40;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 368;
-            inv(2, ci) = 354;
+            inv_id(ci) = 368;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -34992,19 +34992,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 367;
-            inv(2, ci) = 429;
+            inv_id(ci) = 367;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -35082,19 +35082,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1080;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1080;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 366;
-            inv(2, ci) = 471;
+            inv_id(ci) = 366;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 7 + rnd(7) - rnd(7);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 7 + rnd(7) - rnd(7);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -35170,19 +35170,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 365;
-            inv(2, ci) = 429;
+            inv_id(ci) = 365;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -35259,18 +35259,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150;
-            inv(7, ci) = 120;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 364;
-            inv(2, ci) = 354;
+            inv_id(ci) = 364;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -35347,18 +35347,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 20;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 363;
-            inv(2, ci) = 470;
+            inv_id(ci) = 363;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -35434,18 +35434,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 362;
-            inv(2, ci) = 470;
+            inv_id(ci) = 362;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -35521,18 +35521,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 361;
-            inv(2, ci) = 253;
+            inv_id(ci) = 361;
+            inv_image(ci) = 253;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -35597,19 +35597,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 15;
-            inv(15, ci) = 5;
-            inv(24, ci) = 7;
-            inv(1, ci) = 30000;
-            inv(7, ci) = 500;
+            inv_dv(ci) = 15;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 7;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 360;
-            inv(2, ci) = 407;
+            inv_id(ci) = 360;
+            inv_image(ci) = 407;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 41;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 10019;
@@ -35624,7 +35624,7 @@ int label_1275()
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -35690,23 +35690,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 8;
-            inv(11, ci) = 4;
-            inv(13, ci) = 2;
-            inv(12, ci) = 11;
-            inv(14, ci) = 6;
-            inv(24, ci) = 10;
-            inv(1, ci) = 30000;
-            inv(7, ci) = 2000;
+            inv_dice_x(ci) = 8;
+            inv_dice_y(ci) = 4;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 11;
+            inv_dv(ci) = 6;
+            inv_material(ci) = 10;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 104;
-            inv(3, ci) = 359;
-            inv(2, ci) = 426;
+            inv_skill(ci) = 104;
+            inv_id(ci) = 359;
+            inv_image(ci) = 426;
             reftype = 10000;
             reftypeminor = 10007;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70056;
@@ -35717,7 +35717,7 @@ int label_1275()
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -35783,24 +35783,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 8;
-            inv(13, ci) = -5;
-            inv(12, ci) = 2;
-            inv(14, ci) = 15;
-            inv(15, ci) = 3;
-            inv(24, ci) = 20;
-            inv(1, ci) = 30000;
-            inv(7, ci) = 2500;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = -5;
+            inv_damage_bonus(ci) = 2;
+            inv_dv(ci) = 15;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 20;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 105;
-            inv(3, ci) = 358;
-            inv(2, ci) = 425;
+            inv_skill(ci) = 105;
+            inv_id(ci) = 358;
+            inv_image(ci) = 425;
             reftype = 10000;
             reftypeminor = 10006;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80002;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70054;
@@ -35815,7 +35815,7 @@ int label_1275()
             fixeditemenc(11) = 420;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -35882,18 +35882,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(15, ci) = 50;
-            inv(24, ci) = 7;
-            inv(1, ci) = 30000;
-            inv(7, ci) = 1200;
+            inv_pv(ci) = 50;
+            inv_material(ci) = 7;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 357;
-            inv(2, ci) = 407;
+            inv_id(ci) = 357;
+            inv_image(ci) = 407;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 42;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 20060;
@@ -35912,7 +35912,7 @@ int label_1275()
             fixeditemenc(15) = 100;
             fixeditemenc(16) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -35978,22 +35978,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 5;
-            inv(13, ci) = 8;
-            inv(12, ci) = 22;
-            inv(24, ci) = 10;
-            inv(1, ci) = 30000;
-            inv(7, ci) = 1800;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 8;
+            inv_damage_bonus(ci) = 22;
+            inv_material(ci) = 10;
+            inv_value(ci) = 30000;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 103;
-            inv(3, ci) = 356;
-            inv(2, ci) = 427;
+            inv_skill(ci) = 103;
+            inv_id(ci) = 356;
+            inv_image(ci) = 427;
             reftype = 10000;
             reftypeminor = 10004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 38;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 20050;
@@ -36008,7 +36008,7 @@ int label_1275()
             fixeditemenc(11) = 100;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -36074,19 +36074,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 5;
-            inv(15, ci) = 30;
-            inv(24, ci) = 7;
-            inv(1, ci) = 40000;
-            inv(7, ci) = 1200;
+            inv_dv(ci) = 5;
+            inv_pv(ci) = 30;
+            inv_material(ci) = 7;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 355;
-            inv(2, ci) = 414;
+            inv_id(ci) = 355;
+            inv_image(ci) = 414;
             reftype = 22000;
             reftypeminor = 22003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 150;
             fixeditemenc(2) = 20050;
@@ -36103,7 +36103,7 @@ int label_1275()
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -36169,21 +36169,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 380;
-            inv(7, ci) = 450;
+            inv_material(ci) = 35;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 354;
-            inv(2, ci) = 318;
+            inv_id(ci) = 354;
+            inv_image(ci) = 318;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36225,7 +36225,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36259,21 +36259,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 620;
-            inv(7, ci) = 600;
+            inv_material(ci) = 35;
+            inv_value(ci) = 620;
+            inv_weight(ci) = 600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 353;
-            inv(2, ci) = 317;
+            inv_id(ci) = 353;
+            inv_image(ci) = 317;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36315,7 +36315,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36349,21 +36349,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 640;
-            inv(7, ci) = 700;
+            inv_material(ci) = 35;
+            inv_value(ci) = 640;
+            inv_weight(ci) = 700;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 352;
-            inv(2, ci) = 316;
+            inv_id(ci) = 352;
+            inv_image(ci) = 316;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36405,7 +36405,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36439,21 +36439,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 320;
-            inv(7, ci) = 550;
+            inv_material(ci) = 35;
+            inv_value(ci) = 320;
+            inv_weight(ci) = 550;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 351;
-            inv(2, ci) = 315;
+            inv_id(ci) = 351;
+            inv_image(ci) = 315;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36495,7 +36495,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36531,21 +36531,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 170;
-            inv(7, ci) = 600;
+            inv_material(ci) = 35;
+            inv_value(ci) = 170;
+            inv_weight(ci) = 600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 350;
-            inv(2, ci) = 314;
+            inv_id(ci) = 350;
+            inv_image(ci) = 314;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36587,7 +36587,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36621,21 +36621,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 150;
-            inv(7, ci) = 800;
+            inv_material(ci) = 35;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 349;
-            inv(2, ci) = 313;
+            inv_id(ci) = 349;
+            inv_image(ci) = 313;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36677,7 +36677,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36711,21 +36711,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 1500;
-            inv(7, ci) = 2400;
+            inv_material(ci) = 35;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 348;
-            inv(2, ci) = 312;
+            inv_id(ci) = 348;
+            inv_image(ci) = 312;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36767,7 +36767,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36801,21 +36801,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 700;
-            inv(7, ci) = 900;
+            inv_material(ci) = 35;
+            inv_value(ci) = 700;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 347;
-            inv(2, ci) = 311;
+            inv_id(ci) = 347;
+            inv_image(ci) = 311;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36857,7 +36857,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36891,21 +36891,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 1200;
-            inv(7, ci) = 1250;
+            inv_material(ci) = 35;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 1250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 346;
-            inv(2, ci) = 310;
+            inv_id(ci) = 346;
+            inv_image(ci) = 310;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -36947,7 +36947,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -36981,21 +36981,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 900;
-            inv(7, ci) = 800;
+            inv_material(ci) = 35;
+            inv_value(ci) = 900;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 345;
-            inv(2, ci) = 309;
+            inv_id(ci) = 345;
+            inv_image(ci) = 309;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37037,7 +37037,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -37071,19 +37071,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 500;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 344;
-            inv(2, ci) = 308;
+            inv_id(ci) = 344;
+            inv_image(ci) = 308;
             reftype = 53000;
             reftypeminor = 53100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37157,19 +37157,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 780;
-            inv(7, ci) = 500;
+            inv_value(ci) = 780;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 343;
-            inv(2, ci) = 307;
+            inv_id(ci) = 343;
+            inv_image(ci) = 307;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 22;
-            inv(29, ci) = 0;
+            inv_function(ci) = 22;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37238,20 +37238,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 2400;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 342;
-            inv(2, ci) = 306;
+            inv_id(ci) = 342;
+            inv_image(ci) = 306;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 16;
-            inv(25, ci) = 60;
-            inv(29, ci) = 0;
+            inv_function(ci) = 16;
+            inv_param1(ci) = 60;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37317,18 +37317,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 341;
-            inv(2, ci) = 305;
+            inv_id(ci) = 341;
+            inv_image(ci) = 305;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37393,18 +37393,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 340;
-            inv(2, ci) = 304;
+            inv_id(ci) = 340;
+            inv_image(ci) = 304;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37469,18 +37469,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 339;
-            inv(2, ci) = 303;
+            inv_id(ci) = 339;
+            inv_image(ci) = 303;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37545,18 +37545,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 338;
-            inv(2, ci) = 302;
+            inv_id(ci) = 338;
+            inv_image(ci) = 302;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37621,18 +37621,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 337;
-            inv(2, ci) = 301;
+            inv_id(ci) = 337;
+            inv_image(ci) = 301;
             reftype = 62000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37697,18 +37697,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3200;
-            inv(7, ci) = 21000;
+            inv_value(ci) = 3200;
+            inv_weight(ci) = 21000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 336;
-            inv(2, ci) = 300;
+            inv_id(ci) = 336;
+            inv_image(ci) = 300;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37774,18 +37774,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 335;
-            inv(2, ci) = 299;
+            inv_id(ci) = 335;
+            inv_image(ci) = 299;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37850,19 +37850,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6800;
-            inv(7, ci) = 35000;
+            inv_value(ci) = 6800;
+            inv_weight(ci) = 35000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 334;
-            inv(2, ci) = 579;
+            inv_id(ci) = 334;
+            inv_image(ci) = 579;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -37927,19 +37927,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40;
-            inv(7, ci) = -2000;
+            inv_value(ci) = 40;
+            inv_weight(ci) = -2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 333;
-            inv(2, ci) = 297;
+            inv_id(ci) = 333;
+            inv_image(ci) = 297;
             reftype = 91000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38008,18 +38008,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 4900;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 4900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 332;
-            inv(2, ci) = 296;
+            inv_id(ci) = 332;
+            inv_image(ci) = 296;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38084,18 +38084,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1440;
-            inv(7, ci) = 1050;
+            inv_value(ci) = 1440;
+            inv_weight(ci) = 1050;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 331;
-            inv(2, ci) = 295;
+            inv_id(ci) = 331;
+            inv_image(ci) = 295;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38160,19 +38160,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 250;
-            inv(7, ci) = 3500;
+            inv_value(ci) = 250;
+            inv_weight(ci) = 3500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 330;
-            inv(2, ci) = 294;
+            inv_id(ci) = 330;
+            inv_image(ci) = 294;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38238,18 +38238,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 15600;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 15600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 329;
-            inv(2, ci) = 293;
+            inv_id(ci) = 329;
+            inv_image(ci) = 293;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38314,20 +38314,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4600;
-            inv(7, ci) = 29000;
+            inv_value(ci) = 4600;
+            inv_weight(ci) = 29000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 328;
-            inv(2, ci) = 292;
+            inv_id(ci) = 328;
+            inv_image(ci) = 292;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 150;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 150;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38392,19 +38392,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 600;
-            inv(7, ci) = 6400;
+            inv_value(ci) = 600;
+            inv_weight(ci) = 6400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 327;
-            inv(2, ci) = 291;
+            inv_id(ci) = 327;
+            inv_image(ci) = 291;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38469,18 +38469,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 8900;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 8900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 326;
-            inv(2, ci) = 290;
+            inv_id(ci) = 326;
+            inv_image(ci) = 290;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38545,19 +38545,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2800;
-            inv(7, ci) = 10000;
+            inv_value(ci) = 2800;
+            inv_weight(ci) = 10000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 325;
-            inv(2, ci) = 289;
+            inv_id(ci) = 325;
+            inv_image(ci) = 289;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 130;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 130;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38626,18 +38626,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 324;
-            inv(2, ci) = 288;
+            inv_id(ci) = 324;
+            inv_image(ci) = 288;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38702,18 +38702,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2800;
-            inv(7, ci) = 8900;
+            inv_value(ci) = 2800;
+            inv_weight(ci) = 8900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 323;
-            inv(2, ci) = 586;
+            inv_id(ci) = 323;
+            inv_image(ci) = 586;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38778,19 +38778,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2200;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 322;
-            inv(2, ci) = 286;
+            inv_id(ci) = 322;
+            inv_image(ci) = 286;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 19;
-            inv(29, ci) = 0;
+            inv_function(ci) = 19;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38855,18 +38855,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1480;
-            inv(7, ci) = 8800;
+            inv_value(ci) = 1480;
+            inv_weight(ci) = 8800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 321;
-            inv(2, ci) = 285;
+            inv_id(ci) = 321;
+            inv_image(ci) = 285;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -38931,18 +38931,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 900;
-            inv(7, ci) = 6800;
+            inv_value(ci) = 900;
+            inv_weight(ci) = 6800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 320;
-            inv(2, ci) = 284;
+            inv_id(ci) = 320;
+            inv_image(ci) = 284;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39007,19 +39007,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 880;
-            inv(7, ci) = 2800;
+            inv_value(ci) = 880;
+            inv_weight(ci) = 2800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 319;
-            inv(2, ci) = 283;
+            inv_id(ci) = 319;
+            inv_image(ci) = 283;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39088,18 +39088,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1020;
-            inv(7, ci) = 8900;
+            inv_value(ci) = 1020;
+            inv_weight(ci) = 8900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 318;
-            inv(2, ci) = 282;
+            inv_id(ci) = 318;
+            inv_image(ci) = 282;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39164,18 +39164,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 890;
-            inv(7, ci) = 7600;
+            inv_value(ci) = 890;
+            inv_weight(ci) = 7600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 317;
-            inv(2, ci) = 281;
+            inv_id(ci) = 317;
+            inv_image(ci) = 281;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39240,18 +39240,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3200;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 3200;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 316;
-            inv(2, ci) = 280;
+            inv_id(ci) = 316;
+            inv_image(ci) = 280;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39316,18 +39316,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 8900;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 8900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 315;
-            inv(2, ci) = 279;
+            inv_id(ci) = 315;
+            inv_image(ci) = 279;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39397,18 +39397,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 314;
-            inv(2, ci) = 278;
+            inv_id(ci) = 314;
+            inv_image(ci) = 278;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39477,18 +39477,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2800;
-            inv(7, ci) = 24000;
+            inv_value(ci) = 2800;
+            inv_weight(ci) = 24000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 313;
-            inv(2, ci) = 277;
+            inv_id(ci) = 313;
+            inv_image(ci) = 277;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39557,18 +39557,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2800;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 2800;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 312;
-            inv(2, ci) = 276;
+            inv_id(ci) = 312;
+            inv_image(ci) = 276;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39637,18 +39637,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 28000;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 28000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 311;
-            inv(2, ci) = 275;
+            inv_id(ci) = 311;
+            inv_image(ci) = 275;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39713,19 +39713,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 9500;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 9500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 310;
-            inv(2, ci) = 274;
+            inv_id(ci) = 310;
+            inv_image(ci) = 274;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 130;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 130;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39794,19 +39794,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 8000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 8000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 309;
-            inv(2, ci) = 273;
+            inv_id(ci) = 309;
+            inv_image(ci) = 273;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 19;
-            inv(29, ci) = 0;
+            inv_function(ci) = 19;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39871,18 +39871,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 9000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 9000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 308;
-            inv(2, ci) = 272;
+            inv_id(ci) = 308;
+            inv_image(ci) = 272;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -39947,19 +39947,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2200;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 307;
-            inv(2, ci) = 271;
+            inv_id(ci) = 307;
+            inv_image(ci) = 271;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 130;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 130;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40028,20 +40028,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5200;
-            inv(7, ci) = 34000;
+            inv_value(ci) = 5200;
+            inv_weight(ci) = 34000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 306;
-            inv(2, ci) = 270;
+            inv_id(ci) = 306;
+            inv_image(ci) = 270;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 200;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 200;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40106,19 +40106,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 8900;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 8900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 305;
-            inv(2, ci) = 269;
+            inv_id(ci) = 305;
+            inv_image(ci) = 269;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 130;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 130;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40189,19 +40189,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 13000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 13000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 304;
-            inv(2, ci) = 268;
+            inv_id(ci) = 304;
+            inv_image(ci) = 268;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 100;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40270,19 +40270,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 303;
-            inv(2, ci) = 267;
+            inv_id(ci) = 303;
+            inv_image(ci) = 267;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 120;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 120;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40351,18 +40351,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 6800;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 6800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 302;
-            inv(2, ci) = 266;
+            inv_id(ci) = 302;
+            inv_image(ci) = 266;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40427,18 +40427,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240;
-            inv(7, ci) = 1400;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 301;
-            inv(2, ci) = 265;
+            inv_id(ci) = 301;
+            inv_image(ci) = 265;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40504,18 +40504,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1900;
-            inv(7, ci) = 8500;
+            inv_value(ci) = 1900;
+            inv_weight(ci) = 8500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 300;
-            inv(2, ci) = 264;
+            inv_id(ci) = 300;
+            inv_image(ci) = 264;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40581,19 +40581,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5500;
-            inv(7, ci) = 9000;
+            inv_value(ci) = 5500;
+            inv_weight(ci) = 9000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 299;
-            inv(2, ci) = 263;
+            inv_id(ci) = 299;
+            inv_image(ci) = 263;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 19;
-            inv(29, ci) = 0;
+            inv_function(ci) = 19;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40658,18 +40658,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 2400;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 298;
-            inv(2, ci) = 262;
+            inv_id(ci) = 298;
+            inv_image(ci) = 262;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40734,19 +40734,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 17500;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 17500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 297;
-            inv(2, ci) = 261;
+            inv_id(ci) = 297;
+            inv_image(ci) = 261;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 150;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 150;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40815,18 +40815,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 296;
-            inv(2, ci) = 260;
+            inv_id(ci) = 296;
+            inv_image(ci) = 260;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40891,18 +40891,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 890;
-            inv(7, ci) = 4500;
+            inv_value(ci) = 890;
+            inv_weight(ci) = 4500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 295;
-            inv(2, ci) = 259;
+            inv_id(ci) = 295;
+            inv_image(ci) = 259;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -40967,18 +40967,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 320;
-            inv(7, ci) = 1080;
+            inv_value(ci) = 320;
+            inv_weight(ci) = 1080;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 294;
-            inv(2, ci) = 258;
+            inv_id(ci) = 294;
+            inv_image(ci) = 258;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41043,18 +41043,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 7500;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 293;
-            inv(2, ci) = 257;
+            inv_id(ci) = 293;
+            inv_image(ci) = 257;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41119,18 +41119,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 6800;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 6800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 292;
-            inv(2, ci) = 256;
+            inv_id(ci) = 292;
+            inv_image(ci) = 256;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41195,18 +41195,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 291;
-            inv(2, ci) = 255;
+            inv_id(ci) = 291;
+            inv_image(ci) = 255;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41271,19 +41271,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 300000;
-            inv(7, ci) = 800;
+            inv_value(ci) = 300000;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 290;
-            inv(2, ci) = 471;
+            inv_id(ci) = 290;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 1 + rnd(1) - rnd(1);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 1 + rnd(1) - rnd(1);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -41359,19 +41359,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 289;
-            inv(2, ci) = 429;
+            inv_id(ci) = 289;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 1 + rnd(1) - rnd(1);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 1 + rnd(1) - rnd(1);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -41449,18 +41449,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150;
-            inv(7, ci) = 20;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 288;
-            inv(2, ci) = 470;
+            inv_id(ci) = 288;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41536,18 +41536,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 50000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 287;
-            inv(2, ci) = 354;
+            inv_id(ci) = 287;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41623,18 +41623,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 120;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 286;
-            inv(2, ci) = 354;
+            inv_id(ci) = 286;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41710,18 +41710,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 120;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 285;
-            inv(2, ci) = 354;
+            inv_id(ci) = 285;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41797,18 +41797,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 250;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 284;
-            inv(2, ci) = 254;
+            inv_id(ci) = 284;
+            inv_image(ci) = 254;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41873,18 +41873,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 283;
-            inv(2, ci) = 253;
+            inv_id(ci) = 283;
+            inv_image(ci) = 253;
             reftype = 72000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -41949,18 +41949,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 180;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 180;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 282;
-            inv(2, ci) = 252;
+            inv_id(ci) = 282;
+            inv_image(ci) = 252;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42025,18 +42025,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 281;
-            inv(2, ci) = 251;
+            inv_id(ci) = 281;
+            inv_image(ci) = 251;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42101,18 +42101,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 9800;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 9800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 280;
-            inv(2, ci) = 250;
+            inv_id(ci) = 280;
+            inv_image(ci) = 250;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42177,18 +42177,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 380;
-            inv(7, ci) = 300000;
+            inv_value(ci) = 380;
+            inv_weight(ci) = 300000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 279;
-            inv(2, ci) = 249;
+            inv_id(ci) = 279;
+            inv_image(ci) = 249;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42254,18 +42254,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 300000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 300000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 278;
-            inv(2, ci) = 585;
+            inv_id(ci) = 278;
+            inv_image(ci) = 585;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42331,18 +42331,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1300;
-            inv(7, ci) = 300000;
+            inv_value(ci) = 1300;
+            inv_weight(ci) = 300000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 277;
-            inv(2, ci) = 82;
+            inv_id(ci) = 277;
+            inv_image(ci) = 82;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42408,18 +42408,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2600;
-            inv(7, ci) = 350000;
+            inv_value(ci) = 2600;
+            inv_weight(ci) = 350000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 276;
-            inv(2, ci) = 524;
+            inv_id(ci) = 276;
+            inv_image(ci) = 524;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42485,18 +42485,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 800;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 275;
-            inv(2, ci) = 248;
+            inv_id(ci) = 275;
+            inv_image(ci) = 248;
             reftype = 64000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42561,18 +42561,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 4800;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 4800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 274;
-            inv(2, ci) = 232;
+            inv_id(ci) = 274;
+            inv_image(ci) = 232;
             reftype = 64000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42638,18 +42638,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 273;
-            inv(2, ci) = 231;
+            inv_id(ci) = 273;
+            inv_image(ci) = 231;
             reftype = 64000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -42714,19 +42714,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 272;
-            inv(2, ci) = 429;
+            inv_id(ci) = 272;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -42803,19 +42803,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 271;
-            inv(2, ci) = 429;
+            inv_id(ci) = 271;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -42893,19 +42893,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 5400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 270;
-            inv(2, ci) = 429;
+            inv_id(ci) = 270;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -42982,19 +42982,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 5400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 269;
-            inv(2, ci) = 429;
+            inv_id(ci) = 269;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -43071,19 +43071,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 5500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 268;
-            inv(2, ci) = 429;
+            inv_id(ci) = 268;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -43160,19 +43160,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 267;
-            inv(2, ci) = 429;
+            inv_id(ci) = 267;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -43249,25 +43249,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 4;
-            inv(13, ci) = 6;
-            inv(12, ci) = 5;
-            inv(14, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 700;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 4;
+            inv_hit_bonus(ci) = 6;
+            inv_damage_bonus(ci) = 5;
+            inv_dv(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 700;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 101;
-            inv(3, ci) = 266;
-            inv(2, ci) = 432;
+            inv_skill(ci) = 101;
+            inv_id(ci) = 266;
+            inv_image(ci) = 432;
             reftype = 10000;
             reftypeminor = 10003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -43333,19 +43333,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 6400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 265;
-            inv(2, ci) = 429;
+            inv_id(ci) = 265;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -43422,19 +43422,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9600;
-            inv(7, ci) = 380;
+            inv_value(ci) = 9600;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 264;
-            inv(2, ci) = 429;
+            inv_id(ci) = 264;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -43511,19 +43511,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7200;
-            inv(7, ci) = 380;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 263;
-            inv(2, ci) = 429;
+            inv_id(ci) = 263;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -43602,18 +43602,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 120;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 262;
-            inv(2, ci) = 354;
+            inv_id(ci) = 262;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -43689,21 +43689,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 280;
-            inv(7, ci) = 350;
+            inv_material(ci) = 35;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 350;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 261;
-            inv(2, ci) = 201;
+            inv_id(ci) = 261;
+            inv_image(ci) = 201;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 6000;
-            inv(27, ci) = 6;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 6000;
+            inv_param3(ci) = 6;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -43745,7 +43745,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 4)
+                if (cdata_god(0) == 4)
                 {
                     return 1;
                 }
@@ -43779,20 +43779,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 800;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 260;
-            inv(2, ci) = 233;
+            inv_id(ci) = 260;
+            inv_image(ci) = 233;
             reftype = 57000;
             reftypeminor = 57001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 7000;
-            inv(27, ci) = 240;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 7000;
+            inv_param3(ci) = 240;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -43857,21 +43857,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 280;
-            inv(7, ci) = 400;
+            inv_material(ci) = 35;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 259;
-            inv(2, ci) = 233;
+            inv_id(ci) = 259;
+            inv_image(ci) = 233;
             reftype = 57000;
             reftypeminor = 57002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 5000;
-            inv(27, ci) = 24;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 5000;
+            inv_param3(ci) = 24;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -43936,19 +43936,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 350;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 350;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 258;
-            inv(2, ci) = 117;
+            inv_id(ci) = 258;
+            inv_image(ci) = 117;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -44013,19 +44013,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 257;
-            inv(2, ci) = 429;
+            inv_id(ci) = 257;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44103,20 +44103,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1860;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 1860;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 256;
-            inv(2, ci) = 226;
+            inv_id(ci) = 256;
+            inv_image(ci) = 226;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 80;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 80;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -44181,20 +44181,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1860;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 1860;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 255;
-            inv(2, ci) = 349;
+            inv_id(ci) = 255;
+            inv_image(ci) = 349;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 40;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 40;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -44259,21 +44259,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 6500;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 6500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 254;
-            inv(2, ci) = 224;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 254;
+            inv_image(ci) = 224;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 110;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 110;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -44338,18 +44338,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 50;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 253;
-            inv(2, ci) = 223;
+            inv_id(ci) = 253;
+            inv_image(ci) = 223;
             reftype = 52000;
             reftypeminor = 52002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -44425,19 +44425,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 35000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 35000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 252;
-            inv(2, ci) = 429;
+            inv_id(ci) = 252;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44514,19 +44514,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 251;
-            inv(2, ci) = 429;
+            inv_id(ci) = 251;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44603,19 +44603,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 9000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 9000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 250;
-            inv(2, ci) = 429;
+            inv_id(ci) = 250;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44692,19 +44692,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 249;
-            inv(2, ci) = 429;
+            inv_id(ci) = 249;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44782,19 +44782,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8900;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8900;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 248;
-            inv(2, ci) = 429;
+            inv_id(ci) = 248;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 3 + rnd(3) - rnd(3);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44872,19 +44872,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 25000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 25000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 247;
-            inv(2, ci) = 429;
+            inv_id(ci) = 247;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 2 + rnd(2) - rnd(2);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -44961,19 +44961,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8500;
-            inv(7, ci) = 380;
+            inv_value(ci) = 8500;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 246;
-            inv(2, ci) = 429;
+            inv_id(ci) = 246;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -45051,18 +45051,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 200;
-            inv(7, ci) = 20;
+            inv_value(ci) = 200;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 245;
-            inv(2, ci) = 470;
+            inv_id(ci) = 245;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45138,18 +45138,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 8000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 244;
-            inv(2, ci) = 470;
+            inv_id(ci) = 244;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45226,18 +45226,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 240000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 243;
-            inv(2, ci) = 470;
+            inv_id(ci) = 243;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45313,18 +45313,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 480;
-            inv(7, ci) = 20;
+            inv_value(ci) = 480;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 242;
-            inv(2, ci) = 470;
+            inv_id(ci) = 242;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45400,18 +45400,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1000;
-            inv(7, ci) = 300000;
+            inv_value(ci) = 1000;
+            inv_weight(ci) = 300000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 241;
-            inv(2, ci) = 197;
+            inv_id(ci) = 241;
+            inv_image(ci) = 197;
             reftype = 72000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45476,18 +45476,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 300000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 300000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 240;
-            inv(2, ci) = 220;
+            inv_id(ci) = 240;
+            inv_image(ci) = 220;
             reftype = 72000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45552,18 +45552,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3000;
-            inv(7, ci) = 3000;
+            inv_value(ci) = 3000;
+            inv_weight(ci) = 3000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 239;
-            inv(2, ci) = 220;
+            inv_id(ci) = 239;
+            inv_image(ci) = 220;
             reftype = 72000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45629,18 +45629,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 240;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 240;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 238;
-            inv(2, ci) = 221;
+            inv_id(ci) = 238;
+            inv_image(ci) = 221;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45705,18 +45705,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 240;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 240;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 237;
-            inv(2, ci) = 222;
+            inv_id(ci) = 237;
+            inv_image(ci) = 222;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45782,18 +45782,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = 20;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 236;
-            inv(2, ci) = 470;
+            inv_id(ci) = 236;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45869,24 +45869,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 10;
-            inv(13, ci) = -2;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 3800;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 10;
+            inv_hit_bonus(ci) = -2;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 3800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 104;
-            inv(3, ci) = 235;
-            inv(2, ci) = 426;
+            inv_skill(ci) = 104;
+            inv_id(ci) = 235;
+            inv_image(ci) = 426;
             reftype = 10000;
             reftypeminor = 10008;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -45952,24 +45952,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 20;
-            inv(13, ci) = -1;
-            inv(12, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 3500;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 20;
+            inv_hit_bonus(ci) = -1;
+            inv_damage_bonus(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 3500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 102;
-            inv(3, ci) = 234;
-            inv(2, ci) = 399;
+            inv_skill(ci) = 102;
+            inv_id(ci) = 234;
+            inv_image(ci) = 399;
             reftype = 10000;
             reftypeminor = 10010;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46034,19 +46034,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 400;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 233;
-            inv(2, ci) = 233;
+            inv_id(ci) = 233;
+            inv_image(ci) = 233;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 3;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 3;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46111,24 +46111,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 7;
-            inv(13, ci) = 1;
-            inv(12, ci) = 8;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 4000;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 7;
+            inv_hit_bonus(ci) = 1;
+            inv_damage_bonus(ci) = 8;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 4000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 232;
-            inv(2, ci) = 503;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 232;
+            inv_image(ci) = 503;
             reftype = 10000;
             reftypeminor = 10001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46194,24 +46194,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 10;
-            inv(11, ci) = 3;
-            inv(13, ci) = 10;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1800;
+            inv_dice_x(ci) = 10;
+            inv_dice_y(ci) = 3;
+            inv_hit_bonus(ci) = 10;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 231;
-            inv(2, ci) = 547;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 231;
+            inv_image(ci) = 547;
             reftype = 24000;
             reftypeminor = 24020;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46253,7 +46253,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -46287,24 +46287,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 5;
-            inv(13, ci) = 8;
-            inv(12, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 800;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 8;
+            inv_damage_bonus(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 108;
-            inv(3, ci) = 230;
-            inv(2, ci) = 404;
+            inv_skill(ci) = 108;
+            inv_id(ci) = 230;
+            inv_image(ci) = 404;
             reftype = 24000;
             reftypeminor = 24001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46346,7 +46346,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -46380,25 +46380,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 5;
-            inv(13, ci) = 3;
-            inv(12, ci) = 4;
-            inv(14, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 800;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 3;
+            inv_damage_bonus(ci) = 4;
+            inv_dv(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 105;
-            inv(3, ci) = 229;
-            inv(2, ci) = 505;
+            inv_skill(ci) = 105;
+            inv_id(ci) = 229;
+            inv_image(ci) = 505;
             reftype = 10000;
             reftypeminor = 10006;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46440,7 +46440,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 3)
+                if (cdata_god(0) == 3)
                 {
                     return 1;
                 }
@@ -46475,25 +46475,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 4;
-            inv(13, ci) = 1;
-            inv(12, ci) = 3;
-            inv(14, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1800;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 4;
+            inv_hit_bonus(ci) = 1;
+            inv_damage_bonus(ci) = 3;
+            inv_dv(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 104;
-            inv(3, ci) = 228;
-            inv(2, ci) = 494;
+            inv_skill(ci) = 104;
+            inv_id(ci) = 228;
+            inv_image(ci) = 494;
             reftype = 10000;
             reftypeminor = 10007;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46558,24 +46558,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 13;
-            inv(13, ci) = -3;
-            inv(12, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 4200;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 13;
+            inv_hit_bonus(ci) = -3;
+            inv_damage_bonus(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 4200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 103;
-            inv(3, ci) = 227;
-            inv(2, ci) = 504;
+            inv_skill(ci) = 103;
+            inv_id(ci) = 227;
+            inv_image(ci) = 504;
             reftype = 10000;
             reftypeminor = 10005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46641,24 +46641,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 18;
-            inv(13, ci) = -1;
-            inv(12, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 3700;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 18;
+            inv_hit_bonus(ci) = -1;
+            inv_damage_bonus(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 3700;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 102;
-            inv(3, ci) = 226;
-            inv(2, ci) = 500;
+            inv_skill(ci) = 102;
+            inv_id(ci) = 226;
+            inv_image(ci) = 500;
             reftype = 10000;
             reftypeminor = 10010;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46723,25 +46723,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 4;
-            inv(13, ci) = 7;
-            inv(12, ci) = 3;
-            inv(14, ci) = 2;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 900;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 4;
+            inv_hit_bonus(ci) = 7;
+            inv_damage_bonus(ci) = 3;
+            inv_dv(ci) = 2;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 101;
-            inv(3, ci) = 225;
-            inv(2, ci) = 502;
+            inv_skill(ci) = 101;
+            inv_id(ci) = 225;
+            inv_image(ci) = 502;
             reftype = 10000;
             reftypeminor = 10003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46806,23 +46806,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 4;
-            inv(12, ci) = 6;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1200;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 4;
+            inv_damage_bonus(ci) = 6;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 224;
-            inv(2, ci) = 431;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 224;
+            inv_image(ci) = 431;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46888,20 +46888,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 223;
-            inv(2, ci) = 198;
+            inv_id(ci) = 223;
+            inv_image(ci) = 198;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 60;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 60;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -46966,18 +46966,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8;
-            inv(7, ci) = 40;
+            inv_value(ci) = 8;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 222;
-            inv(2, ci) = 199;
+            inv_id(ci) = 222;
+            inv_image(ci) = 199;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47042,18 +47042,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7;
-            inv(7, ci) = 70;
+            inv_value(ci) = 7;
+            inv_weight(ci) = 70;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 221;
-            inv(2, ci) = 200;
+            inv_id(ci) = 221;
+            inv_image(ci) = 200;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47119,18 +47119,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4;
-            inv(7, ci) = 50;
+            inv_value(ci) = 4;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 220;
-            inv(2, ci) = 201;
+            inv_id(ci) = 220;
+            inv_image(ci) = 201;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47196,19 +47196,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 180;
-            inv(7, ci) = 340;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 340;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 219;
-            inv(2, ci) = 202;
+            inv_id(ci) = 219;
+            inv_image(ci) = 202;
             reftype = 59000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 46;
-            inv(29, ci) = 0;
+            inv_function(ci) = 46;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47275,18 +47275,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 30;
-            inv(7, ci) = 80;
+            inv_value(ci) = 30;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 218;
-            inv(2, ci) = 203;
+            inv_id(ci) = 218;
+            inv_image(ci) = 203;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47351,18 +47351,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 25;
-            inv(7, ci) = 90;
+            inv_value(ci) = 25;
+            inv_weight(ci) = 90;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 217;
-            inv(2, ci) = 206;
+            inv_id(ci) = 217;
+            inv_image(ci) = 206;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47427,18 +47427,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40;
-            inv(7, ci) = 80;
+            inv_value(ci) = 40;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 216;
-            inv(2, ci) = 207;
+            inv_id(ci) = 216;
+            inv_image(ci) = 207;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47503,18 +47503,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 220;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 220;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 215;
-            inv(2, ci) = 208;
+            inv_id(ci) = 215;
+            inv_image(ci) = 208;
             reftype = 64000;
             reftypeminor = 64100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47579,18 +47579,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 180;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 214;
-            inv(2, ci) = 209;
+            inv_id(ci) = 214;
+            inv_image(ci) = 209;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47655,25 +47655,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 5;
-            inv(13, ci) = 2;
-            inv(12, ci) = 4;
-            inv(14, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 2500;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 4;
+            inv_dv(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 2500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 104;
-            inv(3, ci) = 213;
-            inv(2, ci) = 401;
+            inv_skill(ci) = 104;
+            inv_id(ci) = 213;
+            inv_image(ci) = 401;
             reftype = 10000;
             reftypeminor = 10007;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47738,25 +47738,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 8;
-            inv(13, ci) = 4;
-            inv(12, ci) = 3;
-            inv(14, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 900;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 3;
+            inv_dv(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 105;
-            inv(3, ci) = 212;
-            inv(2, ci) = 425;
+            inv_skill(ci) = 105;
+            inv_id(ci) = 212;
+            inv_image(ci) = 425;
             reftype = 10000;
             reftypeminor = 10006;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47798,7 +47798,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 3)
+                if (cdata_god(0) == 3)
                 {
                     return 1;
                 }
@@ -47832,26 +47832,26 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 5;
-            inv(13, ci) = 2;
-            inv(12, ci) = 10;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1400;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 10;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 107;
-            inv(3, ci) = 211;
-            inv(2, ci) = 421;
+            inv_skill(ci) = 107;
+            inv_id(ci) = 211;
+            inv_image(ci) = 421;
             reftype = 10000;
             reftypeminor = 10011;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80025;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47916,22 +47916,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 12;
-            inv(24, ci) = 10;
-            inv(1, ci) = 180;
-            inv(7, ci) = 2000;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 12;
+            inv_material(ci) = 10;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 111;
-            inv(3, ci) = 210;
-            inv(2, ci) = 424;
+            inv_skill(ci) = 111;
+            inv_id(ci) = 210;
+            inv_image(ci) = 424;
             reftype = 24000;
             reftypeminor = 24030;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -47997,18 +47997,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1050;
-            inv(7, ci) = 20;
+            inv_value(ci) = 1050;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 209;
-            inv(2, ci) = 470;
+            inv_id(ci) = 209;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48084,18 +48084,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 1;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 1;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 208;
-            inv(2, ci) = 33;
+            inv_id(ci) = 208;
+            inv_image(ci) = 33;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48160,22 +48160,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 15;
-            inv(13, ci) = 5;
-            inv(12, ci) = 7;
-            inv(24, ci) = 7;
-            inv(1, ci) = 60000;
-            inv(7, ci) = 1200;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 15;
+            inv_hit_bonus(ci) = 5;
+            inv_damage_bonus(ci) = 7;
+            inv_material(ci) = 7;
+            inv_value(ci) = 60000;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 108;
-            inv(3, ci) = 207;
-            inv(2, ci) = 404;
+            inv_skill(ci) = 108;
+            inv_id(ci) = 207;
+            inv_image(ci) = 404;
             reftype = 24000;
             reftypeminor = 24001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80001;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 60012;
@@ -48190,7 +48190,7 @@ int label_1275()
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -48256,24 +48256,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 5;
-            inv(11, ci) = 5;
-            inv(13, ci) = 16;
-            inv(12, ci) = 8;
-            inv(14, ci) = 4;
-            inv(15, ci) = 6;
-            inv(24, ci) = 8;
-            inv(1, ci) = 60000;
-            inv(7, ci) = 600;
+            inv_dice_x(ci) = 5;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 16;
+            inv_damage_bonus(ci) = 8;
+            inv_dv(ci) = 4;
+            inv_pv(ci) = 6;
+            inv_material(ci) = 8;
+            inv_value(ci) = 60000;
+            inv_weight(ci) = 600;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 101;
-            inv(3, ci) = 206;
-            inv(2, ci) = 400;
+            inv_skill(ci) = 101;
+            inv_id(ci) = 206;
+            inv_image(ci) = 400;
             reftype = 10000;
             reftypeminor = 10003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 80000;
             fixeditemenc(1) = 200;
             fixeditemenc(2) = 70052;
@@ -48284,7 +48284,7 @@ int label_1275()
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -48351,18 +48351,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 180;
-            inv(7, ci) = 50;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 205;
-            inv(2, ci) = 210;
+            inv_id(ci) = 205;
+            inv_image(ci) = 210;
             reftype = 52000;
             reftypeminor = 52002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48438,21 +48438,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 80;
-            inv(7, ci) = 2000;
+            inv_material(ci) = 35;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 2000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 204;
-            inv(2, ci) = 196;
+            inv_id(ci) = 204;
+            inv_image(ci) = 196;
             reftype = 57000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1000;
-            inv(27, ci) = 4;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1000;
+            inv_param3(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48521,19 +48521,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2600;
-            inv(7, ci) = 800;
+            inv_value(ci) = 2600;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 203;
-            inv(2, ci) = 471;
+            inv_id(ci) = 203;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -48609,19 +48609,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3250;
-            inv(7, ci) = 800;
+            inv_value(ci) = 3250;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 202;
-            inv(2, ci) = 471;
+            inv_id(ci) = 202;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 9 + rnd(9) - rnd(9);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 9 + rnd(9) - rnd(9);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -48697,21 +48697,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 70;
-            inv(7, ci) = 550;
+            inv_material(ci) = 35;
+            inv_value(ci) = 70;
+            inv_weight(ci) = 550;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 201;
-            inv(2, ci) = 193;
+            inv_id(ci) = 201;
+            inv_image(ci) = 193;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 2;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 2;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48753,7 +48753,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -48787,21 +48787,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 30;
-            inv(7, ci) = 840;
+            inv_material(ci) = 35;
+            inv_value(ci) = 30;
+            inv_weight(ci) = 840;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 200;
-            inv(2, ci) = 192;
+            inv_id(ci) = 200;
+            inv_image(ci) = 192;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48843,7 +48843,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -48877,21 +48877,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 80;
-            inv(7, ci) = 970;
+            inv_material(ci) = 35;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 970;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 199;
-            inv(2, ci) = 191;
+            inv_id(ci) = 199;
+            inv_image(ci) = 191;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -48933,7 +48933,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -48967,21 +48967,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 260;
-            inv(7, ci) = 360;
+            inv_material(ci) = 35;
+            inv_value(ci) = 260;
+            inv_weight(ci) = 360;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 198;
-            inv(2, ci) = 164;
+            inv_id(ci) = 198;
+            inv_image(ci) = 164;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49023,7 +49023,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49057,21 +49057,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 240;
-            inv(7, ci) = 440;
+            inv_material(ci) = 35;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 440;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 197;
-            inv(2, ci) = 189;
+            inv_id(ci) = 197;
+            inv_image(ci) = 189;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 12;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 12;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49136,21 +49136,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 130;
-            inv(7, ci) = 880;
+            inv_material(ci) = 35;
+            inv_value(ci) = 130;
+            inv_weight(ci) = 880;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 196;
-            inv(2, ci) = 188;
+            inv_id(ci) = 196;
+            inv_image(ci) = 188;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 8;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49215,21 +49215,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 100;
-            inv(7, ci) = 560;
+            inv_material(ci) = 35;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 560;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 195;
-            inv(2, ci) = 187;
+            inv_id(ci) = 195;
+            inv_image(ci) = 187;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 12;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 12;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49294,21 +49294,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 220;
-            inv(7, ci) = 1070;
+            inv_material(ci) = 35;
+            inv_value(ci) = 220;
+            inv_weight(ci) = 1070;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 194;
-            inv(2, ci) = 186;
+            inv_id(ci) = 194;
+            inv_image(ci) = 186;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 8;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49373,19 +49373,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240;
-            inv(7, ci) = 90;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 90;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 193;
-            inv(2, ci) = 185;
+            inv_id(ci) = 193;
+            inv_image(ci) = 185;
             reftype = 57000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49427,7 +49427,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49461,21 +49461,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 260;
-            inv(7, ci) = 720;
+            inv_material(ci) = 35;
+            inv_value(ci) = 260;
+            inv_weight(ci) = 720;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 192;
-            inv(2, ci) = 184;
+            inv_id(ci) = 192;
+            inv_image(ci) = 184;
             reftype = 57000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 16;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 16;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49540,19 +49540,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 80;
-            inv(7, ci) = 40;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 40;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 191;
-            inv(2, ci) = 183;
+            inv_id(ci) = 191;
+            inv_image(ci) = 183;
             reftype = 57000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 4000;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 4000;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49617,19 +49617,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 70;
-            inv(7, ci) = 650;
+            inv_value(ci) = 70;
+            inv_weight(ci) = 650;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 190;
-            inv(2, ci) = 182;
+            inv_id(ci) = 190;
+            inv_image(ci) = 182;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49671,7 +49671,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49705,18 +49705,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 450;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 189;
-            inv(2, ci) = 181;
+            inv_id(ci) = 189;
+            inv_image(ci) = 181;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49781,21 +49781,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 50;
-            inv(7, ci) = 650;
+            inv_material(ci) = 35;
+            inv_value(ci) = 50;
+            inv_weight(ci) = 650;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 188;
-            inv(2, ci) = 180;
+            inv_id(ci) = 188;
+            inv_image(ci) = 180;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49837,7 +49837,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49871,19 +49871,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40;
-            inv(7, ci) = 790;
+            inv_value(ci) = 40;
+            inv_weight(ci) = 790;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 187;
-            inv(2, ci) = 179;
+            inv_id(ci) = 187;
+            inv_image(ci) = 179;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -49925,7 +49925,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -49959,21 +49959,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 50;
-            inv(7, ci) = 950;
+            inv_material(ci) = 35;
+            inv_value(ci) = 50;
+            inv_weight(ci) = 950;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 186;
-            inv(2, ci) = 178;
+            inv_id(ci) = 186;
+            inv_image(ci) = 178;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50015,7 +50015,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -50049,21 +50049,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 40;
-            inv(7, ci) = 420;
+            inv_material(ci) = 35;
+            inv_value(ci) = 40;
+            inv_weight(ci) = 420;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 185;
-            inv(2, ci) = 177;
+            inv_id(ci) = 185;
+            inv_image(ci) = 177;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50105,7 +50105,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -50139,21 +50139,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 80;
-            inv(7, ci) = 620;
+            inv_material(ci) = 35;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 620;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 184;
-            inv(2, ci) = 176;
+            inv_id(ci) = 184;
+            inv_image(ci) = 176;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 8;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 8;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50218,21 +50218,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 170;
-            inv(7, ci) = 220;
+            inv_material(ci) = 35;
+            inv_value(ci) = 170;
+            inv_weight(ci) = 220;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 183;
-            inv(2, ci) = 175;
+            inv_id(ci) = 183;
+            inv_image(ci) = 175;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 16;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 16;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50297,21 +50297,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 190;
-            inv(7, ci) = 440;
+            inv_material(ci) = 35;
+            inv_value(ci) = 190;
+            inv_weight(ci) = 440;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 182;
-            inv(2, ci) = 174;
+            inv_id(ci) = 182;
+            inv_image(ci) = 174;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 12;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 12;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50376,21 +50376,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 220;
-            inv(7, ci) = 510;
+            inv_material(ci) = 35;
+            inv_value(ci) = 220;
+            inv_weight(ci) = 510;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 181;
-            inv(2, ci) = 173;
+            inv_id(ci) = 181;
+            inv_image(ci) = 173;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 16;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 16;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50455,21 +50455,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 180;
-            inv(7, ci) = 720;
+            inv_material(ci) = 35;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 720;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 180;
-            inv(2, ci) = 172;
+            inv_id(ci) = 180;
+            inv_image(ci) = 172;
             reftype = 57000;
             reftypeminor = 57004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 16;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 16;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50534,21 +50534,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 60;
-            inv(7, ci) = 100;
+            inv_material(ci) = 35;
+            inv_value(ci) = 60;
+            inv_weight(ci) = 100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 179;
-            inv(2, ci) = 171;
+            inv_id(ci) = 179;
+            inv_image(ci) = 171;
             reftype = 57000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2000;
-            inv(27, ci) = 48;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2000;
+            inv_param3(ci) = 48;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50590,7 +50590,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 7)
+                if (cdata_god(0) == 7)
                 {
                     return 1;
                 }
@@ -50624,21 +50624,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 70;
-            inv(7, ci) = 170;
+            inv_material(ci) = 35;
+            inv_value(ci) = 70;
+            inv_weight(ci) = 170;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 178;
-            inv(2, ci) = 170;
+            inv_id(ci) = 178;
+            inv_image(ci) = 170;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50703,21 +50703,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 35;
-            inv(1, ci) = 80;
-            inv(7, ci) = 160;
+            inv_material(ci) = 35;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 160;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 177;
-            inv(2, ci) = 169;
+            inv_id(ci) = 177;
+            inv_image(ci) = 169;
             reftype = 57000;
             reftypeminor = 57003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 3000;
-            inv(27, ci) = 72;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 3000;
+            inv_param3(ci) = 72;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -50782,19 +50782,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 176;
-            inv(2, ci) = 471;
+            inv_id(ci) = 176;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -50870,19 +50870,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1900;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1900;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 175;
-            inv(2, ci) = 471;
+            inv_id(ci) = 175;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 10 + rnd(10) - rnd(10);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -50958,19 +50958,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2200;
-            inv(7, ci) = 12400;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 12400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 174;
-            inv(2, ci) = 166;
+            inv_id(ci) = 174;
+            inv_image(ci) = 166;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 110;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 110;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51039,19 +51039,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 600000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 600000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 173;
-            inv(2, ci) = 355;
+            inv_id(ci) = 173;
+            inv_image(ci) = 355;
             reftype = 60001;
             reftypeminor = 60001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 100;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51125,18 +51125,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1600;
-            inv(7, ci) = 500000;
+            inv_value(ci) = 1600;
+            inv_weight(ci) = 500000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 172;
-            inv(2, ci) = 163;
+            inv_id(ci) = 172;
+            inv_image(ci) = 163;
             reftype = 60002;
             reftypeminor = 60002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51202,18 +51202,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 500000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 500000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 171;
-            inv(2, ci) = 163;
+            inv_id(ci) = 171;
+            inv_image(ci) = 163;
             reftype = 60002;
             reftypeminor = 60002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51278,18 +51278,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 650000;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 650000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 170;
-            inv(2, ci) = 162;
+            inv_id(ci) = 170;
+            inv_image(ci) = 162;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51354,18 +51354,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6500;
-            inv(7, ci) = 650000;
+            inv_value(ci) = 6500;
+            inv_weight(ci) = 650000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 169;
-            inv(2, ci) = 161;
+            inv_id(ci) = 169;
+            inv_image(ci) = 161;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51430,18 +51430,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 650000;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 650000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 168;
-            inv(2, ci) = 160;
+            inv_id(ci) = 168;
+            inv_image(ci) = 160;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51506,18 +51506,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2500;
-            inv(7, ci) = 650000;
+            inv_value(ci) = 2500;
+            inv_weight(ci) = 650000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 167;
-            inv(2, ci) = 159;
+            inv_id(ci) = 167;
+            inv_image(ci) = 159;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51583,18 +51583,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3250;
-            inv(7, ci) = 650000;
+            inv_value(ci) = 3250;
+            inv_weight(ci) = 650000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 166;
-            inv(2, ci) = 158;
+            inv_id(ci) = 166;
+            inv_image(ci) = 158;
             reftype = 60000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51660,18 +51660,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1700;
-            inv(7, ci) = 400000;
+            inv_value(ci) = 1700;
+            inv_weight(ci) = 400000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 165;
-            inv(2, ci) = 157;
+            inv_id(ci) = 165;
+            inv_image(ci) = 157;
             reftype = 60000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51737,18 +51737,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 400000;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 400000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 164;
-            inv(2, ci) = 156;
+            inv_id(ci) = 164;
+            inv_image(ci) = 156;
             reftype = 60000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51814,18 +51814,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 340;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 340;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 163;
-            inv(2, ci) = 155;
+            inv_id(ci) = 163;
+            inv_image(ci) = 155;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51890,18 +51890,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 430;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 430;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 162;
-            inv(2, ci) = 154;
+            inv_id(ci) = 162;
+            inv_image(ci) = 154;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -51966,19 +51966,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1250;
-            inv(7, ci) = 500;
+            inv_value(ci) = 1250;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 161;
-            inv(2, ci) = 153;
+            inv_id(ci) = 161;
+            inv_image(ci) = 153;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 1;
-            inv(29, ci) = 0;
+            inv_function(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52047,19 +52047,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 780;
-            inv(7, ci) = 500;
+            inv_value(ci) = 780;
+            inv_weight(ci) = 500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 160;
-            inv(2, ci) = 152;
+            inv_id(ci) = 160;
+            inv_image(ci) = 152;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 4;
-            inv(29, ci) = 0;
+            inv_function(ci) = 4;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52129,18 +52129,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 11000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 11000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 159;
-            inv(2, ci) = 151;
+            inv_id(ci) = 159;
+            inv_image(ci) = 151;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52205,18 +52205,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 860;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 860;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 158;
-            inv(2, ci) = 150;
+            inv_id(ci) = 158;
+            inv_image(ci) = 150;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52281,18 +52281,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 8600;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 8600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 157;
-            inv(2, ci) = 149;
+            inv_id(ci) = 157;
+            inv_image(ci) = 149;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52357,18 +52357,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 9700;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 9700;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 156;
-            inv(2, ci) = 148;
+            inv_id(ci) = 156;
+            inv_image(ci) = 148;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52433,20 +52433,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 155;
-            inv(2, ci) = 147;
+            inv_id(ci) = 155;
+            inv_image(ci) = 147;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 100;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52511,20 +52511,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1100;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 1100;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 154;
-            inv(2, ci) = 146;
+            inv_id(ci) = 154;
+            inv_image(ci) = 146;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 100;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52589,20 +52589,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 153;
-            inv(2, ci) = 145;
+            inv_id(ci) = 153;
+            inv_image(ci) = 145;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 100;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52667,18 +52667,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 350;
-            inv(7, ci) = 320;
+            inv_value(ci) = 350;
+            inv_weight(ci) = 320;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 152;
-            inv(2, ci) = 144;
+            inv_id(ci) = 152;
+            inv_image(ci) = 144;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52743,18 +52743,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 8600;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 8600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 151;
-            inv(2, ci) = 143;
+            inv_id(ci) = 151;
+            inv_image(ci) = 143;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52819,18 +52819,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4500;
-            inv(7, ci) = 8700;
+            inv_value(ci) = 4500;
+            inv_weight(ci) = 8700;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 150;
-            inv(2, ci) = 142;
+            inv_id(ci) = 150;
+            inv_image(ci) = 142;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52895,18 +52895,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 320;
-            inv(7, ci) = 940;
+            inv_value(ci) = 320;
+            inv_weight(ci) = 940;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 149;
-            inv(2, ci) = 141;
+            inv_id(ci) = 149;
+            inv_image(ci) = 141;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -52971,18 +52971,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240;
-            inv(7, ci) = 830;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 830;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 148;
-            inv(2, ci) = 140;
+            inv_id(ci) = 148;
+            inv_image(ci) = 140;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53047,18 +53047,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3600;
-            inv(7, ci) = 7500;
+            inv_value(ci) = 3600;
+            inv_weight(ci) = 7500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 147;
-            inv(2, ci) = 139;
+            inv_id(ci) = 147;
+            inv_image(ci) = 139;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53123,18 +53123,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1900;
-            inv(7, ci) = 4400;
+            inv_value(ci) = 1900;
+            inv_weight(ci) = 4400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 146;
-            inv(2, ci) = 138;
+            inv_id(ci) = 146;
+            inv_image(ci) = 138;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53200,18 +53200,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 860;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 860;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 145;
-            inv(2, ci) = 137;
+            inv_id(ci) = 145;
+            inv_image(ci) = 137;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53277,18 +53277,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 940;
-            inv(7, ci) = 2400;
+            inv_value(ci) = 940;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 144;
-            inv(2, ci) = 136;
+            inv_id(ci) = 144;
+            inv_image(ci) = 136;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53353,18 +53353,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240;
-            inv(7, ci) = 1500;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 143;
-            inv(2, ci) = 135;
+            inv_id(ci) = 143;
+            inv_image(ci) = 135;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53429,20 +53429,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7800;
-            inv(7, ci) = 17400;
+            inv_value(ci) = 7800;
+            inv_weight(ci) = 17400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 142;
-            inv(2, ci) = 523;
+            inv_id(ci) = 142;
+            inv_image(ci) = 523;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 200;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 200;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53507,18 +53507,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 450;
-            inv(7, ci) = 240;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 240;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 141;
-            inv(2, ci) = 133;
+            inv_id(ci) = 141;
+            inv_image(ci) = 133;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53583,18 +53583,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 830;
-            inv(7, ci) = 1100;
+            inv_value(ci) = 830;
+            inv_weight(ci) = 1100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 140;
-            inv(2, ci) = 132;
+            inv_id(ci) = 140;
+            inv_image(ci) = 132;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53659,18 +53659,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3900;
-            inv(7, ci) = 32000;
+            inv_value(ci) = 3900;
+            inv_weight(ci) = 32000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 139;
-            inv(2, ci) = 526;
+            inv_id(ci) = 139;
+            inv_image(ci) = 526;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53736,18 +53736,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3400;
-            inv(7, ci) = 32000;
+            inv_value(ci) = 3400;
+            inv_weight(ci) = 32000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 138;
-            inv(2, ci) = 525;
+            inv_id(ci) = 138;
+            inv_image(ci) = 525;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53813,18 +53813,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 780;
-            inv(7, ci) = 250;
+            inv_value(ci) = 780;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 137;
-            inv(2, ci) = 129;
+            inv_id(ci) = 137;
+            inv_image(ci) = 129;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53890,18 +53890,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 240;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 240;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 136;
-            inv(2, ci) = 128;
+            inv_id(ci) = 136;
+            inv_image(ci) = 128;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -53967,18 +53967,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 920;
-            inv(7, ci) = 300;
+            inv_value(ci) = 920;
+            inv_weight(ci) = 300;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 135;
-            inv(2, ci) = 127;
+            inv_id(ci) = 135;
+            inv_image(ci) = 127;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54044,18 +54044,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 880;
-            inv(7, ci) = 400;
+            inv_value(ci) = 880;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 134;
-            inv(2, ci) = 126;
+            inv_id(ci) = 134;
+            inv_image(ci) = 126;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54120,18 +54120,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = 350;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 350;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 133;
-            inv(2, ci) = 125;
+            inv_id(ci) = 133;
+            inv_image(ci) = 125;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54196,18 +54196,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 650;
-            inv(7, ci) = 320;
+            inv_value(ci) = 650;
+            inv_weight(ci) = 320;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 132;
-            inv(2, ci) = 124;
+            inv_id(ci) = 132;
+            inv_image(ci) = 124;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54272,18 +54272,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 131;
-            inv(2, ci) = 123;
+            inv_id(ci) = 131;
+            inv_image(ci) = 123;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54348,18 +54348,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1050;
-            inv(7, ci) = 400;
+            inv_value(ci) = 1050;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 130;
-            inv(2, ci) = 122;
+            inv_id(ci) = 130;
+            inv_image(ci) = 122;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54424,18 +54424,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 850;
-            inv(7, ci) = 420;
+            inv_value(ci) = 850;
+            inv_weight(ci) = 420;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 129;
-            inv(2, ci) = 121;
+            inv_id(ci) = 129;
+            inv_image(ci) = 121;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54500,18 +54500,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 1840;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 1840;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 128;
-            inv(2, ci) = 120;
+            inv_id(ci) = 128;
+            inv_image(ci) = 120;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54577,19 +54577,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1960;
-            inv(7, ci) = 900;
+            inv_value(ci) = 1960;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 127;
-            inv(2, ci) = 119;
+            inv_id(ci) = 127;
+            inv_image(ci) = 119;
             reftype = 59000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 2;
-            inv(29, ci) = 0;
+            inv_function(ci) = 2;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54659,18 +54659,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 80;
-            inv(7, ci) = 210;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 210;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 126;
-            inv(2, ci) = 118;
+            inv_id(ci) = 126;
+            inv_image(ci) = 118;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54735,19 +54735,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4800;
-            inv(7, ci) = 800;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 125;
-            inv(2, ci) = 471;
+            inv_id(ci) = 125;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -54823,18 +54823,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 7800;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 7800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 124;
-            inv(2, ci) = 116;
+            inv_id(ci) = 124;
+            inv_image(ci) = 116;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -54899,19 +54899,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1600;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1600;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 123;
-            inv(2, ci) = 471;
+            inv_id(ci) = 123;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 10 + rnd(10) - rnd(10);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -54987,19 +54987,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1460;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1460;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 122;
-            inv(2, ci) = 471;
+            inv_id(ci) = 122;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -55075,19 +55075,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 700;
-            inv(7, ci) = 800;
+            inv_value(ci) = 700;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 121;
-            inv(2, ci) = 471;
+            inv_id(ci) = 121;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -55163,19 +55163,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 800;
-            inv(7, ci) = 800;
+            inv_value(ci) = 800;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 120;
-            inv(2, ci) = 471;
+            inv_id(ci) = 120;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 10 + rnd(10) - rnd(10);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -55251,19 +55251,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 650;
-            inv(7, ci) = 800;
+            inv_value(ci) = 650;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 119;
-            inv(2, ci) = 471;
+            inv_id(ci) = 119;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -55339,19 +55339,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6000;
-            inv(7, ci) = 380;
+            inv_value(ci) = 6000;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 118;
-            inv(2, ci) = 429;
+            inv_id(ci) = 118;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -55428,18 +55428,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 20;
-            inv(7, ci) = 80;
+            inv_value(ci) = 20;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 117;
-            inv(2, ci) = 109;
+            inv_id(ci) = 117;
+            inv_image(ci) = 109;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -55504,19 +55504,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 116;
-            inv(2, ci) = 429;
+            inv_id(ci) = 116;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -55594,18 +55594,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240;
-            inv(7, ci) = 9500;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 9500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 115;
-            inv(2, ci) = 381;
+            inv_id(ci) = 115;
+            inv_image(ci) = 381;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -55670,18 +55670,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 3500;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 3500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 114;
-            inv(2, ci) = 106;
+            inv_id(ci) = 114;
+            inv_image(ci) = 106;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -55746,18 +55746,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 3200;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 3200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 113;
-            inv(2, ci) = 105;
+            inv_id(ci) = 113;
+            inv_image(ci) = 105;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -55822,20 +55822,20 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8500;
-            inv(7, ci) = 14000;
+            inv_value(ci) = 8500;
+            inv_weight(ci) = 14000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 112;
-            inv(2, ci) = 104;
+            inv_id(ci) = 112;
+            inv_image(ci) = 104;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 15;
-            inv(25, ci) = 150;
-            inv(29, ci) = 0;
+            inv_function(ci) = 15;
+            inv_param1(ci) = 150;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -55900,18 +55900,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4400;
-            inv(7, ci) = 45800;
+            inv_value(ci) = 4400;
+            inv_weight(ci) = 45800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 111;
-            inv(2, ci) = 103;
+            inv_id(ci) = 111;
+            inv_image(ci) = 103;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -55976,18 +55976,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 950;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 950;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 110;
-            inv(2, ci) = 102;
+            inv_id(ci) = 110;
+            inv_image(ci) = 102;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56052,19 +56052,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 350000;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 350000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 109;
-            inv(2, ci) = 101;
+            inv_id(ci) = 109;
+            inv_image(ci) = 101;
             reftype = 60001;
             reftypeminor = 60001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(26, ci) = 100;
-            inv(29, ci) = 0;
+            inv_param2(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56138,18 +56138,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1300;
-            inv(7, ci) = 820;
+            inv_value(ci) = 1300;
+            inv_weight(ci) = 820;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 108;
-            inv(2, ci) = 100;
+            inv_id(ci) = 108;
+            inv_image(ci) = 100;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56214,18 +56214,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1050;
-            inv(7, ci) = 750;
+            inv_value(ci) = 1050;
+            inv_weight(ci) = 750;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 107;
-            inv(2, ci) = 99;
+            inv_id(ci) = 107;
+            inv_image(ci) = 99;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56290,18 +56290,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1500;
-            inv(7, ci) = 6800;
+            inv_value(ci) = 1500;
+            inv_weight(ci) = 6800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 106;
-            inv(2, ci) = 98;
+            inv_id(ci) = 106;
+            inv_image(ci) = 98;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56366,18 +56366,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 7600;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 7600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 105;
-            inv(2, ci) = 97;
+            inv_id(ci) = 105;
+            inv_image(ci) = 97;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56442,18 +56442,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = 8200;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 8200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 104;
-            inv(2, ci) = 96;
+            inv_id(ci) = 104;
+            inv_image(ci) = 96;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56518,18 +56518,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 7300;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 7300;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 103;
-            inv(2, ci) = 95;
+            inv_id(ci) = 103;
+            inv_image(ci) = 95;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56594,19 +56594,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 6800;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 6800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 102;
-            inv(2, ci) = 94;
+            inv_id(ci) = 102;
+            inv_image(ci) = 94;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56671,19 +56671,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 360;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 360;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 101;
-            inv(2, ci) = 93;
+            inv_id(ci) = 101;
+            inv_image(ci) = 93;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56748,18 +56748,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 80;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 100;
-            inv(2, ci) = 580;
+            inv_id(ci) = 100;
+            inv_image(ci) = 580;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56824,18 +56824,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1050;
-            inv(7, ci) = 4200;
+            inv_value(ci) = 1050;
+            inv_weight(ci) = 4200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 99;
-            inv(2, ci) = 91;
+            inv_id(ci) = 99;
+            inv_image(ci) = 91;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56901,18 +56901,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 540;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 540;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 98;
-            inv(2, ci) = 90;
+            inv_id(ci) = 98;
+            inv_image(ci) = 90;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -56977,18 +56977,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 140;
-            inv(7, ci) = 420;
+            inv_value(ci) = 140;
+            inv_weight(ci) = 420;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 97;
-            inv(2, ci) = 89;
+            inv_id(ci) = 97;
+            inv_image(ci) = 89;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57053,18 +57053,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 9500;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 9500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 96;
-            inv(2, ci) = 88;
+            inv_id(ci) = 96;
+            inv_image(ci) = 88;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57129,18 +57129,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4200;
-            inv(7, ci) = 3800;
+            inv_value(ci) = 4200;
+            inv_weight(ci) = 3800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 95;
-            inv(2, ci) = 87;
+            inv_id(ci) = 95;
+            inv_image(ci) = 87;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57205,18 +57205,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 400;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 94;
-            inv(2, ci) = 86;
+            inv_id(ci) = 94;
+            inv_image(ci) = 86;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57281,18 +57281,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 160;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 160;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 93;
-            inv(2, ci) = 85;
+            inv_id(ci) = 93;
+            inv_image(ci) = 85;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57357,19 +57357,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 750;
-            inv(7, ci) = 1100;
+            inv_value(ci) = 750;
+            inv_weight(ci) = 1100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 92;
-            inv(2, ci) = 84;
+            inv_id(ci) = 92;
+            inv_image(ci) = 84;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57434,18 +57434,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 180;
-            inv(7, ci) = 3400;
+            inv_value(ci) = 180;
+            inv_weight(ci) = 3400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 91;
-            inv(2, ci) = 72;
+            inv_id(ci) = 91;
+            inv_image(ci) = 72;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57510,18 +57510,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 7900;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 7900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 90;
-            inv(2, ci) = 80;
+            inv_id(ci) = 90;
+            inv_image(ci) = 80;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57586,18 +57586,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1200;
-            inv(7, ci) = 7900;
+            inv_value(ci) = 1200;
+            inv_weight(ci) = 7900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 89;
-            inv(2, ci) = 78;
+            inv_id(ci) = 89;
+            inv_image(ci) = 78;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57662,21 +57662,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 45000;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 45000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 183;
-            inv(3, ci) = 88;
-            inv(2, ci) = 76;
+            inv_skill(ci) = 183;
+            inv_id(ci) = 88;
+            inv_image(ci) = 76;
             reftype = 60000;
             reftypeminor = 60005;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 17;
-            inv(25, ci) = 200;
-            inv(29, ci) = 0;
+            inv_function(ci) = 17;
+            inv_param1(ci) = 200;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57741,18 +57741,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 720;
-            inv(7, ci) = 750;
+            inv_value(ci) = 720;
+            inv_weight(ci) = 750;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 87;
-            inv(2, ci) = 75;
+            inv_id(ci) = 87;
+            inv_image(ci) = 75;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57817,18 +57817,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 450;
-            inv(7, ci) = 800;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 86;
-            inv(2, ci) = 74;
+            inv_id(ci) = 86;
+            inv_image(ci) = 74;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57893,18 +57893,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1600;
-            inv(7, ci) = 8400;
+            inv_value(ci) = 1600;
+            inv_weight(ci) = 8400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 85;
-            inv(2, ci) = 73;
+            inv_id(ci) = 85;
+            inv_image(ci) = 73;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -57969,18 +57969,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 7000;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 7000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 84;
-            inv(2, ci) = 70;
+            inv_id(ci) = 84;
+            inv_image(ci) = 70;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58045,18 +58045,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2400;
-            inv(7, ci) = 6800;
+            inv_value(ci) = 2400;
+            inv_weight(ci) = 6800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 83;
-            inv(2, ci) = 69;
+            inv_id(ci) = 83;
+            inv_image(ci) = 69;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58121,18 +58121,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 320;
-            inv(7, ci) = 320;
+            inv_value(ci) = 320;
+            inv_weight(ci) = 320;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 82;
-            inv(2, ci) = 68;
+            inv_id(ci) = 82;
+            inv_image(ci) = 68;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58197,19 +58197,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 240;
-            inv(7, ci) = 350;
+            inv_value(ci) = 240;
+            inv_weight(ci) = 350;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 81;
-            inv(2, ci) = 67;
+            inv_id(ci) = 81;
+            inv_image(ci) = 67;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58274,19 +58274,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 15000;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 15000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 80;
-            inv(2, ci) = 66;
+            inv_id(ci) = 80;
+            inv_image(ci) = 66;
             reftype = 60000;
             reftypeminor = 60004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 100;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 100;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58355,18 +58355,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6400;
-            inv(7, ci) = 8900;
+            inv_value(ci) = 6400;
+            inv_weight(ci) = 8900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 79;
-            inv(2, ci) = 234;
+            inv_id(ci) = 79;
+            inv_image(ci) = 234;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58431,18 +58431,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1800;
-            inv(7, ci) = 10200;
+            inv_value(ci) = 1800;
+            inv_weight(ci) = 10200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 78;
-            inv(2, ci) = 235;
+            inv_id(ci) = 78;
+            inv_image(ci) = 235;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58508,19 +58508,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 80;
-            inv(7, ci) = 900;
+            inv_value(ci) = 80;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 77;
-            inv(2, ci) = 237;
+            inv_id(ci) = 77;
+            inv_image(ci) = 237;
             reftype = 60000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(19, ci) = 44;
-            inv(29, ci) = 0;
+            inv_function(ci) = 44;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58585,18 +58585,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 15000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 15000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 76;
-            inv(2, ci) = 354;
+            inv_id(ci) = 76;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58673,18 +58673,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 10000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 75;
-            inv(2, ci) = 354;
+            inv_id(ci) = 75;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58761,18 +58761,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 7500;
-            inv(7, ci) = 120;
+            inv_value(ci) = 7500;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 74;
-            inv(2, ci) = 354;
+            inv_id(ci) = 74;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -58850,29 +58850,29 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 18;
-            inv(13, ci) = 4;
-            inv(12, ci) = 3;
-            inv(14, ci) = -1;
-            inv(15, ci) = 1;
-            inv(24, ci) = 20;
-            inv(1, ci) = 20000;
-            inv(7, ci) = 4200;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 18;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 3;
+            inv_dv(ci) = -1;
+            inv_pv(ci) = 1;
+            inv_material(ci) = 20;
+            inv_value(ci) = 20000;
+            inv_weight(ci) = 4200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 73;
-            inv(2, ci) = 405;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 73;
+            inv_image(ci) = 405;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 37;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -58939,18 +58939,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 5000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 72;
-            inv(2, ci) = 354;
+            inv_id(ci) = 72;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59026,18 +59026,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3000;
-            inv(7, ci) = 120;
+            inv_value(ci) = 3000;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 71;
-            inv(2, ci) = 354;
+            inv_id(ci) = 71;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59113,18 +59113,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1280;
-            inv(7, ci) = 120;
+            inv_value(ci) = 1280;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 70;
-            inv(2, ci) = 354;
+            inv_id(ci) = 70;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59200,18 +59200,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 300;
-            inv(7, ci) = 120;
+            inv_value(ci) = 300;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 69;
-            inv(2, ci) = 354;
+            inv_id(ci) = 69;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59287,18 +59287,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 150;
-            inv(7, ci) = 120;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 68;
-            inv(2, ci) = 354;
+            inv_id(ci) = 68;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59374,19 +59374,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1001;
-            inv(1, ci) = 200;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 200;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 67;
-            inv(2, ci) = 398;
+            inv_id(ci) = 67;
+            inv_image(ci) = 398;
             reftype = 34000;
             reftypeminor = 34001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59451,21 +59451,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 3;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 300;
-            inv(7, ci) = 900;
+            inv_dv(ci) = 3;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 300;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 66;
-            inv(2, ci) = 423;
+            inv_id(ci) = 66;
+            inv_image(ci) = 423;
             reftype = 19000;
             reftypeminor = 19001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59530,21 +59530,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 4;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 250;
-            inv(7, ci) = 700;
+            inv_dv(ci) = 4;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 250;
+            inv_weight(ci) = 700;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 65;
-            inv(2, ci) = 422;
+            inv_id(ci) = 65;
+            inv_image(ci) = 422;
             reftype = 20000;
             reftypeminor = 20001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59609,24 +59609,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 13;
-            inv(13, ci) = 8;
-            inv(12, ci) = 5;
-            inv(14, ci) = -4;
-            inv(15, ci) = 4;
-            inv(24, ci) = 20;
-            inv(1, ci) = 60000;
-            inv(7, ci) = 4000;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 13;
+            inv_hit_bonus(ci) = 8;
+            inv_damage_bonus(ci) = 5;
+            inv_dv(ci) = -4;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 20;
+            inv_value(ci) = 60000;
+            inv_weight(ci) = 4000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 64;
-            inv(2, ci) = 405;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 64;
+            inv_image(ci) = 405;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 36;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 70059;
@@ -59641,7 +59641,7 @@ int label_1275()
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -59708,21 +59708,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 44;
-            inv(12, ci) = 4;
-            inv(24, ci) = 10;
-            inv(1, ci) = 50000;
-            inv(7, ci) = 9000;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 44;
+            inv_damage_bonus(ci) = 4;
+            inv_material(ci) = 10;
+            inv_value(ci) = 50000;
+            inv_weight(ci) = 9000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 107;
-            inv(3, ci) = 63;
-            inv(2, ci) = 421;
+            inv_skill(ci) = 107;
+            inv_id(ci) = 63;
+            inv_image(ci) = 421;
             reftype = 10000;
             reftypeminor = 10011;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 38;
@@ -59735,7 +59735,7 @@ int label_1275()
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -59802,24 +59802,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 2;
-            inv(13, ci) = 4;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 150;
-            inv(7, ci) = 2400;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 2;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 2400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 62;
-            inv(2, ci) = 420;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 62;
+            inv_image(ci) = 420;
             reftype = 25000;
             reftypeminor = 25020;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59884,24 +59884,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 8;
-            inv(13, ci) = 2;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 150;
-            inv(7, ci) = 1200;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 150;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 108;
-            inv(3, ci) = 61;
-            inv(2, ci) = 412;
+            inv_skill(ci) = 108;
+            inv_id(ci) = 61;
+            inv_image(ci) = 412;
             reftype = 25000;
             reftypeminor = 25001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -59966,24 +59966,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 1;
-            inv(11, ci) = 22;
-            inv(13, ci) = 7;
-            inv(12, ci) = 1;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 800;
+            inv_dice_x(ci) = 1;
+            inv_dice_y(ci) = 22;
+            inv_hit_bonus(ci) = 7;
+            inv_damage_bonus(ci) = 1;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 110;
-            inv(3, ci) = 60;
-            inv(2, ci) = 419;
+            inv_skill(ci) = 110;
+            inv_id(ci) = 60;
+            inv_image(ci) = 419;
             reftype = 24000;
             reftypeminor = 24020;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60025,7 +60025,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 1)
+                if (cdata_god(0) == 1)
                 {
                     return 1;
                 }
@@ -60059,22 +60059,22 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = -2;
-            inv(15, ci) = 8;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 4800;
-            inv(7, ci) = 2200;
+            inv_dv(ci) = -2;
+            inv_pv(ci) = 8;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 4800;
+            inv_weight(ci) = 2200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 168;
-            inv(3, ci) = 59;
-            inv(2, ci) = 411;
+            inv_skill(ci) = 168;
+            inv_id(ci) = 59;
+            inv_image(ci) = 411;
             reftype = 14000;
             reftypeminor = 14003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60139,24 +60139,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 7;
-            inv(13, ci) = 4;
-            inv(12, ci) = 8;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1200;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 7;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 8;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 108;
-            inv(3, ci) = 58;
-            inv(2, ci) = 404;
+            inv_skill(ci) = 108;
+            inv_id(ci) = 58;
+            inv_image(ci) = 404;
             reftype = 24000;
             reftypeminor = 24001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60198,7 +60198,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 2)
+                if (cdata_god(0) == 2)
                 {
                     return 1;
                 }
@@ -60233,21 +60233,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 7;
-            inv(11, ci) = 7;
-            inv(13, ci) = 4;
-            inv(24, ci) = 25;
-            inv(1, ci) = 40000;
-            inv(7, ci) = 1400;
+            inv_dice_x(ci) = 7;
+            inv_dice_y(ci) = 7;
+            inv_hit_bonus(ci) = 4;
+            inv_material(ci) = 25;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 57;
-            inv(2, ci) = 501;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 57;
+            inv_image(ci) = 501;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 25;
@@ -60258,7 +60258,7 @@ int label_1275()
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -60324,24 +60324,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 4;
-            inv(11, ci) = 8;
-            inv(13, ci) = 2;
-            inv(12, ci) = 8;
-            inv(14, ci) = -3;
-            inv(15, ci) = 2;
-            inv(24, ci) = 9;
-            inv(1, ci) = 40000;
-            inv(7, ci) = 2200;
+            inv_dice_x(ci) = 4;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 8;
+            inv_dv(ci) = -3;
+            inv_pv(ci) = 2;
+            inv_material(ci) = 9;
+            inv_value(ci) = 40000;
+            inv_weight(ci) = 2200;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 56;
-            inv(2, ci) = 405;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 56;
+            inv_image(ci) = 405;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 70058;
@@ -60352,7 +60352,7 @@ int label_1275()
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv(29, ci) = 500;
+            inv_difficulty_of_identification(ci) = 500;
             fixlv = 6;
             return 0;
         }
@@ -60419,18 +60419,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 1;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 1;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 55;
-            inv(2, ci) = 437;
+            inv_id(ci) = 55;
+            inv_image(ci) = 437;
             reftype = 69000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60497,18 +60497,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 0;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 0;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 54;
-            inv(2, ci) = 433;
+            inv_id(ci) = 54;
+            inv_image(ci) = 433;
             reftype = 68000;
             reftypeminor = 99999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60574,18 +60574,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 12000;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 12000;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 53;
-            inv(2, ci) = 247;
+            inv_id(ci) = 53;
+            inv_image(ci) = 247;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60651,18 +60651,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 80;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 52;
-            inv(2, ci) = 246;
+            inv_id(ci) = 52;
+            inv_image(ci) = 246;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60727,18 +60727,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 80;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 51;
-            inv(2, ci) = 245;
+            inv_id(ci) = 51;
+            inv_image(ci) = 245;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60804,18 +60804,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 1050;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 1050;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 50;
-            inv(2, ci) = 244;
+            inv_id(ci) = 50;
+            inv_image(ci) = 244;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60881,18 +60881,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 130;
-            inv(7, ci) = 1400;
+            inv_value(ci) = 130;
+            inv_weight(ci) = 1400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 49;
-            inv(2, ci) = 243;
+            inv_id(ci) = 49;
+            inv_image(ci) = 243;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -60958,18 +60958,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 170;
-            inv(7, ci) = 3200;
+            inv_value(ci) = 170;
+            inv_weight(ci) = 3200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 48;
-            inv(2, ci) = 242;
+            inv_id(ci) = 48;
+            inv_image(ci) = 242;
             reftype = 64000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61035,18 +61035,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 140;
-            inv(7, ci) = 250;
+            inv_value(ci) = 140;
+            inv_weight(ci) = 250;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 47;
-            inv(2, ci) = 204;
+            inv_id(ci) = 47;
+            inv_image(ci) = 204;
             reftype = 64000;
             reftypeminor = 64100;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61112,18 +61112,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6;
-            inv(7, ci) = 800;
+            inv_value(ci) = 6;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 46;
-            inv(2, ci) = 241;
+            inv_id(ci) = 46;
+            inv_image(ci) = 241;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61189,18 +61189,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 8;
-            inv(7, ci) = 80;
+            inv_value(ci) = 8;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 45;
-            inv(2, ci) = 240;
+            inv_id(ci) = 45;
+            inv_image(ci) = 240;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61265,18 +61265,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 450;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 450;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 44;
-            inv(2, ci) = 238;
+            inv_id(ci) = 44;
+            inv_image(ci) = 238;
             reftype = 77000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61318,7 +61318,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61353,18 +61353,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 10;
-            inv(7, ci) = 120;
+            inv_value(ci) = 10;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 43;
-            inv(2, ci) = 239;
+            inv_id(ci) = 43;
+            inv_image(ci) = 239;
             reftype = 64000;
             reftypeminor = 64000;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61429,18 +61429,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 4200;
-            inv(7, ci) = 320;
+            inv_value(ci) = 4200;
+            inv_weight(ci) = 320;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 42;
-            inv(2, ci) = 213;
+            inv_id(ci) = 42;
+            inv_image(ci) = 213;
             reftype = 77000;
             reftypeminor = 77001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61482,7 +61482,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61516,18 +61516,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2450;
-            inv(7, ci) = 380;
+            inv_value(ci) = 2450;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 41;
-            inv(2, ci) = 213;
+            inv_id(ci) = 41;
+            inv_image(ci) = 213;
             reftype = 77000;
             reftypeminor = 77001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61569,7 +61569,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61603,18 +61603,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 720;
-            inv(7, ci) = 70;
+            inv_value(ci) = 720;
+            inv_weight(ci) = 70;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 40;
-            inv(2, ci) = 212;
+            inv_id(ci) = 40;
+            inv_image(ci) = 212;
             reftype = 77000;
             reftypeminor = 77001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61656,7 +61656,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61690,18 +61690,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1400;
-            inv(7, ci) = 240;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 240;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 39;
-            inv(2, ci) = 212;
+            inv_id(ci) = 39;
+            inv_image(ci) = 212;
             reftype = 77000;
             reftypeminor = 77001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61743,7 +61743,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61777,18 +61777,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 2000;
-            inv(7, ci) = 1100;
+            inv_value(ci) = 2000;
+            inv_weight(ci) = 1100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 38;
-            inv(2, ci) = 33;
+            inv_id(ci) = 38;
+            inv_image(ci) = 33;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61830,7 +61830,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61864,18 +61864,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 450;
-            inv(7, ci) = 1200;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 1200;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 37;
-            inv(2, ci) = 211;
+            inv_id(ci) = 37;
+            inv_image(ci) = 211;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -61917,7 +61917,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -61951,18 +61951,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 470;
-            inv(7, ci) = 900;
+            inv_value(ci) = 470;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 36;
-            inv(2, ci) = 211;
+            inv_id(ci) = 36;
+            inv_image(ci) = 211;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62004,7 +62004,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -62039,18 +62039,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 450;
-            inv(7, ci) = 1600;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 1600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 35;
-            inv(2, ci) = 211;
+            inv_id(ci) = 35;
+            inv_image(ci) = 211;
             reftype = 77000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62092,7 +62092,7 @@ int label_1275()
             }
             if (dbspec == 12)
             {
-                if (cdata(61, 0) == 6 || cdata(61, 0) == 5)
+                if (cdata_god(0) == 6 || cdata_god(0) == 5)
                 {
                     return 1;
                 }
@@ -62126,19 +62126,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 34;
-            inv(2, ci) = 429;
+            inv_id(ci) = 34;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -62215,19 +62215,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 33;
-            inv(2, ci) = 429;
+            inv_id(ci) = 33;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -62304,19 +62304,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3800;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3800;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 32;
-            inv(2, ci) = 429;
+            inv_id(ci) = 32;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -62393,18 +62393,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 280;
-            inv(7, ci) = 50;
+            inv_value(ci) = 280;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 31;
-            inv(2, ci) = 354;
+            inv_id(ci) = 31;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 52002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62480,18 +62480,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 120;
-            inv(7, ci) = 120;
+            inv_value(ci) = 120;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 30;
-            inv(2, ci) = 354;
+            inv_id(ci) = 30;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62567,18 +62567,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 40;
-            inv(7, ci) = 120;
+            inv_value(ci) = 40;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 29;
-            inv(2, ci) = 354;
+            inv_id(ci) = 29;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62655,18 +62655,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 30;
-            inv(7, ci) = 120;
+            inv_value(ci) = 30;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 28;
-            inv(2, ci) = 354;
+            inv_id(ci) = 28;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62743,18 +62743,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 20;
-            inv(7, ci) = 120;
+            inv_value(ci) = 20;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 27;
-            inv(2, ci) = 354;
+            inv_id(ci) = 27;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62831,18 +62831,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 120;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 120;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 26;
-            inv(2, ci) = 354;
+            inv_id(ci) = 26;
+            inv_image(ci) = 354;
             reftype = 52000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62917,19 +62917,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 80;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 25;
-            inv(2, ci) = 333;
+            inv_id(ci) = 25;
+            inv_image(ci) = 333;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 2;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 2;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -62977,7 +62977,7 @@ int label_1275()
         }
         if (dbmode == 13)
         {
-            inv(25, ci) = 2;
+            inv_param1(ci) = 2;
             label_2164();
             return -1;
         }
@@ -63002,19 +63002,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 500;
-            inv(7, ci) = 80;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 24;
-            inv(2, ci) = 333;
+            inv_id(ci) = 24;
+            inv_image(ci) = 333;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 0;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -63088,19 +63088,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 100;
-            inv(7, ci) = 80;
+            inv_value(ci) = 100;
+            inv_weight(ci) = 80;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 23;
-            inv(2, ci) = 333;
+            inv_id(ci) = 23;
+            inv_image(ci) = 333;
             reftype = 55000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(25, ci) = 1;
-            inv(29, ci) = 0;
+            inv_param1(ci) = 1;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -63148,7 +63148,7 @@ int label_1275()
         }
         if (dbmode == 13)
         {
-            inv(25, ci) = 1;
+            inv_param1(ci) = 1;
             label_2164();
             return -1;
         }
@@ -63175,19 +63175,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 6400;
-            inv(7, ci) = 380;
+            inv_value(ci) = 6400;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 22;
-            inv(2, ci) = 429;
+            inv_id(ci) = 22;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -63264,19 +63264,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 5600;
-            inv(7, ci) = 380;
+            inv_value(ci) = 5600;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 21;
-            inv(2, ci) = 429;
+            inv_id(ci) = 21;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 4 + rnd(4) - rnd(4);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -63354,19 +63354,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3200;
-            inv(7, ci) = 380;
+            inv_value(ci) = 3200;
+            inv_weight(ci) = 380;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 20;
-            inv(2, ci) = 429;
+            inv_id(ci) = 20;
+            inv_image(ci) = 429;
             reftype = 54000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 5 + rnd(5) - rnd(5);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -63444,19 +63444,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 840;
-            inv(7, ci) = 800;
+            inv_value(ci) = 840;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 19;
-            inv(2, ci) = 471;
+            inv_id(ci) = 19;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 12 + rnd(12) - rnd(12);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -63532,19 +63532,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1080;
-            inv(7, ci) = 800;
+            inv_value(ci) = 1080;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 18;
-            inv(2, ci) = 471;
+            inv_id(ci) = 18;
+            inv_image(ci) = 471;
             reftype = 56000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
-            inv(9, ci) = 8 + rnd(8) - rnd(8);
+            inv_difficulty_of_identification(ci) = 0;
+            inv_count(ci) = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
             return 0;
         }
@@ -63620,18 +63620,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 3500;
-            inv(7, ci) = 20;
+            inv_value(ci) = 3500;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 17;
-            inv(2, ci) = 470;
+            inv_id(ci) = 17;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -63707,18 +63707,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 200;
-            inv(7, ci) = 20;
+            inv_value(ci) = 200;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 16;
-            inv(2, ci) = 470;
+            inv_id(ci) = 16;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -63794,18 +63794,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 12000;
-            inv(7, ci) = 20;
+            inv_value(ci) = 12000;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 15;
-            inv(2, ci) = 470;
+            inv_id(ci) = 15;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -63881,18 +63881,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 480;
-            inv(7, ci) = 20;
+            inv_value(ci) = 480;
+            inv_weight(ci) = 20;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 14;
-            inv(2, ci) = 470;
+            inv_id(ci) = 14;
+            inv_image(ci) = 470;
             reftype = 53000;
             reftypeminor = 0;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -63968,19 +63968,19 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(24, ci) = 1001;
-            inv(1, ci) = 450;
-            inv(7, ci) = 50;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 50;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 13;
-            inv(2, ci) = 407;
+            inv_id(ci) = 13;
+            inv_image(ci) = 407;
             reftype = 32000;
             reftypeminor = 32001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64045,21 +64045,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 1;
-            inv(15, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 2200;
-            inv(7, ci) = 720;
+            inv_dv(ci) = 1;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 2200;
+            inv_weight(ci) = 720;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 12;
-            inv(2, ci) = 460;
+            inv_id(ci) = 12;
+            inv_image(ci) = 460;
             reftype = 18000;
             reftypeminor = 18001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64124,21 +64124,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 1;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 480;
-            inv(7, ci) = 950;
+            inv_dv(ci) = 1;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 480;
+            inv_weight(ci) = 950;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 11;
-            inv(2, ci) = 418;
+            inv_id(ci) = 11;
+            inv_image(ci) = 418;
             reftype = 18000;
             reftypeminor = 18001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64203,23 +64203,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 2;
-            inv(12, ci) = 1;
-            inv(14, ci) = 2;
-            inv(15, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 400;
-            inv(7, ci) = 1100;
+            inv_hit_bonus(ci) = 2;
+            inv_damage_bonus(ci) = 1;
+            inv_dv(ci) = 2;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 400;
+            inv_weight(ci) = 1100;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 10;
-            inv(2, ci) = 450;
+            inv_id(ci) = 10;
+            inv_image(ci) = 450;
             reftype = 22000;
             reftypeminor = 22001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64285,23 +64285,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(13, ci) = 6;
-            inv(12, ci) = 2;
-            inv(14, ci) = 7;
-            inv(15, ci) = 5;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 1400;
-            inv(7, ci) = 700;
+            inv_hit_bonus(ci) = 6;
+            inv_damage_bonus(ci) = 2;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 700;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 9;
-            inv(2, ci) = 449;
+            inv_id(ci) = 9;
+            inv_image(ci) = 449;
             reftype = 22000;
             reftypeminor = 22003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64366,21 +64366,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 11;
-            inv(15, ci) = 3;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 450;
-            inv(7, ci) = 800;
+            inv_dv(ci) = 11;
+            inv_pv(ci) = 3;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 450;
+            inv_weight(ci) = 800;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 8;
-            inv(2, ci) = 408;
+            inv_id(ci) = 8;
+            inv_image(ci) = 408;
             reftype = 16000;
             reftypeminor = 16003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64445,21 +64445,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 6;
-            inv(15, ci) = 10;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 600;
-            inv(7, ci) = 4500;
+            inv_dv(ci) = 6;
+            inv_pv(ci) = 10;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 600;
+            inv_weight(ci) = 4500;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 7;
-            inv(2, ci) = 396;
+            inv_id(ci) = 7;
+            inv_image(ci) = 396;
             reftype = 16000;
             reftypeminor = 16001;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64524,23 +64524,23 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 7;
-            inv(15, ci) = 5;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 7200;
-            inv(7, ci) = 400;
+            inv_dv(ci) = 7;
+            inv_pv(ci) = 5;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 7200;
+            inv_weight(ci) = 400;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 6;
-            inv(2, ci) = 478;
+            inv_id(ci) = 6;
+            inv_image(ci) = 478;
             reftype = 12000;
             reftypeminor = 12002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc(0) = 33;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64605,21 +64605,21 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(14, ci) = 6;
-            inv(15, ci) = 4;
-            inv(24, ci) = 1001;
-            inv(1, ci) = 1400;
-            inv(7, ci) = 600;
+            inv_dv(ci) = 6;
+            inv_pv(ci) = 4;
+            inv_material(ci) = 1001;
+            inv_value(ci) = 1400;
+            inv_weight(ci) = 600;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 5;
-            inv(2, ci) = 477;
+            inv_id(ci) = 5;
+            inv_image(ci) = 477;
             reftype = 12000;
             reftypeminor = 12002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64684,24 +64684,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 3;
-            inv(11, ci) = 4;
-            inv(13, ci) = 4;
-            inv(12, ci) = 7;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1000;
+            inv_dice_x(ci) = 3;
+            inv_dice_y(ci) = 4;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 7;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1000;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 103;
-            inv(3, ci) = 4;
-            inv(2, ci) = 427;
+            inv_skill(ci) = 103;
+            inv_id(ci) = 4;
+            inv_image(ci) = 427;
             reftype = 10000;
             reftypeminor = 10004;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64767,24 +64767,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 9;
-            inv(13, ci) = 4;
-            inv(12, ci) = 5;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 900;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 9;
+            inv_hit_bonus(ci) = 4;
+            inv_damage_bonus(ci) = 5;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 900;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 102;
-            inv(3, ci) = 3;
-            inv(2, ci) = 499;
+            inv_skill(ci) = 102;
+            inv_id(ci) = 3;
+            inv_image(ci) = 499;
             reftype = 10000;
             reftypeminor = 10009;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64849,25 +64849,25 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 5;
-            inv(13, ci) = 9;
-            inv(12, ci) = 4;
-            inv(14, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 600;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 5;
+            inv_hit_bonus(ci) = 9;
+            inv_damage_bonus(ci) = 4;
+            inv_dv(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 600;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 101;
-            inv(3, ci) = 2;
-            inv(2, ci) = 400;
+            inv_skill(ci) = 101;
+            inv_id(ci) = 2;
+            inv_image(ci) = 400;
             reftype = 10000;
             reftypeminor = 10003;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -64933,24 +64933,24 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(10, ci) = 2;
-            inv(11, ci) = 8;
-            inv(13, ci) = 5;
-            inv(12, ci) = 4;
-            inv(24, ci) = 1000;
-            inv(1, ci) = 500;
-            inv(7, ci) = 1500;
+            inv_dice_x(ci) = 2;
+            inv_dice_y(ci) = 8;
+            inv_hit_bonus(ci) = 5;
+            inv_damage_bonus(ci) = 4;
+            inv_material(ci) = 1000;
+            inv_value(ci) = 500;
+            inv_weight(ci) = 1500;
         }
         if (dbmode == 3)
         {
-            inv(16, ci) = 100;
-            inv(3, ci) = 1;
-            inv(2, ci) = 405;
+            inv_skill(ci) = 100;
+            inv_id(ci) = 1;
+            inv_image(ci) = 405;
             reftype = 10000;
             reftypeminor = 10002;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)
@@ -65015,18 +65015,18 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv(1, ci) = 1;
-            inv(7, ci) = 1;
+            inv_value(ci) = 1;
+            inv_weight(ci) = 1;
         }
         if (dbmode == 3)
         {
-            inv(3, ci) = 0;
-            inv(2, ci) = 33;
+            inv_id(ci) = 0;
+            inv_image(ci) = 33;
             reftype = 99999999;
             reftypeminor = 99999999;
-            inv(0, ci) = 1;
+            inv_number(ci) = 1;
             fixeditemenc = 0;
-            inv(29, ci) = 0;
+            inv_difficulty_of_identification(ci) = 0;
             return 0;
         }
         if (dbmode == 2)

@@ -39,7 +39,7 @@ void label_2246()
                 listmax = 0;
                 buff =
                     u8"ああ、聡明なるレシマスの常闇の眼よ！ 新しい主は、どうやらお前の本当の価値を知らないようだぞ。…だが、心配しなくてもいい。この"s +
-                    _sex(cdata(8, 0)) +
+                    _sex(cdata_sex(0)) +
                     u8"は、そこで死んでいる老人のように、たまに本を開いては下界の嘘に満ちた歴史を嘲笑い、自己満足にふける以外の使い方を、きっと見つけてくれるだろう。"s;
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -184,7 +184,7 @@ void label_2246()
         label_2256();
         return;
     case 29:
-        if (cdata(34, 0) < 20000)
+        if (cdata_fame(0) < 20000)
         {
             listmax = 0;
             buff =
@@ -368,7 +368,7 @@ void label_2246()
                 }
             }
             gdata(452) = 2;
-            mdata(4) = cdata(2, 0) * 1000 + cdata(1, 0);
+            mdata(4) = cdata_y(0) * 1000 + cdata_x(0);
             gdata(64) = 5;
             gdata(65) = 5;
             levelexitby = 2;
@@ -380,12 +380,12 @@ void label_2246()
         {
             flt();
             nostack = 1;
-            itemcreate(-1, 630, cdata(1, 0), cdata(2, 0), 0);
-            inv(24, ci) = 15;
+            itemcreate(-1, 630, cdata_x(0), cdata_y(0), 0);
+            inv_material(ci) = 15;
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 100000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 100000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 5);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 5);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -552,13 +552,13 @@ void label_2246()
         if (gdata(450) == 2)
         {
             flt(calcobjlv(10), calcfixlv(3));
-            itemcreate(-1, 449, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 449, cdata_x(0), cdata_y(0), 0);
             flt(calcobjlv(10), calcfixlv(3));
-            itemcreate(-1, 66, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 66, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 3000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 3000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 2);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 2);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -727,16 +727,16 @@ void label_2246()
         if (gdata(451) == 2)
         {
             flt();
-            itemcreate(-1, 18, cdata(1, 0), cdata(2, 0), 0);
-            inv(9, ci) = 12;
+            itemcreate(-1, 18, cdata_x(0), cdata_y(0), 0);
+            inv_count(ci) = 12;
             flt();
             nostack = 1;
-            itemcreate(-1, 685, cdata(1, 0), cdata(2, 0), 0);
-            inv(26, ci) = 5;
+            itemcreate(-1, 685, cdata_x(0), cdata_y(0), 0);
+            inv_param2(ci) = 5;
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 1500);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 1500);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 2);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 2);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -1105,8 +1105,8 @@ void label_2246()
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 flt();
-                itemcreate(-1, 14, cdata(1, 0), cdata(2, 0), 0);
-                inv(8, ci) = 3;
+                itemcreate(-1, 14, cdata_x(0), cdata_y(0), 0);
+                inv_identification_state(ci) = 3;
                 listmax = 0;
                 buff = lang(
                     u8"どうやら何かを掘り当てたようだな。"s,
@@ -1273,11 +1273,11 @@ void label_2246()
                     }
                 }
                 flt();
-                itemcreate(-1, 240, cdata(1, 0), cdata(2, 0), 0);
-                inv(25, ci) = 35;
-                inv(26, ci) = 25;
+                itemcreate(-1, 240, cdata_x(0), cdata_y(0), 0);
+                inv_param1(ci) = 35;
+                inv_param2(ci) = 25;
                 flt();
-                itemcreate(-1, 636, cdata(1, 0), cdata(2, 0), 2);
+                itemcreate(-1, 636, cdata_x(0), cdata_y(0), 2);
                 txt(lang(
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
@@ -1458,9 +1458,9 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 204, cdata(1, 0), cdata(2, 0), 0);
-            inv(23, ci) = 9;
-            inv(8, ci) = 3;
+            itemcreate(-1, 204, cdata_x(0), cdata_y(0), 0);
+            inv_subname(ci) = 9;
+            inv_identification_state(ci) = 3;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -1571,7 +1571,7 @@ void label_2246()
                 {
                     flt();
                     flttypemajor = 60000;
-                    itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+                    itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
                 }
             }
         }
@@ -1675,15 +1675,15 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 58, cdata(1, 0), cdata(2, 0), 0);
-            inv(17, ci) = -1;
+            itemcreate(-1, 58, cdata_x(0), cdata_y(0), 0);
+            inv_curse_state(ci) = -1;
             flt();
-            itemcreate(-1, 61, cdata(1, 0), cdata(2, 0), 0);
-            inv(17, ci) = 0;
+            itemcreate(-1, 61, cdata_x(0), cdata_y(0), 0);
+            inv_curse_state(ci) = 0;
             flt();
-            itemcreate(-1, 363, cdata(1, 0), cdata(2, 0), 0);
-            inv(8, ci) = 3;
-            inv(17, ci) = 1;
+            itemcreate(-1, 363, cdata_x(0), cdata_y(0), 0);
+            inv_identification_state(ci) = 3;
+            inv_curse_state(ci) = 1;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -1756,13 +1756,13 @@ void label_2246()
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
                     flt();
-                    characreate(-1, 3, cdata(1, 0), cdata(2, 0));
+                    characreate(-1, 3, cdata_x(0), cdata_y(0));
                     cbitmod(979, rc, 1);
                 }
             }
             flt();
-            itemcreate(-1, 68, cdata(1, 0), cdata(2, 0), 0);
-            inv(8, ci) = 3;
+            itemcreate(-1, 68, cdata_x(0), cdata_y(0), 0);
+            inv_identification_state(ci) = 3;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -1936,13 +1936,13 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 2500);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 2500);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 3);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 3);
             flt();
-            itemcreate(-1, 559, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 559, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 621, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 621, cdata_x(0), cdata_y(0), 0);
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2019,16 +2019,16 @@ void label_2246()
                 {
                     flt(calcobjlv(gdata(22)), calcfixlv(2));
                     flttypemajor = fltsetdungeon();
-                    itemcreate(-1, 0, cdata(1, tc), cdata(2, tc), 0);
+                    itemcreate(-1, 0, cdata_x(tc), cdata_y(tc), 0);
                 }
             }
             flt();
-            itemcreate(-1, 54, cdata(1, tc), cdata(2, tc), 1000 + rnd(200));
+            itemcreate(-1, 54, cdata_x(tc), cdata_y(tc), 1000 + rnd(200));
             flt();
-            itemcreate(-1, 55, cdata(1, tc), cdata(2, tc), 3);
+            itemcreate(-1, 55, cdata_x(tc), cdata_y(tc), 3);
             flt();
-            itemcreate(-1, 239, cdata(1, tc), cdata(2, tc), 0);
-            inv(26, ci) = 0;
+            itemcreate(-1, 239, cdata_x(tc), cdata_y(tc), 0);
+            inv_param2(ci) = 0;
             snd(44);
             txtef(2);
             txt(lang(
@@ -2206,7 +2206,7 @@ void label_2246()
                 u8"レシマス25階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 25th level. Your journal has been updated."s));
             flt();
-            itemcreate(-1, 360, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 360, cdata_x(0), cdata_y(0), 0);
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2963,16 +2963,16 @@ void label_2246()
                 {
                     flt(calcobjlv(gdata(22)), calcfixlv(2));
                     flttypemajor = fltsetdungeon();
-                    itemcreate(-1, 0, cdata(1, tc), cdata(2, tc), 0);
+                    itemcreate(-1, 0, cdata_x(tc), cdata_y(tc), 0);
                 }
             }
             flt();
-            itemcreate(-1, 54, cdata(1, tc), cdata(2, tc), 1000 + rnd(200));
+            itemcreate(-1, 54, cdata_x(tc), cdata_y(tc), 1000 + rnd(200));
             flt();
-            itemcreate(-1, 55, cdata(1, tc), cdata(2, tc), 3);
+            itemcreate(-1, 55, cdata_x(tc), cdata_y(tc), 3);
             flt();
-            itemcreate(-1, 239, cdata(1, tc), cdata(2, tc), 0);
-            inv(26, ci) = 0;
+            itemcreate(-1, 239, cdata_x(tc), cdata_y(tc), 0);
+            inv_param2(ci) = 0;
             snd(44);
             txtef(2);
             txt(lang(
@@ -3041,7 +3041,7 @@ void label_2246()
                 }
             }
             invctrl = 28;
-            invfile = cdata(153, tc);
+            invfile = cdata_shop_store_id(tc);
             label_2263();
             screenupdate = -1;
             label_1419();
@@ -3063,7 +3063,7 @@ void label_2246()
             if (stat != -1)
             {
                 ci = stat;
-                if (inv(0, ci) >= calccargoupdatecost())
+                if (inv_number(ci) >= calccargoupdatecost())
                 {
                     list(0, listmax) = 1;
                     listn(0, listmax) =
@@ -3104,7 +3104,7 @@ void label_2246()
                 u8"Your cart's weight limit has increased by "s
                     + cnvweight(calccargoupdate()) + u8"."s));
             snd(58);
-            inv(0, ci) -= calccargoupdatecost();
+            inv_number(ci) -= calccargoupdatecost();
             gdata(82) += calccargoupdate();
             label_1521();
             listmax = 0;
@@ -3459,11 +3459,11 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 639, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 639, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 20000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 20000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 4);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 4);
             snd(51);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
@@ -3522,7 +3522,7 @@ void label_2246()
                 if (chatval == 2)
                 {
                     inv_find(559, 0);
-                    --inv(0, stat);
+                    --inv_number(stat);
                     txt(lang(
                         u8"エーテル抗体を1本渡した。"s,
                         u8"You hand her a potion."s));
@@ -3640,7 +3640,7 @@ void label_2246()
             if (chatval == 2)
             {
                 inv_find(559, 0);
-                --inv(0, stat);
+                --inv_number(stat);
                 txt(lang(
                     u8"エーテル抗体を1本渡した。"s,
                     u8"You hand her a potion."s));
@@ -3944,7 +3944,7 @@ void label_2246()
             }
             tcbk = tc;
             tc = rc;
-            s = refchara_str(cdata(27, tc), 8);
+            s = refchara_str(cdata_id(tc), 8);
             if (instr(s, 0, u8"/man/"s) == -1)
             {
                 dmgcon(tcbk, 11, 1000);
@@ -3999,7 +3999,7 @@ void label_2246()
             if (gdata(454) == 1)
             {
                 flt();
-                itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 5000);
+                itemcreate(-1, 54, cdata_x(0), cdata_y(0), 5000);
                 txt(lang(
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
@@ -4018,9 +4018,9 @@ void label_2246()
             chara_vanquish(rc);
             snd(51);
             flt();
-            itemcreate(-1, 640, cdata(1, 0), cdata(2, 0), 2);
+            itemcreate(-1, 640, cdata_x(0), cdata_y(0), 2);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 2);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 2);
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -4175,11 +4175,11 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 661, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 661, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 5000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 5000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 3);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 3);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4374,11 +4374,11 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 641, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 641, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 2500);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 2500);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 2);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 2);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4395,7 +4395,7 @@ void label_2246()
             chara_vanquish(findally(225));
             flt();
             characreate(-1, 225, 31, 4);
-            cdata(150, rc) = 3;
+            cdata_character_role(rc) = 3;
             label_2256();
             return;
         }
@@ -4512,12 +4512,12 @@ void label_2246()
         {
             flt();
             nostack = 1;
-            itemcreate(-1, 630, cdata(1, 0), cdata(2, 0), 0);
-            inv(24, ci) = 24;
+            itemcreate(-1, 630, cdata_x(0), cdata_y(0), 0);
+            inv_material(ci) = 24;
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 25500);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 25500);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 4);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 4);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4577,7 +4577,7 @@ void label_2246()
             label_2256();
             return;
         }
-        if (cdata(34, 0) < 5000)
+        if (cdata_fame(0) < 5000)
         {
             listmax = 0;
             buff = lang(
@@ -4740,7 +4740,7 @@ void label_2246()
                 }
             }
             gdata(457) = 2;
-            mdata(4) = cdata(2, 0) * 1000 + cdata(1, 0);
+            mdata(4) = cdata_y(0) * 1000 + cdata_x(0);
             gdata(64) = 12;
             gdata(65) = 4;
             levelexitby = 2;
@@ -4751,11 +4751,11 @@ void label_2246()
         if (gdata(457) == 3)
         {
             flt();
-            itemcreate(-1, 655, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 655, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 10000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 10000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 3);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 3);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4936,7 +4936,7 @@ void label_2246()
                 }
             }
             gdata(459) = 2;
-            mdata(4) = cdata(2, 0) * 1000 + cdata(1, 0);
+            mdata(4) = cdata_y(0) * 1000 + cdata_x(0);
             gdata(64) = 11;
             gdata(65) = 25;
             levelexitby = 2;
@@ -4947,11 +4947,11 @@ void label_2246()
         if (gdata(459) == 3)
         {
             flt();
-            itemcreate(-1, 662, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 662, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 7500);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 7500);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 3);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 3);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -5139,11 +5139,11 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 663, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 663, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 5000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 5000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 3);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 3);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -5158,9 +5158,9 @@ void label_2246()
                 u8"Your journal has been updated."s));
             gdata(460) = 1000;
             relocate_chara(findally(246), -1);
-            cdata(9, rc) = -1;
-            cdata(69, rc) = -1;
-            cdata(150, rc) = 3;
+            cdata_relationship(rc) = -1;
+            cdata_original_relationship(rc) = -1;
+            cdata_character_role(rc) = 3;
             label_2256();
             return;
         }
@@ -5285,13 +5285,13 @@ void label_2246()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv(0, cnt) == 0)
+                    if (inv_number(cnt) == 0)
                     {
                         continue;
                     }
-                    if (inv(3, cnt) == 668)
+                    if (inv_id(cnt) == 668)
                     {
-                        p(inv(26, cnt)) = 1;
+                        p(inv_param2(cnt)) = 1;
                     }
                 }
             }
@@ -5339,16 +5339,16 @@ void label_2246()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv(0, cnt) == 0)
+                        if (inv_number(cnt) == 0)
                         {
                             continue;
                         }
-                        if (inv(3, cnt) == 668)
+                        if (inv_id(cnt) == 668)
                         {
-                            if (p(inv(26, cnt)) == 0)
+                            if (p(inv_param2(cnt)) == 0)
                             {
-                                --inv(0, cnt);
-                                p(inv(26, cnt)) = 1;
+                                --inv_number(cnt);
+                                p(inv_param2(cnt)) = 1;
                             }
                         }
                     }
@@ -5461,13 +5461,13 @@ void label_2246()
                     }
                 }
                 flt();
-                itemcreate(-1, 666, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, 666, cdata_x(0), cdata_y(0), 0);
                 flt();
-                itemcreate(-1, 655, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, 655, cdata_x(0), cdata_y(0), 0);
                 flt();
-                itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 20000);
+                itemcreate(-1, 54, cdata_x(0), cdata_y(0), 20000);
                 flt();
-                itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 5);
+                itemcreate(-1, 55, cdata_x(0), cdata_y(0), 5);
                 txt(lang(
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
@@ -5511,7 +5511,7 @@ void label_2246()
             label_2256();
             return;
         }
-        if (cdata(34, 0) < 3000)
+        if (cdata_fame(0) < 3000)
         {
             listmax = 0;
             buff = lang(
@@ -5555,7 +5555,7 @@ void label_2246()
                     return;
                 }
             }
-            if (cdata(30, 0) >= 20000)
+            if (cdata_gold(0) >= 20000)
             {
                 list(0, listmax) = 1;
                 listn(0, listmax) =
@@ -5601,11 +5601,11 @@ void label_2246()
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
-            cdata(30, 0) -= 20000;
+            cdata_gold(0) -= 20000;
             snd(12);
             flt();
-            itemcreate(-1, 24, cdata(1, 0), cdata(2, 0), 0);
-            inv(25, ci) = 13;
+            itemcreate(-1, 24, cdata_x(0), cdata_y(0), 0);
+            inv_param1(ci) = 13;
             listmax = 0;
             buff = lang(
                 u8"ホホホッ。取引成立ですね。では、この招待状をあなたに渡しましょう。"s,
@@ -5676,10 +5676,10 @@ void label_2246()
         {
             flt();
             nostack = 1;
-            itemcreate(-1, 672, cdata(1, 0), cdata(2, 0), 0);
-            inv(25, ci) = 162;
+            itemcreate(-1, 672, cdata_x(0), cdata_y(0), 0);
+            inv_param1(ci) = 162;
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 6);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 6);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -5790,7 +5790,7 @@ void label_2246()
                 }
             }
         }
-        if (cdata(30, 0) >= 12000)
+        if (cdata_gold(0) >= 12000)
         {
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"購入する"s, u8"I'll buy."s);
@@ -5828,10 +5828,10 @@ void label_2246()
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
-        cdata(30, 0) -= 12000;
+        cdata_gold(0) -= 12000;
         snd(12);
         flt();
-        itemcreate(-1, 671, cdata(1, 0), cdata(2, 0), 0);
+        itemcreate(-1, 671, cdata_x(0), cdata_y(0), 0);
         listmax = 0;
         buff = lang(
             u8"さあ、真っ赤な花を咲かせなさい。"s,
@@ -5914,8 +5914,8 @@ void label_2246()
             }
             flt();
             nostack = 1;
-            itemcreate(-1, 685, cdata(1, 0), cdata(2, 0), 6);
-            inv(26, ci) = 5;
+            itemcreate(-1, 685, cdata_x(0), cdata_y(0), 6);
+            inv_param2(ci) = 5;
             snd(44);
             txtef(2);
             txt(lang(
@@ -5959,13 +5959,13 @@ void label_2246()
                     {
                         break;
                     }
-                    if (inv(0, cnt) > 0)
+                    if (inv_number(cnt) > 0)
                     {
-                        if (inv(3, cnt) == 685)
+                        if (inv_id(cnt) == 685)
                         {
-                            if (inv(23, cnt) != 0)
+                            if (inv_subname(cnt) != 0)
                             {
-                                --inv(0, cnt);
+                                --inv_number(cnt);
                                 ++gdata(464);
                                 f = 1;
                                 txt(itemname(cnt, 1) + u8"を納入した。"s);
@@ -6041,11 +6041,11 @@ void label_2246()
                 }
             }
             flt();
-            itemcreate(-1, 684, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 684, cdata_x(0), cdata_y(0), 0);
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 2500);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 2500);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 2);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 2);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -6189,15 +6189,15 @@ void label_2246()
         if (gdata(465) == 2)
         {
             flt();
-            itemcreate(-1, 686, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 686, cdata_x(0), cdata_y(0), 0);
             flt();
             nostack = 1;
-            itemcreate(-1, 685, cdata(1, 0), cdata(2, 0), 0);
-            inv(26, ci) = 30;
+            itemcreate(-1, 685, cdata_x(0), cdata_y(0), 0);
+            inv_param2(ci) = 30;
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 15000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 15000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 4);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 4);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -6430,15 +6430,15 @@ void label_2246()
                     }
                 }
                 cell_movechara(tc, 4, 20);
-                cdata(171, tc) = 4;
-                cdata(172, tc) = 20;
+                cdata_initial_x(tc) = 4;
+                cdata_initial_y(tc) = 20;
             }
             label_2256();
             return;
         }
         cell_movechara(tc, 4, 20);
-        cdata(171, tc) = 4;
-        cdata(172, tc) = 20;
+        cdata_initial_x(tc) = 4;
+        cdata_initial_y(tc) = 20;
         if (gdata(469) == 0)
         {
             list(0, listmax) = 1;
@@ -6524,16 +6524,16 @@ void label_2246()
             gdata(469) = 0;
             flt(51 - gdata(128) / 200);
             flttypemajor = 54000;
-            itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
             flt();
             itemcreate(
-                -1, 54, cdata(1, 0), cdata(2, 0), 10000 - gdata(128) + 1000);
+                -1, 54, cdata_x(0), cdata_y(0), 10000 - gdata(128) + 1000);
             flt();
             itemcreate(
                 -1,
                 55,
-                cdata(1, 0),
-                cdata(2, 0),
+                cdata_x(0),
+                cdata_y(0),
                 limit(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
@@ -6749,15 +6749,15 @@ void label_2246()
                     }
                 }
                 cell_movechara(tc, 17, 17);
-                cdata(171, tc) = 17;
-                cdata(172, tc) = 17;
+                cdata_initial_x(tc) = 17;
+                cdata_initial_y(tc) = 17;
             }
             label_2256();
             return;
         }
         cell_movechara(tc, 17, 17);
-        cdata(171, tc) = 17;
-        cdata(172, tc) = 17;
+        cdata_initial_x(tc) = 17;
+        cdata_initial_y(tc) = 17;
         if (gdata(471) == 0)
         {
             list(0, listmax) = 1;
@@ -6843,16 +6843,16 @@ void label_2246()
             gdata(471) = 0;
             flt(51 - gdata(128) / 200);
             flttypemajor = 60000;
-            itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
             flt();
             itemcreate(
-                -1, 54, cdata(1, 0), cdata(2, 0), 10000 - gdata(128) + 1000);
+                -1, 54, cdata_x(0), cdata_y(0), 10000 - gdata(128) + 1000);
             flt();
             itemcreate(
                 -1,
                 55,
-                cdata(1, 0),
-                cdata(2, 0),
+                cdata_x(0),
+                cdata_y(0),
                 limit(3 - gdata(128) / 3000, 1, 3));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
@@ -6966,15 +6966,15 @@ void label_2246()
                         {
                             flt(10);
                             characreate(56, 0, -3, 0);
-                            if (refchara(cdata(27, 56), 6) < 70)
+                            if (refchara(cdata_id(56), 6) < 70)
                             {
                                 continue;
                             }
-                            if (cdata(9, 56) != -3)
+                            if (cdata_relationship(56) != -3)
                             {
                                 continue;
                             }
-                            if (cdata(25, 56) >= 4)
+                            if (cdata_quality(56) >= 4)
                             {
                                 continue;
                             }
@@ -6982,7 +6982,7 @@ void label_2246()
                         }
                     }
                     gdata(267) = 15;
-                    gdata(268) = cdata(27, 56);
+                    gdata(268) = cdata_id(56);
                     chara_vanquish(56);
                     listmax = 0;
                     buff = lang(""s + refchara_str(gdata(268), 2) + u8"を"s +
@@ -7098,8 +7098,8 @@ void label_2246()
                     }
                 }
                 cell_movechara(tc, 29, 2);
-                cdata(171, tc) = 29;
-                cdata(172, tc) = 2;
+                cdata_initial_x(tc) = 29;
+                cdata_initial_y(tc) = 2;
             }
             else
             {
@@ -7108,8 +7108,8 @@ void label_2246()
             return;
         }
         cell_movechara(tc, 29, 2);
-        cdata(171, tc) = 29;
-        cdata(172, tc) = 2;
+        cdata_initial_x(tc) = 29;
+        cdata_initial_y(tc) = 2;
         if (gdata(470) == 0)
         {
             list(0, listmax) = 1;
@@ -7139,17 +7139,17 @@ void label_2246()
                 int cnt = 0;
                 for (;; ++cnt)
                 {
-                    flt(cdata(38, 0) + 10);
+                    flt(cdata_level(0) + 10);
                     characreate(56, 0, -3, 0);
-                    if (refchara(cdata(27, 56), 6) < 70)
+                    if (refchara(cdata_id(56), 6) < 70)
                     {
                         continue;
                     }
-                    if (cdata(9, 56) != -3)
+                    if (cdata_relationship(56) != -3)
                     {
                         continue;
                     }
-                    if (cdata(25, 56) >= 4)
+                    if (cdata_quality(56) >= 4)
                     {
                         continue;
                     }
@@ -7157,7 +7157,7 @@ void label_2246()
                 }
             }
             gdata(267) = 2 + rnd(3);
-            gdata(268) = cdata(27, 56);
+            gdata(268) = cdata_id(56);
             chara_vanquish(56);
             gdata(470) = 1;
             snd(44);
@@ -7218,16 +7218,16 @@ void label_2246()
             gdata(470) = 0;
             flt(51 - gdata(128) / 200, calcfixlv(3));
             flttypemajor = 10000;
-            itemcreate(-1, 0, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
             flt();
             itemcreate(
-                -1, 54, cdata(1, 0), cdata(2, 0), 10000 - gdata(128) + 1000);
+                -1, 54, cdata_x(0), cdata_y(0), 10000 - gdata(128) + 1000);
             flt();
             itemcreate(
                 -1,
                 55,
-                cdata(1, 0),
-                cdata(2, 0),
+                cdata_x(0),
+                cdata_y(0),
                 limit(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
@@ -7397,12 +7397,12 @@ void label_2246()
             }
             flt();
             nostack = 1;
-            itemcreate(-1, 630, cdata(1, 0), cdata(2, 0), 0);
-            inv(24, ci) = 31;
+            itemcreate(-1, 630, cdata_x(0), cdata_y(0), 0);
+            inv_material(ci) = 31;
             flt();
-            itemcreate(-1, 54, cdata(1, 0), cdata(2, 0), 50000);
+            itemcreate(-1, 54, cdata_x(0), cdata_y(0), 50000);
             flt();
-            itemcreate(-1, 55, cdata(1, 0), cdata(2, 0), 4);
+            itemcreate(-1, 55, cdata_x(0), cdata_y(0), 4);
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -7421,7 +7421,7 @@ void label_2246()
         }
         goto label_2247_internal;
     case 302:
-        if (cdata(30, 0) <= 10)
+        if (cdata_gold(0) <= 10)
         {
             listmax = 0;
             buff = lang(
@@ -7454,32 +7454,32 @@ void label_2246()
         buff = lang(u8"おまえさん、ついてない"s + _na() + _ore(3) +
                 u8"達は泣く子も黙る冷血な盗賊団、その名も"s + gdatan(1) +
                 _da() + u8"命が惜しければ、おとなしく荷車の積荷と金貨"s +
-                cdata(30, 0) / 5 + u8"枚を渡すがいい"s + _yo(),
+                cdata_gold(0) / 5 + u8"枚を渡すがいい"s + _yo(),
             u8"Halt, halt, traveler. You're a quite fortunate one. Before you is the renowned band of legendary brigands \""s +
                 gdatan(1) +
                 u8"\" that the mere mention of its name is enough to silence a naughty child. Yet we will spare your life for only a toll of "s +
-                cdata(30, 0) / 5 +
+                cdata_gold(0) / 5 +
                 u8" gold pices and your cargos. Quite fortunate indeed."s);
         chatesc = 0;
         label_2257();
         if (chatval == 0)
         {
             snd(12);
-            cdata(30, 0) -= cdata(30, 0) / 5;
+            cdata_gold(0) -= cdata_gold(0) / 5;
             inv_getheader(0);
             {
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv(0, cnt) > 0)
+                    if (inv_number(cnt) > 0)
                     {
-                        if (refitem(inv(3, cnt), 10) == 1)
+                        if (refitem(inv_id(cnt), 10) == 1)
                         {
                             txtmore();
                             txt(lang(
                                 itemname(cnt) + u8"を渡した。"s,
                                 u8"You hand over "s + itemname(cnt) + u8"."s));
-                            inv(0, cnt) = 0;
+                            inv_number(cnt) = 0;
                         }
                     }
                 }
@@ -7551,7 +7551,7 @@ void label_2246()
             }
             gdata(473) = 0;
             flt();
-            itemcreate(-1, 699, cdata(1, 0), cdata(2, 0), 0);
+            itemcreate(-1, 699, cdata_x(0), cdata_y(0), 0);
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -7665,13 +7665,13 @@ void label_2246()
                             }
                             if (f)
                             {
-                                flt(cdata(38, 0) * 3 / 2, calcfixlv(3));
+                                flt(cdata_level(0) * 3 / 2, calcfixlv(3));
                                 itemcreate(-1, cnt, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    if (inv(4, ci) < 4)
+                                    if (inv_quality(ci) < 4)
                                     {
-                                        inv(0, ci) = 0;
+                                        inv_number(ci) = 0;
                                     }
                                 }
                             }
@@ -7751,7 +7751,7 @@ void label_2246()
                     }
                 }
                 flt();
-                itemcreate(-1, 699, cdata(1, 0), cdata(2, 0), 0);
+                itemcreate(-1, 699, cdata_x(0), cdata_y(0), 0);
                 txt(lang(
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
@@ -7891,7 +7891,7 @@ void label_2246()
             if (chatval == 1)
             {
                 inv_find(771, 0);
-                --inv(0, stat);
+                --inv_number(stat);
                 txt(lang(
                     u8"カプセルドラッグを1錠渡した。"s,
                     u8"You hand him a capsule drag."s));
@@ -7941,7 +7941,7 @@ void label_2246()
         {
             goto label_2247_internal;
         }
-        if (cdata(61, 0) == 6)
+        if (cdata_god(0) == 6)
         {
             listmax = 0;
             buff = lang(
@@ -8014,8 +8014,8 @@ void label_2246()
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
                 flt();
-                itemcreate(-1, 767, cdata(1, 0), cdata(2, 0), 0);
-                cdata(61, 0) = 6;
+                itemcreate(-1, 767, cdata_x(0), cdata_y(0), 0);
+                cdata_god(0) = 6;
                 label_1889();
                 label_2256();
                 return;

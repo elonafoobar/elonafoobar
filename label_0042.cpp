@@ -902,7 +902,7 @@ int label_0042()
             }
             if (trait(tid) == 1)
             {
-                if (cdata(38, 0) < 5)
+                if (cdata_level(0) < 5)
                 {
                     stat = -1;
                     return stat;
@@ -947,7 +947,7 @@ int label_0042()
             }
             if (trait(tid) == 1)
             {
-                if (cdata(38, 0) < 5)
+                if (cdata_level(0) < 5)
                 {
                     stat = -1;
                     return stat;
@@ -956,8 +956,8 @@ int label_0042()
             stat = 1;
             return stat;
         }
-        cdata(70, 0) =
-            limit(cdata(70, 0) + trait(tid) * 5, cdata(70, 0) > 0, 9999);
+        cdata_pv(0) =
+            limit(cdata_pv(0) + trait(tid) * 5, cdata_pv(0) > 0, 9999);
         stat = 1;
         return stat;
     }
@@ -993,8 +993,8 @@ int label_0042()
             stat = 1;
             return stat;
         }
-        cdata(71, 0) =
-            limit(cdata(71, 0) + trait(tid) * 4, cdata(71, 0) > 0, 9999);
+        cdata_dv(0) =
+            limit(cdata_dv(0) + trait(tid) * 4, cdata_dv(0) > 0, 9999);
         stat = 1;
         return stat;
     }
@@ -1115,7 +1115,7 @@ int label_0042()
             stat = 1;
             return stat;
         }
-        cdata(70, 0) += trait(tid) * 3;
+        cdata_pv(0) += trait(tid) * 3;
         stat = 1;
         return stat;
     }
@@ -1863,9 +1863,9 @@ int label_0042()
             stat = 1;
             return stat;
         }
-        if (cdata(71, 0) > 0)
+        if (cdata_dv(0) > 0)
         {
-            cdata(71, 0) = cdata(71, 0) * 125 / 100 + 50;
+            cdata_dv(0) = cdata_dv(0) * 125 / 100 + 50;
         }
         stat = 1;
         return stat;
@@ -2268,19 +2268,19 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの顔はただれている[魅力"s
-                        + -1 * (4 + cdata(38, 0) / 5) + u8"]"s,
+                        + -1 * (4 + cdata_level(0) / 5) + u8"]"s,
                     u8"You have sores on your face. [CHR"s
-                        + -1 * (4 + cdata(38, 0) / 5) + u8"]"s);
+                        + -1 * (4 + cdata_level(0) / 5) + u8"]"s);
                 traitrefn(4) = lang(
                     u8"あなたの顔中に蕁麻疹が出ている[魅力"s
-                        + -2 * (4 + cdata(38, 0) / 5) + u8"]"s,
+                        + -2 * (4 + cdata_level(0) / 5) + u8"]"s,
                     u8"Your face is ulcerate. [CHR"s
-                        + -2 * (4 + cdata(38, 0) / 5) + u8"]"s);
+                        + -2 * (4 + cdata_level(0) / 5) + u8"]"s);
                 traitrefn(5) = lang(
                     u8"あなたの顔は崩れかけている[魅力"s
-                        + -3 * (4 + cdata(38, 0) / 5) + u8"]"s,
+                        + -3 * (4 + cdata_level(0) / 5) + u8"]"s,
                     u8"Your face is crumbling. [CHR"s
-                        + -3 * (4 + cdata(38, 0) / 5) + u8"]"s);
+                        + -3 * (4 + cdata_level(0) / 5) + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの顔のただれは軽くなった。"s,
@@ -2291,7 +2291,7 @@ int label_0042()
             return stat;
         }
         sdata(17, 0) = limit(
-            sdata(17, 0) + trait(tid) * (4 + cdata(38, 0) / 5),
+            sdata(17, 0) + trait(tid) * (4 + cdata_level(0) / 5),
             sdata(17, 0) > 0,
             9999);
         stat = 1;
@@ -2313,9 +2313,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの足の裏は蹄になっている[足装備不可 速度+"s
-                        + (20 + cdata(38, 0) / 2) + u8"]"s,
+                        + (20 + cdata_level(0) / 2) + u8"]"s,
                     u8"Your feet transformed into hooves. [SPD+"s
-                        + (20 + cdata(38, 0) / 2) + u8" Can't wear boots]"s);
+                        + (20 + cdata_level(0) / 2) + u8" Can't wear boots]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの足は元に戻った。"s, u8"Your feet become normal."s);
@@ -2326,7 +2326,7 @@ int label_0042()
             return stat;
         }
         sdata(18, 0) = limit(
-            sdata(18, 0) + (20 + cdata(38, 0) / 2), sdata(18, 0) > 0, 9999);
+            sdata(18, 0) + (20 + cdata_level(0) / 2), sdata(18, 0) > 0, 9999);
         stat = 1;
         return stat;
     }
@@ -2345,10 +2345,10 @@ int label_0042()
             {
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
-                    u8"あなたの目は4つある[感覚+"s + (5 + cdata(38, 0) / 3)
-                        + u8" 魅力"s + (5 + cdata(38, 0) / 3) * -1 + u8"]"s,
-                    u8"You have 4 eyes. [PER+"s + (5 + cdata(38, 0) / 3)
-                        + u8" CHR"s + (5 + cdata(38, 0) / 3) * -1 + u8"]"s);
+                    u8"あなたの目は4つある[感覚+"s + (5 + cdata_level(0) / 3)
+                        + u8" 魅力"s + (5 + cdata_level(0) / 3) * -1 + u8"]"s,
+                    u8"You have 4 eyes. [PER+"s + (5 + cdata_level(0) / 3)
+                        + u8" CHR"s + (5 + cdata_level(0) / 3) * -1 + u8"]"s);
             }
             traitrefn(0) =
                 lang(u8"あなたの目は減った。"s, u8"Your eyes become normal."s);
@@ -2358,9 +2358,11 @@ int label_0042()
             return stat;
         }
         sdata(17, 0) = limit(
-            sdata(17, 0) + (5 + cdata(38, 0) / 3) * -1, sdata(17, 0) > 0, 9999);
+            sdata(17, 0) + (5 + cdata_level(0) / 3) * -1,
+            sdata(17, 0) > 0,
+            9999);
         sdata(13, 0) = limit(
-            sdata(13, 0) + (5 + cdata(38, 0) / 3), sdata(13, 0) > 0, 9999);
+            sdata(13, 0) + (5 + cdata_level(0) / 3), sdata(13, 0) > 0, 9999);
         stat = 1;
         return stat;
     }
@@ -2380,8 +2382,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの背中には羽がある[背中装備不可 重量-20% 速度+"s
-                        + (12 + cdata(38, 0) / 4) + u8"]"s,
-                    u8"You have grown feather. [SPD+"s + (12 + cdata(38, 0) / 4)
+                        + (12 + cdata_level(0) / 4) + u8"]"s,
+                    u8"You have grown feather. [SPD+"s
+                        + (12 + cdata_level(0) / 4)
                         + u8" Weight-20% Can't wear cloaks]"s);
             }
             traitrefn(0) = lang(
@@ -2394,7 +2397,7 @@ int label_0042()
         }
         cbitmod(5, 0, 1);
         sdata(18, 0) = limit(
-            sdata(18, 0) + (12 + cdata(38, 0) / 4), sdata(18, 0) > 0, 9999);
+            sdata(18, 0) + (12 + cdata_level(0) / 4), sdata(18, 0) > 0, 9999);
         stat = 1;
         return stat;
     }
@@ -2414,11 +2417,11 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの首はもの凄く太い[首装備不可 魅力"s
-                        + (5 + cdata(38, 0) / 5) * -1 + u8" PV+"s
-                        + (12 + cdata(38, 0)) + u8"]"s,
+                        + (5 + cdata_level(0) / 5) * -1 + u8" PV+"s
+                        + (12 + cdata_level(0)) + u8"]"s,
                     u8"Your neck is extremely thick. [CHR"s
-                        + (5 + cdata(38, 0) / 5) * -1 + u8" PV+"s
-                        + (12 + cdata(38, 0)) + u8" Can't wear amulets]"s);
+                        + (5 + cdata_level(0) / 5) * -1 + u8" PV+"s
+                        + (12 + cdata_level(0)) + u8" Can't wear amulets]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの首は細くなった。"s, u8"Your neck becomes thin."s);
@@ -2429,8 +2432,10 @@ int label_0042()
             return stat;
         }
         sdata(17, 0) = limit(
-            sdata(17, 0) + (5 + cdata(38, 0) / 5) * -1, sdata(17, 0) > 0, 9999);
-        cdata(70, 0) += 12 + cdata(38, 0);
+            sdata(17, 0) + (5 + cdata_level(0) / 5) * -1,
+            sdata(17, 0) > 0,
+            9999);
+        cdata_pv(0) += 12 + cdata_level(0);
         stat = 1;
         return stat;
     }
@@ -2450,11 +2455,12 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは殺戮に飢えている[DV"s
-                        + (15 + cdata(38, 0) * 3 / 2) * -1 + u8" ダメージ修正+"s
-                        + (5 + cdata(38, 0) * 2 / 3) + u8"]"s,
+                        + (15 + cdata_level(0) * 3 / 2) * -1
+                        + u8" ダメージ修正+"s + (5 + cdata_level(0) * 2 / 3)
+                        + u8"]"s,
                     u8"Desire for violence arises withn in you. [DV"s
-                        + (15 + cdata(38, 0) * 3 / 2) * -1 + u8" Dmg bonus+"s
-                        + (5 + cdata(38, 0) * 2 / 3) + u8"]"s);
+                        + (15 + cdata_level(0) * 3 / 2) * -1 + u8" Dmg bonus+"s
+                        + (5 + cdata_level(0) * 2 / 3) + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの心は落ち着いた。"s,
@@ -2465,7 +2471,7 @@ int label_0042()
             stat = 1;
             return stat;
         }
-        cdata(71, 0) += (15 + cdata(38, 0) * 3 / 2) * -1;
+        cdata_dv(0) += (15 + cdata_level(0) * 3 / 2) * -1;
         stat = 1;
         return stat;
     }
@@ -2485,15 +2491,15 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの頭は巨大化している[耐久"s
-                        + (5 + cdata(38, 0) / 3) * -1 + u8" 器用"s
-                        + (4 + cdata(38, 0) / 4) * -1 + u8" 習得+"s
-                        + (6 + cdata(38, 0) / 2) + u8" 意思+"s
-                        + (2 + cdata(38, 0) / 6) + u8"]"s,
+                        + (5 + cdata_level(0) / 3) * -1 + u8" 器用"s
+                        + (4 + cdata_level(0) / 4) * -1 + u8" 習得+"s
+                        + (6 + cdata_level(0) / 2) + u8" 意思+"s
+                        + (2 + cdata_level(0) / 6) + u8"]"s,
                     u8"Your head has grown huge. [END"s
-                        + (5 + cdata(38, 0) / 3) * -1 + u8" DEX"s
-                        + (4 + cdata(38, 0) / 4) * -1 + u8" LER+"s
-                        + (6 + cdata(38, 0) / 2) + u8" WIL+"s
-                        + (2 + cdata(38, 0) / 6) + u8"]"s);
+                        + (5 + cdata_level(0) / 3) * -1 + u8" DEX"s
+                        + (4 + cdata_level(0) / 4) * -1 + u8" LER+"s
+                        + (6 + cdata_level(0) / 2) + u8" WIL+"s
+                        + (2 + cdata_level(0) / 6) + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの頭は元に戻った。"s,
@@ -2505,13 +2511,17 @@ int label_0042()
             return stat;
         }
         sdata(11, 0) = limit(
-            sdata(11, 0) + (5 + cdata(38, 0) / 3) * -1, sdata(11, 0) > 0, 9999);
+            sdata(11, 0) + (5 + cdata_level(0) / 3) * -1,
+            sdata(11, 0) > 0,
+            9999);
         sdata(12, 0) = limit(
-            sdata(12, 0) + (4 + cdata(38, 0) / 4) * -1, sdata(12, 0) > 0, 9999);
+            sdata(12, 0) + (4 + cdata_level(0) / 4) * -1,
+            sdata(12, 0) > 0,
+            9999);
         sdata(14, 0) = limit(
-            sdata(14, 0) + (6 + cdata(38, 0) / 2), sdata(14, 0) > 0, 9999);
+            sdata(14, 0) + (6 + cdata_level(0) / 2), sdata(14, 0) > 0, 9999);
         sdata(15, 0) = limit(
-            sdata(15, 0) + (2 + cdata(38, 0) / 6), sdata(15, 0) > 0, 9999);
+            sdata(15, 0) + (2 + cdata_level(0) / 6), sdata(15, 0) > 0, 9999);
         stat = 1;
         return stat;
     }
@@ -2591,9 +2601,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは衰弱している[HP-15% 筋力"s
-                        + (4 + cdata(38, 0) / 2) * -1 + u8"]"s,
+                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s,
                     u8"You suffer debilitation. [HP-15% STR"s
-                        + (4 + cdata(38, 0) / 2) * -1 + u8"]"s);
+                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたは健康になった。"s, u8"You become healthy again."s);
@@ -2603,7 +2613,9 @@ int label_0042()
             return stat;
         }
         sdata(10, 0) = limit(
-            sdata(10, 0) + (4 + cdata(38, 0) / 2) * -1, sdata(10, 0) > 0, 9999);
+            sdata(10, 0) + (4 + cdata_level(0) / 2) * -1,
+            sdata(10, 0) > 0,
+            9999);
         sdata(2, 0) = limit(sdata(2, 0) + -15, sdata(2, 0) > 0, 9999);
         stat = 1;
         return stat;
@@ -2624,9 +2636,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは痴呆になっている[MP-15% 魔力"s
-                        + (4 + cdata(38, 0) / 2) * -1 + u8"]"s,
+                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s,
                     u8"You have dementia. [MP-15% MAG"s
-                        + (4 + cdata(38, 0) / 2) * -1 + u8"]"s);
+                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたは明晰になった。"s, u8"You become confident again."s);
@@ -2636,7 +2648,9 @@ int label_0042()
             return stat;
         }
         sdata(16, 0) = limit(
-            sdata(16, 0) + (4 + cdata(38, 0) / 2) * -1, sdata(16, 0) > 0, 9999);
+            sdata(16, 0) + (4 + cdata_level(0) / 2) * -1,
+            sdata(16, 0) > 0,
+            9999);
         sdata(3, 0) = limit(sdata(3, 0) + -15, sdata(3, 0) > 0, 9999);
         stat = 1;
         return stat;
@@ -2657,11 +2671,11 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは重い甲殻で覆われている[PV+"s
-                        + (15 + cdata(38, 0) / 2) + u8" 速度"s
-                        + (20 + cdata(38, 0) / 2) * -1 + u8"]"s,
+                        + (15 + cdata_level(0) / 2) + u8" 速度"s
+                        + (20 + cdata_level(0) / 2) * -1 + u8"]"s,
                     u8"You are covered by heavy carapace. [PV+"s
-                        + (15 + cdata(38, 0) / 2) + u8" SPD"s
-                        + (20 + cdata(38, 0) / 2) * -1 + u8"]"s);
+                        + (15 + cdata_level(0) / 2) + u8" SPD"s
+                        + (20 + cdata_level(0) / 2) * -1 + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの皮膚から甲殻が消えた。"s,
@@ -2673,10 +2687,10 @@ int label_0042()
             return stat;
         }
         sdata(18, 0) = limit(
-            sdata(18, 0) + (20 + cdata(38, 0) / 2) * -1,
+            sdata(18, 0) + (20 + cdata_level(0) / 2) * -1,
             sdata(18, 0) > 0,
             9999);
-        cdata(70, 0) += 15 + cdata(38, 0) / 2;
+        cdata_pv(0) += 15 + cdata_level(0) / 2;
         stat = 1;
         return stat;
     }

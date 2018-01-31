@@ -78,7 +78,8 @@ int stoi(std::string_view s)
     }
     catch (std::invalid_argument&)
     {
-        throw config_loading_error{"Cannot convert to an integer: "s + std::string{s}};
+        throw config_loading_error{"Cannot convert to an integer: "s
+                                   + std::string{s}};
     }
     catch (std::out_of_range&)
     {

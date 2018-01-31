@@ -506,25 +506,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"kobolt"s;
             cdata(158, rc) = 1;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 150;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 150;
             if (rnd(100) < 50)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 171;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 171;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -585,25 +585,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"orc"s;
             cdata(158, rc) = 2;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 150;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 150;
             if (rnd(100) < 51)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 165;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 165;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 130);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -664,25 +664,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"troll"s;
             cdata(158, rc) = 3;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 400;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 400;
             if (rnd(100) < 51)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 391;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 150;
+            cdata_image(rc) = 391;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 150;
             skillinit(2, rc, 90);
             skillinit(3, rc, 80);
             skillinit(10, rc, 10);
@@ -741,25 +741,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"lizardman"s;
             cdata(158, rc) = 4;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 240;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 240;
             if (rnd(100) < 51)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 397;
-            cdata(77, rc) = 120;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 397;
+            cdata_dv_correction_value(rc) = 120;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 120);
             skillinit(3, rc, 70);
             skillinit(10, rc, 7);
@@ -820,25 +820,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"minotaur"s;
             cdata(158, rc) = 5;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 350;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 350;
             if (rnd(100) < 51)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 398;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 398;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 160);
             skillinit(3, rc, 60);
             skillinit(10, rc, 12);
@@ -901,29 +901,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"yerles"s;
             cdata(158, rc) = 6;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(20) + 15);
-            cdata(19, rc) = 165;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 15);
+            cdata_height(rc) = 165;
             if (rnd(100) < 52)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 1;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 1;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 2;
+                cdata_image(rc) = 2;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 110);
             skillinit(3, rc, 90);
             skillinit(10, rc, 7);
@@ -986,29 +986,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"norland"s;
             cdata(158, rc) = 7;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(20) + 15);
-            cdata(19, rc) = 170;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 15);
+            cdata_height(rc) = 170;
             if (rnd(100) < 52)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 1;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 1;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 2;
+                cdata_image(rc) = 2;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 90);
             skillinit(10, rc, 8);
@@ -1073,29 +1073,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"eulderna"s;
             cdata(158, rc) = 8;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(20) + 16);
-            cdata(19, rc) = 175;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 16);
+            cdata_height(rc) = 175;
             if (rnd(100) < 52)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 5;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 5;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 6;
+                cdata_image(rc) = 6;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 100);
             skillinit(10, rc, 6);
@@ -1159,26 +1159,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"fairy"s;
             cdata(158, rc) = 9;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(100) + 5);
-            cdata(19, rc) = 50;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(100) + 5);
+            cdata_height(rc) = 50;
             if (rnd(100) < 52)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 390;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 390;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 390;
+                cdata_image(rc) = 390;
             }
             sdata(60, rc) = 200;
             sdata(53, rc) = 200;
@@ -1187,8 +1187,8 @@ int label_2297()
             sdata(54, rc) = 200;
             sdata(57, rc) = 200;
             sdata(59, rc) = 200;
-            cdata(77, rc) = 250;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 250;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 40);
             skillinit(3, rc, 130);
             skillinit(10, rc, 3);
@@ -1249,25 +1249,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"asura"s;
             cdata(158, rc) = 10;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(20) + 15);
-            cdata(19, rc) = 220;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 15);
+            cdata_height(rc) = 220;
             if (rnd(100) < 52)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 405;
-            cdata(77, rc) = 200;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 405;
+            cdata_dv_correction_value(rc) = 200;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 70);
             skillinit(10, rc, 11);
@@ -1328,25 +1328,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"slime"s;
             cdata(158, rc) = 11;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 2;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 1);
-            cdata(19, rc) = 40;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 2;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 1);
+            cdata_height(rc) = 40;
             if (rnd(100) < 54)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 168;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 168;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 80);
             skillinit(3, rc, 100);
             skillinit(10, rc, 4);
@@ -1406,25 +1406,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"wolf"s;
             cdata(158, rc) = 12;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 2);
-            cdata(19, rc) = 100;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 2);
+            cdata_height(rc) = 100;
             if (rnd(100) < 55)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 254;
-            cdata(77, rc) = 140;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 254;
+            cdata_dv_correction_value(rc) = 140;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -1486,25 +1486,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"dwarf"s;
             cdata(158, rc) = 13;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(60) + 20);
-            cdata(19, rc) = 100;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(60) + 20);
+            cdata_height(rc) = 100;
             if (rnd(100) < 56)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 66;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 66;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 100);
             skillinit(10, rc, 10);
@@ -1568,29 +1568,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"juere"s;
             cdata(158, rc) = 14;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 165;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 165;
             if (rnd(100) < 50)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 9;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 9;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 10;
+                cdata_image(rc) = 10;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 100);
             skillinit(10, rc, 7);
@@ -1652,29 +1652,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"zombie"s;
             cdata(158, rc) = 15;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(200) + 10);
-            cdata(19, rc) = 160;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(200) + 10);
+            cdata_height(rc) = 160;
             if (rnd(100) < 50)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 167;
+            cdata_image(rc) = 167;
             sdata(53, rc) = 500;
             sdata(58, rc) = 500;
             sdata(56, rc) = 500;
             sdata(50, rc) = 80;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 120);
             skillinit(3, rc, 100);
             skillinit(10, rc, 10);
@@ -1737,29 +1737,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"elea"s;
             cdata(158, rc) = 16;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(200) + 10);
-            cdata(19, rc) = 180;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(200) + 10);
+            cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 3;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 3;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 4;
+                cdata_image(rc) = 4;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 110);
             skillinit(10, rc, 6);
@@ -1820,25 +1820,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"rabbit"s;
             cdata(158, rc) = 17;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(5) + 2);
-            cdata(19, rc) = 40;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(5) + 2);
+            cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 169;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 169;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -1897,25 +1897,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"sheep"s;
             cdata(158, rc) = 18;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(5) + 2);
-            cdata(19, rc) = 150;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(5) + 2);
+            cdata_height(rc) = 150;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 170;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 170;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 130);
             skillinit(3, rc, 80);
             skillinit(10, rc, 6);
@@ -1975,25 +1975,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"frog"s;
             cdata(158, rc) = 19;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(5) + 2);
-            cdata(19, rc) = 10;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(5) + 2);
+            cdata_height(rc) = 10;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 172;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 172;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 80);
             skillinit(3, rc, 80);
             skillinit(10, rc, 6);
@@ -2053,25 +2053,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"centipede"s;
             cdata(158, rc) = 20;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 10;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 10;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 173;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 173;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 80);
             skillinit(10, rc, 6);
@@ -2132,25 +2132,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"snail"s;
             cdata(158, rc) = 21;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 8;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 8;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 174;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 174;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 4);
@@ -2209,25 +2209,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"mandrake"s;
             cdata(158, rc) = 22;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 25;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 25;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 175;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 175;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 70);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -2288,25 +2288,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"beetle"s;
             cdata(158, rc) = 23;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 10;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 10;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 176;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 140;
+            cdata_image(rc) = 176;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 140;
             skillinit(2, rc, 80);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -2366,25 +2366,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"mushroom"s;
             cdata(158, rc) = 24;
-            cdata(33, rc) = 7;
-            cdata(65, rc) = 5;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 20;
+            cdata_melee_attack_type(rc) = 7;
+            cdata_special_attack_type(rc) = 5;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 20;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 177;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 177;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 50);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -2444,25 +2444,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"bat"s;
             cdata(158, rc) = 25;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 70;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 70;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 200;
-            cdata(77, rc) = 320;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 200;
+            cdata_dv_correction_value(rc) = 320;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 10);
             skillinit(3, rc, 80);
             skillinit(10, rc, 3);
@@ -2521,25 +2521,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"ent"s;
             cdata(158, rc) = 26;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 1500;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 1500;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 201;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 201;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 170);
             skillinit(3, rc, 80);
             skillinit(10, rc, 9);
@@ -2601,29 +2601,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"lich"s;
             cdata(158, rc) = 27;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 180;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 202;
+            cdata_image(rc) = 202;
             sdata(53, rc) = 500;
             sdata(58, rc) = 500;
             sdata(56, rc) = 500;
             sdata(50, rc) = 80;
-            cdata(77, rc) = 190;
-            cdata(76, rc) = 150;
+            cdata_dv_correction_value(rc) = 190;
+            cdata_pv_correction_value(rc) = 150;
             skillinit(2, rc, 80);
             skillinit(3, rc, 140);
             skillinit(10, rc, 5);
@@ -2684,25 +2684,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"hound"s;
             cdata(158, rc) = 28;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 160;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 160;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 203;
-            cdata(77, rc) = 120;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 203;
+            cdata_dv_correction_value(rc) = 120;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -2762,29 +2762,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"ghost"s;
             cdata(158, rc) = 29;
-            cdata(33, rc) = 6;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 180;
+            cdata_melee_attack_type(rc) = 6;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 205;
+            cdata_image(rc) = 205;
             sdata(53, rc) = 500;
             sdata(58, rc) = 500;
             sdata(56, rc) = 500;
             sdata(50, rc) = 80;
-            cdata(77, rc) = 160;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 160;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 60);
             skillinit(3, rc, 80);
             skillinit(10, rc, 4);
@@ -2844,25 +2844,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"spirit"s;
             cdata(158, rc) = 30;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 100;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 100;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 206;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 206;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -2922,25 +2922,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"eye"s;
             cdata(158, rc) = 31;
-            cdata(33, rc) = 4;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 40;
+            cdata_melee_attack_type(rc) = 4;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 207;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 207;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 3);
@@ -3000,25 +3000,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"wyvern"s;
             cdata(158, rc) = 32;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 1600;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 1600;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 235;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 235;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 190);
             skillinit(3, rc, 80);
             skillinit(10, rc, 11);
@@ -3078,25 +3078,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"wasp"s;
             cdata(158, rc) = 33;
-            cdata(33, rc) = 5;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 80;
+            cdata_melee_attack_type(rc) = 5;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 80;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 210;
-            cdata(77, rc) = 220;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 210;
+            cdata_dv_correction_value(rc) = 220;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 50);
             skillinit(3, rc, 80);
             skillinit(10, rc, 7);
@@ -3155,25 +3155,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"giant"s;
             cdata(158, rc) = 34;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 1800;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 1800;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 232;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 232;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 200);
             skillinit(3, rc, 80);
             skillinit(10, rc, 12);
@@ -3234,25 +3234,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"imp"s;
             cdata(158, rc) = 35;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 80;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 80;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 212;
-            cdata(77, rc) = 200;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 212;
+            cdata_dv_correction_value(rc) = 200;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 70);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -3312,25 +3312,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"hand"s;
             cdata(158, rc) = 36;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 70;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 70;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 213;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 213;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -3389,25 +3389,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"snake"s;
             cdata(158, rc) = 37;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 50;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 50;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 216;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 216;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 6);
@@ -3466,25 +3466,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"drake"s;
             cdata(158, rc) = 38;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 1400;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 1400;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 233;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 120;
+            cdata_image(rc) = 233;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 120;
             skillinit(2, rc, 160);
             skillinit(3, rc, 80);
             skillinit(10, rc, 11);
@@ -3546,25 +3546,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"goblin"s;
             cdata(158, rc) = 39;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 140;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 140;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 220;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 220;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 110);
             skillinit(3, rc, 90);
             skillinit(10, rc, 8);
@@ -3626,25 +3626,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"bear"s;
             cdata(158, rc) = 40;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 280;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 280;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 222;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 222;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 160);
             skillinit(3, rc, 80);
             skillinit(10, rc, 9);
@@ -3705,26 +3705,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"armor"s;
             cdata(158, rc) = 41;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 550;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 550;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 223;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 300;
+            cdata_image(rc) = 223;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 300;
             skillinit(2, rc, 40);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -3784,25 +3784,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"medusa"s;
             cdata(158, rc) = 42;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 160;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 160;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 224;
-            cdata(77, rc) = 140;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 224;
+            cdata_dv_correction_value(rc) = 140;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 110);
             skillinit(10, rc, 7);
@@ -3862,25 +3862,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"cupid"s;
             cdata(158, rc) = 43;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 120;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 120;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 225;
-            cdata(77, rc) = 200;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 225;
+            cdata_dv_correction_value(rc) = 200;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 80);
             skillinit(3, rc, 130);
             skillinit(10, rc, 6);
@@ -3940,30 +3940,30 @@ int label_2297()
         {
             cdatan(2, rc) = u8"phantom"s;
             cdata(158, rc) = 44;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 450;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 450;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 226;
+            cdata_image(rc) = 226;
             sdata(53, rc) = 500;
             sdata(58, rc) = 500;
             sdata(56, rc) = 500;
             sdata(50, rc) = 80;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 200;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 200;
             skillinit(2, rc, 60);
             skillinit(3, rc, 90);
             skillinit(10, rc, 6);
@@ -4023,25 +4023,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"harpy"s;
             cdata(158, rc) = 45;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 140;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 140;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 227;
-            cdata(77, rc) = 150;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 227;
+            cdata_dv_correction_value(rc) = 150;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 100);
             skillinit(10, rc, 8);
@@ -4101,25 +4101,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"dragon"s;
             cdata(158, rc) = 46;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 2400;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 2400;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 228;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 120;
+            cdata_image(rc) = 228;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 120;
             skillinit(2, rc, 220);
             skillinit(3, rc, 80);
             skillinit(10, rc, 13);
@@ -4179,25 +4179,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"dinosaur"s;
             cdata(158, rc) = 47;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 2000;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 2000;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 389;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 120;
+            cdata_image(rc) = 389;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 120;
             skillinit(2, rc, 140);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -4257,25 +4257,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"cerberus"s;
             cdata(158, rc) = 48;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 1200;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 1200;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 229;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 229;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 160);
             skillinit(3, rc, 80);
             skillinit(10, rc, 11);
@@ -4335,25 +4335,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"spider"s;
             cdata(158, rc) = 49;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 1;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 60;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 1;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 60;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 230;
-            cdata(77, rc) = 170;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 230;
+            cdata_dv_correction_value(rc) = 170;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 50);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -4415,26 +4415,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"golem"s;
             cdata(158, rc) = 50;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 700;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 700;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 231;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 140;
+            cdata_image(rc) = 231;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 140;
             skillinit(2, rc, 150);
             skillinit(3, rc, 70);
             skillinit(10, rc, 10);
@@ -4494,26 +4494,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"rock"s;
             cdata(158, rc) = 51;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 500;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 500;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 386;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 200;
+            cdata_image(rc) = 386;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 200;
             skillinit(2, rc, 40);
             skillinit(3, rc, 50);
             skillinit(10, rc, 8);
@@ -4573,25 +4573,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"crab"s;
             cdata(158, rc) = 52;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 50;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 50;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 237;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 150;
+            cdata_image(rc) = 237;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 150;
             skillinit(2, rc, 60);
             skillinit(3, rc, 80);
             skillinit(10, rc, 6);
@@ -4651,30 +4651,30 @@ int label_2297()
         {
             cdatan(2, rc) = u8"skeleton"s;
             cdata(158, rc) = 53;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 160;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 160;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 241;
+            cdata_image(rc) = 241;
             sdata(53, rc) = 500;
             sdata(58, rc) = 500;
             sdata(56, rc) = 500;
             sdata(50, rc) = 80;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 8);
@@ -4735,26 +4735,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"piece"s;
             cdata(158, rc) = 54;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 750;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 750;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 244;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 150;
+            cdata_image(rc) = 244;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 150;
             skillinit(2, rc, 120);
             skillinit(3, rc, 80);
             skillinit(10, rc, 9);
@@ -4814,25 +4814,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"cat"s;
             cdata(158, rc) = 55;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 4;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 60;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 4;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 60;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 253;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 253;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 120);
             skillinit(3, rc, 120);
             skillinit(10, rc, 6);
@@ -4893,25 +4893,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"dog"s;
             cdata(158, rc) = 56;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 80;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 80;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 254;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 254;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 120);
             skillinit(3, rc, 80);
             skillinit(10, rc, 7);
@@ -4973,29 +4973,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"roran"s;
             cdata(158, rc) = 57;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 150;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 150;
             if (rnd(100) < 0)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 4;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 4;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 4;
+                cdata_image(rc) = 4;
             }
-            cdata(77, rc) = 150;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 150;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 4);
@@ -5056,25 +5056,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"rat"s;
             cdata(158, rc) = 58;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 30;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 30;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 255;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 255;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 80);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -5134,25 +5134,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"shell"s;
             cdata(158, rc) = 59;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 120;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 120;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 256;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 340;
+            cdata_image(rc) = 256;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 340;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 7);
@@ -5212,25 +5212,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"catgod"s;
             cdata(158, rc) = 60;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 120;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 120;
             if (rnd(100) < 0)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 199;
-            cdata(77, rc) = 250;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 199;
+            cdata_dv_correction_value(rc) = 250;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 120);
             skillinit(3, rc, 80);
             skillinit(10, rc, 12);
@@ -5291,26 +5291,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"machinegod"s;
             cdata(158, rc) = 61;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 3000;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 3000;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 349;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 150;
+            cdata_image(rc) = 349;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 150;
             skillinit(2, rc, 200);
             skillinit(3, rc, 80);
             skillinit(10, rc, 15);
@@ -5369,25 +5369,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"undeadgod"s;
             cdata(158, rc) = 62;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 1500;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 1500;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 350;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 350;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 150);
             skillinit(3, rc, 500);
             skillinit(10, rc, 10);
@@ -5447,26 +5447,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"machine"s;
             cdata(158, rc) = 63;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 6;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 240;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 6;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 240;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 270;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 270;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 80);
             skillinit(10, rc, 7);
@@ -5527,25 +5527,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"wisp"s;
             cdata(158, rc) = 64;
-            cdata(33, rc) = 4;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 40;
+            cdata_melee_attack_type(rc) = 4;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 272;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 272;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 150);
             skillinit(3, rc, 150);
             skillinit(10, rc, 5);
@@ -5605,25 +5605,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"chicken"s;
             cdata(158, rc) = 65;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 40;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 274;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 274;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 80);
             skillinit(3, rc, 80);
             skillinit(10, rc, 5);
@@ -5683,29 +5683,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"stalker"s;
             cdata(158, rc) = 66;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 180;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 276;
+            cdata_image(rc) = 276;
             sdata(53, rc) = 500;
             sdata(58, rc) = 500;
             sdata(56, rc) = 500;
             sdata(50, rc) = 80;
-            cdata(77, rc) = 130;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 130;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 120);
             skillinit(3, rc, 140);
             skillinit(10, rc, 9);
@@ -5765,25 +5765,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"catsister"s;
             cdata(158, rc) = 67;
-            cdata(33, rc) = 1;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (10 + rnd(4));
-            cdata(19, rc) = 140;
+            cdata_melee_attack_type(rc) = 1;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (10 + rnd(4));
+            cdata_height(rc) = 140;
             if (rnd(100) < 0)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 354;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 354;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 30);
             skillinit(3, rc, 100);
             skillinit(10, rc, 7);
@@ -5846,29 +5846,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"mutant"s;
             cdata(158, rc) = 68;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(50) + 25);
-            cdata(19, rc) = 180;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(50) + 25);
+            cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 3;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 3;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 4;
+                cdata_image(rc) = 4;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 100);
             skillinit(3, rc, 100);
             skillinit(10, rc, 9);
@@ -5928,25 +5928,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"yeek"s;
             cdata(158, rc) = 69;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(30) + 15);
-            cdata(19, rc) = 90;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_height(rc) = 90;
             if (rnd(100) < 50)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 378;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 378;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 80);
             skillinit(3, rc, 90);
             skillinit(10, rc, 4);
@@ -6006,25 +6006,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"yith"s;
             cdata(158, rc) = 70;
-            cdata(33, rc) = 6;
-            cdata(65, rc) = 3;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 950;
+            cdata_melee_attack_type(rc) = 6;
+            cdata_special_attack_type(rc) = 3;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 950;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 429;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 429;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 150);
             skillinit(3, rc, 200);
             skillinit(10, rc, 13);
@@ -6086,29 +6086,29 @@ int label_2297()
         {
             cdatan(2, rc) = u8"servant"s;
             cdata(158, rc) = 71;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(200) + 100);
-            cdata(19, rc) = 165;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(200) + 100);
+            cdata_height(rc) = 165;
             if (rnd(100) < 52)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 1;
-            if (cdata(8, rc) == 1)
+            cdata_image(rc) = 1;
+            if (cdata_sex(rc) == 1)
             {
-                cdata(7, rc) = 2;
+                cdata_image(rc) = 2;
             }
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 90);
             skillinit(3, rc, 150);
             skillinit(10, rc, 6);
@@ -6173,25 +6173,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"horse"s;
             cdata(158, rc) = 72;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 250;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 250;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 262;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 100;
+            cdata_image(rc) = 262;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 150);
             skillinit(3, rc, 50);
             skillinit(10, rc, 9);
@@ -6250,25 +6250,25 @@ int label_2297()
         {
             cdatan(2, rc) = u8"god"s;
             cdata(158, rc) = 73;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - 999999;
-            cdata(19, rc) = 180;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - 999999;
+            cdata_height(rc) = 180;
             if (rnd(100) < 0)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 393;
-            cdata(77, rc) = 300;
-            cdata(76, rc) = 200;
+            cdata_image(rc) = 393;
+            cdata_dv_correction_value(rc) = 300;
+            cdata_pv_correction_value(rc) = 200;
             skillinit(2, rc, 200);
             skillinit(3, rc, 100);
             skillinit(10, rc, 17);
@@ -6334,26 +6334,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"quickling"s;
             cdata(158, rc) = 74;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 25;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 25;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 281;
+            cdata_image(rc) = 281;
             sdata(60, rc) = 500;
-            cdata(77, rc) = 550;
-            cdata(76, rc) = 100;
+            cdata_dv_correction_value(rc) = 550;
+            cdata_pv_correction_value(rc) = 100;
             skillinit(2, rc, 3);
             skillinit(3, rc, 40);
             skillinit(10, rc, 2);
@@ -6414,26 +6414,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"metal"s;
             cdata(158, rc) = 75;
-            cdata(33, rc) = 3;
-            cdata(65, rc) = 0;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 12;
+            cdata_melee_attack_type(rc) = 3;
+            cdata_special_attack_type(rc) = 0;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 12;
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 252;
+            cdata_image(rc) = 252;
             sdata(60, rc) = 500;
-            cdata(77, rc) = 150;
-            cdata(76, rc) = 1000;
+            cdata_dv_correction_value(rc) = 150;
+            cdata_pv_correction_value(rc) = 1000;
             skillinit(2, rc, 1);
             skillinit(3, rc, 100);
             skillinit(10, rc, 4);
@@ -6493,26 +6493,26 @@ int label_2297()
         {
             cdatan(2, rc) = u8"bike"s;
             cdata(158, rc) = 76;
-            cdata(33, rc) = 0;
-            cdata(65, rc) = 6;
-            cdata(21, rc) = gdata(10) - (rnd(10) + 10);
-            cdata(19, rc) = 240;
+            cdata_melee_attack_type(rc) = 0;
+            cdata_special_attack_type(rc) = 6;
+            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_height(rc) = 240;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
             {
-                cdata(8, rc) = 0;
+                cdata_sex(rc) = 0;
             }
             else
             {
-                cdata(8, rc) = 1;
+                cdata_sex(rc) = 1;
             }
             if (mode == 1)
             {
-                cdata(8, rc) = cmsex;
+                cdata_sex(rc) = cmsex;
             }
-            cdata(7, rc) = 471;
-            cdata(77, rc) = 100;
-            cdata(76, rc) = 150;
+            cdata_image(rc) = 471;
+            cdata_dv_correction_value(rc) = 100;
+            cdata_pv_correction_value(rc) = 150;
             skillinit(2, rc, 170);
             skillinit(3, rc, 60);
             skillinit(10, rc, 11);
