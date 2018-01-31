@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include "macro_inv.hpp"
 
 
 namespace elona

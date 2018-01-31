@@ -434,11 +434,11 @@ void label_2251()
                             for (int cnt_end = cnt + (invrange); cnt < cnt_end;
                                  ++cnt)
                             {
-                                if (inv(0, cnt) == 0)
+                                if (inv_number(cnt) == 0)
                                 {
                                     continue;
                                 }
-                                if (inv(3, cnt) == p)
+                                if (inv_id(cnt) == p)
                                 {
                                     deliver(1) = cnt;
                                     break;
@@ -465,7 +465,7 @@ void label_2251()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv(0, cnt) == 0)
+                        if (inv_number(cnt) == 0)
                         {
                             continue;
                         }
@@ -475,11 +475,11 @@ void label_2251()
                         }
                         if (qdata(3, rq) == 1003)
                         {
-                            if (refitem(inv(3, cnt), 5) == 57000)
+                            if (refitem(inv_id(cnt), 5) == 57000)
                             {
-                                if (inv(25, cnt) / 1000 == qdata(12, rq))
+                                if (inv_param1(cnt) / 1000 == qdata(12, rq))
                                 {
-                                    if (inv(26, cnt) == qdata(13, rq))
+                                    if (inv_param2(cnt) == qdata(13, rq))
                                     {
                                         supply = cnt;
                                         break;
@@ -489,7 +489,7 @@ void label_2251()
                         }
                         if (qdata(3, rq) == 1004 || qdata(3, rq) == 1011)
                         {
-                            if (inv(3, cnt) == qdata(11, rq))
+                            if (inv_id(cnt) == qdata(11, rq))
                             {
                                 supply = cnt;
                                 break;
@@ -694,11 +694,11 @@ void label_2251()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv(0, cnt) == 0)
+                if (inv_number(cnt) == 0)
                 {
                     continue;
                 }
-                if (inv(8, cnt) < 3)
+                if (inv_identification_state(cnt) < 3)
                 {
                     ++p;
                 }
@@ -724,11 +724,11 @@ void label_2251()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv(0, cnt) == 0)
+                    if (inv_number(cnt) == 0)
                     {
                         continue;
                     }
-                    if (inv(8, cnt) < 3)
+                    if (inv_identification_state(cnt) < 3)
                     {
                         item_identify(cnt, -1, 250);
                         item_stack(0, cnt, 1);
@@ -841,9 +841,9 @@ void label_2251()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv(0, cnt) != 0)
+                if (inv_number(cnt) != 0)
                 {
-                    inv(8, cnt) = 3;
+                    inv_identification_state(cnt) = 3;
                 }
             }
         }
@@ -1137,12 +1137,12 @@ void label_2251()
         label_2665();
         ti = stat;
         item_copy(deliver(1), ti);
-        inv(0, ti) = 1;
+        inv_number(ti) = 1;
         ci = ti;
         rc = tc;
         label_2663();
         rq = deliver;
-        --inv(0, deliver(1));
+        --inv_number(deliver(1));
         txt(lang(
             itemname(deliver(1), 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(deliver(1), 1) + u8"."s));
@@ -1158,12 +1158,12 @@ void label_2251()
         label_2665();
         ti = stat;
         item_copy(supply, ti);
-        inv(0, ti) = 1;
+        inv_number(ti) = 1;
         cbitmod(987, tc, 1);
         ci = ti;
         rc = tc;
         label_2663();
-        --inv(0, supply);
+        --inv_number(supply);
         txt(lang(
             itemname(supply, 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(supply, 1) + u8"."s));
@@ -1213,8 +1213,8 @@ void label_2251()
         {
             p = itemfind(0, 283);
         }
-        --inv(0, p);
-        if (inv(25, p) == 0)
+        --inv_number(p);
+        if (inv_param1(p) == 0)
         {
             buff = lang(u8"む…中身が空っぽ"s + _dana(2), u8"Hmm! It's empty!"s);
             list(0, listmax) = 0;

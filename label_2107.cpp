@@ -943,7 +943,7 @@ int label_2107()
                         for (int cnt_end = cnt + (invrange); cnt < cnt_end;
                              ++cnt)
                         {
-                            inv(18, cnt) = 0;
+                            inv_body_part(cnt) = 0;
                         }
                     }
                     {

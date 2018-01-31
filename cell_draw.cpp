@@ -579,10 +579,10 @@ void cell_draw()
                                     {
                                         continue;
                                     }
-                                    p_at_m85 =
-                                        inv(2, flooritem_at_m85(cnt2_at_m85));
-                                    i_at_m85 =
-                                        inv(22, flooritem_at_m85(cnt2_at_m85));
+                                    p_at_m85 = inv_image(
+                                        flooritem_at_m85(cnt2_at_m85));
+                                    i_at_m85 = inv_color(
+                                        flooritem_at_m85(cnt2_at_m85));
                                     gsel(1);
                                     color(0);
                                     boxf(

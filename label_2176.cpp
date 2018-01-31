@@ -1154,15 +1154,15 @@ label_2181_internal:
                 txt(lang(
                     u8"呪われた地図は触れると崩れ落ちた。"s,
                     u8"The cursed map crumbles as you touch."s));
-                --inv(0, ci);
+                --inv_number(ci);
                 if (ci >= 5080)
                 {
-                    cell_refresh(inv(5, ci), inv(6, ci));
+                    cell_refresh(inv_x(ci), inv_y(ci));
                 }
                 goto label_2186_internal;
             }
         }
-        if (inv(25, ci) == 0)
+        if (inv_param1(ci) == 0)
         {
             item_separate(ci);
             {
@@ -1217,8 +1217,8 @@ label_2181_internal:
                     }
                 }
             }
-            inv(25, ci) = dx;
-            inv(26, ci) = dy;
+            inv_param1(ci) = dx;
+            inv_param2(ci) = dy;
         }
         txt(lang(
             u8"何かの場所を記した地図のようだ…"s,
@@ -1241,20 +1241,20 @@ label_2181_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
-                y = cnt + inv(26, ci) - 2;
+                y = cnt + inv_param2(ci) - 2;
                 sy = cnt * inf_tiles + wy + 26;
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
                     {
-                        x = cnt + inv(25, ci) - 3;
+                        x = cnt + inv_param1(ci) - 3;
                         sx = cnt * inf_tiles + wx + 46;
                         p = map(x, y, 0);
                         pos(sx + 1, sy + 1);
                         gcopy(2, p % 33 * inf_tiles, p / 33 * inf_tiles);
-                        if (x == inv(25, ci))
+                        if (x == inv_param1(ci))
                         {
-                            if (y == inv(26, ci))
+                            if (y == inv_param2(ci))
                             {
                                 pos(sx, sy);
                                 font(
@@ -1679,11 +1679,11 @@ label_2181_internal:
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv(0, cnt) == 0)
+                    if (inv_number(cnt) == 0)
                     {
                         continue;
                     }
-                    if (inv(16, cnt) == 183)
+                    if (inv_skill(cnt) == 183)
                     {
                         ci = cnt;
                         f = 1;
@@ -1778,7 +1778,7 @@ label_2181_internal:
             stat = 0;
             return stat;
         }
-        if (inv(9, ci) == 0)
+        if (inv_count(ci) == 0)
         {
             txt(lang(
                 u8"釣竿には餌が付いていない。"s,
@@ -1880,7 +1880,7 @@ label_2181_internal:
                 0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
         }
         item_separate(ci);
-        --inv(9, ci);
+        --inv_count(ci);
         rowactre = 0;
         label_2156();
         goto label_2186_internal;
@@ -2300,21 +2300,21 @@ label_2181_internal:
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv(0, cnt) == 0)
+                if (inv_number(cnt) == 0)
                 {
                     continue;
                 }
-                if (inv(17, cnt) >= 0)
+                if (inv_curse_state(cnt) >= 0)
                 {
                     continue;
                 }
                 ci = cnt;
                 p = 0;
-                if (inv(17, ci) == -1)
+                if (inv_curse_state(ci) == -1)
                 {
                     p = rnd(200) + 1;
                 }
-                if (inv(17, ci) == -2)
+                if (inv_curse_state(ci) == -2)
                 {
                     p = rnd(1000) + 1;
                 }
@@ -2324,7 +2324,7 @@ label_2181_internal:
                 }
                 else
                 {
-                    if (inv(18, ci) == 0)
+                    if (inv_body_part(ci) == 0)
                     {
                         continue;
                     }
@@ -2334,7 +2334,7 @@ label_2181_internal:
                     if (efp >= p)
                     {
                         ++p(1);
-                        inv(17, ci) = 0;
+                        inv_curse_state(ci) = 0;
                         item_stack(tc, ci, 1);
                     }
                     else
@@ -3253,7 +3253,7 @@ label_2181_internal:
                     continue;
                 }
                 p(i) = cdata(cnt, tc) % 10000 - 1;
-                if (inv(17, p(i)) == 1)
+                if (inv_curse_state(p(i)) == 1)
                 {
                     if (rnd(10))
                     {
@@ -3271,11 +3271,11 @@ label_2181_internal:
                 for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
                 {
                     p = invhead + rnd(invrange);
-                    if (inv(0, p) == 0)
+                    if (inv_number(p) == 0)
                     {
                         continue;
                     }
-                    if (inv(17, p) == 1)
+                    if (inv_curse_state(p) == 1)
                     {
                         if (rnd(10))
                         {
@@ -3291,13 +3291,13 @@ label_2181_internal:
         {
             i = p(rnd(i));
             valn = itemname(i, 1, 1);
-            if (inv(17, i) == -1)
+            if (inv_curse_state(i) == -1)
             {
-                inv(17, i) = -2;
+                inv_curse_state(i) = -2;
             }
             else
             {
-                inv(17, i) = -1;
+                inv_curse_state(i) = -1;
             }
             if (synccheck(tc, -1))
             {
@@ -3552,7 +3552,7 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         label_20592();
-        if (inv(4, ci) < 4 || inv(4, ci) == 6)
+        if (inv_quality(ci) < 4 || inv_quality(ci) == 6)
         {
             txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
             obvious = 0;
@@ -3570,7 +3570,7 @@ label_2181_internal:
             goto label_2186_internal;
         }
         p = stat;
-        inv(23, ci) = list(1, p) + 40000;
+        inv_subname(ci) = list(1, p) + 40000;
         randomize();
         txt(lang(
             u8"それは"s + listn(0, p) + u8"という銘になった。"s,
@@ -3589,7 +3589,7 @@ label_2181_internal:
         snd(100);
         label_20592();
         f = stat;
-        if (inv(4, ci) >= 4 || ibit(10, ci) == 1)
+        if (inv_quality(ci) >= 4 || ibit(10, ci) == 1)
         {
             txt(lang(
                 u8"そのアイテムに改良の余地はない。"s,
@@ -3598,21 +3598,21 @@ label_2181_internal:
             objfix = 0;
             goto label_2186_internal;
         }
-        randomize(inv(25, efcibk));
-        equip = inv(18, ci);
+        randomize(inv_param1(efcibk));
+        equip = inv_body_part(ci);
         animeload(8, cc);
-        fixmaterial = inv(24, ci);
+        fixmaterial = inv_material(ci);
         label_0265();
-        randomize(inv(25, efcibk));
-        inv(4, ci) = 4;
-        inv(23, ci) = 40000 + rnd(30000);
+        randomize(inv_param1(efcibk));
+        inv_quality(ci) = 4;
+        inv_subname(ci) = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         egolv = rnd(limit(rnd(6), 0, 4) + 1);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
             {
-                randomize(inv(25, efcibk));
+                randomize(inv_param1(efcibk));
                 encadd(
                     ci,
                     randomenc(randomenclv(egolv)),
@@ -3628,15 +3628,15 @@ label_2181_internal:
         if (equip != 0)
         {
             cdata(equip, cc) = cdata(equip, cc) / 10000 * 10000 + ci + 1;
-            inv(18, ci) = equip;
+            inv_body_part(ci) = equip;
         }
         r1 = cc;
         label_1477();
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
-        --inv(0, ci);
-        cell_refresh(inv(5, ci), inv(6, ci));
+        --inv_number(ci);
+        cell_refresh(inv_x(ci), inv_y(ci));
         autosave = 1 * (gdata(20) != 35);
         goto label_2186_internal;
     case 21:
@@ -3653,17 +3653,17 @@ label_2181_internal:
         snd(100);
         label_20592();
         f = stat;
-        if (inv(4, ci) == 5 || ibit(10, ci) == 1)
+        if (inv_quality(ci) == 5 || ibit(10, ci) == 1)
         {
             if (efid == 1127)
             {
                 f = 0;
             }
         }
-        equip = inv(18, ci);
+        equip = inv_body_part(ci);
         if (f == 1)
         {
-            if (inv(4, ci) == 6)
+            if (inv_quality(ci) == 6)
             {
                 if (efp < 350)
                 {
@@ -3678,10 +3678,10 @@ label_2181_internal:
                         + u8"は再生成された。"s,
                     name(cc) + your(cc) + u8" "s + itemname(ci, 1, 1)
                         + u8" is reconstructed."s));
-                --inv(0, ci);
-                cell_refresh(inv(5, ci), inv(6, ci));
+                --inv_number(ci);
+                cell_refresh(inv_x(ci), inv_y(ci));
                 flt();
-                itemcreate(0, inv(3, ci), -1, -1, 0);
+                itemcreate(0, inv_id(ci), -1, -1, 0);
             }
             else
             {
@@ -3713,7 +3713,7 @@ label_2181_internal:
         if (equip != 0)
         {
             cdata(equip, cc) = cdata(equip, cc) / 10000 * 10000 + ci + 1;
-            inv(18, ci) = equip;
+            inv_body_part(ci) = equip;
         }
         r1 = cc;
         label_1477();
@@ -3760,20 +3760,21 @@ label_2181_internal:
         label_20592();
         if (stat == 1)
         {
-            if (inv(20, ci) < efp / 100)
+            if (inv_enhancement(ci) < efp / 100)
             {
                 snd(24);
                 txt(lang(
                     itemname(ci) + u8"は黄金の光に包まれた。"s,
-                    itemname(ci) + u8" "s + is2(inv(0, ci))
+                    itemname(ci) + u8" "s + is2(inv_number(ci))
                         + u8" surrounded by a golden aura."s));
-                ++inv(20, ci);
+                ++inv_enhancement(ci);
             }
             else
             {
                 txt(lang(
                     itemname(ci) + u8"は抵抗した。"s,
-                    itemname(ci) + u8" resist"s + _s2(inv(0, ci)) + u8"."s));
+                    itemname(ci) + u8" resist"s + _s2(inv_number(ci))
+                        + u8"."s));
             }
             r1 = cc;
             label_1477();
@@ -3813,12 +3814,12 @@ label_2181_internal:
         label_20592();
         if (stat == 1)
         {
-            dbid = inv(3, ci);
+            dbid = inv_id(ci);
             dbmode = 2;
             stat = label_1275();
-            if (ichargelevel < 1 || inv(3, ci) == 290 || inv(3, ci) == 480
-                || inv(3, ci) == 289 || inv(3, ci) == 732
-                || inv(3, ci) == 687 && inv(26, ci) != 0)
+            if (ichargelevel < 1 || inv_id(ci) == 290 || inv_id(ci) == 480
+                || inv_id(ci) == 289 || inv_id(ci) == 732
+                || inv_id(ci) == 687 && inv_param2(ci) != 0)
             {
                 txt(lang(
                     u8"それは充填ができないようだ。"s,
@@ -3826,7 +3827,7 @@ label_2181_internal:
                 goto label_2186_internal;
             }
             f = 1;
-            if (inv(9, ci) > ichargelevel)
+            if (inv_count(ci) > ichargelevel)
             {
                 f = -1;
             }
@@ -3841,7 +3842,7 @@ label_2181_internal:
             {
                 f = 0;
             }
-            if (refitem(inv(3, ci), 5) == 54000)
+            if (refitem(inv_id(ci), 5) == 54000)
             {
                 if (rnd(4) == 0)
                 {
@@ -3855,19 +3856,19 @@ label_2181_internal:
             if (f == 1)
             {
                 p = 1 + rnd((ichargelevel / 2 + 1));
-                if (p + inv(9, ci) > ichargelevel)
+                if (p + inv_count(ci) > ichargelevel)
                 {
-                    p = ichargelevel - inv(9, ci) + 1;
+                    p = ichargelevel - inv_count(ci) + 1;
                 }
-                if (refitem(inv(3, ci), 5) == 54000)
+                if (refitem(inv_id(ci), 5) == 54000)
                 {
                     p = 1;
                 }
                 txt(lang(
                     itemname(ci) + u8"は充填された(+"s + p + u8")"s,
-                    itemname(ci) + u8" "s + is2(inv(0, ci))
+                    itemname(ci) + u8" "s + is2(inv_number(ci))
                         + u8" recharged by +"s + p + u8"."s));
-                inv(9, ci) += p;
+                inv_count(ci) += p;
                 animeload(8, cc);
             }
             else
@@ -3876,9 +3877,9 @@ label_2181_internal:
                 {
                     txt(lang(
                         itemname(ci) + u8"は破裂した。"s,
-                        itemname(ci) + u8" explode"s + _s2(inv(0, ci))
+                        itemname(ci) + u8" explode"s + _s2(inv_number(ci))
                             + u8"."s));
-                    --inv(0, ci);
+                    --inv_number(ci);
                     label_1521();
                     goto label_2186_internal;
                 }
@@ -3906,7 +3907,7 @@ label_2181_internal:
         label_20592();
         if (stat == 1)
         {
-            dbid = inv(3, ci);
+            dbid = inv_id(ci);
             dbmode = 2;
             stat = label_1275();
             {
@@ -3937,14 +3938,14 @@ label_2181_internal:
                 }
             }
             animeload(8, cc);
-            p = p * inv(9, ci);
+            p = p * inv_count(ci);
             gdata(25) += p;
             txt(lang(
                 itemname(ci) + u8"を破壊して"s + p + u8"の魔力を抽出した(計"s
                     + gdata(25) + u8")"s,
                 u8"You destroy "s + itemname(ci) + u8" and extract "s + p
                     + u8" recharge powers. (Total:"s + gdata(25) + u8")"s));
-            inv(0, ci) = 0;
+            inv_number(ci) = 0;
             label_1521();
         }
         goto label_2186_internal;
@@ -4017,17 +4018,20 @@ label_2181_internal:
             animeload(8, cc);
             if (efstatus >= 0)
             {
-                if (inv(7, ci) > 0)
+                if (inv_weight(ci) > 0)
                 {
-                    inv(7, ci) = limit(
-                        inv(7, ci) * (100 - efp / 10) / 100, 1, inv(7, ci));
-                    if (inv(15, ci) > 0)
+                    inv_weight(ci) = limit(
+                        inv_weight(ci) * (100 - efp / 10) / 100,
+                        1,
+                        inv_weight(ci));
+                    if (inv_pv(ci) > 0)
                     {
-                        inv(15, ci) -= inv(15, ci) / 10 + 1 + (efstatus < 1);
+                        inv_pv(ci) -= inv_pv(ci) / 10 + 1 + (efstatus < 1);
                     }
-                    if (inv(12, ci) > 0)
+                    if (inv_damage_bonus(ci) > 0)
                     {
-                        inv(12, ci) -= inv(12, ci) / 10 + 1 + (efstatus < 1);
+                        inv_damage_bonus(ci) -=
+                            inv_damage_bonus(ci) / 10 + 1 + (efstatus < 1);
                     }
                 }
                 txt(lang(
@@ -4036,14 +4040,15 @@ label_2181_internal:
             }
             else
             {
-                inv(7, ci) = inv(7, ci) * 150 / 100 + 1000;
-                if (inv(15, ci) > 0)
+                inv_weight(ci) = inv_weight(ci) * 150 / 100 + 1000;
+                if (inv_pv(ci) > 0)
                 {
-                    inv(15, ci) += limit(inv(15, ci) / 10, 1, 5);
+                    inv_pv(ci) += limit(inv_pv(ci) / 10, 1, 5);
                 }
-                if (inv(12, ci) > 0)
+                if (inv_damage_bonus(ci) > 0)
                 {
-                    inv(12, ci) += limit(inv(12, ci) / 10, 1, 5);
+                    inv_damage_bonus(ci) +=
+                        limit(inv_damage_bonus(ci) / 10, 1, 5);
                 }
                 txt(lang(
                     ""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
@@ -4074,7 +4079,7 @@ label_2181_internal:
         f = stat;
         if (f)
         {
-            if (inv(4, ci) > 4 || ibit(5, ci) == 1)
+            if (inv_quality(ci) > 4 || ibit(5, ci) == 1)
             {
                 f = 0;
             }
@@ -4083,9 +4088,9 @@ label_2181_internal:
         {
             autosave = 1 * (gdata(20) != 35);
             animeload(8, cc);
-            fltbk = refitem(inv(3, ci), 5);
+            fltbk = refitem(inv_id(ci), 5);
             valuebk = calcitemvalue(ci, 0);
-            inv(0, ci) = 0;
+            inv_number(ci) = 0;
             {
                 int cnt = 0;
                 for (;; ++cnt)
@@ -4101,9 +4106,9 @@ label_2181_internal:
                     {
                         continue;
                     }
-                    if (inv(1, ci) > valuebk * 3 / 2 + 1000)
+                    if (inv_value(ci) > valuebk * 3 / 2 + 1000)
                     {
-                        inv(0, ci) = 0;
+                        inv_number(ci) = 0;
                         continue;
                     }
                     else
@@ -4558,11 +4563,11 @@ label_2181_internal:
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv(0, cnt) == 0)
+                if (inv_number(cnt) == 0)
                 {
                     continue;
                 }
-                if (inv(3, cnt) == 618)
+                if (inv_id(cnt) == 618)
                 {
                     p = cnt;
                     break;
@@ -4576,7 +4581,7 @@ label_2181_internal:
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv(0, cnt) == 0)
+                    if (inv_number(cnt) == 0)
                     {
                         continue;
                     }
@@ -4584,7 +4589,7 @@ label_2181_internal:
                     {
                         continue;
                     }
-                    if (refitem(inv(3, cnt), 5) != 57000)
+                    if (refitem(inv_id(cnt), 5) != 57000)
                     {
                         continue;
                     }
@@ -4656,7 +4661,8 @@ label_2181_internal:
                 itemcreate(-1, dbid, cdata(1, cc), cdata(2, cc), p);
                 txt(lang(
                     itemname(ci) + u8"が降ってきた！"s,
-                    itemname(ci) + u8" fall"s + _s2(inv(0, ci)) + u8" down!"s));
+                    itemname(ci) + u8" fall"s + _s2(inv_number(ci))
+                        + u8" down!"s));
                 await(100);
                 redraw(1);
             }
@@ -4685,7 +4691,7 @@ label_2181_internal:
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    inv(0, cnt) = 0;
+                    inv_number(cnt) = 0;
                 }
             }
         }

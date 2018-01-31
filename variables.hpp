@@ -1561,7 +1561,7 @@ int inv_getfreeid(int = 0);
 int inv_getowner(int = 0);
 int inv_getspace(int = 0);
 int inv_sum(int = 0);
-int inv_weight(int = 0);
+int inv_weight_(int = 0);
 int item_cold(int = 0, int = 0);
 int item_find(int = 0, int = 0, int = 0);
 int item_fire(int = 0, int = 0);
