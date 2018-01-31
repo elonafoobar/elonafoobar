@@ -503,8 +503,7 @@ void bsave(const std::string& filename, const std::string& data)
         LOG("Failed");
         throw 0;
     }
-    out.write(
-        reinterpret_cast<const char*>(data.c_str()), sizeof(std::size(data)));
+    out.write(reinterpret_cast<const char*>(data.c_str()), std::size(data));
 }
 
 
