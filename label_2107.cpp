@@ -1210,8 +1210,7 @@ int label_2107()
         exist(file + u8"cdata_"s + mid + u8".s2"s);
         if (strsize == -1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         {
             int cnt = 0;
@@ -1268,16 +1267,14 @@ int label_2107()
     }
     if (fmode == 10)
     {
-        dirlist(buff, exedir + u8"tmp\\*.*"s);
-        if (stat == 0)
+        if (dirlist(buff, exedir + u8"tmp\\*.*"s) == 0)
         {
-            stat = stat;
-            return stat;
+            return 0;
         }
         notesel(buff);
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
             {
                 noteget(file, cnt);
                 file = exedir + u8"tmp\\"s + file;
@@ -1292,13 +1289,12 @@ int label_2107()
     if (fmode == 9)
     {
         folder = exedir + u8"save\\"s + playerid;
-        dirlist(buff, folder + u8"\\*.*"s);
-        if (stat != 0)
+        if (dirlist(buff, folder + u8"\\*.*"s) != 0)
         {
             notesel(buff);
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+                for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
                 {
                     noteget(file, cnt);
                     elona_delete(folder + u8"\\"s + file);
@@ -1314,16 +1310,14 @@ int label_2107()
             exist(exedir + u8"tmp\\mdata_"s + mid + u8".s2"s);
             if (strsize == -1)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
         }
         file = exedir + u8"tmp\\map_"s + mid + u8".s2"s;
         exist(file);
         if (strsize == -1)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         elona_delete(file);
         fileadd(file, 1);
@@ -1362,13 +1356,12 @@ int label_2107()
             }
         }
         folder = exedir + u8"tmp"s;
-        dirlist(buff, folder + u8"\\*_"s + area + u8"_*.*"s);
-        if (stat != 0)
+        if (dirlist(buff, folder + u8"\\*_"s + area + u8"_*.*"s) != 0)
         {
             notesel(buff);
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+                for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
                 {
                     noteget(file, cnt);
                     file = folder + u8"\\"s + file;
@@ -1378,8 +1371,7 @@ int label_2107()
             }
         }
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 
 

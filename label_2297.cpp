@@ -4,6 +4,9 @@
 
 namespace elona
 {
+
+
+
 int label_2297()
 {
     if (dbmode == 1)
@@ -464,8 +467,7 @@ int label_2297()
             list(0, listmax) = 1;
             ++listmax;
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"kobolt"s)
     {
@@ -473,23 +475,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 250;
-                return stat;
+                return 250;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"コボルト"s, cnven(u8"kobolt"s));
             cpicref = 171;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -499,8 +497,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -543,8 +540,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"orc"s)
     {
@@ -552,23 +548,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 300;
-                return stat;
+                return 300;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"オーク"s, cnven(u8"orc"s));
             cpicref = 165;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -578,8 +570,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -622,8 +613,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"troll"s)
     {
@@ -631,23 +621,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 250;
-                return stat;
+                return 250;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"トロール"s, cnven(u8"troll"s));
             cpicref = 391;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -657,8 +643,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -699,8 +684,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|A_|W_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"lizardman"s)
     {
@@ -708,23 +692,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 300;
-                return stat;
+                return 300;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"リザードマン"s, cnven(u8"lizardman"s));
             cpicref = 397;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -734,8 +714,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -778,8 +757,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"minotaur"s)
     {
@@ -787,23 +765,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 300;
-                return stat;
+                return 300;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ミノタウロス"s, cnven(u8"minotaur"s));
             cpicref = 398;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -813,8 +787,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -856,8 +829,7 @@ int label_2297()
             s(1) = u8"HD|BD|HA|HA|R_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"yerles"s)
     {
@@ -865,23 +837,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 220;
-                return stat;
+                return 220;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"イェルス"s, cnven(u8"yerles"s));
             cpicref = 1;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -894,8 +862,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -943,8 +910,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"norland"s)
     {
@@ -952,23 +918,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 220;
-                return stat;
+                return 220;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ノーランド"s, cnven(u8"norland"s));
             cpicref = 1;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -979,8 +941,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1028,8 +989,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"eulderna"s)
     {
@@ -1037,23 +997,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 180;
-                return stat;
+                return 180;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"エウダーナ"s, cnven(u8"eulderna"s));
             cpicref = 5;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1066,8 +1022,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -1114,8 +1069,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"fairy"s)
     {
@@ -1123,23 +1077,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 180;
-                return stat;
+                return 180;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"妖精"s, cnven(u8"fairy"s));
             cpicref = 390;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1152,8 +1102,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -1207,8 +1156,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"asura"s)
     {
@@ -1216,23 +1164,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 100;
-                return stat;
+                return 100;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"阿修羅"s, cnven(u8"asura"s));
             cpicref = 405;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1242,8 +1186,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1286,8 +1229,7 @@ int label_2297()
             s(1) = u8"HA|HA|HA|HA|N_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"slime"s)
     {
@@ -1295,23 +1237,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 700;
-                return stat;
+                return 700;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"スライム"s, cnven(u8"slime"s));
             cpicref = 168;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1321,8 +1259,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1364,8 +1301,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"wolf"s)
     {
@@ -1373,23 +1309,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 800;
-                return stat;
+                return 800;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"狼"s, cnven(u8"wolf"s));
             cpicref = 254;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1399,8 +1331,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1442,8 +1373,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"dwarf"s)
     {
@@ -1451,23 +1381,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 150;
-                return stat;
+                return 150;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"丘の民"s, cnven(u8"dwarf"s));
             cpicref = 66;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1479,8 +1405,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -1523,8 +1448,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"juere"s)
     {
@@ -1532,23 +1456,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 210;
-                return stat;
+                return 210;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ジューア"s, cnven(u8"juere"s));
             cpicref = 9;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1561,8 +1481,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -1610,8 +1529,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"zombie"s)
     {
@@ -1619,23 +1537,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 100;
-                return stat;
+                return 100;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ゾンビ"s, cnven(u8"zombie"s));
             cpicref = 167;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1645,8 +1559,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1692,8 +1605,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|R_|A_|W_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"elea"s)
     {
@@ -1701,23 +1613,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 120;
-                return stat;
+                return 120;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"エレア"s, cnven(u8"elea"s));
             cpicref = 3;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1730,8 +1638,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -1778,8 +1685,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"rabbit"s)
     {
@@ -1787,23 +1693,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 800;
-                return stat;
+                return 800;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ウサギ"s, cnven(u8"rabbit"s));
             cpicref = 169;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1813,8 +1715,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1855,8 +1756,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|A_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"sheep"s)
     {
@@ -1864,23 +1764,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1000;
-                return stat;
+                return 1000;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"羊"s, cnven(u8"sheep"s));
             cpicref = 170;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1890,8 +1786,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -1933,8 +1828,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"frog"s)
     {
@@ -1942,23 +1836,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 600;
-                return stat;
+                return 600;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"蛙"s, cnven(u8"frog"s));
             cpicref = 172;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -1968,8 +1858,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2011,8 +1900,7 @@ int label_2297()
             s(1) = u8"BD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"centipede"s)
     {
@@ -2020,23 +1908,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 400;
-                return stat;
+                return 400;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ムカデ"s, cnven(u8"centipede"s));
             cpicref = 173;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2046,8 +1930,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2088,8 +1971,7 @@ int label_2297()
             s(1) = u8"BK|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"snail"s)
     {
@@ -2097,23 +1979,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 500;
-                return stat;
+                return 500;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"かたつむり"s, cnven(u8"snail"s));
             cpicref = 174;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2125,8 +2003,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -2167,8 +2044,7 @@ int label_2297()
             s(1) = u8"BK|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"mandrake"s)
     {
@@ -2176,23 +2052,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 80;
-                return stat;
+                return 80;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"マンドレイク"s, cnven(u8"mandrake"s));
             cpicref = 175;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2202,8 +2074,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2246,8 +2117,7 @@ int label_2297()
             s(1) = u8"HD|BK|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"beetle"s)
     {
@@ -2255,23 +2125,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 750;
-                return stat;
+                return 750;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"昆虫"s, cnven(u8"beetle"s));
             cpicref = 176;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2281,8 +2147,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2324,8 +2189,7 @@ int label_2297()
             s(1) = u8"N_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"mushroom"s)
     {
@@ -2333,23 +2197,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 440;
-                return stat;
+                return 440;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"きのこ"s, cnven(u8"mushroom"s));
             cpicref = 177;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2359,8 +2219,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2402,8 +2261,7 @@ int label_2297()
             s(1) = u8"HD|N_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"bat"s)
     {
@@ -2411,23 +2269,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 350;
-                return stat;
+                return 350;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"コウモリ"s, cnven(u8"bat"s));
             cpicref = 200;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2437,8 +2291,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2479,8 +2332,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"ent"s)
     {
@@ -2488,23 +2340,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 35;
-                return stat;
+                return 35;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"エント"s, cnven(u8"ent"s));
             cpicref = 201;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2514,8 +2362,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2557,8 +2404,7 @@ int label_2297()
             s(1) = u8"HA|R_|R_|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"lich"s)
     {
@@ -2566,23 +2412,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 25;
-                return stat;
+                return 25;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"リッチ"s, cnven(u8"lich"s));
             cpicref = 202;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2594,8 +2436,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -2642,8 +2483,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"hound"s)
     {
@@ -2651,23 +2491,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 540;
-                return stat;
+                return 540;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"猟犬"s, cnven(u8"hound"s));
             cpicref = 203;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2677,8 +2513,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2720,8 +2555,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"ghost"s)
     {
@@ -2729,23 +2563,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 30;
-                return stat;
+                return 30;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"幽霊"s, cnven(u8"ghost"s));
             cpicref = 205;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2755,8 +2585,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2802,8 +2631,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"spirit"s)
     {
@@ -2811,23 +2639,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 25;
-                return stat;
+                return 25;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"精霊"s, cnven(u8"spirit"s));
             cpicref = 206;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2837,8 +2661,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2880,8 +2703,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"eye"s)
     {
@@ -2889,23 +2711,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 50;
-                return stat;
+                return 50;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"目"s, cnven(u8"eye"s));
             cpicref = 207;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2915,8 +2733,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -2958,8 +2775,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"wyvern"s)
     {
@@ -2967,23 +2783,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 100;
-                return stat;
+                return 100;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ワイバーン"s, cnven(u8"wyvern"s));
             cpicref = 235;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -2993,8 +2805,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3036,8 +2847,7 @@ int label_2297()
             s(1) = u8"N_|BD|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"wasp"s)
     {
@@ -3045,23 +2855,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 580;
-                return stat;
+                return 580;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ワスプ"s, cnven(u8"wasp"s));
             cpicref = 210;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3071,8 +2877,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3113,8 +2918,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"giant"s)
     {
@@ -3122,23 +2926,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 60;
-                return stat;
+                return 60;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"巨人"s, cnven(u8"giant"s));
             cpicref = 232;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3148,8 +2948,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3192,8 +2991,7 @@ int label_2297()
             s(1) = u8"BD|BK|HA|HA|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"imp"s)
     {
@@ -3201,23 +2999,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 240;
-                return stat;
+                return 240;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"インプ"s, cnven(u8"imp"s));
             cpicref = 212;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3227,8 +3021,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3270,8 +3063,7 @@ int label_2297()
             s(1) = u8"N_|BD|HA|HA|R_|R_R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"hand"s)
     {
@@ -3279,23 +3071,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 160;
-                return stat;
+                return 160;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"手"s, cnven(u8"hand"s));
             cpicref = 213;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3305,8 +3093,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3347,8 +3134,7 @@ int label_2297()
             s(1) = u8"HA|HA|R_|R_|A_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"snake"s)
     {
@@ -3356,23 +3142,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 430;
-                return stat;
+                return 430;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"蛇"s, cnven(u8"snake"s));
             cpicref = 216;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3382,8 +3164,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3424,8 +3205,7 @@ int label_2297()
             s(1) = u8"BD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"drake"s)
     {
@@ -3433,23 +3213,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 120;
-                return stat;
+                return 120;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ドレイク"s, cnven(u8"drake"s));
             cpicref = 233;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3459,8 +3235,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3502,8 +3277,7 @@ int label_2297()
             s(1) = u8"N_|BD|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"goblin"s)
     {
@@ -3511,23 +3285,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 290;
-                return stat;
+                return 290;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ゴブリン"s, cnven(u8"goblin"s));
             cpicref = 220;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3539,8 +3309,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -3584,8 +3353,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"bear"s)
     {
@@ -3593,23 +3361,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 350;
-                return stat;
+                return 350;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"熊"s, cnven(u8"bear"s));
             cpicref = 222;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3619,8 +3383,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3663,8 +3426,7 @@ int label_2297()
             s(1) = u8"HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"armor"s)
     {
@@ -3672,23 +3434,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 40;
-                return stat;
+                return 40;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"鎧"s, cnven(u8"armor"s));
             cpicref = 223;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3698,8 +3456,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3742,8 +3499,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|A_|W_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"medusa"s)
     {
@@ -3751,23 +3507,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 180;
-                return stat;
+                return 180;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"メデューサ"s, cnven(u8"medusa"s));
             cpicref = 224;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3777,8 +3529,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3820,8 +3571,7 @@ int label_2297()
             s(1) = u8"BD|HA|HA|R_|R_|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"cupid"s)
     {
@@ -3829,23 +3579,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 350;
-                return stat;
+                return 350;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"キューピット"s, cnven(u8"cupid"s));
             cpicref = 225;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3855,8 +3601,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3898,8 +3643,7 @@ int label_2297()
             s(1) = u8"N_|BD|HA|HA|R_|R_|A_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"phantom"s)
     {
@@ -3907,23 +3651,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 35;
-                return stat;
+                return 35;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ファントム"s, cnven(u8"phantom"s));
             cpicref = 226;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -3933,8 +3673,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -3981,8 +3720,7 @@ int label_2297()
             s(1) = u8"N_|BD|HA|HA|R_|R_|A_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"harpy"s)
     {
@@ -3990,23 +3728,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 420;
-                return stat;
+                return 420;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ハーピー"s, cnven(u8"harpy"s));
             cpicref = 227;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4016,8 +3750,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4059,8 +3792,7 @@ int label_2297()
             s(1) = u8"N_|HA|HA|R_|R_|A_|L_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"dragon"s)
     {
@@ -4068,23 +3800,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 20;
-                return stat;
+                return 20;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ドラゴン"s, cnven(u8"dragon"s));
             cpicref = 228;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4094,8 +3822,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4137,8 +3864,7 @@ int label_2297()
             s(1) = u8"N_|BD|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"dinosaur"s)
     {
@@ -4146,23 +3872,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 100;
-                return stat;
+                return 100;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"恐竜"s, cnven(u8"dinosaur"s));
             cpicref = 389;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4172,8 +3894,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4215,8 +3936,7 @@ int label_2297()
             s(1) = u8"N_|BD|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"cerberus"s)
     {
@@ -4224,23 +3944,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 80;
-                return stat;
+                return 80;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ケルベロス"s, cnven(u8"cerberus"s));
             cpicref = 229;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4250,8 +3966,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4293,8 +4008,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|A_|L_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"spider"s)
     {
@@ -4302,23 +4016,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 560;
-                return stat;
+                return 560;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"蜘蛛"s, cnven(u8"spider"s));
             cpicref = 230;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4328,8 +4038,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4371,8 +4080,7 @@ int label_2297()
             s(1) = u8"R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"golem"s)
     {
@@ -4380,23 +4088,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 40;
-                return stat;
+                return 40;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ゴーレム"s, cnven(u8"golem"s));
             cpicref = 231;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4408,8 +4112,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -4452,8 +4155,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"rock"s)
     {
@@ -4461,23 +4163,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 200;
-                return stat;
+                return 200;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"岩"s, cnven(u8"rock"s));
             cpicref = 386;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4487,8 +4185,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4531,8 +4228,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"crab"s)
     {
@@ -4540,23 +4236,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 420;
-                return stat;
+                return 420;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"蟹"s, cnven(u8"crab"s));
             cpicref = 237;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4566,8 +4258,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4609,8 +4300,7 @@ int label_2297()
             s(1) = u8"BK|HA|HA|R_|R_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"skeleton"s)
     {
@@ -4618,23 +4308,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 30;
-                return stat;
+                return 30;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"骸骨"s, cnven(u8"skeleton"s));
             cpicref = 241;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4644,8 +4330,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4693,8 +4378,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"piece"s)
     {
@@ -4702,23 +4386,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 25;
-                return stat;
+                return 25;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"駒"s, cnven(u8"piece"s));
             cpicref = 244;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4728,8 +4408,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4772,8 +4451,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"cat"s)
     {
@@ -4781,23 +4459,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 950;
-                return stat;
+                return 950;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"猫"s, cnven(u8"cat"s));
             cpicref = 253;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4807,8 +4481,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4851,8 +4524,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|L_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"dog"s)
     {
@@ -4860,23 +4532,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 920;
-                return stat;
+                return 920;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"犬"s, cnven(u8"dog"s));
             cpicref = 254;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4886,8 +4554,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -4930,8 +4597,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|L_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"roran"s)
     {
@@ -4939,23 +4605,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 220;
-                return stat;
+                return 220;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ローラン"s, cnven(u8"roran"s));
             cpicref = 4;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -4966,8 +4628,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5014,8 +4675,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"rat"s)
     {
@@ -5023,23 +4683,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1100;
-                return stat;
+                return 1100;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ねずみ"s, cnven(u8"rat"s));
             cpicref = 255;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5049,8 +4705,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5092,8 +4747,7 @@ int label_2297()
             s(1) = u8"BK|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"shell"s)
     {
@@ -5101,23 +4755,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 450;
-                return stat;
+                return 450;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"やどかり"s, cnven(u8"shell"s));
             cpicref = 256;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5127,8 +4777,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5170,8 +4819,7 @@ int label_2297()
             s(1) = u8"L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"catgod"s)
     {
@@ -5179,23 +4827,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 5;
-                return stat;
+                return 5;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"猫の神"s, cnven(u8"catgod"s));
             cpicref = 199;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5205,8 +4849,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5249,8 +4892,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|HA|R_|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"machinegod"s)
     {
@@ -5258,23 +4900,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 5;
-                return stat;
+                return 5;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"機械の神"s, cnven(u8"machinegod"s));
             cpicref = 349;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5284,8 +4922,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5327,8 +4964,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"undeadgod"s)
     {
@@ -5336,23 +4972,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 5;
-                return stat;
+                return 5;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"死霊の神"s, cnven(u8"undeadgod"s));
             cpicref = 350;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5362,8 +4994,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5405,8 +5036,7 @@ int label_2297()
             s(1) = u8"N_|BD|BK|HA|HA|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"machine"s)
     {
@@ -5414,23 +5044,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 15;
-                return stat;
+                return 15;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"機械"s, cnven(u8"machine"s));
             cpicref = 270;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5440,8 +5066,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5485,8 +5110,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"wisp"s)
     {
@@ -5494,23 +5118,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 25;
-                return stat;
+                return 25;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ウィスプ"s, cnven(u8"wisp"s));
             cpicref = 272;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5520,8 +5140,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5563,8 +5182,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"chicken"s)
     {
@@ -5572,23 +5190,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1000;
-                return stat;
+                return 1000;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"鶏"s, cnven(u8"chicken"s));
             cpicref = 274;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5598,8 +5212,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5641,8 +5254,7 @@ int label_2297()
             s(1) = u8"HD|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"stalker"s)
     {
@@ -5650,23 +5262,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 25;
-                return stat;
+                return 25;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"ストーカー"s, cnven(u8"stalker"s));
             cpicref = 276;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5676,8 +5284,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5723,8 +5330,7 @@ int label_2297()
             s(1) = u8"N_|HA|HA|R_|R_|A_||"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"catsister"s)
     {
@@ -5732,23 +5338,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 5;
-                return stat;
+                return 5;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"妹猫"s, cnven(u8"catsister"s));
             cpicref = 354;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5758,8 +5360,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5801,8 +5402,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"mutant"s)
     {
@@ -5810,23 +5410,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 50;
-                return stat;
+                return 50;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"カオスシェイプ"s, cnven(u8"mutant"s));
             cpicref = 3;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5839,8 +5435,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (dbmode == 3)
         {
@@ -5886,8 +5481,7 @@ int label_2297()
             s(1) = u8"BD|HA|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"yeek"s)
     {
@@ -5895,23 +5489,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 500;
-                return stat;
+                return 500;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"イーク"s, cnven(u8"yeek"s));
             cpicref = 378;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5921,8 +5511,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -5964,8 +5553,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"yith"s)
     {
@@ -5973,23 +5561,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 25;
-                return stat;
+                return 25;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"イス"s, cnven(u8"yith"s));
             cpicref = 429;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -5999,8 +5583,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6043,8 +5626,7 @@ int label_2297()
             s(1) = u8"HA|HA|HA|HA|R_|R_|R_|R_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"servant"s)
     {
@@ -6052,23 +5634,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 5;
-                return stat;
+                return 5;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"神の化身"s, cnven(u8"servant"s));
             cpicref = 1;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -6079,8 +5657,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6131,8 +5708,7 @@ int label_2297()
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"horse"s)
     {
@@ -6140,23 +5716,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1000;
-                return stat;
+                return 1000;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"馬"s, cnven(u8"horse"s));
             cpicref = 262;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -6166,8 +5738,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6208,8 +5779,7 @@ int label_2297()
             s(1) = u8"BD|L_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"god"s)
     {
@@ -6217,23 +5787,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"神"s, cnven(u8"god"s));
             cpicref = 393;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -6243,8 +5809,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6292,8 +5857,7 @@ int label_2297()
             s(1) = u8"HA|HA|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"quickling"s)
     {
@@ -6301,23 +5865,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"クイックリング"s, cnven(u8"quickling"s));
             cpicref = 281;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -6327,8 +5887,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6372,8 +5931,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|R_|R_|A_|L_|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"metal"s)
     {
@@ -6381,23 +5939,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 0;
-                return stat;
+                return 0;
             }
             if (dbspec == 9)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"メタル"s, cnven(u8"metal"s));
             cpicref = 252;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -6407,8 +5961,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6451,8 +6004,7 @@ int label_2297()
             s(1) = u8"HD|BD|BK|"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
     if (dbidn == u8"bike"s)
     {
@@ -6460,23 +6012,19 @@ int label_2297()
         {
             if (dbspec == 7)
             {
-                stat = 1;
-                return stat;
+                return 1;
             }
             if (dbspec == 9)
             {
-                stat = 15;
-                return stat;
+                return 15;
             }
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 2)
         {
             racename = lang(u8"バイク"s, cnven(u8"bike"s));
             cpicref = 471;
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 11)
         {
@@ -6486,8 +6034,7 @@ int label_2297()
         }
         if (dbmode == 9)
         {
-            stat = 0;
-            return stat;
+            return 0;
         }
         if (dbmode == 3)
         {
@@ -6531,12 +6078,11 @@ int label_2297()
             s(1) = u8"HD|BD|BK|HA|HA|W_|L_|L_"s;
             label_1531();
         }
-        stat = 0;
-        return stat;
+        return 0;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
+
 
 
 } // namespace elona

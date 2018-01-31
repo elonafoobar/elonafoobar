@@ -35,11 +35,9 @@ int label_0042()
                     u8"あなたの持久力は恐ろしい[スタミナ上昇]"s,
                     u8"You have outstanding stamina. [Stamina+++]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 3)
     {
@@ -62,12 +60,10 @@ int label_0042()
                     u8"あなたは血を吸うことができる"s,
                     u8"You can suck blood now."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         spact(1) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 40)
     {
@@ -90,12 +86,10 @@ int label_0042()
                     u8"あなたは仲間を一時的に強くできる"s,
                     u8"You can temporally strengthen your allies."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         spact(56) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 13)
     {
@@ -118,12 +112,10 @@ int label_0042()
                     u8"あなたは空間を曲げられる"s,
                     u8"You can insta-teleport to nearby tiles."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         spact(27) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 14)
     {
@@ -145,12 +137,10 @@ int label_0042()
                 traitrefn(3) = lang(
                     u8"あなたは口から火を噴ける"s, u8"You can breath fire."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         spact(2) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 22)
     {
@@ -173,12 +163,10 @@ int label_0042()
                     u8"あなたは催眠をかけることができる"s,
                     u8"You can hypnotize single target."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         spact(18) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 23)
     {
@@ -201,12 +189,10 @@ int label_0042()
                     u8"あなたは毒を盛ることができる"s,
                     u8"You can poison a creature."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         spact(15) = 1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 21)
     {
@@ -232,13 +218,11 @@ int label_0042()
                     u8"あなたはとんでもない色魔だ[魅力+8] "s,
                     u8"You are a lady killer. [CHR+8]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(17, 0) =
             limit(sdata(17, 0) + trait(tid) * 4, sdata(17, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 5)
     {
@@ -270,13 +254,11 @@ int label_0042()
                     u8"あなたは腕相撲のチャンピオンだ[筋力+9]"s,
                     u8"You are a master of arm wrestling. [STR+9]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(10, 0) =
             limit(sdata(10, 0) + trait(tid) * 3, sdata(10, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 38)
     {
@@ -303,11 +285,9 @@ int label_0042()
                     u8"あなたは税金の計算にとても強い[税金15%減]"s,
                     u8"You are good at setting expenses off against tax. [TAX-15%]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 39)
     {
@@ -335,11 +315,9 @@ int label_0042()
                     u8"あなたは頻繁に質の高い補給品を受け取る"s,
                     u8"You frequently receive quality supplies."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 42)
     {
@@ -362,11 +340,9 @@ int label_0042()
                     u8"あなたの祈りは呪いの言葉を掻き消す"s,
                     u8"Your prayer nullifies cursed whisperings."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 9)
     {
@@ -396,13 +372,11 @@ int label_0042()
                     u8"あなたは恐ろしく我慢強い[耐久+9]"s,
                     u8"You are awfully tough. [CON+9]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(11, 0) =
             limit(sdata(11, 0) + trait(tid) * 3, sdata(11, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 20)
     {
@@ -429,13 +403,11 @@ int label_0042()
                     u8"あなたは拳聖だ[格闘+6]"s,
                     u8"You mastered martial arts. [Martial Arts+6]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(106, 0) =
             limit(sdata(106, 0) + trait(tid) * 3, sdata(106, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 12)
     {
@@ -464,16 +436,13 @@ int label_0042()
             }
             if (sorg(172, 0) == 0)
             {
-                stat = -1;
-                return stat;
+                return -1;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(172, 0) =
             limit(sdata(172, 0) + trait(tid) * 4, sdata(172, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 43)
     {
@@ -498,15 +467,12 @@ int label_0042()
             }
             if (sorg(168, 0) == 0)
             {
-                stat = -1;
-                return stat;
+                return -1;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         cbitmod(30, 0, 1);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 44)
     {
@@ -529,11 +495,9 @@ int label_0042()
                     u8"あなたの攻撃は敵を恐怖させない"s,
                     u8"Your attacks don't cause enemies to run."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 19)
     {
@@ -562,16 +526,13 @@ int label_0042()
             }
             if (sorg(166, 0) == 0)
             {
-                stat = -1;
-                return stat;
+                return -1;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(166, 0) =
             limit(sdata(166, 0) + trait(tid) * 4, sdata(166, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 15)
     {
@@ -599,13 +560,11 @@ int label_0042()
                     u8"あなたは闇の中で生活できる[暗黒耐性強化]"s,
                     u8"You can dance in darkness. [RES Darkness++]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(53, 0) =
             limit(sdata(53, 0) + trait(tid) * 50 / 2, sdata(53, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 18)
     {
@@ -632,13 +591,11 @@ int label_0042()
                     u8"あなたには毒に強い免疫がある[毒耐性強化]"s,
                     u8"You have a strong tolerance to poison. [RES Poison++]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(55, 0) =
             limit(sdata(55, 0) + trait(tid) * 50 / 2, sdata(55, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 16)
     {
@@ -667,16 +624,13 @@ int label_0042()
             }
             if (sorg(156, 0) == 0)
             {
-                stat = -1;
-                return stat;
+                return -1;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(156, 0) =
             limit(sdata(156, 0) + trait(tid) * 4, sdata(156, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 17)
     {
@@ -703,13 +657,11 @@ int label_0042()
                     u8"あなたは猛烈な信者だ[信仰+8]"s,
                     u8"You are a zealot. [Faith+8]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(181, 0) =
             limit(sdata(181, 0) + trait(tid) * 4, sdata(181, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 1)
     {
@@ -739,13 +691,11 @@ int label_0042()
                     u8"あなたは幸運の女神の寵愛を受けている"s,
                     u8"The goddess of luck smiles on you."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(19, 0) =
             limit(sdata(19, 0) + trait(tid) * 5, sdata(19, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 2)
     {
@@ -784,13 +734,11 @@ int label_0042()
                     u8"あなたは伝説的名苦行者だ[HP+25%]"s,
                     u8"You are an legendary ascetic. [HP+25%]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(2, 0) =
             limit(sdata(2, 0) + trait(tid) * 5, sdata(2, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 11)
     {
@@ -829,13 +777,11 @@ int label_0042()
                     u8"あなたは魔力を支配している[MP+25%]"s,
                     u8"Magic dominats your entire body. [MP+25%"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(3, 0) =
             limit(sdata(3, 0) + trait(tid) * 5, sdata(3, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 6)
     {
@@ -864,16 +810,13 @@ int label_0042()
             }
             if (sdata(159, 0) == 0)
             {
-                stat = -1;
-                return stat;
+                return -1;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(159, 0) =
             limit(sdata(159, 0) + trait(tid) * 3, sdata(159, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 4)
     {
@@ -904,17 +847,14 @@ int label_0042()
             {
                 if (cdata_level(0) < 5)
                 {
-                    stat = -1;
-                    return stat;
+                    return -1;
                 }
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(18, 0) =
             limit(sdata(18, 0) + trait(tid) * 5, sdata(18, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 7)
     {
@@ -949,17 +889,14 @@ int label_0042()
             {
                 if (cdata_level(0) < 5)
                 {
-                    stat = -1;
-                    return stat;
+                    return -1;
                 }
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         cdata_pv(0) =
             limit(cdata_pv(0) + trait(tid) * 5, cdata_pv(0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 8)
     {
@@ -990,13 +927,11 @@ int label_0042()
                     u8"あなたの見切りは伝説的だ[DV+12]"s,
                     u8"You can really dodge enemy attacks. [DV+12]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         cdata_dv(0) =
             limit(cdata_dv(0) + trait(tid) * 4, cdata_dv(0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 10)
     {
@@ -1029,16 +964,13 @@ int label_0042()
             }
             if (sorg(173, 0) == 0)
             {
-                stat = -1;
-                return stat;
+                return -1;
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(173, 0) =
             limit(sdata(173, 0) + trait(tid) * 2, sdata(173, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 41)
     {
@@ -1064,11 +996,9 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたは人肉の味に飽きた。"s,
                 u8"You can no longer accept human flesh."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 25)
     {
@@ -1112,12 +1042,10 @@ int label_0042()
                 u8"Your skin becomes harder."s);
             traitrefn(1) = lang(
                 u8"あなたの皮膚は薄くなった。"s, u8"Your skin becomes pale."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         cdata_pv(0) += trait(tid) * 3;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 26)
     {
@@ -1161,13 +1089,11 @@ int label_0042()
                 u8"Your joints become flexible."s);
             traitrefn(1) =
                 lang(u8"あなたの関節は痛み出した。"s, u8"Your joints creak."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(12, 0) =
             limit(sdata(12, 0) + trait(tid) * 3, sdata(12, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 27)
     {
@@ -1205,13 +1131,11 @@ int label_0042()
                 u8"Suddenly your blood become greenish!"s);
             traitrefn(1) = lang(
                 u8"あなたの血液は薄れた。"s, u8"Your metabolism slows down."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(154, 0) =
             limit(sdata(154, 0) + trait(tid) * 4, sdata(154, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 28)
     {
@@ -1255,13 +1179,11 @@ int label_0042()
                 u8"Your legs become lithe."s);
             traitrefn(1) =
                 lang(u8"あなたの脚はねじれた。"s, u8"Your legs are twisted!"s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(18, 0) =
             limit(sdata(18, 0) + trait(tid) * 5, sdata(18, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 29)
     {
@@ -1304,13 +1226,11 @@ int label_0042()
                 u8"あなたの腕の筋肉が増えた。"s, u8"Your arms grow stronger."s);
             traitrefn(1) = lang(
                 u8"あなたの腕の贅肉が増えた。"s, u8"Your arms become thin."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(10, 0) =
             limit(sdata(10, 0) + trait(tid) * 3, sdata(10, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 30)
     {
@@ -1347,13 +1267,11 @@ int label_0042()
                 u8"あなたの声はよく通る。"s, u8"Your voice becomes lovely."s);
             traitrefn(1) =
                 lang(u8"あなたの声はかれた。"s, u8"Your voice becomes scary."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(17, 0) =
             limit(sdata(17, 0) + trait(tid) * 5, sdata(17, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 31)
     {
@@ -1390,13 +1308,11 @@ int label_0042()
                 u8"あなたの脳は機械化した。"s, u8"Your brain is mechanized!"s);
             traitrefn(1) = lang(
                 u8"あなたの脳は原始化した。"s, u8"Your brain degenerates."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(165, 0) =
             limit(sdata(165, 0) + trait(tid) * 4, sdata(165, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 32)
     {
@@ -1429,13 +1345,11 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたは魔法の耐性を失った。"s,
                 u8"You lose resistance to magic."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(60, 0) =
             limit(sdata(60, 0) + trait(tid) * 50, sdata(60, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 33)
     {
@@ -1468,13 +1382,11 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの鼓膜は薄くなった。"s,
                 u8"Your eardrums become thin."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(57, 0) =
             limit(sdata(57, 0) + trait(tid) * 50, sdata(57, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 34)
     {
@@ -1506,13 +1418,11 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの腕に鳥肌がたった。"s,
                 u8"Your skin gets gooseflesh."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(50, 0) =
             limit(sdata(50, 0) + trait(tid) * 50, sdata(50, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 35)
     {
@@ -1543,13 +1453,11 @@ int label_0042()
                 u8"あなたの皮膚は冷たくなった。"s, u8"You feel hot-headed."s);
             traitrefn(1) =
                 lang(u8"あなたは汗をかきはじめた。"s, u8"You shiver."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(51, 0) =
             limit(sdata(51, 0) + trait(tid) * 50, sdata(51, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 36)
     {
@@ -1582,13 +1490,11 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの身体は電気を良く通す。"s,
                 u8"You lose resistance to lightning."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(52, 0) =
             limit(sdata(52, 0) + trait(tid) * 50, sdata(52, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 37)
     {
@@ -1625,13 +1531,11 @@ int label_0042()
                 lang(u8"あなたの目は細くなった。"s, u8"Your eyes glow."s);
             traitrefn(1) = lang(
                 u8"あなたの視力は低下した。"s, u8"Your sight is weakened."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(13, 0) =
             limit(sdata(13, 0) + trait(tid) * 5, sdata(13, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 150)
     {
@@ -1663,13 +1567,11 @@ int label_0042()
                     u8"あなたはかなり火炎に弱い"s,
                     u8"You have strong weakness to fire."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(50, 0) =
             limit(sdata(50, 0) + trait(tid) * 50, sdata(50, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 151)
     {
@@ -1701,13 +1603,11 @@ int label_0042()
                     u8"あなたはかなり冷気に弱い"s,
                     u8"You have strong weakness to cold."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(51, 0) =
             limit(sdata(51, 0) + trait(tid) * 50, sdata(51, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 152)
     {
@@ -1739,13 +1639,11 @@ int label_0042()
                     u8"あなたはかなり毒に弱い"s,
                     u8"You have strong weakness to poison."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(55, 0) =
             limit(sdata(55, 0) + trait(tid) * 50, sdata(55, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 155)
     {
@@ -1778,13 +1676,11 @@ int label_0042()
                     u8"あなたはかなり暗黒に弱い"s,
                     u8"You have strong weakness to darkness."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(53, 0) =
             limit(sdata(53, 0) + trait(tid) * 50, sdata(53, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 156)
     {
@@ -1804,11 +1700,9 @@ int label_0042()
                     u8"あなたはマナの反動を軽減できる"s,
                     u8"You take less damages from the mana reaction."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 160)
     {
@@ -1828,8 +1722,7 @@ int label_0042()
                     u8"あなたは高い耐性をもっている"s,
                     u8"You have outstanding resistances."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(60, 0) = limit(sdata(60, 0) + 150, sdata(60, 0) > 0, 9999);
         sdata(52, 0) = limit(sdata(52, 0) + 100, sdata(52, 0) > 0, 9999);
@@ -1839,8 +1732,7 @@ int label_0042()
         sdata(54, 0) = limit(sdata(54, 0) + 200, sdata(54, 0) > 0, 9999);
         sdata(58, 0) = limit(sdata(58, 0) + 100, sdata(58, 0) > 0, 9999);
         sdata(51, 0) = limit(sdata(51, 0) + 100, sdata(51, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 161)
     {
@@ -1860,15 +1752,13 @@ int label_0042()
                     u8"あなたは1s以上の物を装備できない[DV上昇]"s,
                     u8"You can't wear equipment weight more than 1s. [DV++]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         if (cdata_dv(0) > 0)
         {
             cdata_dv(0) = cdata_dv(0) * 125 / 100 + 50;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 162)
     {
@@ -1888,11 +1778,9 @@ int label_0042()
                     u8"あなたは罪悪感を感じない[カルマ上限-20]"s,
                     u8"You don't feel guilty. [Karma limit -20]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 169)
     {
@@ -1912,11 +1800,9 @@ int label_0042()
                     u8"あなたは良い心を持っている[カルマ上限+20]"s,
                     u8"You are a good man. [Karma limit +20]"s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 163)
     {
@@ -1936,11 +1822,9 @@ int label_0042()
                     u8"あなたの周りでは質の高いエンチャントが生成される"s,
                     u8"Quality stuff are generated around you."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 164)
     {
@@ -1960,11 +1844,9 @@ int label_0042()
                     u8"あなたが受ける物理ダメージは軽減される"s,
                     u8"You are given physical damage reduction."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 165)
     {
@@ -1984,11 +1866,9 @@ int label_0042()
                     u8"あなたの元素魔法は強化されている"s,
                     u8"Elemental spells you cast are empowered."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 166)
     {
@@ -2008,11 +1888,9 @@ int label_0042()
                     u8"あなたは周囲の狂気を緩和する"s,
                     u8"You are surrounded by an aura that cures sanity."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 167)
     {
@@ -2030,11 +1908,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(u8"あなたは萌える"s, u8"You moe."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 157)
     {
@@ -2053,11 +1929,9 @@ int label_0042()
                 traitrefn(3) = lang(
                     u8"あなたは朦朧状態にならない"s, u8"You won't be dim."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 158)
     {
@@ -2077,11 +1951,9 @@ int label_0042()
                     u8"あなたの食料の消化は遅い"s,
                     u8"Your digestion is slow."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 159)
     {
@@ -2101,11 +1973,9 @@ int label_0042()
                     u8"あなたはより多く採取できる"s,
                     u8"You can gather more materials."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 154)
     {
@@ -2125,11 +1995,9 @@ int label_0042()
                     u8"あなたには追加の成長ボーナスが与えられる"s,
                     u8"You receive extra bonus points."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 153)
     {
@@ -2161,13 +2029,11 @@ int label_0042()
                     u8"あなたはかなり魔法に弱い"s,
                     u8"You have strong weakness to magic."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(60, 0) =
             limit(sdata(60, 0) + trait(tid) * 50, sdata(60, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 0)
     {
@@ -2187,11 +2053,9 @@ int label_0042()
                     u8"あなたの肉体は刻々と変化する"s,
                     u8"Your body is changing every moment."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 168)
     {
@@ -2211,11 +2075,9 @@ int label_0042()
                     u8"あなたのエーテル病の進行は遅い"s,
                     u8"Your body slows the Ether Disease progress."s);
             }
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 201)
     {
@@ -2246,11 +2108,9 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたは重力を発するようになった。"s,
                 u8"You start to generate gravity."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 202)
     {
@@ -2287,15 +2147,13 @@ int label_0042()
                 u8"The swelling in your face decreases."s);
             traitrefn(1) =
                 lang(u8"あなたの顔はただれた。"s, u8"Your face is festered."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(17, 0) = limit(
             sdata(17, 0) + trait(tid) * (4 + cdata_level(0) / 5),
             sdata(17, 0) > 0,
             9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 203)
     {
@@ -2322,13 +2180,11 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの足の裏は蹄に変形した。"s,
                 u8"Your feet change into hooves."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(18, 0) = limit(
             sdata(18, 0) + (20 + cdata_level(0) / 2), sdata(18, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 204)
     {
@@ -2354,8 +2210,7 @@ int label_0042()
                 lang(u8"あなたの目は減った。"s, u8"Your eyes become normal."s);
             traitrefn(1) = lang(
                 u8"あなたの目は増殖した。"s, u8"Your eyes are multipling."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(17, 0) = limit(
             sdata(17, 0) + (5 + cdata_level(0) / 3) * -1,
@@ -2363,8 +2218,7 @@ int label_0042()
             9999);
         sdata(13, 0) = limit(
             sdata(13, 0) + (5 + cdata_level(0) / 3), sdata(13, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 205)
     {
@@ -2392,14 +2246,12 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの背中に羽が生えた。"s,
                 u8"Feathers come out from your back."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         cbitmod(5, 0, 1);
         sdata(18, 0) = limit(
             sdata(18, 0) + (12 + cdata_level(0) / 4), sdata(18, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 206)
     {
@@ -2428,16 +2280,14 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの首は太くなった。"s,
                 u8"Your neck becomes extremely thick."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(17, 0) = limit(
             sdata(17, 0) + (5 + cdata_level(0) / 5) * -1,
             sdata(17, 0) > 0,
             9999);
         cdata_pv(0) += 12 + cdata_level(0);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 207)
     {
@@ -2468,12 +2318,10 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたは憎しみに支配された。"s,
                 u8"Hatred dominates your soul."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         cdata_dv(0) += (15 + cdata_level(0) * 3 / 2) * -1;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 208)
     {
@@ -2507,8 +2355,7 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの頭は巨大化した。"s,
                 u8"Suddenly your head become giant size."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(11, 0) = limit(
             sdata(11, 0) + (5 + cdata_level(0) / 3) * -1,
@@ -2522,8 +2369,7 @@ int label_0042()
             sdata(14, 0) + (6 + cdata_level(0) / 2), sdata(14, 0) > 0, 9999);
         sdata(15, 0) = limit(
             sdata(15, 0) + (2 + cdata_level(0) / 6), sdata(15, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 209)
     {
@@ -2549,11 +2395,9 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの頭上に雨雲が現れた。"s,
                 u8"Clouds of rain start to follow you."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 210)
     {
@@ -2579,11 +2423,9 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたはポーション中毒になった。"s,
                 u8"Potions! More potions!! Suddenly, You become addicted to potion."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 211)
     {
@@ -2609,16 +2451,14 @@ int label_0042()
                 u8"あなたは健康になった。"s, u8"You become healthy again."s);
             traitrefn(1) =
                 lang(u8"あなたは衰弱した。"s, u8"You become weak, very weak."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(10, 0) = limit(
             sdata(10, 0) + (4 + cdata_level(0) / 2) * -1,
             sdata(10, 0) > 0,
             9999);
         sdata(2, 0) = limit(sdata(2, 0) + -15, sdata(2, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 212)
     {
@@ -2644,16 +2484,14 @@ int label_0042()
                 u8"あなたは明晰になった。"s, u8"You become confident again."s);
             traitrefn(1) =
                 lang(u8"あなたはぼけた。"s, u8"You become feebleminded."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(16, 0) = limit(
             sdata(16, 0) + (4 + cdata_level(0) / 2) * -1,
             sdata(16, 0) > 0,
             9999);
         sdata(3, 0) = limit(sdata(3, 0) + -15, sdata(3, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 213)
     {
@@ -2683,16 +2521,14 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの皮膚は甲殻で覆われた。"s,
                 u8"Heavy carapace starts to cover up your skin."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(18, 0) = limit(
             sdata(18, 0) + (20 + cdata_level(0) / 2) * -1,
             sdata(18, 0) > 0,
             9999);
         cdata_pv(0) += 15 + cdata_level(0) / 2;
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 214)
     {
@@ -2717,11 +2553,9 @@ int label_0042()
                 u8"You feel steady."s);
             traitrefn(1) = lang(
                 u8"あなたの周囲の空間は捩れた。"s, u8"You feel unstable."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 215)
     {
@@ -2747,11 +2581,9 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたのマナは杖から魔力を抽出する。"s,
                 u8"You are a living mana battery."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
-        stat = 1;
-        return stat;
+        return 1;
     }
     if (tid == 216)
     {
@@ -2777,15 +2609,12 @@ int label_0042()
             traitrefn(1) = lang(
                 u8"あなたの手から毒が滴り出した。"s,
                 u8"Poison starts to drip from your hands."s);
-            stat = 1;
-            return stat;
+            return 1;
         }
         sdata(55, 0) = limit(sdata(55, 0) + 100, sdata(55, 0) > 0, 9999);
-        stat = 1;
-        return stat;
+        return 1;
     }
-    stat = 0;
-    return stat;
+    return 0;
 }
 
 
