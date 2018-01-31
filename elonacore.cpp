@@ -48,9 +48,8 @@ void label_0002()
 }
 int zentohan(const std::string& prm_209, std::string& prm_210, int prm_211)
 {
-    stat = LCMapStringA(
+    return LCMapStringA(
         GetUserDefaultLCID(), 4194304, prm_209, -1, prm_210, prm_211);
-    return stat;
 }
 void tmset()
 {
@@ -156,9 +155,7 @@ std::string cnven(const std::string& prm_252)
 }
 int cbit(int prm_253, int prm_254)
 {
-    HMMBITCHECK(cdata(450 + prm_253 / 32, prm_254), prm_253 % 32);
-    stat = stat;
-    return stat;
+    return HMMBITCHECK(cdata(450 + prm_253 / 32, prm_254), prm_253 % 32);
 }
 void cbitmod(int prm_255, int prm_256, int prm_257)
 {
@@ -1678,7 +1675,7 @@ void label_0043()
 }
 int ibit(int prm_274, int prm_275)
 {
-    HMMBITCHECK(inv(35 + prm_274 / 32, prm_275), prm_274 % 32);
+    stat = HMMBITCHECK(inv(35 + prm_274 / 32, prm_275), prm_274 % 32);
     stat = stat;
     return stat;
 }
@@ -2116,7 +2113,7 @@ void label_0067()
     {
         return;
     }
-    notesel(buff);
+    stat = notesel(buff);
     noteload(s);
     {
         int cnt = 0;
@@ -2549,22 +2546,22 @@ void key_check(int prm_299)
     {
         j_at_m19 = 0;
         DIGETJOYSTATE(j_at_m19, 0);
-        HMMBITCHECK(j_at_m19, 0);
+        stat = HMMBITCHECK(j_at_m19, 0);
         if (stat)
         {
             p_at_m19 += 2;
         }
-        HMMBITCHECK(j_at_m19, 1);
+        stat = HMMBITCHECK(j_at_m19, 1);
         if (stat)
         {
             p_at_m19 += 8;
         }
-        HMMBITCHECK(j_at_m19, 2);
+        stat = HMMBITCHECK(j_at_m19, 2);
         if (stat)
         {
             p_at_m19 += 1;
         }
-        HMMBITCHECK(j_at_m19, 3);
+        stat = HMMBITCHECK(j_at_m19, 3);
         if (stat)
         {
             p_at_m19 += 4;
@@ -2574,7 +2571,7 @@ void key_check(int prm_299)
             int cnt = 0;
             for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
-                HMMBITCHECK(j_at_m19, 4 + cnt);
+                stat = HMMBITCHECK(j_at_m19, 4 + cnt);
                 if (stat)
                 {
                     a_at_m19 = 1;
@@ -5042,7 +5039,7 @@ void snfood(std::string& prm_360)
 }
 void txtsetlastword()
 {
-    notesel(buff);
+    stat = notesel(buff);
     noteload(
         exedir + u8"user\\"s + lang(u8"lastwords.txt"s, u8"lastwords-e.txt"s));
     noteget(lastword, rnd(noteinfo(0) + 1));
@@ -11352,7 +11349,7 @@ void label_0174()
 void label_0175()
 {
     buff = "";
-    notesel(buff);
+    stat = notesel(buff);
     noteload(exedir + u8"data\\talk.txt"s);
     p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
     label_0174();
@@ -11361,7 +11358,7 @@ void label_0175()
 void label_0176()
 {
     buff = "";
-    notesel(buff);
+    stat = notesel(buff);
     noteload(exedir + u8"data\\talk.txt"s);
     p = -1;
     {
@@ -11562,7 +11559,7 @@ void label_0180()
             u8"第一部メインクエスト完了"s,
             u8"You have completed the main quest."s);
     }
-    talk_conv(s1, 40 - en * 4);
+    stat = talk_conv(s1, 40 - en * 4);
     buff += s1;
     noteadd(""s);
     return;
@@ -11594,7 +11591,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのミシェスに、スライムの退治を頼まれた。スライムの巣窟は、ミシェスの家のすぐ南の家のようだ。"s,
                 u8"Miches of Vernis asked me to investigate the house just south of her home."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11606,7 +11603,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのミシェスに頼まれたスライムの退治を完了した。あとは報告するだけだ。"s,
                 u8"I've wiped out the putit's nest. I have to visit Miches of Vernis to report it."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11631,7 +11628,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのシーナが勤める酒場に、酒泥棒が頻出しているらしい。盗賊団を壊滅させてシーナに報告しよう。"s,
                 u8"Bandits have been stealing things in Vernis. I need to find and destroy their hideout."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11643,7 +11640,7 @@ void label_0181()
             s1 = lang(
                 u8"酒樽を盗んでいたごろつき団を殲滅した。あとはヴェルニースのシーナに報告するだけだ。"s,
                 u8"Those bandits are no more. All I have to do now is bring the news to Shena of Vernis."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11668,7 +11665,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのリリアンに、迷子の子犬ポピーを捜すよう頼まれた。どうやら子犬はヴェルニースのすぐ東にある洞窟にいるらしい。"s,
                 u8"Rilian of Vernis asked me to find her puppy named poppy in the puppy's cave located east of Vernis."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11693,7 +11690,7 @@ void label_0181()
             s1 = lang(
                 u8"ヴェルニースのロイターに金になる仕事を持ちかけられた。何やら危険な仕事のようだ。万全の準備を整えてからロイターに話し掛けよう。"s,
                 u8"Loyter of Vernis has a dangerous, yet highly profitable job for me. I need to prepare well before talking to him again."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11705,7 +11702,7 @@ void label_0181()
             s1 = lang(
                 u8"実験場の全ての敵を殲滅しなければならない。"s,
                 u8"I need to eliminate all of the monsters in the test ground."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11717,7 +11714,7 @@ void label_0181()
             s1 = lang(
                 u8"実験を生き延びて完了させた。ヴェルニースのロイターに報告しよう。"s,
                 u8"I've survived the nightmare. Now to meet Loyer of Vernis to receive the reward."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11742,7 +11739,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11754,7 +11751,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11766,7 +11763,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11778,7 +11775,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11790,7 +11787,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11802,7 +11799,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11814,7 +11811,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11826,7 +11823,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11838,7 +11835,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
                 u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11850,7 +11847,7 @@ void label_0181()
             s1 = lang(
                 u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
                 u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11875,7 +11872,7 @@ void label_0181()
             s1 = lang(
                 u8"カプールのラファエロに嫁を持ってくるよう頼まれた。なんという下劣な男だ。"s,
                 u8"I was asked by Raphael of Port Kapul to bring my wife. What a moron."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11900,7 +11897,7 @@ void label_0181()
             s1 = lang(
                 u8"ヨウィンのタムに、家の猫退治を依頼された。家は南の畑のあたりにあるそうだ。"s,
                 u8"Tam of Yowyn asked me to eliminate the cats in his house. The house is located southern part of Yowyn."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11912,7 +11909,7 @@ void label_0181()
             s1 = lang(
                 u8"タムの家の中の猫を退治した。あとはヨウィンでタムに報告するだけだ。"s,
                 u8"I've freed Tam's house from the cats. To get the reward, I need to speak Tam again in Yowyn."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11937,7 +11934,7 @@ void label_0181()
             s1 = lang(
                 u8"ヨウィンのギルバート大佐に、ジューア解放軍の援護を求められた。準備が整い次第、大佐に話し掛けよう。"s,
                 u8"Carnel Gilbert of Yowyn asked me to help the Juere freedom force fight the Yerles Army. I should speak to him again when I'm ready."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11949,7 +11946,7 @@ void label_0181()
             s1 = lang(
                 u8"イェルスの防衛軍を殲滅しなければならない。"s,
                 u8"I need to destroy the Yerles Army."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11961,7 +11958,7 @@ void label_0181()
             s1 = lang(
                 u8"防衛線を見事に突破した。ヨウィンのギルバート大佐に報告しよう。"s,
                 u8"I've won the war. Now to bring the good news to carnel Gilbert."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11986,7 +11983,7 @@ void label_0181()
             s1 = lang(
                 u8"ヨウィンのアインクに騎士昇格試験の手伝いを頼まれた。ヨウィンの西にあるイークの洞窟に住むイークの首領を倒せばいいそうだ。"s,
                 u8"Ainc of Yowyn asked me to help his promotion task. I need to enter the Yeek's dungeon which is located west of Yowyn and kill the chief."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -11998,7 +11995,7 @@ void label_0181()
             s1 = lang(
                 u8"イークの首領を無事討伐した。ヨウィンのアインクに報告しよう。"s,
                 u8"I've defeated the chief of Yeek. I should head back to Yowyn and report to Ainc."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12023,7 +12020,7 @@ void label_0181()
             s1 = lang(
                 u8"カプールのアーノルドに、カミカゼ特攻隊に耐えるパルミア軍への援軍を頼まれた。準備が整い次第、アーノルドに話し掛けよう。"s,
                 u8"Arnord of Port Kapul asked me to help the isolated Palmian 10th regiment from massive Kamikaze attacks. I should prepare and speak to Arnord when ready."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12035,7 +12032,7 @@ void label_0181()
             s1 = lang(
                 u8"パルミア軍が撤退を完了するまでの間、カミカゼ特攻隊の猛攻に耐えなければならない。パルミア軍が撤退したら、知らせが入るはずだ。"s,
                 u8"I have to hold the battle line to gain time while the Palmian army retreats. A messenger will inform me when it's done."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12047,7 +12044,7 @@ void label_0181()
             s1 = lang(
                 u8"カミカゼ特攻隊の猛攻に耐えきった。カプールのアーノルドに報告しよう。"s,
                 u8"I survived the kamikaze attack. I have to bring the good news to Arnord of Port Kapul."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12072,7 +12069,7 @@ void label_0181()
             s1 = lang(
                 u8"パルミアのミーアは、稀少猫シルバーキャットが欲しいらしい。なんとか捕まえて、ミーアに渡そう。"s,
                 u8"Mia of Palmia wants a silver cat, a very rare cat. If I happen to capture one, I should bring it to Mia."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12097,7 +12094,7 @@ void label_0181()
             s1 = lang(
                 u8"ルミエストのレントンが、レイチェルという童話作家によって描かれた絵本を探している。絵本は全部で4巻あるらしい。全て見つけたら、レントンに報告しよう。"s,
                 u8"Renton of Lumiest is looking for the fairy tale books written by Rachael. I should bring it to him if I happen to find one. There're total of 4 books in the series."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12122,7 +12119,7 @@ void label_0181()
             s1 = lang(
                 u8"ピラミッドに出入りする資格を得た。ピラミッドはカプールの北にあり、中には古代の秘宝が眠っているといわれている。"s,
                 u8"I've got a invitation to the pyramid. The pyramid is located north of Port Kapul and it is rumored that it holds great treasure."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12148,7 +12145,7 @@ void label_0181()
             s1 = lang(
                 u8"ダルフィのノエルにパルミアの街に爆弾をしかけるように依頼された。爆弾をパルミアの宿屋の部屋にあるぬいぐるみにしかけよう。"s,
                 u8"Noel of Derphy asked me to set up a bomb in Palmia. I need to place it right on the teddy bear in the inn."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12160,7 +12157,7 @@ void label_0181()
             s1 = lang(
                 u8"見事にパルミアを壊滅させた。あとはダルフィのノエルの元に戻り、報告するだけだ。"s,
                 u8"I have successfully destroyed Palmia. Now all I need to report back to Noel in Derphy."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12188,7 +12185,7 @@ void label_0181()
                     + u8"個の捕獲済みモンスターボールを届ける必要がある。"s,
                 u8"Icolle of Port Kapul asked me to bring 5 filled monster balls. I still need to bring him "s
                     + (6 - gdata(464)) + u8" of them."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12213,7 +12210,7 @@ void label_0181()
             s1 = lang(
                 u8"ルミエストのバルザックに、下水道の清掃を頼まれた。下水道の入り口は宿屋の近くにあるみたいだ。。"s,
                 u8"Balzak of Lumiest wants me to sweep the entire sewer. I can find the entrance to the sewer around the inn."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12225,7 +12222,7 @@ void label_0181()
             s1 = lang(
                 u8"下水道の大掃除を完了した。あとはルミエストのバルザックに報告するだけだ。"s,
                 u8"I've finished sweeping the sewer. I need to report it to Balzak of Lumiest."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12252,7 +12249,7 @@ void label_0181()
                     gdata(266) + u8"ギルドポイントを獲得する必要がある。"s,
                 u8"To join the Mages Guild, I need to gather "s + gdata(266) +
                     u8" more guild points and talk to the guild guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12277,7 +12274,7 @@ void label_0181()
             s1 = lang(
                 u8"盗賊ギルドに加入するには、税金を4ヶ月以上滞納した状態で、ダルフィのギルドの番人に話しかける必要がある。"s,
                 u8"To join the Thieves Guild, I need to not pay tax for 4 months, that means I'll be a criminal for sure."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12305,7 +12302,7 @@ void label_0181()
                 u8"To join the Fighters Guild, I need to slay "s + gdata(267) +
                     u8" more "s + refchara_str(gdata(268), 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12333,7 +12330,7 @@ void label_0181()
                 u8"To raise the rank in the Mages Guild, you need to gather "s +
                     gdata(266) +
                     u8" more guild points and talk to the guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12361,7 +12358,7 @@ void label_0181()
                 u8"To raise the rank in the Fighters Guild, I need to slay "s +
                     gdata(267) + u8" more "s + refchara_str(gdata(268), 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12389,7 +12386,7 @@ void label_0181()
                 u8"To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of "s +
                     gdata(269) +
                     u8" gold pices and talk to the guild guard in Derphy."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12414,7 +12411,7 @@ void label_0181()
             s1 = lang(
                 u8"パルミアのコネリー少将に、ミノタウロスの首領の退治を頼まれた。ミノタウロスの巣窟は、ヨウィンの南にあるみたいだ。"s,
                 u8"General Conery wants me to hunt the chief of minotaur. The nest is located south of Yowyn."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12426,7 +12423,7 @@ void label_0181()
             s1 = lang(
                 u8"ミノタウロスの首領を無事討伐した。パルミアのコネリー少将に報告しよう。"s,
                 u8"I've killed the chief of minotaur. I should head back to Palmia and speak to General Conery."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12451,7 +12448,7 @@ void label_0181()
             s1 = lang(
                 u8"アクリ・テオラの謎の科学者に、リトルシスターを連れてくるよう頼まれた。捕獲するためには、ビッグダディを倒し、捕獲玉をリトルにぶつける必要がある。"s,
                 u8"A strange scientist asked me to bring little sisters to her. To capture a little sister, I need to kill Big Daddy first then throw the little ball at her."s);
-            talk_conv(s1, 40 - en * 4);
+            stat = talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
@@ -12481,11 +12478,11 @@ void label_0182()
 }
 void label_0183()
 {
-    notesel(buffboard);
+    stat = notesel(buffboard);
     SDIM1(buff2);
     p = instr(buffboard, 0, s + u8","s + lang(u8"JP"s, u8"EN"s));
     buff2 = strmid(buffboard, p, instr(buffboard, p, u8"%END"s));
-    notesel(buff2);
+    stat = notesel(buff2);
     if (noteinfo(0) <= 1)
     {
         buff2 = u8"no txt"s;
@@ -12497,7 +12494,7 @@ void label_0183()
     s(3) = strmid(buff2, 0, p);
     if (val == 2)
     {
-        notesel(buff);
+        stat = notesel(buff);
         return;
     }
     buff2 = strmid(buff2, p + 1, strlen(buff2) - p - 1);
@@ -12695,7 +12692,7 @@ void label_0184()
         }
         buff += nquestdate + u8"\n"s;
         s(5) = lang(u8"報酬: "s, u8"Reward  : "s) + s(5);
-        talk_conv(s(5), 40 - en * 10);
+        stat = talk_conv(s(5), 40 - en * 10);
         buff += s(5) + u8"\n"s;
         if (qdata(8, rq) == 3)
         {
@@ -12707,7 +12704,7 @@ void label_0184()
         {
             s(4) = lang(u8"内容: "s, u8"Detail  : "s) + s(6);
         }
-        talk_conv(s(4), 40 - en * 10);
+        stat = talk_conv(s(4), 40 - en * 10);
         buff += s(4) + u8"\n"s;
     }
     if (val == 3)
@@ -12910,7 +12907,7 @@ void addnews2(const std::string& prm_401, int prm_402)
         txtef(13);
         txt(u8"[News] "s + n_at_m36);
     }
-    talk_conv(n_at_m36, 38 - en * 5);
+    stat = talk_conv(n_at_m36, 38 - en * 5);
     newsbuff += n_at_m36 + u8"\n"s;
     return;
 }
@@ -13944,7 +13941,7 @@ void label_0192()
     gsel(0);
     gmode(2);
     text_set();
-    notesel(msg_log);
+    stat = notesel(msg_log);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (inf_maxlog - 2); cnt < cnt_end; ++cnt)
@@ -13967,7 +13964,7 @@ void label_0192()
     pos(-40, -40);
     mesbox(keylog, 0, 0, 1, 10);
     SDIM1(buffboard);
-    notesel(buffboard);
+    stat = notesel(buffboard);
     noteload(exedir + u8"data\\board.txt"s);
     SDIM1(filter_item);
     SDIM1(rffilter_item);
@@ -16319,7 +16316,7 @@ void csvsort(
 void label_0221()
 {
     SDIM3(randn1, 30, 20);
-    notesel(titlebuff);
+    stat = notesel(titlebuff);
     noteload(lang(u8"data\\ndata.csv"s, u8"data\\ndata-e.csv"s));
     SDIM4(rnlist, 20, 15, noteinfo(0));
     {
@@ -16338,7 +16335,7 @@ void label_0221()
             }
         }
     }
-    notesel(titlebuff);
+    stat = notesel(titlebuff);
     noteload(u8"data\\name.csv"s);
     SDIM3(rn1, 15, noteinfo(0));
     SDIM3(rn2, 15, noteinfo(0));
@@ -25253,7 +25250,7 @@ void fileadd(const std::string& prm_692, int prm_693)
         q_at_m98(0) = u8"#"s;
         q_at_m98(1) = u8"*"s;
     }
-    notesel(filemod);
+    stat = notesel(filemod);
     p_at_m98 = instr(filemod, 0, prm_692);
     if (p_at_m98 != -1)
     {
@@ -25277,7 +25274,7 @@ void fileadd(const std::string& prm_692, int prm_693)
 }
 void arrayfile()
 {
-    notesel(tmp);
+    stat = notesel(tmp);
     tmp = "";
     if (fread == 1)
     {
@@ -27856,7 +27853,7 @@ int customtalk(int prm_764, int prm_765)
             return stat;
         }
         SDIM2(buff_at_m116, strsize);
-        notesel(buff_at_m116);
+        stat = notesel(buff_at_m116);
         noteload(exedir + u8"user\\talk\\"s + cdatan(4, prm_764));
         f_at_m116 = 1;
     }
@@ -27866,7 +27863,7 @@ int customtalk(int prm_764, int prm_765)
         {
             f_at_m116 = 1;
             buff_at_m116 = ""s + usertxt(cdata_cnpc_id(prm_764));
-            notesel(buff_at_m116);
+            stat = notesel(buff_at_m116);
         }
     }
     if (f_at_m116)
@@ -33777,7 +33774,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
         stat = 0;
         return stat;
     }
-    notesel(netbuf);
+    stat = notesel(netbuf);
     noteload(file_at_m147);
     exist(file_at_m147);
     size_at_m147 = strsize;
@@ -33871,7 +33868,7 @@ void label_1398()
     SDIM1(cgiurl2);
     SDIM1(cgiurl3);
     SDIM2(serverlist, 200);
-    notesel(serverlist);
+    stat = notesel(serverlist);
     net_read(4);
     if (stat == 1 && cfg_serverlist == 0)
     {
@@ -42070,8 +42067,8 @@ void label_1541()
     pos(960, 96);
     picload(exedir + u8"graphic\\deco_cm.bmp"s, 1);
     gsel(0);
-    dirlist(buff, exedir + u8"save\\*"s, 5);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"save\\*"s, 5);
+    stat = notesel(buff);
     if (noteinfo() >= 5)
     {
         redraw(0);
@@ -42958,8 +42955,8 @@ label_1565_internal:
         cmname = randomname();
     }
     playerid = u8"sav_"s + cmname;
-    dirlist(buff, exedir + u8"save\\*"s, 5);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"save\\*"s, 5);
+    stat = notesel(buff);
     f = 0;
     {
         int cnt = 0;
@@ -43041,7 +43038,7 @@ void label_1567(int CNT)
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     tx = wx + 230;
     ty = wy + 62;
-    talk_conv(buff, 60 + en * 2);
+    stat = talk_conv(buff, 60 + en * 2);
     color(0, 0, 0);
     pos(tx - 20, ty);
     mes(buff);
@@ -43571,7 +43568,7 @@ void label_1572()
     biten(3) = lang(u8"トンボ"s, u8"dragonfly"s);
     biten(4) = lang(u8"セミ"s, u8"locust"s);
     biten(5) = lang(u8"ヘラクレス"s, u8"beetle"s);
-    notesel(buff);
+    stat = notesel(buff);
     noteload(exedir + u8"data\\book.txt"s);
     p = instr(buff, 0, u8"%DEFINE"s);
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -55708,7 +55705,7 @@ void label_1755()
 }
 int cdbit(int prm_985, int prm_986)
 {
-    HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
+    stat = HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
     stat = stat;
     return stat;
 }
@@ -55845,7 +55842,7 @@ int card_ref(int prm_991)
             s_at_tcg += lang(u8"スキル:"s, u8"Skill:"s);
         }
         s_at_tcg += cdrefn_at_tcg(cardrefskill);
-        talk_conv(s_at_tcg, 95);
+        stat = talk_conv(s_at_tcg, 95);
         rtvaln += u8"\n"s + s_at_tcg;
     }
     stat = dbid;
@@ -59841,7 +59838,7 @@ void atxinit()
 {
     if (atxthrough == 0)
     {
-        notesel(atbuff);
+        stat = notesel(atbuff);
         atbuff = "";
     }
     atxthrough = 0;
@@ -63003,8 +63000,8 @@ int label_1896()
     gsel(0);
     snd(62);
     dx = tx + 36;
-    talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
-    notesel(buff);
+    stat = talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
+    stat = notesel(buff);
     dy = ty + noteinfo(0) * 15 + 80 + listmax * 20;
 label_1897_internal:
     redraw(0);
@@ -65717,7 +65714,7 @@ void label_1942()
     }
     userfile = u8"temp.eum"s;
     bload(exedir + u8"user\\"s + userfile, headtemp, 1024);
-    notesel(headtemp);
+    stat = notesel(headtemp);
     noteget(s, 5);
     noteget(s(1), 6);
     username = ""s + s;
@@ -65748,13 +65745,13 @@ label_19431_internal:
     folder = exedir + u8"user\\"s;
     if (comctrl == 0 || comctrl == 2)
     {
-        dirlist(buff, folder + u8"*.eum"s);
+        stat = dirlist(buff, folder + u8"*.eum"s);
     }
     if (comctrl == 1)
     {
-        dirlist(buff, folder + u8"*.ept"s);
+        stat = dirlist(buff, folder + u8"*.ept"s);
     }
-    notesel(buff);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -65765,7 +65762,7 @@ label_19431_internal:
                 continue;
             }
             bload(folder + file, headtemp, 1024);
-            notesel(headtemp);
+            stat = notesel(headtemp);
             noteget(s, 0);
             noteget(s(1), 1);
             noteget(s(2), 4);
@@ -65936,7 +65933,7 @@ label_1945_internal:
             userfile = listn(1, p);
         }
         bload(folder + userfile, headtemp, 1024);
-        notesel(headtemp);
+        stat = notesel(headtemp);
         noteget(s, 5);
         noteget(s(1), 6);
         if (comctrl == 0 || comctrl == 2)
@@ -67154,7 +67151,7 @@ void label_1964()
     cs_bk = -1;
     snd(26);
     buff = "";
-    notesel(buff);
+    stat = notesel(buff);
     del_chara(56);
     r1 = 56;
     cdata_piety_point(r1) = cdata_piety_point(0);
@@ -67565,7 +67562,7 @@ label_196901_internal:
             }
         }
     }
-    notesel(buff);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -68002,7 +67999,7 @@ void label_1972()
     {
         buff = u8"No news"s;
     }
-    notesel(buff);
+    stat = notesel(buff);
     noteadd(u8" - News - "s, 0);
     noteadd(""s, 1);
     if (noteinfo(0) / (pagesize / 2) % 2 == 1)
@@ -68490,7 +68487,7 @@ label_1978_internal:
             cutname(s(4), 20);
             pos(wx + 392, y + 2);
             mes(s(4));
-            talk_conv(buff, 70);
+            stat = talk_conv(buff, 70);
             p(0) = qdata(5, rq) / 5 + 1;
             p(1) = 14;
             {
@@ -70623,8 +70620,8 @@ int label_2014()
     cc = 0;
     cs_bk = -1;
     folder = exedir + u8"user\\talk\\"s;
-    dirlist(buff, folder + u8"*.txt"s);
-    notesel(buff);
+    stat = dirlist(buff, folder + u8"*.txt"s);
+    stat = notesel(buff);
     list(0, 0) = -999;
     listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
     ++listmax;
@@ -70961,7 +70958,7 @@ void label_2022()
     pos(0, 0);
     picload(exedir + u8"graphic\\book.bmp"s, 1);
     gsel(0);
-    notesel(buff);
+    stat = notesel(buff);
     noteload(exedir + u8"data\\book.txt"s);
     p = instr(buff, 0, ""s + inv_param1(ci) + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
@@ -74427,7 +74424,7 @@ void label_2068()
                     listn(0, p) = "";
                     ++p;
                     buf = trimdesc(description(cnt), 2);
-                    notesel(buf);
+                    stat = notesel(buf);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
@@ -75482,7 +75479,7 @@ void label_2085()
     dbmode = 2;
     label_2298();
     buff = "";
-    notesel(buff);
+    stat = notesel(buff);
     noteadd(
         u8"Elona Version 1.22 キャラクター情報 "s + gdata(10) + u8"年"s
         + gdata(11) + u8"月"s + gdata(12) + u8"日 "s + gdata(13) + u8"時"s
@@ -76127,10 +76124,10 @@ void label_2089()
                     }
                 }
                 folder = exedir + u8"tmp"s;
-                dirlist(buff, folder + u8"\\*_"s + p + u8"_*.*"s);
+                stat = dirlist(buff, folder + u8"\\*_"s + p + u8"_*.*"s);
                 if (stat != 0)
                 {
-                    notesel(buff);
+                    stat = notesel(buff);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -76594,8 +76591,8 @@ void label_2104()
 }
 void label_2105()
 {
-    dirlist(buff, exedir + u8"user\\*.npc"s);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"user\\*.npc"s);
+    stat = notesel(buff);
     usernpcmax = noteinfo(0);
     if (usernpcmax >= 100)
     {
@@ -76765,8 +76762,8 @@ void label_2105()
     label_2110();
     gsel(5);
     folder = exedir + u8"user\\graphic\\"s;
-    dirlist(buff, folder + u8"chara_*.bmp"s);
-    notesel(buff);
+    stat = dirlist(buff, folder + u8"chara_*.bmp"s);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -76982,8 +76979,8 @@ void label_2109()
 }
 void label_2110()
 {
-    dirlist(buff, exedir + u8"user\\_tmp_*.npc"s);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"user\\_tmp_*.npc"s);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -76992,8 +76989,8 @@ void label_2110()
             elona_delete(exedir + u8"user\\"s + file);
         }
     }
-    dirlist(buff, exedir + u8"user\\!tmp*.npc"s);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"user\\!tmp*.npc"s);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -77006,8 +77003,8 @@ void label_2110()
 }
 void label_2111()
 {
-    dirlist(buff, exedir + u8"user\\*.t"s);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"user\\*.t"s);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -77024,11 +77021,11 @@ void label_2112()
     fmode = 10;
     label_2107();
     folder = exedir + u8"save\\"s + playerid + u8"\\"s;
-    notesel(buff);
+    stat = notesel(buff);
     exist(folder + u8"filelist.txt"s);
     if (strsize == -1)
     {
-        dirlist(buff, folder + u8"*.*"s);
+        stat = dirlist(buff, folder + u8"*.*"s);
     }
     else
     {
@@ -77084,8 +77081,8 @@ void label_2113()
     fmode = 4;
     label_2107();
     file = exedir + u8"save\\"s + playerid;
-    dirlist(save_buff, file, 5);
-    notesel(save_buff);
+    stat = dirlist(save_buff, file, 5);
+    stat = notesel(save_buff);
     save_f = 0;
     {
         int cnt = 0;
@@ -77107,7 +77104,7 @@ void label_2113()
     {
     }
     file += u8"\\"s;
-    notesel(filemod);
+    stat = notesel(filemod);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -77139,8 +77136,8 @@ void label_2113()
     fmode = 8;
     label_2107();
     filemod = "";
-    dirlist(buff, exedir + u8"tmp\\*.*"s);
-    notesel(buff);
+    stat = dirlist(buff, exedir + u8"tmp\\*.*"s);
+    stat = notesel(buff);
     notesave(exedir + u8"save\\"s + playerid + u8"\\filelist.txt"s);
     return;
 }
@@ -77393,8 +77390,8 @@ void label_2118()
     }
     label_1425();
     file = exedir + u8"save\\*"s;
-    dirlist(buff, file, 5);
-    notesel(buff);
+    stat = dirlist(buff, file, 5);
+    stat = notesel(buff);
     keyrange = 0;
     {
         int cnt = 0;
@@ -77588,8 +77585,8 @@ void label_2121()
     }
     label_1425();
     file = exedir + u8"save\\*"s;
-    dirlist(buff, file, 5);
-    notesel(buff);
+    stat = dirlist(buff, file, 5);
+    stat = notesel(buff);
     keyrange = 0;
     listmax = 0;
     {
@@ -77866,7 +77863,7 @@ label_21261_internal:
             goto label_21261_internal;
         }
     }
-    notesel(inputlog);
+    stat = notesel(inputlog);
     p(1) = 2;
     ime_esc = 0;
     onkey_1();
@@ -78287,7 +78284,7 @@ label_2132_internal:
 }
 void label_2134()
 {
-    notesel(dbm);
+    stat = notesel(dbm);
     buff = "";
     if (dbm == ""s)
     {
@@ -78967,9 +78964,9 @@ void label_2139()
 }
 void label_2140()
 {
-    CreateMutexA(0, 0, u8"Elona"s);
+    stat = CreateMutexA(0, 0, u8"Elona"s);
     mutex_handle = stat;
-    func_3();
+    stat = func_3();
     if (stat == 183)
     {
         dialog(
@@ -91573,7 +91570,7 @@ void label_22600()
         label_1419();
         cs = 0;
     }
-    talk_conv(buff, 56 - en * 3);
+    stat = talk_conv(buff, 56 - en * 3);
     chatpicloaded = 0;
     redraw(0);
     wx = (windoww - 600) / 2 + inf_screenx;
@@ -91711,7 +91708,7 @@ void label_22610()
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(20, 10, 5);
-    notesel(buff);
+    stat = notesel(buff);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
@@ -95267,7 +95264,7 @@ void label_2662()
             }
         }
     }
-    notesel(newsbuff);
+    stat = notesel(newsbuff);
     if (noteinfo(0) > 195)
     {
         {
@@ -96604,7 +96601,7 @@ void label_2680()
     file = u8"void"s;
     y1 = 60;
     y2 = windowh - 60;
-    notesel(buff);
+    stat = notesel(buff);
     noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
     s = u8"{"s + sceneid + u8"}"s;
     scidx = instr(buff, 0, s);
@@ -96626,7 +96623,7 @@ label_2681:
         label_2685();
         return;
     }
-    notesel(buff);
+    stat = notesel(buff);
     noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
     cs = 0;
     key_list = key_enter;
@@ -98974,7 +98971,7 @@ void label_2701()
     picload(exedir + u8"\\graphic\\deco_help.bmp"s, 1);
     gsel(0);
     page = 0;
-    notesel(buff);
+    stat = notesel(buff);
     noteload(exedir + u8"data\\exhelp.txt"s);
     p = instr(buff, 0, u8"%"s + ghelp + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
@@ -99111,7 +99108,7 @@ void label_2703()
         cs = 3;
         cs_bk2 = cs;
     }
-    notesel(buff);
+    stat = notesel(buff);
     noteload(
         exedir + u8"data\\"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s));
     list(0, 0) = 0;
@@ -99459,7 +99456,7 @@ void label_2707()
     showscroll(wx, wy, ww, wh);
     net_read();
     buff = "";
-    notesel(buff);
+    stat = notesel(buff);
     header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
     {
         int cnt = 0;
@@ -99508,7 +99505,7 @@ void label_2707()
                 }
                 break;
             }
-            talk_conv(s, (ww - 110 - en * 50) / 7);
+            stat = talk_conv(s, (ww - 110 - en * 50) / 7);
             i += stat;
             pos(wx + 48, (19 - i) * 16 + wy + 48);
             mes(s);
@@ -99786,7 +99783,7 @@ label_2711_internal:
 }
 void label_2713()
 {
-    notesel(note_buff);
+    stat = notesel(note_buff);
     noteload(exedir + u8"\\config.txt"s);
     f = 0;
     {
@@ -99858,7 +99855,7 @@ void label_2715()
     key_select(16) = u8"q"s;
     key_select(17) = u8"r"s;
     key_select(18) = u8"s"s;
-    notesel(note_buff);
+    stat = notesel(note_buff);
     noteload(exedir + u8"\\config.txt"s);
     {
         int cnt = 0;
@@ -100411,7 +100408,7 @@ void label_2715()
 }
 void label_2719()
 {
-    notesel(note_buff);
+    stat = notesel(note_buff);
     noteload(exedir + u8"\\user\\export.txt"s);
     usertitle = "";
     usermsg = "";
@@ -100535,7 +100532,7 @@ void label_2719()
 }
 void label_2720()
 {
-    notesel(headtemp);
+    stat = notesel(headtemp);
     noteget(s, 1);
     username = ""s + s;
     noteget(s, 5);
@@ -100577,7 +100574,7 @@ void label_2727()
     pagesize = 12;
     cs = 0;
     cc = 0;
-    notesel(buff);
+    stat = notesel(buff);
     noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
     p = 0;
     {
@@ -102842,7 +102839,7 @@ label_2747:
                 if (chatturn % 250 == 1)
                 {
                     net_read();
-                    notesel(chatnew);
+                    stat = notesel(chatnew);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
@@ -103985,7 +103982,7 @@ void label_2752()
         lastword = lang(u8"「"s, u8"\""s) + inputlog + lang(u8"」"s, u8"\""s);
     }
     buff = "";
-    notesel(buff);
+    stat = notesel(buff);
     file = exedir + u8"save\\bone"s;
     exist(file + u8".txt"s);
     if (strsize != -1)
@@ -104125,7 +104122,7 @@ void label_2752()
 }
 void label_2753()
 {
-    notesel(buff);
+    stat = notesel(buff);
     redraw(0);
     gmode(0);
     pos(0, 0);

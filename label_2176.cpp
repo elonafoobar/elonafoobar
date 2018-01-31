@@ -2421,7 +2421,7 @@ label_2181_internal:
         }
         else
         {
-            notesel(artifactlocation);
+            stat = notesel(artifactlocation);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)

@@ -6,7 +6,7 @@ namespace elona
 {
 int label_2107()
 {
-    notesel(filemod);
+    stat = notesel(filemod);
     gdata(805) = gdata(805) + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
     if (fmode == 8 || fmode == 7)
@@ -294,7 +294,7 @@ int label_2107()
             }
         }
         file = folder + u8"art.log"s;
-        notesel(artifactlocation);
+        stat = notesel(artifactlocation);
         if (fread == 0)
         {
             notesave(file);
@@ -304,7 +304,7 @@ int label_2107()
             noteload(file);
         }
         file = folder + u8"news.log"s;
-        notesel(newsbuff);
+        stat = notesel(newsbuff);
         if (fread == 0)
         {
             notesave(file);
@@ -1268,13 +1268,13 @@ int label_2107()
     }
     if (fmode == 10)
     {
-        dirlist(buff, exedir + u8"tmp\\*.*"s);
+        stat = dirlist(buff, exedir + u8"tmp\\*.*"s);
         if (stat == 0)
         {
             stat = stat;
             return stat;
         }
-        notesel(buff);
+        stat = notesel(buff);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -1292,10 +1292,10 @@ int label_2107()
     if (fmode == 9)
     {
         folder = exedir + u8"save\\"s + playerid;
-        dirlist(buff, folder + u8"\\*.*"s);
+        stat = dirlist(buff, folder + u8"\\*.*"s);
         if (stat != 0)
         {
-            notesel(buff);
+            stat = notesel(buff);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
@@ -1362,10 +1362,10 @@ int label_2107()
             }
         }
         folder = exedir + u8"tmp"s;
-        dirlist(buff, folder + u8"\\*_"s + area + u8"_*.*"s);
+        stat = dirlist(buff, folder + u8"\\*_"s + area + u8"_*.*"s);
         if (stat != 0)
         {
-            notesel(buff);
+            stat = notesel(buff);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)

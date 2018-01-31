@@ -388,7 +388,7 @@ void dialog(const std::string& message, int = 0);
 std::string dirinfo(int n);
 
 
-void dirlist(std::string& out, const std::string& pattern, int = 0);
+int dirlist(std::string& out, const std::string& pattern, int = 0);
 
 double elona_double(const std::string& s);
 
@@ -545,7 +545,7 @@ void noteload(const std::string&);
 
 void notesave(const std::string&);
 
-void notesel(std::string&);
+int notesel(std::string&);
 
 void noteunsel();
 
@@ -693,7 +693,7 @@ void HMMBITON(int&, int);
 
 void HMMBITOFF(int&, int);
 
-void HMMBITCHECK(int, int);
+int HMMBITCHECK(int, int);
 
 
 void sockopen(int, const std::string&, int);
@@ -722,12 +722,12 @@ void RemoveDirectoryA(const std::string&);
 
 void GetLastError();
 
-void CreateMutexA(int, int, const std::string&);
+int CreateMutexA(int, int, const std::string&);
 
 
 void CloseHandle(int id);
 
-void func_3();
+int func_3();
 
 
 int LCMapStringA(int, int, const std::string&, int, const std::string&, int);

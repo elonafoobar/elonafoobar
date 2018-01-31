@@ -682,14 +682,14 @@ std::regex glob2regex(const std::string& glob)
 
 
 
-void dirlist(std::string& out, const std::string& glob, int attr)
+int dirlist(std::string& out, const std::string& glob, int attr)
 {
     LOG("dirlist", attr, fs::path{to_unix_filename(glob)}.parent_path());
 
     assert(attr == 0 || attr == 5);
 
     out = "";
-    stat = 0;
+    int n = 0;
 
     const auto regex = dirlist_detail::glob2regex(to_unix_filename(glob));
     const auto bang = glob.find('!') != std::string::npos;
@@ -708,10 +708,12 @@ void dirlist(std::string& out, const std::string& glob, int attr)
         {
             out += dir.path().string();
             out += '\n';
-            ++stat;
+            ++n;
             LOG("dirlist:dir/file", dir.path().string());
         }
     }
+
+    return n;
 }
 
 double elona_double(const std::string& s)
@@ -1379,10 +1381,10 @@ void notesave(const std::string& filename)
     out << *notemanip::buffer;
 }
 
-void notesel(std::string& buf)
+int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;
-    stat = noteinfo(0);
+    return noteinfo(0);
 }
 
 void noteunsel()
@@ -2107,9 +2109,9 @@ void HMMBITOFF(int& x, int n)
     x &= ~(1 << n);
 }
 
-void HMMBITCHECK(int x, int n)
+int HMMBITCHECK(int x, int n)
 {
-    stat = x & (1 << n) ? 1 : 0;
+    return x & (1 << n) ? 1 : 0;
 }
 
 
@@ -2163,9 +2165,9 @@ void GetLastError()
 {
 }
 
-void CreateMutexA(int, int, const std::string&)
+int CreateMutexA(int, int, const std::string&)
 {
-    stat = 42; // Any positive number.
+    return 42; // Any positive number.
 }
 
 
@@ -2173,9 +2175,9 @@ void CloseHandle(int)
 {
 }
 
-void func_3()
+int func_3()
 {
-    stat = 0;
+    return 0;
 }
 
 
@@ -2308,8 +2310,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
         if (len < max_line_length)
         {
             text += rest;
-            stat = n;
-            return stat;
+            return n;
         }
         size_t line_length = 0;
         while (line_length <= len)
@@ -2361,8 +2362,7 @@ int talk_conv_en(std::string& text, int max_line_length)
             if (p == std::string::npos)
             {
                 text += rest;
-                stat = n;
-                return stat;
+                return n;
             }
             if (line_length + p + 1 > max_line_length)
             {

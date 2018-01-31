@@ -990,7 +990,7 @@ label_2725_internal:
                 int cnt = 0;
                 for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
                 {
-                    HMMBITCHECK(j, 4 + cnt);
+                    stat = HMMBITCHECK(j, 4 + cnt);
                     if (stat)
                     {
                         p = cnt;
