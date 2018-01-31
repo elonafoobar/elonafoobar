@@ -23424,12 +23424,12 @@ void cell_check(int prm_603, int prm_604)
     if (map(prm_603, prm_604, 6) != 0)
     {
         cellfeat = map(prm_603, prm_604, 6) / 1000 % 100;
-        if (chipm(7, map(prm_603, prm_604, 6) % 1000) && 4)
+        if (chipm(7, map(prm_603, prm_604, 6) % 1000) & 4)
         {
             cellaccess = 0;
         }
     }
-    if (chipm(7, map(prm_603, prm_604, 0)) && 4)
+    if (chipm(7, map(prm_603, prm_604, 0)) & 4)
     {
         cellaccess = 0;
     }
@@ -23531,14 +23531,14 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
         {
             return 0;
         }
-        if (chipm(7, map(prm_612, prm_613, 0)) && 1)
+        if (chipm(7, map(prm_612, prm_613, 0)) & 1)
         {
             return 0;
         }
         if (map(prm_612, prm_613, 6) != 0)
         {
             cell_featread(prm_612, prm_613);
-            if (chipm(7, feat) && 1)
+            if (chipm(7, feat) & 1)
             {
                 return 0;
             }
@@ -23606,7 +23606,7 @@ int breath_list()
                             {
                                 continue;
                             }
-                            if (chipm(7, map(tx, ty, 0)) && 1)
+                            if (chipm(7, map(tx, ty, 0)) & 1)
                             {
                                 continue;
                             }
@@ -23740,11 +23740,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 goto label_0387_internal;
             }
-            if (chipm(7, map(prm_629, ty_at_modfov, 0)) && 1)
+            if (chipm(7, map(prm_629, ty_at_modfov, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) && 1)
+            if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -23761,11 +23761,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 goto label_0389_internal;
             }
-            if (chipm(7, map(prm_629, ty_at_modfov, 0)) && 1)
+            if (chipm(7, map(prm_629, ty_at_modfov, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) && 1)
+            if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -23785,11 +23785,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 goto label_0391_internal;
             }
-            if (chipm(7, map(tx_at_modfov, prm_630, 0)) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_630, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -23806,11 +23806,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 goto label_0393_internal;
             }
-            if (chipm(7, map(tx_at_modfov, prm_630, 0)) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_630, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -23840,10 +23840,10 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
     {
         if (ay_at_modfov == 2)
         {
-            if ((chipm(7, map(prm_629, prm_630 + sy_at_modfov, 0)) && 1) == 0)
+            if ((chipm(7, map(prm_629, prm_630 + sy_at_modfov, 0)) & 1) == 0)
             {
                 if ((chipm(7, map(prm_629, (prm_630 + sy_at_modfov), 6) % 1000)
-                     && 1)
+                     & 1)
                     == 0)
                 {
                     return 1;
@@ -23857,13 +23857,13 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             if (ax_at_modfov == 2)
             {
-                if ((chipm(7, map(prm_629 + sx_at_modfov, prm_630, 0)) && 1)
+                if ((chipm(7, map(prm_629 + sx_at_modfov, prm_630, 0)) & 1)
                     == 0)
                 {
                     if ((chipm(
                              7,
                              map((prm_629 + sx_at_modfov), prm_630, 6) % 1000)
-                         && 1)
+                         & 1)
                         == 0)
                     {
                         return 1;
@@ -23893,11 +23893,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             goto label_0395_internal;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
         {
             return 0;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
         {
             return 0;
         }
@@ -23911,11 +23911,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             if (qy_at_modfov > f2_at_modfov)
             {
                 ty_at_modfov += sy_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
                 {
                     return 0;
                 }
@@ -23953,11 +23953,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             goto label_0397_internal;
             return 0;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
         {
             return 0;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
         {
             return 0;
         }
@@ -23971,11 +23971,11 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             if (qx_at_modfov > f2_at_modfov)
             {
                 tx_at_modfov += sx_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
                 {
                     return 0;
                 }
@@ -24026,11 +24026,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 goto label_0400_internal;
             }
-            if (chipm(7, map(prm_633, ty_at_modfov, 0)) && 1)
+            if (chipm(7, map(prm_633, ty_at_modfov, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) && 1)
+            if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -24053,11 +24053,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 goto label_0402_internal;
             }
-            if (chipm(7, map(prm_633, ty_at_modfov, 0)) && 1)
+            if (chipm(7, map(prm_633, ty_at_modfov, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) && 1)
+            if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -24084,11 +24084,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 goto label_0404_internal;
             }
-            if (chipm(7, map(tx_at_modfov, prm_634, 0)) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_634, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -24111,11 +24111,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 goto label_0406_internal;
             }
-            if (chipm(7, map(tx_at_modfov, prm_634, 0)) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_634, 0)) & 1)
             {
                 return 0;
             }
-            if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) && 1)
+            if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
             {
                 return 0;
             }
@@ -24149,10 +24149,10 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
     {
         if (ay_at_modfov == 2)
         {
-            if ((chipm(7, map(prm_633, prm_634 + sy_at_modfov, 0)) && 1) == 0)
+            if ((chipm(7, map(prm_633, prm_634 + sy_at_modfov, 0)) & 1) == 0)
             {
                 if ((chipm(7, map(prm_633, (prm_634 + sy_at_modfov), 6) % 1000)
-                     && 1)
+                     & 1)
                     == 0)
                 {
                     p_at_modfov = 0;
@@ -24177,13 +24177,13 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         {
             if (ax_at_modfov == 2)
             {
-                if ((chipm(7, map(prm_633 + sx_at_modfov, prm_634, 0)) && 1)
+                if ((chipm(7, map(prm_633 + sx_at_modfov, prm_634, 0)) & 1)
                     == 0)
                 {
                     if ((chipm(
                              7,
                              map((prm_633 + sx_at_modfov), prm_634, 6) % 1000)
-                         && 1)
+                         & 1)
                         == 0)
                     {
                         route(0, p_at_modfov) = 1;
@@ -24229,11 +24229,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         {
             goto label_0408_internal;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
         {
             return 0;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
         {
             return 0;
         }
@@ -24253,11 +24253,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 route(0, p_at_modfov) = 2;
                 route(1, p_at_modfov) = sy_at_modfov;
                 ++p_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
                 {
                     return 0;
                 }
@@ -24310,11 +24310,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             goto label_0410_internal;
             return 0;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
         {
             return 0;
         }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
         {
             return 0;
         }
@@ -24334,11 +24334,11 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
                 route(0, p_at_modfov) = 1;
                 route(1, p_at_modfov) = sx_at_modfov;
                 ++p_at_modfov;
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
                 {
                     return 0;
                 }
-                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) && 1)
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
                 {
                     return 0;
                 }
@@ -28559,11 +28559,11 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
                     {
                         continue;
                     }
-                    if (chipm(7, map(dx_at_m130, dy_at_m130, 0)) && 4)
+                    if (chipm(7, map(dx_at_m130, dy_at_m130, 0)) & 4)
                     {
                         continue;
                     }
-                    if (chipm(7, map(dx_at_m130, dy_at_m130, 6) % 1000) && 4)
+                    if (chipm(7, map(dx_at_m130, dy_at_m130, 6) % 1000) & 4)
                     {
                         continue;
                     }
@@ -30840,7 +30840,7 @@ int copy_chara(int prm_848)
             }
             if (map(x_at_m139, y_at_m139, 1) == 0)
             {
-                if ((chipm(7, map(x_at_m139, y_at_m139, 0)) && 4) == 0)
+                if ((chipm(7, map(x_at_m139, y_at_m139, 0)) & 4) == 0)
                 {
                     f_at_m139 = 1;
                     break;
@@ -36706,7 +36706,7 @@ void label_1439()
                         raderh);
                     pos(688 + sx(1), 528 + sy(1));
                     gfini(raderw, raderh);
-                    if (chipm(7, map(sx, sy, 0)) && 4)
+                    if (chipm(7, map(sx, sy, 0)) & 4)
                     {
                         gfdec2(100, 100, 100);
                     }
@@ -37424,7 +37424,7 @@ int calcattackhit(int prm_893)
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
         tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata_hit_bonus(cc);
         pierce = limit(sdata(attackskill, cc) / 5, 5, 50);
-        if (cdata_equipment_type(cc) && 1)
+        if (cdata_equipment_type(cc) & 1)
         {
             tohitorg = tohitorg * 100 / 130;
         }
@@ -37457,7 +37457,7 @@ int calcattackhit(int prm_893)
         }
         else
         {
-            if (cdata_equipment_type(cc) && 2)
+            if (cdata_equipment_type(cc) & 2)
             {
                 tohit += 25;
                 if (inv_weight(cw) >= 4000)
@@ -37465,7 +37465,7 @@ int calcattackhit(int prm_893)
                     tohit += sdata(167, cc);
                 }
             }
-            if (cdata_equipment_type(cc) && 4)
+            if (cdata_equipment_type(cc) & 4)
             {
                 if (attacknum == 1)
                 {
@@ -37676,7 +37676,7 @@ int calcattackdmg(int prm_894)
     }
     else
     {
-        if (cdata_equipment_type(cc) && 2)
+        if (cdata_equipment_type(cc) & 2)
         {
             if (inv_weight(cw) >= 4000)
             {
@@ -37965,7 +37965,7 @@ void label_1477()
             cdata_sum_of_equipment_weight(r1) += inv_weight(rp);
             if (inv_skill(rp) == 168)
             {
-                if (cdata_equipment_type(r1) && 1)
+                if (cdata_equipment_type(r1) & 1)
                 {
                 }
                 else
@@ -38249,7 +38249,7 @@ void label_1477()
             }
         }
     }
-    if (cdata_equipment_type(r1) && 1)
+    if (cdata_equipment_type(r1) & 1)
     {
         if (cdata_pv(r1) > 0)
         {
@@ -38332,7 +38332,7 @@ void label_1477()
             calcbuff(r1, rp, cdata(280 + cnt * 3 + 1, r1));
         }
     }
-    if (cdata_equipment_type(r1) && 4)
+    if (cdata_equipment_type(r1) & 4)
     {
         cdata_extra_attack(r1) += elona_int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
     }
@@ -39048,11 +39048,11 @@ int calcspellfail(int prm_920, int prm_921)
             }
         }
     }
-    if (cdata_equipment_type(prm_921) && 4)
+    if (cdata_equipment_type(prm_921) & 4)
     {
         p_at_m157 -= 6;
     }
-    if (cdata_equipment_type(prm_921) && 1)
+    if (cdata_equipment_type(prm_921) & 1)
     {
         p_at_m157 -= 12;
     }
@@ -41021,7 +41021,7 @@ void label_1532()
             {
                 continue;
             }
-            if (chipm(7, map(x, y, 0)) && 4)
+            if (chipm(7, map(x, y, 0)) & 4)
             {
                 continue;
             }
@@ -41031,7 +41031,7 @@ void label_1532()
             }
             if (map(x, y, 6) != 0)
             {
-                if (chipm(7, map(x, y, 6) % 1000) && 4)
+                if (chipm(7, map(x, y, 6) % 1000) & 4)
                 {
                     continue;
                 }
@@ -44539,7 +44539,7 @@ int label_1582()
                         continue;
                     }
                 }
-                if ((chipm(7, map(sx, sy, 0)) && 4) == 0)
+                if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
                 {
                     p = 1;
                     inv_x(ci) = sx;
@@ -48080,7 +48080,7 @@ void map_randsite(int prm_971, int prm_972)
                 x_at_m169 = prm_971;
                 y_at_m169 = prm_972;
             }
-            if ((chipm(7, map(x_at_m169, y_at_m169, 0)) && 4) == 0)
+            if ((chipm(7, map(x_at_m169, y_at_m169, 0)) & 4) == 0)
             {
                 if (map(x_at_m169, y_at_m169, 6) == 0
                     && map(x_at_m169, y_at_m169, 4) == 0)
@@ -48216,7 +48216,7 @@ label_1652_internal:
         dx_at_m170 = prm_973;
         dy_at_m170 = prm_974;
     }
-    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) && 4) == 0)
+    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
     {
         if (map(dx_at_m170, dy_at_m170, 6) == 0)
         {
@@ -48282,7 +48282,7 @@ label_1655_internal:
         dx_at_m170 = prm_977;
         dy_at_m170 = prm_978;
     }
-    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) && 4) == 0)
+    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
     {
         if (map(dx_at_m170, dy_at_m170, 6) == 0)
         {
@@ -48318,7 +48318,7 @@ label_1658_internal:
         dx_at_m170 = prm_980;
         dy_at_m170 = prm_981;
     }
-    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) && 4) == 0)
+    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
     {
         if (map(dx_at_m170, dy_at_m170, 6) == 0)
         {
@@ -49816,7 +49816,7 @@ int label_1703()
         {
             x = rnd(mdata(0));
             y = rnd(mdata(1));
-            if (map(x, y, 4) != 0 || chipm(7, map(x, y, 0)) && 4)
+            if (map(x, y, 4) != 0 || chipm(7, map(x, y, 0)) & 4)
             {
                 continue;
             }
@@ -50956,7 +50956,7 @@ void label_1714()
                 {
                     break;
                 }
-                if ((chipm(7, tile) && 4) == 0)
+                if ((chipm(7, tile) & 4) == 0)
                 {
                     map(tlocx, tlocy, 0) = tile;
                     map(tlocx, tlocy, 2) = tile;
@@ -51181,7 +51181,7 @@ void label_1714()
                 goto label_1717_internal;
             }
         }
-        if (chipm(7, map(tlocx, tlocy, 0)) && 4 || map(tlocx, tlocy, 1) != 0)
+        if (chipm(7, map(tlocx, tlocy, 0)) & 4 || map(tlocx, tlocy, 1) != 0)
         {
             txt(lang(
                 u8"その場所には移動させることができない。"s,
@@ -53570,7 +53570,7 @@ void label_1750()
                 adata(2, cnt) = mdata(1) / 2;
             }
             p = cnt;
-            if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) && 4
+            if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) & 4
                 || map(adata(1, cnt), adata(2, cnt), 6) != 0)
             {
                 {
@@ -53591,7 +53591,7 @@ void label_1750()
                         {
                             continue;
                         }
-                        if (chipm(7, map(x, y, 0)) && 4)
+                        if (chipm(7, map(x, y, 0)) & 4)
                         {
                             continue;
                         }
@@ -57392,7 +57392,7 @@ void label_1825()
                 s_at_tcg = ""s + cpdata_at_tcg(4, cnt);
                 pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 9 - en);
                 mes(s_at_tcg);
-                if (cnt != player_at_tcg && 1)
+                if (cnt != player_at_tcg)
                 {
                     s_at_tcg = u8"?/"s + cpdata_at_tcg(6, cnt);
                 }
@@ -57910,7 +57910,7 @@ label_1837_internal:
         act_at_tcg(2) = 0;
         s_at_tcg = "";
         cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
-        if (csline_at_tcg == 0 || csline_at_tcg == 3 && 0)
+        if (csline_at_tcg == 0)
         {
             if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg))
             {
@@ -57932,7 +57932,7 @@ label_1837_internal:
                 }
             }
         }
-        if (csline_at_tcg == 1 || csline_at_tcg == 2 && 0)
+        if (csline_at_tcg == 1)
         {
             if (selectmode_at_tcg == 0)
             {
@@ -58000,7 +58000,7 @@ label_1837_internal:
         {
             goto label_1837_internal;
         }
-        if (csline_at_tcg == 1 || csline_at_tcg == 2 && 0)
+        if (csline_at_tcg == 1)
         {
             if (f_at_tcg == 0)
             {
@@ -65708,7 +65708,7 @@ label_1948_internal:
     {
         if (findlocmode == 1)
         {
-            if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) && 4)
+            if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
                 txt(lang(
                     u8"その場所は見えない。"s,
@@ -65982,7 +65982,7 @@ label_1956_internal:
                             list(0, p) / ww * 48,
                             48,
                             48);
-                        if (chipm(7, list(0, p)) && 4)
+                        if (chipm(7, list(0, p)) & 4)
                         {
                             color(240, 230, 220);
                             boxl(
@@ -69014,7 +69014,7 @@ label_1998_internal:
                 nooracle = 0;
                 if (ibit(5, ci) == 1 || inv_quality(ci) == 6)
                 {
-                    if (gdata(828) == 0 && 1)
+                    if (gdata(828) == 0)
                     {
                         dblist(1, wishid) = 0;
                         inv_number(ci) = 0;
@@ -69377,7 +69377,7 @@ void label_2004()
             return;
         }
     }
-    if ((chipm(7, map(x, y, 0)) && 4) == 0 || chipm(0, map(x, y, 0)) == 3
+    if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
         || mdata(6) == 1)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -72718,7 +72718,7 @@ void label_2049()
                 continue;
             }
             ++attacknum;
-            if (cdata_equipment_type(cc) && 2)
+            if (cdata_equipment_type(cc) & 2)
             {
                 if (inv_weight(cw) >= 4000)
                 {
@@ -72737,7 +72737,7 @@ void label_2049()
                             + u8" is too light for two-hand fighting style."s));
                 }
             }
-            if (cdata_equipment_type(cc) && 4)
+            if (cdata_equipment_type(cc) & 4)
             {
                 if (attacknum == 1)
                 {
@@ -82466,7 +82466,7 @@ void label_2189()
                 {
                     if (y < mdata(1))
                     {
-                        if ((chipm(7, map(x, y, 0)) && 4) == 0)
+                        if ((chipm(7, map(x, y, 0)) & 4) == 0)
                         {
                             tlocx = x;
                             tlocy = y;
@@ -83427,7 +83427,7 @@ void label_2201()
             }
             if (y + 1 < mdata(1))
             {
-                if ((chipm(7, map(x, y + 1, 0)) && 4) == 0)
+                if ((chipm(7, map(x, y + 1, 0)) & 4) == 0)
                 {
                     ++y;
                 }
@@ -85590,7 +85590,7 @@ void label_2218()
     attackskill = 106;
     ammo = -1;
     ele = 0;
-    if (cdata_equipment_type(cc) && 1)
+    if (cdata_equipment_type(cc) & 1)
     {
         if (limit(sqrt(sdata(168, cc)) - 3, 1, 5) + cbit(30, cc) * 5 > rnd(100))
         {
@@ -86019,11 +86019,11 @@ label_22191_internal:
             if (attackrange == 0)
             {
                 skillexp(152, cc, 20 / expmodifer, 0, 4);
-                if (cdata_equipment_type(cc) && 2)
+                if (cdata_equipment_type(cc) & 2)
                 {
                     skillexp(167, cc, 20 / expmodifer, 0, 4);
                 }
-                if (cdata_equipment_type(cc) && 4)
+                if (cdata_equipment_type(cc) & 4)
                 {
                     skillexp(166, cc, 20 / expmodifer, 0, 4);
                 }
@@ -86055,7 +86055,7 @@ label_22191_internal:
                         / expmodifer,
                     0,
                     5);
-                if (cdata_equipment_type(tc) && 1)
+                if (cdata_equipment_type(tc) & 1)
                 {
                     skillexp(168, tc, 40 / expmodifer, 0, 4);
                 }
@@ -87077,7 +87077,7 @@ void label_2228()
     }
     if (ibit(10, ci))
     {
-        if (inv_param2(ci) < calcexpalive(inv_param1(ci)) && 1)
+        if (inv_param2(ci) < calcexpalive(inv_param1(ci)))
         {
             txt(lang(
                 u8"この武器はまだ血を吸い足りない。"s,
@@ -97467,7 +97467,7 @@ void label_2693()
                         {
                             if (y < mdata(1))
                             {
-                                if (chipm(7, map(x, y, 0)) && 4)
+                                if (chipm(7, map(x, y, 0)) & 4)
                                 {
                                     if (rnd(4) == 0)
                                     {
@@ -100432,7 +100432,7 @@ void label_2733()
                                     f = 0;
                                     continue;
                                 }
-                                if (chipm(7, map(x, y, 0)) && 4)
+                                if (chipm(7, map(x, y, 0)) & 4)
                                 {
                                     map(x, y, 0) = 37;
                                     cnt = 0 - 1;
@@ -102441,7 +102441,7 @@ label_2747:
     }
     if (key == key_throw)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102468,7 +102468,7 @@ label_2747:
     }
     if (key == key_drop)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102509,7 +102509,7 @@ label_2747:
     }
     if (key == key_zap)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102536,7 +102536,7 @@ label_2747:
     }
     if (key == key_open)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102556,7 +102556,7 @@ label_2747:
     }
     if (key == key_dip)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102597,7 +102597,7 @@ label_2747:
     }
     if (key == key_cast)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102616,7 +102616,7 @@ label_2747:
     }
     if (key == key_skill)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102646,7 +102646,7 @@ label_2747:
     menucycle = 0;
     if (key == key_offer)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102680,7 +102680,7 @@ label_2747:
     }
     if (key == key_interact)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102705,7 +102705,7 @@ label_2747:
     }
     if (key == key_fire)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102723,7 +102723,7 @@ label_2747:
     }
     if (key == key_give)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102769,7 +102769,7 @@ label_2747:
     }
     if (key == key_bash)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102792,7 +102792,7 @@ label_2747:
     }
     if (key == key_close)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -102810,7 +102810,7 @@ label_2747:
     }
     if (key == key_pray)
     {
-        if (mdata(6) == 1 && 1)
+        if (mdata(6) == 1)
         {
             txtnew();
             txt(lang(
@@ -104348,7 +104348,7 @@ void label_2754()
                             continue;
                         }
                         f = 0;
-                        if (chipm(7, map(dx, dy, 0)) && 4)
+                        if (chipm(7, map(dx, dy, 0)) & 4)
                         {
                             f = 1;
                         }

@@ -1209,7 +1209,7 @@ label_2181_internal:
                                         map(dx + x(cnt2) * cnt,
                                             dy + y(cnt2) * cnt,
                                             0);
-                                    if (264 <= p && p < 363 || chipm(7, p) && 4)
+                                    if (264 <= p && p < 363 || chipm(7, p) & 4)
                                     {
                                         f = 0;
                                         break;
@@ -3503,7 +3503,7 @@ label_2181_internal:
                 }
                 else
                 {
-                    if (chipm(7, map(x, y, 0)) && 4)
+                    if (chipm(7, map(x, y, 0)) & 4)
                     {
                         f = 0;
                     }
@@ -4164,7 +4164,7 @@ label_2181_internal:
         }
         else
         {
-            if (chipm(7, map(x, y, 0)) && 4)
+            if (chipm(7, map(x, y, 0)) & 4)
             {
                 if (homemapmode == 0)
                 {
@@ -4219,7 +4219,7 @@ label_2181_internal:
                 }
                 txt(lang(u8"扉が出現した。"s, u8"A door appears."s));
                 cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
-                if (chipm(7, map(x, y, 0)) && 4)
+                if (chipm(7, map(x, y, 0)) & 4)
                 {
                     map(x, y, 0) = tile_tunnel;
                 }

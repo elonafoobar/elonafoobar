@@ -2224,7 +2224,7 @@ label_2061_internal:
                 }
                 label_2743(false);
             }
-            if (chipm(7, map(tlocx, tlocy, 0)) && 4)
+            if (chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
                 txt(lang(
                     u8"そこには投げられない。"s,
