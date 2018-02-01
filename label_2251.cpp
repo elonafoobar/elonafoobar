@@ -133,15 +133,12 @@ void label_2251()
                         u8"婚約を申し込む"s, u8"May I ask for your hand?"s);
                     ++listmax;
                 }
-                else
+                else if (gdata(90) >= 15)
                 {
-                    if (gdata(90) >= 15)
-                    {
-                        list(0, listmax) = 39;
-                        listn(0, listmax) =
-                            lang(u8"遺伝子を残す"s, u8"Let's make a gene."s);
-                        ++listmax;
-                    }
+                    list(0, listmax) = 39;
+                    listn(0, listmax) =
+                        lang(u8"遺伝子を残す"s, u8"Let's make a gene."s);
+                    ++listmax;
                 }
                 if (cdata_can_talk(tc) != 0)
                 {
@@ -328,16 +325,13 @@ void label_2251()
                 u8"落し物の財布を届ける"s, u8"Here is a lost wallet I found."s);
             ++listmax;
         }
-        else
+        else if (itemfind(0, 283) != -1)
         {
-            if (itemfind(0, 283) != -1)
-            {
-                list(0, listmax) = 32;
-                listn(0, listmax) = lang(
-                    u8"落し物のカバンを届ける。"s,
-                    u8"Here is a lost suitcase I found."s);
-                ++listmax;
-            }
+            list(0, listmax) = 32;
+            listn(0, listmax) = lang(
+                u8"落し物のカバンを届ける。"s,
+                u8"Here is a lost suitcase I found."s);
+            ++listmax;
         }
     }
     if (cdata_character_role(tc) == 21)
@@ -456,74 +450,67 @@ void label_2251()
             label_0184();
             label_2679();
         }
-        else
+        else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
         {
-            if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
+            supply = -1;
+            inv_getheader(0);
             {
-                supply = -1;
-                inv_getheader(0);
+                int cnt = invhead;
+                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = invhead;
-                    for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                    if (inv_number(cnt) == 0)
                     {
-                        if (inv_number(cnt) == 0)
+                        continue;
+                    }
+                    if (ibit(13, cnt))
+                    {
+                        continue;
+                    }
+                    if (qdata(3, rq) == 1003)
+                    {
+                        if (refitem(inv_id(cnt), 5) == 57000)
                         {
-                            continue;
-                        }
-                        if (ibit(13, cnt))
-                        {
-                            continue;
-                        }
-                        if (qdata(3, rq) == 1003)
-                        {
-                            if (refitem(inv_id(cnt), 5) == 57000)
+                            if (inv_param1(cnt) / 1000 == qdata(12, rq))
                             {
-                                if (inv_param1(cnt) / 1000 == qdata(12, rq))
+                                if (inv_param2(cnt) == qdata(13, rq))
                                 {
-                                    if (inv_param2(cnt) == qdata(13, rq))
-                                    {
-                                        supply = cnt;
-                                        break;
-                                    }
+                                    supply = cnt;
+                                    break;
                                 }
                             }
                         }
-                        if (qdata(3, rq) == 1004 || qdata(3, rq) == 1011)
+                    }
+                    if (qdata(3, rq) == 1004 || qdata(3, rq) == 1011)
+                    {
+                        if (inv_id(cnt) == qdata(11, rq))
                         {
-                            if (inv_id(cnt) == qdata(11, rq))
-                            {
-                                supply = cnt;
-                                break;
-                            }
+                            supply = cnt;
+                            break;
                         }
                     }
                 }
-                if (supply != -1)
-                {
-                    list(0, listmax) = 26;
-                    listn(0, listmax) = lang(
-                        itemname(supply, 1) + u8"を納入する"s,
-                        u8"Here is "s + itemname(supply, 1) + u8" you asked."s);
-                    ++listmax;
-                }
-                else
-                {
-                    list(0, listmax) = 24;
-                    listn(0, listmax) =
-                        lang(u8"依頼について"s, u8"About the work."s);
-                    ++listmax;
-                }
+            }
+            if (supply != -1)
+            {
+                list(0, listmax) = 26;
+                listn(0, listmax) = lang(
+                    itemname(supply, 1) + u8"を納入する"s,
+                    u8"Here is "s + itemname(supply, 1) + u8" you asked."s);
+                ++listmax;
             }
             else
             {
-                if (qdata(3, rq) != 0)
-                {
-                    list(0, listmax) = 24;
-                    listn(0, listmax) =
-                        lang(u8"依頼について"s, u8"About the work."s);
-                    ++listmax;
-                }
+                list(0, listmax) = 24;
+                listn(0, listmax) =
+                    lang(u8"依頼について"s, u8"About the work."s);
+                ++listmax;
             }
+        }
+        else if (qdata(3, rq) != 0)
+        {
+            list(0, listmax) = 24;
+            listn(0, listmax) = lang(u8"依頼について"s, u8"About the work."s);
+            ++listmax;
         }
     }
     if (deliver != -1 && deliver(1) != -1)
@@ -538,19 +525,14 @@ void label_2251()
         {
             if (cdata_character_role(tc) != 0)
             {
-                if (cdata_character_role(tc) >= 2000
-                    && cdata_character_role(tc) < 3000)
+                if ((cdata_character_role(tc) < 2000
+                     || cdata_character_role(tc) >= 3000)
+                    && evid() == -1)
                 {
-                }
-                else
-                {
-                    if (evid() == -1)
-                    {
-                        list(0, listmax) = 44;
-                        listn(0, listmax) =
-                            lang(u8"解雇する"s, u8"You are fired."s);
-                        ++listmax;
-                    }
+                    list(0, listmax) = 44;
+                    listn(0, listmax) =
+                        lang(u8"解雇する"s, u8"You are fired."s);
+                    ++listmax;
                 }
             }
         }
@@ -2193,23 +2175,17 @@ void label_2251()
         {
             s = lang(u8"西"s, u8"west"s);
         }
+        else if (p == 2)
+        {
+            s = lang(u8"東"s, u8"east"s);
+        }
+        else if (p == 3)
+        {
+            s = lang(u8"北"s, u8"north"s);
+        }
         else
         {
-            if (p == 2)
-            {
-                s = lang(u8"東"s, u8"east"s);
-            }
-            else
-            {
-                if (p == 3)
-                {
-                    s = lang(u8"北"s, u8"north"s);
-                }
-                else
-                {
-                    s = lang(u8"南"s, u8"south"s);
-                }
-            }
+            s = lang(u8"南"s, u8"south"s);
         }
         p = dist(cdata_x(0), cdata_y(0), cdata_x(rc), cdata_y(rc));
         {

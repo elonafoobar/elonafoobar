@@ -440,9 +440,6 @@ int label_2107()
                 {
                     zOpen(hgz, file, 0);
                 }
-                if (cnt == 0)
-                {
-                }
                 if (cnt == 1)
                 {
                     if (fread == 0)
