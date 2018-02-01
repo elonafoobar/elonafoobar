@@ -525,11 +525,9 @@ void label_2251()
         {
             if (cdata_character_role(tc) != 0)
             {
-                if (cdata_character_role(tc) >= 2000
-                    && cdata_character_role(tc) < 3000)
-                {
-                }
-                else if (evid() == -1)
+                if ((cdata_character_role(tc) < 2000
+                     || cdata_character_role(tc) >= 3000)
+                    && evid() == -1)
                 {
                     list(0, listmax) = 44;
                     listn(0, listmax) =

@@ -818,10 +818,7 @@ int label_2176()
                     }
                     goto label_2186_internal;
                 }
-                if (efid == 619)
-                {
-                }
-                else if (encfind(tc, 22) != -1)
+                if (efid != 619 && encfind(tc, 22) != -1)
                 {
                     if (synccheck(tc, -1))
                     {

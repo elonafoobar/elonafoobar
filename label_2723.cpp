@@ -449,10 +449,7 @@ label_2725_internal:
                 }
             }
             cs_list(cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 19, 0);
-            if (submenu == 5 && cnt > 0)
-            {
-            }
-            else if (submenu != 0)
+            if ((submenu != 5 || cnt <= 0) && submenu != 0)
             {
                 pos(wx + 220, wy + 66 + cnt * 19 - 5);
                 gcopy(3, 312, 336, 24, 24);

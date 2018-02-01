@@ -379,12 +379,6 @@ label_1741_internal:
         }
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (280); cnt < cnt_end; ++cnt)
-            {
-            }
-        }
-        {
-            int cnt = 0;
             for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
             {
                 x = rnd(mdata(0));
@@ -395,12 +389,6 @@ label_1741_internal:
         characreate(-1, 41, cdata_x(0), cdata_y(0));
         cdata_character_role(rc) = 22;
         cbitmod(960, rc, 1);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (6 + rnd(6)); cnt < cnt_end; ++cnt)
-            {
-            }
-        }
     }
     if (gdata(20) == 10)
     {
@@ -2465,10 +2453,7 @@ label_1741_internal:
             }
         }
         map_placeplayer();
-        if (264 <= gdata(62) && gdata(62) < 363)
-        {
-        }
-        else
+        if (264 > gdata(62) || gdata(62) >= 363)
         {
             {
                 int cnt = 0;
@@ -2583,10 +2568,7 @@ label_1741_internal:
                     flt(calcobjlv(encounterlv), calcfixlv(2));
                     if (gdata(17) == 1)
                     {
-                        if (33 <= gdata(62) && gdata(62) < 66)
-                        {
-                        }
-                        else if (rnd(3) == 0)
+                        if ((33 > gdata(62) || gdata(62) >= 66) && rnd(3) == 0)
                         {
                             fixlv = 5;
                         }

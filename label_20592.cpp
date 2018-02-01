@@ -509,9 +509,6 @@ label_20591:
                     {
                         list(1, listmax) += inv_param1(cnt) + 900;
                     }
-                    else
-                    {
-                    }
                     if (invctrl == 1 || invctrl == 13)
                     {
                         if (inv_body_part(cnt) != 0)

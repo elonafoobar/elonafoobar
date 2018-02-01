@@ -2450,9 +2450,6 @@ void label_2246()
                 txtmore();
                 gdata(454) = 1000;
             }
-            else
-            {
-            }
             chara_vanquish(rc);
             snd(51);
             flt();
@@ -4178,7 +4175,7 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(179) <= 4)
+                if (gdata(179) <= 4 && 1)
                 {
                     listmax = 0;
                     buff = lang(
@@ -4430,7 +4427,7 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(267) > 0)
+                if (gdata(267) > 0 && 1)
                 {
                     listmax = 0;
                     buff = lang(
@@ -4492,9 +4489,6 @@ void label_2246()
                 cell_movechara(tc, 29, 2);
                 cdata_initial_x(tc) = 29;
                 cdata_initial_y(tc) = 2;
-            }
-            else
-            {
             }
             label_2256();
             return;
@@ -4572,7 +4566,7 @@ void label_2246()
         }
         if (chatval == 2)
         {
-            if (gdata(267) > 0)
+            if (gdata(267) > 0 && 1)
             {
                 listmax = 0;
                 buff = lang(

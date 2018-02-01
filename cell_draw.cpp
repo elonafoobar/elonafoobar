@@ -293,10 +293,8 @@ void cell_draw()
                     {
                         if (y_at_m85 < mdata(1) - 1)
                         {
-                            if (chipm(2, map(x_at_m85, y_at_m85 + 1, 2)) == 2)
-                            {
-                            }
-                            else if (map(x_at_m85, y_at_m85 + 1, 2) != tile_fog)
+                            if (chipm(2, map(x_at_m85, y_at_m85 + 1, 2)) != 2
+                                && map(x_at_m85, y_at_m85 + 1, 2) != tile_fog)
                             {
                                 ground_at_m85 += 33;
                             }
@@ -1266,10 +1264,7 @@ void cell_draw()
                         if (y_at_m85 > 0)
                         {
                             p_at_m85 = map(x_at_m85, y_at_m85 - 1, 2);
-                            if (chipm(2, p_at_m85) == 2)
-                            {
-                            }
-                            else if (p_at_m85 != tile_fog)
+                            if (chipm(2, p_at_m85) != 2 && p_at_m85 != tile_fog)
                             {
                                 if (dy_at_m85 > 20)
                                 {
