@@ -14019,7 +14019,7 @@ void create_pcpic(int prm_409, int prm_410)
         pos(0, 0);
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
-    if (prm_409 != 0 && gdata(183) == 0 && pcc(16, prm_409) == 0)
+    if (prm_409 != 0 || gdata(183) == 0 || pcc(16, prm_409) == 0)
     {
         exist(
             fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
@@ -52922,7 +52922,7 @@ void label_1751()
                 {
                     x = cnt;
                     cell_featread(x, y);
-                    if (feat(1) < 24 && feat(1) > 28)
+                    if (feat(1) < 24 || feat(1) > 28)
                     {
                         map(x, y, 6) = 0;
                     }
