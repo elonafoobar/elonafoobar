@@ -31,7 +31,7 @@ int label_1275()
         {
             ichargelevel = info->chargelevel;
             infilterref = info->infilterref;
-            reftype = info->dbspec5;
+            reftype = info->category;
             return 0;
         }
         else if (dbmode == 17)
@@ -56,7 +56,7 @@ int label_1275()
             case 2: return info->dbspec2;
             case 3: return info->dbspec3;
             case 4: return info->dbspec4;
-            case 5: return info->dbspec5;
+            case 5: return info->category;
             case 7: return info->dbspec7;
             case 8: return info->dbspec8;
             case 9: return info->dbspec9;

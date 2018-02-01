@@ -30,7 +30,6 @@ struct item_data
     int dbspec2;
     int dbspec3;
     int dbspec4;
-    int dbspec5;
     int dbspec7;
     int dbspec8;
     int dbspec9;
@@ -39,6 +38,12 @@ struct item_data
     int dbspec18;
     int dbspec19;
     int dbspec20;
+    int level;
+    int fltselect;
+    int category;
+    int subcategory;
+    int rarity;
+    int coefficient;
 };
 
 
@@ -46,9 +51,49 @@ struct item_data
 class item_db
 {
 public:
+    struct iterator
+    {
+        iterator(const std::unordered_map<int, item_data>::const_iterator& itr)
+            : itr(itr)
+        {
+        }
+
+        const item_data& operator*() const
+        {
+            return itr->second;
+        }
+
+        void operator++()
+        {
+            ++itr;
+        }
+
+        bool operator!=(const iterator& other) const
+        {
+            return itr != other.itr;
+        }
+
+    private:
+        std::unordered_map<int, item_data>::const_iterator itr;
+    };
+
+
     item_db();
 
+
     optional_ref<item_data> operator[](int id) const;
+
+
+    iterator begin() const
+    {
+        return iterator{std::begin(data)};
+    }
+
+    iterator end() const
+    {
+        return iterator{std::end(data)};
+    }
+
 
 private:
     std::unordered_map<int, item_data> data;
