@@ -4175,7 +4175,7 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(179) <= 4 && 1)
+                if (gdata(179) <= 4)
                 {
                     listmax = 0;
                     buff = lang(
@@ -4427,7 +4427,7 @@ void label_2246()
                     label_2246();
                     return;
                 }
-                if (gdata(267) > 0 && 1)
+                if (gdata(267) > 0)
                 {
                     listmax = 0;
                     buff = lang(
@@ -4566,7 +4566,7 @@ void label_2246()
         }
         if (chatval == 2)
         {
-            if (gdata(267) > 0 && 1)
+            if (gdata(267) > 0)
             {
                 listmax = 0;
                 buff = lang(
