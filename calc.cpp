@@ -1620,184 +1620,177 @@ int calcmedalvalue(int ci)
 
 
 
-int calcitemvalue(int prm_898, int prm_899)
+int calcitemvalue(int ci, int situation)
 {
-    int reftype_at_m153 = 0;
-    int limitvalue_at_m153 = 0;
-    reftype_at_m153 = refitem(inv_id(prm_898), 5);
-    if (inv_identification_state(prm_898) == 0)
+    int category = refitem(inv_id(ci), 5);
+    int ret = 0;
+    if (inv_identification_state(ci) == 0)
     {
-        if (prm_899 == 2)
+        if (situation == 2)
         {
-            value_at_m153 = inv_value(prm_898) * 4 / 10;
+            ret = inv_value(ci) * 4 / 10;
         }
         else
         {
-            value_at_m153 = cdata_level(0) / 5
-                    * ((gdata_random_seed + prm_898 * 31) % cdata_level(0) + 4)
+            ret = cdata_level(0) / 5
+                    * ((gdata_random_seed + ci * 31) % cdata_level(0) + 4)
                 + 10;
         }
     }
-    else if (reftype_at_m153 >= 50000)
+    else if (category >= 50000)
     {
-        value_at_m153 = inv_value(prm_898);
+        ret = inv_value(ci);
     }
     else
     {
-        if (inv_identification_state(prm_898) == 1)
+        if (inv_identification_state(ci) == 1)
         {
-            value_at_m153 = inv_value(prm_898) * 2 / 10;
+            ret = inv_value(ci) * 2 / 10;
         }
-        if (inv_identification_state(prm_898) == 2)
+        if (inv_identification_state(ci) == 2)
         {
-            value_at_m153 = inv_value(prm_898) * 5 / 10;
+            ret = inv_value(ci) * 5 / 10;
         }
-        if (inv_identification_state(prm_898) >= 3)
+        if (inv_identification_state(ci) >= 3)
         {
-            value_at_m153 = inv_value(prm_898);
+            ret = inv_value(ci);
         }
     }
-    if (inv_identification_state(prm_898) >= 3)
+    if (inv_identification_state(ci) >= 3)
     {
-        if (inv_curse_state(prm_898) == 1)
+        if (inv_curse_state(ci) == 1)
         {
-            value_at_m153 = value_at_m153 * 120 / 100;
+            ret = ret * 120 / 100;
         }
-        if (inv_curse_state(prm_898) == -1)
+        if (inv_curse_state(ci) == -1)
         {
-            value_at_m153 = value_at_m153 / 2;
+            ret = ret / 2;
         }
-        if (inv_curse_state(prm_898) == -2)
+        if (inv_curse_state(ci) == -2)
         {
-            value_at_m153 = value_at_m153 / 5;
+            ret = ret / 5;
         }
     }
-    if (reftype_at_m153 == 57000)
+    if (category == 57000)
     {
-        if (inv_param2(prm_898) > 0)
+        if (inv_param2(ci) > 0)
         {
-            value_at_m153 =
-                value_at_m153 * inv_param2(prm_898) * inv_param2(prm_898) / 10;
+            ret = ret * inv_param2(ci) * inv_param2(ci) / 10;
         }
     }
-    if (inv_id(prm_898) == 333)
+    if (inv_id(ci) == 333)
     {
-        if (prm_899 == 0)
+        if (situation == 0)
         {
-            value_at_m153 += std::clamp(
-                cdata_fame(0) / 40 + value_at_m153 * (cdata_fame(0) / 80) / 100,
-                0,
-                800);
+            ret += std::clamp(
+                cdata_fame(0) / 40 + ret * (cdata_fame(0) / 80) / 100, 0, 800);
         }
     }
-    if (inv_weight(prm_898) < 0)
+    if (inv_weight(ci) < 0)
     {
         if (mode == 6)
         {
-            if (reftype_at_m153 == 92000)
+            if (category == 92000)
             {
-                value_at_m153 =
-                    value_at_m153 * trate(inv_param1(prm_898)) / 100;
-                if (prm_899 == 1)
+                ret = ret * trate(inv_param1(ci)) / 100;
+                if (situation == 1)
                 {
-                    value_at_m153 = value_at_m153 * 65 / 100;
+                    ret = ret * 65 / 100;
                 }
-                return value_at_m153;
+                return ret;
             }
         }
     }
-    if (ibit(4, prm_898) == 1)
+    if (ibit(4, ci) == 1)
     {
-        dbid = inv_id(prm_898);
+        dbid = inv_id(ci);
         dbmode = 2;
         label_1275();
-        if (inv_count(prm_898) < 0)
+        if (inv_count(ci) < 0)
         {
-            value_at_m153 = value_at_m153 / 10;
+            ret = ret / 10;
         }
-        else if (reftype_at_m153 == 54000)
+        else if (category == 54000)
         {
-            value_at_m153 = value_at_m153 / 5
-                + value_at_m153 * inv_count(prm_898) / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * inv_count(ci) / (ichargelevel * 2 + 1);
         }
         else
         {
-            value_at_m153 = value_at_m153 / 2
-                + value_at_m153 * inv_count(prm_898) / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * inv_count(ci) / (ichargelevel * 3 + 1);
         }
     }
-    if (reftype_at_m153 == 72000)
+    if (category == 72000)
     {
-        if (inv_param1(prm_898) == 0)
+        if (inv_param1(ci) == 0)
         {
-            value_at_m153 = value_at_m153 / 100 + 1;
+            ret = ret / 100 + 1;
         }
     }
-    if (prm_899 == 0)
+    if (situation == 0)
     {
-        limitvalue_at_m153 = value_at_m153 / 2;
-        value_at_m153 = value_at_m153 * 100 / (100 + sdata(156, 0));
+        int max = ret / 2;
+        ret = ret * 100 / (100 + sdata(156, 0));
         if (gdata_belongs_to_mages_guild != 0)
         {
-            if (reftype_at_m153 == 54000)
+            if (category == 54000)
             {
-                value_at_m153 = value_at_m153 * 80 / 100;
+                ret = ret * 80 / 100;
             }
         }
-        if (value_at_m153 <= limitvalue_at_m153)
+        if (ret <= max)
         {
-            value_at_m153 = limitvalue_at_m153;
+            ret = max;
         }
     }
-    if (prm_899 == 1)
+    if (situation == 1)
     {
-        limitvalue_at_m153 = sdata(156, 0) * 250 + 5000;
-        if (value_at_m153 / 3 < limitvalue_at_m153)
+        int max = sdata(156, 0) * 250 + 5000;
+        if (ret / 3 < max)
         {
-            limitvalue_at_m153 = value_at_m153 / 3;
+            max = ret / 3;
         }
-        value_at_m153 = value_at_m153 * (100 + sdata(156, 0) * 5) / 1000;
-        if (reftype_at_m153 < 50000)
+        ret = ret * (100 + sdata(156, 0) * 5) / 1000;
+        if (category < 50000)
         {
-            value_at_m153 /= 20;
+            ret /= 20;
         }
-        if (ibit(9, prm_898))
+        if (ibit(9, ci))
         {
             if (gdata_belongs_to_thieves_guild == 0)
             {
-                value_at_m153 /= 10;
+                ret /= 10;
             }
             else
             {
-                value_at_m153 = value_at_m153 / 3 * 2;
+                ret = ret / 3 * 2;
             }
         }
-        if (value_at_m153 >= limitvalue_at_m153)
+        if (ret >= max)
         {
-            value_at_m153 = limitvalue_at_m153;
+            ret = max;
         }
     }
-    if (prm_899 == 2)
+    if (situation == 2)
     {
-        value_at_m153 = value_at_m153 / 5;
-        if (reftype_at_m153 < 50000)
+        ret = ret / 5;
+        if (category < 50000)
         {
-            value_at_m153 /= 3;
+            ret /= 3;
         }
-        if (value_at_m153 > 15000)
+        if (ret > 15000)
         {
-            value_at_m153 = 15000;
+            ret = 15000;
         }
-        if (ibit(9, prm_898))
+        if (ibit(9, ci))
         {
-            value_at_m153 = 1;
+            ret = 1;
         }
     }
-    if (value_at_m153 <= 0)
+    if (ret <= 0)
     {
-        value_at_m153 = 1;
+        ret = 1;
     }
-    return value_at_m153;
+    return ret;
 }
 
 
