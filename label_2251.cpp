@@ -2269,4 +2269,5 @@ void label_2251()
 }
 
 
+
 } // namespace elona

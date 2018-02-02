@@ -2637,4 +2637,5 @@ int label_0042()
 }
 
 
+
 } // namespace elona

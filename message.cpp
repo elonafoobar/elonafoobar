@@ -467,6 +467,9 @@ void key_check(int prm_299)
     }
     return;
 }
+
+
+
 void keyrelease()
 {
     int a_at_m20 = 0;
@@ -488,6 +491,9 @@ void keyrelease()
     }
     return;
 }
+
+
+
 void press(int prm_300)
 {
     {
@@ -515,6 +521,9 @@ void press(int prm_300)
     keyhalt = 1;
     return;
 }
+
+
+
 void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
 {
     int pos_x_at_m21 = 0;
@@ -546,6 +555,9 @@ void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
     mes(prm_301);
     return;
 }
+
+
+
 void msg_write(std::string& prm_307)
 {
     int mp_at_txtfunc = 0;
@@ -586,17 +598,26 @@ void msg_write(std::string& prm_307)
     mes(prm_307);
     return;
 }
+
+
+
 void txtmore()
 {
     int tmore_at_txtfunc = 0;
     tmore_at_txtfunc = 1;
     return;
 }
+
+
+
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
     return;
 }
+
+
+
 void anime_halt()
 {
     key = "";
@@ -641,6 +662,9 @@ void anime_halt()
     gmode(2);
     return;
 }
+
+
+
 void msg_halt()
 {
     x_at_txtfunc = windoww - 120;
@@ -650,6 +674,9 @@ void msg_halt()
     label_1419();
     return;
 }
+
+
+
 void help_halt()
 {
     x_at_txtfunc = wx + dx - 140;
@@ -657,6 +684,9 @@ void help_halt()
     anime_halt();
     return;
 }
+
+
+
 void txtef(int prm_308)
 {
     tcol_at_txtfunc(0) = 255 - c_col(0, prm_308);
@@ -672,6 +702,9 @@ void txtef(int prm_308)
     }
     return;
 }
+
+
+
 void msg_newlog()
 {
     if (cfg_exlog == 0)
@@ -690,6 +723,9 @@ void msg_newlog()
     gsel(0);
     return;
 }
+
+
+
 void msg_newline()
 {
     msg_newlog();
@@ -735,6 +771,9 @@ void msg_newline()
     msgtempprev = "";
     return;
 }
+
+
+
 void txtnew()
 {
     if (tnew == 0)
@@ -747,6 +786,9 @@ void txtnew()
     }
     return;
 }
+
+
+
 void msg_clear()
 {
     msg_len = 0;
@@ -760,6 +802,9 @@ void msg_clear()
     }
     return;
 }
+
+
+
 void txt_conv()
 {
     redraw(0);
@@ -947,6 +992,9 @@ void txt_conv()
         msglen += std::size(msgtemp(0));
     }
 }
+
+
+
 std::string name(int prm_309)
 {
     std::string s_at_m23;
@@ -977,6 +1025,9 @@ std::string name(int prm_309)
     }
     return cdatan(0, prm_309);
 }
+
+
+
 std::string aln(int prm_310)
 {
     if (prm_310 == 0)
@@ -989,6 +1040,9 @@ std::string aln(int prm_310)
     }
     return ""s + cdatan(0, prm_310) + u8"は"s;
 }
+
+
+
 std::string npcn(int prm_311)
 {
     if (prm_311 == 0)
@@ -1001,6 +1055,9 @@ std::string npcn(int prm_311)
     }
     return ""s + cdatan(0, prm_311) + u8"は"s;
 }
+
+
+
 std::string _s(int prm_312, int prm_313)
 {
     if (prm_312 < 0 || prm_312 >= 245)
@@ -1027,6 +1084,9 @@ std::string _s(int prm_312, int prm_313)
         return u8"s"s;
     }
 }
+
+
+
 std::string _s2(int prm_314)
 {
     if (prm_314 > 1)
@@ -1038,6 +1098,9 @@ std::string _s2(int prm_314)
         return u8"s"s;
     }
 }
+
+
+
 std::string is2(int prm_315)
 {
     if (prm_315 > 1)
@@ -1049,6 +1112,9 @@ std::string is2(int prm_315)
         return u8"is"s;
     }
 }
+
+
+
 std::string is(int prm_316)
 {
     if (prm_316 < 0 || prm_316 >= 245)
@@ -1061,6 +1127,9 @@ std::string is(int prm_316)
     }
     return u8"is"s;
 }
+
+
+
 std::string have(int prm_318)
 {
     if (prm_318 < 0 || prm_318 >= 245)
@@ -1073,6 +1142,9 @@ std::string have(int prm_318)
     }
     return u8"has"s;
 }
+
+
+
 std::string does(int prm_319)
 {
     if (prm_319 == 1)
@@ -1084,6 +1156,9 @@ std::string does(int prm_319)
         return u8"does"s;
     }
 }
+
+
+
 std::string he(int prm_320, int prm_321)
 {
     if (prm_321)
@@ -1126,6 +1201,9 @@ std::string he(int prm_320, int prm_321)
     }
     return u8"she"s;
 }
+
+
+
 std::string his(int prm_322, int prm_323)
 {
     if (prm_323)
@@ -1176,6 +1254,9 @@ std::string his(int prm_322, int prm_323)
     }
     return u8"her"s;
 }
+
+
+
 std::string him(int prm_324, int prm_325)
 {
     if (prm_325)
@@ -1218,6 +1299,9 @@ std::string him(int prm_324, int prm_325)
     }
     return u8"her"s;
 }
+
+
+
 std::string your(int prm_326, int)
 {
     if (prm_326 < 0 || prm_326 >= 245)
@@ -1230,6 +1314,9 @@ std::string your(int prm_326, int)
     }
     return u8"'s"s;
 }
+
+
+
 std::string yourself(int prm_328)
 {
     if (prm_328 < 0 || prm_328 >= 245)
@@ -1250,6 +1337,9 @@ std::string yourself(int prm_328)
     }
     return u8"herself"s;
 }
+
+
+
 void txt_check(int prm_329)
 {
     txtvalid = -1;
@@ -1314,6 +1404,9 @@ void txt_check(int prm_329)
     }
     return;
 }
+
+
+
 void stxt(int prm_340, const std::string& prm_341)
 {
     if (prm_340 == 0 || synccheck(prm_340, -1) && cdata_blind(0) == 0)
@@ -1322,6 +1415,7 @@ void stxt(int prm_340, const std::string& prm_341)
     }
     return;
 }
+
 
 
 } // namespace elona

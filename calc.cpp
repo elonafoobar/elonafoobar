@@ -452,6 +452,9 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
     }
     return;
 }
+
+
+
 int calcskill(int prm_269, int prm_270, int prm_271)
 {
     int rs_at_m9 = 0;
@@ -915,6 +918,9 @@ int calcskill(int prm_269, int prm_270, int prm_271)
     }
     return 0;
 }
+
+
+
 int calcobjlv(int prm_443)
 {
     int objlv_at_m43 = 0;
@@ -952,6 +958,9 @@ int calcobjlv(int prm_443)
     }
     return objlv_at_m43;
 }
+
+
+
 int calcfixlv(int prm_444)
 {
     int fixlv_at_m43 = 0;
@@ -991,6 +1000,9 @@ int calcfixlv(int prm_444)
     }
     return fixlv_at_m43;
 }
+
+
+
 int calcfame(int prm_574, int prm_575)
 {
     p_at_m77 = prm_575 * 100
@@ -1002,6 +1014,9 @@ int calcfame(int prm_574, int prm_575)
     }
     return p_at_m77;
 }
+
+
+
 int decfame(int prm_576, int prm_577)
 {
     p_at_m77 = cdata_fame(prm_576) / prm_577 + 5;
@@ -1013,10 +1028,16 @@ int decfame(int prm_576, int prm_577)
     }
     return p_at_m77;
 }
+
+
+
 int calcshopreform()
 {
     return mdata(18) * 100 + 1000;
 }
+
+
+
 int calcweaponfix(int prm_752)
 {
     pierce = 0;
@@ -1353,6 +1374,9 @@ int calcweaponfix(int prm_752)
     }
     return 0;
 }
+
+
+
 std::string calcage(int prm_762)
 {
     if (gdata_year - cdata_birth_year(prm_762) < 0)
@@ -1361,10 +1385,16 @@ std::string calcage(int prm_762)
     }
     return std::to_string(gdata_year - cdata_birth_year(prm_762));
 }
+
+
+
 int calcexpalive(int prm_892)
 {
     return prm_892 * 100;
 }
+
+
+
 int calcattackhit(int prm_893)
 {
     critical = 0;
@@ -1577,6 +1607,9 @@ int calcattackhit(int prm_893)
     }
     return -1;
 }
+
+
+
 int calcattackdmg(int prm_894)
 {
     if (attackskill == 106)
@@ -1767,6 +1800,9 @@ int calcattackdmg(int prm_894)
     }
     return damage;
 }
+
+
+
 int calcmedalvalue(int prm_897)
 {
     if (inv_id(prm_897) == 430)
@@ -1847,6 +1883,9 @@ int calcmedalvalue(int prm_897)
     }
     return 1;
 }
+
+
+
 int calcitemvalue(int prm_898, int prm_899)
 {
     int reftype_at_m153 = 0;
@@ -2026,6 +2065,9 @@ int calcitemvalue(int prm_898, int prm_899)
     }
     return value_at_m153;
 }
+
+
+
 int calcinvestvalue(int)
 {
     value_at_m153 = std::clamp(cdata_shop_rank(tc), 1, 200)
@@ -2038,16 +2080,25 @@ int calcinvestvalue(int)
     value_at_m153 = value_at_m153 * 100 / (100 + sdata(160, 0) * 10) + 200;
     return value_at_m153;
 }
+
+
+
 int calcguiltvalue(int)
 {
     value_at_m153 =
         (-cdata_karma(0) + -30) * (cdata_fame(0) / 2 + cdata_level(0) * 200);
     return value_at_m153;
 }
+
+
+
 int calchireadv(int prm_902)
 {
     return 250 + cdata_level(prm_902) * cdata_level(prm_902) * 30;
 }
+
+
+
 int calchirecost(int prm_903)
 {
     value_at_m153 = 0;
@@ -2095,6 +2146,9 @@ int calchirecost(int prm_903)
     }
     return value_at_m153;
 }
+
+
+
 void generatemoney(int prm_904)
 {
     p_at_m153 = rnd(100) + rnd((cdata_level(prm_904) * 50 + 1));
@@ -2110,6 +2164,9 @@ void generatemoney(int prm_904)
     }
     return;
 }
+
+
+
 void calccosthire()
 {
     cost_at_m153 = 0;
@@ -2137,6 +2194,9 @@ void calccosthire()
     gdata_cost_to_hire = cost_at_m153;
     return;
 }
+
+
+
 int calccostbuilding()
 {
     cost_at_m153 = 0;
@@ -2175,6 +2235,9 @@ int calccostbuilding()
         / 100;
     return cost_at_m153;
 }
+
+
+
 int calccosttax()
 {
     cost_at_m153 = 0;
@@ -2189,11 +2252,17 @@ int calccosttax()
         / 100;
     return cost_at_m153;
 }
+
+
+
 int calcmealvalue()
 {
     value_at_m153 = 140;
     return value_at_m153;
 }
+
+
+
 int calccostreload(int prm_905, int prm_906)
 {
     int ci_at_m153 = 0;
@@ -2248,14 +2317,23 @@ int calccostreload(int prm_905, int prm_906)
     }
     return cost_at_m153;
 }
+
+
+
 int calccargoupdate()
 {
     return 10000;
 }
+
+
+
 int calccargoupdatecost()
 {
     return (gdata_current_cart_limit - gdata_initial_cart_limit) / 10000 + 1;
 }
+
+
+
 int calcidentifyvalue(int prm_907)
 {
     value_at_m153 = 300;
@@ -2293,6 +2371,9 @@ int calcidentifyvalue(int prm_907)
     }
     return value_at_m153;
 }
+
+
+
 int calctraincost(int prm_908, int prm_909, int prm_910)
 {
     value_at_m153 = sorg(prm_908, prm_909) / 5 + 2;
@@ -2302,6 +2383,9 @@ int calctraincost(int prm_908, int prm_909, int prm_910)
     }
     return value_at_m153;
 }
+
+
+
 int calclearncost(int, int, int prm_913)
 {
     value_at_m153 = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
@@ -2311,6 +2395,9 @@ int calclearncost(int, int, int prm_913)
     }
     return value_at_m153;
 }
+
+
+
 int calcresurrectvalue(int prm_914)
 {
     if (cdata_state(prm_914) != 6)
@@ -2320,6 +2407,9 @@ int calcresurrectvalue(int prm_914)
     value_at_m153 = cdata_level(prm_914) * cdata_level(prm_914) * 15;
     return value_at_m153;
 }
+
+
+
 int calcslavevalue(int prm_915)
 {
     value_at_m153 = sdata(10, prm_915) * sdata(11, prm_915)
@@ -2334,6 +2424,9 @@ int calcslavevalue(int prm_915)
     }
     return value_at_m153;
 }
+
+
+
 int calcrestorecost()
 {
     value_at_m153 = 500;
@@ -2343,6 +2436,9 @@ int calcrestorecost()
     }
     return value_at_m153;
 }
+
+
+
 int calcinitgold(int prm_917)
 {
     int lootrich_at_m155 = 0;
@@ -2371,6 +2467,9 @@ int calcinitgold(int prm_917)
     }
     return rnd(cdata_level(prm_917) * 25 + 10) + 1;
 }
+
+
+
 int calcspellpower(int prm_918, int prm_919)
 {
     if (prm_918 >= 600)
@@ -2394,6 +2493,9 @@ int calcspellpower(int prm_918, int prm_919)
     }
     return sdata(172, prm_919) * 6 + 10;
 }
+
+
+
 int calcspellfail(int prm_920, int prm_921)
 {
     int i_at_m157 = 0;
@@ -2470,6 +2572,9 @@ int calcspellfail(int prm_920, int prm_921)
     }
     return p_at_m157;
 }
+
+
+
 int calcspellcostmp(int prm_922, int prm_923)
 {
     int cost_at_m158 = 0;
@@ -2493,6 +2598,9 @@ int calcspellcostmp(int prm_922, int prm_923)
     }
     return cost_at_m158;
 }
+
+
+
 int calcspellcoststock(int prm_924, int prm_925)
 {
     int cost_at_m159 = 0;
@@ -2509,6 +2617,9 @@ int calcspellcoststock(int prm_924, int prm_925)
     }
     return cost_at_m159;
 }
+
+
+
 int calcscore()
 {
     p = cdata_level(0) * cdata_level(0)
@@ -2524,6 +2635,9 @@ int calcscore()
     }
     return p;
 }
+
+
+
 void calcpartyscore()
 {
     p = 0;
@@ -2560,6 +2674,9 @@ void calcpartyscore()
     qdata(13, gdata_executing_immediate_quest) = p;
     return;
 }
+
+
+
 void calcpartyscore2()
 {
     p = 0;

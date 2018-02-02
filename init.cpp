@@ -24,6 +24,7 @@ redo:
 }
 
 
+
 } // namespace
 
 
@@ -2388,6 +2389,7 @@ void label_2732()
     label_17402();
     return;
 }
+
 
 
 } // namespace elona

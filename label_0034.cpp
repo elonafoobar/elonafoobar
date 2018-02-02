@@ -1706,4 +1706,5 @@ void label_0034()
 }
 
 
+
 } // namespace elona

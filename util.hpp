@@ -23,6 +23,7 @@ inline bool contains(
 }
 
 
+
 inline std::string to_lower(std::string_view source)
 {
     std::string ret;
@@ -33,6 +34,7 @@ inline std::string to_lower(std::string_view source)
         [](char c) { return std::tolower(c); });
     return ret;
 }
+
 
 
 } // namespace strutil

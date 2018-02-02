@@ -35,10 +35,16 @@ std::string cnvrank(int prm_248)
     }
     return ""s + prm_248 + u8"th"s;
 }
+
+
+
 std::string cnvtalk(const std::string& prm_249)
 {
     return u8"\""s + prm_249 + u8"\" "s;
 }
+
+
+
 std::string cnvarticle(const std::string& prm_250)
 {
     if (jp)
@@ -47,6 +53,9 @@ std::string cnvarticle(const std::string& prm_250)
     }
     return u8"["s + prm_250 + u8"]"s;
 }
+
+
+
 std::string cnvitemname(int prm_251)
 {
     if (jp)
@@ -59,6 +68,9 @@ std::string cnvitemname(int prm_251)
     }
     return ioriginalnameref2(prm_251) + u8" of "s + ioriginalnameref(prm_251);
 }
+
+
+
 std::string cnven(const std::string& prm_252)
 {
     std::string s_at_m1;
@@ -89,6 +101,9 @@ std::string cnven(const std::string& prm_252)
     }
     return s_at_m1;
 }
+
+
+
 std::string cnvfix(int prm_339)
 {
     if (prm_339 >= 0)
@@ -100,6 +115,9 @@ std::string cnvfix(int prm_339)
         return ""s + prm_339;
     }
 }
+
+
+
 std::string cnvdate(int prm_342, int prm_343)
 {
     int p_at_m27 = 0;
@@ -143,64 +161,100 @@ std::string cnvdate(int prm_342, int prm_343)
     }
     return s_at_m27;
 }
+
+
+
 std::string cnvplaytime(int prm_344)
 {
     return ""s + prm_344 / 60 / 60 + lang(u8"時間"s, u8":"s) + prm_344 / 60 % 60
         + lang(u8"分"s, u8":"s) + prm_344 % 60 + lang(u8"秒"s, u8" Sec"s);
 }
+
+
+
 std::string sncnv(std::string& prm_349)
 {
     return strmid(prm_349, 0, instr(prm_349, 0, u8" "s)) + u8" "s;
 }
+
+
+
 void sngeneral(std::string& prm_350)
 {
     prm_350 =
         lang(u8"雑貨屋の"s + prm_350, sncnv(prm_350) + u8"the general vendor"s);
     return;
 }
+
+
+
 void sninn(std::string& prm_351)
 {
     prm_351 = lang(u8"宿屋の"s + prm_351, sncnv(prm_351) + u8"the Innkeeper"s);
     return;
 }
+
+
+
 void sntrade(std::string& prm_352)
 {
     prm_352 = lang(u8"交易店の"s + prm_352, sncnv(prm_352) + u8"the trader"s);
     return;
 }
+
+
+
 void sngoods(std::string& prm_353)
 {
     prm_353 =
         lang(u8"何でも屋の"s + prm_353, sncnv(prm_353) + u8"the goods vendor"s);
     return;
 }
+
+
+
 void snbakery(std::string& prm_354)
 {
     prm_354 = lang(u8"パン屋の"s + prm_354, sncnv(prm_354) + u8"the baker"s);
     return;
 }
+
+
+
 void snmagic(std::string& prm_355)
 {
     prm_355 =
         lang(u8"魔法店の"s + prm_355, sncnv(prm_355) + u8"the magic vendor"s);
     return;
 }
+
+
+
 void snarmor(std::string& prm_356)
 {
     prm_356 =
         lang(u8"武具店の"s + prm_356, sncnv(prm_356) + u8"the blacksmith"s);
     return;
 }
+
+
+
 void sntrainer(std::string& prm_357)
 {
     prm_357 = lang(u8"ギルドの"s + prm_357, sncnv(prm_357) + u8"the trainer"s);
     return;
 }
+
+
+
 void snfish(std::string& prm_358)
 {
     prm_358 = lang(u8"釣具店の"s + prm_358, sncnv(prm_358) + u8"the fisher"s);
     return;
 }
+
+
+
 void snblack(std::string& prm_359)
 {
     prm_359 = lang(
@@ -208,12 +262,18 @@ void snblack(std::string& prm_359)
         sncnv(prm_359) + u8"the blackmarket vendor"s);
     return;
 }
+
+
+
 void snfood(std::string& prm_360)
 {
     prm_360 =
         lang(u8"食品店"s + prm_360, sncnv(prm_360) + u8"the food vendor"s);
     return;
 }
+
+
+
 void txtsetlastword()
 {
     notesel(buff);
@@ -222,6 +282,9 @@ void txtsetlastword()
     noteget(lastword, rnd(noteinfo(0) + 1));
     return;
 }
+
+
+
 void txtsetwinword(int prm_361)
 {
     {
@@ -266,6 +329,9 @@ void txtsetwinword(int prm_361)
     }
     return;
 }
+
+
+
 void label_0140()
 {
     SDIM4(mapnamerd, 20, 2, 5);
@@ -281,6 +347,9 @@ void label_0140()
     mapnamerd(1, 4) = lang(u8"混沌の"s, u8"Chaotic "s);
     return;
 }
+
+
+
 std::string maplevel(int)
 {
     if (gdata_current_map == 7)
@@ -313,6 +382,9 @@ std::string maplevel(int)
     }
     return "";
 }
+
+
+
 std::string mapname(int prm_366, int prm_367)
 {
     s(0) = "";
@@ -613,6 +685,9 @@ std::string mapname(int prm_366, int prm_367)
     }
     return s;
 }
+
+
+
 std::string txtbuilding(int prm_368, int prm_369)
 {
     int p_at_m32 = 0;
@@ -622,6 +697,9 @@ std::string txtbuilding(int prm_368, int prm_369)
         bdrefn(p_at_m32) + u8"がある。"s, u8"You see "s + bdrefn(p_at_m32));
     return s_at_m32;
 }
+
+
+
 std::string txtskillchange(int prm_370, int prm_371, int prm_372)
 {
     if (prm_370 == 2)
@@ -826,6 +904,9 @@ std::string txtskillchange(int prm_370, int prm_371, int prm_372)
                 + u8" skill falls off."s);
     }
 }
+
+
+
 std::string
 foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
 {
@@ -2408,6 +2489,9 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
     }
     return s_at_m33;
 }
+
+
+
 std::string _yoro(int prm_377)
 {
     if (cdata_talk_type(tc) == 0)
@@ -2573,6 +2657,9 @@ std::string _yoro(int prm_377)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _dozo(int prm_378)
 {
     if (cdata_talk_type(tc) == 0)
@@ -2738,6 +2825,9 @@ std::string _dozo(int prm_378)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _thanks(int prm_379)
 {
     if (cdata_talk_type(tc) == 0)
@@ -2903,6 +2993,9 @@ std::string _thanks(int prm_379)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _rob(int prm_380)
 {
     if (cdata_talk_type(tc) == 0)
@@ -3071,6 +3164,9 @@ std::string _rob(int prm_380)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _ka(int prm_381)
 {
     if (cdata_talk_type(tc) == 0)
@@ -3236,6 +3332,9 @@ std::string _ka(int prm_381)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _da(int prm_382)
 {
     if (cdata_talk_type(tc) == 0)
@@ -3401,6 +3500,9 @@ std::string _da(int prm_382)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _nda(int prm_383)
 {
     if (cdata_talk_type(tc) == 0)
@@ -3566,6 +3668,9 @@ std::string _nda(int prm_383)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _noka(int prm_384)
 {
     if (cdata_talk_type(tc) == 0)
@@ -3731,6 +3836,9 @@ std::string _noka(int prm_384)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _kana(int prm_385)
 {
     if (cdata_talk_type(tc) == 0)
@@ -3896,6 +4004,9 @@ std::string _kana(int prm_385)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _kimi(int prm_386)
 {
     if (cdata_talk_type(tc) == 0)
@@ -4061,6 +4172,9 @@ std::string _kimi(int prm_386)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _ru(int prm_387)
 {
     if (cdata_talk_type(tc) == 0)
@@ -4226,6 +4340,9 @@ std::string _ru(int prm_387)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _tanomu(int prm_388)
 {
     if (cdata_talk_type(tc) == 0)
@@ -4391,6 +4508,9 @@ std::string _tanomu(int prm_388)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _ore(int prm_389)
 {
     if (cdata_talk_type(tc) == 0)
@@ -4556,6 +4676,9 @@ std::string _ore(int prm_389)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _ga(int prm_390)
 {
     if (cdata_talk_type(tc) == 0)
@@ -4721,6 +4844,9 @@ std::string _ga(int prm_390)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _dana(int prm_391)
 {
     if (cdata_talk_type(tc) == 0)
@@ -4886,6 +5012,9 @@ std::string _dana(int prm_391)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _kure(int prm_392)
 {
     if (cdata_talk_type(tc) == 0)
@@ -5051,6 +5180,9 @@ std::string _kure(int prm_392)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _daro(int prm_393)
 {
     if (cdata_talk_type(tc) == 0)
@@ -5216,6 +5348,9 @@ std::string _daro(int prm_393)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _yo(int prm_394)
 {
     if (cdata_talk_type(tc) == 0)
@@ -5381,6 +5516,9 @@ std::string _yo(int prm_394)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _aru(int prm_395)
 {
     if (cdata_talk_type(tc) == 0)
@@ -5546,6 +5684,9 @@ std::string _aru(int prm_395)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _u(int prm_396)
 {
     if (cdata_talk_type(tc) == 0)
@@ -5711,6 +5852,9 @@ std::string _u(int prm_396)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _na(int prm_397)
 {
     if (cdata_talk_type(tc) == 0)
@@ -5876,6 +6020,9 @@ std::string _na(int prm_397)
     }
     return _tone_at_m34;
 }
+
+
+
 std::string _ta(int prm_398)
 {
     if (cdata_talk_type(tc) == 0)
@@ -6041,6 +6188,9 @@ std::string _ta(int prm_398)
     }
     return _tone_at_m34;
 }
+
+
+
 void label_0173()
 {
     {
@@ -6167,6 +6317,9 @@ void label_0173()
     }
     return;
 }
+
+
+
 void label_0174()
 {
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -6183,6 +6336,9 @@ void label_0174()
     label_0173();
     return;
 }
+
+
+
 void label_0175()
 {
     buff = "";
@@ -6192,6 +6348,9 @@ void label_0175()
     label_0174();
     return;
 }
+
+
+
 void label_0176()
 {
     buff = "";
@@ -6299,6 +6458,9 @@ void label_0176()
     label_0174();
     return;
 }
+
+
+
 std::string cnvweight(int prm_399)
 {
     std::string s_at_m35;
@@ -6306,6 +6468,9 @@ std::string cnvweight(int prm_399)
         + std::abs(prm_399) % 1000 / 100 + ""s + strweight;
     return s_at_m35;
 }
+
+
+
 std::string fltname(int prm_400)
 {
     if (prm_400 == 60001)
@@ -6346,6 +6511,9 @@ std::string fltname(int prm_400)
     }
     return lang(u8"不明"s, u8"Unknown"s);
 }
+
+
+
 void label_0180()
 {
     noteadd(lang(u8"@QM[メインクエスト]"s, u8"@QM[Main Quest]"s));
@@ -6402,6 +6570,9 @@ void label_0180()
     noteadd(""s);
     return;
 }
+
+
+
 void label_0181()
 {
     if (val == 0)
@@ -7295,6 +7466,9 @@ void label_0181()
     }
     return;
 }
+
+
+
 void label_0182()
 {
     noteadd(lang(u8"[古びたお守り]"s, u8"[An old talisman]"s));
@@ -7316,6 +7490,9 @@ void label_0182()
     }
     return;
 }
+
+
+
 void label_0183()
 {
     notesel(buffboard);
@@ -7344,6 +7521,9 @@ void label_0183()
     }
     return;
 }
+
+
+
 void txtgod(int prm_407, int prm_408)
 {
     if (prm_407 == 0)
@@ -7991,6 +8171,9 @@ void txtgod(int prm_407, int prm_408)
     }
     return;
 }
+
+
+
 std::string randomname(int)
 {
 label_0223_internal:
@@ -8043,6 +8226,9 @@ label_0223_internal:
 
     return cnven(s_at_m41);
 }
+
+
+
 std::string random_title(int prm_439)
 {
     elona_vector1<std::string> randn2_at_m41;
@@ -8243,6 +8429,9 @@ label_0228_internal:
     }
     return s_at_m41;
 }
+
+
+
 void label_0230()
 {
     if (hour_played == 1)
@@ -8315,6 +8504,9 @@ void label_0230()
     }
     return;
 }
+
+
+
 void label_0247()
 {
     rtval(0) = 4;
@@ -9392,6 +9584,7 @@ void label_0247()
     }
     return;
 }
+
 
 
 } // namespace elona

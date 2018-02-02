@@ -34,20 +34,32 @@ void netload(const std::string& prm_194)
     dialog(u8"エラー:"s + estr_at_m0);
     return;
 }
+
+
+
 void label_0002()
 {
     return;
 }
+
+
+
 int zentohan(const std::string& prm_209, std::string& prm_210, int prm_211)
 {
     return LCMapStringA(
         GetUserDefaultLCID(), 4194304, prm_209, -1, prm_210, prm_211);
 }
+
+
+
 void tmset()
 {
     timeBeginPeriod(1);
     return;
 }
+
+
+
 std::string lang(const std::string& prm_246, const std::string& prm_247)
 {
     if (jp)
@@ -59,10 +71,16 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
         return prm_247;
     }
 }
+
+
+
 int cbit(int prm_253, int prm_254)
 {
     return HMMBITCHECK(cdata(450 + prm_253 / 32, prm_254), prm_253 % 32);
 }
+
+
+
 void cbitmod(int prm_255, int prm_256, int prm_257)
 {
     if (prm_257 == 0)
@@ -73,6 +91,9 @@ void cbitmod(int prm_255, int prm_256, int prm_257)
     HMMBITON(cdata(450 + prm_255 / 32, prm_256), prm_255 % 32);
     return;
 }
+
+
+
 int refclass(int prm_261, int prm_262)
 {
     dbmode = 16;
@@ -80,6 +101,9 @@ int refclass(int prm_261, int prm_262)
     dbspec = prm_262;
     return label_2298();
 }
+
+
+
 int refrace(const std::string& prm_263, int prm_264)
 {
     dbmode = 16;
@@ -87,6 +111,9 @@ int refrace(const std::string& prm_263, int prm_264)
     dbspec = prm_264;
     return label_2297();
 }
+
+
+
 std::string ranktitle(int prm_265)
 {
     int p_at_m6 = 0;
@@ -109,6 +136,9 @@ std::string ranktitle(int prm_265)
     }
     return rankn(9, prm_265);
 }
+
+
+
 void label_0026()
 {
     SDIM4(rankn, 30, 11, 9);
@@ -301,6 +331,9 @@ void label_0026()
     ranknorma(6) = 30;
     return;
 }
+
+
+
 std::string guildname()
 {
     std::string s_at_m7;
@@ -319,6 +352,9 @@ std::string guildname()
     }
     return s_at_m7;
 }
+
+
+
 void label_0029()
 {
     SDIM3(popostname, 20, 7);
@@ -337,6 +373,9 @@ void label_0029()
     DIM3(podata, 300, 20);
     return;
 }
+
+
+
 void label_0030()
 {
     DIM4(bddata, 40, 20, 10);
@@ -362,6 +401,9 @@ void label_0030()
     bdrefn(6) = lang(u8"灯台"s, u8"Light House"s);
     return;
 }
+
+
+
 void label_0031()
 {
     DIM3(bdataref, 7, 29);
@@ -538,18 +580,30 @@ void label_0031()
     bufftxt(1, 28) = u8" magical effect."s;
     return;
 }
+
+
+
 int sorg(int prm_272, int prm_273)
 {
     return sdata((prm_272 + 600), prm_273) / 1000000;
 }
+
+
+
 int randskill()
 {
     return rnd(40) + 150;
 }
+
+
+
 int randattb()
 {
     return rnd(8) + 10;
 }
+
+
+
 void label_0041()
 {
     DIM2(traitref, 10);
@@ -557,6 +611,9 @@ void label_0041()
     SDIM3(traitrefn2, 20, 6);
     return;
 }
+
+
+
 void label_0043()
 {
     if (cdatan(2, 0) == u8"dwarf"s)
@@ -609,10 +666,16 @@ void label_0043()
     }
     return;
 }
+
+
+
 int ibit(int prm_274, int prm_275)
 {
     return HMMBITCHECK(inv(35 + prm_274 / 32, prm_275), prm_274 % 32);
 }
+
+
+
 void ibitmod(int prm_276, int prm_277, int prm_278)
 {
     if (prm_278 == 0)
@@ -623,6 +686,9 @@ void ibitmod(int prm_276, int prm_277, int prm_278)
     HMMBITON(inv(35 + prm_276 / 32, prm_277), prm_276 % 32);
     return;
 }
+
+
+
 int refitem(int prm_279, int prm_280)
 {
     dbmode = 16;
@@ -630,6 +696,9 @@ int refitem(int prm_279, int prm_280)
     dbspec = prm_280;
     return label_1275();
 }
+
+
+
 int iequiploc(int prm_281)
 {
     int p_at_m13 = 0;
@@ -684,6 +753,9 @@ int iequiploc(int prm_281)
     }
     return 0;
 }
+
+
+
 void setunid(int prm_282, int prm_283)
 {
     cdata_cnpc_id(prm_282) = prm_283;
@@ -691,6 +763,9 @@ void setunid(int prm_282, int prm_283)
     cdata_image(prm_282) += 0;
     return;
 }
+
+
+
 int getunid(int prm_284)
 {
     f_at_m14 = 0;
@@ -714,6 +789,9 @@ int getunid(int prm_284)
     }
     return f_at_m14;
 }
+
+
+
 int findunid(const std::string& prm_285)
 {
     f_at_m14 = 0;
@@ -730,6 +808,9 @@ int findunid(const std::string& prm_285)
     }
     return f_at_m14;
 }
+
+
+
 int synccheck(int prm_286, int prm_287)
 {
     if (prm_287 == -1)
@@ -742,6 +823,9 @@ int synccheck(int prm_286, int prm_287)
     }
     return 0;
 }
+
+
+
 int evid()
 {
     if (evnum <= 0)
@@ -750,6 +834,9 @@ int evid()
     }
     return evlist(evnum - 1);
 }
+
+
+
 int evfind(int prm_288)
 {
     int f_at_m17 = 0;
@@ -766,6 +853,9 @@ int evfind(int prm_288)
     }
     return f_at_m17;
 }
+
+
+
 void evadd(int prm_289, int prm_290, int prm_291)
 {
     if (evproc)
@@ -786,6 +876,9 @@ void evadd(int prm_289, int prm_290, int prm_291)
     ++evnum;
     return;
 }
+
+
+
 void sndload(const std::string& prm_292, int prm_293)
 {
     if (prm_293 < 7)
@@ -802,6 +895,9 @@ void sndload(const std::string& prm_292, int prm_293)
     soundfile(prm_293) = prm_292;
     return;
 }
+
+
+
 void snd(int prm_296, int prm_297, int prm_298)
 {
     int sound_at_m18 = 0;
@@ -885,6 +981,9 @@ void snd(int prm_296, int prm_297, int prm_298)
     }
     return;
 }
+
+
+
 void label_0066()
 {
     DIM2(soundlist, 6);
@@ -1014,6 +1113,9 @@ void label_0066()
     sndload(folder + u8"offer2.wav"s, 121);
     return;
 }
+
+
+
 void label_0067()
 {
     s = fs::u8path(u8"./user/music/musiclist.txt");
@@ -1038,6 +1140,9 @@ void label_0067()
     }
     return;
 }
+
+
+
 void label_0068()
 {
     env = 0;
@@ -1272,6 +1377,9 @@ void label_0068()
     musicloop = 0;
     return;
 }
+
+
+
 int roundmargin(int prm_345, int prm_346)
 {
     if (prm_345 > prm_346)
@@ -1284,6 +1392,9 @@ int roundmargin(int prm_345, int prm_346)
     }
     return prm_345;
 }
+
+
+
 void at(int prm_347)
 {
     if (cc == 0)
@@ -1306,6 +1417,9 @@ void at(int prm_347)
     }
     return;
 }
+
+
+
 void text_set()
 {
     SDIM3(bodyn, 4, 15);
@@ -2295,6 +2409,9 @@ void text_set()
     }
     return;
 }
+
+
+
 std::string elename(int prm_348)
 {
     if (efid == 614)
@@ -2363,6 +2480,9 @@ std::string elename(int prm_348)
     }
     return u8"?"s;
 }
+
+
+
 void txttargetlevel()
 {
     if (cdata_level(cc) * 20 < cdata_level(tc))
@@ -2440,6 +2560,9 @@ void txttargetlevel()
             + u8" with your eyes closed and arms crossed."s);
     return;
 }
+
+
+
 std::string mapfile(int prm_365)
 {
     if (adata(16, prm_365) == 5)
@@ -2472,6 +2595,9 @@ std::string mapfile(int prm_365)
     }
     return u8"vernis"s;
 }
+
+
+
 void label_0149()
 {
     DIM3(picfood, 10, 9);
@@ -2557,6 +2683,9 @@ void label_0149()
     picfood(9, 7) = 111;
     return;
 }
+
+
+
 void label_0184()
 {
     randomize(qdata(0, rq) + 1);
@@ -2793,6 +2922,9 @@ void label_0184()
     randomize();
     return;
 }
+
+
+
 void label_0185()
 {
     {
@@ -2952,6 +3084,9 @@ void label_0185()
     }
     return;
 }
+
+
+
 void addnews2(const std::string& prm_401, int prm_402)
 {
     std::string n_at_m36;
@@ -2965,6 +3100,9 @@ void addnews2(const std::string& prm_401, int prm_402)
     newsbuff += n_at_m36 + u8"\n"s;
     return;
 }
+
+
+
 void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 {
     addnews2(
@@ -2972,6 +3110,9 @@ void addnewstopic(const std::string& prm_403, const std::string& prm_404)
         + gdata_day + u8" h"s + gdata_hour + ""s + u8" "s + prm_404);
     return;
 }
+
+
+
 void addnews(int prm_405, int prm_406)
 {
     if (prm_405 == 0)
@@ -3039,6 +3180,9 @@ void addnews(int prm_405, int prm_406)
     newsbuff += u8"\n"s;
     return;
 }
+
+
+
 void label_0193()
 {
     if (cfg_music == 1)
@@ -3066,6 +3210,9 @@ void label_0193()
     end();
     return;
 }
+
+
+
 void create_pcpic(int prm_409, int prm_410)
 {
     elona::prm_409 = prm_409;
@@ -3654,6 +3801,9 @@ void create_pcpic(int prm_409, int prm_410)
     gsel(0);
     return;
 }
+
+
+
 void label_0196()
 {
     int p_at_m38 = 0;
@@ -3693,6 +3843,9 @@ void label_0196()
     }
     return;
 }
+
+
+
 void addefmap(
     int prm_411,
     int prm_412,
@@ -3707,6 +3860,9 @@ void addefmap(
     efmap(3, prm_411, prm_412) = prm_416;
     return;
 }
+
+
+
 void label_0200()
 {
     {
@@ -3733,6 +3889,9 @@ void label_0200()
     }
     return;
 }
+
+
+
 void label_0201()
 {
     DIM3(chipm, 8, 825);
@@ -3958,6 +4117,9 @@ void label_0201()
     }
     return;
 }
+
+
+
 void label_0202()
 {
     DIM3(cloud, 6, 12);
@@ -4627,6 +4789,9 @@ void label_0202()
     label_0201();
     return;
 }
+
+
+
 void cardplayerinit(int prm_417, int prm_418)
 {
     DIM3(cardplayer_at_cardcontrol, 100, prm_417);
@@ -4634,6 +4799,9 @@ void cardplayerinit(int prm_417, int prm_418)
     cardholdermax_at_cardcontrol = prm_418;
     return;
 }
+
+
+
 void cardplayeradd(int prm_419, int prm_420, int prm_421)
 {
     cardplayer_at_cardcontrol(1, prm_419) = prm_420;
@@ -4647,6 +4815,9 @@ void cardplayeradd(int prm_419, int prm_420, int prm_421)
     }
     return;
 }
+
+
+
 void initcard(int prm_422, int prm_423, int)
 {
     pilex_at_cardcontrol = prm_422;
@@ -4689,6 +4860,9 @@ void initcard(int prm_422, int prm_423, int)
     }
     return;
 }
+
+
+
 void showcard2(int prm_425, int prm_426)
 {
     elona_vector1<int> col_at_cardcontrol;
@@ -4801,6 +4975,9 @@ void showcard2(int prm_425, int prm_426)
     }
     return;
 }
+
+
+
 void showcardpile()
 {
     int pilestack_at_cardcontrol = 0;
@@ -4833,6 +5010,9 @@ void showcardpile()
     bmes(u8"X "s + pilestack_at_cardcontrol, 240, 240, 240);
     return;
 }
+
+
+
 void showcard()
 {
     redraw(0);
@@ -4851,6 +5031,9 @@ void showcard()
     }
     return;
 }
+
+
+
 int servecard(int prm_427)
 {
     int cardid_at_cardcontrol = 0;
@@ -4932,6 +5115,9 @@ int servecard(int prm_427)
     }
     return cardid_at_cardcontrol;
 }
+
+
+
 void showcardholder()
 {
     redraw(0);
@@ -4960,6 +5146,9 @@ void showcardholder()
     }
     return;
 }
+
+
+
 int opencard2(int prm_428, int prm_429)
 {
     if (prm_429 == 1)
@@ -5006,6 +5195,9 @@ int opencard2(int prm_428, int prm_429)
     redraw(1);
     return prm_428;
 }
+
+
+
 int trashcard(int prm_430)
 {
     {
@@ -5053,6 +5245,9 @@ int trashcard(int prm_430)
     }
     return prm_430;
 }
+
+
+
 int cpscore(int prm_431)
 {
     int ace_at_cardcontrol = 0;
@@ -5093,6 +5288,9 @@ int cpscore(int prm_431)
     }
     return i_at_cardcontrol;
 }
+
+
+
 int lastcard(int prm_432)
 {
     c_at_cardcontrol = 0;
@@ -5110,6 +5308,9 @@ int lastcard(int prm_432)
     }
     return c_at_cardcontrol;
 }
+
+
+
 int cpblackcard(int prm_433)
 {
     c_at_cardcontrol = 0;
@@ -5127,6 +5328,9 @@ int cpblackcard(int prm_433)
     }
     return c_at_cardcontrol;
 }
+
+
+
 int cpcardnum(int prm_434)
 {
     c_at_cardcontrol = 0;
@@ -5143,6 +5347,9 @@ int cpcardnum(int prm_434)
     }
     return c_at_cardcontrol;
 }
+
+
+
 int pileremain()
 {
     p_at_cardcontrol = 0;
@@ -5158,6 +5365,9 @@ int pileremain()
     }
     return p_at_cardcontrol;
 }
+
+
+
 void csvsort(
     elona_vector1<std::string>& prm_435,
     std::string prm_436,
@@ -5181,6 +5391,9 @@ void csvsort(
     }
     return;
 }
+
+
+
 void label_0221()
 {
     SDIM3(randn1, 30, 20);
@@ -5219,6 +5432,9 @@ void label_0221()
     }
     return;
 }
+
+
+
 void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
 {
     int p_at_m42 = 0;
@@ -5262,6 +5478,9 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
     randomize();
     return;
 }
+
+
+
 void flt(int prm_445, int prm_446)
 {
     filtermax = 0;
@@ -5287,6 +5506,9 @@ void flt(int prm_445, int prm_446)
     }
     return;
 }
+
+
+
 void fltn(const std::string& prm_447)
 {
     std::string s2_at_m44;
@@ -5309,10 +5531,16 @@ void fltn(const std::string& prm_447)
     }
     return;
 }
+
+
+
 int discsetmc()
 {
     return rnd(40);
 }
+
+
+
 int fltsetdungeon()
 {
     if (rnd(20) == 0)
@@ -5325,6 +5553,9 @@ int fltsetdungeon()
     }
     return fsetitem(rnd(length(fsetitem)));
 }
+
+
+
 int randomele()
 {
     int p_at_m45 = 0;
@@ -5350,6 +5581,9 @@ int randomele()
     }
     return p_at_m45;
 }
+
+
+
 void putenclv(int prm_448)
 {
     {
@@ -5366,6 +5600,9 @@ void putenclv(int prm_448)
     }
     return;
 }
+
+
+
 int encflt(int prm_449, int prm_450)
 {
     if (prm_450 == 2)
@@ -5410,6 +5647,9 @@ int encflt(int prm_449, int prm_450)
         return 0;
     }
 }
+
+
+
 void label_0246()
 {
     DIM3(encref, 8, 62);
@@ -5806,6 +6046,9 @@ void label_0246()
     encprocref(5, 25) = 100;
     return;
 }
+
+
+
 int randomenc(int prm_451)
 {
     int sum_at_m47 = 0;
@@ -5867,6 +6110,9 @@ int randomenc(int prm_451)
     }
     return i_at_m47;
 }
+
+
+
 int randomenclv(int prm_452)
 {
     int enclv_at_m47 = 0;
@@ -5874,6 +6120,9 @@ int randomenclv(int prm_452)
     enclv_at_m47 = rnd(enclv_at_m47 + 1);
     return enclv_at_m47;
 }
+
+
+
 int randomencp(int prm_453)
 {
     int encp_at_m47 = 0;
@@ -5884,6 +6133,9 @@ int randomencp(int prm_453)
     }
     return encp_at_m47;
 }
+
+
+
 void sortenc(int prm_454)
 {
     int f_at_m47 = 0;
@@ -5922,6 +6174,9 @@ void sortenc(int prm_454)
     }
     return;
 }
+
+
+
 void encremove(int prm_455, int prm_456, int prm_457)
 {
     if (prm_456 == 0)
@@ -5965,6 +6220,9 @@ void encremove(int prm_455, int prm_456, int prm_457)
     sortenc(prm_455);
     return;
 }
+
+
+
 int encadd(
     int prm_458,
     int prm_459,
@@ -6181,6 +6439,9 @@ int encadd(
     sortenc(prm_458);
     return 1;
 }
+
+
+
 void egoadd(int prm_465, int prm_466)
 {
     {
@@ -6199,6 +6460,9 @@ void egoadd(int prm_465, int prm_466)
     }
     return;
 }
+
+
+
 void label_0258()
 {
     SDIM1(egoname);
@@ -6296,6 +6560,9 @@ void label_0258()
     maxegominorn = length(egominorn);
     return;
 }
+
+
+
 void label_0259()
 {
     {
@@ -6308,6 +6575,9 @@ void label_0259()
     inv_subname(ci) = 20000 + rnd(maxegominorn);
     return;
 }
+
+
+
 void label_0260()
 {
     p = 0;
@@ -6347,6 +6617,9 @@ void label_0260()
     }
     return;
 }
+
+
+
 void label_0261()
 {
     if (reftype == 25000)
@@ -6499,6 +6772,9 @@ void label_0261()
     }
     return;
 }
+
+
+
 void label_0262()
 {
     SDIM4(mtname, 18, 2, 50);
@@ -7339,12 +7615,18 @@ void label_0262()
     mtlistleather(3, 4) = 8;
     return;
 }
+
+
+
 void label_0263()
 {
     label_0264();
     label_0266();
     return;
 }
+
+
+
 void label_0264()
 {
     if (cm)
@@ -7440,6 +7722,9 @@ void label_0264()
     }
     return;
 }
+
+
+
 void label_0265()
 {
     inv_color(ci) = 0;
@@ -7477,6 +7762,9 @@ void label_0265()
     label_1477();
     return;
 }
+
+
+
 void label_0266()
 {
     if (reftype == 60000)
@@ -7543,6 +7831,9 @@ void label_0266()
     label_0267();
     return;
 }
+
+
+
 void label_0267()
 {
     p = inv_material(ci);
@@ -7570,6 +7861,9 @@ void label_0267()
     }
     return;
 }
+
+
+
 void label_0268()
 {
     p = 0;
@@ -7947,6 +8241,9 @@ void label_0268()
     ++p;
     return;
 }
+
+
+
 std::string rpname(int prm_516)
 {
     std::string s_at_m62;
@@ -7961,6 +8258,9 @@ std::string rpname(int prm_516)
     }
     return s_at_m62;
 }
+
+
+
 void colorres(int)
 {
     color(0, 0, 0);
@@ -8010,6 +8310,9 @@ void colorres(int)
     }
     return;
 }
+
+
+
 void equipinfo(int prm_529, int prm_530, int prm_531)
 {
     int p_at_m66 = 0;
@@ -8075,6 +8378,9 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
     }
     return;
 }
+
+
+
 void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
 {
     std::string word_at_m67;
@@ -8102,6 +8408,9 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     }
     return;
 }
+
+
+
 int cargocheck()
 {
     if (refitem(inv_id(ci), 10) == 0)
@@ -8123,6 +8432,9 @@ int cargocheck()
         return 1;
     }
 }
+
+
+
 void rndshuffle(elona_vector1<int>& prm_534)
 {
     int p_at_m68 = 0;
@@ -8141,6 +8453,9 @@ void rndshuffle(elona_vector1<int>& prm_534)
     }
     return;
 }
+
+
+
 int dist(int prm_535, int prm_536, int prm_537, int prm_538)
 {
     int d_at_m69 = 0;
@@ -8148,6 +8463,9 @@ int dist(int prm_535, int prm_536, int prm_537, int prm_538)
         + (prm_536 - prm_538) * (prm_536 - prm_538);
     return int(std::sqrt(d_at_m69));
 }
+
+
+
 int winposy(int prm_539, int prm_540)
 {
     if (prm_540 == 0)
@@ -8156,6 +8474,9 @@ int winposy(int prm_539, int prm_540)
     }
     return (windowh - prm_539) / 2;
 }
+
+
+
 void cutname(std::string& prm_541, int prm_542)
 {
     int len_at_m71 = 0;
@@ -8196,6 +8517,9 @@ void cutname(std::string& prm_541, int prm_542)
     }
     return;
 }
+
+
+
 void cs_list(
     int CNT,
     const std::string& prm_543,
@@ -8268,6 +8592,9 @@ void cs_list(
     mes(prm_543);
     return;
 }
+
+
+
 void cs_listbk()
 {
     if (cs_bk == -1)
@@ -8278,6 +8605,9 @@ void cs_listbk()
     gcopy(3, 264, 96, cs_posbk(2), cs_posbk(3));
     return;
 }
+
+
+
 void gohostile()
 {
     {
@@ -8296,6 +8626,9 @@ void gohostile()
     }
     return;
 }
+
+
+
 void modkarma(int prm_550, int prm_551)
 {
     int a_at_m74 = 0;
@@ -8379,6 +8712,9 @@ void modkarma(int prm_550, int prm_551)
     }
     return;
 }
+
+
+
 void modrank(int prm_552, int prm_553, int prm_554)
 {
     elona_vector1<int> p_at_m75;
@@ -8442,14 +8778,23 @@ void modrank(int prm_552, int prm_553, int prm_554)
     }
     return;
 }
+
+
+
 int sexp(int prm_555, int prm_556)
 {
     return sdata((prm_555 + 600), prm_556) % 1000000 / 1000;
 }
+
+
+
 int sgrowth(int prm_557, int prm_558)
 {
     return sdata((prm_557 + 600), prm_558) % 1000;
 }
+
+
+
 void modgrowth(int prm_559, int prm_560, int prm_561)
 {
     int growth_at_m76 = 0;
@@ -8466,6 +8811,9 @@ void modgrowth(int prm_559, int prm_560, int prm_561)
         + sexp(prm_560, prm_559) * 1000 + growth_at_m76;
     return;
 }
+
+
+
 void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
 {
     int lv_at_m76 = 0;
@@ -8504,6 +8852,9 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
     label_1477();
     return;
 }
+
+
+
 int skillmod(int prm_566, int prm_567, int prm_568)
 {
     lv_at_m77 = sorg(prm_566, prm_567);
@@ -8592,6 +8943,9 @@ int skillmod(int prm_566, int prm_567, int prm_568)
         + exp_at_m77 * 1000 + growth_at_m77;
     return 0;
 }
+
+
+
 int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
 {
     int exp2_at_m77 = 0;
@@ -8748,6 +9102,9 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         + exp_at_m77 * 1000 + growth_at_m77;
     return 0;
 }
+
+
+
 int getworker(int prm_578, int prm_579)
 {
     int p_at_m78 = 0;
@@ -8776,6 +9133,9 @@ int getworker(int prm_578, int prm_579)
     }
     return p_at_m78;
 }
+
+
+
 void removeworker(int prm_580)
 {
     {
@@ -8794,6 +9154,9 @@ void removeworker(int prm_580)
     }
     return;
 }
+
+
+
 void delmef(int prm_581)
 {
     if (mef(0, prm_581) == 7)
@@ -8825,6 +9188,9 @@ void delmef(int prm_581)
     }
     return;
 }
+
+
+
 void addmef(
     int prm_582,
     int prm_583,
@@ -8882,6 +9248,9 @@ void addmef(
     map(prm_582, prm_583, 8) = i_at_m79 + 1;
     return;
 }
+
+
+
 void cell_featset(
     int prm_592,
     int prm_593,
@@ -8927,6 +9296,9 @@ void cell_featset(
         + feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
     return;
 }
+
+
+
 int cell_featread(int prm_598, int prm_599, int)
 {
     feat(0) = map(prm_598, prm_599, 6) % 1000;
@@ -8935,11 +9307,17 @@ int cell_featread(int prm_598, int prm_599, int)
     feat(3) = map(prm_598, prm_599, 6) / 10000000;
     return 0;
 }
+
+
+
 void cell_featclear(int prm_601, int prm_602)
 {
     map(prm_601, prm_602, 6) = 0;
     return;
 }
+
+
+
 void cell_check(int prm_603, int prm_604)
 {
     cellaccess = 1;
@@ -8970,6 +9348,9 @@ void cell_check(int prm_603, int prm_604)
     }
     return;
 }
+
+
+
 void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 {
     int x2_at_m81 = 0;
@@ -9016,6 +9397,9 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     }
     return;
 }
+
+
+
 void cell_movechara(int prm_609, int prm_610, int prm_611)
 {
     int rc_at_m81 = 0;
@@ -9037,6 +9421,9 @@ void cell_movechara(int prm_609, int prm_610, int prm_611)
     }
     return;
 }
+
+
+
 int route_info(int& prm_612, int& prm_613, int prm_614)
 {
     if (route(0, prm_614 % maxroute) == 1)
@@ -9085,6 +9472,9 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
     }
     return 1;
 }
+
+
+
 int breath_list()
 {
     DIM3(breathlist, 2, 100);
@@ -9181,6 +9571,9 @@ int breath_list()
     }
     return 1;
 }
+
+
+
 void draw_emo(int prm_615, int prm_616, int prm_617)
 {
     gmode(2, 16, 16);
@@ -9188,6 +9581,9 @@ void draw_emo(int prm_615, int prm_616, int prm_617)
     gcopy(3, 32 + cdata_emotion_icon(prm_615) % 100 * 16, 608);
     return;
 }
+
+
+
 void chara_preparepic(int prm_618, int prm_619)
 {
     int p_at_m83 = 0;
@@ -9214,6 +9610,9 @@ void chara_preparepic(int prm_618, int prm_619)
     gsel(selcur);
     return;
 }
+
+
+
 int cell_itemlist(int prm_625, int prm_626)
 {
     listmax = 0;
@@ -9234,6 +9633,9 @@ int cell_itemlist(int prm_625, int prm_626)
     }
     return rtval;
 }
+
+
+
 int cell_itemoncell(int prm_627, int prm_628)
 {
     rtval(0) = 0;
@@ -9255,6 +9657,9 @@ int cell_itemoncell(int prm_627, int prm_628)
     }
     return rtval;
 }
+
+
+
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
     dy_at_modfov = prm_632 - prm_630;
@@ -9517,6 +9922,9 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 label_0397_internal:
     return 1;
 }
+
+
+
 int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
 {
     int p_at_modfov = 0;
@@ -9878,6 +10286,9 @@ label_0410_internal:
     maxroute = p_at_modfov;
     return 1;
 }
+
+
+
 void display_customkey(
     const std::string& prm_637,
     int prm_638,
@@ -9899,12 +10310,18 @@ void display_customkey(
     gcopy(3, 624, 30, 24, 18);
     return;
 }
+
+
+
 void display_key(int prm_641, int prm_642, int prm_643)
 {
     pos(prm_641, prm_642);
     gcopy(3, prm_643 * 24 + 72, 30, 24, 18);
     return;
 }
+
+
+
 void cursor_check()
 {
     if (key == key_north)
@@ -9952,6 +10369,9 @@ void cursor_check()
     }
     return;
 }
+
+
+
 void lenfix(std::string& prm_644, int prm_645)
 {
     int p_at_m89 = 0;
@@ -9969,6 +10389,9 @@ void lenfix(std::string& prm_644, int prm_645)
     }
     return;
 }
+
+
+
 void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
 {
     int x_at_m91 = 0;
@@ -10101,6 +10524,9 @@ void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
     }
     return;
 }
+
+
+
 void window(
     int prm_650,
     int prm_651,
@@ -10219,6 +10645,9 @@ void window(
     gmode(2);
     return;
 }
+
+
+
 void window2(
     int prm_656,
     int prm_657,
@@ -10343,6 +10772,9 @@ void window2(
     }
     return;
 }
+
+
+
 void display_window2(
     int prm_662,
     int prm_663,
@@ -10371,6 +10803,9 @@ void display_window2(
     }
     return;
 }
+
+
+
 void display_window(
     int prm_668,
     int prm_669,
@@ -10435,6 +10870,9 @@ void display_window(
     wh = prm_671;
     return;
 }
+
+
+
 void display_note(const std::string& prm_674, int prm_675)
 {
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
@@ -10442,6 +10880,9 @@ void display_note(const std::string& prm_674, int prm_675)
     mes(prm_674);
     return;
 }
+
+
+
 void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 {
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
@@ -10458,6 +10899,9 @@ void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
         prm_678 + 21);
     return;
 }
+
+
+
 void display_msg(int prm_680, int prm_681)
 {
     msgkeep = prm_681;
@@ -10467,6 +10911,9 @@ void display_msg(int prm_680, int prm_681)
     label_1424();
     return;
 }
+
+
+
 int role(int prm_686, int prm_687, int prm_688)
 {
     int d_at_m97 = 0;
@@ -10488,10 +10935,16 @@ int role(int prm_686, int prm_687, int prm_688)
     }
     return d_at_m97 + prm_688;
 }
+
+
+
 int rolemax(int prm_689, int prm_690, int prm_691)
 {
     return prm_689 * prm_690 + prm_691;
 }
+
+
+
 void page_save()
 {
     pagebk = page;
@@ -10499,6 +10952,9 @@ void page_save()
     pagesaved = 1;
     return;
 }
+
+
+
 void page_load()
 {
     if (pagesaved == 1)
@@ -10509,6 +10965,9 @@ void page_load()
     }
     return;
 }
+
+
+
 void fileadd(const std::string& prm_692, int prm_693)
 {
     elona_vector1<std::string> q_at_m98;
@@ -10546,6 +11005,9 @@ void fileadd(const std::string& prm_692, int prm_693)
     noteunsel();
     return;
 }
+
+
+
 void arrayfile(std::string_view fmode_str)
 {
     notesel(tmp);
@@ -10785,6 +11247,9 @@ void arrayfile(std::string_view fmode_str)
     elona_export = 0;
     return;
 }
+
+
+
 std::string del_str(const std::string& prm_694, const std::string& prm_695)
 {
     std::string s_at_m99;
@@ -10805,6 +11270,9 @@ std::string del_str(const std::string& prm_694, const std::string& prm_695)
     }
     return s_at_m99;
 }
+
+
+
 std::string cnv_str(
     std::string& prm_696,
     const std::string& prm_697,
@@ -10828,6 +11296,9 @@ std::string cnv_str(
     }
     return prm_696;
 }
+
+
+
 void fix_wish(std::string& prm_699)
 {
     cnv_str(prm_699, u8"の剥製"s, ""s);
@@ -10842,6 +11313,9 @@ void fix_wish(std::string& prm_699)
     cnv_str(prm_699, u8"figure"s, ""s);
     return;
 }
+
+
+
 void fix_input_chat(std::string& prm_700)
 {
     cnv_str(prm_700, u8" "s, u8"+"s);
@@ -10851,12 +11325,18 @@ void fix_input_chat(std::string& prm_700)
     cnv_str(prm_700, u8">"s, ""s);
     return;
 }
+
+
+
 void fix_input_chat2(std::string& prm_701)
 {
     cnv_str(prm_701, u8"fucking"s, u8"nyoro~n"s);
     cnv_str(prm_701, u8"fuck"s, u8"nyou talk funny"s);
     return;
 }
+
+
+
 void cnv_filestr(std::string& prm_702)
 {
     cnv_str(prm_702, u8"\""s, u8"_"s);
@@ -10869,6 +11349,9 @@ void cnv_filestr(std::string& prm_702)
     cnv_str(prm_702, u8"*"s, u8"_"s);
     return;
 }
+
+
+
 void imeset(int prm_709)
 {
     himc_at_ime_control = ImmGetContext(hwnd);
@@ -10876,6 +11359,9 @@ void imeset(int prm_709)
     ImmReleaseContext(hwnd, himc_at_ime_control);
     return;
 }
+
+
+
 int imeget()
 {
     int imesw_at_ime_control = 0;
@@ -10884,6 +11370,9 @@ int imeget()
     ImmReleaseContext(hwnd, himc_at_ime_control);
     return imesw_at_ime_control;
 }
+
+
+
 void gmes(const std::string& prm_715)
 {
     std::string m_at_m102;
@@ -11040,6 +11529,9 @@ void gmes(const std::string& prm_715)
     gmesx = xorg_at_m102;
     gmesy += size_at_m102 + 4;
 }
+
+
+
 void boxl(int prm_716, int prm_717, int prm_718, int prm_719)
 {
     pos(prm_716, prm_719);
@@ -11049,6 +11541,9 @@ void boxl(int prm_716, int prm_717, int prm_718, int prm_719)
     line(prm_716, prm_719);
     return;
 }
+
+
+
 std::string fixtxt(const std::string& prm_724, int prm_725)
 {
     std::string m_at_m104;
@@ -11073,6 +11568,9 @@ std::string fixtxt(const std::string& prm_724, int prm_725)
     }
     return ""s + m_at_m104;
 }
+
+
+
 void windowanime(
     int prm_726,
     int prm_727,
@@ -11133,6 +11631,9 @@ void windowanime(
     gmode(2);
     return;
 }
+
+
+
 void windowanimecorner(
     int prm_732,
     int prm_733,
@@ -11183,6 +11684,9 @@ void windowanimecorner(
     gmode(2);
     return;
 }
+
+
+
 void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
 {
     int x_at_m106 = 0;
@@ -11216,6 +11720,9 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
     bmes(prm_739, 250, 250, 250);
     return;
 }
+
+
+
 void drawmenu(int prm_742)
 {
     int y_at_m107 = 0;
@@ -11317,6 +11824,9 @@ void drawmenu(int prm_742)
         255);
     return;
 }
+
+
+
 void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
 {
     int cnt2_at_m108 = 0;
@@ -11341,6 +11851,9 @@ void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
     gmode(2);
     return;
 }
+
+
+
 int direction(int prm_748, int prm_749, int prm_750, int prm_751)
 {
     if (std::abs(prm_748 - prm_750) > std::abs(prm_749 - prm_751))
@@ -11363,6 +11876,9 @@ int direction(int prm_748, int prm_749, int prm_750, int prm_751)
         return 0;
     }
 }
+
+
+
 void label_0478()
 {
     DIM2(matval, 4);
@@ -11763,6 +12279,9 @@ void label_0478()
     matspot(0, p) = 16;
     return;
 }
+
+
+
 int prodcheck()
 {
     int f_at_m110 = 0;
@@ -11790,6 +12309,9 @@ int prodcheck()
     }
     return f_at_m110;
 }
+
+
+
 int label_1280()
 {
     matneed(0) = -1;
@@ -12393,6 +12915,9 @@ int label_1280()
     }
     return -1;
 }
+
+
+
 void fixaiact(int prm_753)
 {
     int p_at_m112 = 0;
@@ -12425,6 +12950,9 @@ void fixaiact(int prm_753)
     }
     return;
 }
+
+
+
 int eleinfo(int prm_754, int prm_755)
 {
     if (prm_754 == 50)
@@ -12550,6 +13078,9 @@ int eleinfo(int prm_754, int prm_755)
     }
     return 0;
 }
+
+
+
 int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
 {
     characreatehack = -1;
@@ -12599,6 +13130,9 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
     }
     return 1;
 }
+
+
+
 int relationbetween(int prm_760, int)
 {
     if (cdata_relationship(prm_760) >= -2)
@@ -12614,6 +13148,9 @@ int relationbetween(int prm_760, int)
     }
     return 0;
 }
+
+
+
 void rowactend(int prm_763)
 {
     cdata_continuous_action_id(prm_763) = 0;
@@ -12621,6 +13158,9 @@ void rowactend(int prm_763)
     cdata_continuous_action_item(prm_763) = 0;
     return;
 }
+
+
+
 int customtalk(int prm_764, int prm_765)
 {
     int f_at_m116 = 0;
@@ -12711,6 +13251,9 @@ int customtalk(int prm_764, int prm_765)
     }
     return 0;
 }
+
+
+
 int findchara(int prm_766)
 {
     p_at_m117 = 0;
@@ -12734,6 +13277,9 @@ int findchara(int prm_766)
     }
     return p_at_m117;
 }
+
+
+
 int findally(int prm_767)
 {
     p_at_m117 = -1;
@@ -12754,6 +13300,9 @@ int findally(int prm_767)
     }
     return p_at_m117;
 }
+
+
+
 int implevel(int prm_768)
 {
     if (prm_768 < 10)
@@ -12790,6 +13339,9 @@ int implevel(int prm_768)
     }
     return 8;
 }
+
+
+
 void modimp(int prm_769, int prm_770)
 {
     elona_vector1<int> p_at_m118;
@@ -12837,6 +13389,9 @@ void modimp(int prm_769, int prm_770)
     }
     return;
 }
+
+
+
 void put_questtarget()
 {
     {
@@ -12852,6 +13407,9 @@ void put_questtarget()
     }
     return;
 }
+
+
+
 int exist_questtarget()
 {
     int f_at_m119 = 0;
@@ -12871,6 +13429,9 @@ int exist_questtarget()
     }
     return f_at_m119;
 }
+
+
+
 void check_quest()
 {
     int p_at_m119 = 0;
@@ -13015,6 +13576,9 @@ void check_quest()
     }
     return;
 }
+
+
+
 void refreshspeed(int prm_771)
 {
     int r_at_m120 = 0;
@@ -13111,6 +13675,9 @@ void refreshspeed(int prm_771)
     }
     return;
 }
+
+
+
 void ride_begin(int prm_772)
 {
     txt(lang(
@@ -13138,6 +13705,9 @@ void ride_begin(int prm_772)
     }
     return;
 }
+
+
+
 void ride_end()
 {
     int p_at_m121 = 0;
@@ -13149,6 +13719,9 @@ void ride_end()
     refreshspeed(p_at_m121);
     return;
 }
+
+
+
 void chara_vanquish(int prm_773)
 {
     if (prm_773 == gdata_mount)
@@ -13164,6 +13737,9 @@ void chara_vanquish(int prm_773)
     check_quest();
     return;
 }
+
+
+
 void turn_aggro(int prm_774, int prm_775, int prm_776)
 {
     if (prm_775 < 16)
@@ -13175,6 +13751,9 @@ void turn_aggro(int prm_774, int prm_775, int prm_776)
     cdata_enemy_id(prm_774) = prm_775;
     return;
 }
+
+
+
 void make_sound(
     int prm_777,
     int prm_778,
@@ -13232,6 +13811,9 @@ void make_sound(
     }
     return;
 }
+
+
+
 int get_freechara()
 {
     f_at_m125 = -1;
@@ -13248,6 +13830,9 @@ int get_freechara()
     }
     return f_at_m125;
 }
+
+
+
 int get_freeally()
 {
     f_at_m125 = 0;
@@ -13267,6 +13852,9 @@ int get_freeally()
     }
     return f_at_m125;
 }
+
+
+
 void del_chara(int prm_783)
 {
     inv_getheader(prm_783);
@@ -13288,6 +13876,9 @@ void del_chara(int prm_783)
     cdata.clear(prm_783);
     return;
 }
+
+
+
 int relocate_chara(int prm_784, int prm_785, int prm_786)
 {
     int tc_at_m125 = 0;
@@ -13469,6 +14060,9 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     label_1477();
     return prm_784;
 }
+
+
+
 void hostileaction(int prm_787, int prm_788)
 {
     if (prm_787 >= 16 || prm_788 == 0)
@@ -13553,6 +14147,9 @@ void hostileaction(int prm_787, int prm_788)
     rowactend(prm_788);
     return;
 }
+
+
+
 void rowact_check(int prm_789)
 {
     if (cdata_continuous_action_id(prm_789) != 0)
@@ -13564,6 +14161,9 @@ void rowact_check(int prm_789)
     }
     return;
 }
+
+
+
 void rowact_item(int prm_790)
 {
     {
@@ -13594,6 +14194,9 @@ void rowact_item(int prm_790)
     }
     return;
 }
+
+
+
 void wake_up()
 {
     if (gdata_hour >= 7 && gdata_hour <= 22)
@@ -13614,6 +14217,9 @@ void wake_up()
     }
     return;
 }
+
+
+
 void incognitobegin()
 {
     {
@@ -13645,6 +14251,9 @@ void incognitobegin()
     }
     return;
 }
+
+
+
 void incognitoend()
 {
     {
@@ -13668,6 +14277,9 @@ void incognitoend()
     }
     return;
 }
+
+
+
 void cell_setchara(int prm_791, int prm_792, int prm_793)
 {
     map(prm_792, prm_793, 1) = prm_791 + 1;
@@ -13675,11 +14287,17 @@ void cell_setchara(int prm_791, int prm_792, int prm_793)
     cdata_y(prm_791) = prm_793;
     return;
 }
+
+
+
 void cell_removechara(int prm_794, int prm_795)
 {
     map(prm_794, prm_795, 1) = 0;
     return;
 }
+
+
+
 int cell_findspace(int prm_796, int prm_797, int prm_798)
 {
     int f_at_m130 = 0;
@@ -13730,6 +14348,9 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
     }
     return f_at_m130;
 }
+
+
+
 int findbuff(int prm_799, int prm_800)
 {
     int f_at_m131 = 0;
@@ -13751,6 +14372,9 @@ int findbuff(int prm_799, int prm_800)
     }
     return f_at_m131;
 }
+
+
+
 int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
 {
     int p_at_m132 = 0;
@@ -13879,6 +14503,9 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     label_1477();
     return 0;
 }
+
+
+
 void delbuff(int prm_805, int prm_806)
 {
     if (prm_805 == 0)
@@ -13935,6 +14562,9 @@ void delbuff(int prm_805, int prm_806)
     label_1477();
     return;
 }
+
+
+
 void animeload(int prm_807, int prm_808)
 {
     elona_vector1<int> i_at_m133;
@@ -14006,6 +14636,9 @@ void animeload(int prm_807, int prm_808)
     gmode(2);
     return;
 }
+
+
+
 void animeblood(int prm_809, int prm_810, int prm_811)
 {
     int ele2_at_m133 = 0;
@@ -14174,6 +14807,9 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     gmode(2);
     return;
 }
+
+
+
 void resistmod(int prm_812, int prm_813, int prm_814)
 {
     int lv_at_m134 = 0;
@@ -14348,6 +14984,9 @@ void resistmod(int prm_812, int prm_813, int prm_814)
     label_1477();
     return;
 }
+
+
+
 void modcorrupt(int prm_815)
 {
     int org_at_m134 = 0;
@@ -14528,6 +15167,9 @@ void modcorrupt(int prm_815)
     }
     return;
 }
+
+
+
 void wet(int prm_816, int prm_817)
 {
     cdata_wet(prm_816) += prm_817;
@@ -14549,6 +15191,9 @@ void wet(int prm_816, int prm_817)
     }
     return;
 }
+
+
+
 int dmgcon(int prm_818, int prm_819, int prm_820)
 {
     elona::prm_818 = prm_818;
@@ -14971,6 +15616,9 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     return 0;
 }
+
+
+
 void label_1346()
 {
     int r_at_con = 0;
@@ -14986,6 +15634,9 @@ void label_1346()
     }
     return;
 }
+
+
+
 void healhp(int prm_821, int prm_822)
 {
     cdata_hp(prm_821) += prm_822;
@@ -14995,6 +15646,9 @@ void healhp(int prm_821, int prm_822)
     }
     return;
 }
+
+
+
 void healmp(int prm_823, int prm_824)
 {
     cdata_mp(prm_823) += prm_824;
@@ -15004,6 +15658,9 @@ void healmp(int prm_823, int prm_824)
     }
     return;
 }
+
+
+
 void healsp(int prm_825, int prm_826)
 {
     cdata_sp(prm_825) += prm_826;
@@ -15013,6 +15670,9 @@ void healsp(int prm_825, int prm_826)
     }
     return;
 }
+
+
+
 void healcon(int prm_827, int prm_828, int prm_829)
 {
     if (prm_828 == 6)
@@ -15296,6 +15956,9 @@ void healcon(int prm_827, int prm_828, int prm_829)
     }
     return;
 }
+
+
+
 void spillblood(int prm_830, int prm_831, int prm_832)
 {
     {
@@ -15329,6 +15992,9 @@ void spillblood(int prm_830, int prm_831, int prm_832)
     }
     return;
 }
+
+
+
 void spillfrag(int prm_833, int prm_834, int prm_835)
 {
     {
@@ -15364,6 +16030,9 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
     }
     return;
 }
+
+
+
 void check_kill(int prm_836, int prm_837)
 {
     int p_at_m137 = 0;
@@ -15441,6 +16110,9 @@ void check_kill(int prm_836, int prm_837)
     }
     return;
 }
+
+
+
 void item_acid(int prm_838, int prm_839)
 {
     int body_at_m138 = 0;
@@ -15505,6 +16177,9 @@ void item_acid(int prm_838, int prm_839)
     }
     return;
 }
+
+
+
 int item_fire(int prm_840, int prm_841)
 {
     max_at_m138 = 0;
@@ -15734,6 +16409,9 @@ int item_fire(int prm_840, int prm_841)
     label_1521();
     return f_at_m138;
 }
+
+
+
 void mapitem_fire(int prm_842, int prm_843)
 {
     if (map(prm_842, prm_843, 4) == 0)
@@ -15774,6 +16452,9 @@ void mapitem_fire(int prm_842, int prm_843)
     }
     return;
 }
+
+
+
 int item_cold(int prm_844, int prm_845)
 {
     std::string s_at_m138;
@@ -15901,6 +16582,9 @@ int item_cold(int prm_844, int prm_845)
     label_1521();
     return f_at_m138;
 }
+
+
+
 void mapitem_cold(int prm_846, int prm_847)
 {
     if (map(prm_846, prm_847, 4) == 0)
@@ -15934,6 +16618,9 @@ void mapitem_cold(int prm_846, int prm_847)
     }
     return;
 }
+
+
+
 int copy_chara(int prm_848)
 {
     int c_at_m139 = 0;
@@ -16018,6 +16705,9 @@ int copy_chara(int prm_848)
     cbitmod(985, c_at_m139, 0);
     return 1;
 }
+
+
+
 void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
 {
     if (prm_852 == 50)
@@ -16371,6 +17061,9 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     }
     return;
 }
+
+
+
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
     int ele_at_m141 = 0;
@@ -17712,6 +18405,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     label_1370();
     return 1;
 }
+
+
+
 void label_1370()
 {
     if (cbit(985, prm_853))
@@ -17736,6 +18432,9 @@ void label_1370()
     txt3rd = 0;
     return;
 }
+
+
+
 int dmgmp(int prm_858, int prm_859)
 {
     int d_at_m142 = 0;
@@ -17771,6 +18470,9 @@ int dmgmp(int prm_858, int prm_859)
     }
     return 1;
 }
+
+
+
 int dmgsp(int prm_860, int prm_861)
 {
     if (prm_860 != 0)
@@ -17783,6 +18485,9 @@ int dmgsp(int prm_860, int prm_861)
     }
     return 1;
 }
+
+
+
 void healsan(int prm_862, int prm_863)
 {
     cdata_insanity(prm_862) -= prm_863;
@@ -17792,6 +18497,9 @@ void healsan(int prm_862, int prm_863)
     }
     return;
 }
+
+
+
 int dmgsan(int prm_864, int prm_865)
 {
     int r_at_m143 = 0;
@@ -17832,6 +18540,9 @@ int dmgsan(int prm_864, int prm_865)
     }
     return 1;
 }
+
+
+
 int actionsp(int prm_866, int prm_867)
 {
     if (prm_866 != 0)
@@ -17849,6 +18560,9 @@ int actionsp(int prm_866, int prm_867)
     dmgsp(prm_866, prm_867);
     return 1;
 }
+
+
+
 int advfavoriteskill(int prm_868)
 {
     randomize(prm_868);
@@ -17873,6 +18587,9 @@ int advfavoriteskill(int prm_868)
     randomize();
     return i_at_m145;
 }
+
+
+
 int advfavoritestat(int prm_869)
 {
     randomize(prm_869);
@@ -17880,6 +18597,9 @@ int advfavoritestat(int prm_869)
     randomize();
     return i_at_m145;
 }
+
+
+
 void modweight(int prm_870, int prm_871, int prm_872)
 {
     int mini_at_m146 = 0;
@@ -17921,6 +18641,9 @@ void modweight(int prm_870, int prm_871, int prm_872)
     }
     return;
 }
+
+
+
 void modheight(int prm_873, int prm_874)
 {
     cdata_height(prm_873) = cdata_height(prm_873) * (100 + prm_874) / 100
@@ -17946,6 +18669,9 @@ void modheight(int prm_873, int prm_874)
     }
     return;
 }
+
+
+
 void cure_anorexia(int prm_875)
 {
     if (cbit(986, prm_875) == 0)
@@ -17963,6 +18689,9 @@ void cure_anorexia(int prm_875)
     }
     return;
 }
+
+
+
 void chara_vomit(int prm_876)
 {
     int p_at_m146 = 0;
@@ -18069,6 +18798,9 @@ void chara_vomit(int prm_876)
     cdata_nutrition(prm_876) -= 3000;
     return;
 }
+
+
+
 void eatstatus(int prm_877, int prm_878)
 {
     if (cdata_state(prm_878) != 1)
@@ -18102,6 +18834,9 @@ void eatstatus(int prm_877, int prm_878)
     }
     return;
 }
+
+
+
 int chara_anorexia(int prm_879)
 {
     if (cbit(986, prm_879) == 0)
@@ -18111,6 +18846,9 @@ int chara_anorexia(int prm_879)
     chara_vomit(prm_879);
     return 1;
 }
+
+
+
 void sickifcursed(int prm_880, int prm_881, int prm_882)
 {
     if (prm_880 <= -1)
@@ -18128,6 +18866,9 @@ void sickifcursed(int prm_880, int prm_881, int prm_882)
     }
     return;
 }
+
+
+
 int net_send(const std::string& prm_883, int prm_884)
 {
     std::string msg_at_m147;
@@ -18192,6 +18933,9 @@ int net_send(const std::string& prm_883, int prm_884)
     sockclose();
     return 1;
 }
+
+
+
 int net_read(int prm_885)
 {
     std::string a_at_m147;
@@ -18421,6 +19165,9 @@ label_1394_internal:
     }
     return 1;
 }
+
+
+
 int net_dllist(const std::string& prm_886, int prm_887)
 {
     std::string file_at_m147;
@@ -18513,6 +19260,9 @@ int net_dllist(const std::string& prm_886, int prm_887)
     }
     return 1;
 }
+
+
+
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
     exist(fs::u8path(u8"./user/"s + prm_889));
@@ -18530,6 +19280,9 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
     }
     return 1;
 }
+
+
+
 void label_1398()
 {
     SDIM1(cgiurl2);
@@ -18572,6 +19325,9 @@ void label_1398()
     textreadurl = u8"http://www."s + cgiurl3 + u8"/text.txt"s;
     return;
 }
+
+
+
 void label_1399()
 {
     if (chatdeny == 1)
@@ -18621,6 +19377,9 @@ void label_1399()
     chatdeny = 1;
     return;
 }
+
+
+
 int label_14002()
 {
 label_14001_internal:
@@ -18877,6 +19636,9 @@ label_1402_internal:
     }
     goto label_1402_internal;
 }
+
+
+
 void label_1415()
 {
     selcur = 0;
@@ -18935,6 +19697,9 @@ void label_1415()
     promptx = (windoww - 10) / 2 + 3;
     return;
 }
+
+
+
 void label_1416()
 {
     redraw(0);
@@ -18942,6 +19707,9 @@ void label_1416()
     label_1419();
     return;
 }
+
+
+
 void label_1417()
 {
     label_14170();
@@ -18949,17 +19717,26 @@ void label_1417()
     label_14190();
     return;
 }
+
+
+
 void label_1418()
 {
     label_14180();
     label_14190();
     return;
 }
+
+
+
 void label_1419()
 {
     label_14190();
     return;
 }
+
+
+
 void label_14170()
 {
     redraw(0);
@@ -19019,6 +19796,9 @@ void label_14170()
     mes(maplevel());
     return;
 }
+
+
+
 void label_14180()
 {
     {
@@ -19041,6 +19821,9 @@ void label_14180()
     }
     return;
 }
+
+
+
 void label_14190()
 {
     screendrawhack = 1;
@@ -19073,6 +19856,9 @@ void label_14190()
     screendrawhack = 0;
     return;
 }
+
+
+
 void label_1420()
 {
     gmode(2);
@@ -19083,6 +19869,9 @@ void label_1420()
     screenupdate = 0;
     return;
 }
+
+
+
 void label_1421()
 {
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
@@ -19642,6 +20431,9 @@ void label_1421()
     }
     return;
 }
+
+
+
 void label_1422()
 {
     gsel(9);
@@ -19668,6 +20460,9 @@ void label_1422()
     gsel(0);
     return;
 }
+
+
+
 void label_1423()
 {
     if (racount == 0)
@@ -19773,10 +20568,16 @@ void label_1423()
     gmode(2);
     return;
 }
+
+
+
 void label_1424()
 {
     return;
 }
+
+
+
 void label_1425()
 {
     gmode(0);
@@ -19816,6 +20617,9 @@ void label_1425()
     gmode(2);
     return;
 }
+
+
+
 void label_1426()
 {
     if (mode == 9)
@@ -21204,6 +22008,9 @@ label_1427_internal:
     anicol = 0;
     return;
 }
+
+
+
 void label_1428()
 {
     if (scposval == 0)
@@ -21279,6 +22086,9 @@ void label_1428()
     }
     return;
 }
+
+
+
 void label_1429()
 {
     slight.clear();
@@ -21406,6 +22216,9 @@ void label_1429()
     }
     return;
 }
+
+
+
 void label_1433()
 {
     screendrawhack = 2;
@@ -21523,6 +22336,9 @@ void label_1433()
     }
     return;
 }
+
+
+
 void label_1434()
 {
     if (mdata(14) != 2)
@@ -21568,6 +22384,9 @@ void label_1434()
     weatherbk = gdata_weather;
     return;
 }
+
+
+
 void label_1435()
 {
     if (mdata(14) != 2)
@@ -21613,6 +22432,9 @@ void label_1435()
     weatherbk = gdata_weather;
     return;
 }
+
+
+
 void label_1436()
 {
     if (mdata(14) != 2)
@@ -21651,6 +22473,9 @@ void label_1436()
     gmode(2);
     return;
 }
+
+
+
 void label_1437()
 {
     if (mdata(14) != 2)
@@ -21684,6 +22509,9 @@ void label_1437()
     gmode(2);
     return;
 }
+
+
+
 void label_1438()
 {
     if (std::abs(cdata_next_x(0) - cdata_x(0)) > 1)
@@ -21759,6 +22587,9 @@ void label_1438()
     scrollanime = 0;
     return;
 }
+
+
+
 void label_1439()
 {
     gsel(3);
@@ -21797,6 +22628,9 @@ void label_1439()
     gsel(0);
     return;
 }
+
+
+
 void label_1440()
 {
     sy(1) = 84 * sy / mdata(1);
@@ -21805,6 +22639,9 @@ void label_1440()
     gcopy(3, 688 + sx(1), 528 + sy(1), raderw, raderh);
     return;
 }
+
+
+
 void label_1441()
 {
     gsel(4);
@@ -21842,6 +22679,9 @@ void label_1441()
     gmode(2);
     return;
 }
+
+
+
 void label_1442()
 {
     {
@@ -21859,6 +22699,9 @@ void label_1442()
     redraw(0);
     return;
 }
+
+
+
 void label_1443()
 {
     {
@@ -21877,6 +22720,9 @@ void label_1443()
     gmode(2);
     return;
 }
+
+
+
 void label_1444()
 {
     redraw(0);
@@ -21892,6 +22738,9 @@ void label_1444()
     redraw(1);
     return;
 }
+
+
+
 void label_1445()
 {
     {
@@ -21930,6 +22779,9 @@ void label_1445()
     }
     return;
 }
+
+
+
 void label_1446()
 {
     fishdir(0) = 0;
@@ -22036,6 +22888,9 @@ void label_1446()
     randomize();
     return;
 }
+
+
+
 int carmor(int prm_890)
 {
     if (cdata_sum_of_equipment_weight(prm_890) >= 35000)
@@ -22051,6 +22906,9 @@ int carmor(int prm_890)
         return 171;
     }
 }
+
+
+
 std::string cnveqweight(int prm_891)
 {
     if (cdata_sum_of_equipment_weight(prm_891) >= 35000)
@@ -22066,6 +22924,9 @@ std::string cnveqweight(int prm_891)
         return lang(u8"(軽装備)"s, u8"(Light)"s);
     }
 }
+
+
+
 void label_1452()
 {
     cdata_speed_correction_value(r1) = 0;
@@ -22090,6 +22951,9 @@ void label_1452()
     }
     return;
 }
+
+
+
 void label_1453()
 {
     {
@@ -22242,6 +23106,9 @@ void label_1453()
     label_1452();
     return;
 }
+
+
+
 void label_1454()
 {
     cdata_experience(r1) -= cdata_required_experience(r1);
@@ -22317,6 +23184,9 @@ void label_1454()
     label_1477();
     return;
 }
+
+
+
 void label_1455()
 {
     {
@@ -22339,6 +23209,9 @@ void label_1455()
     }
     return;
 }
+
+
+
 void label_1456()
 {
     cdata_required_experience(r1) = std::clamp(cdata_level(r1), 1, 200)
@@ -22353,16 +23226,25 @@ void label_1456()
     }
     return;
 }
+
+
+
 void label_1457()
 {
     skillexp(163, 0, 100);
     return;
 }
+
+
+
 void label_1458()
 {
     skillexp(150, 0, 15, 10, 100);
     return;
 }
+
+
+
 void label_1459()
 {
     if (r2 >= (sdata(156, r1) + 10) * (sdata(156, r1) + 10))
@@ -22375,16 +23257,25 @@ void label_1459()
     }
     return;
 }
+
+
+
 void label_1460()
 {
     skillexp(158, r1, 100);
     return;
 }
+
+
+
 void label_1461()
 {
     skillexp(159, cc, gdata_current_dungeon_level * 2 + 20);
     return;
 }
+
+
+
 void label_1462()
 {
     if (r1 == 0)
@@ -22398,11 +23289,17 @@ void label_1462()
     }
     return;
 }
+
+
+
 void label_1463()
 {
     skillexp(164, r1, std::abs(cdata_mp(r1)) * 200 / (cdata_max_mp(r1) + 1));
     return;
 }
+
+
+
 void label_1464()
 {
     if (cdata_hp(r1) != cdata_max_hp(r1))
@@ -22421,6 +23318,9 @@ void label_1464()
     }
     return;
 }
+
+
+
 void label_1465()
 {
     if (mdata(6) == 1)
@@ -22433,16 +23333,25 @@ void label_1465()
     skillexp(157, 0, 2, 0, 1000);
     return;
 }
+
+
+
 void label_1466()
 {
     skillexp(160, 0, 600);
     return;
 }
+
+
+
 void label_1467()
 {
     skillexp(183, cc, r1, 0, 0);
     return;
 }
+
+
+
 void label_1468()
 {
     if (cdata_inventory_weight_type(0) == 0)
@@ -22459,6 +23368,9 @@ void label_1468()
     skillexp(153, 0, 4, 0, 1000);
     return;
 }
+
+
+
 void label_1469()
 {
     if (cc == 0)
@@ -22467,21 +23379,33 @@ void label_1469()
     }
     return;
 }
+
+
+
 void label_1470()
 {
     skillexp(185, 0, 100);
     return;
 }
+
+
+
 void label_1471()
 {
     skillexp(165, 0, 10 + sdataref(4, efid) / 5);
     return;
 }
+
+
+
 void label_1472()
 {
     skillexp(r1, 0, 50 + r2 * 20);
     return;
 }
+
+
+
 void cnvbonus(int prm_895, int prm_896)
 {
     if (prm_895 >= 50 && prm_895 < 61)
@@ -22513,6 +23437,9 @@ void cnvbonus(int prm_895, int prm_896)
     }
     return;
 }
+
+
+
 void label_1477()
 {
     chararefreshhack = 1;
@@ -22991,6 +23918,9 @@ void label_1477()
     chararefreshhack = 0;
     return;
 }
+
+
+
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
     elona_vector1<int> p_at_m161;
@@ -23045,6 +23975,9 @@ void skillinit(int prm_926, int prm_927, int prm_928)
         std::clamp(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
     return;
 }
+
+
+
 void label_1512()
 {
     {
@@ -23098,6 +24031,9 @@ void label_1512()
     skillinit(19, r1, 50);
     return;
 }
+
+
+
 int label_1513()
 {
     f = 1;
@@ -23229,6 +24165,9 @@ int label_1513()
     label_2176();
     return 0;
 }
+
+
+
 int label_1514()
 {
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc))
@@ -23239,6 +24178,9 @@ int label_1514()
     }
     return 0;
 }
+
+
+
 int label_1515()
 {
     if (feat(2) == 7)
@@ -23258,11 +24200,17 @@ int label_1515()
     }
     return 0;
 }
+
+
+
 void label_1516()
 {
     skillexp(175, cc, 50);
     return;
 }
+
+
+
 int label_1517()
 {
     if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc))
@@ -23273,6 +24221,9 @@ int label_1517()
     }
     return 0;
 }
+
+
+
 int label_1518()
 {
     cv = 8;
@@ -23301,6 +24252,9 @@ int label_1518()
     }
     return 0;
 }
+
+
+
 void label_1519()
 {
     if (trait(158))
@@ -23343,6 +24297,9 @@ void label_1519()
     }
     return;
 }
+
+
+
 void label_1520()
 {
     regen = 1;
@@ -23678,6 +24635,9 @@ void label_1520()
     }
     return;
 }
+
+
+
 void label_1521()
 {
     cdata_inventory_weight(0) = std::clamp(inv_weight_(0), 0, 20000000)
@@ -23715,6 +24675,9 @@ void label_1521()
     refreshspeed(0);
     return;
 }
+
+
+
 void label_1525()
 {
     if (sorg(174, 0) > 15)
@@ -23752,6 +24715,9 @@ void label_1525()
     }
     return;
 }
+
+
+
 int eqweaponlight()
 {
     if (rnd(2))
@@ -23764,6 +24730,9 @@ int eqweaponlight()
     }
     return 10004;
 }
+
+
+
 int eqweaponheavy()
 {
     if (rnd(3) == 0)
@@ -23780,6 +24749,9 @@ int eqweaponheavy()
     }
     return 10005;
 }
+
+
+
 void eqrandweaponmage(int prm_929)
 {
     int p_at_m162 = 0;
@@ -23796,6 +24768,9 @@ void eqrandweaponmage(int prm_929)
     }
     return;
 }
+
+
+
 void label_1530()
 {
     if (cdatan(2, rc) == u8"mutant"s)
@@ -24647,6 +25622,9 @@ void label_1530()
     eqmultiweapon = 0;
     return;
 }
+
+
+
 void label_1531()
 {
     p = 100;
@@ -24721,6 +25699,9 @@ void label_1531()
     ++p;
     return;
 }
+
+
+
 void label_1532()
 {
     if (rc == -1)
@@ -24889,6 +25870,9 @@ void label_1532()
     }
     return;
 }
+
+
+
 int label_1533()
 {
     if (rc == -1)
@@ -25008,6 +25992,9 @@ int label_1533()
     rtval = rc;
     return 1;
 }
+
+
+
 void label_1534()
 {
     if (fixlv == 4)
@@ -25023,6 +26010,9 @@ void label_1534()
     }
     return;
 }
+
+
+
 void label_1535()
 {
     if (mode != 1)
@@ -25079,6 +26069,9 @@ void label_1535()
     cm = 0;
     return;
 }
+
+
+
 void label_1536()
 {
     cdata_quality(rc) = 2;
@@ -25145,6 +26138,9 @@ void label_1536()
     label_1477();
     return;
 }
+
+
+
 void label_1537()
 {
     label_1538();
@@ -25160,17 +26156,26 @@ void label_1537()
               (u8" "s + have(rc) + u8" been resurrected!"s)));
     return;
 }
+
+
+
 void label_1538()
 {
     label_15380();
     label_15390();
     return;
 }
+
+
+
 void label_1539()
 {
     label_15390();
     return;
 }
+
+
+
 void label_15380()
 {
     cbitmod(972, rc, 0);
@@ -25188,6 +26193,9 @@ void label_15380()
     cdata_nutrition(rc) = 8000;
     return;
 }
+
+
+
 void label_15390()
 {
     cbitmod(980, rc, 0);
@@ -25239,6 +26247,9 @@ void label_15390()
     label_1477();
     return;
 }
+
+
+
 void label_1540()
 {
     label_1538();
@@ -25276,6 +26287,9 @@ void label_1540()
     label_1477();
     return;
 }
+
+
+
 void label_1566()
 {
     redraw(0);
@@ -25290,6 +26304,9 @@ void label_1566()
     gmode(2);
     return;
 }
+
+
+
 int convertartifact(int prm_930, int prm_931)
 {
     int f_at_m163 = 0;
@@ -25367,6 +26384,9 @@ label_1570_internal:
         n_at_m163 + u8" turns its shape into "s + itemname(ci) + u8"."s));
     return prm_930;
 }
+
+
+
 void label_1572()
 {
     fsetincome(0) = 52000;
@@ -25665,6 +26685,9 @@ void label_1572()
     magebookn(14) = lang(u8"終焉の書"s, u8"Apocalypse"s);
     return;
 }
+
+
+
 void label_1573()
 {
     if (rc == 0)
@@ -26592,6 +27615,9 @@ label_1575_internal:
     }
     return;
 }
+
+
+
 void label_1576()
 {
     i = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -26721,6 +27747,9 @@ void label_1576()
     }
     return;
 }
+
+
+
 void label_1577()
 {
     if (rnd(4) == 0)
@@ -26762,6 +27791,9 @@ void label_1577()
     }
     return;
 }
+
+
+
 void label_1578()
 {
     if (rnd(15) == 0)
@@ -26815,6 +27847,9 @@ void label_1578()
     }
     return;
 }
+
+
+
 void label_1579()
 {
     {
@@ -26948,6 +27983,9 @@ void label_1579()
     }
     return;
 }
+
+
+
 void label_1580()
 {
     if (cdata_confused(0) != 0 || cdata_sleep(0) != 0 || cdata_paralyzed(0) != 0
@@ -27008,6 +28046,9 @@ void label_1580()
     }
     return;
 }
+
+
+
 void label_1581()
 {
     if (reftype < 60000)
@@ -27074,6 +28115,9 @@ void label_1581()
     }
     return;
 }
+
+
+
 int label_1582()
 {
     if (val == 0 || val == -1)
@@ -27488,6 +28532,9 @@ int label_1582()
     }
     return 1;
 }
+
+
+
 void label_1583()
 {
     if (reftype == 60000)
@@ -27499,6 +28546,9 @@ void label_1583()
     }
     return;
 }
+
+
+
 void lovemiracle(int prm_932)
 {
     if (rnd(2) || prm_932 == 0)
@@ -27536,6 +28586,9 @@ void lovemiracle(int prm_932)
     animeload(15, prm_932);
     return;
 }
+
+
+
 void label_1586()
 {
     if (cbit(14, cc) == 1)
@@ -27600,6 +28653,9 @@ void label_1586()
     dmgcon(cc, 5, 200);
     return;
 }
+
+
+
 void label_1587()
 {
     snd(25);
@@ -27658,6 +28714,9 @@ void label_1587()
     label_1521();
     return;
 }
+
+
+
 void label_1588()
 {
     tc = cc;
@@ -28696,6 +29755,9 @@ void label_1588()
     eatstatus(inv_curse_state(cieat), cc);
     return;
 }
+
+
+
 void label_1589()
 {
     if (synccheck(cc, -1))
@@ -28709,6 +29771,9 @@ void label_1589()
     dmgcon(cc, 7, 200);
     return;
 }
+
+
+
 void label_1590()
 {
     if (synccheck(cc, -1))
@@ -28722,6 +29787,9 @@ void label_1590()
     dmgcon(cc, 11, 500);
     return;
 }
+
+
+
 void label_1591()
 {
     if (synccheck(cc, -1))
@@ -28734,6 +29802,9 @@ void label_1591()
     skillexp(11, cc, 100);
     return;
 }
+
+
+
 void label_1592()
 {
     if (synccheck(cc, -1))
@@ -28750,6 +29821,9 @@ void label_1592()
     }
     return;
 }
+
+
+
 void label_1593()
 {
     if (synccheck(cc, -1))
@@ -28758,6 +29832,9 @@ void label_1593()
     }
     return;
 }
+
+
+
 void label_1594()
 {
     if (cc != 0)
@@ -28772,6 +29849,9 @@ void label_1594()
     modkarma(cc, -15);
     return;
 }
+
+
+
 void label_1595()
 {
     if (synccheck(cc, -1))
@@ -28784,6 +29864,9 @@ void label_1595()
     resistmod(cc, 50, 100);
     return;
 }
+
+
+
 void label_1596()
 {
     if (synccheck(cc, -1))
@@ -28797,6 +29880,9 @@ void label_1596()
     dmgcon(cc, 11, 1000);
     return;
 }
+
+
+
 void label_1597()
 {
     if (synccheck(cc, -1))
@@ -28809,6 +29895,9 @@ void label_1597()
     skillexp(17, cc, 150);
     return;
 }
+
+
+
 void label_1598()
 {
     if (synccheck(cc, -1))
@@ -28821,6 +29910,9 @@ void label_1598()
     skillexp(17, cc, 400);
     return;
 }
+
+
+
 void label_1599()
 {
     if (synccheck(cc, -1))
@@ -28831,6 +29923,9 @@ void label_1599()
     dmgcon(cc, 1, 100);
     return;
 }
+
+
+
 void label_1600()
 {
     if (synccheck(cc, -1))
@@ -28843,6 +29938,9 @@ void label_1600()
     skillexp(154, cc, 200);
     return;
 }
+
+
+
 void label_1601()
 {
     if (synccheck(cc, -1))
@@ -28855,6 +29953,9 @@ void label_1601()
     label_1586();
     return;
 }
+
+
+
 void label_1602()
 {
     if (synccheck(cc, -1))
@@ -28865,6 +29966,9 @@ void label_1602()
     skillexp(10, cc, 250);
     return;
 }
+
+
+
 void label_1603()
 {
     if (synccheck(cc, -1))
@@ -28877,6 +29981,9 @@ void label_1603()
     skillexp(155, cc, 500);
     return;
 }
+
+
+
 void label_1604()
 {
     if (synccheck(cc, -1))
@@ -28890,6 +29997,9 @@ void label_1604()
     dmgcon(cc, 5, 200);
     return;
 }
+
+
+
 void label_1605()
 {
     if (synccheck(cc, -1))
@@ -28902,6 +30012,9 @@ void label_1605()
     healsan(cc, 20);
     return;
 }
+
+
+
 void label_1606()
 {
     if (synccheck(cc, -1))
@@ -28917,6 +30030,9 @@ void label_1606()
     }
     return;
 }
+
+
+
 void label_1607()
 {
     if (synccheck(cc, -1))
@@ -28929,6 +30045,9 @@ void label_1607()
     dmgcon(cc, 5, 300);
     return;
 }
+
+
+
 void label_1608()
 {
     if (synccheck(cc, -1))
@@ -28941,6 +30060,9 @@ void label_1608()
     dmgcon(cc, 3, 300);
     return;
 }
+
+
+
 void label_1609()
 {
     if (cc != 0)
@@ -28954,6 +30076,9 @@ void label_1609()
     modkarma(0, -5);
     return;
 }
+
+
+
 void label_1610()
 {
     if (cc != 0)
@@ -28970,6 +30095,9 @@ void label_1610()
     modcorrupt(1000);
     return;
 }
+
+
+
 void label_1611()
 {
     if (synccheck(cc, -1))
@@ -28981,6 +30109,9 @@ void label_1611()
     }
     return;
 }
+
+
+
 void label_1612()
 {
     if (synccheck(cc, -1))
@@ -28991,6 +30122,9 @@ void label_1612()
     }
     return;
 }
+
+
+
 void label_1613()
 {
     if (synccheck(cc, -1))
@@ -29001,6 +30135,9 @@ void label_1613()
     }
     return;
 }
+
+
+
 void label_1614()
 {
     if (synccheck(cc, -1))
@@ -29012,6 +30149,9 @@ void label_1614()
     }
     return;
 }
+
+
+
 void label_1615()
 {
     if (synccheck(cc, -1))
@@ -29027,6 +30167,9 @@ void label_1615()
         std::clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
     return;
 }
+
+
+
 void label_1616()
 {
     if (synccheck(cc, -1))
@@ -29039,6 +30182,9 @@ void label_1616()
     label_1617();
     return;
 }
+
+
+
 void label_1617()
 {
     if (encfind(tc, 48) != -1)
@@ -29063,6 +30209,9 @@ void label_1617()
     }
     return;
 }
+
+
+
 void label_1618()
 {
     tile_trap = 234;
@@ -29169,6 +30318,9 @@ void label_1618()
     ++maxobjid;
     return;
 }
+
+
+
 void map_converttile()
 {
     {
@@ -29219,6 +30371,9 @@ void map_converttile()
     }
     return;
 }
+
+
+
 void map_tileset(int prm_933)
 {
     tile_doorclosed = 726;
@@ -29402,6 +30557,9 @@ void map_tileset(int prm_933)
     }
     return;
 }
+
+
+
 int dist_town()
 {
     int p_at_m165 = 0;
@@ -29435,6 +30593,9 @@ int dist_town()
     }
     return p_at_m165;
 }
+
+
+
 void map_initcustom(const std::string& prm_934)
 {
     fmapfile = fs::u8path(u8"./map/"s + prm_934);
@@ -29501,6 +30662,9 @@ void map_initcustom(const std::string& prm_934)
     mdata(15) = 1;
     return;
 }
+
+
+
 void map_reload(const std::string& prm_935)
 {
     int y_at_m166 = 0;
@@ -29576,6 +30740,9 @@ void map_reload(const std::string& prm_935)
     }
     return;
 }
+
+
+
 void map_initialize()
 {
     if (rdroomnum >= 30)
@@ -29595,6 +30762,9 @@ void map_initialize()
     map_tileset(mdata(12));
     return;
 }
+
+
+
 void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
 {
     int x_at_m167 = 0;
@@ -29729,6 +30899,9 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     label_1532();
     return;
 }
+
+
+
 void map_placearena(int prm_939, int prm_940)
 {
     {
@@ -29765,6 +30938,9 @@ void map_placearena(int prm_939, int prm_940)
     }
     return;
 }
+
+
+
 void map_placeplayer()
 {
     if (mode == 11)
@@ -29817,6 +30993,9 @@ void map_placeplayer()
     }
     return;
 }
+
+
+
 void map_randomtile(int prm_941, int prm_942)
 {
     {
@@ -29830,6 +31009,9 @@ void map_randomtile(int prm_941, int prm_942)
     }
     return;
 }
+
+
+
 int map_digcheck(int prm_953, int prm_954)
 {
     if (prm_953 < 1 || prm_954 < 1 || prm_953 > mdata(0) - 2
@@ -29843,6 +31025,9 @@ int map_digcheck(int prm_953, int prm_954)
     }
     return map(prm_953, prm_954, 0) == 0;
 }
+
+
+
 void map_nextdir1(int prm_955, int prm_956)
 {
     if (tx_at_m168 >= prm_955 - 4 && tx_at_m168 <= prm_955 + 4)
@@ -29941,6 +31126,9 @@ void map_nextdir1(int prm_955, int prm_956)
         return;
     }
 }
+
+
+
 void map_nextdir2(int prm_957, int prm_958)
 {
     int p_at_m168 = 0;
@@ -30062,6 +31250,9 @@ void map_nextdir2(int prm_957, int prm_958)
         return;
     }
 }
+
+
+
 int map_digtoentrance1(
     int prm_959,
     int prm_960,
@@ -30193,6 +31384,9 @@ int map_digtoentrance1(
     }
     return f_at_m168;
 }
+
+
+
 void map_setfog(int, int)
 {
     {
@@ -30213,6 +31407,9 @@ void map_setfog(int, int)
     }
     return;
 }
+
+
+
 void map_createroomdoor()
 {
     if (rdpos == 3 || rdpos == 0)
@@ -30310,6 +31507,9 @@ void map_createroomdoor()
     }
     return;
 }
+
+
+
 int map_createroom(int prm_966)
 {
     if (roomsum >= 30)
@@ -30617,6 +31817,9 @@ int map_createroom(int prm_966)
     }
     return 1;
 }
+
+
+
 int map_placeupstairs(int prm_967, int prm_968)
 {
     if (prm_967 == 0)
@@ -30634,6 +31837,9 @@ int map_placeupstairs(int prm_967, int prm_968)
     rdroomupstair = cr;
     return 1;
 }
+
+
+
 int map_placedownstairs(int prm_969, int prm_970)
 {
     if (gdata_current_dungeon_level >= adata(10, gdata_current_map))
@@ -30655,6 +31861,9 @@ int map_placedownstairs(int prm_969, int prm_970)
     rdroomdownstair = cr;
     return 1;
 }
+
+
+
 void map_randsite(int prm_971, int prm_972)
 {
     int f_at_m169 = 0;
@@ -30784,6 +31993,9 @@ void map_randsite(int prm_971, int prm_972)
     }
     return;
 }
+
+
+
 int map_trap(int prm_973, int prm_974, int, int prm_976)
 {
     int trap_at_m170 = 0;
@@ -30847,10 +32059,16 @@ label_1652_internal:
     p_at_m170 += 1;
     goto label_1652_internal;
 }
+
+
+
 int label_1653()
 {
     return 0;
 }
+
+
+
 int map_web(int prm_977, int prm_978, int prm_979)
 {
     dx_at_m170 = prm_977;
@@ -30883,10 +32101,16 @@ label_1655_internal:
     p_at_m170 += 1;
     goto label_1655_internal;
 }
+
+
+
 int label_1656()
 {
     return 0;
 }
+
+
+
 int map_barrel(int prm_980, int prm_981)
 {
     dx_at_m170 = prm_980;
@@ -30919,10 +32143,16 @@ label_1658_internal:
     p_at_m170 += 1;
     goto label_1658_internal;
 }
+
+
+
 int label_1659()
 {
     return 0;
 }
+
+
+
 int map_connectroom()
 {
     cr = 0;
@@ -31016,10 +32246,16 @@ label_1662_internal:
     cr += 1;
     goto label_1662_internal;
 }
+
+
+
 int label_1663()
 {
     return 1;
 }
+
+
+
 void map_makedoor()
 {
     cr = 0;
@@ -31073,10 +32309,16 @@ label_1665_internal:
     cr += 1;
     goto label_1665_internal;
 }
+
+
+
 void label_1666()
 {
     return;
 }
+
+
+
 void label_16952()
 {
 label_16951_internal:
@@ -31588,6 +32830,9 @@ label_16951_internal:
     }
     return;
 }
+
+
+
 void label_1696()
 {
     map_initialize();
@@ -31648,6 +32893,9 @@ void label_1696()
     }
     return;
 }
+
+
+
 int label_1697()
 {
     gdata_left_minutes_of_executing_quest = 120;
@@ -31787,6 +33035,9 @@ int label_1697()
     }
     return 1;
 }
+
+
+
 int label_1698()
 {
     map_initialize();
@@ -31821,6 +33072,9 @@ int label_1698()
     map_makedoor();
     return 1;
 }
+
+
+
 int label_1699()
 {
     rdroomsizemin = 8;
@@ -31899,6 +33153,9 @@ int label_1699()
     }
     return 1;
 }
+
+
+
 int label_1700()
 {
     rdroomsizemin = 8;
@@ -31980,6 +33237,9 @@ int label_1700()
     }
     return 1;
 }
+
+
+
 int label_1701()
 {
     rdroomsizemax = 3;
@@ -32107,6 +33367,9 @@ int label_1701()
     }
     return 1;
 }
+
+
+
 int label_1702()
 {
     mdata(0) = 48 + rnd(20);
@@ -32145,6 +33408,9 @@ int label_1702()
     map_placedownstairs(p(1), rnd(mdata(1) - 4) + 2);
     return 1;
 }
+
+
+
 int label_1703()
 {
     gdata_left_minutes_of_executing_quest = 60;
@@ -32505,6 +33771,9 @@ int label_1703()
     }
     return 1;
 }
+
+
+
 void label_1704()
 {
     mdata(10) = 0;
@@ -32580,6 +33849,9 @@ void label_1704()
     }
     return;
 }
+
+
+
 void label_1705()
 {
     mdata(0) = 30;
@@ -32677,6 +33949,9 @@ void label_1705()
     }
     return;
 }
+
+
+
 void dimmix(elona_vector1<int>& prm_983)
 {
     int mx_at_m172 = 0;
@@ -32694,6 +33969,9 @@ void dimmix(elona_vector1<int>& prm_983)
     }
     return;
 }
+
+
+
 void label_1708()
 {
     mdata(0) = _mclass * (_bold * 2) - _bold + 8;
@@ -32706,6 +33984,9 @@ void label_1708()
     rdsecond = 0;
     return;
 }
+
+
+
 void label_1709()
 {
     DIM2(maze, _mclass * _mclass);
@@ -32942,6 +34223,9 @@ void label_1709()
     }
     return;
 }
+
+
+
 void label_1710()
 {
     mdata(0) = _mclass * (_bold * 2) - _bold + 8;
@@ -33161,6 +34445,9 @@ void label_1710()
     }
     return;
 }
+
+
+
 void label_1711()
 {
     if (gdata_home_scale == 0)
@@ -33196,6 +34483,9 @@ void label_1711()
     }
     return;
 }
+
+
+
 void label_1712()
 {
     if (mdata(6) != 1)
@@ -33347,6 +34637,9 @@ void label_1712()
     label_2742();
     return;
 }
+
+
+
 void label_1713()
 {
     p = 7;
@@ -33371,6 +34664,9 @@ void label_1713()
     adata(30, p) = gdata(850);
     return;
 }
+
+
+
 void label_1714()
 {
     txtnew();
@@ -34044,6 +35340,9 @@ label_1722_internal:
     label_1714();
     return;
 }
+
+
+
 void label_1723()
 {
     p = 0;
@@ -34129,6 +35428,9 @@ void label_1723()
     gsel(0);
     return;
 }
+
+
+
 void label_1724()
 {
     area = -1;
@@ -34152,6 +35454,9 @@ void label_1724()
     }
     return;
 }
+
+
+
 void label_1725()
 {
     worker = getworker(area);
@@ -34450,6 +35755,9 @@ void label_1725()
     label_2107();
     return;
 }
+
+
+
 void label_1726()
 {
     mdata(10) = (100 - gdata(125) / 100) / 4 + 1;
@@ -34488,6 +35796,9 @@ void label_1726()
     }
     return;
 }
+
+
+
 void label_1727()
 {
     rc = 56;
@@ -34522,6 +35833,9 @@ void label_1727()
     }
     return;
 }
+
+
+
 void label_1728()
 {
     rankorg = gdata(123);
@@ -34592,6 +35906,9 @@ void label_1728()
     mdata(10) = (100 - gdata(123) / 100) / 2 + 1;
     return;
 }
+
+
+
 void label_1729()
 {
     a = refitem(inv_id(val), 5);
@@ -34639,6 +35956,9 @@ void label_1729()
     }
     return;
 }
+
+
+
 void label_1730()
 {
     if (gdata_current_dungeon_level != 1)
@@ -34723,6 +36043,9 @@ void label_1730()
     }
     return;
 }
+
+
+
 int cbreeder(int prm_984)
 {
     std::string s_at_m173;
@@ -34732,6 +36055,9 @@ int cbreeder(int prm_984)
     p_at_m173 = p_at_m173 * 100 / (100 + cdata_level(prm_984) * 5);
     return p_at_m173;
 }
+
+
+
 void label_1733()
 {
     worker = getworker(gdata_current_map);
@@ -34946,6 +36272,9 @@ void label_1733()
     }
     return;
 }
+
+
+
 void label_1735()
 {
     dbid = 0;
@@ -35147,6 +36476,9 @@ void label_1735()
     flt(calcobjlv(cdata_level(0)), calcfixlv(2));
     return;
 }
+
+
+
 void label_1736()
 {
     if (adata(16, gdata_current_map) == 101
@@ -35191,6 +36523,9 @@ void label_1736()
     }
     return;
 }
+
+
+
 void label_1737()
 {
     gdata_left_minutes_of_executing_quest = 0;
@@ -35569,6 +36904,9 @@ void label_1737()
     label_17402();
     return;
 }
+
+
+
 void label_1738()
 {
     {
@@ -35592,6 +36930,9 @@ void label_1738()
     }
     return;
 }
+
+
+
 void label_1739()
 {
     label_1738();
@@ -35616,6 +36957,9 @@ void label_1739()
     label_2107();
     return;
 }
+
+
+
 void label_1745()
 {
     if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -35881,6 +37225,9 @@ void label_1745()
     }
     return;
 }
+
+
+
 void label_1746()
 {
     gsel(6);
@@ -36009,6 +37356,9 @@ void label_1746()
     gmode(2, 24, 24);
     return;
 }
+
+
+
 int label_1747()
 {
     p = 0;
@@ -36042,6 +37392,9 @@ int label_1747()
     label_1749();
     return 1;
 }
+
+
+
 void label_1748()
 {
     if (gdata(79) == 1)
@@ -36099,12 +37452,18 @@ void label_1748()
     gdata(79) = 0;
     return;
 }
+
+
+
 void label_1749()
 {
     label_1751();
     label_1750();
     return;
 }
+
+
+
 void label_1750()
 {
     label_0201();
@@ -36222,6 +37581,9 @@ void label_1750()
     }
     return;
 }
+
+
+
 void label_1751()
 {
     {
@@ -36246,6 +37608,9 @@ void label_1751()
     }
     return;
 }
+
+
+
 void label_1752()
 {
     p = 47;
@@ -36964,6 +38329,9 @@ void label_1752()
     adata(30, p) = 4;
     return;
 }
+
+
+
 int label_1753()
 {
     {
@@ -37090,6 +38458,9 @@ int label_1753()
     }
     return p;
 }
+
+
+
 void label_1754()
 {
     if (gdata_current_map == 33)
@@ -37429,6 +38800,9 @@ void label_1754()
     }
     return;
 }
+
+
+
 void label_1755()
 {
     inv_getheader(-1);
@@ -37751,10 +39125,16 @@ void label_1755()
     }
     return;
 }
+
+
+
 int cdbit(int prm_985, int prm_986)
 {
     return HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
 }
+
+
+
 void cdbitmod(int prm_987, int prm_988, int prm_989)
 {
     if (prm_989 == 0)
@@ -37765,6 +39145,9 @@ void cdbitmod(int prm_987, int prm_988, int prm_989)
     HMMBITON(card_at_tcg(30 + prm_987 / 32, prm_988), prm_987 % 32);
     return;
 }
+
+
+
 void cpflip()
 {
     if (cp_at_tcg == 1)
@@ -37787,6 +39170,9 @@ void cpflip()
     }
     return;
 }
+
+
+
 void cpisme()
 {
     if (ct_at_tcg == 0)
@@ -37809,6 +39195,9 @@ void cpisme()
     }
     return;
 }
+
+
+
 void cpisenemy()
 {
     if (ct_at_tcg == 0)
@@ -37831,6 +39220,9 @@ void cpisenemy()
     }
     return;
 }
+
+
+
 std::string cnvrare(int prm_990)
 {
     s_at_tcg = "";
@@ -37845,6 +39237,9 @@ std::string cnvrare(int prm_990)
     }
     return s_at_tcg;
 }
+
+
+
 int card_ref(int prm_991)
 {
     cardrefcost = 0;
@@ -37894,6 +39289,9 @@ int card_ref(int prm_991)
     }
     return dbid;
 }
+
+
+
 void makecardlist()
 {
     int lmax_at_tcg = 0;
@@ -38007,6 +39405,9 @@ void makecardlist()
     label_1844();
     return;
 }
+
+
+
 void cardhelp(const std::string& prm_992, int prm_993)
 {
     int helpdur_at_tcg = 0;
@@ -38031,6 +39432,9 @@ void cardhelp(const std::string& prm_992, int prm_993)
     helpdur_at_tcg = dur_at_tcg;
     return;
 }
+
+
+
 void tcgdrawcard(int prm_994, int prm_995)
 {
     int selected_at_tcg = 0;
@@ -38181,6 +39585,9 @@ void tcgdrawcard(int prm_994, int prm_995)
     }
     return;
 }
+
+
+
 void tcgdraw()
 {
     int t_at_tcg = 0;
@@ -38442,10 +39849,16 @@ label_1772_internal:
     }
     goto label_1772_internal;
 }
+
+
+
 void label_1773()
 {
     return;
 }
+
+
+
 void efllistadd(
     int prm_996,
     int prm_997,
@@ -38482,6 +39895,9 @@ void efllistadd(
     }
     return;
 }
+
+
+
 int create_card(int prm_1002, int prm_1003)
 {
     int stat = card_ref(prm_1003);
@@ -38499,6 +39915,9 @@ int create_card(int prm_1002, int prm_1003)
     card_at_tcg(23, prm_1002) = cardrefdomain;
     return prm_1002;
 }
+
+
+
 void cardpos(int prm_1004, int prm_1005)
 {
     int l_at_tcg = 0;
@@ -38564,6 +39983,9 @@ void cardpos(int prm_1004, int prm_1005)
     }
     return;
 }
+
+
+
 void gravecard(int prm_1006)
 {
     if (card_at_tcg(0, prm_1006) == 1)
@@ -38612,6 +40034,9 @@ void gravecard(int prm_1006)
     label_1823();
     return;
 }
+
+
+
 void dmgcard(int prm_1007, int prm_1008)
 {
     if (prm_1008 > 0)
@@ -38634,6 +40059,9 @@ void dmgcard(int prm_1007, int prm_1008)
     }
     return;
 }
+
+
+
 void dmgplayer(int prm_1009, int prm_1010)
 {
     if (prm_1010 > 0)
@@ -38648,6 +40076,9 @@ void dmgplayer(int prm_1009, int prm_1010)
     }
     return;
 }
+
+
+
 void delbottomcard(int prm_1011)
 {
     int delcard_at_tcg = 0;
@@ -38675,6 +40106,9 @@ void delbottomcard(int prm_1011)
     gravecard(delcard_at_tcg);
     return;
 }
+
+
+
 int gameover()
 {
     if (cpdata_at_tcg(4, 1) <= 0)
@@ -38687,6 +40121,9 @@ int gameover()
     }
     return 0;
 }
+
+
+
 int getholdersum(int prm_1012)
 {
     p_at_tcg = 0;
@@ -38706,6 +40143,9 @@ int getholdersum(int prm_1012)
     }
     return p_at_tcg;
 }
+
+
+
 int getspotsum(int prm_1013)
 {
     p_at_tcg = 0;
@@ -38725,6 +40165,9 @@ int getspotsum(int prm_1013)
     }
     return p_at_tcg;
 }
+
+
+
 int getdecksum(int prm_1014)
 {
     p_at_tcg = 0;
@@ -38744,6 +40187,9 @@ int getdecksum(int prm_1014)
     }
     return p_at_tcg;
 }
+
+
+
 int cardcandeclareattack(int prm_1015)
 {
     if (card_at_tcg(0, prm_1015) != 1)
@@ -38760,6 +40206,9 @@ int cardcandeclareattack(int prm_1015)
     }
     return 1;
 }
+
+
+
 int cardcanblock(int prm_1016)
 {
     if (card_at_tcg(0, prm_1016) != 1)
@@ -38779,6 +40228,9 @@ int cardcanblock(int prm_1016)
     }
     return 1;
 }
+
+
+
 int cardcanuseskill(int prm_1017)
 {
     if (card_at_tcg(0, prm_1017) != 1)
@@ -38803,6 +40255,9 @@ int cardcanuseskill(int prm_1017)
     }
     return 1;
 }
+
+
+
 void getrandomcard(int prm_1018)
 {
     if (getdecksum(prm_1018) == 0)
@@ -38849,6 +40304,9 @@ label_1790_internal:
     makecardlist();
     return;
 }
+
+
+
 void saccard(int prm_1019, int prm_1020)
 {
     snd(96);
@@ -38912,6 +40370,9 @@ void saccard(int prm_1019, int prm_1020)
         cpy_at_tcg(prm_1020));
     return;
 }
+
+
+
 void opencard(int prm_1021)
 {
     snd(71);
@@ -38919,6 +40380,9 @@ void opencard(int prm_1021)
     tcgdraw();
     return;
 }
+
+
+
 void label_1793()
 {
     SDIM3(cdrefn_at_tcg, 50, 4);
@@ -38935,6 +40399,9 @@ void label_1793()
         u8"Return target creature to its owner's hand."s);
     return;
 }
+
+
+
 void actionproc()
 {
     int ac_at_tcg = 0;
@@ -39090,11 +40557,17 @@ label_1800_internal:
     }
     goto label_1799_internal;
 }
+
+
+
 void label_1802()
 {
     stack_at_tcg = 0;
     return;
 }
+
+
+
 int putcard(int prm_1024, int prm_1025)
 {
     if (getspotsum(prm_1025) >= 8)
@@ -39179,6 +40652,9 @@ int putcard(int prm_1024, int prm_1025)
     opencard(prm_1024);
     return 1;
 }
+
+
+
 void tcgdrawbg()
 {
     int w_at_tcg = 0;
@@ -39210,6 +40686,9 @@ void tcgdrawbg()
     gmode(2);
     return;
 }
+
+
+
 void tcginit()
 {
     elona_vector1<int> spotix_at_tcg;
@@ -39289,17 +40768,26 @@ void tcginit()
     tcgdrawbg();
     return;
 }
+
+
+
 int calcstartcard(int prm_1026)
 {
     return 6 - (cpdata_at_tcg(9, prm_1026) > 2)
         - (cpdata_at_tcg(9, prm_1026) > 3) - (cpdata_at_tcg(9, prm_1026) > 4);
 }
+
+
+
 void calcstartattb(int prm_1027)
 {
     cpdata_at_tcg(4, prm_1027) = 40 - cpdata_at_tcg(9, prm_1027) * 5;
     cpdata_at_tcg(6, prm_1027) = 0;
     return;
 }
+
+
+
 void calcdomain()
 {
     {
@@ -39338,6 +40826,9 @@ void calcdomain()
     }
     return;
 }
+
+
+
 void calcdecksize()
 {
     int cardsize_at_tcg = 0;
@@ -39371,6 +40862,9 @@ void calcdecksize()
     calcstartattb(0);
     return;
 }
+
+
+
 void tcgdeck()
 {
     std::string file_at_tcg;
@@ -39480,6 +40974,9 @@ label_1812_internal:
     }
     return;
 }
+
+
+
 void tcgmain()
 {
     int rp_at_tcg = 0;
@@ -39562,10 +41059,16 @@ label_1814_internal:
     }
     goto label_1814_internal;
 }
+
+
+
 void label_1815()
 {
     return;
 }
+
+
+
 void label_1816()
 {
     phase_at_tcg = 0;
@@ -39594,6 +41097,9 @@ void label_1816()
     }
     return;
 }
+
+
+
 void label_1817()
 {
     phase_at_tcg = 1;
@@ -39603,6 +41109,9 @@ void label_1817()
     tcgdraw();
     return;
 }
+
+
+
 void label_1818()
 {
     phase_at_tcg = 2;
@@ -39620,6 +41129,9 @@ void label_1818()
     }
     return;
 }
+
+
+
 void label_1819()
 {
     phase_at_tcg = 3;
@@ -39640,6 +41152,9 @@ void label_1819()
     }
     return;
 }
+
+
+
 void csfix()
 {
     if (clistmax_at_tcg(csline_at_tcg) == 0)
@@ -39674,6 +41189,9 @@ void csfix()
     }
     return;
 }
+
+
+
 void cslineup()
 {
     cslinebk_at_tcg = csline_at_tcg;
@@ -39710,6 +41228,9 @@ void cslineup()
     }
     return;
 }
+
+
+
 void cslinedown()
 {
     cslinebk_at_tcg = csline_at_tcg;
@@ -39750,6 +41271,9 @@ void cslinedown()
     }
     return;
 }
+
+
+
 void label_1823()
 {
     elona_vector1<int> mana_at_tcg;
@@ -39854,6 +41378,9 @@ void label_1823()
     gsel(0);
     return;
 }
+
+
+
 void label_1824()
 {
     font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
@@ -39946,6 +41473,9 @@ void label_1824()
         + (dlistmax_at_tcg - 1) / 8 / 3);
     return;
 }
+
+
+
 void label_1825()
 {
     gmode(0);
@@ -40071,6 +41601,9 @@ void label_1825()
     mes(helpmsg_at_tcg);
     return;
 }
+
+
+
 void label_1826()
 {
     gmode(4 - 1, -1, 180);
@@ -40085,6 +41618,9 @@ void label_1826()
     gsel(0);
     return;
 }
+
+
+
 void label_1827()
 {
     if (dsc_at_tcg < 0)
@@ -40106,6 +41642,9 @@ void label_1827()
     page_at_tcg = page_at_tcg - page_at_tcg % 3;
     return;
 }
+
+
+
 void label_1828()
 {
     gsel(4);
@@ -40404,6 +41943,9 @@ label_1830_internal:
     }
     goto label_1830_internal;
 }
+
+
+
 int label_1835()
 {
     gsel(4);
@@ -40412,6 +41954,9 @@ int label_1835()
     label_1826();
     return rtval_at_tcg;
 }
+
+
+
 void label_1836()
 {
     if (selectmode_at_tcg == 0)
@@ -40713,11 +42258,17 @@ label_1837_internal:
     }
     goto label_1837_internal;
 }
+
+
+
 void label_1839()
 {
     cursor_at_tcg = 0;
     return;
 }
+
+
+
 void label_1840()
 {
     redraw(0);
@@ -40815,10 +42366,16 @@ label_1841_internal:
     }
     goto label_1841_internal;
 }
+
+
+
 void label_1842()
 {
     return;
 }
+
+
+
 void label_1844()
 {
     emax_at_tcg = 0;
@@ -40932,6 +42489,9 @@ void label_1844()
     }
     return;
 }
+
+
+
 int label_1845()
 {
     if (sac_at_tcg > 0)
@@ -40977,6 +42537,9 @@ int label_1845()
     }
     return 0;
 }
+
+
+
 void label_18462()
 {
     int ec_at_tcg = 0;
@@ -41059,6 +42622,9 @@ label_1847_internal:
     ++ec_at_tcg;
     goto label_1847_internal;
 }
+
+
+
 void label_1848()
 {
     if (aiblock_at_tcg == 0)
@@ -41079,6 +42645,9 @@ void label_1848()
     }
     return;
 }
+
+
+
 int random_material(int prm_1028, int prm_1029)
 {
     int f_at_m174 = 0;
@@ -41145,6 +42714,9 @@ int random_material(int prm_1028, int prm_1029)
     }
     return f_at_m174;
 }
+
+
+
 void matgetmain(int prm_1030, int prm_1031, int prm_1032)
 {
     n_at_m174 = prm_1031;
@@ -41188,6 +42760,9 @@ void matgetmain(int prm_1030, int prm_1031, int prm_1032)
     txt(s_at_m174 + u8"("s + mat(prm_1030) + u8") "s);
     return;
 }
+
+
+
 void matdelmain(int prm_1033, int prm_1034)
 {
     n_at_m174 = prm_1034;
@@ -41202,10 +42777,16 @@ void matdelmain(int prm_1033, int prm_1034)
     txt(s_at_m174 + u8"(残り "s + mat(prm_1033) + u8"個) "s);
     return;
 }
+
+
+
 void label_1854()
 {
     return;
 }
+
+
+
 void label_18552()
 {
 label_18551_internal:
@@ -41581,6 +43162,9 @@ label_1857_internal:
     }
     goto label_1857_internal;
 }
+
+
+
 void label_1859()
 {
     listmax = 0;
@@ -41827,6 +43411,9 @@ label_1861_internal:
     }
     goto label_1861_internal;
 }
+
+
+
 void atxinit()
 {
     if (atxthrough == 0)
@@ -41880,6 +43467,9 @@ void atxinit()
     }
     return;
 }
+
+
+
 void begintempinv()
 {
     file = u8"shoptmp.s2"s;
@@ -41895,6 +43485,9 @@ void begintempinv()
     }
     return;
 }
+
+
+
 void exittempinv()
 {
     file = u8"shoptmp.s2"s;
@@ -41902,6 +43495,9 @@ void exittempinv()
     label_2107();
     return;
 }
+
+
+
 void label_1866()
 {
     begintempinv();
@@ -41936,6 +43532,9 @@ void label_1866()
     label_1873();
     return;
 }
+
+
+
 void label_18672()
 {
 label_18671_internal:
@@ -42102,6 +43701,9 @@ label_1868_internal:
     }
     goto label_1868_internal;
 }
+
+
+
 void label_1870()
 {
     label_1872();
@@ -42196,6 +43798,9 @@ void label_1870()
     atxpic = 0;
     return;
 }
+
+
+
 void label_1871()
 {
     label_1872();
@@ -42220,6 +43825,9 @@ void label_1871()
     }
     return;
 }
+
+
+
 void label_1872()
 {
     x(1) = 300;
@@ -42274,6 +43882,9 @@ void label_1872()
     cs = 0;
     return;
 }
+
+
+
 void label_1873()
 {
     mtilefilecur = -1;
@@ -42313,6 +43924,9 @@ void label_1873()
     label_0068();
     return;
 }
+
+
+
 void label_1874()
 {
     atxap = 10;
@@ -42752,6 +44366,9 @@ label_1876_internal:
     atxthrough = 1;
     goto label_1875;
 }
+
+
+
 void label_1877()
 {
     atxinit();
@@ -42777,6 +44394,9 @@ void label_1877()
     label_1873();
     return;
 }
+
+
+
 void label_1878()
 {
     atxbg = u8"bg14"s;
@@ -42837,6 +44457,9 @@ void label_1878()
     label_1878();
     return;
 }
+
+
+
 void label_1879()
 {
     atxinit();
@@ -43212,6 +44835,9 @@ void label_1879()
     label_1879();
     return;
 }
+
+
+
 int modpiety(int prm_1035)
 {
     if (sdata(181, 0) * 100 < cdata_piety_point(0))
@@ -43248,6 +44874,9 @@ int modpiety(int prm_1035)
     cdata_piety_point(0) += prm_1035 / (1 + (gdata_current_map == 35) * 9);
     return 1;
 }
+
+
+
 void label_1882()
 {
     if (cdata_god(tc) != 0 || cbit(990, tc) || tc == 0)
@@ -43263,6 +44892,9 @@ void label_1882()
     }
     return;
 }
+
+
+
 void label_1883()
 {
     SDIM3(godname, 20, 8);
@@ -43276,6 +44908,9 @@ void label_1883()
     godname(7) = lang(u8"収穫のクミロミ"s, u8"Kumiromi of Harvest"s);
     return;
 }
+
+
+
 void label_1884()
 {
     if (cdata_god(r1) == 1)
@@ -43526,6 +45161,9 @@ void label_1884()
     }
     return;
 }
+
+
+
 void label_1885()
 {
     buff = u8" "s;
@@ -43631,6 +45269,9 @@ void label_1885()
     }
     return;
 }
+
+
+
 void label_1886()
 {
     cs = 0;
@@ -43774,6 +45415,9 @@ label_1887_internal:
     }
     goto label_1887_internal;
 }
+
+
+
 void label_1888()
 {
     if (rtval == 0)
@@ -43810,6 +45454,9 @@ void label_1888()
     label_1477();
     return;
 }
+
+
+
 void label_1889()
 {
     cdata_piety_point(0) = 0;
@@ -43850,6 +45497,9 @@ void label_1889()
     }
     return;
 }
+
+
+
 void label_1890()
 {
     if (cdata_god(0) == 0)
@@ -44128,6 +45778,9 @@ void label_1890()
     label_2742();
     return;
 }
+
+
+
 void label_1891()
 {
     if (cdata_god(0) == 0)
@@ -44284,6 +45937,9 @@ void label_1891()
     label_2742();
     return;
 }
+
+
+
 void label_1892()
 {
     efid = 1114;
@@ -44307,6 +45963,9 @@ void label_1892()
     }
     return;
 }
+
+
+
 int label_1893()
 {
     id(0) = 0;
@@ -44938,6 +46597,9 @@ label_1895_internal:
     label_1422();
     return 1;
 }
+
+
+
 int label_1896()
 {
     if (cfg_skiprandevents)
@@ -45067,11 +46729,17 @@ label_1897_internal:
     }
     goto label_1897_internal;
 }
+
+
+
 int label_1898()
 {
     key = "";
     return rtval;
 }
+
+
+
 int calcincome(int prm_1036)
 {
     int p_at_m176 = 0;
@@ -45114,6 +46782,9 @@ int calcincome(int prm_1036)
     }
     return p_at_m176;
 }
+
+
+
 void label_1901()
 {
     invfile = 4;
@@ -45326,6 +46997,9 @@ void label_1901()
     }
     return;
 }
+
+
+
 std::string rpmatname(int prm_1037)
 {
     std::string s_at_m177;
@@ -45361,6 +47035,9 @@ std::string rpmatname(int prm_1037)
     }
     return s_at_m177;
 }
+
+
+
 int blendcheckext(int prm_1038, int prm_1039)
 {
     int p_at_m178 = 0;
@@ -45382,6 +47059,9 @@ int blendcheckext(int prm_1038, int prm_1039)
     }
     return 0;
 }
+
+
+
 std::string rpsuccessrate(int prm_1040)
 {
     if (prm_1040 == 100)
@@ -45422,6 +47102,9 @@ std::string rpsuccessrate(int prm_1040)
     }
     return lang(u8"絶対ムリ！"s, u8"Impossible!"s);
 }
+
+
+
 int rpdiff(int, int prm_1042, int prm_1043)
 {
     int p1_at_m180 = 0;
@@ -45528,6 +47211,9 @@ int rpdiff(int, int prm_1042, int prm_1043)
     }
     return p1_at_m180;
 }
+
+
+
 int blendcheckmat(int prm_1044)
 {
     int f_at_m181 = 0;
@@ -45641,6 +47327,9 @@ int blendcheckmat(int prm_1044)
     }
     return f_at_m181;
 }
+
+
+
 int blendmatnum(int prm_1045, int prm_1046)
 {
     int m_at_m182 = 0;
@@ -45721,6 +47410,9 @@ int blendmatnum(int prm_1045, int prm_1046)
     }
     return m_at_m182;
 }
+
+
+
 int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
 {
     int id_at_m183 = 0;
@@ -45831,6 +47523,9 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
     }
     return m_at_m183;
 }
+
+
+
 void window_recipe2()
 {
     int x_at_m183 = 0;
@@ -45875,6 +47570,9 @@ void window_recipe2()
     bmes(lang(u8"必要時間: "s, u8"Time: "s) + s_at_m183, 235, 235, 235);
     return;
 }
+
+
+
 void window_recipe_(
     int prm_1050,
     int prm_1051,
@@ -46133,6 +47831,9 @@ void window_recipe_(
     color(0, 0, 0);
     return;
 }
+
+
+
 void clear_rprefmat()
 {
     {
@@ -46144,6 +47845,9 @@ void clear_rprefmat()
     }
     return;
 }
+
+
+
 void label_1920()
 {
     {
@@ -46155,6 +47859,9 @@ void label_1920()
     }
     return;
 }
+
+
+
 void label_1921()
 {
     DIM3(rpdata, 100, 1200);
@@ -46358,6 +48065,9 @@ void label_1921()
     rfnameorg(1, 4) = lang(u8"何か物体"s, u8"any item"s);
     return;
 }
+
+
+
 void label_1922()
 {
     step = -1;
@@ -46891,6 +48601,9 @@ label_1928_internal:
     }
     goto label_1928_internal;
 }
+
+
+
 int label_1931()
 {
     f = 1;
@@ -46917,6 +48630,9 @@ int label_1931()
     }
     return f;
 }
+
+
+
 int label_1932()
 {
     p = 0;
@@ -46951,6 +48667,9 @@ int label_1932()
     label_1521();
     return 1;
 }
+
+
+
 void label_1933()
 {
     rpresult = 1;
@@ -47018,6 +48737,9 @@ void label_1933()
     label_1932();
     return;
 }
+
+
+
 void label_19342()
 {
 label_19341_internal:
@@ -47124,6 +48846,9 @@ label_19341_internal:
     rowactend(cc);
     return;
 }
+
+
+
 void label_1935()
 {
     ci = rpref(10);
@@ -47347,6 +49072,9 @@ label_1936_internal:
     label_1477();
     return;
 }
+
+
+
 std::string txtitemoncell(int prm_1055, int prm_1056)
 {
     elona_vector1<int> p_at_m185;
@@ -47409,6 +49137,9 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
             u8"There are "s + rtval + u8" items lying here."s);
     }
 }
+
+
+
 void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
 {
     int dy_at_m186 = 0;
@@ -47500,6 +49231,9 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     cansee = 1;
     return;
 }
+
+
+
 int key_direction()
 {
     kdx = 0;
@@ -47550,6 +49284,9 @@ int key_direction()
     }
     return 0;
 }
+
+
+
 void label_1942()
 {
     if (cfg_extrahelp)
@@ -47628,6 +49365,9 @@ void label_1942()
     label_2114();
     return;
 }
+
+
+
 int label_19432()
 {
 label_19431_internal:
@@ -47903,6 +49643,9 @@ label_1945_internal:
     }
     goto label_1945_internal;
 }
+
+
+
 int label_1947()
 {
     if (tlocinitx != 0 || tlocinity != 0)
@@ -48237,6 +49980,9 @@ label_1948_internal:
     }
     goto label_1948_internal;
 }
+
+
+
 void label_1951()
 {
     page = 0;
@@ -48421,6 +50167,9 @@ label_1953_internal:
     }
     goto label_1953_internal;
 }
+
+
+
 void label_1955()
 {
     ww = 33;
@@ -48492,12 +50241,18 @@ label_1956_internal:
     }
     goto label_1956_internal;
 }
+
+
+
 void label_1958()
 {
     screenupdate = -1;
     label_1419();
     return;
 }
+
+
+
 int label_1959()
 {
     snd(26);
@@ -48997,6 +50752,9 @@ label_1961_internal:
     }
     goto label_1961_internal;
 }
+
+
+
 void label_1964()
 {
     if (rc < 0)
@@ -49119,15 +50877,24 @@ label_1966_internal:
     }
     goto label_1966_internal;
 }
+
+
+
 int label_19672()
 {
     label_1968();
     return label_196902();
 }
+
+
+
 int label_1969()
 {
     return label_196902();
 }
+
+
+
 void label_1968()
 {
     listmax = 0;
@@ -49152,6 +50919,9 @@ void label_1968()
     windowshadow = 1;
     return;
 }
+
+
+
 int label_196902()
 {
 label_196901_internal:
@@ -49828,6 +51598,9 @@ label_1970_internal:
     }
     goto label_1970_internal;
 }
+
+
+
 void label_1972()
 {
     curmenu = 1;
@@ -50171,6 +51944,9 @@ label_1974_internal:
     }
     goto label_1974_internal;
 }
+
+
+
 void label_1976()
 {
     if (cfg_extrahelp)
@@ -50465,6 +52241,9 @@ label_1978_internal:
     }
     goto label_1978_internal;
 }
+
+
+
 int label_1980()
 {
     snd(26);
@@ -50680,6 +52459,9 @@ label_1982_internal:
     }
     goto label_1982_internal;
 }
+
+
+
 int label_1984()
 {
     snd(26);
@@ -50848,6 +52630,9 @@ label_1986_internal:
     }
     goto label_1986_internal;
 }
+
+
+
 void label_1988()
 {
     listmax = 0;
@@ -51002,6 +52787,9 @@ label_1990_internal:
     }
     goto label_1990_internal;
 }
+
+
+
 void label_1992()
 {
     if (jp)
@@ -51019,6 +52807,9 @@ void label_1992()
     inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill"s));
     return;
 }
+
+
+
 int label_1993()
 {
     redraw(0);
@@ -51111,6 +52902,9 @@ label_1994_internal:
     }
     goto label_1994_internal;
 }
+
+
+
 void label_1996()
 {
     s = lang(
@@ -51128,6 +52922,9 @@ void label_1996()
     }
     return;
 }
+
+
+
 void label_1997()
 {
     txtcopy = "";
@@ -51638,6 +53435,9 @@ label_1999_internal:
     label_1996();
     return;
 }
+
+
+
 void label_2000()
 {
     label_2002();
@@ -51656,6 +53456,9 @@ void label_2000()
     label_1996();
     return;
 }
+
+
+
 void label_2001()
 {
     label_2002();
@@ -51674,6 +53477,9 @@ void label_2001()
     label_1996();
     return;
 }
+
+
+
 void label_2002()
 {
     i = 0;
@@ -51721,6 +53527,9 @@ void label_2002()
     }
     return;
 }
+
+
+
 void label_2003()
 {
     menucycle = 0;
@@ -51799,6 +53608,9 @@ void label_2003()
     }
     label_2743(false);
 }
+
+
+
 void label_2004()
 {
     txt(lang(
@@ -51837,6 +53649,9 @@ void label_2004()
     label_2224();
     return;
 }
+
+
+
 void label_2005()
 {
     txt(lang(
@@ -51853,6 +53668,9 @@ void label_2005()
     label_2201();
     return;
 }
+
+
+
 void label_2006()
 {
     int stat = label_2174();
@@ -51864,6 +53682,9 @@ void label_2006()
     label_2742();
     return;
 }
+
+
+
 void label_2007()
 {
     listmax = 0;
@@ -52121,6 +53942,9 @@ label_2009_internal:
     }
     goto label_2009_internal;
 }
+
+
+
 void label_2011()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
@@ -52168,6 +53992,9 @@ void label_2011()
     label_1419();
     label_2743(false);
 }
+
+
+
 void label_2012()
 {
     txt(lang(
@@ -52399,6 +54226,9 @@ void label_2012()
     label_1419();
     label_2743(false);
 }
+
+
+
 void label_2013()
 {
     txt(lang(
@@ -52427,6 +54257,9 @@ void label_2013()
     label_1416();
     label_2743(false);
 }
+
+
+
 int label_2014()
 {
     gsel(4);
@@ -52584,6 +54417,9 @@ label_2016_internal:
     }
     goto label_2016_internal;
 }
+
+
+
 int label_2018()
 {
     snd(94);
@@ -52764,6 +54600,9 @@ label_2020_internal:
     }
     goto label_2020_internal;
 }
+
+
+
 void label_2022()
 {
     snd(59);
@@ -52869,6 +54708,9 @@ label_2024_internal:
     }
     goto label_2024_internal;
 }
+
+
+
 void label_2026()
 {
     tc = cc;
@@ -52880,6 +54722,9 @@ void label_2026()
     label_2742();
     return;
 }
+
+
+
 void label_2027()
 {
     listmax = 0;
@@ -53125,6 +54970,9 @@ label_2029_internal:
     }
     goto label_2029_internal;
 }
+
+
+
 void label_2031()
 {
     s = "";
@@ -53176,6 +55024,9 @@ void label_2031()
     s += skilldesc(i);
     return;
 }
+
+
+
 void label_2032()
 {
     int dbmax = 0;
@@ -53404,6 +55255,9 @@ void label_2032()
     }
     return;
 }
+
+
+
 int label_20332()
 {
 label_20331:
@@ -54378,6 +56232,9 @@ label_2035_internal:
     }
     goto label_2035_internal;
 }
+
+
+
 void label_2038()
 {
     rtval = -2;
@@ -54512,6 +56369,9 @@ void label_2038()
     }
     return;
 }
+
+
+
 int label_2039()
 {
     create_pcpic(cc, 0);
@@ -54862,6 +56722,9 @@ label_2041_internal:
     }
     goto label_2041_internal;
 }
+
+
+
 int label_2044()
 {
     create_pcpic(cc, 1);
@@ -55006,6 +56869,9 @@ label_2045_internal:
     }
     goto label_2045_internal;
 }
+
+
+
 void label_2047()
 {
     p(1) = 0;
@@ -55055,6 +56921,9 @@ void label_2047()
     }
     return;
 }
+
+
+
 void label_2048()
 {
     tc = cc;
@@ -55102,6 +56971,9 @@ void label_2048()
     ++p(2);
     return;
 }
+
+
+
 void label_2049()
 {
     attacknum = 0;
@@ -55182,6 +57054,9 @@ void label_2049()
     }
     return;
 }
+
+
+
 void label_2050()
 {
     cc = 0;
@@ -55602,6 +57477,9 @@ label_2052_internal:
     }
     goto label_2052_internal;
 }
+
+
+
 void label_2054()
 {
     if (map(cdata_x(0), cdata_y(0), 6) != 0)
@@ -55794,6 +57672,9 @@ void label_2054()
         }
     }
 }
+
+
+
 void label_2055()
 {
     if (cdata_continuous_action_turn(tc) != 0)
@@ -55811,6 +57692,9 @@ void label_2055()
     label_20592();
     return;
 }
+
+
+
 void label_2056()
 {
     if (listmax < 1)
@@ -55846,6 +57730,9 @@ void label_2056()
     }
     return;
 }
+
+
+
 void label_2057()
 {
     if (listmax < 1)
@@ -55887,6 +57774,9 @@ void label_2057()
     }
     return;
 }
+
+
+
 void savecycle()
 {
     if (menucycle == 1)
@@ -55899,6 +57789,9 @@ void savecycle()
     }
     return;
 }
+
+
+
 std::string trimdesc(const std::string& prm_1060, int prm_1061)
 {
     std::string q_at_m187;
@@ -55965,6 +57858,9 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
     }
     return q_at_m187;
 }
+
+
+
 void label_2068()
 {
     if (ci < 0)
@@ -56368,6 +58264,9 @@ label_2070_internal:
     }
     goto label_2070_internal;
 }
+
+
+
 int label_2072()
 {
     if (cdata_state(cdata_enemy_id(cc)) != 1)
@@ -56438,6 +58337,9 @@ int label_2072()
     }
     return 1;
 }
+
+
+
 int label_2073()
 {
     txttargetlevel();
@@ -56469,6 +58371,9 @@ int label_2073()
         return 0;
     }
 }
+
+
+
 void label_2074()
 {
     cc = 0;
@@ -56520,6 +58425,9 @@ void label_2074()
     label_2742();
     return;
 }
+
+
+
 int label_2075()
 {
     cw = -1;
@@ -56566,6 +58474,9 @@ int label_2075()
     attackskill = inv_skill(cw);
     return 1;
 }
+
+
+
 void label_2076()
 {
     listmax = 0;
@@ -56675,6 +58586,9 @@ void label_2076()
     }
     return;
 }
+
+
+
 void label_2077()
 {
     r1 = 50;
@@ -56682,6 +58596,9 @@ void label_2077()
     label_2742();
     return;
 }
+
+
+
 void label_2078()
 {
     txt(lang(
@@ -56703,6 +58620,9 @@ void label_2078()
     label_2131();
     return;
 }
+
+
+
 void label_2079()
 {
     txtnew();
@@ -56765,6 +58685,9 @@ void label_2079()
     label_1419();
     label_2743(false);
 }
+
+
+
 int label_2080()
 {
     f = 0;
@@ -56785,6 +58708,9 @@ int label_2080()
     }
     return f;
 }
+
+
+
 void label_2081()
 {
     int stat = label_2080();
@@ -56912,6 +58838,9 @@ void label_2081()
     label_1419();
     return;
 }
+
+
+
 void label_2082()
 {
     screenupdate = -1;
@@ -56972,6 +58901,9 @@ void label_2082()
     label_2742();
     return;
 }
+
+
+
 int label_2083()
 {
     if (inv_id(ci) == 563)
@@ -57003,6 +58935,9 @@ int label_2083()
     label_2148();
     return 1;
 }
+
+
+
 void label_2084()
 {
     if (gdata_wizard)
@@ -57234,6 +59169,9 @@ void label_2084()
     }
     return;
 }
+
+
+
 void label_2085()
 {
     cc = 0;
@@ -57491,6 +59429,9 @@ void label_2085()
     exec(s, 16);
     return;
 }
+
+
+
 void label_2086()
 {
     f = 0;
@@ -57596,6 +59537,9 @@ void label_2086()
     }
     label_2743(false);
 }
+
+
+
 void label_2087()
 {
     inv_getheader(-1);
@@ -57611,6 +59555,9 @@ void label_2087()
     }
     return;
 }
+
+
+
 void label_2088()
 {
     {
@@ -57646,6 +59593,9 @@ void label_2088()
     }
     return;
 }
+
+
+
 void label_2089()
 {
     if (gdata_version != 1220)
@@ -57942,6 +59892,9 @@ void label_2089()
     label_1920();
     return;
 }
+
+
+
 void label_2090()
 {
     ++gdata(184);
@@ -57951,6 +59904,9 @@ void label_2090()
     label_1752();
     return;
 }
+
+
+
 void label_2091()
 {
     file = u8"shop"s + 3 + u8".s2"s;
@@ -58002,6 +59958,9 @@ void label_2091()
     }
     return;
 }
+
+
+
 void label_2092()
 {
     fmode = 15;
@@ -58086,12 +60045,18 @@ void label_2092()
     gdata_play_time = genetemp(805);
     return;
 }
+
+
+
 void label_2093()
 {
     fmode = 14;
     label_2107();
     return;
 }
+
+
+
 void zipadd(const std::string& prm_1062)
 {
     p = 12;
@@ -58111,6 +60076,9 @@ void zipadd(const std::string& prm_1062)
     memcpy_(filebuff, filetemp, len - p * 2, lenhead + p * 2);
     return;
 }
+
+
+
 void label_2095()
 {
     p = 12;
@@ -58143,6 +60111,9 @@ void label_2095()
     }
     return;
 }
+
+
+
 void zipinit2(const std::string& prm_1063, const std::string& prm_1064)
 {
     lensum_at_m188 = 0;
@@ -58151,6 +60122,9 @@ void zipinit2(const std::string& prm_1063, const std::string& prm_1064)
     SDIM1(filebuff_at_m188);
     return;
 }
+
+
+
 void zipadd2(const std::string& prm_1065)
 {
     p_at_m188(0) = 50;
@@ -58180,11 +60154,17 @@ void zipadd2(const std::string& prm_1065)
         lenhead_at_m188 + p_at_m188);
     return;
 }
+
+
+
 void zipend2()
 {
     bsave(zipfolder_at_m188 + zipfinalfile_at_m188, filebuff_at_m188);
     return;
 }
+
+
+
 void unzip2(const std::string& prm_1066, const std::string& prm_1067)
 {
     int zipsize_at_m188 = 0;
@@ -58236,6 +60216,9 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
     }
     return;
 }
+
+
+
 std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
 {
     int p_at_m189 = 0;
@@ -58254,6 +60237,9 @@ std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
         p_at_m189 + 1,
         std::clamp(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
 }
+
+
+
 void label_2104()
 {
     if (initunid)
@@ -58338,6 +60324,9 @@ void label_2104()
     setunid(rc, cun);
     return;
 }
+
+
+
 void label_2105()
 {
     buff(0).clear();
@@ -58531,6 +60520,9 @@ void label_2105()
     gsel(0);
     return;
 }
+
+
+
 void label_2106()
 {
     fread = 0;
@@ -58661,6 +60653,9 @@ void label_2106()
     label_2111();
     return;
 }
+
+
+
 void label_2108()
 {
     SDIM2(headtemp, 1024);
@@ -58710,6 +60705,9 @@ void label_2108()
     label_2111();
     return;
 }
+
+
+
 void label_2109()
 {
     SDIM2(headtemp, 1024);
@@ -58730,6 +60728,9 @@ void label_2109()
     label_2111();
     return;
 }
+
+
+
 void label_2110()
 {
     for (const auto& entry :
@@ -58748,6 +60749,9 @@ void label_2110()
     }
     return;
 }
+
+
+
 void label_2111()
 {
     for (const auto& entry :
@@ -58759,6 +60763,9 @@ void label_2111()
     }
     return;
 }
+
+
+
 void label_2112()
 {
     filemod = "";
@@ -58816,6 +60823,9 @@ void label_2112()
     time_begin = timeGetTime() / 1000;
     return;
 }
+
+
+
 void label_2113()
 {
     if (gdata_current_map == 35)
@@ -58893,6 +60903,9 @@ void label_2113()
     notesave(fs::u8path(u8"./save/"s + playerid + u8"/filelist.txt"));
     return;
 }
+
+
+
 void label_2114()
 {
     snd(49);
@@ -58906,6 +60919,9 @@ void label_2114()
     label_1737();
     return;
 }
+
+
+
 void label_2118()
 {
     cs = 0;
@@ -59089,6 +61105,9 @@ label_2119_internal:
     }
     goto label_2119_internal;
 }
+
+
+
 void label_2121()
 {
     cs = 0;
@@ -59202,6 +61221,9 @@ label_2122_internal:
     }
     goto label_2122_internal;
 }
+
+
+
 void label_2124()
 {
     DIM3(fovlist, 2, 15);
@@ -59260,6 +61282,9 @@ void label_2124()
     }
     return;
 }
+
+
+
 void label_21262()
 {
 label_21261_internal:
@@ -59514,6 +61539,9 @@ label_21261_internal:
     onkey_0();
     return;
 }
+
+
+
 int label_2127()
 {
     snd(26);
@@ -59656,6 +61684,9 @@ label_2128_internal:
     }
     goto label_2128_internal;
 }
+
+
+
 int label_2131()
 {
     snd(26);
@@ -59802,6 +61833,9 @@ label_2132_internal:
     }
     goto label_2132_internal;
 }
+
+
+
 void label_2134()
 {
     notesel(dbm);
@@ -59833,6 +61867,9 @@ label_2135_internal:
     }
     goto label_2135_internal;
 }
+
+
+
 void label_2136()
 {
     clrobj(1);
@@ -59846,6 +61883,9 @@ void label_2136()
     }
     label_2743(false);
 }
+
+
+
 void label_2138()
 {
     if (strutil::contains(buff(0), u8"?"))
@@ -60480,6 +62520,9 @@ void label_2138()
     label_2139();
     return;
 }
+
+
+
 void label_2139()
 {
     noteadd(""s);
@@ -60487,6 +62530,9 @@ void label_2139()
     objprm(2, ""s);
     return;
 }
+
+
+
 void label_2140()
 {
     mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
@@ -60502,6 +62548,9 @@ void label_2140()
     }
     return;
 }
+
+
+
 int efstatusfix(int prm_1072, int prm_1073, int prm_1074, int prm_1075)
 {
     if (efstatus <= -2)
@@ -60518,6 +62567,9 @@ int efstatusfix(int prm_1072, int prm_1073, int prm_1074, int prm_1075)
     }
     return prm_1075;
 }
+
+
+
 int label_2143()
 {
     if (map(cdata_x(0), cdata_y(0), 6) == 0)
@@ -60658,6 +62710,9 @@ int label_2143()
     }
     return 0;
 }
+
+
+
 void label_2144()
 {
     cell_featset(movx, movy, 0);
@@ -60684,6 +62739,9 @@ void label_2144()
     }
     return;
 }
+
+
+
 void label_21452()
 {
 label_21451_internal:
@@ -60928,6 +62986,9 @@ label_21451_internal:
     }
     return;
 }
+
+
+
 void label_2146()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -61402,6 +63463,9 @@ void label_2146()
     }
     return;
 }
+
+
+
 void label_2147()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -61608,6 +63672,9 @@ void label_2147()
     rowactend(tc);
     return;
 }
+
+
+
 void label_2148()
 {
     if (cc != 0)
@@ -62135,6 +64202,9 @@ void label_2148()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2149()
 {
     redraw(0);
@@ -62149,6 +64219,9 @@ void label_2149()
     screenupdate = 0;
     return;
 }
+
+
+
 void label_2150()
 {
     gsel(4);
@@ -62160,6 +64233,9 @@ void label_2150()
     gsel(0);
     return;
 }
+
+
+
 void label_2151()
 {
     if (gdata_current_map == 13)
@@ -62363,6 +64439,9 @@ void label_2151()
     autosave = 1 * (gdata_current_map != 35);
     return;
 }
+
+
+
 void label_2152()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -62412,6 +64491,9 @@ void label_2152()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2153()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -62597,6 +64679,9 @@ void label_2153()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2154()
 {
     if (rowactre != 0)
@@ -62645,6 +64730,9 @@ void label_2154()
     }
     return;
 }
+
+
+
 void label_2155()
 {
     flt();
@@ -62658,6 +64746,9 @@ void label_2155()
     item_stack(0, ci, 1);
     return;
 }
+
+
+
 void label_2156()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -62812,6 +64903,9 @@ void label_2156()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2157()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -62830,6 +64924,9 @@ void label_2157()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2158()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -62945,6 +65042,9 @@ void label_2158()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2159()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -63091,6 +65191,9 @@ void label_2159()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2160()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -63139,6 +65242,9 @@ void label_2160()
     rowactend(cc);
     return;
 }
+
+
+
 void label_2161()
 {
     cieat = ci;
@@ -63230,6 +65336,9 @@ void label_2161()
     }
     return;
 }
+
+
+
 void label_2162()
 {
     txtmore();
@@ -63294,6 +65403,9 @@ void label_2162()
             u8"Empty! Your stomach is still empty!"s));
     return;
 }
+
+
+
 int label_2163()
 {
     if (cdata_continuous_action_id(cc) == 0)
@@ -63477,6 +65589,9 @@ int label_2163()
     rowactend(cc);
     return 1;
 }
+
+
+
 int label_2164()
 {
     if (cdata_blind(cc) != 0)
@@ -63522,6 +65637,9 @@ int label_2164()
     label_2022();
     return 1;
 }
+
+
+
 int calcmagiccontrol(int prm_1076, int prm_1077)
 {
     if (sdata(188, prm_1076) != 0)
@@ -63556,6 +65674,9 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
     }
     return 0;
 }
+
+
+
 int label_2167()
 {
     spellbk = efid;
@@ -63571,6 +65692,9 @@ int label_2167()
     }
     return 0;
 }
+
+
+
 int label_2168()
 {
     efsource = 3;
@@ -63761,6 +65885,9 @@ int label_2168()
     }
     return 1;
 }
+
+
+
 int label_2169()
 {
     tc = cc;
@@ -63823,6 +65950,9 @@ int label_2169()
     }
     return 1;
 }
+
+
+
 int label_2170()
 {
     if (inv_param1(ci) < -5 || inv_param3(ci) >= 20
@@ -64047,6 +66177,9 @@ int label_2170()
     }
     return 1;
 }
+
+
+
 int label_2171()
 {
     tc = cc;
@@ -64110,6 +66243,9 @@ int label_2171()
     }
     return 1;
 }
+
+
+
 int label_2172()
 {
     if (inv_count(ci) <= 0)
@@ -64222,6 +66358,9 @@ label_2173_internal:
     --inv_count(ci);
     return 1;
 }
+
+
+
 int label_2174()
 {
     if (efid == 646)
@@ -64311,6 +66450,9 @@ int label_2174()
     }
     return 1;
 }
+
+
+
 int label_2175()
 {
     noeffect = 0;
@@ -64510,6 +66652,9 @@ int label_2175()
     }
     return 1;
 }
+
+
+
 void label_2187()
 {
     subloop = 1;
@@ -64543,6 +66688,9 @@ void label_2187()
     }
     return;
 }
+
+
+
 void label_2188()
 {
     cdata_poisoned(tc) = 0;
@@ -64560,6 +66708,9 @@ void label_2188()
     cdata_sp(tc) = cdata_max_sp(tc);
     return;
 }
+
+
+
 void label_2189()
 {
     if (synccheck(cc, -1))
@@ -64894,6 +67045,9 @@ void label_2189()
     label_2742();
     return;
 }
+
+
+
 void label_2190()
 {
     int stat = item_find(60002);
@@ -64910,11 +67064,17 @@ void label_2190()
     label_1890();
     return;
 }
+
+
+
 void label_2191()
 {
     item_exchange(ci, ti);
     return;
 }
+
+
+
 int label_2192()
 {
     if (cc != -1)
@@ -65286,6 +67446,9 @@ int label_2192()
     }
     return 1;
 }
+
+
+
 int label_2193()
 {
     inumbk = inv_number(ci) - in;
@@ -65365,6 +67528,9 @@ int label_2193()
     }
     return 1;
 }
+
+
+
 int label_2194()
 {
     if (ci == -1)
@@ -65388,6 +67554,9 @@ int label_2194()
     cdata(body, r1) = cdata(body, r1) / 10000 * 10000 + ci + 1;
     return 1;
 }
+
+
+
 void label_2195()
 {
     p = cdata(body, r1) % 10000;
@@ -65402,6 +67571,9 @@ void label_2195()
     item_stack(r1, ci);
     return;
 }
+
+
+
 void label_2196()
 {
     {
@@ -65423,6 +67595,9 @@ void label_2196()
     }
     return;
 }
+
+
+
 void label_2197()
 {
     if (inv_id(ci) == 783)
@@ -65448,6 +67623,9 @@ void label_2197()
     label_2742();
     return;
 }
+
+
+
 void label_2198()
 {
     if (cc == 0)
@@ -65486,6 +67664,9 @@ void label_2198()
     label_2742();
     return;
 }
+
+
+
 void label_2199()
 {
     dbmode = 15;
@@ -65494,6 +67675,9 @@ void label_2199()
     label_2742();
     return;
 }
+
+
+
 void label_2200()
 {
     dbmode = 14;
@@ -65508,6 +67692,9 @@ void label_2200()
     label_2742();
     return;
 }
+
+
+
 void label_2201()
 {
     if (map(x, y, 5) != 0)
@@ -65728,6 +67915,9 @@ void label_2201()
     label_2742();
     return;
 }
+
+
+
 void label_2203()
 {
     f = 0;
@@ -66000,6 +68190,9 @@ void label_2203()
     }
     label_2743(false);
 }
+
+
+
 void label_2205()
 {
     if (cbit(975, cc))
@@ -66295,6 +68488,9 @@ void label_2205()
     label_2742();
     return;
 }
+
+
+
 void label_2206()
 {
     if (cc == 0)
@@ -66516,6 +68712,9 @@ void label_2206()
     }
     return;
 }
+
+
+
 void label_2207()
 {
     if (dbg_freemove)
@@ -66782,6 +68981,9 @@ void label_2207()
     label_1737();
     return;
 }
+
+
+
 int label_2209()
 {
     int stat = item_find(636, 3);
@@ -66869,6 +69071,9 @@ label_2211_internal:
     label_1460();
     return 1;
 }
+
+
+
 void label_2212()
 {
     if (inv_id(ci) == 361)
@@ -67074,6 +69279,9 @@ void label_2212()
     label_2742();
     return;
 }
+
+
+
 void label_2213()
 {
     snd(23);
@@ -67243,6 +69451,9 @@ void label_2213()
     }
     return;
 }
+
+
+
 void label_2214()
 {
     snd(23);
@@ -67422,6 +69633,9 @@ void label_2214()
         1);
     return;
 }
+
+
+
 void label_2215()
 {
     cell_featread(dx, dy);
@@ -67504,6 +69718,9 @@ void label_2215()
     label_2742();
     return;
 }
+
+
+
 void label_2216()
 {
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
@@ -67538,6 +69755,9 @@ void label_2216()
     label_2742();
     return;
 }
+
+
+
 int label_2217()
 {
     attackrange = 1;
@@ -67656,6 +69876,9 @@ int label_2217()
     ammoproc = -1;
     return 0;
 }
+
+
+
 void label_2218()
 {
     if (cc != 0)
@@ -67742,6 +69965,9 @@ void label_2218()
     attackvar = 0;
     return;
 }
+
+
+
 void label_22192()
 {
 label_22191_internal:
@@ -68367,6 +70593,9 @@ label_22191_internal:
     }
     return;
 }
+
+
+
 void label_2220()
 {
     {
@@ -68540,6 +70769,9 @@ void label_2220()
     }
     return;
 }
+
+
+
 void label_2221()
 {
     ++msgdup;
@@ -68740,17 +70972,26 @@ void label_2221()
     label_2742();
     return;
 }
+
+
+
 void label_2222()
 {
     cell_featset(refx, refy, tile_trap, -1, -1);
     return;
 }
+
+
+
 void label_2223()
 {
     map(refx, refy, 0) = tile_tunnel;
     cell_featset(refx, refy, 0, 0);
     return;
 }
+
+
+
 void label_2224()
 {
     if (cdata_sp(cc) < 0)
@@ -68767,6 +71008,9 @@ void label_2224()
     label_2742();
     return;
 }
+
+
+
 void dipcursed(int prm_1078, int)
 {
     if (refitem(inv_id(prm_1078), 5) == 57000)
@@ -68805,6 +71049,9 @@ void dipcursed(int prm_1078, int)
     txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
     return;
 }
+
+
+
 void label_2227()
 {
     if (inv_id(cidip) == 617)
@@ -69079,6 +71326,9 @@ void label_2227()
     label_2742();
     return;
 }
+
+
+
 void label_2228()
 {
     screenupdate = -1;
@@ -70381,6 +72631,9 @@ label_2229_internal:
     label_2742();
     return;
 }
+
+
+
 int label_2230()
 {
     if (cbit(23, tc) || cbit(27, tc))
@@ -70426,6 +72679,9 @@ int label_2230()
     randomize();
     return dbmax;
 }
+
+
+
 int label_2231()
 {
     int dbmax = 0;
@@ -70546,6 +72802,9 @@ int label_2231()
         return -1;
     }
 }
+
+
+
 void label_2232()
 {
     screenupdate = -1;
@@ -70596,6 +72855,9 @@ void label_2232()
     label_2742();
     return;
 }
+
+
+
 void label_2233()
 {
     --feat(3);
@@ -70613,6 +72875,9 @@ void label_2233()
     }
     return;
 }
+
+
+
 void label_2234()
 {
     feat(3) = 4 + rnd(5);
@@ -70654,6 +72919,9 @@ void label_2234()
     }
     return;
 }
+
+
+
 void label_2235()
 {
     p = 15;
@@ -70693,6 +72961,9 @@ void label_2235()
     txt(lang(u8"新しい芽が息吹いている！"s, u8"A new plant grows!"s));
     return;
 }
+
+
+
 void label_2236()
 {
     skillexp(180, 0, 75);
@@ -70740,12 +73011,18 @@ void label_2236()
     item_stack(0, ci, 1);
     return;
 }
+
+
+
 void label_2237()
 {
     gdata(91) = 105;
     label_2148();
     return;
 }
+
+
+
 int clientguide(int)
 {
     int i_at_m193 = 0;
@@ -70802,6 +73079,9 @@ int clientguide(int)
     }
     return j_at_m193;
 }
+
+
+
 int tradecheck(int prm_1081)
 {
     j_at_m193 = 0;
@@ -70828,6 +73108,9 @@ int tradecheck(int prm_1081)
     }
     return j_at_m193;
 }
+
+
+
 void label_2241()
 {
     gsel(4);
@@ -70838,6 +73121,9 @@ void label_2241()
     gsel(0);
     return;
 }
+
+
+
 void label_2242()
 {
     keyhalt = 1;
@@ -71014,6 +73300,9 @@ void label_2242()
     label_2251();
     return;
 }
+
+
+
 void label_2243()
 {
     listmax = 0;
@@ -71035,6 +73324,9 @@ void label_2243()
     label_2256();
     return;
 }
+
+
+
 void label_2244()
 {
     listmax = 0;
@@ -72028,6 +74320,9 @@ void label_2244()
     label_2256();
     return;
 }
+
+
+
 int label_2248()
 {
     list(0, listmax) = 1;
@@ -72088,6 +74383,9 @@ int label_2248()
     }
     return 1;
 }
+
+
+
 void label_2249()
 {
     if (lomiaseaster)
@@ -72428,6 +74726,9 @@ void label_2249()
     label_2246();
     return;
 }
+
+
+
 void label_2250()
 {
     listmax = 0;
@@ -72451,6 +74752,9 @@ void label_2250()
     label_2256();
     return;
 }
+
+
+
 void label_2252()
 {
     if (qdata(8, rq) == 1)
@@ -72627,6 +74931,9 @@ void label_2252()
     label_2251();
     return;
 }
+
+
+
 void label_2253()
 {
     if (qdata(3, rq) == 1001 || qdata(3, rq) == 1010)
@@ -72709,6 +75016,9 @@ void label_2253()
     label_2256();
     return;
 }
+
+
+
 void label_2254()
 {
     tcbk = tc;
@@ -72793,6 +75103,9 @@ void label_2254()
     label_2251();
     return;
 }
+
+
+
 void label_2255()
 {
     listmax = 0;
@@ -72831,6 +75144,9 @@ void label_2255()
     label_2251();
     return;
 }
+
+
+
 void label_2256()
 {
     questteleport = 0;
@@ -72841,6 +75157,9 @@ void label_2256()
     }
     return;
 }
+
+
+
 void label_2257()
 {
     cs_bk = -1;
@@ -72925,6 +75244,9 @@ label_2258_internal:
     }
     goto label_2258_internal;
 }
+
+
+
 void label_2259()
 {
     snd(10);
@@ -72932,17 +75254,26 @@ void label_2259()
     listmax = 0;
     return;
 }
+
+
+
 void label_2260()
 {
     label_22600();
     label_22610();
     return;
 }
+
+
+
 void label_2261()
 {
     label_22610();
     return;
 }
+
+
+
 void label_22600()
 {
     if (scenemode == 0)
@@ -72963,6 +75294,9 @@ void label_22600()
     gcopy(7, 0, 0, 600, 380);
     return;
 }
+
+
+
 void label_22610()
 {
     redraw(0);
@@ -73104,6 +75438,9 @@ void label_22610()
     }
     return;
 }
+
+
+
 void label_2262()
 {
     if (tc > 0)
@@ -73148,6 +75485,9 @@ void label_2262()
     label_2264();
     return;
 }
+
+
+
 void label_2263()
 {
     mode = 6;
@@ -73168,6 +75508,9 @@ void label_2263()
     label_20592();
     return;
 }
+
+
+
 void label_2264()
 {
     file = u8"shop"s + invfile + u8".s2"s;
@@ -73179,6 +75522,9 @@ void label_2264()
     mode = 0;
     return;
 }
+
+
+
 void label_2265()
 {
     inv_getheader(-1);
@@ -73829,6 +76175,9 @@ void label_2265()
         + 168 * (1 + (cdata_character_role(tc) == 1009));
     return;
 }
+
+
+
 void label_2266()
 {
     p = refitem(inv_id(ci), 5);
@@ -73895,6 +76244,9 @@ void label_2266()
     }
     return;
 }
+
+
+
 void label_2267()
 {
     DIM2(trate, 8);
@@ -73984,6 +76336,9 @@ void label_2267()
     randomize();
     return;
 }
+
+
+
 void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 {
     int p_at_m194 = 0;
@@ -74009,6 +76364,9 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
     bddata(3, prm_1082, p_at_m194) = bdref(0, prm_1083) + 363;
     return;
 }
+
+
+
 void label_2270()
 {
     if (initeco)
@@ -74107,6 +76465,9 @@ void label_2270()
     msgtemp = "";
     return;
 }
+
+
+
 void label_22712()
 {
 label_22711:
@@ -74308,6 +76669,9 @@ label_2272_internal:
     }
     goto label_2272_internal;
 }
+
+
+
 void showeconomy(
     int prm_1086,
     int prm_1087,
@@ -74334,6 +76698,9 @@ void showeconomy(
     mes(u8"("s + p_at_m195 + u8")"s);
     return;
 }
+
+
+
 void label_2276()
 {
     curmenu = 1;
@@ -74504,6 +76871,9 @@ label_2278_internal:
     }
     goto label_2278_internal;
 }
+
+
+
 void label_2280()
 {
     listmax = 0;
@@ -74715,6 +77085,9 @@ label_2283_internal:
     }
     goto label_2283_internal;
 }
+
+
+
 void label_2295()
 {
     if (cdatan(2, r1) == u8"kobolt"s)
@@ -75099,11 +77472,17 @@ void label_2295()
     }
     return;
 }
+
+
+
 void label_2296()
 {
     DIM3(racebit, 10, 78);
     return;
 }
+
+
+
 int label_2298()
 {
     if (dbmode == 1)
@@ -75870,6 +78249,9 @@ int label_2298()
     }
     return 0;
 }
+
+
+
 void label_2655()
 {
     maxnpcid = 356;
@@ -76388,6 +78770,9 @@ void label_2655()
     filter_creature(355) = u8"/dragon/"s;
     return;
 }
+
+
+
 int label_2659()
 {
     f = get_freeally();
@@ -76415,6 +78800,9 @@ int label_2659()
         cdatan(0, rc) + u8" join"s + _s(rc) + u8" your party!"s));
     return 1;
 }
+
+
+
 void label_2660()
 {
     {
@@ -76427,6 +78815,9 @@ void label_2660()
     }
     return;
 }
+
+
+
 void label_2661()
 {
     flt(0, 4);
@@ -76466,6 +78857,9 @@ void label_2661()
         + rnd((cdata_level(rc) * 200 + 100)) + rnd(500);
     return;
 }
+
+
+
 void label_2662()
 {
     {
@@ -76596,6 +78990,9 @@ void label_2662()
     }
     return;
 }
+
+
+
 void label_2663()
 {
     a = refitem(inv_id(ci), 5);
@@ -76605,6 +79002,9 @@ void label_2663()
     }
     return;
 }
+
+
+
 int label_2664()
 {
     f = 0;
@@ -76665,6 +79065,9 @@ int label_2664()
     label_2667();
     return 0;
 }
+
+
+
 int label_2665()
 {
     p = inv_getfreeid(tc);
@@ -76690,6 +79093,9 @@ int label_2665()
     }
     return p;
 }
+
+
+
 void label_2666()
 {
     inv_getheader(rc);
@@ -76707,6 +79113,9 @@ void label_2666()
     }
     return;
 }
+
+
+
 void label_2667()
 {
     i = iequiploc(ci);
@@ -76773,6 +79182,9 @@ void label_2667()
     }
     return;
 }
+
+
+
 void label_2668()
 {
     haveweapon = 0;
@@ -76914,6 +79326,9 @@ void label_2668()
     }
     return;
 }
+
+
+
 void label_2669()
 {
     {
@@ -76976,6 +79391,9 @@ void label_2669()
     }
     return;
 }
+
+
+
 void label_2670()
 {
     qdata(6, rq) =
@@ -77000,6 +79418,9 @@ void label_2670()
     }
     return;
 }
+
+
+
 void label_2671()
 {
     {
@@ -77031,6 +79452,9 @@ void label_2671()
     }
     return;
 }
+
+
+
 int label_2672()
 {
     qdata(3, rq) = 0;
@@ -77445,6 +79869,9 @@ int label_2672()
     }
     return 1;
 }
+
+
+
 void label_2673()
 {
     {
@@ -77476,6 +79903,9 @@ void label_2673()
     }
     return;
 }
+
+
+
 void label_2674()
 {
     if (gdata_executing_immediate_quest_type == 1006)
@@ -77527,6 +79957,9 @@ void label_2674()
     gdata(73) = 0;
     return;
 }
+
+
+
 void label_2675()
 {
     rc = 0;
@@ -77538,6 +79971,9 @@ void label_2675()
     label_1737();
     return;
 }
+
+
+
 void label_2676()
 {
     if (val == 1)
@@ -77645,6 +80081,9 @@ void label_2676()
         u8"名声値を"s + p + u8"失った。"s, u8"You lose "s + p + u8" fame."s));
     return;
 }
+
+
+
 void label_2677()
 {
     {
@@ -77719,6 +80158,9 @@ void label_2677()
     }
     return;
 }
+
+
+
 void label_2678()
 {
     music = 74;
@@ -77771,6 +80213,9 @@ void label_2678()
     }
     return;
 }
+
+
+
 void label_2679()
 {
     snd(51);
@@ -77888,6 +80333,9 @@ void label_2679()
     autosave = 1 * (gdata_current_map != 35);
     return;
 }
+
+
+
 void label_2680()
 {
     if (gdata_played_scene < sceneid)
@@ -78179,6 +80627,9 @@ label_2684_internal:
     boxf(0, y2, windoww, windowh);
     goto label_2681;
 }
+
+
+
 void label_2685()
 {
     gsel(4);
@@ -78191,6 +80642,9 @@ void label_2685()
     msgtempprev = "";
     return;
 }
+
+
+
 int ai_check()
 {
     {
@@ -78263,6 +80717,9 @@ int ai_check()
     }
     return 0;
 }
+
+
+
 void label_2687()
 {
     if (cbit(985, cc))
@@ -78887,6 +81344,9 @@ label_2689_internal:
     label_2690();
     return;
 }
+
+
+
 void label_2690()
 {
     if (cdata_ai_calm(cc) == 4)
@@ -79355,6 +81815,9 @@ label_2692_internal:
     label_2742();
     return;
 }
+
+
+
 void label_2693()
 {
     if (mdata(6) == 3)
@@ -79643,6 +82106,9 @@ void label_2693()
     label_2742();
     return;
 }
+
+
+
 int label_2694()
 {
     if (cdata(205, cc) > cdata_x(cc))
@@ -79685,6 +82151,9 @@ int label_2694()
     }
     return 0;
 }
+
+
+
 int label_2695()
 {
     if (cdata(206, cc) > cdata_y(cc))
@@ -79727,6 +82196,9 @@ int label_2695()
     }
     return 0;
 }
+
+
+
 void label_2696()
 {
     if (tc == 0)
@@ -79938,6 +82410,9 @@ void label_2696()
         return;
     }
 }
+
+
+
 void label_2697()
 {
     page = quickpage;
@@ -80257,6 +82732,9 @@ label_2700_internal:
     quickkeywait = 1;
     return;
 }
+
+
+
 void label_2701()
 {
     gsel(3);
@@ -80350,6 +82828,9 @@ void label_2701()
     }
     return;
 }
+
+
+
 void label_2702()
 {
     if (jp)
@@ -80372,6 +82853,9 @@ void label_2702()
     }
     return;
 }
+
+
+
 void label_2703()
 {
     snd(26);
@@ -80723,6 +83207,9 @@ label_2705_internal:
     }
     goto label_2705_internal;
 }
+
+
+
 void label_2707()
 {
     curmenu = 2;
@@ -80857,6 +83344,9 @@ label_2708_internal:
     }
     goto label_2708_internal;
 }
+
+
+
 void label_2710()
 {
     curmenu = 0;
@@ -81064,6 +83554,9 @@ label_2711_internal:
     }
     goto label_2711_internal;
 }
+
+
+
 void label_2713()
 {
     notesel(note_buff);
@@ -81112,11 +83605,17 @@ void label_2713()
     notesave(fs::u8path(u8"./config.txt"));
     return;
 }
+
+
+
 void label_2714()
 {
     SDIM3(jkey, 2, 12);
     return;
 }
+
+
+
 void label_2715()
 {
     key_select(0) = u8"a"s;
@@ -81689,6 +84188,9 @@ void label_2715()
     }
     return;
 }
+
+
+
 void label_2719()
 {
     notesel(note_buff);
@@ -81813,6 +84315,9 @@ void label_2719()
     }
     return;
 }
+
+
+
 void label_2720()
 {
     notesel(headtemp);
@@ -81824,6 +84329,9 @@ void label_2720()
     userrelation = stoi(s);
     return;
 }
+
+
+
 int cnvjkey(const std::string& prm_1092)
 {
     int p_at_m198 = 0;
@@ -81841,6 +84349,9 @@ int cnvjkey(const std::string& prm_1092)
     }
     return p_at_m198 + 1;
 }
+
+
+
 void label_2727()
 {
     snd(59);
@@ -82015,6 +84526,9 @@ label_2729_internal:
     }
     goto label_2729_internal;
 }
+
+
+
 void label_2733()
 {
     sound = 0;
@@ -82192,6 +84706,9 @@ label_2734_internal:
     }
     label_2737();
 }
+
+
+
 void label_2735()
 {
     if (gdata_weather == 2)
@@ -82218,6 +84735,9 @@ void label_2735()
     }
     return;
 }
+
+
+
 void label_2736()
 {
     if (adata(16, gdata_current_map) == 101)
@@ -82614,6 +85134,9 @@ void label_2736()
     }
     return;
 }
+
+
+
 void label_2737(bool label_2738_flg)
 {
     if (label_2738_flg)
@@ -83196,6 +85719,9 @@ label_2738:
     label_2737();
     return;
 }
+
+
+
 void label_27412()
 {
 label_27411_internal:
@@ -83225,6 +85751,9 @@ label_27411_internal:
     }
     return;
 }
+
+
+
 void label_2742()
 {
     cc = ct;
@@ -83304,6 +85833,9 @@ void label_2742()
     label_2737();
     return;
 }
+
+
+
 void label_2743(bool label_2747_flg)
 {
     if (label_2747_flg)
@@ -84563,6 +87095,9 @@ label_2747:
     }
     label_2743(false);
 }
+
+
+
 void label_2748()
 {
     if (gdata_angband_flag != -1)
@@ -84621,6 +87156,9 @@ void label_2748()
     }
     return;
 }
+
+
+
 void label_27492()
 {
 label_27491:
@@ -84768,6 +87306,9 @@ label_2750_internal:
     }
     goto label_2750_internal;
 }
+
+
+
 void label_2751()
 {
     label_1417();
@@ -84795,6 +87336,9 @@ void label_2751()
     label_1419();
     return;
 }
+
+
+
 void label_2752()
 {
     cc = 0;
@@ -84961,6 +87505,9 @@ void label_2752()
     label_1737();
     return;
 }
+
+
+
 void label_2753()
 {
     notesel(buff);
@@ -85038,6 +87585,9 @@ void label_2753()
     }
     return;
 }
+
+
+
 int refchara(int prm_258, int prm_259)
 {
     dbmode = 16;
@@ -85045,6 +87595,9 @@ int refchara(int prm_258, int prm_259)
     dbspec = prm_259;
     return label_2654();
 }
+
+
+
 std::string refchara_str(int prm_0258, int prm_0259)
 {
     dbmode = 16;
@@ -85053,6 +87606,7 @@ std::string refchara_str(int prm_0258, int prm_0259)
     label_2654();
     return refstr;
 }
+
 
 
 } // namespace elona

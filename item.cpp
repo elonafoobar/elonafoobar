@@ -36,6 +36,9 @@ int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
     itemcreatehack = 0;
     return label_1582();
 }
+
+
+
 void inv_getheader(int prm_472)
 {
     if (prm_472 == 0)
@@ -54,6 +57,9 @@ void inv_getheader(int prm_472)
     invrange = 20;
     return;
 }
+
+
+
 int inv_getowner(int prm_473)
 {
     if (prm_473 < 200)
@@ -66,6 +72,9 @@ int inv_getowner(int prm_473)
     }
     return (prm_473 - 200) / 20 + 1;
 }
+
+
+
 int inv_find(int prm_474, int prm_475)
 {
     int f_at_m52 = 0;
@@ -88,6 +97,9 @@ int inv_find(int prm_474, int prm_475)
     }
     return f_at_m52;
 }
+
+
+
 int item_find(int prm_476, int prm_477, int prm_478)
 {
     elona_vector1<int> p_at_m52;
@@ -168,6 +180,9 @@ int item_find(int prm_476, int prm_477, int prm_478)
     }
     return p_at_m52;
 }
+
+
+
 int encfind(int prm_479, int prm_480)
 {
     int i_at_m53 = 0;
@@ -203,6 +218,9 @@ int encfind(int prm_479, int prm_480)
     }
     return f_at_m53;
 }
+
+
+
 int encfindspec(int prm_481, int prm_482)
 {
     f_at_m53 = -1;
@@ -223,6 +241,9 @@ int encfindspec(int prm_481, int prm_482)
     }
     return f_at_m53;
 }
+
+
+
 void itemlist(int prm_483, int prm_484)
 {
     inv_getheader(prm_483);
@@ -244,6 +265,9 @@ void itemlist(int prm_483, int prm_484)
     }
     return;
 }
+
+
+
 int itemusingfind(int prm_485, int prm_486)
 {
     f_at_m54 = -1;
@@ -273,6 +297,9 @@ int itemusingfind(int prm_485, int prm_486)
     }
     return f_at_m54;
 }
+
+
+
 int itemfind(int prm_487, int prm_488, int prm_489)
 {
     inv_getheader(prm_487);
@@ -316,6 +343,9 @@ int itemfind(int prm_487, int prm_488, int prm_489)
         return f_at_m54;
     }
 }
+
+
+
 int mapitemfind(int prm_490, int prm_491, int prm_492)
 {
     inv_getheader(-1);
@@ -343,6 +373,9 @@ int mapitemfind(int prm_490, int prm_491, int prm_492)
     }
     return f_at_m54;
 }
+
+
+
 void cell_refresh(int prm_493, int prm_494)
 {
     int p_at_m55 = 0;
@@ -438,6 +471,9 @@ void cell_refresh(int prm_493, int prm_494)
     }
     return;
 }
+
+
+
 void itemturn(int prm_495)
 {
     if (gdata_item_turns < 0)
@@ -448,6 +484,9 @@ void itemturn(int prm_495)
     inv_turn(prm_495) = gdata_item_turns;
     return;
 }
+
+
+
 void removeitem(int prm_496, int prm_497)
 {
     int n_at_m56 = 0;
@@ -474,6 +513,9 @@ void removeitem(int prm_496, int prm_497)
     }
     return;
 }
+
+
+
 void item_copy(int prm_498, int prm_499)
 {
     if (prm_498 < 0 || prm_499 < 0)
@@ -489,6 +531,9 @@ void item_copy(int prm_498, int prm_499)
     }
     return;
 }
+
+
+
 void item_exchange(int prm_500, int prm_501)
 {
     {
@@ -502,11 +547,17 @@ void item_exchange(int prm_500, int prm_501)
     }
     return;
 }
+
+
+
 void item_delete(int prm_502)
 {
     inv.clear(prm_502);
     return;
 }
+
+
+
 int inv_getspace(int prm_503)
 {
     inv_getheader(prm_503);
@@ -524,6 +575,9 @@ int inv_getspace(int prm_503)
     }
     return p_at_m57;
 }
+
+
+
 int inv_sum(int prm_504)
 {
     inv_getheader(prm_504);
@@ -540,6 +594,9 @@ int inv_sum(int prm_504)
     }
     return p_at_m57;
 }
+
+
+
 void item_compress(int)
 {
     p_at_m57 = 0;
@@ -618,6 +675,9 @@ void item_compress(int)
     }
     return;
 }
+
+
+
 int inv_getfreeid(int prm_506)
 {
     inv_getheader(prm_506);
@@ -648,6 +708,9 @@ int inv_getfreeid(int prm_506)
     }
     return p_at_m57;
 }
+
+
+
 int inv_weight_(int prm_507)
 {
     p_at_m57 = 0;
@@ -676,6 +739,9 @@ int inv_weight_(int prm_507)
     }
     return p_at_m57;
 }
+
+
+
 void item_num(int prm_508, int prm_509)
 {
     inv_number(prm_508) += prm_509;
@@ -693,6 +759,9 @@ void item_num(int prm_508, int prm_509)
     }
     return;
 }
+
+
+
 int item_separate(int& prm_510)
 {
     int ti_at_m59 = 0;
@@ -737,6 +806,9 @@ int item_separate(int& prm_510)
     }
     return ti_at_m59;
 }
+
+
+
 int chara_unequip(int prm_511)
 {
     int p_at_m59 = 0;
@@ -755,6 +827,9 @@ int chara_unequip(int prm_511)
     inv_body_part(prm_511) = 0;
     return 1;
 }
+
+
+
 int item_identify(int prm_512, int prm_513, int prm_514)
 {
     int idlv_at_m60 = 0;
@@ -786,6 +861,9 @@ int item_identify(int prm_512, int prm_513, int prm_514)
     idtresult = idlv_at_m60;
     return idtresult;
 }
+
+
+
 void item_checkknown(int prm_515)
 {
     if (inv_identification_state(prm_515) >= 3)
@@ -801,6 +879,9 @@ void item_checkknown(int prm_515)
     }
     return;
 }
+
+
+
 void label_0311()
 {
     if (inv_id(prm_518) == 578)
@@ -1008,6 +1089,9 @@ void label_0311()
     }
     return;
 }
+
+
+
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
     elona_vector1<int> iqiality_at_m63;
@@ -1619,6 +1703,9 @@ label_0313_internal:
     itemnamehack = 0;
     return s_at_m63;
 }
+
+
+
 void remain_make(int prm_521, int prm_522)
 {
     inv_subname(prm_521) = cdata_id(prm_522);
@@ -1646,6 +1733,9 @@ void remain_make(int prm_521, int prm_522)
     }
     return;
 }
+
+
+
 void make_dish(int prm_523, int prm_524)
 {
     inv_image(prm_523) = picfood(prm_524, inv_param1(prm_523) / 1000);
@@ -1661,6 +1751,9 @@ void make_dish(int prm_523, int prm_524)
     inv_param2(prm_523) = prm_524;
     return;
 }
+
+
+
 int item_stack(int prm_525, int prm_526, int prm_527)
 {
     elona_vector1<int> p_at_m65;

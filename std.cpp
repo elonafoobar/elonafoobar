@@ -111,6 +111,7 @@ Key hspkey2snailkey(int hsp_key)
 }
 
 
+
 char hspkey2char(int hsp_key)
 {
     switch (hsp_key)
@@ -187,6 +188,7 @@ size_t byte_count(uint8_t c)
     else
         return 1;
 }
+
 
 
 } // namespace
@@ -300,6 +302,8 @@ std::string operator+(const std::string& lhs, int rhs)
     return lhs + std::to_string(rhs);
 }
 
+
+
 std::string operator+(
     elona_vector1<std::string>& lhs,
     elona_vector1<std::string>& rhs)
@@ -307,15 +311,21 @@ std::string operator+(
     return lhs(0) + rhs(0);
 }
 
+
+
 std::string operator+(const std::string& lhs, elona_vector1<std::string>& rhs)
 {
     return lhs + rhs(0);
 }
 
+
+
 std::string operator+(elona_vector1<std::string>& lhs, int rhs)
 {
     return lhs(0) + std::to_string(rhs);
 }
+
+
 
 std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 {
@@ -328,6 +338,7 @@ namespace await_detail
 {
 uint32_t last_await;
 }
+
 
 
 void await(int msec)
@@ -355,10 +366,12 @@ void await(int msec)
 }
 
 
+
 // CANNOT BE IMPLEMENTED
 void axobj(int, const std::string&, int, int)
 {
 }
+
 
 
 void bcopy(const fs::path& from, const fs::path& to)
@@ -366,6 +379,8 @@ void bcopy(const fs::path& from, const fs::path& to)
     LOG("copy", from, to);
     fs::copy_file(from, to, fs::copy_options::overwrite_existing);
 }
+
+
 
 // fullscreen
 void bgscr(int window_id, int width, int height, int, int)
@@ -386,6 +401,8 @@ void boxf(int x1, int y1, int x2, int y2)
     Application::instance().renderer().fill_rect(x1, y1, x2 - x1, y2 - y1);
 }
 
+
+
 void boxf()
 {
     if (detail::current_tex_buffer().color.r == 0
@@ -397,6 +414,7 @@ void boxf()
     }
     Application::instance().renderer().clear();
 }
+
 
 
 void bload(const fs::path& filename, std::string& data, int size, int)
@@ -418,6 +436,8 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     data = {buf.get(), static_cast<size_t>(size)};
 }
 
+
+
 void bload(const fs::path& filename, int& data, int size, int)
 {
     LOG("bload", filename);
@@ -432,6 +452,8 @@ void bload(const fs::path& filename, int& data, int size, int)
     size = in.readsome(buf.get(), size);
     data = *reinterpret_cast<int*>(buf.get());
 }
+
+
 
 void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 {
@@ -459,6 +481,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 }
 
 
+
 void bsave(const fs::path& filename, const std::string& data)
 {
     LOG("bsave", filename);
@@ -473,6 +496,7 @@ void bsave(const fs::path& filename, const std::string& data)
 }
 
 
+
 void bsave(const fs::path& filename, int data)
 {
     LOG("bsave", filename);
@@ -480,6 +504,7 @@ void bsave(const fs::path& filename, int data)
     std::ofstream out{filename, std::ios::binary};
     out.write(reinterpret_cast<const char*>(&data), sizeof(data));
 }
+
 
 
 void bsave(const fs::path& filename, elona_vector1<int>& data)
@@ -492,6 +517,7 @@ void bsave(const fs::path& filename, elona_vector1<int>& data)
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
     }
 }
+
 
 
 void buffer(int window_id, int width, int height)
@@ -544,14 +570,18 @@ void buffer(int window_id, int width, int height)
     gsel(window_id);
 }
 
+
+
 void chgdisp(int, int width, int height)
 {
 }
 
 
+
 void clrobj(int)
 {
 }
+
 
 
 // Shift-JIS -> Unicode
@@ -560,10 +590,14 @@ void cnvstow(std::string& out, const std::string& source)
     out = source;
 }
 
+
+
 void color(int r, int g)
 {
     color(r, g, 0);
 }
+
+
 
 void color(int r, int g, int b)
 {
@@ -577,6 +611,8 @@ void color(int r, int g, int b)
         detail::current_tex_buffer().color);
 }
 
+
+
 void color(int v)
 {
     color(v, 0, 0);
@@ -588,16 +624,22 @@ void delcom(int)
 {
 }
 
+
+
 void elona_delete(const fs::path& filename)
 {
     LOG("delete", filename);
     fs::remove_all(filename);
 }
 
+
+
 int dialog(const std::string& message, int)
 {
     return 0;
 }
+
+
 
 // TODO
 std::string dirinfo(int n)
@@ -621,9 +663,11 @@ std::string dirinfo(int n)
 }
 
 
+
 void exec(const std::string&, int)
 {
 }
+
 
 
 void exist(const fs::path& filename)
@@ -645,6 +689,8 @@ namespace font_detail
 std::unordered_map<int, Font> font_cache;
 }
 
+
+
 void font(const std::string& name, int size, int style)
 {
     if (auto i = font_detail::font_cache.find(size);
@@ -662,6 +708,8 @@ void font(const std::string& name, int size, int style)
         Application::instance().renderer().set_font(i_->second);
     }
 }
+
+
 
 void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
 {
@@ -721,10 +769,14 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
         detail::current_tex_buffer().y);
 }
 
+
+
 void getkey(int& out, int key)
 {
     out = Keyboard::instance().is_pressed(hspkey2snailkey(key));
 }
+
+
 
 void getstr(
     std::string& out,
@@ -754,6 +806,8 @@ void getstr(
         out = "";
     }
 }
+
+
 
 int ginfo(int type)
 {
@@ -790,6 +844,7 @@ int ginfo(int type)
 }
 
 
+
 void gmode(int mode, int width, int height, int alpha)
 {
     detail::current_tex_buffer().mode = mode;
@@ -800,11 +855,15 @@ void gmode(int mode, int width, int height, int alpha)
     detail::current_tex_buffer().color.a = std::clamp(alpha, 0, 255);
 }
 
+
+
 template <typename T>
 constexpr T rad2deg(T rad)
 {
     return rad * 180.0 / 3.14159265358979323846264;
 }
+
+
 
 void grotate2(
     int window_id,
@@ -865,6 +924,8 @@ void grotate2(
         nullptr,
         ::SDL_FLIP_NONE));
 }
+
+
 
 void grotate(
     int window_id,
@@ -945,12 +1006,16 @@ void grotate(
         dst_height);
 }
 
+
+
 void gsel(int window_id)
 {
     detail::current_buffer = window_id;
     Application::instance().renderer().set_render_target(
         detail::current_tex_buffer().texture);
 }
+
+
 
 void gzoom(
     int dst_width,
@@ -1018,6 +1083,7 @@ void gzoom(
 }
 
 
+
 int instr(const std::string& str, size_t pos, const std::string pattern)
 {
     if (pattern == "\n")
@@ -1047,16 +1113,20 @@ int stoi(std::string_view s)
 }
 
 
+
 size_t length(const std::string& str)
 {
     return std::size(str);
 }
 
 
+
 void line(int x1, int y1, int x2, int y2)
 {
     Application::instance().renderer().render_line(x1, y1, x2, y2);
 }
+
+
 
 void line(int x, int y)
 {
@@ -1092,6 +1162,7 @@ void memcpy(
 }
 
 
+
 // void memexpand(void* memory, size_t size)
 // {
 // }
@@ -1121,10 +1192,14 @@ void mes(const std::string& text)
     }
 }
 
+
+
 void mes(int n)
 {
     mes(std::to_string(n));
 }
+
+
 
 void mesbox(
     std::string& buffer,
@@ -1137,23 +1212,32 @@ void mesbox(
         std::make_unique<mesbox_detail::MessageBox>(buffer));
 }
 
+
+
 void mkdir(const fs::path& path)
 {
     LOG("mkdir", path);
     fs::create_directory(path);
 }
 
+
+
 void mmload(const std::string& file, int id, int mode)
 {
 }
+
+
 
 void mmplay(int id)
 {
 }
 
+
+
 void mmstop()
 {
 }
+
 
 
 // // Special function
@@ -1180,10 +1264,13 @@ std::vector<std::string> split_lines(const std::string& str)
     return lines;
 }
 
+
+
 size_t count(const std::string& str)
 {
     return std::size(split_lines(str));
 }
+
 
 
 struct io_error : public std::runtime_error
@@ -1236,6 +1323,7 @@ void noteadd(const std::string& text, int index, int overwrite)
 }
 
 
+
 void notedel(size_t index)
 {
     if (!notemanip::buffer)
@@ -1251,6 +1339,8 @@ void notedel(size_t index)
         }
     }
 }
+
+
 
 void noteget(std::string& out, size_t index)
 {
@@ -1271,11 +1361,15 @@ void noteget(std::string& out, size_t index)
     }
 }
 
+
+
 int noteinfo(int mode)
 {
     assert(mode == 0);
     return notemanip::buffer ? notemanip::count(*notemanip::buffer) : 0;
 }
+
+
 
 void noteload(const fs::path& filename)
 {
@@ -1293,6 +1387,8 @@ void noteload(const fs::path& filename)
     }
 }
 
+
+
 void notesave(const fs::path& filename)
 {
     LOG("notesave", filename);
@@ -1307,11 +1403,15 @@ void notesave(const fs::path& filename)
     out << *notemanip::buffer;
 }
 
+
+
 int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;
     return noteinfo(0);
 }
+
+
 
 void noteunsel()
 {
@@ -1324,13 +1424,18 @@ void objmode(int, int)
 {
 }
 
+
+
 void objprm(int, const std::string&)
 {
 }
 
+
+
 void objsel(int)
 {
 }
+
 
 
 // Peek 1byte.
@@ -1338,6 +1443,8 @@ std::uint8_t peek(const std::string& str, size_t index)
 {
     return str[index];
 }
+
+
 
 std::uint8_t peek(elona_vector1<int> v, size_t index)
 {
@@ -1349,6 +1456,8 @@ std::uint8_t peek(elona_vector1<int> v, size_t index)
 void pget(int x, int y)
 {
 }
+
+
 
 void picload(const fs::path& filename, int mode)
 {
@@ -1387,21 +1496,28 @@ void picload(const fs::path& filename, int mode)
     }
 }
 
+
+
 void poke(std::string& str, size_t index, char c)
 {
     str[index] = c;
 }
+
+
 
 void poke(std::string& str, size_t index, const std::string& s)
 {
     poke(str, index, s[0]);
 }
 
+
+
 void pos(int x, int y)
 {
     detail::current_tex_buffer().x = x;
     detail::current_tex_buffer().y = y;
 }
+
 
 
 namespace rnd_detail
@@ -1417,6 +1533,8 @@ void randomize(std::random_device::result_type seed)
 {
     rnd_detail::random_engine.seed(seed);
 }
+
+
 
 int rnd(int n)
 {
@@ -1441,9 +1559,12 @@ void redraw(int n)
     Application::instance().renderer().set_render_target(save);
 }
 
+
+
 void screen(int window_id, int width, int height, int mode, int x, int y)
 {
 }
+
 
 
 void stick(int& out, int allow_repeat_keys)
@@ -1479,6 +1600,7 @@ void stick(int& out, int allow_repeat_keys)
 }
 
 
+
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
@@ -1490,6 +1612,8 @@ size_t strlen_u(const std::string& str)
     }
     return ret;
 }
+
+
 
 std::string strmid(const std::string& source, int pos, int length)
 {
@@ -1514,6 +1638,8 @@ std::string strmid(const std::string& source, int pos, int length)
     }
 }
 
+
+
 void title(const std::string& title_str)
 {
     LOG("SDL_Init");
@@ -1532,6 +1658,8 @@ void title(const std::string& title_str)
     buffer(0, 800, 600);
 }
 
+
+
 // // Special function
 // void varptr()
 // {
@@ -1540,6 +1668,7 @@ void title(const std::string& title_str)
 void width(int width, int height, int, int)
 {
 }
+
 
 
 int wpeek(int x, size_t index)
@@ -1554,6 +1683,8 @@ int wpeek(int x, size_t index)
         return x & 0xffff;
     }
 }
+
+
 
 void wpoke(int& x, size_t index, int y)
 {
@@ -1578,6 +1709,8 @@ void exrand_randomize(std::random_device::result_type seed)
     rnd_detail::random_engine2.seed(seed);
 }
 
+
+
 void exrand_rnd(int& result, int max)
 {
     if (max <= 0)
@@ -1591,13 +1724,18 @@ void exrand_rnd(int& result, int max)
     }
 }
 
+
+
 void func_1(const std::string&, int)
 {
 }
 
+
+
 void xnotesel(std::string&)
 {
 }
+
 
 
 void xnoteadd(const std::string&)
@@ -1639,6 +1777,8 @@ void map(F f)
     // ::SDL_UnlockTexture(texture);
 }
 
+
+
 } // namespace gf_detail
 
 void gfini(int width, int height)
@@ -1650,6 +1790,8 @@ void gfini(int width, int height)
     // &gf_detail::pitch); LOG("gfini", gf_detail::pitch, gf_detail::rect.h);
 }
 
+
+
 void gfdec(int r, int g, int b)
 {
     // gf_detail::map([](uint8_t v_, int v)
@@ -1659,6 +1801,8 @@ void gfdec(int r, int g, int b)
     //         return v_;
     //     });
 }
+
+
 
 void gfdec2(int r, int g, int b)
 {
@@ -1670,6 +1814,8 @@ void gfdec2(int r, int g, int b)
     //     });
 }
 
+
+
 void gfinc(int r, int g, int b)
 {
     // gf_detail::map([](uint8_t v_, int v)
@@ -1680,9 +1826,12 @@ void gfinc(int r, int g, int b)
     //     });
 }
 
+
+
 void ematan(int, int, int)
 {
 }
+
 
 
 int aplsel(const std::string&)
@@ -1690,18 +1839,25 @@ int aplsel(const std::string&)
     return 0;
 }
 
+
+
 int aplobj(const std::string&, int)
 {
     return 0;
 }
 
+
+
 void apledit(int, int, int)
 {
 }
 
+
+
 void func_2(int, int, int, int, int, int)
 {
 }
+
 
 
 namespace gzip_detail
@@ -1762,6 +1918,7 @@ void zWrite(elona_vector1<int>& data, int, int size)
 }
 
 
+
 void zWrite(elona_vector2<int>& data, int, int size)
 {
     LOG("zWrite", size);
@@ -1780,6 +1937,7 @@ void zWrite(elona_vector2<int>& data, int, int size)
 }
 
 
+
 void zWrite(elona_vector2<int>& data, int, int size, int offset)
 {
     LOG("zWrite", size);
@@ -1796,6 +1954,7 @@ void zWrite(elona_vector2<int>& data, int, int size, int offset)
         }
     }
 }
+
 
 
 void zWrite(elona_vector3<int>& data, int, int size)
@@ -1817,6 +1976,7 @@ void zWrite(elona_vector3<int>& data, int, int size)
         }
     }
 }
+
 
 
 void zWrite(elona_vector1<std::string>& data, int, int size)
@@ -1851,6 +2011,7 @@ void zRead(elona_vector1<int>& data, int, int size)
 }
 
 
+
 void zRead(elona_vector2<int>& data, int, int size)
 {
     LOG("zRead/int[][]", size, data.j_size(), data.i_size());
@@ -1868,6 +2029,7 @@ void zRead(elona_vector2<int>& data, int, int size)
         }
     }
 }
+
 
 
 void zRead(elona_vector2<int>& data, int, int size, int offset)
@@ -1888,6 +2050,7 @@ void zRead(elona_vector2<int>& data, int, int size, int offset)
         }
     }
 }
+
 
 
 void zRead(elona_vector3<int>& data, int, int size)
@@ -1913,6 +2076,7 @@ void zRead(elona_vector3<int>& data, int, int size)
 }
 
 
+
 void zRead(elona_vector1<std::string>& data, int, int size)
 {
     LOG("zRead", size);
@@ -1930,44 +2094,61 @@ void zClose(int)
     gzip_detail::file.close();
 }
 
+
+
 void GetOpenFileNameA()
 {
 }
+
 
 
 void GetSaveFileNameA()
 {
 }
 
+
+
 int DSINIT()
 {
     return 0;
 }
 
+
+
 void DSEND()
 {
 }
+
+
 
 void DSRELEASE(int)
 {
 }
 
 
+
 void DSLOADFNAME(const std::string& filename, int id)
 {
 }
+
+
 
 void DSPLAY(int, int)
 {
 }
 
+
+
 void DSSTOP(int)
 {
 }
 
+
+
 void DSSETVOLUME(int, int)
 {
 }
+
 
 
 int DSGETMASTERVOLUME()
@@ -1975,36 +2156,51 @@ int DSGETMASTERVOLUME()
     return 100;
 }
 
+
+
 int CHECKPLAY(int id)
 {
     return 0;
 }
+
+
 
 int DMINIT()
 {
     return 0;
 }
 
+
+
 void DMEND()
 {
 }
+
 
 
 void DMLOADFNAME(const std::string&, int)
 {
 }
 
+
+
 void DMPLAY(int, int)
 {
 }
+
+
 
 void DMSTOP()
 {
 }
 
+
+
 void DIINIT()
 {
 }
+
+
 
 int DIGETJOYNUM()
 {
@@ -2012,19 +2208,26 @@ int DIGETJOYNUM()
 }
 
 
+
 void DIGETJOYSTATE(int, int)
 {
 }
+
+
 
 void HMMBITON(int& x, int n)
 {
     x |= 1 << n;
 }
 
+
+
 void HMMBITOFF(int& x, int n)
 {
     x &= ~(1 << n);
 }
+
+
 
 int HMMBITCHECK(int x, int n)
 {
@@ -2032,54 +2235,75 @@ int HMMBITCHECK(int x, int n)
 }
 
 
+
 int sockopen(int, const std::string&, int)
 {
     return 0;
 }
 
+
+
 void sockclose()
 {
 }
+
+
 
 int sockget(const std::string&, int)
 {
     return 0;
 }
 
+
+
 int sockput(const std::string&)
 {
     return 0;
 }
+
+
 
 void netinit()
 {
 }
 
 
+
 void netexec(int&)
 {
 }
+
+
 
 void neterror(const std::string&)
 {
 }
 
+
+
 void neturl(const std::string&)
 {
 }
 
+
+
 void netdlname(const std::string&)
 {
 }
+
+
 
 void netrequest(const std::string&)
 {
 }
 
 
+
 void GetLastError()
 {
 }
+
+
 
 int CreateMutexA(int, int, const std::string&)
 {
@@ -2087,14 +2311,18 @@ int CreateMutexA(int, int, const std::string&)
 }
 
 
+
 void CloseHandle(int)
 {
 }
+
+
 
 int func_3()
 {
     return 0;
 }
+
 
 
 int LCMapStringA(int, int, const std::string&, int, const std::string&, int)
@@ -2103,76 +2331,104 @@ int LCMapStringA(int, int, const std::string&, int, const std::string&, int)
 }
 
 
+
 int GetUserDefaultLCID()
 {
     return 0;
 }
+
+
 
 void water_getimage()
 {
 }
 
 
+
 void water_setripple(int, int, int, int)
 {
 }
 
+
+
 void water_calc()
 {
 }
+
+
 
 void water_draw()
 {
 }
 
 
+
 void AppendMenuA()
 {
 }
 
+
+
 void CheckMenuRadioItem()
 {
 }
+
+
 
 void CreateMenu()
 {
 }
 
 
+
 void CreatePopupMenu()
 {
 }
 
+
+
 void DrawMenuBar()
 {
 }
+
+
 
 void SetMenu()
 {
 }
 
 
+
 void keybd_event(int, int, int)
 {
 }
 
+
+
 void GetKeyboardState(elona_vector1<int>&)
 {
 }
+
+
 
 void timeBeginPeriod(int)
 {
 }
 
 
+
 void timeEndPeriod()
 {
 }
+
+
 
 int timeGetTime()
 {
     return ::SDL_GetTicks();
 }
+
+
 
 int ImmGetContext(int)
 {
@@ -2180,13 +2436,17 @@ int ImmGetContext(int)
 }
 
 
+
 void ImmReleaseContext(int, int)
 {
 }
 
+
+
 void ImmSetOpenStatus(int, int)
 {
 }
+
 
 
 int ImmGetOpenStatus(int)
@@ -2201,9 +2461,11 @@ void onkey_0()
 }
 
 
+
 void onkey_1()
 {
 }
+
 
 
 void end()
@@ -2261,6 +2523,8 @@ int talk_conv_jp(std::string& text, int max_line_length)
         }
     }
 }
+
+
 
 // Assumes that `text` insists of only ASCII codes.
 int talk_conv_en(std::string& text, int max_line_length)
@@ -2321,6 +2585,7 @@ void rm_crlf(std::string& str)
     }
     str = ret;
 }
+
 
 
 } // namespace elona

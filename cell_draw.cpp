@@ -2108,4 +2108,5 @@ void cell_draw()
 }
 
 
+
 } // namespace elona

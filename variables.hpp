@@ -2516,16 +2516,19 @@ void txt()
 }
 
 
+
 inline std::string txt_tostr(const std::string& s)
 {
     return s;
 }
 
 
+
 inline std::string txt_tostr(elona_vector1<std::string>& v)
 {
     return v(0);
 }
+
 
 
 template <typename... Args>
