@@ -61,4 +61,31 @@ auto transform(R&& src, I dst, F func)
 
 
 
+template <typename R, typename F>
+auto for_each(const R& range, F func)
+{
+    using std::begin, std::end;
+    return std::for_each(begin(range), end(range), func);
+}
+
+
+
+template <typename R, typename T>
+auto find(const R& range, const T& value)
+{
+    using std::begin, std::end;
+    return std::find(begin(range), end(range), value);
+}
+
+
+
+template <typename R, typename F>
+auto find_if(const R& range, F predicate)
+{
+    using std::begin, std::end;
+    return std::find_if(begin(range), end(range), predicate);
+}
+
+
+
 } // namespace elona::range

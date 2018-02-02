@@ -11483,246 +11483,225 @@ void fileadd(const std::string& prm_692, int prm_693)
 
 
 
-void arrayfile(std::string_view fmode_str)
+void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
 {
-    int fidx = 0;
-    int cdatanfix = 0;
-    notesel(tmp);
-    tmp = "";
-    if (fread == 1)
+    std::vector<std::string> lines;
+    if (fs::exists(filepath))
     {
-        exist(file);
-        if (strsize != -1)
-        {
-            noteload(file);
-        }
+        range::transform(
+            fileutil::read_by_line{filepath},
+            std::back_inserter(lines),
+            [](const auto& pair) { return pair.second; });
     }
+
     if (fmode_str == u8"qname"s)
     {
-        fidx = 0;
+        lines.resize(500);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 500; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
-            {
-                if (fread == 0)
-                {
-                    noteadd(qname(cnt), fidx);
-                }
-                if (fread == 1)
-                {
-                    noteget(qname(cnt), fidx);
-                }
-                ++fidx;
-            }
+            qname(i) = *itr;
+            ++itr;
         }
     }
-    if (fmode_str == u8"gdatan"s)
+    else if (fmode_str == u8"gdatan"s)
     {
-        fidx = 0;
+        lines.resize(50);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 50; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
-            {
-                if (fread == 0)
-                {
-                    noteadd(gdatan(cnt), fidx);
-                }
-                if (fread == 1)
-                {
-                    noteget(gdatan(cnt), fidx);
-                }
-                ++fidx;
-            }
+            gdatan(i) = *itr;
+            ++itr;
         }
     }
-    if (fmode_str == u8"mdatan"s)
+    else if (fmode_str == u8"mdatan"s)
     {
-        fidx = 0;
+        lines.resize(2);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 2; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-            {
-                if (fread == 0)
-                {
-                    noteadd(mdatan(cnt), fidx);
-                }
-                if (fread == 1)
-                {
-                    noteget(mdatan(cnt), fidx);
-                }
-                ++fidx;
-            }
+            mdatan(i) = *itr;
+            ++itr;
         }
     }
-    if (fmode_str == u8"cdatan1"s)
+    else if (fmode_str == u8"cdatan1"s)
     {
-        fidx = 0;
-        cdatanfix = 0;
-        if (noteinfo(0) < 300)
+        if (std::size(lines) <= 57 * 10 / 2)
+            lines.resize(57 * 10 / 2);
+        else
+            lines.resize(57 * 10);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 57; ++i)
         {
-            cdatanfix = 1;
-        }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (57); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < 10; ++j)
             {
-                cnt2 = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-                    {
-                        if (fread == 0)
-                        {
-                            noteadd(cdatan(cnt, cnt2), fidx);
-                        }
-                        if (fread == 1)
-                        {
-                            if (cdatanfix)
-                            {
-                                if (cnt > 4)
-                                {
-                                    break;
-                                }
-                            }
-                            noteget(cdatan(cnt, cnt2), fidx);
-                        }
-                        ++fidx;
-                    }
-                }
+                if (std::size(lines) <= 57 * 10 / 2 && j >= 10 / 2)
+                    break;
+                cdatan(j, i) = *itr;
+                ++itr;
             }
         }
     }
-    if (fmode_str == u8"cdatan2"s)
+    else if (fmode_str == u8"cdatan2"s)
     {
-        fidx = 0;
-        cdatanfix = 0;
-        if (noteinfo(0) < 1000)
+        if (std::size(lines) <= 188 * 10 / 2)
+            lines.resize(188 * 10 / 2);
+        else
+            lines.resize(188 * 10);
+        auto itr = std::begin(lines);
+        for (int i = 57; i < 245; ++i)
         {
-            cdatanfix = 1;
-        }
-        {
-            int cnt = 57;
-            for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < 10; ++j)
             {
-                cnt2 = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-                    {
-                        if (fread == 0)
-                        {
-                            noteadd(cdatan(cnt, cnt2), fidx);
-                        }
-                        if (fread == 1)
-                        {
-                            if (cdatanfix)
-                            {
-                                if (cnt > 4)
-                                {
-                                    break;
-                                }
-                            }
-                            noteget(cdatan(cnt, cnt2), fidx);
-                        }
-                        ++fidx;
-                    }
-                }
+                if (std::size(lines) <= 188 * 10 / 2 && j >= 10 / 2)
+                    break;
+                cdatan(j, i) = *itr;
+                ++itr;
             }
         }
     }
-    if (fmode_str == u8"cdatan3"s)
+    else if (fmode_str == u8"cdatan3"s)
     {
-        fidx = 0;
-        cdatanfix = 0;
-        if (noteinfo(0) < 6)
+        if (std::size(lines) <= 10 / 2)
+            lines.resize(10 / 2);
+        else
+            lines.resize(10);
+        auto itr = std::begin(lines);
+        for (int j = 0; j < 10; ++j)
         {
-            cdatanfix = 1;
-        }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-            {
-                if (fread == 0)
-                {
-                    noteadd(cdatan(cnt, tg), fidx);
-                }
-                if (fread == 1)
-                {
-                    if (cdatanfix)
-                    {
-                        if (cnt > 4)
-                        {
-                            break;
-                        }
-                    }
-                    noteget(cdatan(cnt, tg), fidx);
-                }
-                ++fidx;
-            }
+            if (std::size(lines) < 10 / 2 && j >= 10 / 2)
+                break;
+            cdatan(j, tg) = *itr;
+            ++itr;
         }
     }
-    if (fmode_str == u8"invn1"s)
+    else if (fmode_str == u8"invn1"s)
     {
-        fidx = 0;
+        lines.resize(1320 * 6);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 1320; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (1320); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < 6; ++j)
             {
-                cnt2 = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
-                    {
-                        if (fread == 0)
-                        {
-                            noteadd(invn(cnt, cnt2), fidx);
-                        }
-                        if (fread == 1)
-                        {
-                            noteget(invn(cnt, cnt2), fidx);
-                        }
-                        ++fidx;
-                    }
-                }
+                invn(j, i) = *itr;
+                ++itr;
             }
         }
     }
-    if (fmode_str == u8"invn2"s)
+    else if (fmode_str == u8"invn2"s)
     {
-        fidx = 0;
+        lines.resize(4160 * 6);
+        auto itr = std::begin(lines);
+        for (int i = 1320; i < 5480; ++i)
         {
-            int cnt = 1320;
-            for (int cnt_end = cnt + (4160); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < 6; ++j)
             {
-                cnt2 = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
-                    {
-                        if (fread == 0)
-                        {
-                            noteadd(invn(cnt, cnt2), fidx);
-                        }
-                        if (fread == 1)
-                        {
-                            noteget(invn(cnt, cnt2), fidx);
-                        }
-                        ++fidx;
-                    }
-                }
+                invn(j, i) = *itr;
+                ++itr;
             }
         }
     }
+}
+
+
+
+void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
+{
+    std::ofstream out{filepath};
+    if (!out)
+    {
+        throw "TODO";
+    }
+
+    if (fmode_str == u8"qname"s)
+    {
+        for (int i = 0; i < 500; ++i)
+        {
+            out << qname(i) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"gdatan"s)
+    {
+        for (int i = 0; i < 50; ++i)
+        {
+            out << gdatan(i) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"mdatan"s)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            out << mdatan(i) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"cdatan1"s)
+    {
+        for (int i = 0; i < 57; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                out << cdatan(j, i) << std::endl;
+            }
+        }
+    }
+    else if (fmode_str == u8"cdatan2"s)
+    {
+        for (int i = 57; i < 245; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                out << cdatan(j, i) << std::endl;
+            }
+        }
+    }
+    else if (fmode_str == u8"cdatan3"s)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            out << cdatan(j, tg) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"invn1"s)
+    {
+        for (int i = 0; i < 1320; ++i)
+        {
+            for (int j = 0; j < 6; ++j)
+            {
+                out << invn(j, i) << std::endl;
+            }
+        }
+    }
+    else if (fmode_str == u8"invn2"s)
+    {
+        for (int i = 1320; i < 5480; ++i)
+        {
+            for (int j = 0; j < 6; ++j)
+            {
+                out << invn(j, i) << std::endl;
+            }
+        }
+    }
+
+    if (elona_export == 0)
+    {
+        fileadd(filepath);
+    }
+}
+
+
+
+void arrayfile(std::string_view fmode_str)
+{
     if (fread == 0)
     {
-        notesave(file);
-        if (elona_export == 0)
-        {
-            fileadd(file);
-        }
+        arrayfile_write(fmode_str, fs::u8path(file(0)));
     }
+    else
+    {
+        arrayfile_read(fmode_str, fs::u8path(file(0)));
+    }
+
     elona_export = 0;
-    return;
 }
 
 
@@ -13638,91 +13617,99 @@ void rowactend(int prm_763)
 
 
 
-int customtalk(int prm_764, int prm_765)
+int customtalk(int cc, int talk_type)
 {
-    int f_at_m116 = 0;
-    elona_vector1<std::string> buff_at_m116;
-    std::string s_at_m116;
-    int p_at_m116 = 0;
-    f_at_m116 = 0;
-    if (cbit(989, prm_764))
+    std::vector<std::string> talk_file_buffer;
+
+    bool use_external_file = false;
+
+    if (cbit(989, cc))
     {
-        exist(fs::u8path(u8"./user/talk/"s + cdatan(4, prm_764)));
-        if (strsize == -1)
-        {
+        const auto filepath = fs::u8path(u8"./user/talk") / cdatan(4, cc);
+        if (!fs::exists(filepath))
             return 0;
-        }
-        SDIM2(buff_at_m116, strsize);
-        notesel(buff_at_m116);
-        noteload(fs::u8path(u8"./user/talk/"s + cdatan(4, prm_764)));
-        f_at_m116 = 1;
+        range::transform(
+            fileutil::read_by_line{filepath},
+            std::back_inserter(talk_file_buffer),
+            [](const auto& pair) { return pair.second; });
+        use_external_file = true;
     }
-    else if (cdata_id(prm_764) == 343)
+    else if (cdata_id(cc) == 343)
     {
-        f_at_m116 = 1;
-        buff_at_m116 = ""s + usertxt(cdata_cnpc_id(prm_764));
-        notesel(buff_at_m116);
+        talk_file_buffer = strutil::split_lines(usertxt(cdata_cnpc_id(cc)));
+        use_external_file = true;
     }
-    if (f_at_m116)
+
+    if (use_external_file)
     {
-        if (prm_765 == 101)
+        std::string tag;
+        switch (talk_type)
         {
-            s_at_m116 = u8"%txtAggro"s;
+        case 101: tag = u8"%txtAggro"s; break;
+        case 103: tag = u8"%txtKilled"s; break;
+        case 102: tag = u8"%txtDead"s; break;
+        case 104: tag = u8"%txtWelcome"s; break;
+        case 100: tag = u8"%txtCalm"s; break;
+        case 106: tag = u8"%txtDialog"s; break;
+        default: assert(0);
         }
-        if (prm_765 == 103)
+
+        tag += u8"," + lang(u8"JP"s, u8"EN"s);
+        const auto start_text = range::find_if(
+            talk_file_buffer,
+            [&](const auto& line) { return strutil::contains(line, tag); });
+        if (start_text == std::end(talk_file_buffer))
         {
-            s_at_m116 = u8"%txtKilled"s;
+            throw "TODO";
         }
-        if (prm_765 == 102)
+        const auto end_text = std::find_if(
+            std::next(start_text),
+            std::cend(talk_file_buffer),
+            [](const auto& line) { return strutil::contains(line, u8"%"); });
+        if (end_text == std::end(talk_file_buffer))
         {
-            s_at_m116 = u8"%txtDead"s;
+            throw "TODO";
         }
-        if (prm_765 == 104)
+
+        // Example:
+        // %txtDialog,EN                              <- start_text
+        // Elona Foobar is one of the Elona variants.
+        // Elona is one of the rogue-like games.
+        // %END                                       <- end_text
+        const auto number_of_lines_plus_1 = std::distance(start_text, end_text);
+        if (number_of_lines_plus_1 == 1)
         {
-            s_at_m116 = u8"%txtWelcome"s;
+            throw "TODO";
         }
-        if (prm_765 == 100)
+        else
         {
-            s_at_m116 = u8"%txtCalm"s;
-        }
-        if (prm_765 == 106)
-        {
-            s_at_m116 = u8"%txtDialog"s;
-        }
-        p_at_m116 =
-            instr(buff_at_m116, 0, s_at_m116 + u8","s + lang(u8"JP"s, u8"EN"s));
-        buff_at_m116 = strmid(
-            buff_at_m116,
-            p_at_m116,
-            instr(buff_at_m116, p_at_m116 + 1, u8"%"s));
-        if (noteinfo(0) > 1)
-        {
-            p_at_m116 = rnd(noteinfo(0) - 1) + 1;
-            noteget(s_at_m116, p_at_m116);
-            if (s_at_m116 != ""s)
+            std::vector<std::string> lines;
+            std::copy(
+                std::next(start_text), end_text, std::back_inserter(lines));
+            const auto line = lines[rnd(int(std::size(lines)))];
+            if (!std::empty(line))
             {
-                if (prm_765 == 106)
+                if (talk_type == 106)
                 {
-                    buff = s_at_m116;
+                    buff = line;
                 }
                 else
                 {
                     txtef(9);
-                    txt(s_at_m116);
+                    txt(line);
                 }
             }
         }
-        noteunsel();
         return 1;
     }
-    if (prm_765 == 106)
-    {
+
+    if (talk_type == 106)
         return 0;
-    }
-    if (cdata_can_talk(prm_764) != 0)
+
+    if (cdata_can_talk(cc) != 0)
     {
-        dbid = cdata_id(prm_764);
-        dbmode = prm_765;
+        dbid = cdata_id(cc);
+        dbmode = talk_type;
         label_2654();
         return 1;
     }
