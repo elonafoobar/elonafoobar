@@ -36,15 +36,15 @@ void label_2251()
                         }
                     }
                     cdata_interest(tc) -= rnd(30);
-                    cdata_time_interest_revive(tc) = gdata(13) + gdata(12) * 24
-                        + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 8;
+                    cdata_time_interest_revive(tc) = gdata_hour + gdata_day * 24
+                        + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 8;
                 }
             }
         }
     }
     if (cdata_character_role(tc) == 18)
     {
-        if (gdata(814) > 0)
+        if (gdata_number_of_waiting_guests > 0)
         {
             list(0, listmax) = 58;
             listn(0, listmax) =
@@ -133,7 +133,7 @@ void label_2251()
                         u8"婚約を申し込む"s, u8"May I ask for your hand?"s);
                     ++listmax;
                 }
-                else if (gdata(90) >= 15)
+                else if (gdata_continuous_active_hours >= 15)
                 {
                     list(0, listmax) = 39;
                     listn(0, listmax) =
@@ -177,7 +177,7 @@ void label_2251()
             lang(u8"食事をとる"s, u8"Bring me something to eat."s) + u8" ("s
             + calcmealvalue() + strgold + u8")"s;
         ++listmax;
-        if (gdata(17) == 1 || gdata(17) == 4 || gdata(17) == 2)
+        if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
         {
             list(0, listmax) = 43;
             listn(0, listmax) =
@@ -342,7 +342,7 @@ void label_2251()
     }
     if (cdata_character_role(tc) == 1020)
     {
-        if (gdata(263) != 0)
+        if (gdata_belongs_to_mages_guild != 0)
         {
             list(0, listmax) = 55;
             listn(0, listmax) =
@@ -352,7 +352,7 @@ void label_2251()
     }
     if (cdata_drunk(tc) != 0 || 0)
     {
-        if (gdata(20) != 35)
+        if (gdata_current_map != 35)
         {
             if (tc >= 16)
             {
@@ -385,13 +385,15 @@ void label_2251()
     f = 0;
     deliver(0) = -1;
     deliver(1) = -1;
-    if (gdata(22) == 1)
+    if (gdata_current_dungeon_level == 1)
     {
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (gdata(75)); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (gdata_number_of_existing_quests);
+                 cnt < cnt_end;
+                 ++cnt)
             {
-                if (qdata(1, cnt) == gdata(20))
+                if (qdata(1, cnt) == gdata_current_map)
                 {
                     if (qdata(0, cnt) == tc)
                     {
@@ -407,7 +409,9 @@ void label_2251()
     {
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (gdata(75)); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (gdata_number_of_existing_quests);
+                 cnt < cnt_end;
+                 ++cnt)
             {
                 if (qdata(3, cnt) == 0)
                 {
@@ -519,7 +523,7 @@ void label_2251()
         listn(0, listmax) = lang(u8"配達物を渡す"s, u8"Here's your delivery."s);
         ++listmax;
     }
-    if (gdata(20) == 7)
+    if (gdata_current_map == 7)
     {
         if (tc >= 57)
         {
@@ -539,7 +543,7 @@ void label_2251()
     }
     if (cdata_character_role(tc) == 1015)
     {
-        if (gdata(453) == 1000)
+        if (gdata_pael_and_her_mom == 1000)
         {
             rc = findchara(222);
             if (rc != 0)
@@ -567,9 +571,9 @@ void label_2251()
         {
             if (cdata_karma(0) < -30)
             {
-                if (gdata(20) != 14)
+                if (gdata_current_map != 14)
                 {
-                    if (gdata(20) != 7)
+                    if (gdata_current_map != 7)
                     {
                         if (cbit(16, 0) == 0)
                         {
@@ -846,7 +850,7 @@ void label_2251()
     }
     if (chatval == 21 || chatval == 22)
     {
-        if (gdata(183) != 0)
+        if (gdata_mount != 0)
         {
             int stat = cell_findspace(cdata_x(0), cdata_y(0), 1);
             if (stat == 0)
@@ -857,23 +861,23 @@ void label_2251()
                 label_2256();
                 return;
             }
-            cell_setchara(gdata(183), rtval, rtval(1));
+            cell_setchara(gdata_mount, rtval, rtval(1));
             txt(lang(
-                name(gdata(183)) + u8"から降りた。"s,
-                u8"You dismount from "s + name(gdata(183)) + u8"."s));
+                name(gdata_mount) + u8"から降りた。"s,
+                u8"You dismount from "s + name(gdata_mount) + u8"."s));
             ride_end();
         }
         gdata(74) = calcfame(
             0,
-            (220 - gdata(120) / 50) * (100 + limit(adata(22, gdata(20)), 0, 50))
-                    / 100
+            (220 - gdata(120) / 50)
+                    * (100 + limit(adata(22, gdata_current_map), 0, 50)) / 100
                 + 2);
         listmax = 0;
-        randomize(adata(26, gdata(20)));
+        randomize(adata(26, gdata_current_map));
         if (chatval == 21)
         {
-            if (adata(26, gdata(20)) > gdata(13) + gdata(12) * 24
-                    + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12)
+            if (adata(26, gdata_current_map) > gdata_hour + gdata_day * 24
+                    + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
             {
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
@@ -881,8 +885,8 @@ void label_2251()
                 label_2251();
                 return;
             }
-            randomize(adata(24, gdata(20)));
-            exrand_randomize(adata(24, gdata(20)));
+            randomize(adata(24, gdata_current_map));
+            exrand_randomize(adata(24, gdata_current_map));
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
@@ -925,8 +929,8 @@ void label_2251()
         }
         else
         {
-            if (adata(27, gdata(20)) > gdata(13) + gdata(12) * 24
-                    + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12)
+            if (adata(27, gdata_current_map) > gdata_hour + gdata_day * 24
+                    + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
             {
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
@@ -960,24 +964,24 @@ void label_2251()
         }
         if (arenaop == 0)
         {
-            adata(26, gdata(20)) = gdata(13) + gdata(12) * 24
-                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 24;
+            adata(26, gdata_current_map) = gdata_hour + gdata_day * 24
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
         }
         if (arenaop == 1)
         {
-            adata(27, gdata(20)) = gdata(13) + gdata(12) * 24
-                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 24;
+            adata(27, gdata_current_map) = gdata_hour + gdata_day * 24
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
         }
-        gdata(70) = 1;
+        gdata_executing_immediate_quest_type = 1;
         gdata(71) = 1;
-        gdata(72) = 0;
+        gdata_executing_immediate_quest = 0;
         gdata(73) = 1;
-        gdata(66) = gdata(20);
-        gdata(67) = gdata(22);
-        gdata(68) = cdata_x(0);
-        gdata(69) = cdata_y(0);
-        gdata(64) = 6;
-        gdata(65) = 1;
+        gdata_previous_map2 = gdata_current_map;
+        gdata_previous_dungeon_level = gdata_current_dungeon_level;
+        gdata_previous_x = cdata_x(0);
+        gdata_previous_y = cdata_y(0);
+        gdata_destination_map = 6;
+        gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
         label_2256();
@@ -988,8 +992,8 @@ void label_2251()
         arenaimport = 0;
         gdata(74) = calcfame(
             0,
-            (220 - gdata(121) / 50) * (50 + limit(adata(23, gdata(20)), 0, 50))
-                    / 100
+            (220 - gdata(121) / 50)
+                    * (50 + limit(adata(23, gdata_current_map), 0, 50)) / 100
                 + 2);
         if (chatval == 49)
         {
@@ -1078,16 +1082,16 @@ void label_2251()
             label_2251();
             return;
         }
-        gdata(70) = 2;
+        gdata_executing_immediate_quest_type = 2;
         gdata(71) = 0;
-        gdata(72) = 0;
+        gdata_executing_immediate_quest = 0;
         gdata(73) = 1;
-        gdata(66) = gdata(20);
-        gdata(67) = gdata(22);
-        gdata(68) = cdata_x(0);
-        gdata(69) = cdata_y(0);
-        gdata(64) = 40;
-        gdata(65) = 1;
+        gdata_previous_map2 = gdata_current_map;
+        gdata_previous_dungeon_level = gdata_current_dungeon_level;
+        gdata_previous_x = cdata_x(0);
+        gdata_previous_y = cdata_y(0);
+        gdata_destination_map = 40;
+        gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
         label_2256();
@@ -1095,18 +1099,18 @@ void label_2251()
     }
     if (chatval == 42)
     {
-        buff = lang(u8"現在は"s + adata(23, gdata(20)) + u8"連勝中"s + _da() +
+        buff = lang(u8"現在は"s + adata(23, gdata_current_map) + u8"連勝中"s + _da() +
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
-            u8"Your winning streak has reached "s + adata(23, gdata(20)) +
+            u8"Your winning streak has reached "s + adata(23, gdata_current_map) +
                 u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
         label_2251();
         return;
     }
     if (chatval == 23)
     {
-        buff = lang(u8"現在は"s + adata(22, gdata(20)) + u8"連勝中"s + _da() +
+        buff = lang(u8"現在は"s + adata(22, gdata_current_map) + u8"連勝中"s + _da() +
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
-            u8"Your winning streak has reached "s + adata(22, gdata(20)) +
+            u8"Your winning streak has reached "s + adata(22, gdata_current_map) +
                 u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
         label_2251();
         return;
@@ -1220,8 +1224,8 @@ void label_2251()
             chatesc = 1;
             label_2257();
             modkarma(0, 5);
-            ++gdata(851);
-            if (gdata(851) >= 4)
+            ++gdata_lost_wallet_count;
+            if (gdata_lost_wallet_count >= 4)
             {
                 listmax = 0;
                 buff = lang(
@@ -1514,7 +1518,7 @@ void label_2251()
     }
     if (chatval == 39)
     {
-        if (gdata(20) == 30)
+        if (gdata_current_map == 30)
         {
             listmax = 0;
             buff = lang(u8"こんな場所では嫌よ"s, u8"Not here!"s);
@@ -1552,7 +1556,7 @@ void label_2251()
             }
         }
         cbitmod(962, tc, 1);
-        if (gdata(828) == 0)
+        if (gdata_wizard == 0)
         {
             gdata(98) = tc;
         }
@@ -1580,12 +1584,12 @@ void label_2251()
                 return;
             }
         }
-        gdata(66) = gdata(20);
-        gdata(67) = gdata(22);
-        gdata(68) = cdata_x(0);
-        gdata(69) = cdata_y(0);
-        gdata(64) = 30;
-        gdata(65) = 1;
+        gdata_previous_map2 = gdata_current_map;
+        gdata_previous_dungeon_level = gdata_current_dungeon_level;
+        gdata_previous_x = cdata_x(0);
+        gdata_previous_y = cdata_y(0);
+        gdata_destination_map = 30;
+        gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
         snd(49);
@@ -1808,8 +1812,8 @@ void label_2251()
             cdata_gold(0) -= calchireadv(tc);
             cdata_relationship(tc) = 10;
             cbitmod(969, tc, 1);
-            cdata_period_of_contract(tc) = gdata(13) + gdata(12) * 24
-                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 168;
+            cdata_period_of_contract(tc) = gdata_hour + gdata_day * 24
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
             ++cdata_hire_count(tc);
             snd(64);
             txtef(5);
@@ -1902,7 +1906,7 @@ void label_2251()
             modkarma(0, -20);
             snd(11);
             cdata_gold(0) += 50000;
-            gdata(453) = 1002;
+            gdata_pael_and_her_mom = 1002;
             rc = findchara(222);
             cdata_ai_calm(rc) = 3;
             cdata_relationship(rc) = 0;
@@ -2039,7 +2043,7 @@ void label_2251()
     }
     if (chatval == 59)
     {
-        --gdata(814);
+        --gdata_number_of_waiting_guests;
         listmax = 0;
         buff = lang(u8"追い返す"s + _yo(), u8"Alright."s);
         tc = tc * 1 + 0;
@@ -2112,19 +2116,19 @@ void label_2251()
     }
     if (chatval == 61)
     {
-        if (gdata(20) == 43)
+        if (gdata_current_map == 43)
         {
             p(0) = 45;
             p(1) = 48;
             p(2) = 0;
         }
-        if (gdata(20) == 45)
+        if (gdata_current_map == 45)
         {
             p(0) = 43;
             p(1) = 48;
             p(2) = 0;
         }
-        if (gdata(20) == 48)
+        if (gdata_current_map == 48)
         {
             p(0) = 43;
             p(1) = 45;
@@ -2154,13 +2158,13 @@ void label_2251()
             label_2251();
             return;
         }
-        gdata(64) = adata(30, chatval);
-        gdata(65) = 1;
+        gdata_destination_map = adata(30, chatval);
+        gdata_destination_dungeon_level = 1;
         levelexitby = 4;
         gdata(79) = 1;
         gdata(850) = adata(30, chatval);
-        gdata(5) = adata(1, chatval);
-        gdata(6) = adata(2, chatval);
+        gdata_pc_home_x = adata(1, chatval);
+        gdata_pc_home_y = adata(2, chatval);
         fixtransfermap = 1;
         chatteleport = 1;
         label_2256();

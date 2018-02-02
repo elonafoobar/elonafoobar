@@ -440,12 +440,12 @@ void cell_refresh(int prm_493, int prm_494)
 }
 void itemturn(int prm_495)
 {
-    if (gdata(826) < 0)
+    if (gdata_item_turns < 0)
     {
-        gdata(826) = 0;
+        gdata_item_turns = 0;
     }
-    ++gdata(826);
-    inv_turn(prm_495) = gdata(826);
+    ++gdata_item_turns;
+    inv_turn(prm_495) = gdata_item_turns;
     return;
 }
 void removeitem(int prm_496, int prm_497)
@@ -654,7 +654,7 @@ int inv_weight_(int prm_507)
     inv_getheader(prm_507);
     if (prm_507 == 0)
     {
-        gdata(80) = 0;
+        gdata_cargo_weight = 0;
     }
     {
         int cnt = invhead;
@@ -668,7 +668,8 @@ int inv_weight_(int prm_507)
                 }
                 else if (prm_507 == 0)
                 {
-                    gdata(80) += inv_weight(cnt) * inv_number(cnt) * -1;
+                    gdata_cargo_weight +=
+                        inv_weight(cnt) * inv_number(cnt) * -1;
                 }
             }
         }
@@ -1579,20 +1580,20 @@ label_0313_internal:
     }
     if (ibit(7, prm_518) == 1)
     {
-        if (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
-                + gdata(10) * 24 * 30 * 12
+        if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                + gdata_year * 24 * 30 * 12
             < inv_count(prm_518))
         {
             s_at_m63 += lang(
                 u8"("s
                     + (inv_count(prm_518)
-                       - (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
-                          + gdata(10) * 24 * 30 * 12))
+                       - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                          + gdata_year * 24 * 30 * 12))
                     + u8"時間)"s,
                 u8"(Next: "s
                     + (inv_count(prm_518)
-                       - (gdata(13) + gdata(12) * 24 + gdata(11) * 24 * 30
-                          + gdata(10) * 24 * 30 * 12))
+                       - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                          + gdata_year * 24 * 30 * 12))
                     + u8"h.)"s);
         }
     }
@@ -1651,8 +1652,8 @@ void make_dish(int prm_523, int prm_524)
     {
         if (inv_param3(prm_523) >= 0)
         {
-            inv_param3(prm_523) = gdata(13) + gdata(12) * 24
-                + gdata(11) * 24 * 30 + gdata(10) * 24 * 30 * 12 + 72;
+            inv_param3(prm_523) = gdata_hour + gdata_day * 24
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 72;
         }
     }
     inv_param2(prm_523) = prm_524;

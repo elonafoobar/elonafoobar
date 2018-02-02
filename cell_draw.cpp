@@ -50,14 +50,14 @@ void cell_draw()
     }
     light_at_m85 = gdata(89);
     randomize(scrturn_at_m85);
-    if (gdata(37) == 1)
+    if (gdata_torch == 1)
     {
         if (mdata(6) >= 20 && mdata(6) <= 23)
         {
             light_at_m85 -= 50;
         }
     }
-    if (gdata(13) > 17 || gdata(13) < 6)
+    if (gdata_hour > 17 || gdata_hour < 6)
     {
         flick_at_m85 = rnd(10);
     }
@@ -1185,7 +1185,7 @@ void cell_draw()
                     if (map(x_at_m85, y_at_m85, 9) != 0)
                     {
                         p_at_m85 = map(x_at_m85, y_at_m85, 9);
-                        if (gdata(13) > 17 || gdata(13) < 6
+                        if (gdata_hour > 17 || gdata_hour < 6
                             || lightdata(6, p_at_m85))
                         {
                             if (mapsync(x_at_m85, y_at_m85) == msync)

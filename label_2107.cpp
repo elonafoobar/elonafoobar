@@ -8,7 +8,7 @@ namespace elona
 int label_2107()
 {
     notesel(filemod);
-    gdata(805) = gdata(805) + timeGetTime() / 1000 - time_begin;
+    gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
     if (fmode == 8 || fmode == 7)
     {
@@ -285,7 +285,7 @@ int label_2107()
                     }
                     if (fread == 1)
                     {
-                        if (gdata(96) >= 1200)
+                        if (gdata_version >= 1200)
                         {
                             zRead(recipememory, hgz, fsize);
                         }

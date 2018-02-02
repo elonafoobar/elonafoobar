@@ -158,7 +158,7 @@ int label_2297()
             cdata(158, rc) = 1;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 150;
             if (rnd(100) < 50)
             {
@@ -231,7 +231,7 @@ int label_2297()
             cdata(158, rc) = 2;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 150;
             if (rnd(100) < 51)
             {
@@ -304,7 +304,7 @@ int label_2297()
             cdata(158, rc) = 3;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 400;
             if (rnd(100) < 51)
             {
@@ -375,7 +375,7 @@ int label_2297()
             cdata(158, rc) = 4;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 240;
             if (rnd(100) < 51)
             {
@@ -448,7 +448,7 @@ int label_2297()
             cdata(158, rc) = 5;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 350;
             if (rnd(100) < 51)
             {
@@ -523,7 +523,7 @@ int label_2297()
             cdata(158, rc) = 6;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(20) + 15);
             cdata_height(rc) = 165;
             if (rnd(100) < 52)
             {
@@ -602,7 +602,7 @@ int label_2297()
             cdata(158, rc) = 7;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(20) + 15);
             cdata_height(rc) = 170;
             if (rnd(100) < 52)
             {
@@ -683,7 +683,7 @@ int label_2297()
             cdata(158, rc) = 8;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 16);
+            cdata_birth_year(rc) = gdata_year - (rnd(20) + 16);
             cdata_height(rc) = 175;
             if (rnd(100) < 52)
             {
@@ -763,7 +763,7 @@ int label_2297()
             cdata(158, rc) = 9;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(100) + 5);
+            cdata_birth_year(rc) = gdata_year - (rnd(100) + 5);
             cdata_height(rc) = 50;
             if (rnd(100) < 52)
             {
@@ -847,7 +847,7 @@ int label_2297()
             cdata(158, rc) = 10;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(20) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(20) + 15);
             cdata_height(rc) = 220;
             if (rnd(100) < 52)
             {
@@ -920,7 +920,7 @@ int label_2297()
             cdata(158, rc) = 11;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 2;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 1);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 1);
             cdata_height(rc) = 40;
             if (rnd(100) < 54)
             {
@@ -992,7 +992,7 @@ int label_2297()
             cdata(158, rc) = 12;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 2);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 2);
             cdata_height(rc) = 100;
             if (rnd(100) < 55)
             {
@@ -1066,7 +1066,7 @@ int label_2297()
             cdata(158, rc) = 13;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(60) + 20);
+            cdata_birth_year(rc) = gdata_year - (rnd(60) + 20);
             cdata_height(rc) = 100;
             if (rnd(100) < 56)
             {
@@ -1142,7 +1142,7 @@ int label_2297()
             cdata(158, rc) = 14;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 165;
             if (rnd(100) < 50)
             {
@@ -1220,7 +1220,7 @@ int label_2297()
             cdata(158, rc) = 15;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(200) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(200) + 10);
             cdata_height(rc) = 160;
             if (rnd(100) < 50)
             {
@@ -1299,7 +1299,7 @@ int label_2297()
             cdata(158, rc) = 16;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(200) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(200) + 10);
             cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
@@ -1376,7 +1376,7 @@ int label_2297()
             cdata(158, rc) = 17;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(5) + 2);
+            cdata_birth_year(rc) = gdata_year - (rnd(5) + 2);
             cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
@@ -1447,7 +1447,7 @@ int label_2297()
             cdata(158, rc) = 18;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(5) + 2);
+            cdata_birth_year(rc) = gdata_year - (rnd(5) + 2);
             cdata_height(rc) = 150;
             if (rnd(100) < 53)
             {
@@ -1519,7 +1519,7 @@ int label_2297()
             cdata(158, rc) = 19;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(5) + 2);
+            cdata_birth_year(rc) = gdata_year - (rnd(5) + 2);
             cdata_height(rc) = 10;
             if (rnd(100) < 53)
             {
@@ -1591,7 +1591,7 @@ int label_2297()
             cdata(158, rc) = 20;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 10;
             if (rnd(100) < 53)
             {
@@ -1664,7 +1664,7 @@ int label_2297()
             cdata(158, rc) = 21;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 8;
             if (rnd(100) < 53)
             {
@@ -1735,7 +1735,7 @@ int label_2297()
             cdata(158, rc) = 22;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 25;
             if (rnd(100) < 53)
             {
@@ -1808,7 +1808,7 @@ int label_2297()
             cdata(158, rc) = 23;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 10;
             if (rnd(100) < 53)
             {
@@ -1880,7 +1880,7 @@ int label_2297()
             cdata(158, rc) = 24;
             cdata_melee_attack_type(rc) = 7;
             cdata_special_attack_type(rc) = 5;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 20;
             if (rnd(100) < 53)
             {
@@ -1952,7 +1952,7 @@ int label_2297()
             cdata(158, rc) = 25;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 70;
             if (rnd(100) < 53)
             {
@@ -2023,7 +2023,7 @@ int label_2297()
             cdata(158, rc) = 26;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 1500;
             if (rnd(100) < 53)
             {
@@ -2097,7 +2097,7 @@ int label_2297()
             cdata(158, rc) = 27;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
@@ -2174,7 +2174,7 @@ int label_2297()
             cdata(158, rc) = 28;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 160;
             if (rnd(100) < 53)
             {
@@ -2246,7 +2246,7 @@ int label_2297()
             cdata(158, rc) = 29;
             cdata_melee_attack_type(rc) = 6;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
@@ -2322,7 +2322,7 @@ int label_2297()
             cdata(158, rc) = 30;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 100;
             if (rnd(100) < 53)
             {
@@ -2394,7 +2394,7 @@ int label_2297()
             cdata(158, rc) = 31;
             cdata_melee_attack_type(rc) = 4;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
@@ -2466,7 +2466,7 @@ int label_2297()
             cdata(158, rc) = 32;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 1600;
             if (rnd(100) < 53)
             {
@@ -2538,7 +2538,7 @@ int label_2297()
             cdata(158, rc) = 33;
             cdata_melee_attack_type(rc) = 5;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 80;
             if (rnd(100) < 53)
             {
@@ -2609,7 +2609,7 @@ int label_2297()
             cdata(158, rc) = 34;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 1800;
             if (rnd(100) < 53)
             {
@@ -2682,7 +2682,7 @@ int label_2297()
             cdata(158, rc) = 35;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 80;
             if (rnd(100) < 53)
             {
@@ -2754,7 +2754,7 @@ int label_2297()
             cdata(158, rc) = 36;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 70;
             if (rnd(100) < 53)
             {
@@ -2825,7 +2825,7 @@ int label_2297()
             cdata(158, rc) = 37;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 50;
             if (rnd(100) < 53)
             {
@@ -2896,7 +2896,7 @@ int label_2297()
             cdata(158, rc) = 38;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 1400;
             if (rnd(100) < 53)
             {
@@ -2970,7 +2970,7 @@ int label_2297()
             cdata(158, rc) = 39;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 140;
             if (rnd(100) < 53)
             {
@@ -3044,7 +3044,7 @@ int label_2297()
             cdata(158, rc) = 40;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 280;
             if (rnd(100) < 53)
             {
@@ -3117,7 +3117,7 @@ int label_2297()
             cdata(158, rc) = 41;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 550;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -3190,7 +3190,7 @@ int label_2297()
             cdata(158, rc) = 42;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 160;
             if (rnd(100) < 53)
             {
@@ -3262,7 +3262,7 @@ int label_2297()
             cdata(158, rc) = 43;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 120;
             if (rnd(100) < 53)
             {
@@ -3334,7 +3334,7 @@ int label_2297()
             cdata(158, rc) = 44;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 450;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -3411,7 +3411,7 @@ int label_2297()
             cdata(158, rc) = 45;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 140;
             if (rnd(100) < 53)
             {
@@ -3483,7 +3483,7 @@ int label_2297()
             cdata(158, rc) = 46;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 2400;
             if (rnd(100) < 53)
             {
@@ -3555,7 +3555,7 @@ int label_2297()
             cdata(158, rc) = 47;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 2000;
             if (rnd(100) < 53)
             {
@@ -3627,7 +3627,7 @@ int label_2297()
             cdata(158, rc) = 48;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 1200;
             if (rnd(100) < 53)
             {
@@ -3699,7 +3699,7 @@ int label_2297()
             cdata(158, rc) = 49;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 1;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 60;
             if (rnd(100) < 53)
             {
@@ -3773,7 +3773,7 @@ int label_2297()
             cdata(158, rc) = 50;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 700;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -3846,7 +3846,7 @@ int label_2297()
             cdata(158, rc) = 51;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 500;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -3919,7 +3919,7 @@ int label_2297()
             cdata(158, rc) = 52;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 50;
             if (rnd(100) < 53)
             {
@@ -3991,7 +3991,7 @@ int label_2297()
             cdata(158, rc) = 53;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 160;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -4069,7 +4069,7 @@ int label_2297()
             cdata(158, rc) = 54;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 750;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -4142,7 +4142,7 @@ int label_2297()
             cdata(158, rc) = 55;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 4;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 60;
             if (rnd(100) < 53)
             {
@@ -4215,7 +4215,7 @@ int label_2297()
             cdata(158, rc) = 56;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 80;
             if (rnd(100) < 53)
             {
@@ -4289,7 +4289,7 @@ int label_2297()
             cdata(158, rc) = 57;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 150;
             if (rnd(100) < 0)
             {
@@ -4366,7 +4366,7 @@ int label_2297()
             cdata(158, rc) = 58;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 30;
             if (rnd(100) < 53)
             {
@@ -4438,7 +4438,7 @@ int label_2297()
             cdata(158, rc) = 59;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 120;
             if (rnd(100) < 53)
             {
@@ -4510,7 +4510,7 @@ int label_2297()
             cdata(158, rc) = 60;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 120;
             if (rnd(100) < 0)
             {
@@ -4583,7 +4583,7 @@ int label_2297()
             cdata(158, rc) = 61;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 3000;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -4655,7 +4655,7 @@ int label_2297()
             cdata(158, rc) = 62;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 1500;
             if (rnd(100) < 53)
             {
@@ -4727,7 +4727,7 @@ int label_2297()
             cdata(158, rc) = 63;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 6;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 240;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)
@@ -4801,7 +4801,7 @@ int label_2297()
             cdata(158, rc) = 64;
             cdata_melee_attack_type(rc) = 4;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
@@ -4873,7 +4873,7 @@ int label_2297()
             cdata(158, rc) = 65;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 40;
             if (rnd(100) < 53)
             {
@@ -4945,7 +4945,7 @@ int label_2297()
             cdata(158, rc) = 66;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
@@ -5021,7 +5021,7 @@ int label_2297()
             cdata(158, rc) = 67;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (10 + rnd(4));
+            cdata_birth_year(rc) = gdata_year - (10 + rnd(4));
             cdata_height(rc) = 140;
             if (rnd(100) < 0)
             {
@@ -5096,7 +5096,7 @@ int label_2297()
             cdata(158, rc) = 68;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(50) + 25);
+            cdata_birth_year(rc) = gdata_year - (rnd(50) + 25);
             cdata_height(rc) = 180;
             if (rnd(100) < 53)
             {
@@ -5172,7 +5172,7 @@ int label_2297()
             cdata(158, rc) = 69;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(30) + 15);
+            cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
             cdata_height(rc) = 90;
             if (rnd(100) < 50)
             {
@@ -5244,7 +5244,7 @@ int label_2297()
             cdata(158, rc) = 70;
             cdata_melee_attack_type(rc) = 6;
             cdata_special_attack_type(rc) = 3;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 950;
             if (rnd(100) < 53)
             {
@@ -5318,7 +5318,7 @@ int label_2297()
             cdata(158, rc) = 71;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(200) + 100);
+            cdata_birth_year(rc) = gdata_year - (rnd(200) + 100);
             cdata_height(rc) = 165;
             if (rnd(100) < 52)
             {
@@ -5399,7 +5399,7 @@ int label_2297()
             cdata(158, rc) = 72;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 250;
             if (rnd(100) < 53)
             {
@@ -5470,7 +5470,7 @@ int label_2297()
             cdata(158, rc) = 73;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - 999999;
+            cdata_birth_year(rc) = gdata_year - 999999;
             cdata_height(rc) = 180;
             if (rnd(100) < 0)
             {
@@ -5548,7 +5548,7 @@ int label_2297()
             cdata(158, rc) = 74;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 25;
             if (rnd(100) < 53)
             {
@@ -5622,7 +5622,7 @@ int label_2297()
             cdata(158, rc) = 75;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 12;
             if (rnd(100) < 53)
             {
@@ -5695,7 +5695,7 @@ int label_2297()
             cdata(158, rc) = 76;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 6;
-            cdata_birth_year(rc) = gdata(10) - (rnd(10) + 10);
+            cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
             cdata_height(rc) = 240;
             cbitmod(983, rc, 1);
             if (rnd(100) < 53)

@@ -12,19 +12,22 @@ void label_2754()
     {
     case 8: label_2678(); goto label_2755_internal;
     case 14:
-        if (gdata(70) == 1009)
+        if (gdata_executing_immediate_quest_type == 1009)
         {
             txt(lang(u8"パーティーは終了した。"s, u8"The party is over."s));
             calcpartyscore();
             calcpartyscore2();
             txt(lang(
-                u8"最終得点は"s + qdata(13, gdata(72)) + u8"ポイントだった！"s,
-                u8"Your final score is "s + qdata(13, gdata(72))
+                u8"最終得点は"s + qdata(13, gdata_executing_immediate_quest)
+                    + u8"ポイントだった！"s,
+                u8"Your final score is "s
+                    + qdata(13, gdata_executing_immediate_quest)
                     + u8" points!"s));
-            if (qdata(12, gdata(72)) <= qdata(13, gdata(72)))
+            if (qdata(12, gdata_executing_immediate_quest)
+                <= qdata(13, gdata_executing_immediate_quest))
             {
                 gdata(73) = 3;
-                qdata(8, gdata(72)) = 3;
+                qdata(8, gdata_executing_immediate_quest) = 3;
                 txtef(2);
                 txt(lang(
                     u8"パーティーは大盛況だった！"s,
@@ -39,12 +42,13 @@ void label_2754()
                     u8"The party turned out to be a big flop..."s));
             }
         }
-        if (gdata(70) == 1006)
+        if (gdata_executing_immediate_quest_type == 1006)
         {
-            if (qdata(12, gdata(72)) < qdata(13, gdata(72)))
+            if (qdata(12, gdata_executing_immediate_quest)
+                < qdata(13, gdata_executing_immediate_quest))
             {
                 gdata(73) = 3;
-                qdata(8, gdata(72)) = 3;
+                qdata(8, gdata_executing_immediate_quest) = 3;
                 txtef(2);
                 txt(lang(
                     u8"無事に納入を終えた！"s, u8"You complete the task!"s));
@@ -58,7 +62,7 @@ void label_2754()
                     u8"You fail to fulfill your task..."s));
             }
         }
-        if (gdata(70) == 1008)
+        if (gdata_executing_immediate_quest_type == 1008)
         {
             txtef(8);
             txt(lang(
@@ -74,7 +78,7 @@ void label_2754()
         characreate(-1, 23, cdata_x(0), cdata_y(0));
         goto label_2755_internal;
     case 27:
-        if (gdata(20) == 35)
+        if (gdata_current_map == 35)
         {
             goto label_2755_internal;
         }
@@ -200,7 +204,7 @@ void label_2754()
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2755_internal;
     case 29:
         voidboss(0) = 300;
@@ -223,25 +227,26 @@ void label_2754()
         voidboss(17) = 33;
         voidboss(18) = 80;
         voidboss(19) = 332;
-        randomize(gdata(10) + gdata(22));
+        randomize(gdata_year + gdata_current_dungeon_level);
         c = voidboss(rnd(length(voidboss)));
         randomize();
         flt();
         fixlv = 4;
-        initlv = gdata(22) / 4;
+        initlv = gdata_current_dungeon_level / 4;
         characreate(-1, c, -3, 0);
         cbitmod(976, rc, 1);
         cdata_relationship(rc) = -3;
         cdata_original_relationship(rc) = -3;
         tc = rc;
-        adata(20, gdata(20)) = tc;
+        adata(20, gdata_current_map) = tc;
         txtef(3);
         txtmore();
         txt(lang(
-            u8"気をつけろ！この階は"s + mapname(gdata(20)) + u8"の守護者、"s
-                + cdatan(0, tc) + u8"によって守られている。"s,
+            u8"気をつけろ！この階は"s + mapname(gdata_current_map)
+                + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
             u8"Be aware! This level is guarded by the lord of "s
-                + mapname(gdata(20)) + u8", "s + cdatan(0, tc) + u8"."s));
+                + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
+                + u8"."s));
         goto label_2755_internal;
     case 4:
     {
@@ -250,7 +255,7 @@ void label_2754()
         {
             label_1735();
             fixlv = 4;
-            initlv = gdata(22) + rnd(5);
+            initlv = gdata_current_dungeon_level + rnd(5);
             int stat = characreate(-1, 0, -3, 0);
             if (stat == 0)
             {
@@ -264,7 +269,7 @@ void label_2754()
         }
     }
         tc = rc;
-        adata(20, gdata(20)) = tc;
+        adata(20, gdata_current_map) = tc;
         cdatan(0, rc) += u8" Lv"s + cdata_level(rc);
         txt(lang(
             u8"どうやら最深層まで辿り着いたらしい…"s,
@@ -272,10 +277,11 @@ void label_2754()
         txtef(3);
         txtmore();
         txt(lang(
-            u8"気をつけろ！この階は"s + mapname(gdata(20)) + u8"の守護者、"s
-                + cdatan(0, tc) + u8"によって守られている。"s,
+            u8"気をつけろ！この階は"s + mapname(gdata_current_map)
+                + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
             u8"Be aware! This level is guarded by the lord of "s
-                + mapname(gdata(20)) + u8", "s + cdatan(0, tc) + u8"."s));
+                + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
+                + u8"."s));
         goto label_2755_internal;
     case 5:
         music = 64;
@@ -294,7 +300,7 @@ void label_2754()
             55,
             cdata_x(0),
             cdata_y(0),
-            limit(rnd(3) + gdata(22) / 10, 1, 6));
+            limit(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
         flt();
         itemcreate(-1, 239, cdata_x(0), cdata_y(0), 0);
         inv_param2(ci) = 0;
@@ -307,16 +313,16 @@ void label_2754()
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
         modrank(2, 300, 8);
-        gdata(74) = calcfame(0, gdata(22) * 30 + 200);
+        gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);
         txtmore();
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
         cdata_fame(0) += gdata(74);
-        if (gdata(20) == 42)
+        if (gdata_current_map == 42)
         {
-            adata(20, gdata(20)) = 0;
+            adata(20, gdata_current_map) = 0;
             gdata(186) = gdata(186) + 5;
             txt(lang(
                 u8"この階の封印が解けたようだ！"s,
@@ -324,7 +330,7 @@ void label_2754()
         }
         else
         {
-            adata(20, gdata(20)) = -1;
+            adata(20, gdata_current_map) = -1;
         }
         goto label_2755_internal;
     case 16:
@@ -340,7 +346,9 @@ void label_2754()
     case 15:
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (gdata(75)); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (gdata_number_of_existing_quests);
+             cnt < cnt_end;
+             ++cnt)
         {
             if (qdata(3, cnt) == 1007)
             {
@@ -389,7 +397,7 @@ void label_2754()
                 u8"レベル6に達していないので能力値の減少はない。"s,
                 u8"Death penalty won't be applied until you hit Lv 6."s));
         }
-        if (gdata(85) >= 20000)
+        if (gdata_ether_disease_stage >= 20000)
         {
             modcorrupt(-2000);
         }
@@ -399,7 +407,7 @@ void label_2754()
         decfame(0, 10);
         r1 = 0;
         label_1477();
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2755_internal;
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
@@ -412,7 +420,7 @@ void label_2754()
             cdata_x(evdata1(evnum - (evnum != 0) * 1)),
             cdata_y(evdata1(evnum - (evnum != 0) * 1)),
             4);
-        gdata(453) = 1001;
+        gdata_pael_and_her_mom = 1001;
         tc = findchara(221);
         if (tc != 0)
         {
@@ -440,7 +448,7 @@ void label_2754()
         txt(""s + usermsg);
         goto label_2755_internal;
     case 25:
-        --gdata(814);
+        --gdata_number_of_waiting_guests;
         if (get_freechara() == -1)
         {
             txt(lang(
@@ -460,7 +468,7 @@ void label_2754()
                     {
                         if (cbit(969, i) == 0)
                         {
-                            cdata_current_map(i) != gdata(20);
+                            cdata_current_map(i) != gdata_current_map;
                             if (cdata_relationship(i) >= 0)
                             {
                                 if (rnd(25) < p)
@@ -517,7 +525,8 @@ void label_2754()
                 int cnt = 0;
                 for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
                 {
-                    if (gdata(825) != gdata(11) || rnd(5) == 0)
+                    if (gdata_last_month_when_trainer_visited != gdata_month
+                        || rnd(5) == 0)
                     {
                         if (rnd(3))
                         {
@@ -580,9 +589,9 @@ void label_2754()
                 {
                     continue;
                 }
-                if (gdata(183) != 0)
+                if (gdata_mount != 0)
                 {
-                    if (c == gdata(183))
+                    if (c == gdata_mount)
                     {
                         continue;
                     }
@@ -702,7 +711,7 @@ void label_2754()
                     {
                         if (cdata_character_role(cnt) != 0
                             || cdata_relationship(cnt) == 0
-                            || cdata_current_map(cnt) == gdata(20))
+                            || cdata_current_map(cnt) == gdata_current_map)
                         {
                             cdata_emotion_icon(cnt) = 2006;
                             int stat = customtalk(cnt, 104);
@@ -739,7 +748,7 @@ void label_2754()
                 }
             }
         }
-        if (gdata(814) != 0)
+        if (gdata_number_of_waiting_guests != 0)
         {
             tc = 0;
             {
@@ -949,11 +958,11 @@ void label_2754()
         {
             if (evdata2(evnum - (evnum != 0) * 1) == 16)
             {
-                if (gdata(20) == 15)
+                if (gdata_current_map == 15)
                 {
-                    if (gdata(463) == 1)
+                    if (gdata_red_blossom_in_palmia == 1)
                     {
-                        gdata(463) = 2;
+                        gdata_red_blossom_in_palmia = 2;
                         snd(44);
                         txtef(2);
                         txt(lang(
@@ -977,7 +986,7 @@ void label_2754()
         {
             goto label_2755_internal;
         }
-        gdata(17) = 1;
+        gdata_weather = 1;
         envonly = 1;
         label_0068();
         txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));

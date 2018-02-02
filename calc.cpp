@@ -920,13 +920,13 @@ int calcobjlv(int prm_443)
     int objlv_at_m43 = 0;
     if (prm_443 <= 0)
     {
-        objlv_at_m43 = gdata(22);
+        objlv_at_m43 = gdata_current_dungeon_level;
     }
     else
     {
         objlv_at_m43 = prm_443;
     }
-    if (gdata(20) == 30)
+    if (gdata_current_map == 30)
     {
         objlv_at_m43 = 1;
     }
@@ -1355,11 +1355,11 @@ int calcweaponfix(int prm_752)
 }
 std::string calcage(int prm_762)
 {
-    if (gdata(10) - cdata_birth_year(prm_762) < 0)
+    if (gdata_year - cdata_birth_year(prm_762) < 0)
     {
         return lang(u8"不明"s, u8"Unknown"s);
     }
-    return elona_str(gdata(10) - cdata_birth_year(prm_762));
+    return elona_str(gdata_year - cdata_birth_year(prm_762));
 }
 int calcexpalive(int prm_892)
 {
@@ -1433,7 +1433,7 @@ int calcattackhit(int prm_893)
             }
         }
     }
-    if (gdata(183) != 0)
+    if (gdata_mount != 0)
     {
         if (cc == 0)
         {
@@ -1450,7 +1450,7 @@ int calcattackhit(int prm_893)
                 }
             }
         }
-        if (cc == gdata(183))
+        if (cc == gdata_mount)
         {
             tohit = tohit * 100 / limit((150 - sdata(10, cc) / 2), 115, 150);
             if (attackskill != 106)
@@ -1859,7 +1859,7 @@ int calcitemvalue(int prm_898, int prm_899)
         else
         {
             value_at_m153 = cdata_level(0) / 5
-                    * ((gdata(8) + prm_898 * 31) % cdata_level(0) + 4)
+                    * ((gdata_random_seed + prm_898 * 31) % cdata_level(0) + 4)
                 + 10;
         }
     }
@@ -1962,7 +1962,7 @@ int calcitemvalue(int prm_898, int prm_899)
     {
         limitvalue_at_m153 = value_at_m153 / 2;
         value_at_m153 = value_at_m153 * 100 / (100 + sdata(156, 0));
-        if (gdata(263) != 0)
+        if (gdata_belongs_to_mages_guild != 0)
         {
             if (reftype_at_m153 == 54000)
             {
@@ -1988,7 +1988,7 @@ int calcitemvalue(int prm_898, int prm_899)
         }
         if (ibit(9, prm_898))
         {
-            if (gdata(265) == 0)
+            if (gdata_belongs_to_thieves_guild == 0)
             {
                 value_at_m153 /= 10;
             }
@@ -2132,13 +2132,13 @@ void calccosthire()
                 25,
                 200)
         / 100;
-    gdata(170) = cost_at_m153;
+    gdata_cost_to_hire = cost_at_m153;
     return;
 }
 int calccostbuilding()
 {
     cost_at_m153 = 0;
-    cost_at_m153 += gdata(24) * gdata(24) * 200;
+    cost_at_m153 += gdata_home_scale * gdata_home_scale * 200;
     {
         int cnt = 300;
         for (int cnt_end = cnt + (150); cnt < cnt_end; ++cnt)
@@ -2252,7 +2252,7 @@ int calccargoupdate()
 }
 int calccargoupdatecost()
 {
-    return (gdata(82) - gdata(81)) / 10000 + 1;
+    return (gdata_current_cart_limit - gdata_initial_cart_limit) / 10000 + 1;
 }
 int calcidentifyvalue(int prm_907)
 {
@@ -2285,7 +2285,7 @@ int calcidentifyvalue(int prm_907)
         }
     }
     value_at_m153 = value_at_m153 * 100 / (100 + sdata(156, 0) * 2);
-    if (gdata(264))
+    if (gdata_belongs_to_fighters_guild)
     {
         value_at_m153 /= 2;
     }
@@ -2302,7 +2302,7 @@ int calctraincost(int prm_908, int prm_909, int prm_910)
 }
 int calclearncost(int, int, int prm_913)
 {
-    value_at_m153 = 15 + 3 * gdata(39);
+    value_at_m153 = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
     if (prm_913)
     {
         value_at_m153 = value_at_m153 * 2 / 3;
@@ -2335,7 +2335,7 @@ int calcslavevalue(int prm_915)
 int calcrestorecost()
 {
     value_at_m153 = 500;
-    if (gdata(264))
+    if (gdata_belongs_to_fighters_guild)
     {
         value_at_m153 /= 2;
     }
@@ -2346,7 +2346,9 @@ int calcinitgold(int prm_917)
     int lootrich_at_m155 = 0;
     if (prm_917 < 0)
     {
-        return rnd(gdata(22) * 25 * (gdata(20) != 30) + 10) + 1;
+        return rnd(gdata_current_dungeon_level * 25 * (gdata_current_map != 30)
+                   + 10)
+            + 1;
     }
     lootrich_at_m155 = -1;
     if (cdata_id(prm_917) == 183)
@@ -2397,7 +2399,7 @@ int calcspellfail(int prm_920, int prm_921)
     int p_at_m157 = 0;
     if (prm_921 != 0)
     {
-        if (gdata(183) == prm_921)
+        if (gdata_mount == prm_921)
         {
             return 95 - limit((30 - sdata(301, 0) / 2), 0, 30);
         }
@@ -2420,7 +2422,7 @@ int calcspellfail(int prm_920, int prm_921)
     {
         i_at_m157 = 4;
     }
-    if (gdata(183) != 0)
+    if (gdata_mount != 0)
     {
         i_at_m157 += 4;
     }
@@ -2507,12 +2509,14 @@ int calcspellcoststock(int prm_924, int prm_925)
 }
 int calcscore()
 {
-    p = cdata_level(0) * cdata_level(0) + gdata(1) * gdata(1) + gdata(2);
-    if (gdata(0) > 1)
+    p = cdata_level(0) * cdata_level(0)
+        + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
+        + gdata_kill_count;
+    if (gdata_death_count > 1)
     {
         p = p / 10 + 1;
     }
-    if (gdata(828))
+    if (gdata_wizard)
     {
         p = 0;
     }
@@ -2539,17 +2543,19 @@ void calcpartyscore()
             }
         }
     }
-    if (p > qdata(13, gdata(72)))
+    if (p > qdata(13, gdata_executing_immediate_quest))
     {
         txtef(4);
-        txt(u8"(+"s + (p - qdata(13, gdata(72))) + u8") "s);
+        txt(u8"(+"s + (p - qdata(13, gdata_executing_immediate_quest))
+            + u8") "s);
     }
-    if (p < qdata(13, gdata(72)))
+    if (p < qdata(13, gdata_executing_immediate_quest))
     {
         txtef(3);
-        txt(u8"("s + (p - qdata(13, gdata(72))) + u8") "s);
+        txt(u8"("s + (p - qdata(13, gdata_executing_immediate_quest))
+            + u8") "s);
     }
-    qdata(13, gdata(72)) = p;
+    qdata(13, gdata_executing_immediate_quest) = p;
     return;
 }
 void calcpartyscore2()
@@ -2581,7 +2587,8 @@ void calcpartyscore2()
             u8"(合計ボーナス:"s + p + u8"%) "s,
             u8"(Total Bonus:"s + p + u8"%)"s));
     }
-    qdata(13, gdata(72)) = qdata(13, gdata(72)) * (100 + p) / 100;
+    qdata(13, gdata_executing_immediate_quest) =
+        qdata(13, gdata_executing_immediate_quest) * (100 + p) / 100;
     return;
 }
 

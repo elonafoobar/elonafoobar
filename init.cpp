@@ -408,7 +408,7 @@ void label_0192()
     label_1752();
     label_1618();
     label_0221();
-    gdata(8) = rnd(800) + 2;
+    gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
     label_1883();
     label_1277();
@@ -571,11 +571,11 @@ void label_0192()
 
 void label_2731()
 {
-    gdata(10) = 517;
-    gdata(11) = 8;
-    gdata(12) = 12;
-    gdata(13) = 16;
-    gdata(14) = 10;
+    gdata_year = 517;
+    gdata_month = 8;
+    gdata_day = 12;
+    gdata_hour = 16;
+    gdata_minute = 10;
     quickpage = 1;
     if (dirinfo(4) == u8"medit"s)
     {
@@ -836,7 +836,7 @@ void label_1541()
 {
     if (cfg_wizard)
     {
-        gdata(828) = 1;
+        gdata_wizard = 1;
     }
     if (geneuse != ""s)
     {
@@ -1466,7 +1466,7 @@ void label_1557(bool label_1558_flg)
 {
     if (label_1558_flg)
     {
-        gdata(93) = 3;
+        gdata_acquirable_feat_count = 3;
         DIM2(trait, 500);
         DIM2(spact, 500);
         label_0043();
@@ -1551,7 +1551,7 @@ label_1559_internal:
                 keyrange = cnt + 1;
                 if (list(0, 0) == -1)
                 {
-                    if (gdata(828) == 1)
+                    if (gdata_wizard == 1)
                     {
                         listn(0, cnt) = u8"*Debug*"s;
                     }
@@ -2038,27 +2038,27 @@ void label_2732()
                 gdata(120 + cnt) = 5000;
             }
         }
-        gdata(96) = elona_int(elona_double(u8"1.22"s) * 1000);
+        gdata_version = elona_int(elona_double(u8"1.22"s) * 1000);
         gdata(41) = 424;
         gdata(42) = 300;
         gdata(43) = 631;
-        gdata(16) = 1000;
-        gdata(27) = 100;
+        gdata_next_inventory_serial_id = 1000;
+        gdata_next_shelter_serial_id = 100;
         dbgchara = 23;
         playerid = u8"sav_noa"s;
-        gdata(5) = 22;
-        gdata(6) = 21;
-        gdata(19) = -1;
-        gdata(8) = rnd(800) + 2;
+        gdata_pc_home_x = 22;
+        gdata_pc_home_y = 21;
+        gdata_previous_map = -1;
+        gdata_random_seed = rnd(800) + 2;
         gdata(9) = rnd(200) + 2;
-        gdata(20) = 4;
-        gdata(22) = 0;
-        gdata(26) = 7;
+        gdata_current_map = 4;
+        gdata_current_dungeon_level = 0;
+        gdata_entrance_type = 7;
         mapstartx = 22;
         mapstarty = 21;
-        gdata(20) = 5;
-        gdata(22) = 1;
-        gdata(26) = 7;
+        gdata_current_map = 5;
+        gdata_current_dungeon_level = 1;
+        gdata_entrance_type = 7;
         mapstartx = 10;
         mapstarty = 23;
         initlv = 50;
@@ -2066,29 +2066,29 @@ void label_2732()
         flt(100);
         characreate(0, 84, -3, 0);
         label_1536();
-        gdata(10) = 517;
-        gdata(11) = 12;
-        gdata(12) = 30;
-        gdata(13) = 1;
-        gdata(14) = 10;
-        gdata(36) = 50;
-        gdata(257) = 1;
+        gdata_year = 517;
+        gdata_month = 12;
+        gdata_day = 30;
+        gdata_hour = 1;
+        gdata_minute = 10;
+        gdata_played_scene = 50;
+        gdata_has_not_been_to_vernis = 1;
         adata(30, 7) = 4;
-        gdata(850) = adata(30, gdata(20));
-        gdata(93) = 2;
-        gdata(811) = 1000;
-        gdata(97) = 1000;
-        gdata(24) = 0;
-        gdata(814) = 2;
-        gdata(25) = 1000;
+        gdata(850) = adata(30, gdata_current_map);
+        gdata_acquirable_feat_count = 2;
+        gdata_save_count_of_little_sister = 1000;
+        gdata_rights_to_succeed_to = 1000;
+        gdata_home_scale = 0;
+        gdata_number_of_waiting_guests = 2;
+        gdata_charge_power = 1000;
         cdata_god(0) = 2;
         cdata_piety_point(0) = 1000;
         cdata_praying_point(0) = 1000;
-        gdata(453) = 1000;
+        gdata_pael_and_her_mom = 1000;
         cdata_gold(0) += 1000000;
         cdata_platinum_coin(0) = 30;
         cdata_fame(0) = 65000;
-        gdata(252) = 100;
+        gdata_main_quest_flag = 100;
         r1 = 0;
         label_1477();
         flt();
@@ -2344,22 +2344,22 @@ void label_2732()
     }
     if (mode == 5)
     {
-        gdata(10) = 517;
-        gdata(11) = 8;
-        gdata(12) = 12;
-        gdata(13) = 1;
-        gdata(14) = 10;
-        gdata(5) = 22;
-        gdata(6) = 21;
-        gdata(19) = -1;
+        gdata_year = 517;
+        gdata_month = 8;
+        gdata_day = 12;
+        gdata_hour = 1;
+        gdata_minute = 10;
+        gdata_pc_home_x = 22;
+        gdata_pc_home_y = 21;
+        gdata_previous_map = -1;
         gdata(850) = 4;
         ghelp = 1;
-        gdata(20) = 7;
-        gdata(22) = 1;
-        gdata(26) = 4;
-        gdata(96) = elona_int(elona_double(u8"1.22"s) * 1000);
-        gdata(17) = 3;
-        gdata(18) = 6;
+        gdata_current_map = 7;
+        gdata_current_dungeon_level = 1;
+        gdata_entrance_type = 4;
+        gdata_version = elona_int(elona_double(u8"1.22"s) * 1000);
+        gdata_weather = 3;
+        gdata_hours_until_weather_changes = 6;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
@@ -2376,8 +2376,8 @@ void label_2732()
     }
     if (mode == 2)
     {
-        gdata(16) = 1000;
-        gdata(27) = 100;
+        gdata_next_inventory_serial_id = 1000;
+        gdata_next_shelter_serial_id = 100;
         label_1920();
     }
     if (mode == 3)

@@ -801,7 +801,7 @@ void txt_conv()
             tnew = 0;
             if (cfg_msgaddtime)
             {
-                msgtemp(0) = u8"["s + gdata(14) + u8"] " + msgtemp(0);
+                msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
             }
             else
             {

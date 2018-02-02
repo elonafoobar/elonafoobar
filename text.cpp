@@ -283,27 +283,31 @@ void label_0140()
 }
 std::string maplevel(int)
 {
-    if (gdata(20) == 7)
+    if (gdata_current_map == 7)
     {
-        if (gdata(22) != 1)
+        if (gdata_current_dungeon_level != 1)
         {
-            if (gdata(22) > 0)
+            if (gdata_current_dungeon_level > 0)
             {
-                return u8"B."s + (gdata(22) - 1);
+                return u8"B."s + (gdata_current_dungeon_level - 1);
             }
             else
             {
-                return u8"L."s + (gdata(22) - 2) * -1;
+                return u8"L."s + (gdata_current_dungeon_level - 2) * -1;
             }
         }
     }
-    if (adata(0, gdata(20)) != 3)
+    if (adata(0, gdata_current_map) != 3)
     {
-        if (adata(16, gdata(20)) == 3 || adata(16, gdata(20)) == 8
-            || adata(16, gdata(20)) == 13
+        if (adata(16, gdata_current_map) == 3
+            || adata(16, gdata_current_map) == 8
+            || adata(16, gdata_current_map) == 13
             || (mdata(6) >= 20 && mdata(6) <= 23) == 1)
         {
-            return ""s + cnvrank((gdata(22) - adata(17, gdata(20)) + 1))
+            return ""s
+                + cnvrank(
+                       (gdata_current_dungeon_level
+                        - adata(17, gdata_current_map) + 1))
                 + lang(u8"層"s, ""s);
         }
     }
@@ -554,11 +558,12 @@ std::string mapname(int prm_366, int prm_367)
     }
     if (adata(16, prm_366) == 13)
     {
-        if (gdata(70) == 1001)
+        if (gdata_executing_immediate_quest_type == 1001)
         {
             s = lang(u8"街近辺"s, u8"The outskirts"s);
         }
-        if (gdata(70) == 1010 || gdata(70) == 1008)
+        if (gdata_executing_immediate_quest_type == 1010
+            || gdata_executing_immediate_quest_type == 1008)
         {
             s = lang(u8"市街地"s, u8"Urban area"s);
         }
@@ -6062,9 +6067,10 @@ void label_0173()
                         if (talkref == 1)
                         {
                             s = lang(
-                                ""s + gdata(814),
-                                ""s + gdata(814) + u8" guest"s
-                                    + _s2(gdata(814)));
+                                ""s + gdata_number_of_waiting_guests,
+                                ""s + gdata_number_of_waiting_guests
+                                    + u8" guest"s
+                                    + _s2(gdata_number_of_waiting_guests));
                             break;
                         }
                     }
@@ -6198,7 +6204,7 @@ void label_0176()
         {
             if (cdata_character_role(tc) == 18)
             {
-                if (gdata(814) > 0)
+                if (gdata_number_of_waiting_guests > 0)
                 {
                     talkref = 1;
                     p = instr(buff, 0, u8"%MAID,"s + lang(u8"JP"s, u8"EN"s));
@@ -6251,16 +6257,16 @@ void label_0176()
                     break;
                 }
             }
-            if (adata(29, gdata(20)))
+            if (adata(29, gdata_current_map))
             {
-                if (gdata(20) == 33)
+                if (gdata_current_map == 33)
                 {
                     if (rnd(3))
                     {
                         p = instr(
                             buff,
                             0,
-                            u8"%FEST,"s + gdata(20) + u8","s
+                            u8"%FEST,"s + gdata_current_map + u8","s
                                 + lang(u8"JP"s, u8"EN"s));
                         break;
                     }
@@ -6280,7 +6286,8 @@ void label_0176()
                 p = instr(
                     buff,
                     0,
-                    u8"%AREA,"s + gdata(20) + u8","s + lang(u8"JP"s, u8"EN"s));
+                    u8"%AREA,"s + gdata_current_map + u8","s
+                        + lang(u8"JP"s, u8"EN"s));
                 break;
             }
         }
@@ -6342,49 +6349,49 @@ std::string fltname(int prm_400)
 void label_0180()
 {
     noteadd(lang(u8"@QM[メインクエスト]"s, u8"@QM[Main Quest]"s));
-    if (gdata(252) >= 0 && gdata(252) < 30)
+    if (gdata_main_quest_flag >= 0 && gdata_main_quest_flag < 30)
     {
         s1 = lang(
             u8"ヴェルニースの南にあるネフィアの迷宮群のひとつ《レシマス》で、何かが見つかるかもしれない。"s,
             u8"I should check the dungeon called Lesimas. It's located south of Vernis."s);
     }
-    if (gdata(252) >= 30 && gdata(252) < 50)
+    if (gdata_main_quest_flag >= 30 && gdata_main_quest_flag < 50)
     {
         s1 = lang(
             u8"致命傷を負った斥候に、パルミアのジャビ王へ書簡を渡すよう頼まれた。パルミアには、ヴェルニースから東の街道を進めば辿り着ける。"s,
             u8"The injured scout asked me to devliver a letter to the king of Palmia. Palmia is located east of Vernis."s);
     }
-    if (gdata(252) >= 50 && gdata(252) < 60)
+    if (gdata_main_quest_flag >= 50 && gdata_main_quest_flag < 60)
     {
         s1 = lang(
             u8"ジャビ王によると、仕事が欲しい時は城の図書館にいるエリステアを訪ねればいいようだ。"s,
             u8"Eristia will have some tasks for me if I want to work for Palmia. She's in the library of the castle."s);
     }
-    if (gdata(252) >= 60 && gdata(252) < 100)
+    if (gdata_main_quest_flag >= 60 && gdata_main_quest_flag < 100)
     {
         s1 = lang(
             u8"レシマスに赴き、冒険者カラムという人物を探すよう依頼された。彼は最低でもレシマスの16階より先の階層にいるらしい。"s,
             u8"Eristia asked to look for an adventurer called Karam in the dungeon of Lesimas. He was on the 16th level of the dungeon the last time he sent a report. I may have to go deeper if I am to find him."s);
     }
-    if (gdata(252) >= 100 && gdata(252) < 110)
+    if (gdata_main_quest_flag >= 100 && gdata_main_quest_flag < 110)
     {
         s1 = lang(
             u8"瀕死のカラムから得た情報を、パルミアのエリステアに伝えなければならない。"s,
             u8"I need to bring information Karam gave me to Eristia at once."s);
     }
-    if (gdata(252) >= 110 && gdata(252) < 125)
+    if (gdata_main_quest_flag >= 110 && gdata_main_quest_flag < 125)
     {
         s1 = lang(
             u8"レシマス最下層の封印を解く為に必要な三つの魔石の入手を依頼された。賢者の魔石は《灼熱の塔》に、愚者の魔石は《死者の洞窟》に、覇者の魔石は《古城》にある。"s,
             u8"I need to find 3 magic stones to break the seal of Lesimas. They can be found at the Tower of Fire, the crypt of the damned and the Ancient Castle"s);
     }
-    if (gdata(252) >= 125 && gdata(252) < 180)
+    if (gdata_main_quest_flag >= 125 && gdata_main_quest_flag < 180)
     {
         s1 = lang(
             u8"三つの魔石の力で最下層の封印を解き、レシマスの秘宝を持ち帰るようエリステアに依頼された。"s,
             u8"With 3 magic stones I have, I need to get to the deepest level of Lesimas and break the seal. Then bring back an item called Hidden Artifact of Lesimas, whatever it is."s);
     }
-    if (gdata(252) >= 180 && gdata(252) < 1000)
+    if (gdata_main_quest_flag >= 180 && gdata_main_quest_flag < 1000)
     {
         s1 = lang(
             u8"第一部メインクエスト完了"s,
@@ -6403,10 +6410,10 @@ void label_0181()
         noteadd(lang(u8"@QM[サブクエスト]"s, u8"@QM[Sub Quest]"s));
     }
     p = 0;
-    if (gdata(450) != 0)
+    if (gdata_putit_attacks != 0)
     {
         s = lang(u8"ぬいぐるみを守れ！ Lv6相当"s, u8"Putit attacks Lv6"s);
-        p = gdata(450);
+        p = gdata_putit_attacks;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6440,10 +6447,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(451) != 0)
+    if (gdata_thieves_hideout != 0)
     {
         s = lang(u8"お酒泥棒 Lv2相当"s, u8"Thieves' hideout Lv2"s);
-        p = gdata(451);
+        p = gdata_thieves_hideout;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6477,10 +6484,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(455) != 0)
+    if (gdata_puppys_cave != 0)
     {
         s = lang(u8"迷子の子犬 Lv4相当"s, u8"Puppy's cave Lv4"s);
-        p = gdata(455);
+        p = gdata_puppys_cave;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6502,10 +6509,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(452) != 0)
+    if (gdata_nightmare != 0)
     {
         s = lang(u8"実験場のナイトメア Lv50相当"s, u8"Nightmare Lv50"s);
-        p = gdata(452);
+        p = gdata_nightmare;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6551,10 +6558,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(453) != 0)
+    if (gdata_pael_and_her_mom != 0)
     {
         s = lang(u8"エーテル病を治せ Lv20相当"s, u8"Pael and her mom Lv20"s);
-        p = gdata(453);
+        p = gdata_pael_and_her_mom;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6684,10 +6691,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(454) != 0)
+    if (gdata_wife_collector != 0)
     {
         s = lang(u8"嫁泥棒 Lv3相当"s, u8"Wife collector LV3"s);
-        p = gdata(454);
+        p = gdata_wife_collector;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6709,10 +6716,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(456) != 0)
+    if (gdata_cat_house != 0)
     {
         s = lang(u8"猫退治 Lv25相当"s, u8"Cat house Lv25"s);
-        p = gdata(456);
+        p = gdata_cat_house;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6746,10 +6753,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(457) != 0)
+    if (gdata_defense_line != 0)
     {
         s = lang(u8"防衛戦線の死闘 Lv17相当"s, u8"Defense line Lv17"s);
-        p = gdata(457);
+        p = gdata_defense_line;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6795,10 +6802,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(458) != 0)
+    if (gdata_novice_knight != 0)
     {
         s = lang(u8"騎士昇格試験の手伝い Lv8相当"s, u8"Novice knightLv8"s);
-        p = gdata(458);
+        p = gdata_novice_knight;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6832,10 +6839,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(459) != 0)
+    if (gdata_kamikaze_attack != 0)
     {
         s = lang(u8"カミカゼ特攻隊 Lv14相当"s, u8"Kamikaze attack Lv14"s);
-        p = gdata(459);
+        p = gdata_kamikaze_attack;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6881,10 +6888,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(460) != 0)
+    if (gdata_mias_dream != 0)
     {
         s = lang(u8"ミーアの夢 Lv1相当"s, u8"Mia's dream Lv1"s);
-        p = gdata(460);
+        p = gdata_mias_dream;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6906,10 +6913,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(461) != 0)
+    if (gdata_rare_books != 0)
     {
         s = lang(u8"幻の絵本 Lv12相当"s, u8"Rare books Lv12"s);
-        p = gdata(461);
+        p = gdata_rare_books;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6931,10 +6938,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(462) != 0)
+    if (gdata_pyramid_trial != 0)
     {
         s = lang(u8"ピラミッドからの挑戦状 Lv16相当"s, u8"Pyramid trial Lv16"s);
-        p = gdata(462);
+        p = gdata_pyramid_trial;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6956,11 +6963,11 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(463) != 0)
+    if (gdata_red_blossom_in_palmia != 0)
     {
         s = lang(
             u8"パルミアに赤い花を Lv14相当"s, u8"Red blossom in Palmia Lv14"s);
-        p = gdata(463);
+        p = gdata_red_blossom_in_palmia;
         if (val == 1)
         {
             if (p >= 1000)
@@ -6994,10 +7001,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(464) != 0)
+    if (gdata_ambitious_scientist != 0)
     {
         s = lang(u8"生化学者の野望 Lv5相当"s, u8"Ambitious scientist Lv5"s);
-        p = gdata(464);
+        p = gdata_ambitious_scientist;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7008,24 +7015,26 @@ void label_0181()
     }
     if (val == 0)
     {
-        if (p == gdata(464) * (gdata(464) < 6) + (gdata(464) == 0))
+        if (p
+            == gdata_ambitious_scientist * (gdata_ambitious_scientist < 6)
+                + (gdata_ambitious_scientist == 0))
         {
             s1 = lang(
                 u8"カプールのイコールに、実験用の生物5体の捕獲を頼まれた。依頼品、モンスターボールに捕獲したものでなくてはならない。あと"s
-                    + (6 - gdata(464))
+                    + (6 - gdata_ambitious_scientist)
                     + u8"個の捕獲済みモンスターボールを届ける必要がある。"s,
                 u8"Icolle of Port Kapul asked me to bring 5 filled monster balls. I still need to bring him "s
-                    + (6 - gdata(464)) + u8" of them."s);
+                    + (6 - gdata_ambitious_scientist) + u8" of them."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (gdata(465) != 0)
+    if (gdata_sewer_sweeping != 0)
     {
         s = lang(u8"下水道大作戦 Lv23相当"s, u8"Sewer sweeping Lv23"s);
-        p = gdata(465);
+        p = gdata_sewer_sweeping;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7059,10 +7068,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(466) != 0)
+    if (gdata_joining_mages_guild != 0)
     {
         s = lang(u8"魔術士ギルド審査"s, u8"Joining the Mages Guild"s);
-        p = gdata(466);
+        p = gdata_joining_mages_guild;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7077,8 +7086,8 @@ void label_0181()
         {
             s1 = lang(
                 u8"魔術士ギルドに加入するには、ルミエストのメイジギルドの納入箱に、解読済みの古書物を納入し、ギルドポイントを貯めた後、ギルドの番人に話しかけなければならない。審査をクリアするには、あと"s +
-                    gdata(266) + u8"ギルドポイントを獲得する必要がある。"s,
-                u8"To join the Mages Guild, I need to gather "s + gdata(266) +
+                    gdata_mages_guild_quota + u8"ギルドポイントを獲得する必要がある。"s,
+                u8"To join the Mages Guild, I need to gather "s + gdata_mages_guild_quota +
                     u8" more guild points and talk to the guild guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -7086,10 +7095,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(468) != 0)
+    if (gdata_joining_thieves_guild != 0)
     {
         s = lang(u8"盗賊ギルド審査"s, u8"Joining the Thieves Guild"s);
-        p = gdata(468);
+        p = gdata_joining_thieves_guild;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7111,10 +7120,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(467) != 0)
+    if (gdata_joining_fighters_guild != 0)
     {
         s = lang(u8"戦士ギルド審査"s, u8"Joining the Fighters Guild"s);
-        p = gdata(467);
+        p = gdata_joining_fighters_guild;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7128,10 +7137,10 @@ void label_0181()
         if (p == 1)
         {
             s1 = lang(u8"戦士ギルドに加入するには、"s +
-                    refchara_str(gdata(268), 2) + u8"をあと"s + gdata(267) +
+                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
-                u8"To join the Fighters Guild, I need to slay "s + gdata(267) +
-                    u8" more "s + refchara_str(gdata(268), 2) +
+                u8"To join the Fighters Guild, I need to slay "s + gdata_fighters_guild_quota +
+                    u8" more "s + refchara_str(gdata_fighters_guild_target, 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -7139,10 +7148,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(469) != 0)
+    if (gdata_mages_guild_quota2 != 0)
     {
         s = lang(u8"魔術士ギルドノルマ"s, u8"The Mages Guild quota"s);
-        p = gdata(469);
+        p = gdata_mages_guild_quota2;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7157,9 +7166,9 @@ void label_0181()
         {
             s1 = lang(
                 u8"魔術士ギルドのランクを上げるためには、ルミエストのメイジギルドの納入箱に、解読済みの古書物を納入し、ギルドポイントを貯めた後、ギルドの番人に話しかけなければならない。ランク上昇のためには、あと"s +
-                    gdata(266) + u8"ギルドポイントを獲得する必要がある。"s,
+                    gdata_mages_guild_quota + u8"ギルドポイントを獲得する必要がある。"s,
                 u8"To raise the rank in the Mages Guild, you need to gather "s +
-                    gdata(266) +
+                    gdata_mages_guild_quota +
                     u8" more guild points and talk to the guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -7167,10 +7176,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(470) != 0)
+    if (gdata_fighters_guild_quota2 != 0)
     {
         s = lang(u8"戦士ギルドノルマ"s, u8"The Fighters Guild quota"s);
-        p = gdata(470);
+        p = gdata_fighters_guild_quota2;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7184,10 +7193,10 @@ void label_0181()
         if (p == 1)
         {
             s1 = lang(u8"戦士ギルドのランクを上げるためには、"s +
-                    refchara_str(gdata(268), 2) + u8"をあと"s + gdata(267) +
+                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
                 u8"To raise the rank in the Fighters Guild, I need to slay "s +
-                    gdata(267) + u8" more "s + refchara_str(gdata(268), 2) +
+                    gdata_fighters_guild_quota + u8" more "s + refchara_str(gdata_fighters_guild_target, 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -7195,10 +7204,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(471) != 0)
+    if (gdata_thieves_guild_quota2 != 0)
     {
         s = lang(u8"盗賊ギルドノルマ"s, u8"The Thieves Guild quota"s);
-        p = gdata(471);
+        p = gdata_thieves_guild_quota2;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7212,10 +7221,10 @@ void label_0181()
         if (p == 1)
         {
             s1 = lang(u8"盗賊ギルドのランクを上げるためには、あと金貨"s +
-                    gdata(269) +
+                    gdata_thieves_guild_quota +
                     u8"枚分の盗品を売りさばき、ダルフィのギルドの番人に話しかける必要がある。"s,
                 u8"To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of "s +
-                    gdata(269) +
+                    gdata_thieves_guild_quota +
                     u8" gold pices and talk to the guild guard in Derphy."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -7223,10 +7232,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(472) != 0)
+    if (gdata_minotaur_king != 0)
     {
         s = lang(u8"ミノタウロスの王 Lv24相当"s, u8"Minotaur king Lv24"s);
-        p = gdata(472);
+        p = gdata_minotaur_king;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7260,10 +7269,10 @@ void label_0181()
         }
     }
     p = 0;
-    if (gdata(473) != 0)
+    if (gdata_little_sister != 0)
     {
         s = lang(u8"リトルシスター Lv30相当"s, u8"Little sister Lv30"s);
-        p = gdata(473);
+        p = gdata_little_sister;
         if (val == 1)
         {
             if (p >= 1000)
@@ -7289,19 +7298,19 @@ void label_0181()
 void label_0182()
 {
     noteadd(lang(u8"[古びたお守り]"s, u8"[An old talisman]"s));
-    if (gdata(252) >= 30)
+    if (gdata_main_quest_flag >= 30)
     {
         noteadd(lang(u8"[ジャビ王への書簡]"s, u8"A letter to the king"s));
     }
-    if (gdata(253) != 0)
+    if (gdata_magic_stone_of_fool != 0)
     {
         noteadd(lang(u8"[愚者の魔石]"s, u8"Fool's magic stone"s));
     }
-    if (gdata(255) != 0)
+    if (gdata_magic_stone_of_king != 0)
     {
         noteadd(lang(u8"[覇者の魔石]"s, u8"King's magic stone"s));
     }
-    if (gdata(254) != 0)
+    if (gdata_magic_stone_of_sage != 0)
     {
         noteadd(lang(u8"[賢者の魔石]"s, u8"Sage's magic stone"s));
     }

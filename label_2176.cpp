@@ -68,11 +68,11 @@ int label_2176()
                 }
                 if (efid == 625 || efid == 446)
                 {
-                    if (tc == 0 && cc == 0 || cc == gdata(183))
+                    if (tc == 0 && cc == 0 || cc == gdata_mount)
                     {
-                        if (gdata(183) != 0)
+                        if (gdata_mount != 0)
                         {
-                            tc = gdata(183);
+                            tc = gdata_mount;
                         }
                     }
                 }
@@ -83,9 +83,9 @@ int label_2176()
                     if (efstatus >= 1)
                     {
                         cdata_birth_year(tc) += rnd(3) + 1;
-                        if (cdata_birth_year(tc) + 12 > gdata(10))
+                        if (cdata_birth_year(tc) + 12 > gdata_year)
                         {
-                            cdata_birth_year(tc) = gdata(10) - 12;
+                            cdata_birth_year(tc) = gdata_year - 12;
                         }
                         if (synccheck(tc, -1))
                         {
@@ -193,9 +193,9 @@ int label_2176()
                             tc = map(dx, dy, 1) - 1;
                             if (cc != tc)
                             {
-                                if (gdata(183) != 0)
+                                if (gdata_mount != 0)
                                 {
-                                    if (gdata(183) == cc)
+                                    if (gdata_mount == cc)
                                     {
                                         if (tc == 0)
                                         {
@@ -358,9 +358,9 @@ int label_2176()
                                 {
                                     continue;
                                 }
-                                if (gdata(183) != 0)
+                                if (gdata_mount != 0)
                                 {
-                                    if (gdata(183) == cc)
+                                    if (gdata_mount == cc)
                                     {
                                         if (tc == 0)
                                         {
@@ -691,7 +691,7 @@ int label_2176()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata(3) + 100 >= 188)
+                    if (gdata_other_character_count + 100 >= 188)
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;
@@ -775,9 +775,9 @@ int label_2176()
                 goto label_2186_internal;
             case 5:
                 tcprev = tc;
-                if (gdata(183) != 0)
+                if (gdata_mount != 0)
                 {
-                    if (gdata(183) == tc)
+                    if (gdata_mount == tc)
                     {
                         goto label_2186_internal;
                     }
@@ -807,8 +807,8 @@ int label_2176()
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
-                if (gdata(20) == 40 || mdata(6) == 1 || gdata(20) == 37
-                    || gdata(20) == 41)
+                if (gdata_current_map == 40 || mdata(6) == 1
+                    || gdata_current_map == 37 || gdata_current_map == 41)
                 {
                     if (synccheck(tc, -1))
                     {
@@ -862,9 +862,9 @@ int label_2176()
                         cdata_gold(cc) += p;
                     }
                     tc = cc;
-                    if (gdata(183) != 0)
+                    if (gdata_mount != 0)
                     {
-                        if (gdata(183) == tc)
+                        if (gdata_mount == tc)
                         {
                             goto label_2186_internal;
                         }
@@ -1008,9 +1008,9 @@ int label_2176()
                         {
                             continue;
                         }
-                        if (gdata(183) != 0)
+                        if (gdata_mount != 0)
                         {
-                            if (gdata(183) == cc)
+                            if (gdata_mount == cc)
                             {
                                 if (tc == 0)
                                 {
@@ -1486,7 +1486,8 @@ label_2181_internal:
         sickifcursed(efstatus, tc, 1);
         goto label_2186_internal;
     case 300:
-        if (gdata(70) == 1008 || gdata(70) == 1010)
+        if (gdata_executing_immediate_quest_type == 1008
+            || gdata_executing_immediate_quest_type == 1010)
         {
             txt(lang(
                 u8"そんなことをしている余裕はない！"s,
@@ -1532,7 +1533,7 @@ label_2181_internal:
             dmgsp(
                 0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
         }
-        if (gdata(183) != 0)
+        if (gdata_mount != 0)
         {
             if (tc == cc)
             {
@@ -1544,26 +1545,27 @@ label_2181_internal:
                         u8"There's no place to get off."s));
                     goto label_2186_internal;
                 }
-                cell_setchara(gdata(183), rtval, rtval(1));
+                cell_setchara(gdata_mount, rtval, rtval(1));
                 txt(lang(
-                    name(gdata(183)) + u8"から降りた。"s,
-                    u8"You dismount from "s + name(gdata(183)) + u8"."s));
+                    name(gdata_mount) + u8"から降りた。"s,
+                    u8"You dismount from "s + name(gdata_mount) + u8"."s));
                 txtef(9);
                 if (jp)
                 {
-                    txt(name(gdata(183)) + u8"「ふぅ」"s,
-                        name(gdata(183)) + u8"「乗り心地はよかった？」"s,
-                        name(gdata(183)) + u8"「疲れた…」"s,
-                        name(gdata(183)) + u8"「またいつでも乗ってね♪」"s);
+                    txt(name(gdata_mount) + u8"「ふぅ」"s,
+                        name(gdata_mount) + u8"「乗り心地はよかった？」"s,
+                        name(gdata_mount) + u8"「疲れた…」"s,
+                        name(gdata_mount) + u8"「またいつでも乗ってね♪」"s);
                 }
                 if (en)
                 {
-                    txt(name(gdata(183)) + u8" "s + cnvtalk(u8"Phew."s),
-                        name(gdata(183)) + u8" "s
+                    txt(name(gdata_mount) + u8" "s + cnvtalk(u8"Phew."s),
+                        name(gdata_mount) + u8" "s
                             + cnvtalk(u8"How was my ride?"s),
-                        name(gdata(183)) + u8" "s
+                        name(gdata_mount) + u8" "s
                             + cnvtalk(u8"Tired...tired..."s),
-                        name(gdata(183)) + u8" "s + cnvtalk(u8"It was nice."s));
+                        name(gdata_mount) + u8" "s
+                            + cnvtalk(u8"It was nice."s));
                 }
                 ride_end();
                 goto label_2186_internal;
@@ -1585,7 +1587,7 @@ label_2181_internal:
         }
         if (tc == cc)
         {
-            if (gdata(183) == 0)
+            if (gdata_mount == 0)
             {
                 txt(lang(
                     name(cc) + u8"は自分に乗ろうとした。"s,
@@ -1600,13 +1602,13 @@ label_2181_internal:
                 u8"The ally currently stays in this area."s));
             goto label_2186_internal;
         }
-        if (gdata(183) != 0)
+        if (gdata_mount != 0)
         {
             txt(lang(
-                u8"現在"s + name(cc) + u8"は"s + name(gdata(183))
+                u8"現在"s + name(cc) + u8"は"s + name(gdata_mount)
                     + u8"に騎乗している。"s,
                 name(cc) + u8" "s + is(cc) + u8" currently riding "s
-                    + name(gdata(183)) + u8"."s));
+                    + name(gdata_mount) + u8"."s));
         }
         else
         {
@@ -1614,18 +1616,18 @@ label_2181_internal:
             txtef(9);
             if (jp)
             {
-                txt(name(gdata(183)) + u8"「うぐぅ」"s,
-                    name(gdata(183)) + u8"「ダイエットしてよ…」"s,
-                    name(gdata(183)) + u8"「いくよ！」"s,
-                    name(gdata(183)) + u8"「やさしくしてね♪」"s);
+                txt(name(gdata_mount) + u8"「うぐぅ」"s,
+                    name(gdata_mount) + u8"「ダイエットしてよ…」"s,
+                    name(gdata_mount) + u8"「いくよ！」"s,
+                    name(gdata_mount) + u8"「やさしくしてね♪」"s);
             }
             if (en)
             {
-                txt(name(gdata(183)) + u8" "s + cnvtalk(u8"Awww."s),
-                    name(gdata(183)) + u8" "s
+                txt(name(gdata_mount) + u8" "s + cnvtalk(u8"Awww."s),
+                    name(gdata_mount) + u8" "s
                         + cnvtalk(u8"You should go on a diet."s),
-                    name(gdata(183)) + u8" "s + cnvtalk(u8"Let's roll!"s),
-                    name(gdata(183)) + u8" "s + cnvtalk(u8"Be gentle."s));
+                    name(gdata_mount) + u8" "s + cnvtalk(u8"Let's roll!"s),
+                    name(gdata_mount) + u8" "s + cnvtalk(u8"Be gentle."s));
             }
         }
         goto label_2186_internal;
@@ -1913,7 +1915,7 @@ label_2181_internal:
         txt(lang(
             u8"たくさんの"s + s + u8"が降ってきた！"s,
             u8"Some "s + s + u8" fall from above!"s));
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (rnd(3) + 3 + (efstatus >= 1) * 6);
@@ -2452,7 +2454,7 @@ label_2181_internal:
             obvious = 0;
             goto label_2186_internal;
         }
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 1143:
         if (efstatus <= 0)
@@ -2556,7 +2558,7 @@ label_2181_internal:
     }
         r1 = tc;
         label_1477();
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 1107:
         if (tc != 0)
@@ -2671,7 +2673,7 @@ label_2181_internal:
     }
         r1 = tc;
         label_1477();
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 1106:
         i = rnd(10) + 10;
@@ -2738,7 +2740,7 @@ label_2181_internal:
                 snd(117);
             }
         }
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 653:
         if (tc < 57)
@@ -2983,12 +2985,12 @@ label_2181_internal:
             obvious = 0;
             goto label_2186_internal;
         }
-        if (gdata(63) != 0)
+        if (gdata_is_returning_or_escaping != 0)
         {
             txt(lang(
                 u8"脱出を中止した。"s,
                 u8"The air around you gradually loses power."s));
-            gdata(63) = 0;
+            gdata_is_returning_or_escaping = 0;
         }
         else
         {
@@ -3018,11 +3020,11 @@ label_2181_internal:
             txt(lang(
                 u8"周囲の大気がざわめきだした。"s,
                 u8"The air around you becomes charged."s));
-            if (adata(16, gdata(20)) == 8)
+            if (adata(16, gdata_current_map) == 8)
             {
-                if (gdata(22) == adata(10, gdata(20)))
+                if (gdata_current_dungeon_level == adata(10, gdata_current_map))
                 {
-                    if (adata(20, gdata(20)) != -1)
+                    if (adata(20, gdata_current_map) != -1)
                     {
                         txt(lang(
                             u8"このままダンジョンを出ると、この階のクエストは達成できない…"s,
@@ -3030,17 +3032,17 @@ label_2181_internal:
                     }
                 }
             }
-            gdata(64) = gdata(850);
-            gdata(65) = 1;
+            gdata_destination_map = gdata(850);
+            gdata_destination_dungeon_level = 1;
             if (efstatus <= -1)
             {
                 if (rnd(3) == 0)
                 {
-                    gdata(64) = 41;
-                    gdata(65) = 1;
+                    gdata_destination_map = 41;
+                    gdata_destination_dungeon_level = 1;
                 }
             }
-            gdata(63) = 5 + rnd(10);
+            gdata_is_returning_or_escaping = 5 + rnd(10);
         }
         goto label_2186_internal;
     case 428:
@@ -3050,12 +3052,12 @@ label_2181_internal:
             obvious = 0;
             goto label_2186_internal;
         }
-        if (gdata(63) != 0)
+        if (gdata_is_returning_or_escaping != 0)
         {
             txt(lang(
                 u8"帰還を中止した。"s,
                 u8"The air around you gradually loses power."s));
-            gdata(63) = 0;
+            gdata_is_returning_or_escaping = 0;
         }
         else
         {
@@ -3064,8 +3066,8 @@ label_2181_internal:
             {
                 if (rnd(3) == 0)
                 {
-                    gdata(64) = 41;
-                    gdata(65) = 1;
+                    gdata_destination_map = 41;
+                    gdata_destination_dungeon_level = 1;
                 }
             }
         }
@@ -3337,7 +3339,8 @@ label_2181_internal:
             obvious = 0;
             goto label_2186_internal;
         }
-        if (gdata(20) == 6 || gdata(20) == 40 || gdata(20) == 42)
+        if (gdata_current_map == 6 || gdata_current_map == 40
+            || gdata_current_map == 42)
         {
             obvious = 0;
             txt(lang(
@@ -3580,7 +3583,7 @@ label_2181_internal:
         ci = efcibk;
         --inv_number(ci);
         cell_refresh(inv_x(ci), inv_y(ci));
-        autosave = 1 * (gdata(20) != 35);
+        autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 21:
     case 1127:
@@ -3674,14 +3677,16 @@ label_2181_internal:
         }
         snd(24);
         p = rnd((efp + 1)) / 100 + 1;
-        gdata(97) += p;
+        gdata_rights_to_succeed_to += p;
         txtef(5);
         txt(lang(
             u8"あなたは遺産相続人として認められた(+"s + p + u8")"s,
             u8"You claim the right of succession. (+"s + p + u8")"s));
         txt(lang(
-            u8"今やあなたは"s + gdata(97) + u8"個の遺産を相続できる。"s,
-            u8"You can now inherit "s + gdata(97) + u8" items."s));
+            u8"今やあなたは"s + gdata_rights_to_succeed_to
+                + u8"個の遺産を相続できる。"s,
+            u8"You can now inherit "s + gdata_rights_to_succeed_to
+                + u8" items."s));
         goto label_2186_internal;
     case 1124:
     case 1125:
@@ -3741,17 +3746,17 @@ label_2181_internal:
         }
         if (efid == 630)
         {
-            if (gdata(25) < 10)
+            if (gdata_charge_power < 10)
             {
                 txt(lang(
                     u8"充填するには最低でも魔力の貯蓄が10必要だ。"s,
                     u8"You need at least 10 recharge powers to recharge items."s));
                 goto label_2186_internal;
             }
-            gdata(25) -= 10;
+            gdata_charge_power -= 10;
             txt(lang(
-                u8"魔力の貯蓄を10消費した(残り"s + gdata(25) + u8")"s,
-                u8"You spend 10 recharge powers. (Total:"s + gdata(25)
+                u8"魔力の貯蓄を10消費した(残り"s + gdata_charge_power + u8")"s,
+                u8"You spend 10 recharge powers. (Total:"s + gdata_charge_power
                     + u8")"s));
         }
         invsubroutine = 1;
@@ -3889,12 +3894,14 @@ label_2181_internal:
                 }
                 animeload(8, cc);
                 p = p * inv_count(ci);
-                gdata(25) += p;
+                gdata_charge_power += p;
                 txt(lang(
                     itemname(ci) + u8"を破壊して"s + p
-                        + u8"の魔力を抽出した(計"s + gdata(25) + u8")"s,
+                        + u8"の魔力を抽出した(計"s + gdata_charge_power
+                        + u8")"s,
                     u8"You destroy "s + itemname(ci) + u8" and extract "s + p
-                        + u8" recharge powers. (Total:"s + gdata(25) + u8")"s));
+                        + u8" recharge powers. (Total:"s + gdata_charge_power
+                        + u8")"s));
                 inv_number(ci) = 0;
                 label_1521();
             }
@@ -3963,7 +3970,7 @@ label_2181_internal:
             int stat = label_20592();
             if (stat == 1)
             {
-                autosave = 1 * (gdata(20) != 35);
+                autosave = 1 * (gdata_current_map != 35);
                 animeload(8, cc);
                 if (efstatus >= 0)
                 {
@@ -4039,7 +4046,7 @@ label_2181_internal:
         }
         if (f == 1)
         {
-            autosave = 1 * (gdata(20) != 35);
+            autosave = 1 * (gdata_current_map != 35);
             animeload(8, cc);
             fltbk = refitem(inv_id(ci), 5);
             valuebk = calcitemvalue(ci, 0);

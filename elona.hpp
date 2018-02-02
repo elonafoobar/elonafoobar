@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 #include "macro_cdata.hpp"
+#include "macro_gdata.hpp"
 #include "macro_inv.hpp"
 
 #if __has_include(<filesystem>)

@@ -427,7 +427,7 @@ label_20591:
                     {
                         if (invctrl(1) == 0)
                         {
-                            if (gdata(20) == 36)
+                            if (gdata_current_map == 36)
                             {
                                 if (inv_id(cnt) != 687 || inv_param2(cnt) == 0)
                                 {
@@ -578,9 +578,9 @@ label_20591:
     {
         if (invctrl(1) == 0)
         {
-            if (gdata(20) == 36)
+            if (gdata_current_map == 36)
             {
-                if (gdata(266) <= 0)
+                if (gdata_mages_guild_quota <= 0)
                 {
                     txt(lang(
                         u8"現在魔術士ギルドのノルマはない。"s,
@@ -690,11 +690,11 @@ label_20591:
         {
             if (invctrl(1) == 0)
             {
-                if (gdata(20) == 36)
+                if (gdata_current_map == 36)
                 {
                     txt(lang(
-                        u8"ノルマ残り: "s + gdata(266) + u8"GP"s,
-                        ""s + gdata(266)
+                        u8"ノルマ残り: "s + gdata_mages_guild_quota + u8"GP"s,
+                        ""s + gdata_mages_guild_quota
                             + u8"guild points are needed to gain a rank."s));
                 }
             }
@@ -914,7 +914,7 @@ label_2061_internal:
     s = ""s + listmax + u8" items"s;
     s += u8"  (重さ合計 "s + cnvweight(cdata_inventory_weight(0)) + u8"/"s
         + cnvweight(cdata_max_inventory_weight(0)) + u8"  荷車 "s
-        + cnvweight(gdata(80)) + u8")"s;
+        + cnvweight(gdata_cargo_weight) + u8")"s;
     if (invctrl == 25)
     {
         s = ""s;
@@ -1322,7 +1322,7 @@ label_2061_internal:
             {
                 if (invctrl(1) == 1)
                 {
-                    if (gdata(97) < 1)
+                    if (gdata_rights_to_succeed_to < 1)
                     {
                         txt(lang(
                             u8"遺産の相続権を持っていない。"s,
@@ -1493,20 +1493,20 @@ label_2061_internal:
             {
                 if (invctrl(1) == 1)
                 {
-                    --gdata(97);
+                    --gdata_rights_to_succeed_to;
                     if (invctrl(1) == 1)
                     {
                         txt(lang(
-                            u8"残り"s + gdata(97)
+                            u8"残り"s + gdata_rights_to_succeed_to
                                 + u8"個分のアイテムの相続権を持っている。"s,
-                            u8"You can claim "s + gdata(97)
-                                + u8" more heirloom"s + _s2(gdata(97))
-                                + u8"."s));
+                            u8"You can claim "s + gdata_rights_to_succeed_to
+                                + u8" more heirloom"s
+                                + _s2(gdata_rights_to_succeed_to) + u8"."s));
                     }
                 }
                 if (invctrl(1) == 4)
                 {
-                    ++gdata(812);
+                    ++gdata_gift_count_of_little_sister;
                     invsubroutine = 0;
                     return 1;
                 }
@@ -1997,12 +1997,13 @@ label_2061_internal:
             if (invctrl(1) == 0)
             {
                 snd(100);
-                if (gdata(20) == 36)
+                if (gdata_current_map == 36)
                 {
-                    gdata(266) -= (inv_param1(ci) + 1) * inv_number(ci);
-                    if (gdata(266) <= 0)
+                    gdata_mages_guild_quota -=
+                        (inv_param1(ci) + 1) * inv_number(ci);
+                    if (gdata_mages_guild_quota <= 0)
                     {
-                        gdata(266) = 0;
+                        gdata_mages_guild_quota = 0;
                     }
                     txtef(2);
                     txt(lang(
@@ -2010,7 +2011,7 @@ label_2061_internal:
                             u8"You deliver "s + itemname(ci) + u8". "s)
                         + u8"("s + (inv_param1(ci) + 1) * inv_number(ci)
                         + u8" Guild Point)"s);
-                    if (gdata(266) == 0)
+                    if (gdata_mages_guild_quota == 0)
                     {
                         snd(51);
                         txtef(2);
@@ -2021,16 +2022,18 @@ label_2061_internal:
                 }
                 else
                 {
-                    qdata(13, gdata(72)) += inv_weight(ci) * inv_number(ci);
+                    qdata(13, gdata_executing_immediate_quest) +=
+                        inv_weight(ci) * inv_number(ci);
                     txtef(2);
                     txt(lang(
                             itemname(ci) + u8"を納入した。"s,
                             u8"You deliver"s + itemname(ci) + u8"."s)
                         + u8" +"s + cnvweight(inv_weight(ci) * inv_number(ci))
                         + lang(u8"  納入済み"s, u8" Delivered "s) + u8"("s
-                        + cnvweight(qdata(13, gdata(72))) + u8") "s
-                        + lang(u8"納入ノルマ"s, u8"Quota "s) + u8"("s
-                        + cnvweight(qdata(12, gdata(72))) + u8")"s);
+                        + cnvweight(qdata(13, gdata_executing_immediate_quest))
+                        + u8") "s + lang(u8"納入ノルマ"s, u8"Quota "s) + u8"("s
+                        + cnvweight(qdata(12, gdata_executing_immediate_quest))
+                        + u8")"s);
                 }
                 inv_number(ci) = 0;
                 label_1521();
@@ -2045,7 +2048,7 @@ label_2061_internal:
                         u8"金が足りない…"s, u8"You don't have enough money."s));
                     goto label_2060_internal;
                 }
-                if (gdata(179) <= 0)
+                if (gdata_left_bill <= 0)
                 {
                     snd(27);
                     txt(lang(
@@ -2060,7 +2063,7 @@ label_2061_internal:
                     itemname(ci) + u8"を支払った。"s,
                     u8"You pay "s + itemname(ci) + u8"."s));
                 --inv_number(ci);
-                --gdata(179);
+                --gdata_left_bill;
                 label_1521();
                 screenupdate = -1;
                 label_1419();
