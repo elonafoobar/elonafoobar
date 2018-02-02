@@ -722,4 +722,144 @@ void label_2716()
 
 
 
+void label_2713()
+{
+    notesel(note_buff);
+    noteload(fs::u8path(u8"./config.txt"));
+    f = 0;
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        {
+            noteget(s, cnt);
+            if (!strutil::contains(s(0), valn(0)))
+            {
+                continue;
+            }
+            i = 1;
+            p = 0;
+            {
+                int cnt = 0;
+                for (;; ++cnt)
+                {
+                    p(2) = instr(s, p, u8"\""s);
+                    if (p(2) == -1)
+                    {
+                        break;
+                    }
+                    p += p(2);
+                    p(1) = instr(s, p + 1, u8"\""s) + p + 1;
+                    if (p(1) == -1)
+                    {
+                        break;
+                    }
+                    s = strmid(s, 0, p + 1) + valn(i) + strmid(s, p(1), 999);
+                    p += std::size(valn(i)) + 2;
+                    ++i;
+                }
+            }
+            noteadd(s, cnt, 1);
+            f = 1;
+            break;
+        }
+    }
+    if (f == 0)
+    {
+        noteadd(""s + valn + u8" \""s + valn(1) + u8"\""s);
+    }
+    notesave(fs::u8path(u8"./config.txt"));
+    return;
+}
+
+
+
+void label_2715()
+{
+    key_select(0) = u8"a"s;
+    key_select(1) = u8"b"s;
+    key_select(2) = u8"c"s;
+    key_select(3) = u8"d"s;
+    key_select(4) = u8"e"s;
+    key_select(5) = u8"f"s;
+    key_select(6) = u8"g"s;
+    key_select(7) = u8"h"s;
+    key_select(8) = u8"i"s;
+    key_select(9) = u8"j"s;
+    key_select(10) = u8"k"s;
+    key_select(11) = u8"l"s;
+    key_select(12) = u8"m"s;
+    key_select(13) = u8"n"s;
+    key_select(14) = u8"o"s;
+    key_select(15) = u8"p"s;
+    key_select(16) = u8"q"s;
+    key_select(17) = u8"r"s;
+    key_select(18) = u8"s"s;
+
+    std::unique_ptr<config_base> config_list[] = {
+        std::make_unique<config_integer>(
+            u8"language.", [&](auto value) { cfg_language = value; }),
+        std::make_unique<config_integer>(
+            u8"fullscreen.", [&](auto value) { cfg_fullscreen = value; }),
+        std::make_unique<config_integer>(
+            u8"music.", [&](auto value) { cfg_music = value; }),
+        std::make_unique<config_integer>(
+            u8"sound.", [&](auto value) { cfg_sound = value; }),
+        std::make_unique<config_integer>(
+            u8"extraRace.", [&](auto value) { cfg_extrarace = value; }),
+        std::make_unique<config_integer>(
+            u8"joypad.", [&](auto value) { cfg_joypad = value; }),
+        std::make_unique<config_integer>(
+            u8"msg_box.", [&](auto value) { cfg_msg_box = value; }),
+        std::make_unique<config_integer>(
+            u8"msgLine.", [&](auto value) { inf_msgline = value; }),
+        std::make_unique<config_integer>(
+            u8"tileSize.", [&](auto value) { inf_tiles = value; }),
+        std::make_unique<config_integer>(
+            u8"fontSize .",
+            [&](auto value) { inf_mesfont = value; }), // not "fontSize."
+        std::make_unique<config_integer>(
+            u8"infVerType.", [&](auto value) { inf_vertype = value; }),
+        std::make_unique<config_integer>(
+            u8"windowX.", [&](auto value) { windowx = value; }),
+        std::make_unique<config_integer>(
+            u8"windowY.", [&](auto value) { windowy = value; }),
+        std::make_unique<config_integer>(
+            u8"windowW.", [&](auto value) { windoww = value; }),
+        std::make_unique<config_integer>(
+            u8"windowH.", [&](auto value) { windowh = value; }),
+        std::make_unique<config_integer>(
+            u8"clockX.", [&](auto value) { inf_clockx = value; }),
+        std::make_unique<config_integer>(
+            u8"clockW.", [&](auto value) { inf_clockw = value; }),
+        std::make_unique<config_integer>(
+            u8"clockH.", [&](auto value) { inf_clockh = value; }),
+        std::make_unique<config_string>(
+            u8"defLoadFolder.", [&](auto value) { defload = value; }),
+        std::make_unique<config_integer>(
+            u8"charamake_wiz.", [&](auto value) { cfg_wizard = value; }),
+    };
+
+    std::fstream file{fs::u8path(u8"./config.txt")};
+    if (!file)
+    {
+        throw config_loading_error{u8"Failed to open: "s
+                                   + fs::u8path(u8"./config.txt").u8string()};
+    }
+
+    std::string line;
+    while (std::getline(file, line))
+    {
+        for (const auto& config : config_list)
+        {
+            if (config->matches(line))
+            {
+                config->set(line);
+                break;
+            }
+        }
+    }
+}
+
+
+
 } // namespace elona
