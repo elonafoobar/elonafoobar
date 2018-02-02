@@ -1591,85 +1591,31 @@ int calcattackdmg(int prm_894)
 
 
 
-int calcmedalvalue(int prm_897)
+int calcmedalvalue(int ci)
 {
-    if (inv_id(prm_897) == 430)
+    switch (inv_id(ci))
     {
-        return 5;
+    case 430: return 5;
+    case 431: return 8;
+    case 502: return 7;
+    case 480: return 20;
+    case 421: return 15;
+    case 603: return 20;
+    case 615: return 5;
+    case 559: return 10;
+    case 516: return 3;
+    case 616: return 18;
+    case 623: return 85;
+    case 624: return 25;
+    case 505: return 12;
+    case 625: return 11;
+    case 626: return 30;
+    case 627: return 55;
+    case 56: return 65;
+    case 742: return 72;
+    case 760: return 94;
+    default: return 1;
     }
-    if (inv_id(prm_897) == 431)
-    {
-        return 8;
-    }
-    if (inv_id(prm_897) == 502)
-    {
-        return 7;
-    }
-    if (inv_id(prm_897) == 480)
-    {
-        return 20;
-    }
-    if (inv_id(prm_897) == 421)
-    {
-        return 15;
-    }
-    if (inv_id(prm_897) == 603)
-    {
-        return 20;
-    }
-    if (inv_id(prm_897) == 615)
-    {
-        return 5;
-    }
-    if (inv_id(prm_897) == 559)
-    {
-        return 10;
-    }
-    if (inv_id(prm_897) == 516)
-    {
-        return 3;
-    }
-    if (inv_id(prm_897) == 616)
-    {
-        return 18;
-    }
-    if (inv_id(prm_897) == 623)
-    {
-        return 85;
-    }
-    if (inv_id(prm_897) == 624)
-    {
-        return 25;
-    }
-    if (inv_id(prm_897) == 505)
-    {
-        return 12;
-    }
-    if (inv_id(prm_897) == 625)
-    {
-        return 11;
-    }
-    if (inv_id(prm_897) == 626)
-    {
-        return 30;
-    }
-    if (inv_id(prm_897) == 627)
-    {
-        return 55;
-    }
-    if (inv_id(prm_897) == 56)
-    {
-        return 65;
-    }
-    if (inv_id(prm_897) == 742)
-    {
-        return 72;
-    }
-    if (inv_id(prm_897) == 760)
-    {
-        return 94;
-    }
-    return 1;
 }
 
 
