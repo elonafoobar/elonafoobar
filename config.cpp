@@ -106,7 +106,7 @@ struct config_integer : public config_base
         {
             throw config_loading_error{"Too few records: "s + s};
         }
-        callback(stoi(records.front()));
+        callback(elona::stoi(records.front()));
     }
 
 
@@ -168,7 +168,7 @@ struct config_key : public config_base
         {
             throw config_loading_error{"Too few records: "s + s};
         }
-        callback(records[0], stoi(records[1]));
+        callback(records[0], elona::stoi(records[1]));
     }
 
 

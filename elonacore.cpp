@@ -2895,7 +2895,7 @@ void label_0184()
         buff = lang(
             u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
             u8"You've done well. Thanks. Here's your reward."s);
-        if (stoi(s(5)) != 0)
+        if (elona::stoi(s(5)) != 0)
         {
             txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), ""s));
         }
@@ -19085,7 +19085,7 @@ label_1394_internal:
                     break;
                 }
                 list(0, listmax) =
-                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
+                    elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 listn(0, listmax) =
@@ -19093,7 +19093,7 @@ label_1394_internal:
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 list(1, listmax) =
-                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
+                    elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
                 listn(1, listmax) = ""s + list(1, listmax);
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
@@ -19110,7 +19110,7 @@ label_1394_internal:
                     break;
                 }
                 chat_count_at_m147 =
-                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
+                    elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 1;
                 if (cnt == 0)
                 {
@@ -19220,7 +19220,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
                     if (cnt == 0)
                     {
                         list(0, listmax) = listmax;
-                        list(1, listmax) = stoi(s_at_m147);
+                        list(1, listmax) = elona::stoi(s_at_m147);
                     }
                     if (cnt == 2)
                     {
@@ -19229,8 +19229,8 @@ int net_dllist(const std::string& prm_886, int prm_887)
                     }
                     if (cnt == 3)
                     {
-                        list(2, listmax) = stoi(s_at_m147);
-                        if (stoi(s_at_m147) != 100001)
+                        list(2, listmax) = elona::stoi(s_at_m147);
+                        if (elona::stoi(s_at_m147) != 100001)
                         {
                             if (prm_887 == 0)
                             {
@@ -26660,10 +26660,10 @@ void label_1572()
         {
             noteget(msgtemp, cnt);
             csvsort(s, msgtemp, 44);
-            booktitle(stoi(s)) = lang(s(1), s(2));
-            if (stoi(s(3)) == 1)
+            booktitle(elona::stoi(s(0))) = lang(s(1), s(2));
+            if (elona::stoi(s(3)) == 1)
             {
-                isetbook(p) = stoi(s);
+                isetbook(p) = elona::stoi(s(0));
                 ++p;
             }
         }
@@ -35667,14 +35667,14 @@ void label_1725()
                 for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     flt(list(0, cnt2), list(1, cnt2));
-                    flttypemajor = stoi(listn(0, cnt2));
+                    flttypemajor = elona::stoi(listn(0, cnt2));
                     int stat = itemcreate(-1, 0, -1, -1, 0);
                     if (stat == 0)
                     {
                         f = 0;
                         break;
                     }
-                    if (inv_value(ci) > stoi(listn(1, cnt2)) * 2)
+                    if (inv_value(ci) > elona::stoi(listn(1, cnt2)) * 2)
                     {
                         f = 1;
                         break;
@@ -35696,8 +35696,8 @@ void label_1725()
             }
             if (f == 0)
             {
-                itemcreate(-1, 54, -1, -1, stoi(listn(1, cnt)));
-                income += stoi(listn(1, cnt));
+                itemcreate(-1, 54, -1, -1, elona::stoi(listn(1, cnt)));
+                income += elona::stoi(listn(1, cnt));
             }
             else
             {
@@ -43039,7 +43039,7 @@ label_1857_internal:
             }
             s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            if (stoi(listn(0, p)) == -1)
+            if (elona::stoi(listn(0, p)) == -1)
             {
                 p(2) = 3;
             }
@@ -49360,7 +49360,7 @@ void label_1942()
     noteget(s, 5);
     noteget(s(1), 6);
     username = ""s + s;
-    userrelation = stoi(s(1));
+    userrelation = elona::stoi(s(1));
     msg_halt();
     label_2114();
     return;
@@ -49404,7 +49404,7 @@ label_19431_internal:
         noteget(s(2), 4);
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
-        list(2, listmax) = stoi(s(2));
+        list(2, listmax) = elona::stoi(s(2));
         listn(0, listmax) = u8"("s + path.filename().generic_u8string()
             + u8") "s + s + u8" "s + s(1);
         listn(1, listmax) = path.filename();
@@ -49572,12 +49572,12 @@ label_1945_internal:
         if (comctrl == 0 || comctrl == 2)
         {
             username = ""s + s;
-            userrelation = stoi(s(1));
+            userrelation = elona::stoi(s(1));
         }
         if (comctrl == 1)
         {
-            rtval(0) = stoi(s);
-            rtval(1) = stoi(s(1));
+            rtval(0) = elona::stoi(s(0));
+            rtval(1) = elona::stoi(s(1));
         }
         return 1;
     }
@@ -56958,7 +56958,7 @@ void label_2048()
         s(3) = s;
     }
     s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
-        + strmid(s(2), 0, (3 + (stoi(s(2)) >= 10)));
+        + strmid(s(2), 0, (3 + (elona::stoi(s(2)) >= 10)));
     if (val == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
@@ -60098,7 +60098,7 @@ void label_2095()
             SDIM2(ziptmp2, p);
             memcpy_(ziptmp1, filebuff, p, 0, lenhead);
             memcpy_(ziptmp2, filebuff, p, 0, lenhead + p);
-            len = stoi(ziptmp2);
+            len = elona::stoi(ziptmp2(0));
             SDIM2(filetemp, len - p * 2);
             memcpy_(filetemp, filebuff, len - p * 2, 0, lenhead + p * 2);
             bsave(folder + ziptmp1, filetemp);
@@ -60194,7 +60194,7 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
                 p_at_m188(2),
                 0,
                 lenhead_at_m188 + p_at_m188(1));
-            len_at_m188 = stoi(ziptmp2_at_m188);
+            len_at_m188 = elona::stoi(ziptmp2_at_m188(0));
             if (len_at_m188 == 0)
             {
                 break;
@@ -60281,8 +60281,8 @@ void label_2104()
                 {
                     break;
                 }
-                sdata(stoi(unres(cnt * 2)), rc) +=
-                    stoi(unres((cnt * 2 + 1))) * 50;
+                sdata(elona::stoi(unres(cnt * 2)), rc) +=
+                    elona::stoi(unres((cnt * 2 + 1))) * 50;
             }
         }
     }
@@ -60432,14 +60432,14 @@ void label_2105()
             userdatan(5, tg) = getnpctxt(u8"resist."s, ""s);
             s = getnpctxt(u8"meleeElem."s, u8"0,0"s);
             csvstr2(s, s);
-            userdata(11, tg) = stoi(s) * 100000 + stoi(s(1));
+            userdata(11, tg) = elona::stoi(s(0)) * 100000 + elona::stoi(s(1));
             s = getnpctxt(u8"bitOn."s, u8"0,0"s);
             csvstr2(s, s);
             {
                 int cnt = 0;
                 for (;; ++cnt)
                 {
-                    p = stoi(s(cnt));
+                    p = elona::stoi(s(cnt));
                     if (cnt > 20 || p == 0)
                     {
                         break;
@@ -60453,7 +60453,7 @@ void label_2105()
                 int cnt = 0;
                 for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    userdata(15 + cnt, cnt2) = stoi(s(cnt));
+                    userdata(15 + cnt, cnt2) = elona::stoi(s(cnt));
                 }
             }
             s = getnpctxt(u8"aiActSub."s, u8"0,0,0,0,0"s);
@@ -60462,20 +60462,21 @@ void label_2105()
                 int cnt = 0;
                 for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    userdata(20 + cnt, cnt2) = stoi(s(cnt));
+                    userdata(20 + cnt, cnt2) = elona::stoi(s(cnt));
                 }
             }
-            userdata(12, tg) = stoi(getnpctxt(u8"select."s, u8"0"s));
-            userdata(2, tg) = stoi(getnpctxt(u8"level."s, u8"1"s));
-            userdata(3, tg) = stoi(getnpctxt(u8"sex."s, u8"-1"s));
-            userdata(4, tg) = stoi(getnpctxt(u8"relation."s, u8"-1"s));
-            userdata(5, tg) = stoi(getnpctxt(u8"fixLv."s, u8"0"s));
-            userdata(6, tg) = stoi(getnpctxt(u8"rare."s, u8"0"s));
-            userdata(7, tg) = stoi(getnpctxt(u8"aiCalm."s, u8"1"s));
-            userdata(8, tg) = stoi(getnpctxt(u8"aiMove."s, u8"50"s));
-            userdata(9, tg) = stoi(getnpctxt(u8"aiDist."s, u8"1"s));
-            userdata(10, tg) = stoi(getnpctxt(u8"aiHeal."s, u8"0"s));
-            unaiactsubfreq(tg) = stoi(getnpctxt(u8"aiActSubFreq."s, u8"0"s));
+            userdata(12, tg) = elona::stoi(getnpctxt(u8"select."s, u8"0"s));
+            userdata(2, tg) = elona::stoi(getnpctxt(u8"level."s, u8"1"s));
+            userdata(3, tg) = elona::stoi(getnpctxt(u8"sex."s, u8"-1"s));
+            userdata(4, tg) = elona::stoi(getnpctxt(u8"relation."s, u8"-1"s));
+            userdata(5, tg) = elona::stoi(getnpctxt(u8"fixLv."s, u8"0"s));
+            userdata(6, tg) = elona::stoi(getnpctxt(u8"rare."s, u8"0"s));
+            userdata(7, tg) = elona::stoi(getnpctxt(u8"aiCalm."s, u8"1"s));
+            userdata(8, tg) = elona::stoi(getnpctxt(u8"aiMove."s, u8"50"s));
+            userdata(9, tg) = elona::stoi(getnpctxt(u8"aiDist."s, u8"1"s));
+            userdata(10, tg) = elona::stoi(getnpctxt(u8"aiHeal."s, u8"0"s));
+            unaiactsubfreq(tg) =
+                elona::stoi(getnpctxt(u8"aiActSubFreq."s, u8"0"s));
             p = instr(txtbuff, 0, u8"%txt"s);
             txtbuff = strmid(txtbuff, p, instr(txtbuff, 0, u8"%endTxt"s) - p);
             usertxt(tg) = strmid(txtbuff, 0, 7998);
@@ -60513,7 +60514,7 @@ void label_2105()
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
         file = entry.path().filename().generic_u8string();
-        p = stoi(strmid(file, 6, instr(file, 6, u8"."s)));
+        p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
         pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
         picload(folder + file, 1);
     }
@@ -61318,7 +61319,8 @@ label_21261_internal:
                 gcopy(3, 312, 336, 24, 24);
                 pos(x + dx - 51, y + 4);
                 gcopy(3, 336, 336, 24, 24);
-                inputlog2 = ""s + stoi(inputlog) + u8"("s + val(5) + u8")"s;
+                inputlog2 =
+                    ""s + elona::stoi(inputlog(0)) + u8"("s + val(5) + u8")"s;
                 pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
                 color(255, 255, 255);
                 mes(inputlog2);
@@ -61747,7 +61749,7 @@ label_2132_internal:
         gcopy(3, 312, 336, 24, 24);
         pos(dx(1) + sx + dx - 51, dy + 4);
         gcopy(3, 336, 336, 24, 24);
-        inputlog2 = ""s + stoi(inputlog) + u8"("s + val(5) + u8")"s;
+        inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val(5) + u8")"s;
         pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
         color(255, 255, 255);
         mes(inputlog2);
@@ -61789,14 +61791,14 @@ label_2132_internal:
         {
             if (key == promptl(1, cnt))
             {
-                rtval = stoi(promptl(2, cnt));
+                rtval = elona::stoi(promptl(2, cnt));
                 break;
             }
         }
     }
     if (val(3) == 2)
     {
-        val = stoi(inputlog);
+        val = elona::stoi(inputlog(0));
         if (key == key_west || key == key_pagedown)
         {
             snd(5);
@@ -61920,7 +61922,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (stoi(buff) == 1)
+    if (elona::stoi(buff(0)) == 1)
     {
         {
             int cnt = 0;
@@ -61936,7 +61938,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (stoi(buff) == 2)
+    if (elona::stoi(buff(0)) == 2)
     {
         {
             int cnt = 0;
@@ -61958,7 +61960,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (stoi(buff) == 3)
+    if (elona::stoi(buff(0)) == 3)
     {
         inv_getheader(0);
         {
@@ -61971,7 +61973,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (stoi(buff) == 4)
+    if (elona::stoi(buff(0)) == 4)
     {
         if (dbg_compare == 0)
         {
@@ -62112,7 +62114,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (stoi(buff) == 5)
+    if (elona::stoi(buff(0)) == 5)
     {
         {
             int cnt = 0;
@@ -75308,7 +75310,7 @@ void label_22610()
         p = cdata_sex(tc) * 64 + cdata_portrait(tc);
         if (scenemode)
         {
-            p = stoi(actor(1, rc));
+            p = elona::stoi(actor(1, rc));
         }
         pos(wx + 42, wy + 42);
         gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
@@ -80411,7 +80413,7 @@ label_2682_internal:
     }
     if (strutil::contains(s(0), u8"{chat_"))
     {
-        rc = stoi(strmid(s, 6, 1));
+        rc = elona::stoi(strmid(s, 6, 1));
         scidxtop = scidx;
         val = 1;
         goto label_2682_internal;
@@ -80503,7 +80505,7 @@ label_2682_internal:
     }
     if (strutil::contains(s(0), u8"{actor_"))
     {
-        rc = stoi(strmid(s, 7, 1));
+        rc = elona::stoi(strmid(s, 7, 1));
         csvsort(s, s(1), 44);
         actor(0, rc) = s;
         actor(1, rc) = s(1);
@@ -83655,7 +83657,7 @@ void label_2719()
                         ++i;
                     }
                 }
-                userrelation = stoi(rtvaln);
+                userrelation = elona::stoi(rtvaln(0));
                 continue;
             }
             if (strutil::contains(s(0), u8"password."))
@@ -83700,7 +83702,7 @@ void label_2720()
     noteget(s, 5);
     usermsg = ""s + s;
     noteget(s, 6);
-    userrelation = stoi(s);
+    userrelation = elona::stoi(s(0));
     return;
 }
 
@@ -86787,10 +86789,10 @@ void label_2752()
                     p = cnt * 4;
                     noteget(s(10), p + 3);
                     csvsort(s, s(10), 44);
-                    p(2) = stoi(s);
+                    p(2) = elona::stoi(s(0));
                     noteget(s(10), p + 7);
                     csvsort(s, s(10), 44);
-                    p(3) = stoi(s);
+                    p(3) = elona::stoi(s(0));
                     if (p(3) > p(2))
                     {
                         if (cnt == page)
@@ -86944,7 +86946,7 @@ void label_2753()
             pos(x + 480, y + 20);
             color(10, 10, 10);
             mes(""s + s + lang(u8"点"s, ""s));
-            p = stoi(s(1)) % 1000;
+            p = elona::stoi(s(1)) % 1000;
             chara_preparepic(p);
             pos(x - 22, y + 12);
             gmode(2, chipc(2, p), chipc(3, p));
