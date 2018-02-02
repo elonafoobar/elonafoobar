@@ -1768,11 +1768,11 @@ label_1565_internal:
     }
     playerid = u8"sav_"s + cmname;
     const auto save_dir = fs::u8path(u8"./save");
-    if (range::all_of(
+    if (range::any_of(
             filesystem::dir_entries{save_dir,
                                     filesystem::dir_entries::type::dir},
             [&](const auto& entry) {
-                return entry.path().filename().generic_u8string() != playerid;
+                return entry.path().filename().generic_u8string() == playerid;
             }))
     {
         redraw(0);
