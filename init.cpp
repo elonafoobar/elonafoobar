@@ -2038,7 +2038,7 @@ void label_2732()
                 gdata(120 + cnt) = 5000;
             }
         }
-        gdata_version = elona_int(elona_double(u8"1.22"s) * 1000);
+        gdata_version = 1220;
         gdata(41) = 424;
         gdata(42) = 300;
         gdata(43) = 631;
@@ -2357,7 +2357,7 @@ void label_2732()
         gdata_current_map = 7;
         gdata_current_dungeon_level = 1;
         gdata_entrance_type = 4;
-        gdata_version = elona_int(elona_double(u8"1.22"s) * 1000);
+        gdata_version = 1220;
         gdata_weather = 3;
         gdata_hours_until_weather_changes = 6;
         {

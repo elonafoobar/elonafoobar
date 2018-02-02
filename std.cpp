@@ -621,17 +621,6 @@ std::string dirinfo(int n)
 }
 
 
-double elona_double(const std::string& s)
-{
-    return std::stod(s);
-}
-
-double elona_double(int n)
-{
-    return static_cast<double>(n);
-}
-
-
 void exec(const std::string&, int)
 {
 }
@@ -1039,23 +1028,23 @@ int instr(const std::string& str, size_t pos, const std::string pattern)
     return ret == std::string::npos ? -1 : static_cast<int>(ret - pos);
 }
 
-int elona_int(double x)
-{
-    return static_cast<int>(x);
-}
 
-int elona_int(const std::string& s)
+
+int stoi(std::string_view s)
 {
     try
     {
-        return std::stoi(s);
+        return std::stoi(std::string{s});
     }
-    catch (...)
+    catch (std::invalid_argument&)
+    {
+        return 0;
+    }
+    catch (std::out_of_range&)
     {
         return 0;
     }
 }
-
 
 
 size_t length(const std::string& str)
@@ -1491,12 +1480,6 @@ void stick(int& out, int allow_repeat_keys)
     // out += check_key_pressed(8,  /* Mouse left */,  false);
     // out += check_key_pressed(9,  /* Mouse right */, false);
     out += check_key_pressed(10, Key::tab, false);
-}
-
-
-std::string elona_str(int n)
-{
-    return std::to_string(n);
 }
 
 

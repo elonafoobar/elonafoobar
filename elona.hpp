@@ -397,9 +397,6 @@ int dialog(const std::string& message, int = 0);
 std::string dirinfo(int n);
 
 
-double elona_double(const std::string& s);
-
-double elona_double(int n);
 
 void exec(const std::string&, int);
 
@@ -453,9 +450,9 @@ void gzoom(
 
 int instr(const std::string& str, size_t pos, const std::string pattern);
 
-int elona_int(double x);
 
-int elona_int(const std::string& s);
+int stoi(std::string_view s);
+
 
 template <typename T>
 size_t length(elona_vector2<T>& arr)
@@ -585,8 +582,6 @@ double sqrt(double x);
 
 void stick(int& out, int = 0);
 
-
-std::string elona_str(int n);
 
 size_t strlen_u(const std::string& str);
 

@@ -1359,7 +1359,7 @@ std::string calcage(int prm_762)
     {
         return lang(u8"不明"s, u8"Unknown"s);
     }
-    return elona_str(gdata_year - cdata_birth_year(prm_762));
+    return std::to_string(gdata_year - cdata_birth_year(prm_762));
 }
 int calcexpalive(int prm_892)
 {
@@ -1586,7 +1586,7 @@ int calcattackdmg(int prm_894)
         dice1 = 2;
         dice2 = sdata(106, cc) / 8 + 5;
         dmgmulti = 0.5
-            + elona_double(
+            + double(
                   (sdata(10, cc) + sdata(attackskill, cc) / 5
                    + sdata(152, cc) * 2))
                 / 40;
@@ -1602,7 +1602,7 @@ int calcattackdmg(int prm_894)
             dmgfix += inv_damage_bonus(ammo)
                 + inv_dice_x(ammo) * inv_dice_y(ammo) / 2;
             dmgmulti = 0.5
-                + elona_double(
+                + double(
                       (sdata(13, cc) + sdata(inv_skill(cw), cc) / 5
                        + sdata(attackskill, cc) / 5 + sdata(189, cc) * 3 / 2))
                     / 40;
@@ -1610,7 +1610,7 @@ int calcattackdmg(int prm_894)
         else
         {
             dmgmulti = 0.6
-                + elona_double(
+                + double(
                       (sdata(10, cc) + sdata(inv_skill(cw), cc) / 5
                        + sdata(attackskill, cc) / 5 + sdata(152, cc) * 2))
                     / 45;
@@ -1674,7 +1674,7 @@ int calcattackdmg(int prm_894)
     {
         dmgfix = -100;
     }
-    dmgmulti = elona_int(dmgmulti * 100);
+    dmgmulti = int(dmgmulti * 100);
     damage = role(dice1, dice2, dmgfix);
     if (critical)
     {

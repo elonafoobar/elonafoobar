@@ -61,25 +61,6 @@ std::vector<std::string_view> parse_records(std::string_view line)
 
 
 
-int stoi(std::string_view s)
-{
-    try
-    {
-        return std::stoi(std::string{s});
-    }
-    catch (std::invalid_argument&)
-    {
-        throw config_loading_error{"Cannot convert to an integer: "s
-                                   + std::string{s}};
-    }
-    catch (std::out_of_range&)
-    {
-        throw config_loading_error{"Out of range: "s + std::string{s}};
-    }
-}
-
-
-
 struct config_base
 {
     config_base(std::string_view pattern)

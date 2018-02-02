@@ -2766,7 +2766,7 @@ void label_0184()
         buff = lang(
             u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
             u8"You've done well. Thanks. Here's your reward."s);
-        if (elona_int(s(5)) != 0)
+        if (stoi(s(5)) != 0)
         {
             txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), ""s));
         }
@@ -4755,7 +4755,7 @@ void showcard2(int prm_425, int prm_426)
                 col_at_cardcontrol(2) = 105;
             }
             gmode(2);
-            s_at_cardcontrol = elona_str(card_at_cardcontrol(0, prm_425));
+            s_at_cardcontrol = std::to_string(card_at_cardcontrol(0, prm_425));
             tx_at_cardcontrol = 2;
             if (card_at_cardcontrol(0, prm_425) == 1)
             {
@@ -8146,7 +8146,7 @@ int dist(int prm_535, int prm_536, int prm_537, int prm_538)
     int d_at_m69 = 0;
     d_at_m69 = (prm_535 - prm_537) * (prm_535 - prm_537)
         + (prm_536 - prm_538) * (prm_536 - prm_538);
-    return elona_int(sqrt(d_at_m69));
+    return int(sqrt(d_at_m69));
 }
 int winposy(int prm_539, int prm_540)
 {
@@ -8522,7 +8522,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 = elona_int(elona_double(growth_at_m77) * 0.9);
+                growth_at_m77 = growth_at_m77 * 0.9;
                 if (growth_at_m77 < 1)
                 {
                     growth_at_m77 = 1;
@@ -8564,8 +8564,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 =
-                    elona_int(elona_double(growth_at_m77) * (-0.9 + 2)) + 1;
+                growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
                 if (growth_at_m77 > 400)
                 {
                     growth_at_m77 = 400;
@@ -8677,7 +8676,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 = elona_int(elona_double(growth_at_m77) * 0.9);
+                growth_at_m77 = growth_at_m77 * 0.9;
                 if (growth_at_m77 < 1)
                 {
                     growth_at_m77 = 1;
@@ -8720,8 +8719,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 =
-                    elona_int(elona_double(growth_at_m77) * (-0.9 + 2)) + 1;
+                growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
                 if (growth_at_m77 > 400)
                 {
                     growth_at_m77 = 400;
@@ -17650,7 +17648,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 catitem = prm_855;
             }
-            if (elona_int(sqrt(sdata(161, prm_855))) > rnd(150))
+            if (int(sqrt(sdata(161, prm_855))) > rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -18343,7 +18341,7 @@ label_1394_internal:
                     break;
                 }
                 list(0, listmax) =
-                    elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
+                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 listn(0, listmax) =
@@ -18351,7 +18349,7 @@ label_1394_internal:
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 list(1, listmax) =
-                    elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
+                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
                 listn(1, listmax) = ""s + list(1, listmax);
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
@@ -18368,7 +18366,7 @@ label_1394_internal:
                     break;
                 }
                 chat_count_at_m147 =
-                    elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
+                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 1;
                 if (cnt == 0)
                 {
@@ -18475,7 +18473,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
                     if (cnt == 0)
                     {
                         list(0, listmax) = listmax;
-                        list(1, listmax) = elona_int(s_at_m147);
+                        list(1, listmax) = stoi(s_at_m147);
                     }
                     if (cnt == 2)
                     {
@@ -18484,8 +18482,8 @@ int net_dllist(const std::string& prm_886, int prm_887)
                     }
                     if (cnt == 3)
                     {
-                        list(2, listmax) = elona_int(s_at_m147);
-                        if (elona_int(s_at_m147) != 100001)
+                        list(2, listmax) = stoi(s_at_m147);
+                        if (stoi(s_at_m147) != 100001)
                         {
                             if (prm_887 == 0)
                             {
@@ -22597,7 +22595,7 @@ void label_1477()
     cdata_rate_to_pierce(r1) = 0;
     if (sdata(186, r1))
     {
-        cdata_rate_of_critical_hit(r1) = elona_int(sqrt(sdata(186, r1))) + 2;
+        cdata_rate_of_critical_hit(r1) = int(sqrt(sdata(186, r1))) + 2;
     }
     else
     {
@@ -22905,8 +22903,8 @@ void label_1477()
     {
         if (cdata_pv(r1) > 0)
         {
-            cdata_pv(r1) = cdata_pv(r1)
-                * (120 + elona_int(sqrt(sdata(168, r1))) * 2) / 100;
+            cdata_pv(r1) =
+                cdata_pv(r1) * (120 + int(sqrt(sdata(168, r1))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
@@ -22980,7 +22978,7 @@ void label_1477()
     }
     if (cdata_equipment_type(r1) & 4)
     {
-        cdata_extra_attack(r1) += elona_int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
+        cdata_extra_attack(r1) += int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
     }
     if (cdata_rate_of_critical_hit(r1) > 30)
     {
@@ -23028,8 +23026,7 @@ void skillinit(int prm_926, int prm_927, int prm_928)
     }
     if (cdata_level(prm_927) > 1)
     {
-        p_at_m161 = elona_int(
-            std::exp(std::log(0.9) * cdata_level(prm_927)) * p_at_m161);
+        p_at_m161 = std::exp(std::log(0.9) * cdata_level(prm_927)) * p_at_m161;
     }
     if (p_at_m161 < 1)
     {
@@ -25643,10 +25640,10 @@ void label_1572()
         {
             noteget(msgtemp, cnt);
             csvsort(s, msgtemp, 44);
-            booktitle(elona_int(s)) = lang(s(1), s(2));
-            if (elona_int(s(3)) == 1)
+            booktitle(stoi(s)) = lang(s(1), s(2));
+            if (stoi(s(3)) == 1)
             {
-                isetbook(p) = elona_int(s);
+                isetbook(p) = stoi(s);
                 ++p;
             }
         }
@@ -34261,7 +34258,7 @@ void label_1725()
             ci = dblist(0, p);
             a = dblist(1, p);
             val = calcitemvalue(ci, 2);
-            val = val * elona_int((10 + sqrt(sdata(156, worker) * 200))) / 100;
+            val = val * int((10 + sqrt(sdata(156, worker) * 200))) / 100;
             if (val <= 1)
             {
                 continue;
@@ -34286,8 +34283,8 @@ void label_1725()
             {
                 list(0, listmax) = refitem(inv_id(ci), 7);
                 list(1, listmax) = inv_quality(ci);
-                listn(0, listmax) = elona_str(a);
-                listn(1, listmax) = elona_str(val);
+                listn(0, listmax) = std::to_string(a);
+                listn(1, listmax) = std::to_string(val);
                 ++listmax;
             }
             else
@@ -34365,14 +34362,14 @@ void label_1725()
                 for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     flt(list(0, cnt2), list(1, cnt2));
-                    flttypemajor = elona_int(listn(0, cnt2));
+                    flttypemajor = stoi(listn(0, cnt2));
                     int stat = itemcreate(-1, 0, -1, -1, 0);
                     if (stat == 0)
                     {
                         f = 0;
                         break;
                     }
-                    if (inv_value(ci) > elona_int(listn(1, cnt2)) * 2)
+                    if (inv_value(ci) > stoi(listn(1, cnt2)) * 2)
                     {
                         f = 1;
                         break;
@@ -34394,8 +34391,8 @@ void label_1725()
             }
             if (f == 0)
             {
-                itemcreate(-1, 54, -1, -1, elona_int(listn(1, cnt)));
-                income += elona_int(listn(1, cnt));
+                itemcreate(-1, 54, -1, -1, stoi(listn(1, cnt)));
+                income += stoi(listn(1, cnt));
             }
             else
             {
@@ -34437,8 +34434,7 @@ void label_1725()
                     + cdatan(0, worker) + u8" put "s + s
                     + u8" in the shop strong box."s));
         }
-        skillexp(
-            156, worker, std::clamp(elona_int(sqrt(income)) * 6, 25, 1000));
+        skillexp(156, worker, std::clamp(int(sqrt(income)) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {
@@ -34567,7 +34563,7 @@ void label_1728()
             }
         }
     }
-    rankcur = 10000 - elona_int(sqrt(rankcur) * 100);
+    rankcur = 10000 - int(sqrt(rankcur) * 100);
     if (rankcur < 100)
     {
         rankcur = 100;
@@ -41461,7 +41457,7 @@ label_1857_internal:
             }
             s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            if (elona_int(listn(0, p)) == -1)
+            if (stoi(listn(0, p)) == -1)
             {
                 p(2) = 3;
             }
@@ -47626,7 +47622,7 @@ void label_1942()
     noteget(s, 5);
     noteget(s(1), 6);
     username = ""s + s;
-    userrelation = elona_int(s(1));
+    userrelation = stoi(s(1));
     msg_halt();
     label_2114();
     return;
@@ -47667,7 +47663,7 @@ label_19431_internal:
         noteget(s(2), 4);
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
-        list(2, listmax) = elona_int(s(2));
+        list(2, listmax) = stoi(s(2));
         listn(0, listmax) = u8"("s + path.filename().generic_u8string()
             + u8") "s + s + u8" "s + s(1);
         listn(1, listmax) = path.filename();
@@ -47835,12 +47831,12 @@ label_1945_internal:
         if (comctrl == 0 || comctrl == 2)
         {
             username = ""s + s;
-            userrelation = elona_int(s(1));
+            userrelation = stoi(s(1));
         }
         if (comctrl == 1)
         {
-            rtval(0) = elona_int(s);
-            rtval(1) = elona_int(s(1));
+            rtval(0) = stoi(s);
+            rtval(1) = stoi(s(1));
         }
         return 1;
     }
@@ -54120,7 +54116,7 @@ label_2035_internal:
                     }
                     else
                     {
-                        s = elona_str(sdata(list(0, p) + 600, cc));
+                        s = std::to_string(sdata(list(0, p) + 600, cc));
                         s = strmid(s, -1, 6);
                         s = ""s + sorg(i, cc) + u8"."s + strmid(s, 0, 3);
                         if (sorg(i, cc) != sdata(i, cc))
@@ -55092,7 +55088,7 @@ void label_2048()
         s(3) = s;
     }
     s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
-        + strmid(s(2), 0, (3 + (elona_int(s(2)) >= 10)));
+        + strmid(s(2), 0, (3 + (stoi(s(2)) >= 10)));
     if (val == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
@@ -57651,7 +57647,7 @@ void label_2088()
 }
 void label_2089()
 {
-    if (gdata_version != elona_int(elona_double(u8"1.22"s) * 1000))
+    if (gdata_version != 1220)
     {
         dialog(lang(
             u8"Ver."s + gdata_version
@@ -57929,18 +57925,18 @@ void label_2089()
         }
         gdata(850) = 4;
     }
-    if (gdata_version != elona_int(elona_double(u8"1.22"s) * 1000))
+    if (gdata_version != 1220)
     {
         gdata(79) = 1;
     }
     del_chara(56);
-    if (gdata_version > elona_int(elona_double(u8"1.22"s) * 1000))
+    if (gdata_version > 1220)
     {
         dialog(u8"invalid version"s);
         label_0193();
         return;
     }
-    gdata_version = elona_int(elona_double(u8"1.22"s) * 1000);
+    gdata_version = 1220;
     cbitmod(967, 0, 1);
     label_1920();
     return;
@@ -58105,7 +58101,7 @@ void zipadd(const std::string& prm_1062)
     SDIM2(ziptmp1, p);
     ziptmp1 += prm_1062;
     SDIM2(ziptmp2, p);
-    ziptmp2 += elona_str(len);
+    ziptmp2 += std::to_string(len);
     memexpand(filebuff, lensum);
     memcpy_(filebuff, ziptmp1, p, lenhead);
     memcpy_(filebuff, ziptmp2, p, lenhead + p);
@@ -58133,7 +58129,7 @@ void label_2095()
             SDIM2(ziptmp2, p);
             memcpy_(ziptmp1, filebuff, p, 0, lenhead);
             memcpy_(ziptmp2, filebuff, p, 0, lenhead + p);
-            len = elona_int(ziptmp2);
+            len = stoi(ziptmp2);
             SDIM2(filetemp, len - p * 2);
             memcpy_(filetemp, filebuff, len - p * 2, 0, lenhead + p * 2);
             bsave(folder + ziptmp1, filetemp);
@@ -58166,7 +58162,7 @@ void zipadd2(const std::string& prm_1065)
     SDIM2(ziptmp1_at_m188, p_at_m188(1));
     ziptmp1_at_m188 += prm_1065;
     SDIM2(ziptmp2_at_m188, p_at_m188(2));
-    ziptmp2_at_m188 += elona_str(len_at_m188);
+    ziptmp2_at_m188 += std::to_string(len_at_m188);
     memexpand(filebuff_at_m188, lensum_at_m188);
     memcpy_(filebuff_at_m188, ziptmp1_at_m188, p_at_m188(1), lenhead_at_m188);
     memcpy_(
@@ -58217,7 +58213,7 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
                 p_at_m188(2),
                 0,
                 lenhead_at_m188 + p_at_m188(1));
-            len_at_m188 = elona_int(ziptmp2_at_m188);
+            len_at_m188 = stoi(ziptmp2_at_m188);
             if (len_at_m188 == 0)
             {
                 break;
@@ -58298,8 +58294,8 @@ void label_2104()
                 {
                     break;
                 }
-                sdata(elona_int(unres(cnt * 2)), rc) +=
-                    elona_int(unres((cnt * 2 + 1))) * 50;
+                sdata(stoi(unres(cnt * 2)), rc) +=
+                    stoi(unres((cnt * 2 + 1))) * 50;
             }
         }
     }
@@ -58446,14 +58442,14 @@ void label_2105()
             userdatan(5, tg) = getnpctxt(u8"resist."s, ""s);
             s = getnpctxt(u8"meleeElem."s, u8"0,0"s);
             csvstr2(s, s);
-            userdata(11, tg) = elona_int(s) * 100000 + elona_int(s(1));
+            userdata(11, tg) = stoi(s) * 100000 + stoi(s(1));
             s = getnpctxt(u8"bitOn."s, u8"0,0"s);
             csvstr2(s, s);
             {
                 int cnt = 0;
                 for (;; ++cnt)
                 {
-                    p = elona_int(s(cnt));
+                    p = stoi(s(cnt));
                     if (cnt > 20 || p == 0)
                     {
                         break;
@@ -58467,7 +58463,7 @@ void label_2105()
                 int cnt = 0;
                 for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    userdata(15 + cnt, cnt2) = elona_int(s(cnt));
+                    userdata(15 + cnt, cnt2) = stoi(s(cnt));
                 }
             }
             s = getnpctxt(u8"aiActSub."s, u8"0,0,0,0,0"s);
@@ -58476,21 +58472,20 @@ void label_2105()
                 int cnt = 0;
                 for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    userdata(20 + cnt, cnt2) = elona_int(s(cnt));
+                    userdata(20 + cnt, cnt2) = stoi(s(cnt));
                 }
             }
-            userdata(12, tg) = elona_int(getnpctxt(u8"select."s, u8"0"s));
-            userdata(2, tg) = elona_int(getnpctxt(u8"level."s, u8"1"s));
-            userdata(3, tg) = elona_int(getnpctxt(u8"sex."s, u8"-1"s));
-            userdata(4, tg) = elona_int(getnpctxt(u8"relation."s, u8"-1"s));
-            userdata(5, tg) = elona_int(getnpctxt(u8"fixLv."s, u8"0"s));
-            userdata(6, tg) = elona_int(getnpctxt(u8"rare."s, u8"0"s));
-            userdata(7, tg) = elona_int(getnpctxt(u8"aiCalm."s, u8"1"s));
-            userdata(8, tg) = elona_int(getnpctxt(u8"aiMove."s, u8"50"s));
-            userdata(9, tg) = elona_int(getnpctxt(u8"aiDist."s, u8"1"s));
-            userdata(10, tg) = elona_int(getnpctxt(u8"aiHeal."s, u8"0"s));
-            unaiactsubfreq(tg) =
-                elona_int(getnpctxt(u8"aiActSubFreq."s, u8"0"s));
+            userdata(12, tg) = stoi(getnpctxt(u8"select."s, u8"0"s));
+            userdata(2, tg) = stoi(getnpctxt(u8"level."s, u8"1"s));
+            userdata(3, tg) = stoi(getnpctxt(u8"sex."s, u8"-1"s));
+            userdata(4, tg) = stoi(getnpctxt(u8"relation."s, u8"-1"s));
+            userdata(5, tg) = stoi(getnpctxt(u8"fixLv."s, u8"0"s));
+            userdata(6, tg) = stoi(getnpctxt(u8"rare."s, u8"0"s));
+            userdata(7, tg) = stoi(getnpctxt(u8"aiCalm."s, u8"1"s));
+            userdata(8, tg) = stoi(getnpctxt(u8"aiMove."s, u8"50"s));
+            userdata(9, tg) = stoi(getnpctxt(u8"aiDist."s, u8"1"s));
+            userdata(10, tg) = stoi(getnpctxt(u8"aiHeal."s, u8"0"s));
+            unaiactsubfreq(tg) = stoi(getnpctxt(u8"aiActSubFreq."s, u8"0"s));
             p = instr(txtbuff, 0, u8"%txt"s);
             txtbuff = strmid(txtbuff, p, instr(txtbuff, 0, u8"%endTxt"s) - p);
             usertxt(tg) = strmid(txtbuff, 0, 7998);
@@ -58528,7 +58523,7 @@ void label_2105()
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
         file = entry.path().filename().generic_u8string();
-        p = elona_int(strmid(file, 6, instr(file, 6, u8"."s)));
+        p = stoi(strmid(file, 6, instr(file, 6, u8"."s)));
         pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
         picload(folder + file, 1);
     }
@@ -59277,9 +59272,9 @@ label_21261_internal:
     if (val(4) != 0)
     {
         val(5) = val(4);
-        if (strlen_u(elona_str(val(5))) >= 3)
+        if (strlen_u(std::to_string(val(5))) >= 3)
         {
-            dx += std::size(elona_str(val(5))) * 8;
+            dx += std::size(std::to_string(val(5))) * 8;
         }
         redraw(0);
         pos(x + 24, y + 4);
@@ -59297,8 +59292,7 @@ label_21261_internal:
                 gcopy(3, 312, 336, 24, 24);
                 pos(x + dx - 51, y + 4);
                 gcopy(3, 336, 336, 24, 24);
-                inputlog2 =
-                    ""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
+                inputlog2 = ""s + stoi(inputlog) + u8"("s + val(5) + u8")"s;
                 pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
                 color(255, 255, 255);
                 mes(inputlog2);
@@ -59701,9 +59695,9 @@ int label_2131()
         val(5) = val(4);
         val(4) = 1;
         val = 1;
-        if (strlen_u(elona_str(val(5))) >= 3)
+        if (strlen_u(std::to_string(val(5))) >= 3)
         {
-            dx += std::size(elona_str(val(5))) * 8;
+            dx += std::size(std::to_string(val(5))) * 8;
         }
         pos(dx(1) + sx + 24, dy + 4);
         gfini(dx - 42, 35);
@@ -59721,7 +59715,7 @@ label_2132_internal:
         gcopy(3, 312, 336, 24, 24);
         pos(dx(1) + sx + dx - 51, dy + 4);
         gcopy(3, 336, 336, 24, 24);
-        inputlog2 = ""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
+        inputlog2 = ""s + stoi(inputlog) + u8"("s + val(5) + u8")"s;
         pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
         color(255, 255, 255);
         mes(inputlog2);
@@ -59763,14 +59757,14 @@ label_2132_internal:
         {
             if (key == promptl(1, cnt))
             {
-                rtval = elona_int(promptl(2, cnt));
+                rtval = stoi(promptl(2, cnt));
                 break;
             }
         }
     }
     if (val(3) == 2)
     {
-        val = elona_int(inputlog);
+        val = stoi(inputlog);
         if (key == key_west || key == key_pagedown)
         {
             snd(5);
@@ -59885,7 +59879,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 1)
+    if (stoi(buff) == 1)
     {
         {
             int cnt = 0;
@@ -59901,7 +59895,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 2)
+    if (stoi(buff) == 2)
     {
         {
             int cnt = 0;
@@ -59923,7 +59917,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 3)
+    if (stoi(buff) == 3)
     {
         inv_getheader(0);
         {
@@ -59936,7 +59930,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 4)
+    if (stoi(buff) == 4)
     {
         if (dbg_compare == 0)
         {
@@ -60077,7 +60071,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 5)
+    if (stoi(buff) == 5)
     {
         {
             int cnt = 0;
@@ -67706,7 +67700,7 @@ void label_2218()
                         + u8" with "s + his(cc) + u8" shield."s));
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(tc, 7, 50 + elona_int(sqrt(sdata(168, cc))) * 15);
+            dmgcon(tc, 7, 50 + int(sqrt(sdata(168, cc))) * 15);
             cdata_paralyzed(tc) += rnd(3);
         }
     }
@@ -72978,7 +72972,7 @@ void label_22610()
         p = cdata_sex(tc) * 64 + cdata_portrait(tc);
         if (scenemode)
         {
-            p = elona_int(actor(1, rc));
+            p = stoi(actor(1, rc));
         }
         pos(wx + 42, wy + 42);
         gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
@@ -77252,7 +77246,7 @@ int label_2672()
     {
         qdata(5, rq) = std::clamp(
             rnd(sdata(183, 0) + 10),
-            elona_int(1.5 * sqrt(sdata(183, 0))) + 1,
+            int(1.5 * sqrt(sdata(183, 0))) + 1,
             cdata_fame(0) / 1000 + 10);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -77967,7 +77961,7 @@ label_2682_internal:
     }
     if (strutil::contains(s(0), u8"{chat_"))
     {
-        rc = elona_int(strmid(s, 6, 1));
+        rc = stoi(strmid(s, 6, 1));
         scidxtop = scidx;
         val = 1;
         goto label_2682_internal;
@@ -78059,7 +78053,7 @@ label_2682_internal:
     }
     if (strutil::contains(s(0), u8"{actor_"))
     {
-        rc = elona_int(strmid(s, 7, 1));
+        rc = stoi(strmid(s, 7, 1));
         csvsort(s, s(1), 44);
         actor(0, rc) = s;
         actor(1, rc) = s(1);
@@ -81173,7 +81167,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_language = elona_int(rtvaln);
+                cfg_language = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"fullscreen."))
@@ -81200,7 +81194,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_fullscreen = elona_int(rtvaln);
+                cfg_fullscreen = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"music."))
@@ -81227,7 +81221,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_music = elona_int(rtvaln);
+                cfg_music = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"sound."))
@@ -81254,7 +81248,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_sound = elona_int(rtvaln);
+                cfg_sound = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"extraRace."))
@@ -81281,7 +81275,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_extrarace = elona_int(rtvaln);
+                cfg_extrarace = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"joypad."))
@@ -81308,7 +81302,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_joypad = elona_int(rtvaln);
+                cfg_joypad = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"msg_box."))
@@ -81335,7 +81329,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_msg_box = elona_int(rtvaln);
+                cfg_msg_box = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"msgLine."))
@@ -81362,7 +81356,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_msgline = elona_int(rtvaln);
+                inf_msgline = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"tileSize."))
@@ -81389,7 +81383,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_tiles = elona_int(rtvaln);
+                inf_tiles = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"fontSize ."))
@@ -81416,7 +81410,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_mesfont = elona_int(rtvaln);
+                inf_mesfont = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"infVerType."))
@@ -81443,7 +81437,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_vertype = elona_int(rtvaln);
+                inf_vertype = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"windowX."))
@@ -81470,7 +81464,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                windowx = elona_int(rtvaln);
+                windowx = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"windowY."))
@@ -81497,7 +81491,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                windowy = elona_int(rtvaln);
+                windowy = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"windowW."))
@@ -81524,7 +81518,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                windoww = elona_int(rtvaln);
+                windoww = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"windowH."))
@@ -81551,7 +81545,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                windowh = elona_int(rtvaln);
+                windowh = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"clockX."))
@@ -81578,7 +81572,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_clockx = elona_int(rtvaln);
+                inf_clockx = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"clockW."))
@@ -81605,7 +81599,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_clockw = elona_int(rtvaln);
+                inf_clockw = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"clockH."))
@@ -81632,7 +81626,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                inf_clockh = elona_int(rtvaln);
+                inf_clockh = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"defLoadFolder."))
@@ -81686,7 +81680,7 @@ void label_2715()
                         ++i;
                     }
                 }
-                cfg_wizard = elona_int(rtvaln);
+                cfg_wizard = stoi(rtvaln);
                 continue;
             }
         }
@@ -81783,7 +81777,7 @@ void label_2719()
                         ++i;
                     }
                 }
-                userrelation = elona_int(rtvaln);
+                userrelation = stoi(rtvaln);
                 continue;
             }
             if (strutil::contains(s(0), u8"password."))
@@ -81825,7 +81819,7 @@ void label_2720()
     noteget(s, 5);
     usermsg = ""s + s;
     noteget(s, 6);
-    userrelation = elona_int(s);
+    userrelation = stoi(s);
     return;
 }
 int cnvjkey(const std::string& prm_1092)
@@ -84873,10 +84867,10 @@ void label_2752()
                     p = cnt * 4;
                     noteget(s(10), p + 3);
                     csvsort(s, s(10), 44);
-                    p(2) = elona_int(s);
+                    p(2) = stoi(s);
                     noteget(s(10), p + 7);
                     csvsort(s, s(10), 44);
-                    p(3) = elona_int(s);
+                    p(3) = stoi(s);
                     if (p(3) > p(2))
                     {
                         if (cnt == page)
@@ -85027,7 +85021,7 @@ void label_2753()
             pos(x + 480, y + 20);
             color(10, 10, 10);
             mes(""s + s + lang(u8"点"s, ""s));
-            p = elona_int(s(1)) % 1000;
+            p = stoi(s(1)) % 1000;
             chara_preparepic(p);
             pos(x - 22, y + 12);
             gmode(2, chipc(2, p), chipc(3, p));

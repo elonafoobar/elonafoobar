@@ -557,8 +557,7 @@ void msg_write(std::string& prm_307)
             mp_at_txtfunc = instr(prm_307, 0, u8"♪"s);
             if (mp_at_txtfunc != -1)
             {
-                mark_at_txtfunc =
-                    elona_int(strmid(prm_307, mp_at_txtfunc + 2, 1));
+                mark_at_txtfunc = stoi(strmid(prm_307, mp_at_txtfunc + 2, 1));
                 if (jp)
                 {
                     if (mark_at_txtfunc == 0)

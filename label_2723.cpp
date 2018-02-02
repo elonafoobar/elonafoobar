@@ -1116,7 +1116,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"extraHelp."s;
-                valn(1) = elona_str(cfg_extrahelp);
+                valn(1) = std::to_string(cfg_extrahelp);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1133,7 +1133,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"ignoreDislike."s;
-                valn(1) = elona_str(cfg_ignoredislike);
+                valn(1) = std::to_string(cfg_ignoredislike);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1150,7 +1150,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"zkey."s;
-                valn(1) = elona_str(cfg_zkey);
+                valn(1) = std::to_string(cfg_zkey);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1167,7 +1167,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"xkey."s;
-                valn(1) = elona_str(cfg_xkey);
+                valn(1) = std::to_string(cfg_xkey);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1184,7 +1184,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"startRun."s;
-                valn(1) = elona_str(cfg_startrun);
+                valn(1) = std::to_string(cfg_startrun);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1201,7 +1201,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"walkWait."s;
-                valn(1) = elona_str(cfg_walkwait);
+                valn(1) = std::to_string(cfg_walkwait);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1218,7 +1218,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"attackWait."s;
-                valn(1) = elona_str(cfg_attackwait);
+                valn(1) = std::to_string(cfg_attackwait);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1238,7 +1238,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"sound."s;
-                valn(1) = elona_str(cfg_sound2);
+                valn(1) = std::to_string(cfg_sound2);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1255,7 +1255,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"music."s;
-                valn(1) = elona_str(cfg_music2);
+                valn(1) = std::to_string(cfg_music2);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1272,7 +1272,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"fullscreen."s;
-                valn(1) = elona_str(cfg_fullscreen2);
+                valn(1) = std::to_string(cfg_fullscreen2);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1289,7 +1289,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"scroll."s;
-                valn(1) = elona_str(cfg_scroll);
+                valn(1) = std::to_string(cfg_scroll);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1306,7 +1306,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"alwaysCenter."s;
-                valn(1) = elona_str(cfg_alwayscenter);
+                valn(1) = std::to_string(cfg_alwayscenter);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1323,7 +1323,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"heartbeat."s;
-                valn(1) = elona_str(cfg_heart);
+                valn(1) = std::to_string(cfg_heart);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1340,7 +1340,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"attackAnime."s;
-                valn(1) = elona_str(cfg_attackanime);
+                valn(1) = std::to_string(cfg_attackanime);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1357,7 +1357,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"envEffect."s;
-                valn(1) = elona_str(cfg_env);
+                valn(1) = std::to_string(cfg_env);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1374,7 +1374,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"shadow."s;
-                valn(1) = elona_str(cfg_shadow);
+                valn(1) = std::to_string(cfg_shadow);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1391,7 +1391,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"objectShadow."s;
-                valn(1) = elona_str(cfg_objectshadow);
+                valn(1) = std::to_string(cfg_objectshadow);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1460,7 +1460,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"net."s;
-                valn(1) = elona_str(cfg_net);
+                valn(1) = std::to_string(cfg_net);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1477,7 +1477,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"netWish."s;
-                valn(1) = elona_str(cfg_netwish);
+                valn(1) = std::to_string(cfg_netwish);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1494,7 +1494,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"netChat."s;
-                valn(1) = elona_str(cfg_netchat);
+                valn(1) = std::to_string(cfg_netchat);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1514,7 +1514,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"runWait."s;
-                valn(1) = elona_str(cfg_runwait);
+                valn(1) = std::to_string(cfg_runwait);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1531,7 +1531,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"autoNumlock."s;
-                valn(1) = elona_str(cfg_autonumlock);
+                valn(1) = std::to_string(cfg_autonumlock);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1548,7 +1548,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"titleEffect."s;
-                valn(1) = elona_str(cfg_titleeffect);
+                valn(1) = std::to_string(cfg_titleeffect);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1565,7 +1565,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"scr_sync."s;
-                valn(1) = elona_str(cfg_scrsync);
+                valn(1) = std::to_string(cfg_scrsync);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1582,7 +1582,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"scroll_run."s;
-                valn(1) = elona_str(cfg_runscroll);
+                valn(1) = std::to_string(cfg_runscroll);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1599,7 +1599,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"autoTurnType."s;
-                valn(1) = elona_str(cfg_autoturn);
+                valn(1) = std::to_string(cfg_autoturn);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1616,7 +1616,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"skipRandEvents."s;
-                valn(1) = elona_str(cfg_skiprandevents);
+                valn(1) = std::to_string(cfg_skiprandevents);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1636,7 +1636,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"joypad."s;
-                valn(1) = elona_str(cfg_joypad);
+                valn(1) = std::to_string(cfg_joypad);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1656,7 +1656,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"msg_addTime."s;
-                valn(1) = elona_str(cfg_msgaddtime);
+                valn(1) = std::to_string(cfg_msgaddtime);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1673,7 +1673,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"msg_trans."s;
-                valn(1) = elona_str(cfg_msgtrans);
+                valn(1) = std::to_string(cfg_msgtrans);
                 label_2713();
                 goto label_2724_internal;
             }
@@ -1693,7 +1693,7 @@ label_2725_internal:
                 }
                 snd(20);
                 valn(0) = u8"language."s;
-                valn(1) = elona_str(cfg_language);
+                valn(1) = std::to_string(cfg_language);
                 label_2713();
                 goto label_2724_internal;
             }
