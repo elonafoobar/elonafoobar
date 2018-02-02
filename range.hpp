@@ -31,4 +31,12 @@ bool all_of(const R& range, F predicate)
 }
 
 
+template <typename R, typename F>
+bool any_of(const R& range, F predicate)
+{
+    using std::begin, std::end;
+    return std::any_of(begin(range), end(range), predicate);
+}
+
+
 } // namespace elona::range
