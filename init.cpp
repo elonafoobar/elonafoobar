@@ -1,5 +1,7 @@
 #include "elona.hpp"
+#include "filesystem.hpp"
 #include "main.hpp"
+#include "range.hpp"
 #include "variables.hpp"
 
 
@@ -861,9 +863,10 @@ void label_1541()
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_cm.bmp"), 1);
     gsel(0);
-    dirlist(buff, fs::u8path(u8"./save/*"s), 5);
-    notesel(buff);
-    if (noteinfo() >= 5)
+    if (range::count_if(
+            filesystem::dir_entries{fs::u8path(u8"./save")},
+            [](const auto& entry) { return entry.is_directory() })
+        >= 5)
     {
         redraw(0);
         keyrange = 0;
@@ -1765,22 +1768,12 @@ label_1565_internal:
         cmname = randomname();
     }
     playerid = u8"sav_"s + cmname;
-    dirlist(buff, fs::u8path(u8"./save/*"s), 5);
-    notesel(buff);
-    f = 0;
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(s, cnt);
-            if (getpath(s, 16) == getpath(playerid, 16))
-            {
-                f = 1;
-                break;
-            }
-        }
-    }
-    if (f == 1)
+    const auto save_dir = fs::u8path(u8"./save");
+    if (range::all_of(
+            filesystem::dir_entries{save_dir}, [&](const auto& entry) {
+                return entry.is_directory()
+                    && fs::relative(entry.path(), save_dir) != playerid;
+            }))
     {
         redraw(0);
         gmode(0);

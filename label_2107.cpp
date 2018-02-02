@@ -1264,24 +1264,19 @@ int label_2107()
     }
     if (fmode == 10)
     {
-        if (dirlist(buff, fs::u8path(u8"./tmp/*.*"s)) == 0)
+        bool no_file = true;
+        for (const auto& entry : filesystem::dir_entries(fs::u8path(u8"./tmp")))
         {
-            return 0;
-        }
-        notesel(buff);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+            if (entry.is_file()
+                && entry.path().filename().generic_u8string().find('.')
+                    != std::string::npos)
             {
-                noteget(file, cnt);
-                file = fs::u8path(u8"./tmp/"s + file);
-                exist(file);
-                if (strsize != -1)
-                {
-                    elona_delete(file);
-                }
+                no_file = false;
+                elona_delete(entry.path());
             }
         }
+        if (no_file)
+            return 0;
     }
     if (fmode == 9)
     {

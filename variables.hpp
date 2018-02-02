@@ -1097,7 +1097,7 @@ inline int raderw;
 inline int raderx;
 inline int radery;
 inline int randseed;
-inline int range;
+inline int range_;
 inline int rangedist;
 inline int rankcur;
 inline int rankorg;
