@@ -7,38 +7,19 @@ namespace elona::range
 {
 
 
-namespace detail
-{
-
-
-template <typename R>
-struct iterator_type
-{
-    using type = typename R::iterator;
-};
-
-
-template <typename R>
-struct iterator_type<R*>
-{
-    using type = R*;
-};
-
-
-template <typename R>
-using iterator_type_t = typename iterator_type<R>::type;
-
-
-} // namespace detail
-
-
-
 template <typename R, typename P>
-typename std::iterator_traits<detail::iterator_type_t<R>>::difference_type
-count_if(const R& range, P predicate)
+auto count_if(const R& range, P predicate)
 {
     using std::begin, std::end;
     return std::count_if(begin(range), end(range), predicate);
+}
+
+
+template <typename R>
+auto distance(const R& range)
+{
+    using std::begin, std::end;
+    return std::distance(begin(range), end(range));
 }
 
 

@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "filesystem.hpp"
 #include "variables.hpp"
 
 
@@ -1265,15 +1266,13 @@ int label_2107()
     if (fmode == 10)
     {
         bool no_file = true;
-        for (const auto& entry : filesystem::dir_entries(fs::u8path(u8"./tmp")))
+        for (const auto& entry : filesystem::dir_entries(
+                 fs::u8path(u8"./tmp"),
+                 filesystem::dir_entries::type::file,
+                 std::regex{u8R"(.*\..*)"}))
         {
-            if (entry.is_file()
-                && entry.path().filename().generic_u8string().find('.')
-                    != std::string::npos)
-            {
-                no_file = false;
-                elona_delete(entry.path());
-            }
+            no_file = false;
+            elona_delete(entry.path());
         }
         if (no_file)
             return 0;
@@ -1334,20 +1333,13 @@ int label_2107()
                 adata(cnt, area) = 0;
             }
         }
-        folder = fs::u8path(u8"./tmp");
-        if (dirlist(buff, folder + u8"\\*_"s + area + u8"_*.*"s) != 0)
+        for (const auto& entry : filesystem::dir_entries(
+                 fs::u8path(u8"./tmp"),
+                 filesystem::dir_entries::type::file,
+                 std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
         {
-            notesel(buff);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-                {
-                    noteget(file, cnt);
-                    file = folder + u8"\\"s + file;
-                    elona_delete(file);
-                    fileadd(file, 1);
-                }
-            }
+            elona_delete(entry.path());
+            fileadd(entry.path().generic_u8string(), 1);
         }
     }
     return 0;

@@ -863,9 +863,8 @@ void label_1541()
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_cm.bmp"), 1);
     gsel(0);
-    if (range::count_if(
-            filesystem::dir_entries{fs::u8path(u8"./save")},
-            [](const auto& entry) { return entry.is_directory() })
+    if (range::distance(filesystem::dir_entries{
+            fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
         >= 5)
     {
         redraw(0);
@@ -1770,9 +1769,10 @@ label_1565_internal:
     playerid = u8"sav_"s + cmname;
     const auto save_dir = fs::u8path(u8"./save");
     if (range::all_of(
-            filesystem::dir_entries{save_dir}, [&](const auto& entry) {
-                return entry.is_directory()
-                    && fs::relative(entry.path(), save_dir) != playerid;
+            filesystem::dir_entries{save_dir,
+                                    filesystem::dir_entries::type::dir},
+            [&](const auto& entry) {
+                return entry.path().filename().generic_u8string() != playerid;
             }))
     {
         redraw(0);

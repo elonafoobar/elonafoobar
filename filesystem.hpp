@@ -7,6 +7,8 @@ namespace fs = std::filesystem;
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 #endif
+#include <functional>
+#include <regex>
 #include "range.hpp"
 
 
@@ -17,8 +19,21 @@ namespace elona::filesystem
 
 struct dir_entries
 {
-    dir_entries(const fs::path& base_dir)
+    enum class type
+    {
+        dir,
+        file,
+        all,
+    };
+
+
+    dir_entries(
+        const fs::path& base_dir,
+        type entry_type,
+        const std::regex& pattern = std::regex{u8".*"})
         : base_dir(base_dir)
+        , entry_type(entry_type)
+        , pattern(pattern)
     {
     }
 
@@ -33,9 +48,16 @@ struct dir_entries
 
 
         // begin
-        iterator(const fs::directory_iterator& itr)
+        iterator(
+            const fs::directory_iterator& itr,
+            std::function<bool(const fs::directory_iterator)> predicate)
             : itr(itr)
+            , predicate(predicate)
         {
+            while (predicate(this->itr))
+            {
+                ++this->itr;
+            }
         }
 
 
@@ -50,7 +72,7 @@ struct dir_entries
             do
             {
                 ++itr;
-            } while (itr != end && !itr->exists());
+            } while (predicate(itr));
         }
 
 
@@ -80,13 +102,36 @@ struct dir_entries
 
     private:
         fs::directory_iterator itr;
-        const fs::directory_iterator end;
+        std::function<bool(const fs::directory_iterator)> predicate;
     };
 
 
     iterator begin() const
     {
-        return {fs::directory_iterator{base_dir}};
+        return {fs::directory_iterator{base_dir}, [this](const auto& itr) {
+                    if (itr == fs::directory_iterator{})
+                        return false;
+                    if (!itr->exists())
+                        return true;
+                    switch (entry_type)
+                    {
+                    case type::dir:
+                        if (!itr->is_directory())
+                        {
+                            return true;
+                        }
+                        break;
+                    case type::file:
+                        if (!itr->is_regular_file())
+                        {
+                            return true;
+                        }
+                        break;
+                    case type::all: break;
+                    }
+                    return !std::regex_match(
+                        itr->path().filename().generic_u8string(), pattern);
+                }};
     }
 
 
@@ -98,6 +143,8 @@ struct dir_entries
 
 private:
     const fs::path base_dir;
+    const std::regex pattern;
+    const type entry_type;
 };
 
 

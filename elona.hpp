@@ -402,8 +402,6 @@ int dialog(const std::string& message, int = 0);
 std::string dirinfo(int n);
 
 
-int dirlist(std::string& out, const fs::path& pattern, int = 0);
-
 double elona_double(const std::string& s);
 
 double elona_double(int n);
