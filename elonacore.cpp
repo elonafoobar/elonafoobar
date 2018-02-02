@@ -1245,7 +1245,7 @@ void label_0068()
                     return;
                 }
             }
-            if (instr(musicfile(music), 0, u8".mp3"s) != -1)
+            if (strutil::contains(musicfile(music), u8".mp3"))
             {
                 mp3 = 1;
             }
@@ -10800,7 +10800,7 @@ std::string del_str(const std::string& prm_694, const std::string& prm_695)
         int cnt = 0;
         for (;; ++cnt)
         {
-            if (instr(s_at_m99, 0, prm_695) == -1)
+            if (!strutil::contains(s_at_m99, prm_695))
             {
                 break;
             }
@@ -18460,7 +18460,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
         int cnt = 0;
         for (int cnt_end = cnt + (10000); cnt < cnt_end; ++cnt)
         {
-            if (instr(netbuf, p_at_m147, u8"<"s) == -1
+            if (!strutil::contains(netbuf(0), u8"<", p_at_m147)
                 || p_at_m147 + 1 >= size_at_m147)
             {
                 break;
@@ -27881,7 +27881,7 @@ void label_1588()
                         if (inv_id(ci) == 204)
                         {
                             s = refchara_str(inv_subname(ci), 8);
-                            if (instr(s, 0, u8"/man/"s) != -1)
+                            if (strutil::contains(s(0), u8"/man/"))
                             {
                                 txt(lang(u8"ウマイ！"s, u8"Delicious!"s));
                                 break;
@@ -28358,7 +28358,7 @@ void label_1588()
         s = refchara_str(inv_subname(ci), 8);
         if (cc == 0)
         {
-            if (instr(s, 0, u8"/man/"s) != -1)
+            if (strutil::contains(s(0), u8"/man/"))
             {
                 if (trait(41))
                 {
@@ -51134,8 +51134,8 @@ void label_1997()
         inputlog = getpath(inputlog, 16);
     }
     snd(24);
-    if (instr(inputlog, 0, u8"中の神"s) != -1
-        || instr(inputlog, 0, u8"god inside"s) != -1)
+    if (strutil::contains(inputlog(0), u8"中の神")
+        || strutil::contains(inputlog(0), u8"god inside"s))
     {
         txt(lang(
             u8"中の神も大変…あ…中の神なんているわけないじゃない！…ねえ、聞かなかったことにしてね。"s,
@@ -51143,8 +51143,8 @@ void label_1997()
         label_1996();
         return;
     }
-    if (instr(inputlog, 0, u8"中の人"s) != -1
-        || instr(inputlog, 0, u8"man inside"s) != -1)
+    if (strutil::contains(inputlog(0), u8"中の人")
+        || strutil::contains(inputlog(0), u8"man inside"s))
     {
         txt(lang(u8"中の人も大変ね。"s, u8"There's no man inside."s));
         label_1996();
@@ -51322,21 +51322,21 @@ void label_1997()
         label_1996();
         return;
     }
-    if (instr(inputlog, 0, lang(u8"スキル"s, u8"skill"s)) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"スキル"s, u8"skill"s)))
     {
         goto label_1999_internal;
     }
-    if (instr(inputlog, 0, lang(u8"アイテム"s, u8"item"s)) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"アイテム"s, u8"item"s)))
     {
         goto label_1998_internal;
     }
-    if (instr(inputlog, 0, lang(u8"カード"s, u8"card"s)) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"カード"s, u8"card"s)))
     {
         label_2000();
         return;
     }
-    if (instr(inputlog, 0, lang(u8"剥製"s, u8"figure"s)) != -1
-        || instr(inputlog, 0, u8"はく製"s) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"剥製"s, u8"figure"s))
+        || strutil::contains(inputlog(0), u8"はく製"s))
     {
         label_2001();
         return;
@@ -51385,7 +51385,8 @@ label_1998_internal:
                 for (int cnt_end = cnt + (strlen(inputlog)); cnt < cnt_end;
                      ++cnt)
                 {
-                    if (instr(s, 0, strmid(inputlog, 0, cnt * (1 + jp))) != -1)
+                    if (strutil::contains(
+                            s(0), strmid(inputlog, 0, cnt * (1 + jp))))
                     {
                         p = p + 50 * (cnt + 1) + rnd(15);
                     }
@@ -51666,7 +51667,7 @@ void label_2002()
             {
                 s = getpath(s, 16);
             }
-            if (instr(s, 0, s2) != -1)
+            if (strutil::contains(s(0), s2))
             {
                 p = 1000 - (strlen(s) - strlen(s2)) * 10;
             }
@@ -52586,7 +52587,7 @@ int label_2018()
             int cnt = 0;
             for (int cnt_end = cnt + (usernpcmax); cnt < cnt_end; ++cnt)
             {
-                if (instr(userdatan(6, cnt), 0, u8"_tmp_"s) == -1)
+                if (!strutil::contains(userdatan(6, cnt), u8"_tmp_"))
                 {
                     continue;
                 }
@@ -58385,10 +58386,11 @@ void label_2105()
             userdatan(1, tg) = s(jp);
             noteget(s, cnt);
             userdatan(6, tg) = s;
-            if (instr(untaglist, 0, u8"/"s + userdatan(0, tg) + u8"/"s) != -1)
+            if (strutil::contains(
+                    untaglist(0), u8"/"s + userdatan(0, tg) + u8"/"))
             {
                 --usernpcmax;
-                if (instr(s, 0, u8"_tmp_"s) == -1)
+                if (!strutil::contains(s(0), u8"_tmp_"))
                 {
                     msgtemp += lang(
                                    u8"同名NPCは読み込まれない。"s,
@@ -58399,7 +58401,7 @@ void label_2105()
                 continue;
             }
             untaglist += u8"/"s + userdatan(0, tg) + u8"/"s;
-            if (instr(s, 0, u8"_tmp_"s) != -1)
+            if (strutil::contains(s(0), u8"_tmp_"))
             {
                 ++gdata(86);
             }
@@ -58517,7 +58519,7 @@ void label_2106()
     userdata(1, cun) = strsize;
     SDIM2(txtbuff, strsize);
     bload(txtfile, txtbuff);
-    if (instr(txtbuff, 0, u8"%Elona Custom Npc"s) == -1)
+    if (!strutil::contains(txtbuff(0), u8"%Elona Custom Npc"))
     {
         txt(u8"Invalid File. Aborting."s);
         return;
@@ -58582,7 +58584,7 @@ void label_2106()
     s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
     csvstr2(s, s);
     cnv_filestr(s);
-    if (instr(s, 0, u8"_tmp_"s) != -1)
+    if (strutil::contains(s(0), u8"_tmp_"))
     {
         dialog(u8"The name contains an invalid word \"_tmp_\""s);
         return;
@@ -58755,7 +58757,7 @@ void label_2112()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, u8".s2"s) != -1)
+            if (strutil::contains(s(0), u8".s2"))
             {
                 bcopy(folder + s, fs::u8path(u8"./tmp/"s + s));
             }
@@ -59435,12 +59437,12 @@ label_21261_internal:
                 noteget(s, 0);
                 mes(s);
             }
-            if (instr(inputlog, 0, u8"\n"s) != -1)
+            if (strutil::contains(inputlog(0), u8"\n"))
             {
                 rtval = 0;
                 break;
             }
-            if (instr(inputlog, 0, u8"\t"s) != -1)
+            if (strutil::contains(inputlog(0), u8"\t"))
             {
                 objprm(1, ""s);
                 inputlog = "";
@@ -59816,7 +59818,7 @@ void label_2136()
 }
 void label_2138()
 {
-    if (instr(buff, 0, u8"?"s) != -1)
+    if (strutil::contains(buff(0), u8"?"))
     {
         noteadd(u8"\t1\t\tShows charainfo."s);
         noteadd(u8"\t2\t\tShows pc equipment."s);
@@ -60052,27 +60054,27 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"del"s) != -1 || buff == u8"\n"s)
+    if (strutil::contains(buff(0), u8"del") || buff == u8"\n"s)
     {
         dbm = "";
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"freemove"s) != -1)
+    if (strutil::contains(buff(0), u8"freemove"))
     {
         dbg_freemove = 1;
         noteadd(u8"Done."s);
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"resetmap"s) != -1)
+    if (strutil::contains(buff(0), u8"resetmap"))
     {
         label_2090();
         noteadd(u8"Done."s);
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"exitroom"s) != -1)
+    if (strutil::contains(buff(0), u8"exitroom"))
     {
         if (gdata_current_map == 35)
         {
@@ -60086,7 +60088,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"removequest"s) != -1)
+    if (strutil::contains(buff(0), u8"removequest"))
     {
         {
             int cnt = 0;
@@ -60107,7 +60109,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"fixmap"s) != -1)
+    if (strutil::contains(buff(0), u8"fixmap"))
     {
         {
             int cnt = 0;
@@ -60146,7 +60148,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"advreset"s) != -1)
+    if (strutil::contains(buff(0), u8"advreset"))
     {
         {
             int cnt = 16;
@@ -60181,7 +60183,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"fixcorrupt1"s) != -1)
+    if (strutil::contains(buff(0), u8"fixcorrupt1"))
     {
         {
             int cnt = 0;
@@ -60230,7 +60232,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"client"s) != -1)
+    if (strutil::contains(buff(0), u8"client"))
     {
         DIM2(mapclient, 1000);
         {
@@ -60261,7 +60263,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"108fix"s) != -1)
+    if (strutil::contains(buff(0), u8"108fix"))
     {
         {
             int cnt = 0;
@@ -60282,7 +60284,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"test"s) != -1)
+    if (strutil::contains(buff(0), u8"test"))
     {
         {
             int cnt = 0;
@@ -60297,7 +60299,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"mapinfo"s) != -1)
+    if (strutil::contains(buff(0), u8"mapinfo"))
     {
         noteadd(u8"gArea\t\t:"s + gdata_current_map);
         noteadd(u8"gLevel\t\t:"s + gdata_current_dungeon_level);
@@ -60308,7 +60310,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"quest"s) != -1)
+    if (strutil::contains(buff(0), u8"quest"))
     {
         noteadd(
             u8"gQuest:"s + gdata_executing_immediate_quest_type
@@ -60339,7 +60341,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"wizard"s) != -1)
+    if (strutil::contains(buff(0), u8"wizard"))
     {
         gdata_wizard = 1;
         cdatan(1, 0) = u8"*Debug*"s;
@@ -60349,7 +60351,7 @@ void label_2138()
     }
     if (gdata_wizard || 0)
     {
-        if (instr(buff, 0, u8"gain_spell"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_spell"))
         {
             {
                 int cnt = 400;
@@ -60362,7 +60364,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"gain_spact"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_spact"))
         {
             {
                 int cnt = 0;
@@ -60375,7 +60377,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"allinv"s) != -1)
+        if (strutil::contains(buff(0), u8"allinv"))
         {
             {
                 int cnt = 0;
@@ -60405,7 +60407,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"mapinv"s) != -1)
+        if (strutil::contains(buff(0), u8"mapinv"))
         {
             {
                 int cnt = 0;
@@ -60426,7 +60428,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"gain_exp"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_exp"))
         {
             cdata_experience(0) += 1000000000;
             r1 = 0;
@@ -60436,7 +60438,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"gain_fame"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_fame"))
         {
             cdata_fame(0) += 10000;
             noteadd(u8"Done."s);
@@ -68387,7 +68389,7 @@ void label_2220()
             if (enc == 57)
             {
                 s = refchara_str(cdata_id(tc), 8);
-                if (instr(s, 0, u8"/dragon/"s) != -1)
+                if (strutil::contains(s(0), u8"/dragon/"))
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
@@ -68398,7 +68400,7 @@ void label_2220()
             if (enc == 61)
             {
                 s = refchara_str(cdata_id(tc), 8);
-                if (instr(s, 0, u8"/god/"s) != -1)
+                if (strutil::contains(s(0), u8"/god/"))
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
@@ -68409,7 +68411,7 @@ void label_2220()
             if (enc == 58)
             {
                 s = refchara_str(cdata_id(tc), 8);
-                if (instr(s, 0, u8"/undead/"s) != -1)
+                if (strutil::contains(s(0), u8"/undead/"))
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
@@ -70392,7 +70394,7 @@ int label_2231()
 {
     int dbmax = 0;
     s(1) = refchara_str(cdata_id(tc), 8);
-    if (instr(s(1), 0, u8"/man/"s) != -1)
+    if (strutil::contains(s(1), u8"/man/"))
     {
         return -1;
     }
@@ -73668,11 +73670,11 @@ void label_2265()
                 continue;
             }
             f = 0;
-            if (instr(filter_item(inv_id(ci)), 0, u8"/neg/"s) != -1)
+            if (strutil::contains(filter_item(inv_id(ci)), u8"/neg/"))
             {
                 f = 1;
             }
-            if (instr(filter_item(inv_id(ci)), 0, u8"/noshop/"s) != -1)
+            if (strutil::contains(filter_item(inv_id(ci)), u8"/noshop/"))
             {
                 if (cdata_character_role(tc) != 1018)
                 {
@@ -77922,7 +77924,7 @@ label_2682_internal:
         val = 0;
         goto label_2682_internal;
     }
-    if (instr(s, 0, u8"{chat_"s) != -1)
+    if (strutil::contains(s(0), u8"{chat_"))
     {
         rc = elona_int(strmid(s, 6, 1));
         scidxtop = scidx;
@@ -78014,7 +78016,7 @@ label_2682_internal:
         snd(28);
         goto label_2682_internal;
     }
-    if (instr(s, 0, u8"{actor_"s) != -1)
+    if (strutil::contains(s(0), u8"{actor_"))
     {
         rc = elona_int(strmid(s, 7, 1));
         csvsort(s, s(1), 44);
@@ -80320,7 +80322,7 @@ void label_2702()
         int cnt = 0;
         for (int cnt_end = cnt + (24); cnt < cnt_end; ++cnt)
         {
-            if (instr(s(cnt), 0, u8"("s) == -1)
+            if (!strutil::contains(s(cnt), u8"("))
             {
                 continue;
             }
@@ -81034,7 +81036,7 @@ void label_2713()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, valn) == -1)
+            if (!strutil::contains(s(0), valn(0)))
             {
                 continue;
             }
@@ -81105,7 +81107,7 @@ void label_2715()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, u8"language."s) != -1)
+            if (strutil::contains(s(0), u8"language."))
             {
                 i = 0;
                 p = 0;
@@ -81132,7 +81134,7 @@ void label_2715()
                 cfg_language = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"fullscreen."s) != -1)
+            if (strutil::contains(s(0), u8"fullscreen."))
             {
                 i = 0;
                 p = 0;
@@ -81159,7 +81161,7 @@ void label_2715()
                 cfg_fullscreen = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"music."s) != -1)
+            if (strutil::contains(s(0), u8"music."))
             {
                 i = 0;
                 p = 0;
@@ -81186,7 +81188,7 @@ void label_2715()
                 cfg_music = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"sound."s) != -1)
+            if (strutil::contains(s(0), u8"sound."))
             {
                 i = 0;
                 p = 0;
@@ -81213,7 +81215,7 @@ void label_2715()
                 cfg_sound = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"extraRace."s) != -1)
+            if (strutil::contains(s(0), u8"extraRace."))
             {
                 i = 0;
                 p = 0;
@@ -81240,7 +81242,7 @@ void label_2715()
                 cfg_extrarace = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"joypad."s) != -1)
+            if (strutil::contains(s(0), u8"joypad."))
             {
                 i = 0;
                 p = 0;
@@ -81267,7 +81269,7 @@ void label_2715()
                 cfg_joypad = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"msg_box."s) != -1)
+            if (strutil::contains(s(0), u8"msg_box."))
             {
                 i = 0;
                 p = 0;
@@ -81294,7 +81296,7 @@ void label_2715()
                 cfg_msg_box = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"msgLine."s) != -1)
+            if (strutil::contains(s(0), u8"msgLine."))
             {
                 i = 0;
                 p = 0;
@@ -81321,7 +81323,7 @@ void label_2715()
                 inf_msgline = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"tileSize."s) != -1)
+            if (strutil::contains(s(0), u8"tileSize."))
             {
                 i = 0;
                 p = 0;
@@ -81348,7 +81350,7 @@ void label_2715()
                 inf_tiles = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"fontSize ."s) != -1)
+            if (strutil::contains(s(0), u8"fontSize ."))
             {
                 i = 0;
                 p = 0;
@@ -81375,7 +81377,7 @@ void label_2715()
                 inf_mesfont = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"infVerType."s) != -1)
+            if (strutil::contains(s(0), u8"infVerType."))
             {
                 i = 0;
                 p = 0;
@@ -81402,7 +81404,7 @@ void label_2715()
                 inf_vertype = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowX."s) != -1)
+            if (strutil::contains(s(0), u8"windowX."))
             {
                 i = 0;
                 p = 0;
@@ -81429,7 +81431,7 @@ void label_2715()
                 windowx = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowY."s) != -1)
+            if (strutil::contains(s(0), u8"windowY."))
             {
                 i = 0;
                 p = 0;
@@ -81456,7 +81458,7 @@ void label_2715()
                 windowy = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowW."s) != -1)
+            if (strutil::contains(s(0), u8"windowW."))
             {
                 i = 0;
                 p = 0;
@@ -81483,7 +81485,7 @@ void label_2715()
                 windoww = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowH."s) != -1)
+            if (strutil::contains(s(0), u8"windowH."))
             {
                 i = 0;
                 p = 0;
@@ -81510,7 +81512,7 @@ void label_2715()
                 windowh = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"clockX."s) != -1)
+            if (strutil::contains(s(0), u8"clockX."))
             {
                 i = 0;
                 p = 0;
@@ -81537,7 +81539,7 @@ void label_2715()
                 inf_clockx = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"clockW."s) != -1)
+            if (strutil::contains(s(0), u8"clockW."))
             {
                 i = 0;
                 p = 0;
@@ -81564,7 +81566,7 @@ void label_2715()
                 inf_clockw = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"clockH."s) != -1)
+            if (strutil::contains(s(0), u8"clockH."))
             {
                 i = 0;
                 p = 0;
@@ -81591,7 +81593,7 @@ void label_2715()
                 inf_clockh = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"defLoadFolder."s) != -1)
+            if (strutil::contains(s(0), u8"defLoadFolder."))
             {
                 i = 0;
                 p = 0;
@@ -81618,7 +81620,7 @@ void label_2715()
                 defload = rtvaln;
                 continue;
             }
-            if (instr(s, 0, u8"charamake_wiz."s) != -1)
+            if (strutil::contains(s(0), u8"charamake_wiz."))
             {
                 i = 0;
                 p = 0;
@@ -81661,7 +81663,7 @@ void label_2719()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, u8"room_title."s) != -1)
+            if (strutil::contains(s(0), u8"room_title."))
             {
                 i = 0;
                 p = 0;
@@ -81688,7 +81690,7 @@ void label_2719()
                 usertitle = rtvaln;
                 continue;
             }
-            if (instr(s, 0, u8"welcome_msg."s) != -1)
+            if (strutil::contains(s(0), u8"welcome_msg."))
             {
                 i = 0;
                 p = 0;
@@ -81715,7 +81717,7 @@ void label_2719()
                 usermsg = rtvaln;
                 continue;
             }
-            if (instr(s, 0, u8"pet_relation."s) != -1)
+            if (strutil::contains(s(0), u8"pet_relation."))
             {
                 i = 0;
                 p = 0;
@@ -81742,7 +81744,7 @@ void label_2719()
                 userrelation = elona_int(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"password."s) != -1)
+            if (strutil::contains(s(0), u8"password."))
             {
                 i = 0;
                 p = 0;

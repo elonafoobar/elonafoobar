@@ -900,7 +900,7 @@ void txt_conv()
         {
             int b = 0;
             b = peek(msgtemp(0), 0);
-            if (instr(msgtemp(0), 0, u8"\"") != -1)
+            if (strutil::contains(msgtemp(0), u8"\""))
             {
                 if (tcolfix_at_txtfunc == 0)
                 {

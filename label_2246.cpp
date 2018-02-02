@@ -2403,7 +2403,7 @@ void label_2246()
             tcbk = tc;
             tc = rc;
             s = refchara_str(cdata_id(tc), 8);
-            if (instr(s, 0, u8"/man/"s) == -1)
+            if (!strutil::contains(s(0), u8"/man/"))
             {
                 dmgcon(tcbk, 11, 1000);
                 f = 1;

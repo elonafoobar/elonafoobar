@@ -8035,7 +8035,7 @@ label_0223_internal:
         {
             goto label_0223_internal;
         }
-        if (instr(s_at_m41, 0, u8"ーッ"s) != -1)
+        if (strutil::contains(s_at_m41, u8"ーッ"))
         {
             goto label_0223_internal;
         }

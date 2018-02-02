@@ -12,6 +12,7 @@
 #include "macro_cdata.hpp"
 #include "macro_gdata.hpp"
 #include "macro_inv.hpp"
+#include "util.hpp"
 
 #if __has_include(<filesystem>)
 #include <filesystem>

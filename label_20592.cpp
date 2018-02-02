@@ -1732,7 +1732,7 @@ label_2061_internal:
                 if (reftype == 53000)
                 {
                     f = 1;
-                    if (instr(filter_item(inv_id(ci)), 0, u8"/neg/"s) != -1)
+                    if (strutil::contains(filter_item(inv_id(ci)), u8"/neg/"))
                     {
                         f = 0;
                     }
@@ -1755,11 +1755,12 @@ label_2061_internal:
                             goto label_2060_internal;
                         }
                     }
-                    if (instr(filter_item(inv_id(ci)), 0, u8"/neg/"s) != -1)
+                    if (strutil::contains(filter_item(inv_id(ci)), u8"/neg/"))
                     {
                         f = 0;
                     }
-                    if (instr(filter_item(inv_id(ci)), 0, u8"/nogive/"s) != -1)
+                    if (strutil::contains(
+                            filter_item(inv_id(ci)), u8"/nogive/"))
                     {
                         f = 0;
                     }
