@@ -7495,6 +7495,7 @@ void label_0182()
 
 void label_0183()
 {
+    elona_vector1<std::string> buff2;
     notesel(buffboard);
     SDIM1(buff2);
     p = instr(buffboard, 0, s + u8","s + lang(u8"JP"s, u8"EN"s));
@@ -8509,6 +8510,7 @@ void label_0230()
 
 void label_0247()
 {
+    int sid = 0;
     rtval(0) = 4;
     rtval(1) = 0;
     s = u8"error:"s + val + u8"/"s + val(1);

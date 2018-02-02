@@ -6,6 +6,8 @@ namespace elona
 {
 void label_2251()
 {
+    int chatid = 0;
+    int tcchat = 0;
     listmax = 0;
     if (buff == ""s)
     {

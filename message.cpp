@@ -9,6 +9,7 @@ namespace elona
 
 void key_check(int prm_299)
 {
+    int key_ctrl = 0;
     int p_at_m19 = 0;
     int a_at_m19 = 0;
     int f_at_m19 = 0;
@@ -792,6 +793,7 @@ void txtnew()
 
 void msg_clear()
 {
+    int msg_len = 0;
     msg_len = 0;
     msgtemp = "";
     {

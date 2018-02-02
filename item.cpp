@@ -1094,6 +1094,7 @@ void label_0311()
 
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
+    int itemnamehack = 0;
     elona_vector1<int> iqiality_at_m63;
     int num2_at_m63 = 0;
     std::string s2_at_m63;

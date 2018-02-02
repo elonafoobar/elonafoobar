@@ -8,6 +8,7 @@ namespace elona
 
 void label_2754()
 {
+    elona_vector1<int> voidboss;
     switch (evid())
     {
     case 8: label_2678(); goto label_2755_internal;

@@ -457,6 +457,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
 
 int calcskill(int prm_269, int prm_270, int prm_271)
 {
+    int ep = 0;
     int rs_at_m9 = 0;
     rs_at_m9 = sdata(sdataref(0, prm_269), prm_270);
     ele = 0;
@@ -1397,6 +1398,11 @@ int calcexpalive(int prm_892)
 
 int calcattackhit(int prm_893)
 {
+    int tohitorg = 0;
+    int tohitfix = 0;
+    int tohi = 0;
+    int twohit = 0;
+    int evaderef = 0;
     critical = 0;
     if (attackskill == 106)
     {
@@ -1612,6 +1618,10 @@ int calcattackhit(int prm_893)
 
 int calcattackdmg(int prm_894)
 {
+    int prot2 = 0;
+    int protfix = 0;
+    int damagepierce = 0;
+    int damagenormal = 0;
     if (attackskill == 106)
     {
         dmgfix =

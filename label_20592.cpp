@@ -11,6 +11,11 @@ void label_2743(bool = true);
 
 int label_20592()
 {
+    int mainweapon = 0;
+    int countequip = 0;
+    int showmoney = 0;
+    int citrade = 0;
+    int dropcontinue = 0;
 label_20591:
     if (invctrl == 22)
     {

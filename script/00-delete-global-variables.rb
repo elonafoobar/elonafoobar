@@ -8,10 +8,8 @@ variable_declarations = {}
 File.open('../variables.hpp').each_line(chomp: true) do |line|
   if line =~ /^inline/
     name = line.match(/.* (\w+);/)[1]
-    if name.include?('_at_')
-      variables << name
-      variable_declarations[name] = line.sub('inline ', '')
-    end
+    variables << name
+    variable_declarations[name] = line.sub('inline ', '')
   elsif !variables.empty?
     break
   end
@@ -101,7 +99,7 @@ File.open('../variables.hpp.tmp', 'w') do |out|
   File.open('../variables.hpp').each_line do |line|
     if line =~ /^inline/ && (match_data = line.match(/.* (\w+);/))
       name = match_data[1]
-      if name.include?('_at_') && variable_table.has_key?(name)
+      if variable_table.has_key?(name)
         next
       end
     end

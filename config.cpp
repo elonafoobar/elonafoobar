@@ -228,6 +228,8 @@ namespace elona
 
 void label_2716()
 {
+    int cfg_scancel = 0;
+    int cfg_showskillmod = 0;
     // FIXME std::string{value} => value
     std::unique_ptr<config_base> config_list[] = {
         std::make_unique<config_integer>(
