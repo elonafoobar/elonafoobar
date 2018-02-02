@@ -1232,7 +1232,7 @@ label_2061_internal:
                 val(4) = inv_number(ci);
                 inputlog = ""s + inv_number(ci);
                 label_21262();
-                in = stoi(inputlog);
+                in = elona::stoi(inputlog(0));
                 if (in > inv_number(ci))
                 {
                     in = inv_number(ci);
@@ -1389,7 +1389,7 @@ label_2061_internal:
                 val(4) = inv_number(ci);
                 inputlog = ""s + inv_number(ci);
                 label_21262();
-                in = stoi(inputlog);
+                in = elona::stoi(inputlog(0));
                 if (in > inv_number(ci))
                 {
                     in = inv_number(ci);
