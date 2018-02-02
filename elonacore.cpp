@@ -42073,6 +42073,7 @@ void label_1870()
                 gcopy(2, x - atxpic(2) / 2, y - atxpic(3) / 2, x(1), y(1));
                 pos(x, y);
                 gmode(2, inf_tiles, inf_tiles);
+                double p_double;
                 if (cnt == 10)
                 {
                     p_double = 0;
