@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 int label_2176()
 {
     int efcibk = 0;

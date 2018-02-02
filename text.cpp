@@ -6,6 +6,13 @@ namespace elona
 {
 
 
+elona_vector1<std::string> _tone_at_m34;
+int p_at_m34 = 0;
+int talkref = 0;
+std::string s_at_m41;
+elona_vector1<int> p_at_m41;
+
+
 std::string cnvrank(int prm_248)
 {
     if (jp)

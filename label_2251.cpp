@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 void label_2251()
 {
     int chatid = 0;

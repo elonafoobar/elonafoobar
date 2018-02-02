@@ -7,6 +7,15 @@ namespace elona
 {
 
 
+int p_at_m43 = 0;
+int p_at_m77 = 0;
+elona_vector1<int> rangemap;
+int rangedist = 0;
+int value_at_m153 = 0;
+int p_at_m153 = 0;
+int cost_at_m153 = 0;
+
+
 void calcbuff(int prm_266, int prm_267, int prm_268)
 {
     elona_vector1<int> p_at_m8;

@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 int label_1756()
 {
     if (dbid == 0)

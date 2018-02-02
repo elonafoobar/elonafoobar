@@ -5,6 +5,8 @@
 
 namespace elona
 {
+
+
 int label_2107()
 {
     int fsize = 0;

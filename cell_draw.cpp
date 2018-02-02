@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 void cell_draw()
 {
     int deco2 = 0;

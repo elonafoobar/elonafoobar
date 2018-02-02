@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 int label_0042()
 {
     if (tid == 24)

@@ -7,6 +7,12 @@ namespace elona
 {
 
 
+int msglen = 0;
+int tcontinue_at_txtfunc = 0;
+int tcolfix_at_txtfunc = 0;
+int p_at_txtfunc = 0;
+
+
 void key_check(int prm_299)
 {
     int key_ctrl = 0;

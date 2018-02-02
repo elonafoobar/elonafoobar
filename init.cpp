@@ -48,6 +48,12 @@ namespace elona
 {
 
 
+elona_vector1<int> keybd_st;
+elona_vector1<std::string> cmrace;
+std::string cmclass;
+elona_vector1<int> cmstats;
+
+
 int main()
 {
     int randseed = 0;
