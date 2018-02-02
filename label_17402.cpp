@@ -2859,11 +2859,11 @@ label_1741_internal:
                                         for (;; ++cnt)
                                         {
                                             await();
-                                            dx = limit(
+                                            dx = std::clamp(
                                                 rnd(cnt / 4 + 1) + 1,
                                                 1,
                                                 mdata(0));
-                                            dy = limit(
+                                            dy = std::clamp(
                                                 rnd(cnt / 4 + 1) + 1,
                                                 1,
                                                 mdata(1));

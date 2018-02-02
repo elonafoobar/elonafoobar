@@ -324,19 +324,6 @@ std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 
 
 
-int abs(int x)
-{
-    return x > 0 ? x : -x;
-}
-
-
-double atan(int y, int x)
-{
-    return std::atan2(static_cast<double>(y), static_cast<double>(x));
-}
-
-
-
 namespace await_detail
 {
 uint32_t last_await;
@@ -634,17 +621,6 @@ std::string dirinfo(int n)
 }
 
 
-double elona_double(const std::string& s)
-{
-    return std::stod(s);
-}
-
-double elona_double(int n)
-{
-    return static_cast<double>(n);
-}
-
-
 void exec(const std::string&, int)
 {
 }
@@ -662,11 +638,6 @@ void exist(const fs::path& filename)
     }
 }
 
-
-double expf(double x)
-{
-    return std::exp(x);
-}
 
 
 namespace font_detail
@@ -755,29 +726,6 @@ void getkey(int& out, int key)
     out = Keyboard::instance().is_pressed(hspkey2snailkey(key));
 }
 
-std::string getpath(const fs::path& source, int mode)
-{
-    if (mode == 8)
-    {
-        return source.filename();
-    }
-    else if (mode == 16)
-    {
-        std::string from{source};
-        std::string to;
-        std::transform(
-            std::begin(from),
-            std::end(from),
-            std::back_inserter(to),
-            [](char c) { return std::tolower(c); });
-        return to;
-    }
-    else
-    {
-        assert(0);
-    }
-}
-
 void getstr(
     std::string& out,
     const std::string& source,
@@ -792,7 +740,7 @@ void getstr(
     }
     if (pos == std::string::npos)
     {
-        pos = source.length();
+        pos = std::size(source);
     }
     if (pos >= offset)
     {
@@ -1080,23 +1028,23 @@ int instr(const std::string& str, size_t pos, const std::string pattern)
     return ret == std::string::npos ? -1 : static_cast<int>(ret - pos);
 }
 
-int elona_int(double x)
-{
-    return static_cast<int>(x);
-}
 
-int elona_int(const std::string& s)
+
+int stoi(std::string_view s)
 {
     try
     {
-        return std::stoi(s);
+        return std::stoi(std::string{s});
     }
-    catch (...)
+    catch (std::invalid_argument&)
+    {
+        return 0;
+    }
+    catch (std::out_of_range&)
     {
         return 0;
     }
 }
-
 
 
 size_t length(const std::string& str)
@@ -1104,11 +1052,6 @@ size_t length(const std::string& str)
     return std::size(str);
 }
 
-
-int limit(int x, int min, int max)
-{
-    return std::clamp(x, min, max);
-}
 
 void line(int x1, int y1, int x2, int y2)
 {
@@ -1120,13 +1063,6 @@ void line(int x, int y)
     line(detail::current_tex_buffer().x, detail::current_tex_buffer().y, x, y);
     detail::current_tex_buffer().x = x;
     detail::current_tex_buffer().y = y;
-}
-
-
-
-double logf(double x)
-{
-    return std::log(x);
 }
 
 
@@ -1509,10 +1445,6 @@ void screen(int window_id, int width, int height, int mode, int x, int y)
 {
 }
 
-double sqrt(double x)
-{
-    return std::sqrt(x);
-}
 
 void stick(int& out, int allow_repeat_keys)
 {
@@ -1547,20 +1479,10 @@ void stick(int& out, int allow_repeat_keys)
 }
 
 
-std::string elona_str(int n)
-{
-    return std::to_string(n);
-}
-
-size_t strlen(const std::string& str)
-{
-    return str.length();
-}
-
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
-    for (int i = 0; i < str.length();)
+    for (int i = 0; i < std::size(str);)
     {
         const auto byte = byte_count(static_cast<uint8_t>(str[i]));
         ret += byte == 1 ? 1 : 2;
@@ -2300,7 +2222,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
 
     while (1)
     {
-        const auto len = rest.length();
+        const auto len = std::size(rest);
         if (len < max_line_length)
         {
             text += rest;
@@ -2326,7 +2248,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
                 // }
                 text += rest.substr(0, line_length) + '\n';
                 ++n;
-                if (rest.length() > line_length)
+                if (std::size(rest) > line_length)
                 {
                     rest = rest.substr(line_length);
                 }

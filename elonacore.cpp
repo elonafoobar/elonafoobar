@@ -1245,7 +1245,7 @@ void label_0068()
                     return;
                 }
             }
-            if (instr(musicfile(music), 0, u8".mp3"s) != -1)
+            if (strutil::contains(musicfile(music), u8".mp3"))
             {
                 mp3 = 1;
             }
@@ -2440,17 +2440,6 @@ void txttargetlevel()
             + u8" with your eyes closed and arms crossed."s);
     return;
 }
-int limitmax(int prm_362, int prm_363)
-{
-    if (prm_362 > prm_363)
-    {
-        return prm_363;
-    }
-    else
-    {
-        return prm_362;
-    }
-}
 std::string mapfile(int prm_365)
 {
     if (adata(16, prm_365) == 5)
@@ -2777,7 +2766,7 @@ void label_0184()
         buff = lang(
             u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
             u8"You've done well. Thanks. Here's your reward."s);
-        if (elona_int(s(5)) != 0)
+        if (stoi(s(5)) != 0)
         {
             txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), ""s));
         }
@@ -2813,7 +2802,7 @@ void label_0185()
             await();
             p(0) = instr(buff, 0, u8"{"s);
             p(1) = instr(buff, p, u8"}"s);
-            p(2) = strlen(buff);
+            p(2) = std::size(buff(0));
             if (p == -1)
             {
                 break;
@@ -4766,7 +4755,7 @@ void showcard2(int prm_425, int prm_426)
                 col_at_cardcontrol(2) = 105;
             }
             gmode(2);
-            s_at_cardcontrol = elona_str(card_at_cardcontrol(0, prm_425));
+            s_at_cardcontrol = std::to_string(card_at_cardcontrol(0, prm_425));
             tx_at_cardcontrol = 2;
             if (card_at_cardcontrol(0, prm_425) == 1)
             {
@@ -5365,7 +5354,7 @@ void putenclv(int prm_448)
 {
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (abs(prm_448) + 1); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + (std::abs(prm_448) + 1); cnt < cnt_end; ++cnt)
         {
             if (cnt > 4)
             {
@@ -5881,7 +5870,7 @@ int randomenc(int prm_451)
 int randomenclv(int prm_452)
 {
     int enclv_at_m47 = 0;
-    enclv_at_m47 = limit(prm_452, 0, 4);
+    enclv_at_m47 = std::clamp(prm_452, 0, 4);
     enclv_at_m47 = rnd(enclv_at_m47 + 1);
     return enclv_at_m47;
 }
@@ -6124,8 +6113,8 @@ int encadd(
         if (enc_at_m48 == 9)
         {
             enc_at_m48 = rnd(rnd(6) + 1);
-            encp_at_m48 =
-                limit(encp_at_m48, 0, 500) * encammoref(1, enc_at_m48) / 500
+            encp_at_m48 = std::clamp(encp_at_m48, 0, 500)
+                    * encammoref(1, enc_at_m48) / 500
                 + encammoref(0, enc_at_m48);
             enc_at_m48 += 90000;
             encp_at_m48 += encp_at_m48 * 1000;
@@ -6374,10 +6363,10 @@ void label_0261()
     }
     else
     {
-        egolv = rnd(limit(rnd(objlv / 10 + 3), 0, 4) + 1);
+        egolv = rnd(std::clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         inv_value(ci) = inv_value(ci) * 3;
         inv_difficulty_of_identification(ci) =
-            50 + rnd((abs((fixlv - 2)) * 100 + 100));
+            50 + rnd((std::abs((fixlv - 2)) * 100 + 100));
     }
     if (reftypeminor == 10006)
     {
@@ -6486,7 +6475,7 @@ void label_0261()
         encadd(
             ci,
             randomenc(randomenclv(egolv)),
-            limit(randomencp(), 250, 10000)
+            std::clamp(randomencp(), 250, 10000)
                 * (125 + (inv_curse_state(ci) == -2) * 25) / 100);
         {
             int cnt = 0;
@@ -7410,7 +7399,7 @@ void label_0264()
     {
         mtlv = 4;
     }
-    mtlv = limit(rnd(mtlv + 1) + objfix, 0, 4);
+    mtlv = std::clamp(rnd(mtlv + 1) + objfix, 0, 4);
     objfix = 0;
     if (reftype == 60000)
     {
@@ -8045,7 +8034,8 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             }
             i_at_m66 = p_at_m66 % 10000;
             pos(prm_530 + (i_at_m66 - 50) * 20, prm_531);
-            p_at_m66 = abs(inv_enchantment_power(prm_529, cnt) / 2 / 50) + 1;
+            p_at_m66 =
+                std::abs(inv_enchantment_power(prm_529, cnt) / 2 / 50) + 1;
             if (p_at_m66 > 5)
             {
                 s_at_m66 = u8"+"s;
@@ -8092,13 +8082,17 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     int i_at_m67 = 0;
     word_at_m67 = prm_533;
     p_at_m67 = 0;
-    i_at_m67 = strlen(word_at_m67);
+    i_at_m67 = std::size(word_at_m67);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
         {
             prm_532(cnt) = "";
-            getstr(prm_532(cnt), word_at_m67, limit(p_at_m67, 0, i_at_m67), 44);
+            getstr(
+                prm_532(cnt),
+                word_at_m67,
+                std::clamp(p_at_m67, 0, i_at_m67),
+                44);
             if (strsize > i_at_m67)
             {
                 break;
@@ -8152,7 +8146,7 @@ int dist(int prm_535, int prm_536, int prm_537, int prm_538)
     int d_at_m69 = 0;
     d_at_m69 = (prm_535 - prm_537) * (prm_535 - prm_537)
         + (prm_536 - prm_538) * (prm_536 - prm_538);
-    return elona_int(sqrt(d_at_m69));
+    return int(std::sqrt(d_at_m69));
 }
 int winposy(int prm_539, int prm_540)
 {
@@ -8215,7 +8209,8 @@ void cs_list(
     int tx_at_m72 = 0;
     if (cs == CNT)
     {
-        tx_at_m72 = limit(strlen(prm_543) * 7 + 32 + prm_547, 10, 480);
+        tx_at_m72 =
+            std::clamp(int(std::size(prm_543) * 7 + 32 + prm_547), 10, 480);
         gsel(3);
         pos(264, 96);
         gcopy(0, prm_544, prm_545, tx_at_m72, prm_546);
@@ -8503,7 +8498,7 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
     {
         modgrowth(prm_562, prm_563, 50);
     }
-    sdata(prm_563 + 600, prm_562) = limit(lv_at_m76, 0, 2000) * 1000000
+    sdata(prm_563 + 600, prm_562) = std::clamp(lv_at_m76, 0, 2000) * 1000000
         + sexp(prm_563, prm_562) * 1000 + sgrowth(prm_563, prm_562);
     r1 = prm_562;
     label_1477();
@@ -8527,14 +8522,14 @@ int skillmod(int prm_566, int prm_567, int prm_568)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 = elona_int(elona_double(growth_at_m77) * 0.9);
+                growth_at_m77 = growth_at_m77 * 0.9;
                 if (growth_at_m77 < 1)
                 {
                     growth_at_m77 = 1;
                 }
             }
         }
-        sdata(prm_566 + 600, prm_567) = limit(lv_at_m77, 0, 2000) * 1000000
+        sdata(prm_566 + 600, prm_567) = std::clamp(lv_at_m77, 0, 2000) * 1000000
             + exp_at_m77 * 1000 + growth_at_m77;
         if (synccheck(prm_567, -1))
         {
@@ -8569,15 +8564,14 @@ int skillmod(int prm_566, int prm_567, int prm_568)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 =
-                    elona_int(elona_double(growth_at_m77) * (-0.9 + 2)) + 1;
+                growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
                 if (growth_at_m77 > 400)
                 {
                     growth_at_m77 = 400;
                 }
             }
         }
-        sdata(prm_566 + 600, prm_567) = limit(lv_at_m77, 0, 2000) * 1000000
+        sdata(prm_566 + 600, prm_567) = std::clamp(lv_at_m77, 0, 2000) * 1000000
             + exp_at_m77 * 1000 + growth_at_m77;
         if (prm_567 == 0 || prm_567 < 16)
         {
@@ -8594,8 +8588,8 @@ int skillmod(int prm_566, int prm_567, int prm_568)
         label_1477();
         return 1;
     }
-    sdata(prm_566 + 600, prm_567) =
-        limit(lv_at_m77, 0, 2000) * 1000000 + exp_at_m77 * 1000 + growth_at_m77;
+    sdata(prm_566 + 600, prm_567) = std::clamp(lv_at_m77, 0, 2000) * 1000000
+        + exp_at_m77 * 1000 + growth_at_m77;
     return 0;
 }
 int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
@@ -8682,14 +8676,14 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 = elona_int(elona_double(growth_at_m77) * 0.9);
+                growth_at_m77 = growth_at_m77 * 0.9;
                 if (growth_at_m77 < 1)
                 {
                     growth_at_m77 = 1;
                 }
             }
         }
-        sdata(prm_569 + 600, prm_570) = limit(lv_at_m77, 0, 2000) * 1000000
+        sdata(prm_569 + 600, prm_570) = std::clamp(lv_at_m77, 0, 2000) * 1000000
             + exp_at_m77 * 1000 + growth_at_m77;
         if (synccheck(prm_570, -1))
         {
@@ -8725,15 +8719,14 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             int cnt = 0;
             for (int cnt_end = cnt + (lvchange_at_m77); cnt < cnt_end; ++cnt)
             {
-                growth_at_m77 =
-                    elona_int(elona_double(growth_at_m77) * (-0.9 + 2)) + 1;
+                growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
                 if (growth_at_m77 > 400)
                 {
                     growth_at_m77 = 400;
                 }
             }
         }
-        sdata(prm_569 + 600, prm_570) = limit(lv_at_m77, 0, 2000) * 1000000
+        sdata(prm_569 + 600, prm_570) = std::clamp(lv_at_m77, 0, 2000) * 1000000
             + exp_at_m77 * 1000 + growth_at_m77;
         if (synccheck(prm_570, -1))
         {
@@ -8751,8 +8744,8 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         label_1477();
         return 1;
     }
-    sdata(prm_569 + 600, prm_570) =
-        limit(lv_at_m77, 0, 2000) * 1000000 + exp_at_m77 * 1000 + growth_at_m77;
+    sdata(prm_569 + 600, prm_570) = std::clamp(lv_at_m77, 0, 2000) * 1000000
+        + exp_at_m77 * 1000 + growth_at_m77;
     return 0;
 }
 int getworker(int prm_578, int prm_579)
@@ -9266,8 +9259,8 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
     dy_at_modfov = prm_632 - prm_630;
     dx_at_modfov = prm_631 - prm_629;
-    ay_at_modfov = abs(dy_at_modfov);
-    ax_at_modfov = abs(dx_at_modfov);
+    ay_at_modfov = std::abs(dy_at_modfov);
+    ax_at_modfov = std::abs(dx_at_modfov);
     if (ax_at_modfov < 2 && ay_at_modfov < 2)
     {
         return 1;
@@ -9540,8 +9533,8 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             return 1;
         }
     }
-    ay_at_modfov = abs(dy_at_modfov);
-    ax_at_modfov = abs(dx_at_modfov);
+    ay_at_modfov = std::abs(dy_at_modfov);
+    ax_at_modfov = std::abs(dx_at_modfov);
     p_at_modfov = 0;
     if (dx_at_modfov == 0)
     {
@@ -10397,7 +10390,7 @@ void display_window(
         window2(
             prm_668 + 34,
             prm_669 - 4,
-            45 * prm_670 / 100 + limit((strlen_u(s) * 8 - 120), 0, 200),
+            45 * prm_670 / 100 + std::clamp(int(strlen_u(s) * 8 - 120), 0, 200),
             32,
             1,
             1);
@@ -10420,7 +10413,7 @@ void display_window(
     font(lang(cfg_font1, cfg_font2), 15 + en - en * 2, 0);
     color(0, 0, 0);
     pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
-            + limit((strlen(s) * 8 - 120), 0, 200) / 2,
+            + std::clamp(int(std::size(s(0)) * 8 - 120), 0, 200) / 2,
         prm_669 + 4 + vfix);
     color(20, 10, 0);
     bmes(s, 255, 255, 255);
@@ -10800,13 +10793,13 @@ std::string del_str(const std::string& prm_694, const std::string& prm_695)
         int cnt = 0;
         for (;; ++cnt)
         {
-            if (instr(s_at_m99, 0, prm_695) == -1)
+            if (!strutil::contains(s_at_m99, prm_695))
             {
                 break;
             }
             s_at_m99 = strmid(s_at_m99, 0, instr(s_at_m99, 0, prm_695))
                 + strmid(s_at_m99,
-                         (instr(s_at_m99, 0, prm_695) + strlen(prm_695)),
+                         (instr(s_at_m99, 0, prm_695) + std::size(prm_695)),
                          100);
         }
     }
@@ -10823,14 +10816,14 @@ std::string cnv_str(
         int cnt = 0;
         for (;; ++cnt)
         {
-            s3_at_m100 = getpath(prm_696, 16);
+            s3_at_m100 = strutil::to_lower(prm_696);
             p_at_m100 = instr(s3_at_m100, 0, prm_697);
             if (p_at_m100 == -1)
             {
                 break;
             }
             prm_696 = strmid(prm_696, 0, p_at_m100) + lang(prm_698, prm_698)
-                + strmid(prm_696, (p_at_m100 + strlen(prm_697)), 300);
+                + strmid(prm_696, (p_at_m100 + std::size(prm_697)), 300);
         }
     }
     return prm_696;
@@ -11350,7 +11343,7 @@ void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
 }
 int direction(int prm_748, int prm_749, int prm_750, int prm_751)
 {
-    if (abs(prm_748 - prm_750) > abs(prm_749 - prm_751))
+    if (std::abs(prm_748 - prm_750) > std::abs(prm_749 - prm_751))
     {
         if (prm_748 > prm_750)
         {
@@ -13032,7 +13025,7 @@ void refreshspeed(int prm_771)
     else
     {
         cdata_current_speed(prm_771) = sdata(18, prm_771)
-            * limit((100 - cdata_speed_correction_value(prm_771)), 0, 100)
+            * std::clamp((100 - cdata_speed_correction_value(prm_771)), 0, 100)
             / 100;
     }
     if (cdata_current_speed(prm_771) < 10)
@@ -13050,18 +13043,18 @@ void refreshspeed(int prm_771)
     if (gdata_mount != 0)
     {
         cdata_current_speed(0) = sdata(18, gdata_mount) * 100
-            / limit((100 + sdata(18, gdata_mount)
-                     - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
-                     - (cbit(22, gdata_mount) == 1) * 50),
-                    100,
-                    1000);
+            / std::clamp((100 + sdata(18, gdata_mount)
+                          - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
+                          - (cbit(22, gdata_mount) == 1) * 50),
+                         100,
+                         1000);
         if (cbit(25, gdata_mount))
         {
             cdata_current_speed(0) /= 10;
         }
         if (gdata_mount == prm_771)
         {
-            cdata_current_speed(prm_771) = limit(
+            cdata_current_speed(prm_771) = std::clamp(
                 sdata(10, prm_771) + sdata(301, 0), 10, sdata(18, prm_771));
             return;
         }
@@ -13260,7 +13253,7 @@ int get_freeally()
     f_at_m125 = 0;
     {
         int cnt = 1;
-        for (int cnt_end = cnt + (limit(sdata(17, 0) / 5 + 1, 2, 15));
+        for (int cnt_end = cnt + (std::clamp(sdata(17, 0) / 5 + 1, 2, 15));
              cnt < cnt_end;
              ++cnt)
         {
@@ -14347,7 +14340,7 @@ void resistmod(int prm_812, int prm_813, int prm_814)
                     + your(prm_812) + u8" body."s));
         }
     }
-    sdata(prm_813 + 600, prm_812) = limit(lv_at_m134, 0, 2000) * 1000000
+    sdata(prm_813 + 600, prm_812) = std::clamp(lv_at_m134, 0, 2000) * 1000000
         + sexp(prm_813, prm_812) * 1000 + sgrowth(prm_813, prm_812);
     snd(107);
     animeload(15, prm_812);
@@ -14480,7 +14473,7 @@ void modcorrupt(int prm_815)
         }
         else
         {
-            p_at_m134 = abs(mod_at_m134);
+            p_at_m134 = std::abs(mod_at_m134);
         }
         if (p_at_m134 < 0)
         {
@@ -15472,7 +15465,7 @@ void item_acid(int prm_838, int prm_839)
                 {
                     continue;
                 }
-                if (rnd(limit(30, 1, 30)) == 0)
+                if (rnd(std::clamp(30, 1, 30)) == 0)
                 {
                     if (inv_enhancement(p_at_m138) > -4)
                     {
@@ -16419,7 +16412,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (r_at_m141 < 3)
         {
             dmg_at_m141 =
-                dmg_at_m141 * 150 / limit((r_at_m141 * 50 + 50), 40, 150);
+                dmg_at_m141 * 150 / std::clamp((r_at_m141 * 50 + 50), 40, 150);
         }
         else if (r_at_m141 < 10)
         {
@@ -16472,7 +16465,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     {
         if (cdata_hp(prm_853) - dmg_at_m141 <= 0)
         {
-            if (limit(
+            if (std::clamp(
                     25
                         + cdata((280 + findbuff(prm_853, 18) * 3 + 1), prm_853)
                             / 17,
@@ -16505,7 +16498,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 healhp(
                     prm_855,
-                    limit(
+                    std::clamp(
                         rnd(dmg_at_m141 * (150 + prm_857 * 2) / 1000 + 10),
                         1,
                         cdata_max_hp(prm_855) / 10 + rnd(5)));
@@ -17476,9 +17469,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 customtalk(prm_855, 103);
             }
-            exp_at_m141 = limit(cdata_level(prm_853), 1, 200)
-                    * limit((cdata_level(prm_853) + 1), 1, 200)
-                    * limit((cdata_level(prm_853) + 2), 1, 200) / 20
+            exp_at_m141 = std::clamp(cdata_level(prm_853), 1, 200)
+                    * std::clamp((cdata_level(prm_853) + 1), 1, 200)
+                    * std::clamp((cdata_level(prm_853) + 2), 1, 200) / 20
                 + 8;
             if (cdata_level(prm_853) > cdata_level(prm_855))
             {
@@ -17655,7 +17648,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 catitem = prm_855;
             }
-            if (elona_int(sqrt(sdata(161, prm_855))) > rnd(150))
+            if (int(std::sqrt(sdata(161, prm_855))) > rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -18348,7 +18341,7 @@ label_1394_internal:
                     break;
                 }
                 list(0, listmax) =
-                    elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
+                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 listn(0, listmax) =
@@ -18356,7 +18349,7 @@ label_1394_internal:
                 header_at_m147 += tail_at_m147 + 2;
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
                 list(1, listmax) =
-                    elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
+                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 2;
                 listn(1, listmax) = ""s + list(1, listmax);
                 tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
@@ -18373,7 +18366,7 @@ label_1394_internal:
                     break;
                 }
                 chat_count_at_m147 =
-                    elona_int(strmid(netbuf, header_at_m147, tail_at_m147));
+                    stoi(strmid(netbuf, header_at_m147, tail_at_m147));
                 header_at_m147 += tail_at_m147 + 1;
                 if (cnt == 0)
                 {
@@ -18460,7 +18453,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
         int cnt = 0;
         for (int cnt_end = cnt + (10000); cnt < cnt_end; ++cnt)
         {
-            if (instr(netbuf, p_at_m147, u8"<"s) == -1
+            if (!strutil::contains(netbuf(0), u8"<", p_at_m147)
                 || p_at_m147 + 1 >= size_at_m147)
             {
                 break;
@@ -18480,7 +18473,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
                     if (cnt == 0)
                     {
                         list(0, listmax) = listmax;
-                        list(1, listmax) = elona_int(s_at_m147);
+                        list(1, listmax) = stoi(s_at_m147);
                     }
                     if (cnt == 2)
                     {
@@ -18489,8 +18482,8 @@ int net_dllist(const std::string& prm_886, int prm_887)
                     }
                     if (cnt == 3)
                     {
-                        list(2, listmax) = elona_int(s_at_m147);
-                        if (elona_int(s_at_m147) != 100001)
+                        list(2, listmax) = stoi(s_at_m147);
+                        if (stoi(s_at_m147) != 100001)
                         {
                             if (prm_887 == 0)
                             {
@@ -19792,7 +19785,7 @@ void label_1425()
     msgx = 20;
     msgy = 30;
     sx = 760;
-    sx = strlen(s) * 8 + 45;
+    sx = std::size(s(0)) * 8 + 45;
     if (sx > 760)
     {
         sx = 760;
@@ -20049,7 +20042,7 @@ void label_1426()
                                     7,
                                     cnt2 * 48,
                                     0,
-                                    atan(
+                                    std::atan2(
                                         tlocx - cdata_x(cc),
                                         cdata_y(cc) - tlocy),
                                     inf_tiles,
@@ -20259,7 +20252,7 @@ void label_1426()
                                         7,
                                         ap(cnt) * 48,
                                         0,
-                                        atan(
+                                        std::atan2(
                                             tlocx - cdata_x(cc),
                                             cdata_y(cc) - tlocy),
                                         48,
@@ -20368,7 +20361,7 @@ void label_1426()
                             1,
                             0,
                             960,
-                            atan(anix - cdata_x(cc), cdata_y(cc) - aniy),
+                            std::atan2(anix - cdata_x(cc), cdata_y(cc) - aniy),
                             inf_tiles,
                             inf_tiles);
                     }
@@ -20567,7 +20560,8 @@ void label_1426()
                     1,
                     0,
                     960,
-                    atan(cdata_x(tc) - cdata_x(cc), cdata_y(cc) - cdata_y(tc)),
+                    std::atan2(
+                        cdata_x(tc) - cdata_x(cc), cdata_y(cc) - cdata_y(tc)),
                     inf_tiles,
                     inf_tiles);
                 redraw(1);
@@ -20874,12 +20868,13 @@ void label_1426()
                         }
                         af = 1;
                         cnt2 = cnt;
-                        anidy = ay(cnt) * limit((20 - ap(cnt)), 0, 6) / 6 - 96;
+                        anidy =
+                            ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                         gmode(2, 96, 96);
                         pos(ax(cnt), anidy);
                         gcopy(
                             7,
-                            limit((8 - ap(cnt)), 0, 8) * 96
+                            std::clamp((8 - ap(cnt)), 0, 8) * 96
                                 + 96 * (ap(cnt) < 15),
                             0,
                             96,
@@ -20892,10 +20887,10 @@ void label_1426()
                                 gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
                             }
                         }
-                        anidx = limit(
+                        anidx = std::clamp(
                             anidy / 55 + 1,
                             0,
-                            7 - limit((11 - ap(cnt)) * 2, 0, 7));
+                            7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
                         {
                             int cnt = 1;
                             for (int cnt_end = cnt + (anidx); cnt < cnt_end;
@@ -20990,7 +20985,8 @@ void label_1426()
                             continue;
                         }
                         af = 1;
-                        anidy = ay(cnt) * limit((20 - ap(cnt)), 0, 6) / 6 - 96;
+                        anidy =
+                            ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                         gmode(2, 96, 96);
                         if (ap(cnt) < 9)
                         {
@@ -21006,7 +21002,11 @@ void label_1426()
                         {
                             pos(ax(cnt), ay(cnt));
                             gcopy(
-                                7, limit((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
+                                7,
+                                std::clamp((ap(cnt) - 8), 0, 8) * 96,
+                                0,
+                                96,
+                                96);
                         }
                         ++ap(cnt);
                     }
@@ -21075,7 +21075,8 @@ void label_1426()
                         }
                         af = 1;
                         cnt2 = cnt;
-                        anidy = ay(cnt) * limit((20 - ap(cnt)), 0, 6) / 6 - 96;
+                        anidy =
+                            ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                         gmode(2, 96, 96);
                         if (ap(cnt) < 10)
                         {
@@ -21685,11 +21686,11 @@ void label_1437()
 }
 void label_1438()
 {
-    if (abs(cdata_next_x(0) - cdata_x(0)) > 1)
+    if (std::abs(cdata_next_x(0) - cdata_x(0)) > 1)
     {
         return;
     }
-    if (abs(cdata_next_y(0) - cdata_y(0)) > 1)
+    if (std::abs(cdata_next_y(0) - cdata_y(0)) > 1)
     {
         return;
     }
@@ -21957,7 +21958,7 @@ void label_1446()
                 144 + fishanime(1) % 2 * 48,
                 0,
                 48,
-                limit(fishanime(1) * 5, 1, 48));
+                std::clamp(fishanime(1) * 5, 1, 48));
         }
         return;
     }
@@ -22322,15 +22323,15 @@ void label_1455()
         int cnt = 10;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            sdata(cnt + 600, r1) =
-                limit(sdata(cnt + 600, r1) + 1000000 * rnd(3), 1, 2000000000);
+            sdata(cnt + 600, r1) = std::clamp(
+                sdata(cnt + 600, r1) + 1000000 * rnd(3), 1, 2000000000);
         }
     }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (length(mainskill)); cnt < cnt_end; ++cnt)
         {
-            sdata(mainskill(cnt) + 600, r1) = limit(
+            sdata(mainskill(cnt) + 600, r1) = std::clamp(
                 sdata(mainskill(cnt) + 600, r1) + 1000000 * rnd(3),
                 1,
                 2000000000);
@@ -22340,10 +22341,10 @@ void label_1455()
 }
 void label_1456()
 {
-    cdata_required_experience(r1) = limit(cdata_level(r1), 1, 200)
-            * (limit(cdata_level(r1), 1, 200) + 1)
-            * (limit(cdata_level(r1), 1, 200) + 2)
-            * (limit(cdata_level(r1), 1, 200) + 3)
+    cdata_required_experience(r1) = std::clamp(cdata_level(r1), 1, 200)
+            * (std::clamp(cdata_level(r1), 1, 200) + 1)
+            * (std::clamp(cdata_level(r1), 1, 200) + 2)
+            * (std::clamp(cdata_level(r1), 1, 200) + 3)
         + 3000;
     if (cdata_required_experience(r1) > 100000000
         || cdata_required_experience(r1) < 0)
@@ -22367,7 +22368,10 @@ void label_1459()
     if (r2 >= (sdata(156, r1) + 10) * (sdata(156, r1) + 10))
     {
         skillexp(
-            156, r1, limit(r2 * r2 / (sdata(156, r1) * 5 + 10), 10, 1000), 10);
+            156,
+            r1,
+            std::clamp(r2 * r2 / (sdata(156, r1) * 5 + 10), 10, 1000),
+            10);
     }
     return;
 }
@@ -22396,7 +22400,7 @@ void label_1462()
 }
 void label_1463()
 {
-    skillexp(164, r1, abs(cdata_mp(r1)) * 200 / (cdata_max_mp(r1) + 1));
+    skillexp(164, r1, std::abs(cdata_mp(r1)) * 200 / (cdata_max_mp(r1) + 1));
     return;
 }
 void label_1464()
@@ -22591,7 +22595,7 @@ void label_1477()
     cdata_rate_to_pierce(r1) = 0;
     if (sdata(186, r1))
     {
-        cdata_rate_of_critical_hit(r1) = elona_int(sqrt(sdata(186, r1))) + 2;
+        cdata_rate_of_critical_hit(r1) = int(std::sqrt(sdata(186, r1))) + 2;
     }
     else
     {
@@ -22899,8 +22903,8 @@ void label_1477()
     {
         if (cdata_pv(r1) > 0)
         {
-            cdata_pv(r1) = cdata_pv(r1)
-                * (120 + elona_int(sqrt(sdata(168, r1))) * 2) / 100;
+            cdata_pv(r1) =
+                cdata_pv(r1) * (120 + int(std::sqrt(sdata(168, r1))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
@@ -22912,7 +22916,7 @@ void label_1477()
         cdata_equipment_type(r1) += 4;
     }
     cdata_max_mp(r1) =
-        limit(
+        std::clamp(
             ((sdata(16, r1) * 2 + sdata(15, r1) + sdata(14, r1) / 3)
                  * cdata_level(r1) / 25
              + sdata(16, r1)),
@@ -22920,7 +22924,7 @@ void label_1477()
             1000000)
         * sdata(3, r1) / 100;
     cdata_max_hp(r1) =
-        limit(
+        std::clamp(
             ((sdata(11, r1) * 2 + sdata(10, r1) + sdata(15, r1) / 3)
                  * cdata_level(r1) / 25
              + sdata(11, r1)),
@@ -22974,7 +22978,7 @@ void label_1477()
     }
     if (cdata_equipment_type(r1) & 4)
     {
-        cdata_extra_attack(r1) += elona_int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
+        cdata_extra_attack(r1) += int(std::sqrt(sdata(166, r1))) * 3 / 2 + 4;
     }
     if (cdata_rate_of_critical_hit(r1) > 30)
     {
@@ -23022,8 +23026,7 @@ void skillinit(int prm_926, int prm_927, int prm_928)
     }
     if (cdata_level(prm_927) > 1)
     {
-        p_at_m161 =
-            elona_int(expf(logf(0.9) * cdata_level(prm_927)) * p_at_m161);
+        p_at_m161 = std::exp(std::log(0.9) * cdata_level(prm_927)) * p_at_m161;
     }
     if (p_at_m161 < 1)
     {
@@ -23039,7 +23042,7 @@ void skillinit(int prm_926, int prm_927, int prm_928)
         p_at_m161(1) = 2000 - sdata_at_m161 / 1000000;
     }
     sdata(prm_926 + 600, prm_927) +=
-        limit(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
+        std::clamp(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
     return;
 }
 void label_1512()
@@ -23068,7 +23071,7 @@ void label_1512()
             {
                 p = 100;
             }
-            sdata(cnt + 600, r1) = limit(p, 1, 2000) * 1000000;
+            sdata(cnt + 600, r1) = std::clamp(p(0), 1, 2000) * 1000000;
         }
     }
     i = 4;
@@ -23677,7 +23680,7 @@ void label_1520()
 }
 void label_1521()
 {
-    cdata_inventory_weight(0) = limit(inv_weight_(0), 0, 20000000)
+    cdata_inventory_weight(0) = std::clamp(inv_weight_(0), 0, 20000000)
         * (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata_max_inventory_weight(0) =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
@@ -25637,10 +25640,10 @@ void label_1572()
         {
             noteget(msgtemp, cnt);
             csvsort(s, msgtemp, 44);
-            booktitle(elona_int(s)) = lang(s(1), s(2));
-            if (elona_int(s(3)) == 1)
+            booktitle(stoi(s)) = lang(s(1), s(2));
+            if (stoi(s(3)) == 1)
             {
-                isetbook(p) = elona_int(s);
+                isetbook(p) = stoi(s);
                 ++p;
             }
         }
@@ -26727,7 +26730,7 @@ void label_1577()
     }
     if (mdata(6) != 1)
     {
-        if (rnd(10 - limit(cdata_curse_power(cc) / 10, 0, 9)) == 0)
+        if (rnd(10 - std::clamp(cdata_curse_power(cc) / 10, 0, 9)) == 0)
         {
             efid = 408;
             tc = cc;
@@ -26836,8 +26839,9 @@ void label_1579()
                         if (mdata(6) != 1)
                         {
                             if (rnd(25)
-                                < limit(
-                                      abs(inv_enchantment_power(ci, cnt)) / 50,
+                                < std::clamp(
+                                      std::abs(inv_enchantment_power(ci, cnt))
+                                          / 50,
                                       1,
                                       25))
                             {
@@ -26862,7 +26866,8 @@ void label_1579()
                                         + u8" blood."s));
                             }
                             cdata_bleeding(cc) +=
-                                abs(inv_enchantment_power(ci, cnt)) / 25 + 3;
+                                std::abs(inv_enchantment_power(ci, cnt)) / 25
+                                + 3;
                             continue;
                         }
                     }
@@ -26881,8 +26886,9 @@ void label_1579()
                             cdata_experience(cc) -=
                                 cdata_required_experience(cc)
                                     / (300
-                                       - limit(
-                                             abs(inv_enchantment_power(ci, cnt))
+                                       - std::clamp(
+                                             std::abs(
+                                                 inv_enchantment_power(ci, cnt))
                                                  / 2,
                                              0,
                                              50))
@@ -26901,8 +26907,9 @@ void label_1579()
                             if (mdata(6) != 5)
                             {
                                 if (rnd(50)
-                                    < limit(
-                                          abs(inv_enchantment_power(ci, cnt))
+                                    < std::clamp(
+                                          std::abs(
+                                              inv_enchantment_power(ci, cnt))
                                               / 50,
                                           1,
                                           50))
@@ -27334,7 +27341,7 @@ int label_1582()
     }
     if (inv_id(ci) == 687)
     {
-        inv_param1(ci) = rnd(rnd(limit(objlv / 2, 1, 14)) + 1);
+        inv_param1(ci) = rnd(rnd(std::clamp(objlv / 2, 1, 14)) + 1);
     }
     if (inv_id(ci) == 667)
     {
@@ -27374,7 +27381,8 @@ int label_1582()
             inv_param1(ci) = cdata_level(0);
         }
         inv_param2(ci) = rnd(
-            abs(gdata_current_dungeon_level) * (gdata_current_map != 30) + 1);
+            std::abs(gdata_current_dungeon_level) * (gdata_current_map != 30)
+            + 1);
         if (inv_id(ci) == 284 || inv_id(ci) == 283)
         {
             inv_param2(ci) = rnd(15);
@@ -27509,7 +27517,7 @@ void lovemiracle(int prm_932)
         {
             inv_subname(ci) = cdata_id(prm_932);
             inv_weight(ci) = cdata_weight(prm_932) * 10 + 250;
-            inv_value(ci) = limit(
+            inv_value(ci) = std::clamp(
                 cdata_weight(prm_932) * cdata_weight(prm_932) / 10000,
                 200,
                 40000);
@@ -27881,7 +27889,7 @@ void label_1588()
                         if (inv_id(ci) == 204)
                         {
                             s = refchara_str(inv_subname(ci), 8);
-                            if (instr(s, 0, u8"/man/"s) != -1)
+                            if (strutil::contains(s(0), u8"/man/"))
                             {
                                 txt(lang(u8"ウマイ！"s, u8"Delicious!"s));
                                 break;
@@ -28358,7 +28366,7 @@ void label_1588()
         s = refchara_str(inv_subname(ci), 8);
         if (cc == 0)
         {
-            if (instr(s, 0, u8"/man/"s) != -1)
+            if (strutil::contains(s(0), u8"/man/"))
             {
                 if (trait(41))
                 {
@@ -29014,7 +29022,9 @@ void label_1615()
             u8"Wow, "s + name(cc) + u8" speed"s + _s(cc) + u8" up!"s));
     }
     skillexp(
-        18, cc, limit(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
+        18,
+        cc,
+        std::clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
     return;
 }
 void label_1616()
@@ -30292,7 +30302,7 @@ void map_createroomdoor()
                         y,
                         tile_doorclosed,
                         21,
-                        rnd(abs(gdata_current_dungeon_level * 3 / 2) + 1));
+                        rnd(std::abs(gdata_current_dungeon_level * 3 / 2) + 1));
                 }
                 break;
             }
@@ -31057,7 +31067,7 @@ label_1665_internal:
                 dy,
                 tile_doorclosed,
                 21,
-                rnd(abs(gdata_current_dungeon_level * 3 / 2) + 1));
+                rnd(std::abs(gdata_current_dungeon_level * 3 / 2) + 1));
         }
     }
     cr += 1;
@@ -31547,7 +31557,7 @@ label_16951_internal:
     }
     if (rnd(4) == 0)
     {
-        p = limit(rnd(mdata(0) * mdata(1) / 500 + 1) + 1, 3, 15);
+        p = std::clamp(rnd(mdata(0) * mdata(1) / 500 + 1) + 1, 3, 15);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
@@ -31687,7 +31697,8 @@ int label_1697()
             {
                 tile = 31;
             }
-            size = limit(dist(dx, dy, mdata(0) / 2, mdata(1) / 2) / 8, 0, 8);
+            size =
+                std::clamp(dist(dx, dy, mdata(0) / 2, mdata(1) / 2) / 8, 0, 8);
             crop = isetcrop(rnd(length(isetcrop)));
             {
                 int cnt = dy;
@@ -31723,7 +31734,7 @@ int label_1697()
                             flt();
                             itemcreate(-1, dbid, x, y, 0);
                             inv_own_state(ci) = 4;
-                            p = limit(size + rnd((rnd(4) + 1)), 0, 9);
+                            p = std::clamp(size + rnd((rnd(4) + 1)), 0, 9);
                             inv_weight(ci) =
                                 inv_weight(ci) * (80 + p * p * 100) / 100;
                             inv_subname(ci) = p;
@@ -32333,7 +32344,7 @@ int label_1703()
             ry = roomy(cnt) + 1;
             rh = roomheight(cnt) - 2;
             rdsize = rw * rh;
-            roomdiff = limit(
+            roomdiff = std::clamp(
                 rnd(qdata(5, gdata_executing_immediate_quest) / 3 + 3), 0, 9);
             if (rnd(2) == 0)
             {
@@ -33113,7 +33124,8 @@ void label_1710()
                                         y,
                                         tile_doorclosed,
                                         21,
-                                        rnd(abs(gdata_current_dungeon_level * 3
+                                        rnd(std::abs(
+                                                gdata_current_dungeon_level * 3
                                                 / 2)
                                             + 1));
                                 }
@@ -33134,7 +33146,8 @@ void label_1710()
                                         y,
                                         tile_doorclosed,
                                         21,
-                                        rnd(abs(gdata_current_dungeon_level * 3
+                                        rnd(std::abs(
+                                                gdata_current_dungeon_level * 3
                                                 / 2)
                                             + 1));
                                 }
@@ -33621,7 +33634,7 @@ void label_1714()
                 font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
                 {
                     int cnt = 0;
-                    for (int cnt_end = cnt + (limit(p(cnt) / 1000, 1, 10));
+                    for (int cnt_end = cnt + (std::clamp(p(cnt) / 1000, 1, 10));
                          cnt < cnt_end;
                          ++cnt)
                     {
@@ -33858,7 +33871,7 @@ void label_1714()
         {
             snd(12);
             cdata_gold(0) -= calcshopreform();
-            mdata(18) = limit(mdata(18) + 10, 1, 400);
+            mdata(18) = std::clamp(mdata(18) + 10, 1, 400);
             txtef(2);
             txt(lang(
                 u8"店を拡張した！これからは"s + mdata(18)
@@ -34245,7 +34258,7 @@ void label_1725()
             ci = dblist(0, p);
             a = dblist(1, p);
             val = calcitemvalue(ci, 2);
-            val = val * elona_int((10 + sqrt(sdata(156, worker) * 200))) / 100;
+            val = val * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
             if (val <= 1)
             {
                 continue;
@@ -34270,8 +34283,8 @@ void label_1725()
             {
                 list(0, listmax) = refitem(inv_id(ci), 7);
                 list(1, listmax) = inv_quality(ci);
-                listn(0, listmax) = elona_str(a);
-                listn(1, listmax) = elona_str(val);
+                listn(0, listmax) = std::to_string(a);
+                listn(1, listmax) = std::to_string(val);
                 ++listmax;
             }
             else
@@ -34349,14 +34362,14 @@ void label_1725()
                 for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     flt(list(0, cnt2), list(1, cnt2));
-                    flttypemajor = elona_int(listn(0, cnt2));
+                    flttypemajor = stoi(listn(0, cnt2));
                     int stat = itemcreate(-1, 0, -1, -1, 0);
                     if (stat == 0)
                     {
                         f = 0;
                         break;
                     }
-                    if (inv_value(ci) > elona_int(listn(1, cnt2)) * 2)
+                    if (inv_value(ci) > stoi(listn(1, cnt2)) * 2)
                     {
                         f = 1;
                         break;
@@ -34378,8 +34391,8 @@ void label_1725()
             }
             if (f == 0)
             {
-                itemcreate(-1, 54, -1, -1, elona_int(listn(1, cnt)));
-                income += elona_int(listn(1, cnt));
+                itemcreate(-1, 54, -1, -1, stoi(listn(1, cnt)));
+                income += stoi(listn(1, cnt));
             }
             else
             {
@@ -34421,7 +34434,8 @@ void label_1725()
                     + cdatan(0, worker) + u8" put "s + s
                     + u8" in the shop strong box."s));
         }
-        skillexp(156, worker, limit(elona_int(sqrt(income)) * 6, 25, 1000));
+        skillexp(
+            156, worker, std::clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {
@@ -34550,7 +34564,7 @@ void label_1728()
             }
         }
     }
-    rankcur = 10000 - elona_int(sqrt(rankcur) * 100);
+    rankcur = 10000 - int(std::sqrt(rankcur) * 100);
     if (rankcur < 100)
     {
         rankcur = 100;
@@ -34583,7 +34597,7 @@ void label_1729()
     a = refitem(inv_id(val), 5);
     if (a == 60000)
     {
-        gdata(77) += limit(inv_value(val) / 50, 50, 500);
+        gdata(77) += std::clamp(inv_value(val) / 50, 50, 500);
     }
     p = inv_value(val);
     {
@@ -34667,7 +34681,7 @@ void label_1730()
         {
             if (list(0, cnt) != 0)
             {
-                gdata(78) += limit(list(1, cnt), 100, 2000);
+                gdata(78) += std::clamp(list(1, cnt), 100, 2000);
             }
         }
     }
@@ -34854,7 +34868,7 @@ void label_1733()
                             {
                                 inv_subname(ci) = cdata_id(cnt);
                                 inv_weight(ci) = cdata_weight(cnt) * 10 + 250;
-                                inv_value(ci) = limit(
+                                inv_value(ci) = std::clamp(
                                     cdata_weight(cnt) * cdata_weight(cnt)
                                         / 10000,
                                     200,
@@ -34900,7 +34914,7 @@ void label_1733()
                             {
                                 inv_subname(ci) = cdata_id(cnt);
                                 inv_weight(ci) = cdata_weight(cnt) * 40 + 300;
-                                inv_value(ci) = limit(
+                                inv_value(ci) = std::clamp(
                                     cdata_weight(cnt) * cdata_weight(cnt)
                                         / 5000,
                                     1,
@@ -35089,7 +35103,7 @@ void label_1735()
         if (gdata_executing_immediate_quest_type == 1006)
         {
             fltn(u8"wild"s);
-            objlv = limit(objlv / 4, 1, 8);
+            objlv = std::clamp(objlv / 4, 1, 8);
         }
         return;
     }
@@ -36159,8 +36173,8 @@ void label_1750()
                     for (;; ++cnt)
                     {
                         await();
-                        dx = limit(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
-                        dy = limit(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
+                        dx = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
+                        dy = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
                         x = adata(1, p) + rnd(dx) - rnd(dx);
                         y = adata(2, p) + rnd(dy) - rnd(dy);
                         if (x <= 0 || y <= 0 || x >= mdata(0) - 1
@@ -37822,7 +37836,8 @@ std::string cnvrare(int prm_990)
     s_at_tcg = "";
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (limit(5 - prm_990 / 20, 1, 5)); cnt < cnt_end;
+        for (int cnt_end = cnt + (std::clamp(5 - prm_990 / 20, 1, 5));
+             cnt < cnt_end;
              ++cnt)
         {
             s_at_tcg += u8"*"s;
@@ -38092,7 +38107,7 @@ void tcgdrawcard(int prm_994, int prm_995)
                 }
                 else
                 {
-                    p_at_tcg = abs(card_at_tcg(17, prm_994));
+                    p_at_tcg = std::abs(card_at_tcg(17, prm_994));
                     pos(x_at_tcg, y_at_tcg);
                     gcopy(2, p_at_tcg % 22 * 72, p_at_tcg / 22 * 96, 72, 96);
                 }
@@ -38306,7 +38321,7 @@ label_1772_internal:
         }
         if (chaintime_at_tcg > 5)
         {
-            gmode(5 - 1, -1, limit(chaintime_at_tcg * 3 - 40, 0, 255));
+            gmode(5 - 1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
             color(0, 0, 0);
             cnt2_at_tcg = 0;
             {
@@ -38317,7 +38332,7 @@ label_1772_internal:
                         chainy_at_tcg + star_at_tcg(1, cnt));
                     gcopy(
                         7,
-                        64 * limit((17 - chaintime_at_tcg / 3), 0, 8),
+                        64 * std::clamp((17 - chaintime_at_tcg / 3), 0, 8),
                         416,
                         64,
                         64);
@@ -38354,18 +38369,20 @@ label_1772_internal:
                 color(0, 0, 0);
                 pos(efllist_at_tcg(5, cnt) + 11,
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
-                mes(abs(efllist_at_tcg(1, cnt)));
+                mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(255, 100, 100);
                 pos(efllist_at_tcg(5, cnt) + 10,
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
-                mes(abs(efllist_at_tcg(1, cnt)));
+                mes(std::abs(efllist_at_tcg(1, cnt)));
                 font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
                 gmode(5 - 1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 color(0, 0, 0);
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
                     7,
-                    64 * limit((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64
+                        * std::clamp(
+                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     360,
                     48,
                     64);
@@ -38376,11 +38393,11 @@ label_1772_internal:
                 color(0, 0, 0);
                 pos(efllist_at_tcg(2, cnt) + 31,
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
-                mes(abs(efllist_at_tcg(1, cnt)));
+                mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(100, 100, 255);
                 pos(efllist_at_tcg(2, cnt) + 30,
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
-                mes(abs(efllist_at_tcg(1, cnt)));
+                mes(std::abs(efllist_at_tcg(1, cnt)));
                 font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
                 color(255, 255, 255);
                 gmode(5 - 1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
@@ -38388,14 +38405,18 @@ label_1772_internal:
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
                     7,
-                    64 * limit((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64
+                        * std::clamp(
+                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
                 pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
                 gcopy(
                     7,
-                    64 * limit((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64
+                        * std::clamp(
+                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
@@ -38870,7 +38891,7 @@ void saccard(int prm_1019, int prm_1020)
     cdbitmod(1, prm_1019, 1);
     card_at_tcg(4, prm_1019) = landix_at_tcg(prm_1020)
         + landsum_at_tcg(prm_1020)
-            * limit(
+            * std::clamp(
                   (landspace_at_tcg - landsum_at_tcg(prm_1020) / 2),
                   4,
                   landspace_at_tcg);
@@ -39132,7 +39153,7 @@ int putcard(int prm_1024, int prm_1025)
         cdbitmod(1, prm_1024, 1);
         card_at_tcg(4, prm_1024) = landix_at_tcg(prm_1025)
             + landsum_at_tcg(prm_1025)
-                * limit(
+                * std::clamp(
                       (landspace_at_tcg - landsum_at_tcg(prm_1025) / 2),
                       4,
                       landspace_at_tcg);
@@ -39754,14 +39775,14 @@ void label_1823()
                 {
                     x_at_tcg = landix_at_tcg(cnt2_at_tcg)
                         + cnt
-                            * limit(
+                            * std::clamp(
                                   (landspace_at_tcg
                                    - landsum_at_tcg(cnt2_at_tcg) / 2),
                                   4,
                                   landspace_at_tcg);
                     y_at_tcg = landiy_at_tcg(cnt2_at_tcg);
                     m_at_tcg = landlist_at_tcg(cnt, cnt2_at_tcg);
-                    n_at_tcg = abs(card_at_tcg(17, m_at_tcg));
+                    n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
                     ++mana_at_tcg(card_at_tcg(23, m_at_tcg));
                     pos(x_at_tcg, y_at_tcg);
                     gcopy(2, n_at_tcg % 22 * 72, n_at_tcg / 22 * 96, 72, 96);
@@ -39821,7 +39842,7 @@ void label_1823()
                     else
                     {
                         gmode(0);
-                        n_at_tcg = abs(card_at_tcg(17, m_at_tcg));
+                        n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
                         pos(x_at_tcg, y_at_tcg);
                         gcopy(
                             2, n_at_tcg % 22 * 72, n_at_tcg / 22 * 96, 72, 96);
@@ -40722,12 +40743,12 @@ label_1841_internal:
             if (cnt == 0)
             {
                 y_at_tcg(cnt) =
-                    card_at_tcg(3, cc_at_tcg) - limit(p_at_tcg * 3, 0, 16);
+                    card_at_tcg(3, cc_at_tcg) - std::clamp(p_at_tcg * 3, 0, 16);
             }
             if (cnt == 1)
             {
-                y_at_tcg(cnt) =
-                    card_at_tcg(3, cc_at_tcg) + 60 + limit(p_at_tcg * 3, 0, 16);
+                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
+                    + std::clamp(p_at_tcg * 3, 0, 16);
             }
             if (cnt == 2)
             {
@@ -40743,7 +40764,7 @@ label_1841_internal:
                 continue;
             }
             color(0, 0, 0);
-            gmode(4, 0, 0, limit(p_at_tcg * 30 + 20, 0, 255));
+            gmode(4, 0, 0, std::clamp(p_at_tcg * 30 + 20, 0, 255));
             pos(x_at_tcg(cnt), y_at_tcg(cnt));
             gcopy(7, 192, 96, 36, 36);
             gmode(4, 0, 0, 50 + i_at_tcg * 2);
@@ -40815,7 +40836,7 @@ void label_1844()
             if (card_at_tcg(9, c_at_tcg) == 10)
             {
                 p_at_tcg = 20;
-                p_at_tcg -= abs(
+                p_at_tcg -= std::abs(
                     cpdata_at_tcg(6, cp_at_tcg) - card_at_tcg(10, c_at_tcg));
             }
             if (card_at_tcg(13, c_at_tcg) == 2)
@@ -41437,7 +41458,7 @@ label_1857_internal:
             }
             s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            if (elona_int(listn(0, p)) == -1)
+            if (stoi(listn(0, p)) == -1)
             {
                 p(2) = 3;
             }
@@ -41933,7 +41954,7 @@ label_18671_internal:
             if (strmid(s, 0, 1) == u8"@"s)
             {
                 s(1) = strmid(s, 1, 2);
-                s = strmid(s, 3, strlen(s) - 3);
+                s = strmid(s, 3, std::size(s(0)) - 3);
                 font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
                 color(250, 240, 230);
                 if (s(1) == u8"BL"s)
@@ -43261,246 +43282,246 @@ void label_1884()
     {
         if (sdata(12, r1) > 0)
         {
-            sdata(12, r1) +=
-                limit(cdata_piety_point(r1) / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(12, r1) += std::clamp(
+                cdata_piety_point(r1) / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(13, r1) > 0)
         {
-            sdata(13, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 14 + sdata(181, 0) / 10);
+            sdata(13, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 14 + sdata(181, 0) / 10);
         }
         if (sdata(154, r1) > 0)
         {
-            sdata(154, r1) +=
-                limit(cdata_piety_point(r1) / 500, 1, 8 + sdata(181, 0) / 10);
+            sdata(154, r1) += std::clamp(
+                cdata_piety_point(r1) / 500, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(110, r1) > 0)
         {
-            sdata(110, r1) +=
-                limit(cdata_piety_point(r1) / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(110, r1) += std::clamp(
+                cdata_piety_point(r1) / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(159, r1) > 0)
         {
-            sdata(159, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(159, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(158, r1) > 0)
         {
-            sdata(158, r1) +=
-                limit(cdata_piety_point(r1) / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(158, r1) += std::clamp(
+                cdata_piety_point(r1) / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(176, r1) > 0)
         {
-            sdata(176, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 10 + sdata(181, 0) / 10);
+            sdata(176, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(179, r1) > 0)
         {
-            sdata(179, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(179, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
         }
     }
     if (cdata_god(r1) == 2)
     {
         if (sdata(13, r1) > 0)
         {
-            sdata(13, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 10 + sdata(181, 0) / 10);
+            sdata(13, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(18, r1) > 0)
         {
-            sdata(18, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 30 + sdata(181, 0) / 10);
+            sdata(18, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 30 + sdata(181, 0) / 10);
         }
         if (sdata(108, r1) > 0)
         {
-            sdata(108, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(108, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(109, r1) > 0)
         {
-            sdata(109, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(109, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(157, r1) > 0)
         {
-            sdata(157, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(157, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, r1) > 0)
         {
-            sdata(174, r1) +=
-                limit(cdata_piety_point(r1) / 550, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, r1) += std::clamp(
+                cdata_piety_point(r1) / 550, 1, 8 + sdata(181, 0) / 10);
         }
     }
     if (cdata_god(r1) == 3)
     {
         if (sdata(16, r1) > 0)
         {
-            sdata(16, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 18 + sdata(181, 0) / 10);
+            sdata(16, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, r1) > 0)
         {
-            sdata(155, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(155, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(50, r1) > 0)
         {
-            sdata(50, r1) +=
-                limit(cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(50, r1) += std::clamp(
+                cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(51, r1) > 0)
         {
-            sdata(51, r1) +=
-                limit(cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(51, r1) += std::clamp(
+                cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(52, r1) > 0)
         {
-            sdata(52, r1) +=
-                limit(cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(52, r1) += std::clamp(
+                cdata_piety_point(r1) / 50, 1, 200 + sdata(181, 0) / 10);
         }
     }
     if (cdata_god(r1) == 4)
     {
         if (sdata(17, r1) > 0)
         {
-            sdata(17, r1) +=
-                limit(cdata_piety_point(r1) / 250, 1, 20 + sdata(181, 0) / 10);
+            sdata(17, r1) += std::clamp(
+                cdata_piety_point(r1) / 250, 1, 20 + sdata(181, 0) / 10);
         }
         if (sdata(19, r1) > 0)
         {
-            sdata(19, r1) +=
-                limit(cdata_piety_point(r1) / 100, 1, 50 + sdata(181, 0) / 10);
+            sdata(19, r1) += std::clamp(
+                cdata_piety_point(r1) / 100, 1, 50 + sdata(181, 0) / 10);
         }
         if (sdata(173, r1) > 0)
         {
-            sdata(173, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 15 + sdata(181, 0) / 10);
+            sdata(173, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(164, r1) > 0)
         {
-            sdata(164, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 17 + sdata(181, 0) / 10);
+            sdata(164, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 17 + sdata(181, 0) / 10);
         }
         if (sdata(185, r1) > 0)
         {
-            sdata(185, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(185, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(158, r1) > 0)
         {
-            sdata(158, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(158, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
     if (cdata_god(r1) == 5)
     {
         if (sdata(10, r1) > 0)
         {
-            sdata(10, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 11 + sdata(181, 0) / 10);
+            sdata(10, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 11 + sdata(181, 0) / 10);
         }
         if (sdata(11, r1) > 0)
         {
-            sdata(11, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(11, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(168, r1) > 0)
         {
-            sdata(168, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(168, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(153, r1) > 0)
         {
-            sdata(153, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(153, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(163, r1) > 0)
         {
-            sdata(163, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(163, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, r1) > 0)
         {
-            sdata(174, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
     if (cdata_god(r1) == 6)
     {
         if (sdata(15, r1) > 0)
         {
-            sdata(15, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(15, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(154, r1) > 0)
         {
-            sdata(154, r1) +=
-                limit(cdata_piety_point(r1) / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(154, r1) += std::clamp(
+                cdata_piety_point(r1) / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, r1) > 0)
         {
-            sdata(155, r1) +=
-                limit(cdata_piety_point(r1) / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(155, r1) += std::clamp(
+                cdata_piety_point(r1) / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(161, r1) > 0)
         {
-            sdata(161, r1) +=
-                limit(cdata_piety_point(r1) / 400, 1, 9 + sdata(181, 0) / 10);
+            sdata(161, r1) += std::clamp(
+                cdata_piety_point(r1) / 400, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(184, r1) > 0)
         {
-            sdata(184, r1) +=
-                limit(cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(184, r1) += std::clamp(
+                cdata_piety_point(r1) / 450, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(174, r1) > 0)
         {
-            sdata(174, r1) +=
-                limit(cdata_piety_point(r1) / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(174, r1) += std::clamp(
+                cdata_piety_point(r1) / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(164, r1) > 0)
         {
-            sdata(164, r1) +=
-                limit(cdata_piety_point(r1) / 400, 1, 12 + sdata(181, 0) / 10);
+            sdata(164, r1) += std::clamp(
+                cdata_piety_point(r1) / 400, 1, 12 + sdata(181, 0) / 10);
         }
     }
     if (cdata_god(r1) == 7)
     {
         if (sdata(13, r1) > 0)
         {
-            sdata(13, r1) +=
-                limit(cdata_piety_point(r1) / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(13, r1) += std::clamp(
+                cdata_piety_point(r1) / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(12, r1) > 0)
         {
-            sdata(12, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(12, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(14, r1) > 0)
         {
-            sdata(14, r1) +=
-                limit(cdata_piety_point(r1) / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(14, r1) += std::clamp(
+                cdata_piety_point(r1) / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(180, r1) > 0)
         {
-            sdata(180, r1) +=
-                limit(cdata_piety_point(r1) / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(180, r1) += std::clamp(
+                cdata_piety_point(r1) / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(178, r1) > 0)
         {
-            sdata(178, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 10 + sdata(181, 0) / 10);
+            sdata(178, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(177, r1) > 0)
         {
-            sdata(177, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 9 + sdata(181, 0) / 10);
+            sdata(177, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(150, r1) > 0)
         {
-            sdata(150, r1) +=
-                limit(cdata_piety_point(r1) / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(150, r1) += std::clamp(
+                cdata_piety_point(r1) / 350, 1, 8 + sdata(181, 0) / 10);
         }
     }
     return;
@@ -44140,7 +44161,7 @@ void label_1891()
     }
     if (inv_id(ci) == 204)
     {
-        i = limit(inv_weight(ci) / 200, 1, 50);
+        i = std::clamp(inv_weight(ci) / 200, 1, 50);
         if (inv_param3(ci) < 0)
         {
             i = 1;
@@ -45167,7 +45188,7 @@ void label_1901()
     }
     if (cdata_fame(0) > 0)
     {
-        p = limit(cdata_fame(0) / 10, 100, 25000);
+        p = std::clamp(cdata_fame(0) / 10, 100, 25000);
         if (cdata_fame(0) >= 25000)
         {
             p += (cdata_fame(0) - 25000) / 100;
@@ -47602,7 +47623,7 @@ void label_1942()
     noteget(s, 5);
     noteget(s(1), 6);
     username = ""s + s;
-    userrelation = elona_int(s(1));
+    userrelation = stoi(s(1));
     msg_halt();
     label_2114();
     return;
@@ -47643,7 +47664,7 @@ label_19431_internal:
         noteget(s(2), 4);
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
-        list(2, listmax) = elona_int(s(2));
+        list(2, listmax) = stoi(s(2));
         listn(0, listmax) = u8"("s + path.filename().generic_u8string()
             + u8") "s + s + u8" "s + s(1);
         listn(1, listmax) = path.filename();
@@ -47811,12 +47832,12 @@ label_1945_internal:
         if (comctrl == 0 || comctrl == 2)
         {
             username = ""s + s;
-            userrelation = elona_int(s(1));
+            userrelation = stoi(s(1));
         }
         if (comctrl == 1)
         {
-            rtval(0) = elona_int(s);
-            rtval(1) = elona_int(s(1));
+            rtval(0) = stoi(s);
+            rtval(1) = stoi(s(1));
         }
         return 1;
     }
@@ -48050,8 +48071,8 @@ label_1948_internal:
             snd(5);
             keyrelease();
         }
-        tx = limit((mousex - inf_screenx), 0, windoww) / 48;
-        ty = limit((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
+        tx = std::clamp((mousex - inf_screenx), 0, windoww) / 48;
+        ty = std::clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
         int stat = key_direction();
         if (stat == 1)
         {
@@ -49294,7 +49315,7 @@ label_196901_internal:
                         s = u8"[Disease]"s;
                     }
                 }
-                s += traitrefn(2 + abs(trait(tid)));
+                s += traitrefn(2 + std::abs(trait(tid)));
             }
             listn(0, cnt) = s;
         }
@@ -49888,7 +49909,7 @@ void label_1972()
         }
     }
     gold = 0;
-    p = limit(cdata_fame(0) / 10, 100, 25000);
+    p = std::clamp(cdata_fame(0) / 10, 100, 25000);
     if (cdata_fame(0) >= 25000)
     {
         p += (cdata_fame(0) - 25000) / 100;
@@ -50025,7 +50046,7 @@ label_1973_internal:
             if (strmid(s, 0, 1) == u8"@"s)
             {
                 s(1) = strmid(s, 1, 2);
-                s = strmid(s, 3, strlen(s) - 3);
+                s = strmid(s, 3, std::size(s(0)) - 3);
                 font(lang(cfg_font1, cfg_font2), 10 + en - en * 2, 1);
                 color(0, 0, 200);
                 if (s(1) == u8"QL"s)
@@ -50991,7 +51012,7 @@ void label_1992()
     }
     else
     {
-        inputlog = getpath(inputlog, 16);
+        inputlog = strutil::to_lower(inputlog(0));
     }
     inputlog = del_str(inputlog, lang(u8"アイテム"s, u8"item"s));
     inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill "s));
@@ -51131,11 +51152,11 @@ void label_1997()
     }
     if (en)
     {
-        inputlog = getpath(inputlog, 16);
+        inputlog = strutil::to_lower(inputlog(0));
     }
     snd(24);
-    if (instr(inputlog, 0, u8"中の神"s) != -1
-        || instr(inputlog, 0, u8"god inside"s) != -1)
+    if (strutil::contains(inputlog(0), u8"中の神")
+        || strutil::contains(inputlog(0), u8"god inside"s))
     {
         txt(lang(
             u8"中の神も大変…あ…中の神なんているわけないじゃない！…ねえ、聞かなかったことにしてね。"s,
@@ -51143,8 +51164,8 @@ void label_1997()
         label_1996();
         return;
     }
-    if (instr(inputlog, 0, u8"中の人"s) != -1
-        || instr(inputlog, 0, u8"man inside"s) != -1)
+    if (strutil::contains(inputlog(0), u8"中の人")
+        || strutil::contains(inputlog(0), u8"man inside"s))
     {
         txt(lang(u8"中の人も大変ね。"s, u8"There's no man inside."s));
         label_1996();
@@ -51322,21 +51343,21 @@ void label_1997()
         label_1996();
         return;
     }
-    if (instr(inputlog, 0, lang(u8"スキル"s, u8"skill"s)) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"スキル"s, u8"skill"s)))
     {
         goto label_1999_internal;
     }
-    if (instr(inputlog, 0, lang(u8"アイテム"s, u8"item"s)) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"アイテム"s, u8"item"s)))
     {
         goto label_1998_internal;
     }
-    if (instr(inputlog, 0, lang(u8"カード"s, u8"card"s)) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"カード"s, u8"card"s)))
     {
         label_2000();
         return;
     }
-    if (instr(inputlog, 0, lang(u8"剥製"s, u8"figure"s)) != -1
-        || instr(inputlog, 0, u8"はく製"s) != -1)
+    if (strutil::contains(inputlog(0), lang(u8"剥製"s, u8"figure"s))
+        || strutil::contains(inputlog(0), u8"はく製"s))
     {
         label_2001();
         return;
@@ -51378,14 +51399,16 @@ label_1998_internal:
             s = cnvitemname(cnt2);
             if (en)
             {
-                s = getpath(s, 16);
+                s = strutil::to_lower(s(0));
             }
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (strlen(inputlog)); cnt < cnt_end;
+                for (int cnt_end = cnt + (std::size(inputlog(0)));
+                     cnt < cnt_end;
                      ++cnt)
                 {
-                    if (instr(s, 0, strmid(inputlog, 0, cnt * (1 + jp))) != -1)
+                    if (strutil::contains(
+                            s(0), strmid(inputlog, 0, cnt * (1 + jp))))
                     {
                         p = p + 50 * (cnt + 1) + rnd(15);
                     }
@@ -51547,11 +51570,11 @@ label_1999_internal:
             s = skillname(cnt2);
             if (en)
             {
-                s = getpath(s, 16);
+                s = strutil::to_lower(s(0));
             }
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (strlen(inputlog) / (1 + jp));
+                for (int cnt_end = cnt + (std::size(inputlog(0)) / (1 + jp));
                      cnt < cnt_end;
                      ++cnt)
                 {
@@ -51664,11 +51687,11 @@ void label_2002()
             s = refchara_str(cnt, 2);
             if (en)
             {
-                s = getpath(s, 16);
+                s = strutil::to_lower(s(0));
             }
-            if (instr(s, 0, s2) != -1)
+            if (strutil::contains(s(0), s2))
             {
-                p = 1000 - (strlen(s) - strlen(s2)) * 10;
+                p = 1000 - (std::size(s(0)) - std::size(s2)) * 10;
             }
             if (p != 0)
             {
@@ -52586,7 +52609,7 @@ int label_2018()
             int cnt = 0;
             for (int cnt_end = cnt + (usernpcmax); cnt < cnt_end; ++cnt)
             {
-                if (instr(userdatan(6, cnt), 0, u8"_tmp_"s) == -1)
+                if (!strutil::contains(userdatan(6, cnt), u8"_tmp_"))
                 {
                     continue;
                 }
@@ -53142,7 +53165,7 @@ void label_2031()
         }
         else if (i == 461)
         {
-            s += ""s + limit(bonus, 1, 100) + u8"%"s;
+            s += ""s + std::clamp(bonus, 1, 100) + u8"%"s;
         }
         else
         {
@@ -53513,8 +53536,8 @@ label_20331:
     picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
     if (cdata_portrait(cc) < 0)
     {
-        s = fs::u8path(u8"./user/graphic/face"s) + abs((cdata_portrait(cc) + 1))
-            + u8".bmp"s;
+        s = fs::u8path(u8"./user/graphic/face"s)
+            + std::abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
         exist(s);
         if (cdata_portrait(cc) != -1)
         {
@@ -53664,7 +53687,7 @@ label_2035_internal:
         else
         {
             s = fs::u8path(u8"./user/graphic/face"s)
-                + abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
+                + std::abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
             exist(s);
             if (cdata_portrait(cc) != -1)
             {
@@ -54089,12 +54112,12 @@ label_2035_internal:
                     cs_list(cnt, s, wx + x, wy + 66 + cnt * 19 - 1, 19);
                     if (list(0, p) >= 50 && list(0, p) < 100)
                     {
-                        p(1) = limit(sdata(list(0, p), cc) / 50, 0, 6);
+                        p(1) = std::clamp(sdata(list(0, p), cc) / 50, 0, 6);
                         s = _resist(p(1));
                     }
                     else
                     {
-                        s = elona_str(sdata(list(0, p) + 600, cc));
+                        s = std::to_string(sdata(list(0, p) + 600, cc));
                         s = strmid(s, -1, 6);
                         s = ""s + sorg(i, cc) + u8"."s + strmid(s, 0, 3);
                         if (sorg(i, cc) != sdata(i, cc))
@@ -54271,7 +54294,7 @@ label_2035_internal:
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
             modgrowth(
-                cc, csskill, limit(15 - sgrowth(csskill, cc) / 15, 2, 15));
+                cc, csskill, std::clamp(15 - sgrowth(csskill, cc) / 15, 2, 15));
             redraw(0);
             label_1421();
             goto label_2034_internal;
@@ -54647,7 +54670,14 @@ label_2041_internal:
         else if (cdata_portrait(cc) != -1)
         {
             pos(wx + 238, wy + 75);
-            gzoom(80, 112, 7, abs((cdata_portrait(cc) + 2)) * 80, 0, 80, 112);
+            gzoom(
+                80,
+                112,
+                7,
+                std::abs((cdata_portrait(cc) + 2)) * 80,
+                0,
+                80,
+                112);
         }
     }
     else if (cbit(967, cc) == 1)
@@ -54692,7 +54722,7 @@ label_2041_internal:
                 }
                 else
                 {
-                    s += u8" u"s + (abs(rtval(2)) - 1);
+                    s += u8" u"s + (std::abs(rtval(2)) - 1);
                 }
             }
             cs_list(cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 19, 0);
@@ -55059,7 +55089,7 @@ void label_2048()
         s(3) = s;
     }
     s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
-        + strmid(s(2), 0, (3 + (elona_int(s(2)) >= 10)));
+        + strmid(s(2), 0, (3 + (stoi(s(2)) >= 10)));
     if (val == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
@@ -55902,9 +55932,11 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
                 }
                 if (jp)
                 {
-                    if (strmid(q_at_m187, strlen(q_at_m187) - 3, 2) == u8"。"s)
+                    if (strmid(q_at_m187, std::size(q_at_m187) - 3, 2)
+                        == u8"。"s)
                     {
-                        q_at_m187 = strmid(q_at_m187, 0, strlen(q_at_m187) - 3);
+                        q_at_m187 =
+                            strmid(q_at_m187, 0, std::size(q_at_m187) - 3);
                     }
                 }
                 else
@@ -56022,9 +56054,10 @@ void label_2068()
             list(0, p) = 7;
             listn(0, p) = lang(u8"それは生きている"s, u8"It is alive."s)
                 + u8" [Lv:"s + inv_param1(ci) + u8" Exp:"s
-                + limit(inv_param2(ci) * 100 / calcexpalive(inv_param1(ci)),
-                        0,
-                        100)
+                + std::clamp(inv_param2(ci) * 100
+                                 / calcexpalive(inv_param1(ci)),
+                             0,
+                             100)
                 + u8"%]"s;
             ++p;
         }
@@ -56174,7 +56207,7 @@ void label_2068()
                                 {
                                     int cnt = 0;
                                     for (int cnt_end =
-                                             cnt + (strlen(q) / p(1) + 1);
+                                             cnt + (std::size(q(0)) / p(1) + 1);
                                          cnt < cnt_end;
                                          ++cnt)
                                     {
@@ -57615,7 +57648,7 @@ void label_2088()
 }
 void label_2089()
 {
-    if (gdata_version != elona_int(elona_double(u8"1.22"s) * 1000))
+    if (gdata_version != 1220)
     {
         dialog(lang(
             u8"Ver."s + gdata_version
@@ -57893,18 +57926,18 @@ void label_2089()
         }
         gdata(850) = 4;
     }
-    if (gdata_version != elona_int(elona_double(u8"1.22"s) * 1000))
+    if (gdata_version != 1220)
     {
         gdata(79) = 1;
     }
     del_chara(56);
-    if (gdata_version > elona_int(elona_double(u8"1.22"s) * 1000))
+    if (gdata_version > 1220)
     {
         dialog(u8"invalid version"s);
         label_0193();
         return;
     }
-    gdata_version = elona_int(elona_double(u8"1.22"s) * 1000);
+    gdata_version = 1220;
     cbitmod(967, 0, 1);
     label_1920();
     return;
@@ -57957,7 +57990,7 @@ void label_2091()
     {
         i = 40;
     }
-    cdata_gold(0) += limit(cdata_gold(56) / 100, 1000, 100000);
+    cdata_gold(0) += std::clamp(cdata_gold(56) / 100, 1000, 100000);
     cdata_platinum_coin(0) += p;
     cdata_skill_bonus(0) += i;
     {
@@ -58069,7 +58102,7 @@ void zipadd(const std::string& prm_1062)
     SDIM2(ziptmp1, p);
     ziptmp1 += prm_1062;
     SDIM2(ziptmp2, p);
-    ziptmp2 += elona_str(len);
+    ziptmp2 += std::to_string(len);
     memexpand(filebuff, lensum);
     memcpy_(filebuff, ziptmp1, p, lenhead);
     memcpy_(filebuff, ziptmp2, p, lenhead + p);
@@ -58097,7 +58130,7 @@ void label_2095()
             SDIM2(ziptmp2, p);
             memcpy_(ziptmp1, filebuff, p, 0, lenhead);
             memcpy_(ziptmp2, filebuff, p, 0, lenhead + p);
-            len = elona_int(ziptmp2);
+            len = stoi(ziptmp2);
             SDIM2(filetemp, len - p * 2);
             memcpy_(filetemp, filebuff, len - p * 2, 0, lenhead + p * 2);
             bsave(folder + ziptmp1, filetemp);
@@ -58130,7 +58163,7 @@ void zipadd2(const std::string& prm_1065)
     SDIM2(ziptmp1_at_m188, p_at_m188(1));
     ziptmp1_at_m188 += prm_1065;
     SDIM2(ziptmp2_at_m188, p_at_m188(2));
-    ziptmp2_at_m188 += elona_str(len_at_m188);
+    ziptmp2_at_m188 += std::to_string(len_at_m188);
     memexpand(filebuff_at_m188, lensum_at_m188);
     memcpy_(filebuff_at_m188, ziptmp1_at_m188, p_at_m188(1), lenhead_at_m188);
     memcpy_(
@@ -58181,7 +58214,7 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
                 p_at_m188(2),
                 0,
                 lenhead_at_m188 + p_at_m188(1));
-            len_at_m188 = elona_int(ziptmp2_at_m188);
+            len_at_m188 = stoi(ziptmp2_at_m188);
             if (len_at_m188 == 0)
             {
                 break;
@@ -58219,7 +58252,7 @@ std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
     return strmid(
         txtbuff,
         p_at_m189 + 1,
-        limit(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
+        std::clamp(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
 }
 void label_2104()
 {
@@ -58236,7 +58269,7 @@ void label_2104()
     }
     else
     {
-        cdata_level(rc) = limit(userdata(2, cun), 1, 100);
+        cdata_level(rc) = std::clamp(userdata(2, cun), 1, 100);
     }
     cdata_portrait(rc) = -1;
     creaturepack = 0;
@@ -58262,8 +58295,8 @@ void label_2104()
                 {
                     break;
                 }
-                sdata(elona_int(unres(cnt * 2)), rc) +=
-                    elona_int(unres((cnt * 2 + 1))) * 50;
+                sdata(stoi(unres(cnt * 2)), rc) +=
+                    stoi(unres((cnt * 2 + 1))) * 50;
             }
         }
     }
@@ -58271,14 +58304,14 @@ void label_2104()
     cdata(40, rc) = -10000;
     cdatan(0, rc) = userdatan(1, cun);
     cdatan(5, rc) = userdatan(0, cun);
-    cdata_relationship(rc) = limit(userdata(4, cun), -3, 10);
-    cdata_ai_calm(rc) = limit(userdata(7, cun), 1, 4);
-    cdata_ai_move(rc) = limit(userdata(8, cun), 0, 100);
-    cdata_ai_dist(rc) = limit(userdata(9, cun), 1, 100);
+    cdata_relationship(rc) = std::clamp(userdata(4, cun), -3, 10);
+    cdata_ai_calm(rc) = std::clamp(userdata(7, cun), 1, 4);
+    cdata_ai_move(rc) = std::clamp(userdata(8, cun), 0, 100);
+    cdata_ai_dist(rc) = std::clamp(userdata(9, cun), 1, 100);
     if (userdata(11, cun))
     {
         cdata_element_of_unarmed_attack(rc) =
-            limit(userdata(11, cun), 5000000, 6400000);
+            std::clamp(userdata(11, cun), 5000000, 6400000);
     }
     cdata_ai_heal(rc) = userdata(10, cun);
     dbidn = userdatan(2, cun);
@@ -58297,7 +58330,7 @@ void label_2104()
     }
     if (userdata(5, cun))
     {
-        fixlv = limit(userdata(5, cun), 0, 6);
+        fixlv = std::clamp(userdata(5, cun), 0, 6);
     }
     cspecialeq = 0;
     cdata_original_relationship(rc) = cdata_relationship(rc);
@@ -58385,10 +58418,11 @@ void label_2105()
             userdatan(1, tg) = s(jp);
             noteget(s, cnt);
             userdatan(6, tg) = s;
-            if (instr(untaglist, 0, u8"/"s + userdatan(0, tg) + u8"/"s) != -1)
+            if (strutil::contains(
+                    untaglist(0), u8"/"s + userdatan(0, tg) + u8"/"))
             {
                 --usernpcmax;
-                if (instr(s, 0, u8"_tmp_"s) == -1)
+                if (!strutil::contains(s(0), u8"_tmp_"))
                 {
                     msgtemp += lang(
                                    u8"同名NPCは読み込まれない。"s,
@@ -58399,7 +58433,7 @@ void label_2105()
                 continue;
             }
             untaglist += u8"/"s + userdatan(0, tg) + u8"/"s;
-            if (instr(s, 0, u8"_tmp_"s) != -1)
+            if (strutil::contains(s(0), u8"_tmp_"))
             {
                 ++gdata(86);
             }
@@ -58409,14 +58443,14 @@ void label_2105()
             userdatan(5, tg) = getnpctxt(u8"resist."s, ""s);
             s = getnpctxt(u8"meleeElem."s, u8"0,0"s);
             csvstr2(s, s);
-            userdata(11, tg) = elona_int(s) * 100000 + elona_int(s(1));
+            userdata(11, tg) = stoi(s) * 100000 + stoi(s(1));
             s = getnpctxt(u8"bitOn."s, u8"0,0"s);
             csvstr2(s, s);
             {
                 int cnt = 0;
                 for (;; ++cnt)
                 {
-                    p = elona_int(s(cnt));
+                    p = stoi(s(cnt));
                     if (cnt > 20 || p == 0)
                     {
                         break;
@@ -58430,7 +58464,7 @@ void label_2105()
                 int cnt = 0;
                 for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    userdata(15 + cnt, cnt2) = elona_int(s(cnt));
+                    userdata(15 + cnt, cnt2) = stoi(s(cnt));
                 }
             }
             s = getnpctxt(u8"aiActSub."s, u8"0,0,0,0,0"s);
@@ -58439,21 +58473,20 @@ void label_2105()
                 int cnt = 0;
                 for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    userdata(20 + cnt, cnt2) = elona_int(s(cnt));
+                    userdata(20 + cnt, cnt2) = stoi(s(cnt));
                 }
             }
-            userdata(12, tg) = elona_int(getnpctxt(u8"select."s, u8"0"s));
-            userdata(2, tg) = elona_int(getnpctxt(u8"level."s, u8"1"s));
-            userdata(3, tg) = elona_int(getnpctxt(u8"sex."s, u8"-1"s));
-            userdata(4, tg) = elona_int(getnpctxt(u8"relation."s, u8"-1"s));
-            userdata(5, tg) = elona_int(getnpctxt(u8"fixLv."s, u8"0"s));
-            userdata(6, tg) = elona_int(getnpctxt(u8"rare."s, u8"0"s));
-            userdata(7, tg) = elona_int(getnpctxt(u8"aiCalm."s, u8"1"s));
-            userdata(8, tg) = elona_int(getnpctxt(u8"aiMove."s, u8"50"s));
-            userdata(9, tg) = elona_int(getnpctxt(u8"aiDist."s, u8"1"s));
-            userdata(10, tg) = elona_int(getnpctxt(u8"aiHeal."s, u8"0"s));
-            unaiactsubfreq(tg) =
-                elona_int(getnpctxt(u8"aiActSubFreq."s, u8"0"s));
+            userdata(12, tg) = stoi(getnpctxt(u8"select."s, u8"0"s));
+            userdata(2, tg) = stoi(getnpctxt(u8"level."s, u8"1"s));
+            userdata(3, tg) = stoi(getnpctxt(u8"sex."s, u8"-1"s));
+            userdata(4, tg) = stoi(getnpctxt(u8"relation."s, u8"-1"s));
+            userdata(5, tg) = stoi(getnpctxt(u8"fixLv."s, u8"0"s));
+            userdata(6, tg) = stoi(getnpctxt(u8"rare."s, u8"0"s));
+            userdata(7, tg) = stoi(getnpctxt(u8"aiCalm."s, u8"1"s));
+            userdata(8, tg) = stoi(getnpctxt(u8"aiMove."s, u8"50"s));
+            userdata(9, tg) = stoi(getnpctxt(u8"aiDist."s, u8"1"s));
+            userdata(10, tg) = stoi(getnpctxt(u8"aiHeal."s, u8"0"s));
+            unaiactsubfreq(tg) = stoi(getnpctxt(u8"aiActSubFreq."s, u8"0"s));
             p = instr(txtbuff, 0, u8"%txt"s);
             txtbuff = strmid(txtbuff, p, instr(txtbuff, 0, u8"%endTxt"s) - p);
             usertxt(tg) = strmid(txtbuff, 0, 7998);
@@ -58491,7 +58524,7 @@ void label_2105()
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
         file = entry.path().filename().generic_u8string();
-        p = elona_int(strmid(file, 6, instr(file, 6, u8"."s)));
+        p = stoi(strmid(file, 6, instr(file, 6, u8"."s)));
         pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
         picload(folder + file, 1);
     }
@@ -58517,7 +58550,7 @@ void label_2106()
     userdata(1, cun) = strsize;
     SDIM2(txtbuff, strsize);
     bload(txtfile, txtbuff);
-    if (instr(txtbuff, 0, u8"%Elona Custom Npc"s) == -1)
+    if (!strutil::contains(txtbuff(0), u8"%Elona Custom Npc"))
     {
         txt(u8"Invalid File. Aborting."s);
         return;
@@ -58582,7 +58615,7 @@ void label_2106()
     s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
     csvstr2(s, s);
     cnv_filestr(s);
-    if (instr(s, 0, u8"_tmp_"s) != -1)
+    if (strutil::contains(s(0), u8"_tmp_"))
     {
         dialog(u8"The name contains an invalid word \"_tmp_\""s);
         return;
@@ -58592,7 +58625,7 @@ void label_2106()
         dialog(u8"The first letter of the name must be alphabetic."s);
         return;
     }
-    if (strlen_u(s) >= 32 || strlen(s(1)) >= 32)
+    if (strlen_u(s) >= 32 || std::size(s(1)) >= 32)
     {
         dialog(u8"The name is too long."s);
         return;
@@ -58755,7 +58788,7 @@ void label_2112()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, u8".s2"s) != -1)
+            if (strutil::contains(s(0), u8".s2"))
             {
                 bcopy(folder + s, fs::u8path(u8"./tmp/"s + s));
             }
@@ -58829,17 +58862,17 @@ void label_2113()
             {
                 save_p = 1;
             }
-            save_s = strmid(save_s, 1, strlen(save_s));
+            save_s = strmid(save_s, 1, std::size(save_s));
             if (save_p == 0)
             {
-                bcopy(save_s, file + getpath(save_s, 8));
+                bcopy(save_s, file + fs::u8path(save_s).filename());
             }
             else
             {
-                exist(file + getpath(save_s, 8));
+                exist(file + fs::u8path(save_s).filename());
                 if (strsize != -1)
                 {
-                    elona_delete(file + getpath(save_s, 8));
+                    elona_delete(file + fs::u8path(save_s).filename());
                 }
             }
         }
@@ -59240,9 +59273,9 @@ label_21261_internal:
     if (val(4) != 0)
     {
         val(5) = val(4);
-        if (strlen_u(elona_str(val(5))) >= 3)
+        if (strlen_u(std::to_string(val(5))) >= 3)
         {
-            dx += strlen(elona_str(val(5))) * 8;
+            dx += std::size(std::to_string(val(5))) * 8;
         }
         redraw(0);
         pos(x + 24, y + 4);
@@ -59260,8 +59293,7 @@ label_21261_internal:
                 gcopy(3, 312, 336, 24, 24);
                 pos(x + dx - 51, y + 4);
                 gcopy(3, 336, 336, 24, 24);
-                inputlog2 =
-                    ""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
+                inputlog2 = ""s + stoi(inputlog) + u8"("s + val(5) + u8")"s;
                 pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
                 color(255, 255, 255);
                 mes(inputlog2);
@@ -59435,12 +59467,12 @@ label_21261_internal:
                 noteget(s, 0);
                 mes(s);
             }
-            if (instr(inputlog, 0, u8"\n"s) != -1)
+            if (strutil::contains(inputlog(0), u8"\n"))
             {
                 rtval = 0;
                 break;
             }
-            if (instr(inputlog, 0, u8"\t"s) != -1)
+            if (strutil::contains(inputlog(0), u8"\t"))
             {
                 objprm(1, ""s);
                 inputlog = "";
@@ -59664,9 +59696,9 @@ int label_2131()
         val(5) = val(4);
         val(4) = 1;
         val = 1;
-        if (strlen_u(elona_str(val(5))) >= 3)
+        if (strlen_u(std::to_string(val(5))) >= 3)
         {
-            dx += strlen(elona_str(val(5))) * 8;
+            dx += std::size(std::to_string(val(5))) * 8;
         }
         pos(dx(1) + sx + 24, dy + 4);
         gfini(dx - 42, 35);
@@ -59684,7 +59716,7 @@ label_2132_internal:
         gcopy(3, 312, 336, 24, 24);
         pos(dx(1) + sx + dx - 51, dy + 4);
         gcopy(3, 336, 336, 24, 24);
-        inputlog2 = ""s + elona_int(inputlog) + u8"("s + val(5) + u8")"s;
+        inputlog2 = ""s + stoi(inputlog) + u8"("s + val(5) + u8")"s;
         pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
         color(255, 255, 255);
         mes(inputlog2);
@@ -59726,14 +59758,14 @@ label_2132_internal:
         {
             if (key == promptl(1, cnt))
             {
-                rtval = elona_int(promptl(2, cnt));
+                rtval = stoi(promptl(2, cnt));
                 break;
             }
         }
     }
     if (val(3) == 2)
     {
-        val = elona_int(inputlog);
+        val = stoi(inputlog);
         if (key == key_west || key == key_pagedown)
         {
             snd(5);
@@ -59816,7 +59848,7 @@ void label_2136()
 }
 void label_2138()
 {
-    if (instr(buff, 0, u8"?"s) != -1)
+    if (strutil::contains(buff(0), u8"?"))
     {
         noteadd(u8"\t1\t\tShows charainfo."s);
         noteadd(u8"\t2\t\tShows pc equipment."s);
@@ -59848,7 +59880,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 1)
+    if (stoi(buff) == 1)
     {
         {
             int cnt = 0;
@@ -59864,7 +59896,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 2)
+    if (stoi(buff) == 2)
     {
         {
             int cnt = 0;
@@ -59886,7 +59918,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 3)
+    if (stoi(buff) == 3)
     {
         inv_getheader(0);
         {
@@ -59899,7 +59931,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 4)
+    if (stoi(buff) == 4)
     {
         if (dbg_compare == 0)
         {
@@ -60040,7 +60072,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (elona_int(buff) == 5)
+    if (stoi(buff) == 5)
     {
         {
             int cnt = 0;
@@ -60052,27 +60084,27 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"del"s) != -1 || buff == u8"\n"s)
+    if (strutil::contains(buff(0), u8"del") || buff == u8"\n"s)
     {
         dbm = "";
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"freemove"s) != -1)
+    if (strutil::contains(buff(0), u8"freemove"))
     {
         dbg_freemove = 1;
         noteadd(u8"Done."s);
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"resetmap"s) != -1)
+    if (strutil::contains(buff(0), u8"resetmap"))
     {
         label_2090();
         noteadd(u8"Done."s);
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"exitroom"s) != -1)
+    if (strutil::contains(buff(0), u8"exitroom"))
     {
         if (gdata_current_map == 35)
         {
@@ -60086,7 +60118,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"removequest"s) != -1)
+    if (strutil::contains(buff(0), u8"removequest"))
     {
         {
             int cnt = 0;
@@ -60107,7 +60139,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"fixmap"s) != -1)
+    if (strutil::contains(buff(0), u8"fixmap"))
     {
         {
             int cnt = 0;
@@ -60146,7 +60178,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"advreset"s) != -1)
+    if (strutil::contains(buff(0), u8"advreset"))
     {
         {
             int cnt = 16;
@@ -60181,7 +60213,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"fixcorrupt1"s) != -1)
+    if (strutil::contains(buff(0), u8"fixcorrupt1"))
     {
         {
             int cnt = 0;
@@ -60230,7 +60262,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"client"s) != -1)
+    if (strutil::contains(buff(0), u8"client"))
     {
         DIM2(mapclient, 1000);
         {
@@ -60261,7 +60293,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"108fix"s) != -1)
+    if (strutil::contains(buff(0), u8"108fix"))
     {
         {
             int cnt = 0;
@@ -60282,7 +60314,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"test"s) != -1)
+    if (strutil::contains(buff(0), u8"test"))
     {
         {
             int cnt = 0;
@@ -60297,7 +60329,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"mapinfo"s) != -1)
+    if (strutil::contains(buff(0), u8"mapinfo"))
     {
         noteadd(u8"gArea\t\t:"s + gdata_current_map);
         noteadd(u8"gLevel\t\t:"s + gdata_current_dungeon_level);
@@ -60308,7 +60340,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"quest"s) != -1)
+    if (strutil::contains(buff(0), u8"quest"))
     {
         noteadd(
             u8"gQuest:"s + gdata_executing_immediate_quest_type
@@ -60339,7 +60371,7 @@ void label_2138()
         label_2139();
         return;
     }
-    if (instr(buff, 0, u8"wizard"s) != -1)
+    if (strutil::contains(buff(0), u8"wizard"))
     {
         gdata_wizard = 1;
         cdatan(1, 0) = u8"*Debug*"s;
@@ -60349,7 +60381,7 @@ void label_2138()
     }
     if (gdata_wizard || 0)
     {
-        if (instr(buff, 0, u8"gain_spell"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_spell"))
         {
             {
                 int cnt = 400;
@@ -60362,7 +60394,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"gain_spact"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_spact"))
         {
             {
                 int cnt = 0;
@@ -60375,7 +60407,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"allinv"s) != -1)
+        if (strutil::contains(buff(0), u8"allinv"))
         {
             {
                 int cnt = 0;
@@ -60405,7 +60437,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"mapinv"s) != -1)
+        if (strutil::contains(buff(0), u8"mapinv"))
         {
             {
                 int cnt = 0;
@@ -60426,7 +60458,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"gain_exp"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_exp"))
         {
             cdata_experience(0) += 1000000000;
             r1 = 0;
@@ -60436,7 +60468,7 @@ void label_2138()
             label_2139();
             return;
         }
-        if (instr(buff, 0, u8"gain_fame"s) != -1)
+        if (strutil::contains(buff(0), u8"gain_fame"))
         {
             cdata_fame(0) += 10000;
             noteadd(u8"Done."s);
@@ -61077,13 +61109,13 @@ void label_2146()
                                 * cdata_quality_of_performance(cc)
                                 * (100 + inv_param1(ci) / 5) / 100 / 1000
                             + rnd(10);
-                        p = limit(
-                            cdata_gold(tc) * limit(p, 1, 100) / 125,
+                        p = std::clamp(
+                            cdata_gold(tc) * std::clamp(p(0), 1, 100) / 125,
                             0,
                             sdata(183, cc) * 100);
                         if (tc < 16)
                         {
-                            p = rnd(limit(p, 1, 100)) + 1;
+                            p = rnd(std::clamp(p(0), 1, 100)) + 1;
                         }
                         if (cdata_character_role(tc) >= 1000
                                 && cdata_character_role(tc) < 2000
@@ -61168,11 +61200,11 @@ void label_2146()
                                 {
                                     if (rnd(performtips * 2 + 2) == 0)
                                     {
-                                        x = limit(
+                                        x = std::clamp(
                                             cdata_x(cc) - 1 + rnd(3),
                                             0,
                                             mdata(0) - 1);
-                                        y = limit(
+                                        y = std::clamp(
                                             cdata_y(cc) - 1 + rnd(3),
                                             0,
                                             mdata(1) - 1);
@@ -61594,7 +61626,7 @@ void label_2148()
                 itemname(ci, 1) + u8"に目星をつけた。"s,
                 u8"You target "s + itemname(ci, 1) + u8"."s));
             cdata_continuous_action_turn(cc) =
-                2 + limit(inv_weight(ci) / 500, 0, 50);
+                2 + std::clamp(inv_weight(ci) / 500, 0, 50);
         }
         if (gdata(91) == 100)
         {
@@ -61629,10 +61661,10 @@ void label_2148()
                 itemname(ci, 1) + u8"を掘り始めた。"s,
                 u8"You start to pick "s + itemname(ci, 1) + u8"."s));
             cdata_continuous_action_turn(cc) = 10
-                + limit(inv_weight(ci)
-                            / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
-                        1,
-                        100);
+                + std::clamp(inv_weight(ci)
+                                 / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
+                             1,
+                             100);
         }
         if (gdata(91) == 104)
         {
@@ -62034,7 +62066,7 @@ void label_2148()
             snd(14 + rnd(2));
         }
         label_1521();
-        skillexp(300, 0, limit(inv_weight(ti) / 25, 0, 450) + 50);
+        skillexp(300, 0, std::clamp(inv_weight(ti) / 25, 0, 450) + 50);
         if (cdata_karma(0) >= -30)
         {
             if (rnd(3) == 0)
@@ -62291,7 +62323,7 @@ void label_2151()
                 i += sorg(cnt, 0);
             }
         }
-        i = limit(i / 6, 10, 1000);
+        i = std::clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
         gdata_sleep_experience = gdata_sleep_experience * inv_param1(ci) / 100;
         grown = 0;
@@ -62582,7 +62614,8 @@ void label_2154()
             {
                 continue;
             }
-            i = limit(inv_param4(ci) + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
+            i = std::clamp(
+                inv_param4(ci) + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
             if (fishdata(1, cnt) != i)
             {
                 continue;
@@ -63414,7 +63447,7 @@ int label_2163()
             efid,
             1,
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
-                    / limit((100 + spell((efid - 400)) / 2), 50, 1000)
+                    / std::clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
         label_1471();
         if (itemmemory(2, inv_id(ci)) == 0)
@@ -64632,7 +64665,7 @@ void label_2189()
                 animeload(8, tc);
                 inv_subname(ci) = cdata_id(tc);
                 inv_param3(ci) = cdata_level(tc);
-                inv_weight(ci) = limit(cdata_weight(tc), 10000, 100000);
+                inv_weight(ci) = std::clamp(cdata_weight(tc), 10000, 100000);
                 inv_value(ci) = 1000;
             }
             else
@@ -65775,7 +65808,7 @@ void label_2203()
                     {
                         if (cdata_sleep(tc) == 0)
                         {
-                            p = rnd(limit(cdata_gold(cc), 0, 20) + 1);
+                            p = rnd(std::clamp(cdata_gold(cc), 0, 20) + 1);
                             if (cbit(15, cc))
                             {
                                 p = 0;
@@ -66127,7 +66160,7 @@ void label_2205()
                     }
                 }
                 if (rnd(220 + cdata_level(0) * 10
-                        - limit(
+                        - std::clamp(
                               gdata_cargo_weight * 150
                                   / (gdata_current_cart_limit + 1),
                               0,
@@ -67657,7 +67690,9 @@ void label_2218()
     ele = 0;
     if (cdata_equipment_type(cc) & 1)
     {
-        if (limit(sqrt(sdata(168, cc)) - 3, 1, 5) + cbit(30, cc) * 5 > rnd(100))
+        if (std::clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
+                + cbit(30, cc) * 5
+            > rnd(100))
         {
             if (synccheck(cc, -1))
             {
@@ -67667,7 +67702,7 @@ void label_2218()
                         + u8" with "s + his(cc) + u8" shield."s));
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(tc, 7, 50 + elona_int(sqrt(sdata(168, cc))) * 15);
+            dmgcon(tc, 7, 50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata_paralyzed(tc) += rnd(3);
         }
     }
@@ -68075,7 +68110,8 @@ label_22191_internal:
             skillexp(
                 attackskill,
                 cc,
-                limit((sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
+                std::clamp(
+                    (sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
                     / expmodifer,
                 0,
                 4);
@@ -68111,7 +68147,7 @@ label_22191_internal:
                 skillexp(
                     carmor(tc),
                     tc,
-                    limit((250 * rtdmg / cdata_max_hp(tc) + 1), 3, 100)
+                    std::clamp((250 * rtdmg / cdata_max_hp(tc) + 1), 3, 100)
                         / expmodifer,
                     0,
                     5);
@@ -68159,7 +68195,7 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                limit(dmg / 10, 1, cdata_max_hp(tc) / 10),
+                                std::clamp(dmg / 10, 1, cdata_max_hp(tc) / 10),
                                 tc,
                                 p,
                                 cdata_damage_reaction_info(tc) / 1000);
@@ -68178,7 +68214,7 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                limit(dmg / 10, 1, cdata_max_hp(tc) / 10),
+                                std::clamp(dmg / 10, 1, cdata_max_hp(tc) / 10),
                                 tc,
                                 p,
                                 cdata_damage_reaction_info(tc) / 1000);
@@ -68228,7 +68264,8 @@ label_22191_internal:
         }
         if (sdata(attackskill, cc) > sdata(173, tc) || rnd(5) == 0)
         {
-            p = limit((sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
+            p = std::clamp(
+                    (sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
                 / expmodifer;
             skillexp(173, tc, p, 0, 4);
             skillexp(187, tc, p, 0, 4);
@@ -68387,7 +68424,7 @@ void label_2220()
             if (enc == 57)
             {
                 s = refchara_str(cdata_id(tc), 8);
-                if (instr(s, 0, u8"/dragon/"s) != -1)
+                if (strutil::contains(s(0), u8"/dragon/"))
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
@@ -68398,7 +68435,7 @@ void label_2220()
             if (enc == 61)
             {
                 s = refchara_str(cdata_id(tc), 8);
-                if (instr(s, 0, u8"/god/"s) != -1)
+                if (strutil::contains(s(0), u8"/god/"))
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
@@ -68409,7 +68446,7 @@ void label_2220()
             if (enc == 58)
             {
                 s = refchara_str(cdata_id(tc), 8);
-                if (instr(s, 0, u8"/undead/"s) != -1)
+                if (strutil::contains(s(0), u8"/undead/"))
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
@@ -68592,8 +68629,8 @@ void label_2221()
                         cell_featread(x, y);
                         refx = x;
                         refy = y;
-                        if (abs(cdata_y(cc) - y) <= 1
-                            && abs(cdata_x(cc) - x) <= 1)
+                        if (std::abs(cdata_y(cc) - y) <= 1
+                            && std::abs(cdata_x(cc) - x) <= 1)
                         {
                             if (feat(1) == 14)
                             {
@@ -70255,7 +70292,8 @@ void label_2228()
                     if (list(1, p) > sorg(i, rc))
                     {
                         p = (list(1, p) - sorg(i, rc)) * 500;
-                        p = limit(p * 10 / limit(lv, 2, 10), 1000, 10000);
+                        p = std::clamp(
+                            p * 10 / std::clamp(lv, 2, 10), 1000, 10000);
                         skillmod(i, rc, p);
                         txtmore();
                     }
@@ -70392,7 +70430,7 @@ int label_2231()
 {
     int dbmax = 0;
     s(1) = refchara_str(cdata_id(tc), 8);
-    if (instr(s(1), 0, u8"/man/"s) != -1)
+    if (strutil::contains(s(1), u8"/man/"))
     {
         return -1;
     }
@@ -71285,7 +71323,7 @@ void label_2244()
                     modgrowth(
                         cc,
                         csskill,
-                        limit(
+                        std::clamp(
                             15 - sgrowth(csskill, cc) / 15,
                             2,
                             15 - (csskill < 18) * 10));
@@ -72728,7 +72766,7 @@ void label_2254()
         {
             cdata_platinum_coin(0) -= calctraincost(csskill, cc);
             modgrowth(
-                cc, csskill, limit(15 - sgrowth(csskill, cc) / 15, 2, 15));
+                cc, csskill, std::clamp(15 - sgrowth(csskill, cc) / 15, 2, 15));
             buff = lang(
                 u8"訓練は完了し"s + _ta()
                     + u8"潜在能力が伸びているはずなので、後は自分で鍛えて"s
@@ -72936,15 +72974,15 @@ void label_22610()
         p = cdata_sex(tc) * 64 + cdata_portrait(tc);
         if (scenemode)
         {
-            p = elona_int(actor(1, rc));
+            p = stoi(actor(1, rc));
         }
         pos(wx + 42, wy + 42);
         gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
     }
     else
     {
-        s = fs::u8path(u8"./user/graphic/face"s) + abs((cdata_portrait(tc) + 1))
-            + u8".bmp"s;
+        s = fs::u8path(u8"./user/graphic/face"s)
+            + std::abs((cdata_portrait(tc) + 1)) + u8".bmp"s;
         exist(s);
         if (strsize == -1 || cdata_portrait(tc) == -1)
         {
@@ -73668,11 +73706,11 @@ void label_2265()
                 continue;
             }
             f = 0;
-            if (instr(filter_item(inv_id(ci)), 0, u8"/neg/"s) != -1)
+            if (strutil::contains(filter_item(inv_id(ci)), u8"/neg/"))
             {
                 f = 1;
             }
-            if (instr(filter_item(inv_id(ci)), 0, u8"/noshop/"s) != -1)
+            if (strutil::contains(filter_item(inv_id(ci)), u8"/noshop/"))
             {
                 if (cdata_character_role(tc) != 1018)
                 {
@@ -73751,7 +73789,7 @@ void label_2265()
             }
             if (cdata_character_role(tc) == 1018)
             {
-                inv_value(ci) = limit(inv_value(ci), 1, 1000000) * 50;
+                inv_value(ci) = std::clamp(inv_value(ci), 1, 1000000) * 50;
                 if (inv_id(ci) == 729)
                 {
                     inv_value(ci) *= 10;
@@ -76956,7 +76994,8 @@ void label_2670()
     else
     {
         qdata(6, rq) = qdata(6, rq)
-            * (100 + limit((qdata(5, rq) - cdata_level(0)) / 5 * 25, 0, 200))
+            * (100
+               + std::clamp((qdata(5, rq) - cdata_level(0)) / 5 * 25, 0, 200))
             / 100;
     }
     return;
@@ -77067,7 +77106,7 @@ int label_2672()
             qdata(5, rq) =
                 rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 2500 + 1));
             qdata(5, rq) = roundmargin(qdata(5, rq), cdata_level(0));
-            minlevel = limit(qdata(5, rq) / 7, 5, 30);
+            minlevel = std::clamp(qdata(5, rq) / 7, 5, 30);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
@@ -77106,7 +77145,7 @@ int label_2672()
             qdata(5, rq) =
                 rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 2500 + 1));
             qdata(5, rq) = roundmargin(qdata(5, rq), cdata_level(0));
-            minlevel = limit(qdata(5, rq) / 4, 5, 30);
+            minlevel = std::clamp(qdata(5, rq) / 4, 5, 30);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
@@ -77170,7 +77209,7 @@ int label_2672()
                       adata(2, p))
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
-            qdata(5, rq) = limit(
+            qdata(5, rq) = std::clamp(
                 rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 500 + 1)) + 1,
                 1,
                 80);
@@ -77185,7 +77224,7 @@ int label_2672()
                       adata(2, p))
                     * 2;
             qdata(9, rq) = rnd(5) + 2;
-            qdata(5, rq) = limit(rewardfix / 10 + 1, 1, 40);
+            qdata(5, rq) = std::clamp(rewardfix / 10 + 1, 1, 40);
         }
         if (qdata(4, rq) == 2)
         {
@@ -77197,7 +77236,7 @@ int label_2672()
                       adata(2, p))
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
-            qdata(5, rq) = limit(rewardfix / 20 + 1, 1, 40);
+            qdata(5, rq) = std::clamp(rewardfix / 20 + 1, 1, 40);
         }
         if (qdata(12, rq) == 33 || gdata_current_map == 33)
         {
@@ -77207,9 +77246,9 @@ int label_2672()
     }
     if (rnd(23) == 0 || gdata_current_map == 15 && rnd(8) == 0)
     {
-        qdata(5, rq) = limit(
+        qdata(5, rq) = std::clamp(
             rnd(sdata(183, 0) + 10),
-            elona_int(1.5 * sqrt(sdata(183, 0))) + 1,
+            int(1.5 * std::sqrt(sdata(183, 0))) + 1,
             cdata_fame(0) / 1000 + 10);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -77227,7 +77266,7 @@ int label_2672()
     }
     if (rnd(30) == 0 || gdata_current_map == 12 && rnd(2) == 0)
     {
-        qdata(5, rq) = limit(
+        qdata(5, rq) = std::clamp(
             rnd(cdata_level(0) + 5) + rnd((cdata_fame(0) / 800 + 1)) + 1,
             1,
             50);
@@ -77246,7 +77285,7 @@ int label_2672()
     }
     if (rnd(8) == 0)
     {
-        qdata(5, rq) = limit(
+        qdata(5, rq) = std::clamp(
             rnd(cdata_level(0) + 10) + rnd((cdata_fame(0) / 500 + 1)) + 1,
             1,
             80);
@@ -77345,7 +77384,7 @@ int label_2672()
             qdata(14, rq) = 2;
             qdata(4, rq) = 0;
             qdata(9, rq) = rnd(12) + 3;
-            qdata(5, rq) = limit(rewardfix / 20 + 1, 1, 25);
+            qdata(5, rq) = std::clamp(rewardfix / 20 + 1, 1, 25);
         }
         return 0;
     }
@@ -77400,7 +77439,7 @@ int label_2672()
         label_0481();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
-        qdata(5, rq) = limit(rnd(cdata_level(0) + 5) + 1, 1, 30);
+        qdata(5, rq) = std::clamp(rnd(cdata_level(0) + 5) + 1, 1, 30);
         rewardfix = 65 + qdata(5, rq);
         return 0;
     }
@@ -77742,7 +77781,7 @@ void label_2679()
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                p = limit(p * qdata(13, rq) / qdata(12, rq), p, p * 3);
+                p = std::clamp(p * qdata(13, rq) / qdata(12, rq), p(0), p * 3);
             }
         }
     }
@@ -77875,7 +77914,7 @@ void label_2680()
         label_2685();
         return;
     }
-    scidx += strlen(s);
+    scidx += std::size(s(0));
 label_2681:
     await();
     stick(a, 128);
@@ -77922,9 +77961,9 @@ label_2682_internal:
         val = 0;
         goto label_2682_internal;
     }
-    if (instr(s, 0, u8"{chat_"s) != -1)
+    if (strutil::contains(s(0), u8"{chat_"))
     {
-        rc = elona_int(strmid(s, 6, 1));
+        rc = stoi(strmid(s, 6, 1));
         scidxtop = scidx;
         val = 1;
         goto label_2682_internal;
@@ -78014,9 +78053,9 @@ label_2682_internal:
         snd(28);
         goto label_2682_internal;
     }
-    if (instr(s, 0, u8"{actor_"s) != -1)
+    if (strutil::contains(s(0), u8"{actor_"))
     {
-        rc = elona_int(strmid(s, 7, 1));
+        rc = stoi(strmid(s, 7, 1));
         csvsort(s, s(1), 44);
         actor(0, rc) = s;
         actor(1, rc) = s(1);
@@ -78080,8 +78119,8 @@ label_2684_internal:
         {
             y = y1 + 31 + (9 - noteinfo(0) / 2 + cnt) * 20;
             noteget(s, cnt);
-            x = windoww / 2 - strlen(s) * 4;
-            dx = 80 + strlen(s) * 8;
+            x = windoww / 2 - std::size(s(0)) * 4;
+            dx = 80 + std::size(s(0)) * 8;
             if (dx < 180)
             {
                 dx = 0;
@@ -78099,7 +78138,7 @@ label_2684_internal:
         {
             y = y1 + 28 + (9 - noteinfo(0) / 2 + cnt) * 20;
             noteget(s, cnt);
-            x = windoww / 2 - strlen(s) * 4;
+            x = windoww / 2 - std::size(s(0)) * 4;
             color(10, 10, 10);
             pos(x, y);
             bmes(s, 240, 240, 240);
@@ -79519,7 +79558,8 @@ void label_2693()
             }
         }
     }
-    if (abs(cdata(205, cc) - cdata_x(cc)) >= abs(cdata(206, cc) - cdata_y(cc)))
+    if (std::abs(cdata(205, cc) - cdata_x(cc))
+        >= std::abs(cdata(206, cc) - cdata_y(cc)))
     {
         {
             int stat = label_2694();
@@ -80320,7 +80360,7 @@ void label_2702()
         int cnt = 0;
         for (int cnt_end = cnt + (24); cnt < cnt_end; ++cnt)
         {
-            if (instr(s(cnt), 0, u8"("s) == -1)
+            if (!strutil::contains(s(cnt), u8"("))
             {
                 continue;
             }
@@ -80697,7 +80737,7 @@ void label_2707()
     windowshadow = 1;
     snd(92);
     drawmenu(2);
-    ww = limit(windoww - 90, windoww - 90, 720);
+    ww = std::clamp(windoww - 90, windoww - 90, 720);
     wh = 440;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
@@ -81034,7 +81074,7 @@ void label_2713()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, valn) == -1)
+            if (!strutil::contains(s(0), valn(0)))
             {
                 continue;
             }
@@ -81056,7 +81096,7 @@ void label_2713()
                         break;
                     }
                     s = strmid(s, 0, p + 1) + valn(i) + strmid(s, p(1), 999);
-                    p += strlen(valn(i)) + 2;
+                    p += std::size(valn(i)) + 2;
                     ++i;
                 }
             }
@@ -81105,7 +81145,7 @@ void label_2715()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, u8"language."s) != -1)
+            if (strutil::contains(s(0), u8"language."))
             {
                 i = 0;
                 p = 0;
@@ -81125,14 +81165,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_language = elona_int(rtvaln);
+                cfg_language = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"fullscreen."s) != -1)
+            if (strutil::contains(s(0), u8"fullscreen."))
             {
                 i = 0;
                 p = 0;
@@ -81152,14 +81192,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_fullscreen = elona_int(rtvaln);
+                cfg_fullscreen = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"music."s) != -1)
+            if (strutil::contains(s(0), u8"music."))
             {
                 i = 0;
                 p = 0;
@@ -81179,14 +81219,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_music = elona_int(rtvaln);
+                cfg_music = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"sound."s) != -1)
+            if (strutil::contains(s(0), u8"sound."))
             {
                 i = 0;
                 p = 0;
@@ -81206,14 +81246,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_sound = elona_int(rtvaln);
+                cfg_sound = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"extraRace."s) != -1)
+            if (strutil::contains(s(0), u8"extraRace."))
             {
                 i = 0;
                 p = 0;
@@ -81233,14 +81273,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_extrarace = elona_int(rtvaln);
+                cfg_extrarace = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"joypad."s) != -1)
+            if (strutil::contains(s(0), u8"joypad."))
             {
                 i = 0;
                 p = 0;
@@ -81260,14 +81300,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_joypad = elona_int(rtvaln);
+                cfg_joypad = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"msg_box."s) != -1)
+            if (strutil::contains(s(0), u8"msg_box."))
             {
                 i = 0;
                 p = 0;
@@ -81287,14 +81327,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_msg_box = elona_int(rtvaln);
+                cfg_msg_box = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"msgLine."s) != -1)
+            if (strutil::contains(s(0), u8"msgLine."))
             {
                 i = 0;
                 p = 0;
@@ -81314,14 +81354,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_msgline = elona_int(rtvaln);
+                inf_msgline = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"tileSize."s) != -1)
+            if (strutil::contains(s(0), u8"tileSize."))
             {
                 i = 0;
                 p = 0;
@@ -81341,14 +81381,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_tiles = elona_int(rtvaln);
+                inf_tiles = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"fontSize ."s) != -1)
+            if (strutil::contains(s(0), u8"fontSize ."))
             {
                 i = 0;
                 p = 0;
@@ -81368,14 +81408,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_mesfont = elona_int(rtvaln);
+                inf_mesfont = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"infVerType."s) != -1)
+            if (strutil::contains(s(0), u8"infVerType."))
             {
                 i = 0;
                 p = 0;
@@ -81395,14 +81435,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_vertype = elona_int(rtvaln);
+                inf_vertype = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowX."s) != -1)
+            if (strutil::contains(s(0), u8"windowX."))
             {
                 i = 0;
                 p = 0;
@@ -81422,14 +81462,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                windowx = elona_int(rtvaln);
+                windowx = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowY."s) != -1)
+            if (strutil::contains(s(0), u8"windowY."))
             {
                 i = 0;
                 p = 0;
@@ -81449,14 +81489,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                windowy = elona_int(rtvaln);
+                windowy = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowW."s) != -1)
+            if (strutil::contains(s(0), u8"windowW."))
             {
                 i = 0;
                 p = 0;
@@ -81476,14 +81516,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                windoww = elona_int(rtvaln);
+                windoww = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"windowH."s) != -1)
+            if (strutil::contains(s(0), u8"windowH."))
             {
                 i = 0;
                 p = 0;
@@ -81503,14 +81543,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                windowh = elona_int(rtvaln);
+                windowh = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"clockX."s) != -1)
+            if (strutil::contains(s(0), u8"clockX."))
             {
                 i = 0;
                 p = 0;
@@ -81530,14 +81570,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_clockx = elona_int(rtvaln);
+                inf_clockx = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"clockW."s) != -1)
+            if (strutil::contains(s(0), u8"clockW."))
             {
                 i = 0;
                 p = 0;
@@ -81557,14 +81597,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_clockw = elona_int(rtvaln);
+                inf_clockw = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"clockH."s) != -1)
+            if (strutil::contains(s(0), u8"clockH."))
             {
                 i = 0;
                 p = 0;
@@ -81584,14 +81624,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                inf_clockh = elona_int(rtvaln);
+                inf_clockh = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"defLoadFolder."s) != -1)
+            if (strutil::contains(s(0), u8"defLoadFolder."))
             {
                 i = 0;
                 p = 0;
@@ -81611,14 +81651,14 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
                 defload = rtvaln;
                 continue;
             }
-            if (instr(s, 0, u8"charamake_wiz."s) != -1)
+            if (strutil::contains(s(0), u8"charamake_wiz."))
             {
                 i = 0;
                 p = 0;
@@ -81638,11 +81678,11 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                cfg_wizard = elona_int(rtvaln);
+                cfg_wizard = stoi(rtvaln);
                 continue;
             }
         }
@@ -81661,7 +81701,7 @@ void label_2719()
         for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
         {
             noteget(s, cnt);
-            if (instr(s, 0, u8"room_title."s) != -1)
+            if (strutil::contains(s(0), u8"room_title."))
             {
                 i = 0;
                 p = 0;
@@ -81681,14 +81721,14 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
                 usertitle = rtvaln;
                 continue;
             }
-            if (instr(s, 0, u8"welcome_msg."s) != -1)
+            if (strutil::contains(s(0), u8"welcome_msg."))
             {
                 i = 0;
                 p = 0;
@@ -81708,14 +81748,14 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
                 usermsg = rtvaln;
                 continue;
             }
-            if (instr(s, 0, u8"pet_relation."s) != -1)
+            if (strutil::contains(s(0), u8"pet_relation."))
             {
                 i = 0;
                 p = 0;
@@ -81735,14 +81775,14 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
-                userrelation = elona_int(rtvaln);
+                userrelation = stoi(rtvaln);
                 continue;
             }
-            if (instr(s, 0, u8"password."s) != -1)
+            if (strutil::contains(s(0), u8"password."))
             {
                 i = 0;
                 p = 0;
@@ -81762,7 +81802,7 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81781,7 +81821,7 @@ void label_2720()
     noteget(s, 5);
     usermsg = ""s + s;
     noteget(s, 6);
-    userrelation = elona_int(s);
+    userrelation = stoi(s);
     return;
 }
 int cnvjkey(const std::string& prm_1092)
@@ -82509,9 +82549,9 @@ void label_2736()
             ++gdata_year;
             gdata_month = 1;
             gdata_last_month_when_trainer_visited = 0;
-            gdata_wish_count = limit(gdata_wish_count - 1, 0, 10);
+            gdata_wish_count = std::clamp(gdata_wish_count - 1, 0, 10);
             gdata_lost_wallet_count =
-                limit(gdata_lost_wallet_count - 1, 0, 999999);
+                std::clamp(gdata_lost_wallet_count - 1, 0, 999999);
         }
         if (gdata_day == 1 || gdata_day == 15)
         {
@@ -82733,7 +82773,8 @@ label_2738:
                 {
                     if (gdata_protects_from_etherwind == 0)
                     {
-                        modcorrupt(5 + limit(gdata_play_turns / 20000, 0, 15));
+                        modcorrupt(
+                            5 + std::clamp(gdata_play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
@@ -84828,10 +84869,10 @@ void label_2752()
                     p = cnt * 4;
                     noteget(s(10), p + 3);
                     csvsort(s, s(10), 44);
-                    p(2) = elona_int(s);
+                    p(2) = stoi(s);
                     noteget(s(10), p + 7);
                     csvsort(s, s(10), 44);
-                    p(3) = elona_int(s);
+                    p(3) = stoi(s);
                     if (p(3) > p(2))
                     {
                         if (cnt == page)
@@ -84982,7 +85023,7 @@ void label_2753()
             pos(x + 480, y + 20);
             color(10, 10, 10);
             mes(""s + s + lang(u8"点"s, ""s));
-            p = elona_int(s(1)) % 1000;
+            p = stoi(s(1)) % 1000;
             chara_preparepic(p);
             pos(x - 22, y + 12);
             gmode(2, chipc(2, p), chipc(3, p));

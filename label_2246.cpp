@@ -2403,7 +2403,7 @@ void label_2246()
             tcbk = tc;
             tc = rc;
             s = refchara_str(cdata_id(tc), 8);
-            if (instr(s, 0, u8"/man/"s) == -1)
+            if (!strutil::contains(s(0), u8"/man/"))
             {
                 dmgcon(tcbk, 11, 1000);
                 f = 1;
@@ -4089,7 +4089,7 @@ void label_2246()
                 55,
                 cdata_x(0),
                 cdata_y(0),
-                limit(4 - gdata(128) / 2500, 1, 4));
+                std::clamp(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4314,7 +4314,7 @@ void label_2246()
                 55,
                 cdata_x(0),
                 cdata_y(0),
-                limit(3 - gdata(128) / 3000, 1, 3));
+                std::clamp(3 - gdata(128) / 3000, 1, 3));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4595,7 +4595,7 @@ void label_2246()
                 55,
                 cdata_x(0),
                 cdata_y(0),
-                limit(4 - gdata(128) / 2500, 1, 4));
+                std::clamp(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);

@@ -1136,7 +1136,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         else
         {
             s2_at_m63 = ""s + ioriginalnameref2(inv_id(prm_518));
-            if (instr(ioriginalnameref(inv_id(prm_518)), 0, u8"with"s) != -1)
+            if (strutil::contains(ioriginalnameref(inv_id(prm_518)), u8"with"))
             {
                 s3_at_m63 = u8"with"s;
             }
@@ -1637,8 +1637,10 @@ void remain_make(int prm_521, int prm_522)
         {
             if (cdata_original_relationship(prm_522) < -1)
             {
-                inv_value(prm_521) = inv_value(prm_521)
-                    * limit((4 - refchara(cdata_id(prm_522), 6) / 5), 1, 5);
+                inv_value(prm_521) =
+                    inv_value(prm_521)
+                    * std::clamp(
+                          (4 - refchara(cdata_id(prm_522), 6) / 5), 1, 5);
             }
         }
     }

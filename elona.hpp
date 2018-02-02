@@ -12,6 +12,7 @@
 #include "macro_cdata.hpp"
 #include "macro_gdata.hpp"
 #include "macro_inv.hpp"
+#include "util.hpp"
 
 #if __has_include(<filesystem>)
 #include <filesystem>
@@ -350,13 +351,6 @@ DEFINE_CMP(<=)
 
 
 
-int abs(int x);
-
-
-double atan(int y, int x);
-
-
-
 void await(int msec = 0);
 
 // CANNOT BE IMPLEMENTED
@@ -403,17 +397,12 @@ int dialog(const std::string& message, int = 0);
 std::string dirinfo(int n);
 
 
-double elona_double(const std::string& s);
-
-double elona_double(int n);
 
 void exec(const std::string&, int);
 
 
 void exist(const fs::path& filename);
 
-
-double expf(double x);
 
 void font(const std::string& name, int size, int style);
 
@@ -425,8 +414,6 @@ void gcopy(
     int src_height = 0);
 
 void getkey(int& out, int key);
-
-std::string getpath(const fs::path& source, int mode);
 
 void getstr(
     std::string& out,
@@ -463,9 +450,9 @@ void gzoom(
 
 int instr(const std::string& str, size_t pos, const std::string pattern);
 
-int elona_int(double x);
 
-int elona_int(const std::string& s);
+int stoi(std::string_view s);
+
 
 template <typename T>
 size_t length(elona_vector2<T>& arr)
@@ -487,15 +474,9 @@ size_t length2(const elona_vector2<T>& arr)
     return arr.j_size();
 }
 
-int limit(int x, int min, int max);
-
 void line(int x1, int y1, int x2, int y2);
 
 void line(int x, int y);
-
-
-
-double logf(double x);
 
 
 
@@ -597,14 +578,10 @@ int rnd(int n);
 
 void screen(int window_id, int width, int height, int mode, int x, int y);
 
-double sqrt(double x);
 
 void stick(int& out, int = 0);
 
 
-std::string elona_str(int n);
-
-size_t strlen(const std::string& str);
 size_t strlen_u(const std::string& str);
 
 std::string strmid(const std::string& source, int pos, int length);

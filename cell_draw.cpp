@@ -1191,7 +1191,7 @@ void cell_draw()
                             if (mapsync(x_at_m85, y_at_m85) == msync)
                             {
                                 light_at_m85 -= (6
-                                                 - limit(
+                                                 - std::clamp(
                                                        dist(
                                                            cdata_x(0),
                                                            cdata_y(0),

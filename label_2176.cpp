@@ -1266,7 +1266,7 @@ label_2181_internal:
             txt(lang(
                 name(tc) + u8"は恋の予感がした。"s,
                 name(tc) + u8" sense"s + _s(tc) + u8" a sigh of love,"s));
-            modimp(tc, limit(efp / 15, 0, 15));
+            modimp(tc, std::clamp(efp / 15, 0, 15));
             dmgcon(tc, 7, 100);
             lovemiracle(tc);
             goto label_2186_internal;
@@ -1282,7 +1282,7 @@ label_2181_internal:
                 name(tc) + u8" give"s + _s(tc) + u8" "s + name(0)
                     + u8" the eye."s));
             lovemiracle(tc);
-            modimp(tc, limit(efp / 4, 0, 25));
+            modimp(tc, std::clamp(efp / 4, 0, 25));
         }
         dmgcon(tc, 7, 500);
         goto label_2186_internal;
@@ -3553,7 +3553,7 @@ label_2181_internal:
         inv_quality(ci) = 4;
         inv_subname(ci) = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
-        egolv = rnd(limit(rnd(6), 0, 4) + 1);
+        egolv = rnd(std::clamp(rnd(6), 0, 4) + 1);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
@@ -3976,7 +3976,7 @@ label_2181_internal:
                 {
                     if (inv_weight(ci) > 0)
                     {
-                        inv_weight(ci) = limit(
+                        inv_weight(ci) = std::clamp(
                             inv_weight(ci) * (100 - efp / 10) / 100,
                             1,
                             inv_weight(ci));
@@ -4000,12 +4000,12 @@ label_2181_internal:
                     inv_weight(ci) = inv_weight(ci) * 150 / 100 + 1000;
                     if (inv_pv(ci) > 0)
                     {
-                        inv_pv(ci) += limit(inv_pv(ci) / 10, 1, 5);
+                        inv_pv(ci) += std::clamp(inv_pv(ci) / 10, 1, 5);
                     }
                     if (inv_damage_bonus(ci) > 0)
                     {
                         inv_damage_bonus(ci) +=
-                            limit(inv_damage_bonus(ci) / 10, 1, 5);
+                            std::clamp(inv_damage_bonus(ci) / 10, 1, 5);
                     }
                     txt(lang(
                         ""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
@@ -4579,7 +4579,8 @@ label_2181_internal:
         animeload(10, tc);
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (limit(4 + rnd((efp / 50 + 1)), 1, 15));
+            for (int cnt_end =
+                     cnt + (std::clamp(4 + rnd((efp / 50 + 1)), 1, 15));
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -4646,7 +4647,7 @@ label_2181_internal:
         invsubroutine = 1;
         invctrl(0) = 22;
         invctrl(1) = 5;
-        invcontainer = limit(efp / 10 + 10, 10, 300);
+        invcontainer = std::clamp(efp / 10 + 10, 10, 300);
         mode = 6;
         snd(100);
         label_20592();

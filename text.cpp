@@ -572,7 +572,7 @@ std::string mapname(int prm_366, int prm_367)
     {
         s = mapnamerd(
             adata(5, prm_366),
-            limitmax(adata(17, prm_366) / 5, length2(mapnamerd) - 1));
+            std::min(adata(17, prm_366) / 5, int(length2(mapnamerd) - 1)));
         if (adata(0, prm_366) == 20)
         {
             s += lang(u8"洞窟"s, u8"Dungeon"s);
@@ -6050,7 +6050,7 @@ void label_0173()
             await();
             p(0) = instr(buff, 0, u8"{"s);
             p(1) = instr(buff, p, u8"}"s);
-            p(2) = strlen(buff);
+            p(2) = std::size(buff(0));
             if (p == -1)
             {
                 break;
@@ -6302,8 +6302,8 @@ void label_0176()
 std::string cnvweight(int prm_399)
 {
     std::string s_at_m35;
-    s_at_m35 = ""s + abs(prm_399) / 1000 + u8"."s + abs(prm_399) % 1000 / 100
-        + ""s + strweight;
+    s_at_m35 = ""s + std::abs(prm_399) / 1000 + u8"."s
+        + std::abs(prm_399) % 1000 / 100 + ""s + strweight;
     return s_at_m35;
 }
 std::string fltname(int prm_400)
@@ -7337,7 +7337,7 @@ void label_0183()
         notesel(buff);
         return;
     }
-    buff2 = strmid(buff2, p + 1, strlen(buff2) - p - 1);
+    buff2 = strmid(buff2, p + 1, std::size(buff2(0)) - p - 1);
     if (val != 2)
     {
         buff = buff2;
@@ -8010,7 +8010,7 @@ label_0223_internal:
     {
         s_at_m41 += rn2(rnd(length(rn2)));
     }
-    p_at_m41 = strlen(s_at_m41);
+    p_at_m41 = std::size(s_at_m41);
     if (p_at_m41 < 4)
     {
         goto label_0223_internal;
@@ -8035,7 +8035,7 @@ label_0223_internal:
         {
             goto label_0223_internal;
         }
-        if (instr(s_at_m41, 0, u8"ーッ"s) != -1)
+        if (strutil::contains(s_at_m41, u8"ーッ"))
         {
             goto label_0223_internal;
         }
@@ -8336,10 +8336,10 @@ void label_0247()
             {
                 rtval = 9;
                 s = lang(
-                    ""s + skillname(sid) + u8"を"s + abs((val(1) / 50 + 1))
+                    ""s + skillname(sid) + u8"を"s + std::abs((val(1) / 50 + 1))
                         + u8"下げる"s,
                     u8"decreases your "s + skillname(sid) + u8" by "s
-                        + abs((val(1) / 50 + 1)) + u8"."s);
+                        + std::abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000)
                 {
                     s = lang(
@@ -8355,10 +8355,10 @@ void label_0247()
             else
             {
                 s = lang(
-                    ""s + skillname(sid) + u8"を"s + abs((val(1) / 50 + 1))
+                    ""s + skillname(sid) + u8"を"s + std::abs((val(1) / 50 + 1))
                         + u8"上げる"s,
                     u8"increases your "s + skillname(sid) + u8" by "s
-                        + abs((val(1) / 50 + 1)) + u8"."s);
+                        + std::abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000)
                 {
                     s = lang(
