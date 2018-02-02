@@ -821,7 +821,7 @@ label_2060_internal:
                 gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
                 if (invctrl == p)
                 {
-                    gmode(5 - 1, -1, 70);
+                    gmode(5, -1, -1, 70);
                     pos(x + cnt * 44 + 20, y - 24);
                     gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
                     gmode(2);
@@ -1065,7 +1065,7 @@ label_2061_internal:
                     chipc(1, inv_color(p)) + 2,
                     chipc(2, inv_color(p)) - 16,
                     chipc(3, inv_color(p)) - 8);
-                gmode(4 - 1, -1, 150);
+                gmode(4, -1, -1, 150);
                 color(0, 0, 0);
                 pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
                 gcopy(

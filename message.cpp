@@ -826,7 +826,7 @@ void txt_conv()
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
                 redraw(0);
-                gmode(4 - 1, -1, cfg_msgtrans * 20);
+                gmode(4, -1, -1, cfg_msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
                     if (i == p_at_txtfunc)
