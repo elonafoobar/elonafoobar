@@ -10546,7 +10546,7 @@ void fileadd(const std::string& prm_692, int prm_693)
     noteunsel();
     return;
 }
-void arrayfile()
+void arrayfile(std::string_view fmode_str)
 {
     notesel(tmp);
     tmp = "";
@@ -10558,7 +10558,7 @@ void arrayfile()
             noteload(file);
         }
     }
-    if (fmode == u8"qname"s)
+    if (fmode_str == u8"qname"s)
     {
         fidx = 0;
         {
@@ -10577,7 +10577,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"gdatan"s)
+    if (fmode_str == u8"gdatan"s)
     {
         fidx = 0;
         {
@@ -10596,7 +10596,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"mdatan"s)
+    if (fmode_str == u8"mdatan"s)
     {
         fidx = 0;
         {
@@ -10615,7 +10615,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"cdatan1"s)
+    if (fmode_str == u8"cdatan1"s)
     {
         fidx = 0;
         cdatanfix = 0;
@@ -10653,7 +10653,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"cdatan2"s)
+    if (fmode_str == u8"cdatan2"s)
     {
         fidx = 0;
         cdatanfix = 0;
@@ -10691,7 +10691,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"cdatan3"s)
+    if (fmode_str == u8"cdatan3"s)
     {
         fidx = 0;
         cdatanfix = 0;
@@ -10722,7 +10722,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"invn1"s)
+    if (fmode_str == u8"invn1"s)
     {
         fidx = 0;
         {
@@ -10748,7 +10748,7 @@ void arrayfile()
             }
         }
     }
-    if (fmode == u8"invn2"s)
+    if (fmode_str == u8"invn2"s)
     {
         fidx = 0;
         {

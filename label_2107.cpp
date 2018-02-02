@@ -315,14 +315,11 @@ int label_2107()
             noteload(file);
         }
         file = folder + u8"cdatan.s1"s;
-        fmode = u8"cdatan1"s;
-        arrayfile();
+        arrayfile(u8"cdatan1");
         file = folder + u8"qname.s1"s;
-        fmode = u8"qname"s;
-        arrayfile();
+        arrayfile(u8"qname");
         file = folder + u8"gdatan.s1"s;
-        fmode = u8"gdatan"s;
-        arrayfile();
+        arrayfile(u8"gdatan");
         if (fread == 0)
         {
             bsave(folder + u8"evnum.s1"s, evnum);
@@ -674,11 +671,9 @@ int label_2107()
             }
         }
         file = folder + u8"cdatan_"s + mid + u8".s2"s;
-        fmode = u8"cdatan2"s;
-        arrayfile();
+        arrayfile(u8"cdatan2");
         file = folder + u8"mdatan_"s + mid + u8".s2"s;
-        fmode = u8"mdatan"s;
-        arrayfile();
+        arrayfile(u8"mdatan");
     }
     if (fmode == 20 || fmode == 19)
     {
@@ -762,9 +757,8 @@ int label_2107()
             }
         }
         file = folder + u8"m4_"s + id + u8".t"s;
-        fmode = u8"mdatan"s;
         elona_export = 1;
-        arrayfile();
+        arrayfile(u8"mdatan");
         if (fread == 0)
         {
             zipadd(u8"m1_"s + id + u8".t"s);
@@ -891,9 +885,8 @@ int label_2107()
                     }
                 }
                 file = folder + u8"c4_"s + id + u8".t"s;
-                fmode = u8"cdatan3"s;
                 elona_export = 1;
-                arrayfile();
+                arrayfile(u8"cdatan3");
                 if (fread == 0)
                 {
                     zipadd(u8"c1_"s + id + u8".t"s);
@@ -1260,8 +1253,7 @@ int label_2107()
             }
         }
         file = folder + u8"cdatan_"s + mid + u8".s2"s;
-        fmode = u8"cdatan2"s;
-        arrayfile();
+        arrayfile(u8"cdatan2");
     }
     if (fmode == 10)
     {
