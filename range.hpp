@@ -43,4 +43,22 @@ bool any_of(const R& range, F predicate)
 
 
 
+template <typename R, typename I, typename F>
+auto transform(const R& src, I dst, F func)
+{
+    using std::begin, std::end;
+    return std::transform(begin(src), end(src), dst, func);
+}
+
+
+
+template <typename R, typename I, typename F>
+auto transform(R&& src, I dst, F func)
+{
+    using std::begin, std::end;
+    return std::transform(begin(src), end(src), dst, func);
+}
+
+
+
 } // namespace elona::range

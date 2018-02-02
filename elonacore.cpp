@@ -1116,33 +1116,6 @@ void label_0066()
 
 
 
-void label_0067()
-{
-    s = fs::u8path(u8"./user/music/musiclist.txt");
-    exist(s);
-    if (strsize == -1)
-    {
-        return;
-    }
-    notesel(buff);
-    noteload(s);
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(s, cnt);
-            if (s == ""s)
-            {
-                continue;
-            }
-            musicfile(cnt + 50) = strmid(s, 0, instr(s, 0, u8"\t"s));
-        }
-    }
-    return;
-}
-
-
-
 void label_0068()
 {
     env = 0;
@@ -5394,43 +5367,47 @@ void csvsort(
 
 
 
-void label_0221()
+void load_random_name_table()
 {
+    std::vector<std::string> lines;
+    range::transform(
+        fileutil::read_by_line{
+            fs::u8path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
+        std::back_inserter(lines),
+        [](const auto& pair) { return pair.second; });
+
     SDIM3(randn1, 30, 20);
-    notesel(titlebuff);
-    noteload(fs::u8path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s)));
-    SDIM4(rnlist, 20, 15, noteinfo(0));
+    SDIM4(rnlist, 20, 15, std::size(lines));
+
+    for (int i = 0; i < std::size(lines); ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        csvsort(randn1, lines[i], 44);
+        for (int j = 0; j < 15; ++j)
         {
-            noteget(msgtemp, cnt);
-            csvsort(randn1, msgtemp, 44);
-            cnt2 = cnt;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
-                {
-                    rnlist(cnt, cnt2) = randn1(cnt);
-                }
-            }
+            rnlist(j, i) = randn1(j);
         }
     }
-    notesel(titlebuff);
-    noteload(fs::u8path(u8"data/name.csv"s));
-    SDIM3(rn1, 15, noteinfo(0));
-    SDIM3(rn2, 15, noteinfo(0));
+}
+
+
+
+void load_random_title_table()
+{
+    std::vector<std::string> lines;
+    range::transform(
+        fileutil::read_by_line{fs::u8path(u8"data/name.csv"s)},
+        std::back_inserter(lines),
+        [](const auto& pair) { return pair.second; });
+
+    SDIM3(rn1, 15, std::size(lines));
+    SDIM3(rn2, 15, std::size(lines));
+
+    for (int i = 0; i < std::size(lines); ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(msgtemp, cnt);
-            csvsort(randn1, msgtemp, 44);
-            rn1(cnt) = lang(randn1(0), randn1(1));
-            rn2(cnt) = lang(randn1(2), randn1(3));
-        }
+        csvsort(randn1, lines[i], 44);
+        rn1(i) = lang(randn1(0), randn1(1));
+        rn2(i) = lang(randn1(2), randn1(3));
     }
-    return;
 }
 
 
