@@ -1,3 +1,4 @@
+#include "calc.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "main.hpp"
@@ -890,7 +891,6 @@ void label_0031()
     DIM3(bdataref, 7, 29);
     SDIM3(buffname, 20, 29);
     SDIM4(bufftxt, 30, 2, 29);
-    SDIM2(buffdesc, 200);
     bdataref(0, 1) = 1;
     bdataref(1, 1) = 1;
     bdataref(2, 1) = 0;
@@ -24412,7 +24412,7 @@ void label_1477()
             {
                 break;
             }
-            calcbuff(r1, rp, cdata(280 + cnt * 3 + 1, r1));
+            apply_buff(r1, rp, cdata(280 + cnt * 3 + 1, r1));
         }
     }
     if (cdata_equipment_type(r1) & 4)
@@ -55561,8 +55561,9 @@ void label_2031()
     if (sdataref(1, i) / 1000 == 1)
     {
         p = sdataref(1, i) % 1000;
-        calcbuff(-2, p, calcspellpower(i, cc));
-        s = ""s + dur + lang(u8"ﾀｰﾝ "s, u8"t "s) + buffdesc;
+        const auto duration = calc_buff_duration(p, calcspellpower(i, cc));
+        const auto description = get_buff_description(p, calcspellpower(i, cc));
+        s = ""s + duration + lang(u8"ﾀｰﾝ "s, u8"t "s) + description;
         return;
     }
     int stat = calcskill(i, cc, calcspellpower(i, cc));
@@ -56429,16 +56430,16 @@ label_2035_internal:
         }
         if (cs_buffmax != 0)
         {
-            calcbuff(
-                -2,
-                cdata(280 + cs_buff * 3, cc),
-                cdata(280 + cs_buff * 3 + 1, cc));
+            const auto duration = calc_buff_duration(
+                cdata(280 + cs_buff * 3, cc), cdata(280 + cs_buff * 3 + 1, cc));
+            const auto description = get_buff_description(
+                cdata(280 + cs_buff * 3, cc), cdata(280 + cs_buff * 3 + 1, cc));
             s = ""s + buffname(cdata((280 + cs_buff * 3), cc)) + u8": "s
                 + cdata((280 + cs_buff * 3 + 2), cc)
                 + lang(
-                      (u8"("s + dur + u8")ﾀｰﾝの間、"s),
-                      (u8"("s + dur + u8") "s))
-                + buffdesc;
+                      (u8"("s + duration + u8")ﾀｰﾝの間、"s),
+                      (u8"("s + duration + u8") "s))
+                + description;
         }
         else
         {

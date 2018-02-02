@@ -1,3 +1,4 @@
+#include "calc.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
 
@@ -90,8 +91,7 @@ int label_2176()
                         }
                     }
                 }
-                calcbuff(-1, p, efp);
-                addbuff(tc, p, efp, dur);
+                addbuff(tc, p, efp, calc_buff_duration(p, efp));
                 if (efid == 447)
                 {
                     if (efstatus >= 1)
