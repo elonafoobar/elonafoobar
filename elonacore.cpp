@@ -10823,7 +10823,7 @@ std::string cnv_str(
         int cnt = 0;
         for (;; ++cnt)
         {
-            s3_at_m100 = getpath(prm_696, 16);
+            s3_at_m100 = strutil::to_lower(prm_696);
             p_at_m100 = instr(s3_at_m100, 0, prm_697);
             if (p_at_m100 == -1)
             {
@@ -50991,7 +50991,7 @@ void label_1992()
     }
     else
     {
-        inputlog = getpath(inputlog, 16);
+        inputlog = strutil::to_lower(inputlog(0));
     }
     inputlog = del_str(inputlog, lang(u8"アイテム"s, u8"item"s));
     inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill "s));
@@ -51131,7 +51131,7 @@ void label_1997()
     }
     if (en)
     {
-        inputlog = getpath(inputlog, 16);
+        inputlog = strutil::to_lower(inputlog(0));
     }
     snd(24);
     if (strutil::contains(inputlog(0), u8"中の神")
@@ -51378,7 +51378,7 @@ label_1998_internal:
             s = cnvitemname(cnt2);
             if (en)
             {
-                s = getpath(s, 16);
+                s = strutil::to_lower(s(0));
             }
             {
                 int cnt = 0;
@@ -51549,7 +51549,7 @@ label_1999_internal:
             s = skillname(cnt2);
             if (en)
             {
-                s = getpath(s, 16);
+                s = strutil::to_lower(s(0));
             }
             {
                 int cnt = 0;
@@ -51666,7 +51666,7 @@ void label_2002()
             s = refchara_str(cnt, 2);
             if (en)
             {
-                s = getpath(s, 16);
+                s = strutil::to_lower(s(0));
             }
             if (strutil::contains(s(0), s2))
             {
@@ -58837,14 +58837,14 @@ void label_2113()
             save_s = strmid(save_s, 1, std::size(save_s));
             if (save_p == 0)
             {
-                bcopy(save_s, file + getpath(save_s, 8));
+                bcopy(save_s, file + fs::u8path(save_s).filename());
             }
             else
             {
-                exist(file + getpath(save_s, 8));
+                exist(file + fs::u8path(save_s).filename());
                 if (strsize != -1)
                 {
-                    elona_delete(file + getpath(save_s, 8));
+                    elona_delete(file + fs::u8path(save_s).filename());
                 }
             }
         }

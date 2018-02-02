@@ -427,8 +427,6 @@ void gcopy(
 
 void getkey(int& out, int key);
 
-std::string getpath(const fs::path& source, int mode);
-
 void getstr(
     std::string& out,
     const std::string& source,

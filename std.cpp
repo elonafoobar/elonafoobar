@@ -755,29 +755,6 @@ void getkey(int& out, int key)
     out = Keyboard::instance().is_pressed(hspkey2snailkey(key));
 }
 
-std::string getpath(const fs::path& source, int mode)
-{
-    if (mode == 8)
-    {
-        return source.filename();
-    }
-    else if (mode == 16)
-    {
-        std::string from{source};
-        std::string to;
-        std::transform(
-            std::begin(from),
-            std::end(from),
-            std::back_inserter(to),
-            [](char c) { return std::tolower(c); });
-        return to;
-    }
-    else
-    {
-        assert(0);
-    }
-}
-
 void getstr(
     std::string& out,
     const std::string& source,
