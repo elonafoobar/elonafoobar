@@ -1445,10 +1445,6 @@ void screen(int window_id, int width, int height, int mode, int x, int y)
 {
 }
 
-double sqrt(double x)
-{
-    return std::sqrt(x);
-}
 
 void stick(int& out, int allow_repeat_keys)
 {

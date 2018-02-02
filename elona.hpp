@@ -578,7 +578,6 @@ int rnd(int n);
 
 void screen(int window_id, int width, int height, int mode, int x, int y);
 
-double sqrt(double x);
 
 void stick(int& out, int = 0);
 

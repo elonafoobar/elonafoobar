@@ -8146,7 +8146,7 @@ int dist(int prm_535, int prm_536, int prm_537, int prm_538)
     int d_at_m69 = 0;
     d_at_m69 = (prm_535 - prm_537) * (prm_535 - prm_537)
         + (prm_536 - prm_538) * (prm_536 - prm_538);
-    return int(sqrt(d_at_m69));
+    return int(std::sqrt(d_at_m69));
 }
 int winposy(int prm_539, int prm_540)
 {
@@ -17648,7 +17648,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 catitem = prm_855;
             }
-            if (int(sqrt(sdata(161, prm_855))) > rnd(150))
+            if (int(std::sqrt(sdata(161, prm_855))) > rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -22595,7 +22595,7 @@ void label_1477()
     cdata_rate_to_pierce(r1) = 0;
     if (sdata(186, r1))
     {
-        cdata_rate_of_critical_hit(r1) = int(sqrt(sdata(186, r1))) + 2;
+        cdata_rate_of_critical_hit(r1) = int(std::sqrt(sdata(186, r1))) + 2;
     }
     else
     {
@@ -22904,7 +22904,7 @@ void label_1477()
         if (cdata_pv(r1) > 0)
         {
             cdata_pv(r1) =
-                cdata_pv(r1) * (120 + int(sqrt(sdata(168, r1))) * 2) / 100;
+                cdata_pv(r1) * (120 + int(std::sqrt(sdata(168, r1))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
@@ -22978,7 +22978,7 @@ void label_1477()
     }
     if (cdata_equipment_type(r1) & 4)
     {
-        cdata_extra_attack(r1) += int(sqrt(sdata(166, r1))) * 3 / 2 + 4;
+        cdata_extra_attack(r1) += int(std::sqrt(sdata(166, r1))) * 3 / 2 + 4;
     }
     if (cdata_rate_of_critical_hit(r1) > 30)
     {
@@ -34258,7 +34258,7 @@ void label_1725()
             ci = dblist(0, p);
             a = dblist(1, p);
             val = calcitemvalue(ci, 2);
-            val = val * int((10 + sqrt(sdata(156, worker) * 200))) / 100;
+            val = val * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
             if (val <= 1)
             {
                 continue;
@@ -34434,7 +34434,8 @@ void label_1725()
                     + cdatan(0, worker) + u8" put "s + s
                     + u8" in the shop strong box."s));
         }
-        skillexp(156, worker, std::clamp(int(sqrt(income)) * 6, 25, 1000));
+        skillexp(
+            156, worker, std::clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {
@@ -34563,7 +34564,7 @@ void label_1728()
             }
         }
     }
-    rankcur = 10000 - int(sqrt(rankcur) * 100);
+    rankcur = 10000 - int(std::sqrt(rankcur) * 100);
     if (rankcur < 100)
     {
         rankcur = 100;
@@ -67689,7 +67690,8 @@ void label_2218()
     ele = 0;
     if (cdata_equipment_type(cc) & 1)
     {
-        if (std::clamp(int(sqrt(sdata(168, cc)) - 3), 1, 5) + cbit(30, cc) * 5
+        if (std::clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
+                + cbit(30, cc) * 5
             > rnd(100))
         {
             if (synccheck(cc, -1))
@@ -67700,7 +67702,7 @@ void label_2218()
                         + u8" with "s + his(cc) + u8" shield."s));
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(tc, 7, 50 + int(sqrt(sdata(168, cc))) * 15);
+            dmgcon(tc, 7, 50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata_paralyzed(tc) += rnd(3);
         }
     }
@@ -77246,7 +77248,7 @@ int label_2672()
     {
         qdata(5, rq) = std::clamp(
             rnd(sdata(183, 0) + 10),
-            int(1.5 * sqrt(sdata(183, 0))) + 1,
+            int(1.5 * std::sqrt(sdata(183, 0))) + 1,
             cdata_fame(0) / 1000 + 10);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30

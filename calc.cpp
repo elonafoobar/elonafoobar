@@ -114,7 +114,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
     }
     if (prm_267 == 5)
     {
-        p_at_m8 = 50 + sqrt(prm_268 / 5);
+        p_at_m8 = 50 + std::sqrt(prm_268 / 5);
         dur = 8 + prm_268 / 30;
         if (prm_266 < 0)
         {
