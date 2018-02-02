@@ -13,20 +13,20 @@ void label_0481();
 void label_1419();
 void label_1567(int);
 
-int prm_409;
-int prm_518;
-int prm_818;
-int prm_820;
-int prm_853;
+inline int prm_409;
+inline int prm_518;
+inline int prm_818;
+inline int prm_820;
+inline int prm_853;
 
-int tmp_at_m172;
+inline int tmp_at_m172;
 
-elona_vector2<std::string> invn;
-elona_vector1<int> inhlist_at_m184;
-elona_vector1<int> inhlist;
+inline elona_vector2<std::string> invn;
+inline elona_vector1<int> inhlist_at_m184;
+inline elona_vector1<int> inhlist;
 
-int i_at_m68;
-double r_at_m133;
+inline int i_at_m68;
+inline double r_at_m133;
 
 
 #define window_recipe(a, b, c, d, e, f) window_recipe_(b, c, d, e, f)
@@ -43,7 +43,7 @@ void label_2737(bool = true);
 int label_2654();
 
 
-int _fdialog(
+inline int _fdialog(
     std::string&,
     int,
     std::string&,

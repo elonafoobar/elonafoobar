@@ -4,16 +4,9 @@
 
 namespace elona
 {
+
+
 void label_2743(bool = true);
-void cs_list(
-    int CNT,
-    const std::string& prm_543,
-    int prm_544 = 0,
-    int prm_545 = 0,
-    int prm_546 = 0,
-    int prm_547 = 0,
-    int prm_548 = 0,
-    int prm_549 = 0);
 
 
 int label_20592()
