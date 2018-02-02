@@ -1637,8 +1637,10 @@ void remain_make(int prm_521, int prm_522)
         {
             if (cdata_original_relationship(prm_522) < -1)
             {
-                inv_value(prm_521) = inv_value(prm_521)
-                    * limit((4 - refchara(cdata_id(prm_522), 6) / 5), 1, 5);
+                inv_value(prm_521) =
+                    inv_value(prm_521)
+                    * std::clamp(
+                          (4 - refchara(cdata_id(prm_522), 6) / 5), 1, 5);
             }
         }
     }

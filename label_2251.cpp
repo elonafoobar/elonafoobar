@@ -870,7 +870,8 @@ void label_2251()
         gdata(74) = calcfame(
             0,
             (220 - gdata(120) / 50)
-                    * (100 + limit(adata(22, gdata_current_map), 0, 50)) / 100
+                    * (100 + std::clamp(adata(22, gdata_current_map), 0, 50))
+                    / 100
                 + 2);
         listmax = 0;
         randomize(adata(26, gdata_current_map));
@@ -993,7 +994,8 @@ void label_2251()
         gdata(74) = calcfame(
             0,
             (220 - gdata(121) / 50)
-                    * (50 + limit(adata(23, gdata_current_map), 0, 50)) / 100
+                    * (50 + std::clamp(adata(23, gdata_current_map), 0, 50))
+                    / 100
                 + 2);
         if (chatval == 49)
         {

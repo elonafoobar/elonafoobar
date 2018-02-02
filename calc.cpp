@@ -220,12 +220,12 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
                 return;
             }
         }
-        sdata(50, prm_266) =
-            limit(sdata(50, prm_266) + -100, sdata(50, prm_266) > 0, 9999);
-        sdata(51, prm_266) =
-            limit(sdata(51, prm_266) + -100, sdata(51, prm_266) > 0, 9999);
-        sdata(52, prm_266) =
-            limit(sdata(52, prm_266) + -100, sdata(52, prm_266) > 0, 9999);
+        sdata(50, prm_266) = std::clamp(
+            sdata(50, prm_266) + -100, int{sdata(50, prm_266) > 0}, 9999);
+        sdata(51, prm_266) = std::clamp(
+            sdata(51, prm_266) + -100, int{sdata(51, prm_266) > 0}, 9999);
+        sdata(52, prm_266) = std::clamp(
+            sdata(52, prm_266) + -100, int{sdata(52, prm_266) > 0}, 9999);
         return;
     }
     if (prm_267 == 10)
@@ -263,10 +263,10 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
                 return;
             }
         }
-        sdata(58, prm_266) =
-            limit(sdata(58, prm_266) + -100, sdata(58, prm_266) > 0, 9999);
-        sdata(54, prm_266) =
-            limit(sdata(54, prm_266) + -100, sdata(54, prm_266) > 0, 9999);
+        sdata(58, prm_266) = std::clamp(
+            sdata(58, prm_266) + -100, int{sdata(58, prm_266) > 0}, 9999);
+        sdata(54, prm_266) = std::clamp(
+            sdata(54, prm_266) + -100, int{sdata(54, prm_266) > 0}, 9999);
         return;
     }
     if (prm_267 == 12)
@@ -410,7 +410,7 @@ void calcbuff(int prm_266, int prm_267, int prm_268)
     if (prm_267 == 18)
     {
         dur = 66;
-        p_at_m8 = limit(25 + prm_268 / 17, 25, 80);
+        p_at_m8 = std::clamp(25 + prm_268 / 17, 25, 80);
         if (prm_266 < 0)
         {
             if (prm_266 == -1)
@@ -471,7 +471,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
     {
         dice1 = 0;
         dice2 = 1;
-        bonus = limit((rs_at_m9 * 5 + prm_271) / 20 + 40, 40, 100);
+        bonus = std::clamp((rs_at_m9 * 5 + prm_271) / 20 + 40, 40, 100);
         ele = 0;
         elep = 0;
         return 1;
@@ -1373,7 +1373,7 @@ int calcattackhit(int prm_893)
         tohitorg =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
         tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata_hit_bonus(cc);
-        pierce = limit(sdata(attackskill, cc) / 5, 5, 50);
+        pierce = std::clamp(sdata(attackskill, cc) / 5, 5, 50);
         if (cdata_equipment_type(cc) & 1)
         {
             tohitorg = tohitorg * 100 / 130;
@@ -1397,7 +1397,7 @@ int calcattackhit(int prm_893)
         {
             if (prm_893 == 0)
             {
-                rangedist = limit(
+                rangedist = std::clamp(
                     dist(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc))
                         - 1,
                     0,
@@ -1437,7 +1437,8 @@ int calcattackhit(int prm_893)
     {
         if (cc == 0)
         {
-            tohit = tohit * 100 / limit((150 - sdata(301, cc) / 2), 115, 150);
+            tohit =
+                tohit * 100 / std::clamp((150 - sdata(301, cc) / 2), 115, 150);
             if (attackskill != 106)
             {
                 if (attackrange == 0)
@@ -1452,7 +1453,8 @@ int calcattackhit(int prm_893)
         }
         if (cc == gdata_mount)
         {
-            tohit = tohit * 100 / limit((150 - sdata(10, cc) / 2), 115, 150);
+            tohit =
+                tohit * 100 / std::clamp((150 - sdata(10, cc) / 2), 115, 150);
             if (attackskill != 106)
             {
                 if (attackrange == 0)
@@ -1519,7 +1521,7 @@ int calcattackhit(int prm_893)
     {
         if (tohit < sdata(187, tc) * 10)
         {
-            evaderef = evade * 100 / limit(tohit, 1, tohit);
+            evaderef = evade * 100 / std::clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
                 if (rnd(sdata(187, tc) + 250) > 100)
@@ -1684,12 +1686,12 @@ int calcattackdmg(int prm_894)
         else if (ammo != -1)
         {
             dmgmulti = dmgmulti
-                * limit((inv_weight(ammo) / 100 + 100), 100, 150) / 100;
+                * std::clamp((inv_weight(ammo) / 100 + 100), 100, 150) / 100;
         }
         else
         {
-            dmgmulti =
-                dmgmulti * limit((inv_weight(cw) / 200 + 100), 100, 150) / 100;
+            dmgmulti = dmgmulti
+                * std::clamp((inv_weight(cw) / 200 + 100), 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
@@ -1757,7 +1759,7 @@ int calcattackdmg(int prm_894)
     if (cdata_decrease_physical_damage(tc) != 0)
     {
         damage = damage * 100
-            / limit((100 + cdata_decrease_physical_damage(tc)), 25, 1000);
+            / std::clamp((100 + cdata_decrease_physical_damage(tc)), 25, 1000);
     }
     if (damage < 0)
     {
@@ -1909,7 +1911,7 @@ int calcitemvalue(int prm_898, int prm_899)
     {
         if (prm_899 == 0)
         {
-            value_at_m153 += limit(
+            value_at_m153 += std::clamp(
                 cdata_fame(0) / 40 + value_at_m153 * (cdata_fame(0) / 80) / 100,
                 0,
                 800);
@@ -2026,8 +2028,8 @@ int calcitemvalue(int prm_898, int prm_899)
 }
 int calcinvestvalue(int)
 {
-    value_at_m153 = limit(cdata_shop_rank(tc), 1, 200)
-            * limit(cdata_shop_rank(tc), 1, 200) * 15
+    value_at_m153 = std::clamp(cdata_shop_rank(tc), 1, 200)
+            * std::clamp(cdata_shop_rank(tc), 1, 200) * 15
         + 200;
     if (value_at_m153 > 500000)
     {
@@ -2127,10 +2129,10 @@ void calccosthire()
         }
     }
     cost_at_m153 = cost_at_m153
-        * limit((100 - limit(cdata_karma(0) / 2, 0, 50) - 7 * trait(38)
-                 - (cdata_karma(0) >= 20) * 5),
-                25,
-                200)
+        * std::clamp((100 - std::clamp(cdata_karma(0) / 2, 0, 50)
+                      - 7 * trait(38) - (cdata_karma(0) >= 20) * 5),
+                     25,
+                     200)
         / 100;
     gdata_cost_to_hire = cost_at_m153;
     return;
@@ -2166,10 +2168,10 @@ int calccostbuilding()
         }
     }
     cost_at_m153 = cost_at_m153
-        * limit((100 - limit(cdata_karma(0) / 2, 0, 50) - 7 * trait(38)
-                 - (cdata_karma(0) >= 20) * 5),
-                25,
-                200)
+        * std::clamp((100 - std::clamp(cdata_karma(0) / 2, 0, 50)
+                      - 7 * trait(38) - (cdata_karma(0) >= 20) * 5),
+                     25,
+                     200)
         / 100;
     return cost_at_m153;
 }
@@ -2180,10 +2182,10 @@ int calccosttax()
     cost_at_m153 += cdata_fame(0);
     cost_at_m153 += cdata_level(0) * 200;
     cost_at_m153 = cost_at_m153
-        * limit((100 - limit(cdata_karma(0) / 2, 0, 50) - 7 * trait(38)
-                 - (cdata_karma(0) >= 20) * 5),
-                25,
-                200)
+        * std::clamp((100 - std::clamp(cdata_karma(0) / 2, 0, 50)
+                      - 7 * trait(38) - (cdata_karma(0) >= 20) * 5),
+                     25,
+                     200)
         / 100;
     return cost_at_m153;
 }
@@ -2401,7 +2403,7 @@ int calcspellfail(int prm_920, int prm_921)
     {
         if (gdata_mount == prm_921)
         {
-            return 95 - limit((30 - sdata(301, 0) / 2), 0, 30);
+            return 95 - std::clamp((30 - sdata(301, 0) / 2), 0, 30);
         }
         else
         {

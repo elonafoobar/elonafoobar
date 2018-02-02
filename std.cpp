@@ -324,19 +324,6 @@ std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 
 
 
-int abs(int x)
-{
-    return x > 0 ? x : -x;
-}
-
-
-double atan(int y, int x)
-{
-    return std::atan2(static_cast<double>(y), static_cast<double>(x));
-}
-
-
-
 namespace await_detail
 {
 uint32_t last_await;
@@ -662,11 +649,6 @@ void exist(const fs::path& filename)
     }
 }
 
-
-double expf(double x)
-{
-    return std::exp(x);
-}
 
 
 namespace font_detail
@@ -1082,11 +1064,6 @@ size_t length(const std::string& str)
 }
 
 
-int limit(int x, int min, int max)
-{
-    return std::clamp(x, min, max);
-}
-
 void line(int x1, int y1, int x2, int y2)
 {
     Application::instance().renderer().render_line(x1, y1, x2, y2);
@@ -1097,13 +1074,6 @@ void line(int x, int y)
     line(detail::current_tex_buffer().x, detail::current_tex_buffer().y, x, y);
     detail::current_tex_buffer().x = x;
     detail::current_tex_buffer().y = y;
-}
-
-
-
-double logf(double x)
-{
-    return std::log(x);
 }
 
 

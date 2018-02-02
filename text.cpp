@@ -572,7 +572,7 @@ std::string mapname(int prm_366, int prm_367)
     {
         s = mapnamerd(
             adata(5, prm_366),
-            limitmax(adata(17, prm_366) / 5, length2(mapnamerd) - 1));
+            std::min(adata(17, prm_366) / 5, int(length2(mapnamerd) - 1)));
         if (adata(0, prm_366) == 20)
         {
             s += lang(u8"洞窟"s, u8"Dungeon"s);
@@ -6302,8 +6302,8 @@ void label_0176()
 std::string cnvweight(int prm_399)
 {
     std::string s_at_m35;
-    s_at_m35 = ""s + abs(prm_399) / 1000 + u8"."s + abs(prm_399) % 1000 / 100
-        + ""s + strweight;
+    s_at_m35 = ""s + std::abs(prm_399) / 1000 + u8"."s
+        + std::abs(prm_399) % 1000 / 100 + ""s + strweight;
     return s_at_m35;
 }
 std::string fltname(int prm_400)
@@ -8336,10 +8336,10 @@ void label_0247()
             {
                 rtval = 9;
                 s = lang(
-                    ""s + skillname(sid) + u8"を"s + abs((val(1) / 50 + 1))
+                    ""s + skillname(sid) + u8"を"s + std::abs((val(1) / 50 + 1))
                         + u8"下げる"s,
                     u8"decreases your "s + skillname(sid) + u8" by "s
-                        + abs((val(1) / 50 + 1)) + u8"."s);
+                        + std::abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000)
                 {
                     s = lang(
@@ -8355,10 +8355,10 @@ void label_0247()
             else
             {
                 s = lang(
-                    ""s + skillname(sid) + u8"を"s + abs((val(1) / 50 + 1))
+                    ""s + skillname(sid) + u8"を"s + std::abs((val(1) / 50 + 1))
                         + u8"上げる"s,
                     u8"increases your "s + skillname(sid) + u8" by "s
-                        + abs((val(1) / 50 + 1)) + u8"."s);
+                        + std::abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000)
                 {
                     s = lang(

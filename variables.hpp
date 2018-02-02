@@ -1651,7 +1651,6 @@ int label_2672();
 int label_2694();
 int label_2695();
 int lastcard(int = 0);
-int limitmax(int = 0, int = 0);
 int map_barrel(int = 0, int = 0);
 int map_connectroom();
 int map_createroom(int = 0);

@@ -351,13 +351,6 @@ DEFINE_CMP(<=)
 
 
 
-int abs(int x);
-
-
-double atan(int y, int x);
-
-
-
 void await(int msec = 0);
 
 // CANNOT BE IMPLEMENTED
@@ -413,8 +406,6 @@ void exec(const std::string&, int);
 
 void exist(const fs::path& filename);
 
-
-double expf(double x);
 
 void font(const std::string& name, int size, int style);
 
@@ -486,15 +477,9 @@ size_t length2(const elona_vector2<T>& arr)
     return arr.j_size();
 }
 
-int limit(int x, int min, int max);
-
 void line(int x1, int y1, int x2, int y2);
 
 void line(int x, int y);
-
-
-
-double logf(double x);
 
 
 
