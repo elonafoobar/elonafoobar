@@ -3,12 +3,55 @@
 
 
 
+namespace
+{
+
+
+std::tuple<int, int> calc_buff_effect(int id, int power)
+{
+    switch (id)
+    {
+    case 1: return {25 + power / 15, 0};
+    case 2: return {0, 0};
+    case 3: return {0, 0};
+    case 4: return {0, 0};
+    case 5: return {50 + std::sqrt(power / 5), 0};
+    case 6: return {std::min(20 + power / 20, 50), 0};
+    case 7: return {5 + power / 30, 0};
+    case 8: return {0, 0};
+    case 9: return {0, 0};
+    case 10: return {50 + power / 3 * 2, 0};
+    case 11: return {0, 0};
+    case 12: return {6 + power / 40, 3 + power / 100};
+    case 13: return {20, 0};
+    case 14: return {155 + power / 5, 0};
+    case 15: return {0, 0};
+    case 16: return {0, 0};
+    case 17: return {120, 0};
+    case 18: return {std::clamp(25 + power / 17, 25, 80), 0};
+    case 19: return {power, 0};
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28: return {power, 0};
+    default: assert(0);
+    }
+}
+
+
+} // namespace
+
+
+
 namespace elona
 {
 
 
-int p_at_m43 = 0;
-int p_at_m77 = 0;
 elona_vector1<int> rangemap;
 int rangedist = 0;
 int value_at_m153 = 0;
@@ -16,450 +59,208 @@ int p_at_m153 = 0;
 int cost_at_m153 = 0;
 
 
-void calcbuff(int prm_266, int prm_267, int prm_268)
+
+int calc_buff_duration(int id, int power)
 {
-    elona_vector1<int> p_at_m8;
-    if (prm_267 >= 20 && prm_267 <= 28)
+    switch (id)
     {
-        dur = 10 + prm_268 / 10;
-        p_at_m8 = prm_268;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    skillname(prm_267 - 20 + 10) + u8"の成長率を"s + p_at_m8
-                        + u8"%上昇"s,
-                    u8"Increases the growth rate "s
-                        + skillname((prm_267 - 20 + 10)) + u8" by "s + p_at_m8
-                        + ""s);
-                return;
-            }
-        }
-        cdata(270 + (prm_267 - 20 + 10) - 10, prm_266) = p_at_m8;
-        return;
+    case 1: return 10 + power / 10;
+    case 2: return 5 + power / 40;
+    case 3: return 12 + power / 20;
+    case 4: return 4 + power / 6;
+    case 5: return 8 + power / 30;
+    case 6: return 8 + power / 30;
+    case 7: return 10 + power / 4;
+    case 8: return 6 + power / 10;
+    case 9: return 4 + power / 15;
+    case 10: return 15 + power / 5;
+    case 11: return 4 + power / 15;
+    case 12: return 10 + power / 4;
+    case 13: return power;
+    case 14: return 7;
+    case 15: return 4 + power / 40;
+    case 16: return 20;
+    case 17: return 5;
+    case 18: return 66;
+    case 19: return 777;
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28: return 10 + power / 10;
+    default: assert(0);
     }
-    if (prm_267 == 1)
+}
+
+
+std::string get_buff_description(int id, int power)
+{
+    const auto [effect1, effect2] = calc_buff_effect(id, power);
+
+    switch (id)
     {
-        dur = 10 + prm_268 / 10;
-        p_at_m8 = 25 + prm_268 / 15;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"PVを"s + p_at_m8 + u8"上昇/耐恐怖"s,
-                    u8"Increases PV by "s + p_at_m8 + u8"/RES+ fear"s);
-                return;
-            }
-        }
-        cdata_pv(prm_266) += p_at_m8;
-        cdata_fear(prm_266) = 0;
-        return;
+    case 1:
+        return lang(
+            u8"PVを"s + effect1 + u8"上昇/耐恐怖"s,
+            u8"Increases PV by "s + effect1 + u8"/RES+ fear"s);
+    case 2: return lang(u8"魔法の使用を禁止"s, u8"Inhibits casting"s);
+    case 3: return lang(u8"自然回復強化"s, u8"Enhances regeneration"s);
+    case 4:
+        return lang(u8"炎冷気電撃耐性の獲得"s, u8"RES+ fire,cold,lightning"s);
+    case 5:
+        return lang(
+            ""s + effect1 + u8"の加速"s, u8"Increases speed by "s + effect1);
+    case 6:
+        return lang(
+            ""s + effect1 + u8"の鈍足"s, u8"Decreases speed by "s + effect1);
+    case 7:
+        return lang(
+            u8"筋力・器用を"s + effect1 + u8"上昇/耐恐怖/耐混乱"s,
+            u8"Increases STR,DEX by "s + effect1 + u8"/RES+ fear,confusion"s);
+    case 8: return lang(u8"DVとPVを半減"s, u8"Halves DV and PV"s);
+    case 9:
+        return lang(u8"炎冷気電撃耐性の減少"s, u8"RES- fire,cold,lightning"s);
+    case 10:
+        return lang(
+            u8"ﾊﾟﾜｰ"s + effect1 + u8"の呪い(hex)への抵抗"s,
+            u8"grants hex protection(power:"s + effect1 + u8")"s);
+    case 11: return lang(u8"神経幻影耐性の減少"s, u8"RES- mind,nerve"s);
+    case 12:
+        return lang(
+            u8"習得・魔力を"s + effect1 + u8"上昇/読書を"s + effect2
+                + u8"上昇"s,
+            u8"Increases LER,MAG by "s + effect1 + u8", literacy skill by "s
+                + effect2);
+    case 13:
+        return lang(
+            ""s + effect1 + u8"の鈍足/PVを20%減少"s,
+            u8"Decreases speed by "s + effect1 + u8", PV by 20%"s);
+    case 14:
+        return lang(
+            ""s + effect1 + u8"の加速"s, u8"Increases speed by "s + effect1);
+    case 15: return lang(u8"変装"s, u8"Grants new identify"s);
+    case 16:
+        return lang(
+            u8"呪いが完了したときに確実なる死"s,
+            u8"Guaranteed death when the hex ends"s);
+    case 17:
+        return lang(
+            ""s + effect1 + u8"の加速と能力のアップ"s,
+            u8"Increases speed by "s + effect1
+                + u8"/Boosts physical attributes"s);
+    case 18:
+        return lang(
+            u8"致命傷を負ったとき"s + effect1 + u8"%の確率でダメージ分回復。"s,
+            ""s + effect1
+                + u8"% chances taking a lethal damage heals you instead"s);
+    case 19:
+        return lang(
+            ""s + effect1 + u8"の幸運の上昇"s,
+            u8"Increase luck by "s + effect1 + u8"."s);
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28:
+        return lang(
+            skillname(id - 20 + 10) + u8"の成長率を"s + effect1 + u8"%上昇"s,
+            u8"Increases the growth rate "s + skillname((id - 20 + 10))
+                + u8" by "s + effect1 + ""s);
+    default: assert(0);
     }
-    if (prm_267 == 2)
+}
+
+
+
+void apply_buff(int cc, int id, int power)
+{
+    const auto [effect1, effect2] = calc_buff_effect(id, power);
+
+    switch (id)
     {
-        dur = 5 + prm_268 / 40;
-        if (prm_266 < 0)
+    case 1:
+        cdata_pv(cc) += effect1;
+        cdata_fear(cc) = 0;
+        break;
+    case 2: break;
+    case 3: sdata(154, cc) += 40; break;
+    case 4:
+        sdata(50, cc) += 100;
+        sdata(51, cc) += 100;
+        sdata(52, cc) += 100;
+        break;
+    case 5: sdata(18, cc) += effect1; break;
+    case 6: sdata(18, cc) -= effect1; break;
+    case 7:
+        sdata(10, cc) += effect1;
+        sdata(12, cc) += effect1;
+        cdata_fear(cc) = 0;
+        cdata_confused(cc) = 0;
+        break;
+    case 8:
+        cdata_dv(cc) = cdata_dv(cc) / 2;
+        cdata_pv(cc) = cdata_pv(cc) / 2;
+        break;
+    case 9:
+        sdata(50, cc) =
+            std::clamp(sdata(50, cc) + -100, int{sdata(50, cc) > 0}, 9999);
+        sdata(51, cc) =
+            std::clamp(sdata(51, cc) + -100, int{sdata(51, cc) > 0}, 9999);
+        sdata(52, cc) =
+            std::clamp(sdata(52, cc) + -100, int{sdata(52, cc) > 0}, 9999);
+        break;
+    case 10: break;
+    case 11:
+        sdata(58, cc) =
+            std::clamp(sdata(58, cc) + -100, int{sdata(58, cc) > 0}, 9999);
+        sdata(54, cc) =
+            std::clamp(sdata(54, cc) + -100, int{sdata(54, cc) > 0}, 9999);
+        break;
+    case 12:
+        sdata(14, cc) += effect1;
+        sdata(16, cc) += effect1;
+        sdata(150, cc) += effect2;
+        break;
+    case 13:
+        sdata(18, cc) -= effect1;
+        if (cdata_pv(cc) > 1)
         {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(u8"魔法の使用を禁止"s, u8"Inhibits casting"s);
-                return;
-            }
+            cdata_pv(cc) -= cdata_pv(cc) / 5;
         }
-        return;
+        break;
+    case 14: sdata(18, cc) += effect1; break;
+    case 15: cbitmod(16, cc, 1); break;
+    case 16: cbitmod(973, cc, 1); break;
+    case 17:
+        sdata(18, cc) += effect1;
+        sdata(10, cc) = sdata(10, cc) * 150 / 100 + 10;
+        sdata(12, cc) = sdata(12, cc) * 150 / 100 + 10;
+        sdata(154, cc) += 50;
+        cdata_pv(cc) = cdata_pv(cc) * 150 / 100 + 25;
+        cdata_dv(cc) = cdata_dv(cc) * 150 / 100 + 25;
+        cdata_hit_bonus(cc) = cdata_hit_bonus(cc) * 150 / 100 + 50;
+        break;
+    case 18: cbitmod(980, cc, 1); break;
+    case 19: sdata(19, cc) += effect1; break;
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28: cdata(270 + (id - 20 + 10) - 10, cc) = effect1; break;
+    default: assert(0);
     }
-    if (prm_267 == 3)
-    {
-        dur = 12 + prm_268 / 20;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(u8"自然回復強化"s, u8"Enhances regeneration"s);
-                return;
-            }
-        }
-        sdata(154, prm_266) += 40;
-        return;
-    }
-    if (prm_267 == 4)
-    {
-        dur = 4 + prm_268 / 6;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"炎冷気電撃耐性の獲得"s, u8"RES+ fire,cold,lightning"s);
-                return;
-            }
-        }
-        sdata(50, prm_266) += 100;
-        sdata(51, prm_266) += 100;
-        sdata(52, prm_266) += 100;
-        return;
-    }
-    if (prm_267 == 5)
-    {
-        p_at_m8 = 50 + std::sqrt(prm_268 / 5);
-        dur = 8 + prm_268 / 30;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    ""s + p_at_m8 + u8"の加速"s,
-                    u8"Increases speed by "s + p_at_m8);
-                return;
-            }
-        }
-        sdata(18, prm_266) += p_at_m8;
-        return;
-    }
-    if (prm_267 == 6)
-    {
-        p_at_m8 = 20 + prm_268 / 20;
-        if (p_at_m8 > 50)
-        {
-            p_at_m8 = 50;
-        }
-        dur = 8 + prm_268 / 30;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    ""s + p_at_m8 + u8"の鈍足"s,
-                    u8"Decreases speed by "s + p_at_m8);
-                return;
-            }
-        }
-        sdata(18, prm_266) -= p_at_m8;
-        return;
-    }
-    if (prm_267 == 7)
-    {
-        dur = 10 + prm_268 / 4;
-        p_at_m8 = 5 + prm_268 / 30;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"筋力・器用を"s + p_at_m8 + u8"上昇/耐恐怖/耐混乱"s,
-                    u8"Increases STR,DEX by "s + p_at_m8
-                        + u8"/RES+ fear,confusion"s);
-                return;
-            }
-        }
-        sdata(10, prm_266) += p_at_m8;
-        sdata(12, prm_266) += p_at_m8;
-        cdata_fear(prm_266) = 0;
-        cdata_confused(prm_266) = 0;
-        return;
-    }
-    if (prm_267 == 8)
-    {
-        p_at_m8(0) = 30 + prm_268 / 10;
-        p_at_m8(1) = 5 + prm_268 / 15;
-        dur = 6 + prm_268 / 10;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(u8"DVとPVを半減"s, u8"Halves DV and PV"s);
-                return;
-            }
-        }
-        cdata_dv(prm_266) = cdata_dv(prm_266) / 2;
-        cdata_pv(prm_266) = cdata_pv(prm_266) / 2;
-        return;
-    }
-    if (prm_267 == 9)
-    {
-        dur = 4 + prm_268 / 15;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"炎冷気電撃耐性の減少"s, u8"RES- fire,cold,lightning"s);
-                return;
-            }
-        }
-        sdata(50, prm_266) = std::clamp(
-            sdata(50, prm_266) + -100, int{sdata(50, prm_266) > 0}, 9999);
-        sdata(51, prm_266) = std::clamp(
-            sdata(51, prm_266) + -100, int{sdata(51, prm_266) > 0}, 9999);
-        sdata(52, prm_266) = std::clamp(
-            sdata(52, prm_266) + -100, int{sdata(52, prm_266) > 0}, 9999);
-        return;
-    }
-    if (prm_267 == 10)
-    {
-        p_at_m8 = 50 + prm_268 / 3 * 2;
-        dur = 15 + prm_268 / 5;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"ﾊﾟﾜｰ"s + p_at_m8 + u8"の呪い(hex)への抵抗"s,
-                    u8"grants hex protection(power:"s + p_at_m8 + u8")"s);
-                return;
-            }
-        }
-        return;
-    }
-    if (prm_267 == 11)
-    {
-        dur = 4 + prm_268 / 15;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(u8"神経幻影耐性の減少"s, u8"RES- mind,nerve"s);
-                return;
-            }
-        }
-        sdata(58, prm_266) = std::clamp(
-            sdata(58, prm_266) + -100, int{sdata(58, prm_266) > 0}, 9999);
-        sdata(54, prm_266) = std::clamp(
-            sdata(54, prm_266) + -100, int{sdata(54, prm_266) > 0}, 9999);
-        return;
-    }
-    if (prm_267 == 12)
-    {
-        dur = 10 + prm_268 / 4;
-        p_at_m8(0) = 6 + prm_268 / 40;
-        p_at_m8(1) = 3 + prm_268 / 100;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"習得・魔力を"s + p_at_m8 + u8"上昇/読書を"s + p_at_m8(1)
-                        + u8"上昇"s,
-                    u8"Increases LER,MAG by "s + p_at_m8
-                        + u8", literacy skill by "s + p_at_m8(1));
-                return;
-            }
-        }
-        sdata(14, prm_266) += p_at_m8;
-        sdata(16, prm_266) += p_at_m8;
-        sdata(150, prm_266) += p_at_m8(1);
-        return;
-    }
-    if (prm_267 == 13)
-    {
-        p_at_m8 = 20;
-        dur = prm_268;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    ""s + p_at_m8 + u8"の鈍足/PVを20%減少"s,
-                    u8"Decreases speed by "s + p_at_m8 + u8", PV by 20%"s);
-                return;
-            }
-        }
-        sdata(18, prm_266) -= p_at_m8;
-        if (cdata_pv(prm_266) > 1)
-        {
-            cdata_pv(prm_266) -= cdata_pv(prm_266) / 5;
-        }
-        return;
-    }
-    if (prm_267 == 14)
-    {
-        p_at_m8 = 155 + prm_268 / 5;
-        dur = 7;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    ""s + p_at_m8 + u8"の加速"s,
-                    u8"Increases speed by "s + p_at_m8);
-                return;
-            }
-        }
-        sdata(18, prm_266) += p_at_m8;
-        return;
-    }
-    if (prm_267 == 15)
-    {
-        dur = 4 + prm_268 / 40;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(u8"変装"s, u8"Grants new identify"s);
-                return;
-            }
-        }
-        cbitmod(16, prm_266, 1);
-        return;
-    }
-    if (prm_267 == 16)
-    {
-        dur = 20;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    u8"呪いが完了したときに確実なる死"s,
-                    u8"Guaranteed death when the hex ends"s);
-                return;
-            }
-        }
-        cbitmod(973, prm_266, 1);
-        return;
-    }
-    if (prm_267 == 17)
-    {
-        p_at_m8 = 120;
-        dur = 5;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    ""s + p_at_m8 + u8"の加速と能力のアップ"s,
-                    u8"Increases speed by "s + p_at_m8
-                        + u8"/Boosts physical attributes"s);
-                return;
-            }
-        }
-        sdata(18, prm_266) += p_at_m8;
-        sdata(10, prm_266) = sdata(10, prm_266) * 150 / 100 + 10;
-        sdata(12, prm_266) = sdata(12, prm_266) * 150 / 100 + 10;
-        sdata(154, prm_266) += 50;
-        cdata_pv(prm_266) = cdata_pv(prm_266) * 150 / 100 + 25;
-        cdata_dv(prm_266) = cdata_dv(prm_266) * 150 / 100 + 25;
-        cdata_hit_bonus(prm_266) = cdata_hit_bonus(prm_266) * 150 / 100 + 50;
-        return;
-    }
-    if (prm_267 == 18)
-    {
-        dur = 66;
-        p_at_m8 = std::clamp(25 + prm_268 / 17, 25, 80);
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(u8"致命傷を負ったとき"s + p_at_m8 +
-                        u8"%の確率でダメージ分回復。"s,
-                    ""s + p_at_m8 +
-                        u8"% chances taking a lethal damage heals you instead"s);
-                return;
-            }
-        }
-        cbitmod(980, prm_266, 1);
-        return;
-    }
-    if (prm_267 == 19)
-    {
-        p_at_m8 = prm_268;
-        dur = 777;
-        if (prm_266 < 0)
-        {
-            if (prm_266 == -1)
-            {
-                return;
-            }
-            else
-            {
-                buffdesc = lang(
-                    ""s + p_at_m8 + u8"の幸運の上昇"s,
-                    u8"Increase luck by "s + p_at_m8 + u8"."s);
-                return;
-            }
-        }
-        sdata(19, prm_266) += p_at_m8;
-        return;
-    }
-    return;
 }
 
 
@@ -931,112 +732,80 @@ int calcskill(int prm_269, int prm_270, int prm_271)
 
 
 
-int calcobjlv(int prm_443)
+int calcobjlv(int base)
 {
-    int objlv_at_m43 = 0;
-    if (prm_443 <= 0)
-    {
-        objlv_at_m43 = gdata_current_dungeon_level;
-    }
-    else
-    {
-        objlv_at_m43 = prm_443;
-    }
+    int ret = base <= 0 ? gdata_current_dungeon_level : base;
     if (gdata_current_map == 30)
     {
-        objlv_at_m43 = 1;
+        ret = 1;
     }
+    for (int i = 0; i < 3; ++i)
     {
-        int cnt = 1;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        if (rnd(30 + i * 5) == 0)
         {
-            p_at_m43 = rnd(30 + cnt * 5);
-            if (p_at_m43 == 0)
-            {
-                objlv_at_m43 += rnd(10 * cnt);
-                continue;
-            }
-            break;
+            ret += rnd(10 * i);
+            continue;
         }
+        break;
     }
-    if (prm_443 <= 3)
+    if (base <= 3)
     {
         if (rnd(4) != 0)
         {
-            objlv_at_m43 = rnd(3) + 1;
+            ret = rnd(3) + 1;
         }
     }
-    return objlv_at_m43;
+    return ret;
 }
 
 
 
-int calcfixlv(int prm_444)
+int calcfixlv(int base)
 {
-    int fixlv_at_m43 = 0;
-    if (prm_444 == 0)
+    int ret = base == 0 ? 2 : base;
+    for (int i = 0; i < 3; ++i)
     {
-        fixlv_at_m43 = 2;
-    }
-    else
-    {
-        fixlv_at_m43 = prm_444;
-    }
-    {
-        int cnt = 1;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        int p = rnd(30 + i * 5);
+        if (p == 0)
         {
-            p_at_m43 = rnd(30 + cnt * 5);
-            if (p_at_m43 == 0)
-            {
-                ++fixlv_at_m43;
-                continue;
-            }
-            if (p_at_m43 < 3)
-            {
-                --fixlv_at_m43;
-                continue;
-            }
-            break;
+            ++ret;
+            continue;
         }
+        else if (p < 3)
+        {
+            --ret;
+            continue;
+        }
+        break;
     }
-    if (fixlv_at_m43 < 1)
-    {
-        fixlv_at_m43 = 1;
-    }
-    if (fixlv_at_m43 > 5)
-    {
-        fixlv_at_m43 = 5;
-    }
-    return fixlv_at_m43;
+    return std::clamp(ret, 1, 5);
 }
 
 
 
-int calcfame(int prm_574, int prm_575)
+int calcfame(int cc, int base)
 {
-    p_at_m77 = prm_575 * 100
-        / (100
-           + cdata_fame(prm_574) / 100 * (cdata_fame(prm_574) / 100) / 2500);
-    if (p_at_m77 < 5)
+    int ret = base * 100
+        / (100 + cdata_fame(cc) / 100 * (cdata_fame(cc) / 100) / 2500);
+    if (ret < 5)
     {
-        p_at_m77 = rnd(5) + 1;
+        ret = rnd(5) + 1;
     }
-    return p_at_m77;
+    return ret;
 }
 
 
 
-int decfame(int prm_576, int prm_577)
+int decfame(int cc, int base)
 {
-    p_at_m77 = cdata_fame(prm_576) / prm_577 + 5;
-    p_at_m77 = p_at_m77 + rnd(p_at_m77 / 2) - rnd(p_at_m77 / 2);
-    cdata_fame(prm_576) -= p_at_m77;
-    if (cdata_fame(prm_576) < 0)
+    int ret = cdata_fame(cc) / base + 5;
+    ret = ret + rnd(ret / 2) - rnd(ret / 2);
+    cdata_fame(cc) -= ret;
+    if (cdata_fame(cc) < 0)
     {
-        cdata_fame(prm_576) = 0;
+        cdata_fame(cc) = 0;
     }
-    return p_at_m77;
+    return ret;
 }
 
 
@@ -1822,267 +1591,206 @@ int calcattackdmg(int prm_894)
 
 
 
-int calcmedalvalue(int prm_897)
+int calcmedalvalue(int ci)
 {
-    if (inv_id(prm_897) == 430)
+    switch (inv_id(ci))
     {
-        return 5;
+    case 430: return 5;
+    case 431: return 8;
+    case 502: return 7;
+    case 480: return 20;
+    case 421: return 15;
+    case 603: return 20;
+    case 615: return 5;
+    case 559: return 10;
+    case 516: return 3;
+    case 616: return 18;
+    case 623: return 85;
+    case 624: return 25;
+    case 505: return 12;
+    case 625: return 11;
+    case 626: return 30;
+    case 627: return 55;
+    case 56: return 65;
+    case 742: return 72;
+    case 760: return 94;
+    default: return 1;
     }
-    if (inv_id(prm_897) == 431)
-    {
-        return 8;
-    }
-    if (inv_id(prm_897) == 502)
-    {
-        return 7;
-    }
-    if (inv_id(prm_897) == 480)
-    {
-        return 20;
-    }
-    if (inv_id(prm_897) == 421)
-    {
-        return 15;
-    }
-    if (inv_id(prm_897) == 603)
-    {
-        return 20;
-    }
-    if (inv_id(prm_897) == 615)
-    {
-        return 5;
-    }
-    if (inv_id(prm_897) == 559)
-    {
-        return 10;
-    }
-    if (inv_id(prm_897) == 516)
-    {
-        return 3;
-    }
-    if (inv_id(prm_897) == 616)
-    {
-        return 18;
-    }
-    if (inv_id(prm_897) == 623)
-    {
-        return 85;
-    }
-    if (inv_id(prm_897) == 624)
-    {
-        return 25;
-    }
-    if (inv_id(prm_897) == 505)
-    {
-        return 12;
-    }
-    if (inv_id(prm_897) == 625)
-    {
-        return 11;
-    }
-    if (inv_id(prm_897) == 626)
-    {
-        return 30;
-    }
-    if (inv_id(prm_897) == 627)
-    {
-        return 55;
-    }
-    if (inv_id(prm_897) == 56)
-    {
-        return 65;
-    }
-    if (inv_id(prm_897) == 742)
-    {
-        return 72;
-    }
-    if (inv_id(prm_897) == 760)
-    {
-        return 94;
-    }
-    return 1;
 }
 
 
 
-int calcitemvalue(int prm_898, int prm_899)
+int calcitemvalue(int ci, int situation)
 {
-    int reftype_at_m153 = 0;
-    int limitvalue_at_m153 = 0;
-    reftype_at_m153 = refitem(inv_id(prm_898), 5);
-    if (inv_identification_state(prm_898) == 0)
+    int category = refitem(inv_id(ci), 5);
+    int ret = 0;
+    if (inv_identification_state(ci) == 0)
     {
-        if (prm_899 == 2)
+        if (situation == 2)
         {
-            value_at_m153 = inv_value(prm_898) * 4 / 10;
+            ret = inv_value(ci) * 4 / 10;
         }
         else
         {
-            value_at_m153 = cdata_level(0) / 5
-                    * ((gdata_random_seed + prm_898 * 31) % cdata_level(0) + 4)
+            ret = cdata_level(0) / 5
+                    * ((gdata_random_seed + ci * 31) % cdata_level(0) + 4)
                 + 10;
         }
     }
-    else if (reftype_at_m153 >= 50000)
+    else if (category >= 50000)
     {
-        value_at_m153 = inv_value(prm_898);
+        ret = inv_value(ci);
     }
     else
     {
-        if (inv_identification_state(prm_898) == 1)
+        if (inv_identification_state(ci) == 1)
         {
-            value_at_m153 = inv_value(prm_898) * 2 / 10;
+            ret = inv_value(ci) * 2 / 10;
         }
-        if (inv_identification_state(prm_898) == 2)
+        if (inv_identification_state(ci) == 2)
         {
-            value_at_m153 = inv_value(prm_898) * 5 / 10;
+            ret = inv_value(ci) * 5 / 10;
         }
-        if (inv_identification_state(prm_898) >= 3)
+        if (inv_identification_state(ci) >= 3)
         {
-            value_at_m153 = inv_value(prm_898);
+            ret = inv_value(ci);
         }
     }
-    if (inv_identification_state(prm_898) >= 3)
+    if (inv_identification_state(ci) >= 3)
     {
-        if (inv_curse_state(prm_898) == 1)
+        if (inv_curse_state(ci) == 1)
         {
-            value_at_m153 = value_at_m153 * 120 / 100;
+            ret = ret * 120 / 100;
         }
-        if (inv_curse_state(prm_898) == -1)
+        if (inv_curse_state(ci) == -1)
         {
-            value_at_m153 = value_at_m153 / 2;
+            ret = ret / 2;
         }
-        if (inv_curse_state(prm_898) == -2)
+        if (inv_curse_state(ci) == -2)
         {
-            value_at_m153 = value_at_m153 / 5;
+            ret = ret / 5;
         }
     }
-    if (reftype_at_m153 == 57000)
+    if (category == 57000)
     {
-        if (inv_param2(prm_898) > 0)
+        if (inv_param2(ci) > 0)
         {
-            value_at_m153 =
-                value_at_m153 * inv_param2(prm_898) * inv_param2(prm_898) / 10;
+            ret = ret * inv_param2(ci) * inv_param2(ci) / 10;
         }
     }
-    if (inv_id(prm_898) == 333)
+    if (inv_id(ci) == 333)
     {
-        if (prm_899 == 0)
+        if (situation == 0)
         {
-            value_at_m153 += std::clamp(
-                cdata_fame(0) / 40 + value_at_m153 * (cdata_fame(0) / 80) / 100,
-                0,
-                800);
+            ret += std::clamp(
+                cdata_fame(0) / 40 + ret * (cdata_fame(0) / 80) / 100, 0, 800);
         }
     }
-    if (inv_weight(prm_898) < 0)
+    if (inv_weight(ci) < 0)
     {
         if (mode == 6)
         {
-            if (reftype_at_m153 == 92000)
+            if (category == 92000)
             {
-                value_at_m153 =
-                    value_at_m153 * trate(inv_param1(prm_898)) / 100;
-                if (prm_899 == 1)
+                ret = ret * trate(inv_param1(ci)) / 100;
+                if (situation == 1)
                 {
-                    value_at_m153 = value_at_m153 * 65 / 100;
+                    ret = ret * 65 / 100;
                 }
-                return value_at_m153;
+                return ret;
             }
         }
     }
-    if (ibit(4, prm_898) == 1)
+    if (ibit(4, ci) == 1)
     {
-        dbid = inv_id(prm_898);
+        dbid = inv_id(ci);
         dbmode = 2;
         label_1275();
-        if (inv_count(prm_898) < 0)
+        if (inv_count(ci) < 0)
         {
-            value_at_m153 = value_at_m153 / 10;
+            ret = ret / 10;
         }
-        else if (reftype_at_m153 == 54000)
+        else if (category == 54000)
         {
-            value_at_m153 = value_at_m153 / 5
-                + value_at_m153 * inv_count(prm_898) / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * inv_count(ci) / (ichargelevel * 2 + 1);
         }
         else
         {
-            value_at_m153 = value_at_m153 / 2
-                + value_at_m153 * inv_count(prm_898) / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * inv_count(ci) / (ichargelevel * 3 + 1);
         }
     }
-    if (reftype_at_m153 == 72000)
+    if (category == 72000)
     {
-        if (inv_param1(prm_898) == 0)
+        if (inv_param1(ci) == 0)
         {
-            value_at_m153 = value_at_m153 / 100 + 1;
+            ret = ret / 100 + 1;
         }
     }
-    if (prm_899 == 0)
+    if (situation == 0)
     {
-        limitvalue_at_m153 = value_at_m153 / 2;
-        value_at_m153 = value_at_m153 * 100 / (100 + sdata(156, 0));
+        int max = ret / 2;
+        ret = ret * 100 / (100 + sdata(156, 0));
         if (gdata_belongs_to_mages_guild != 0)
         {
-            if (reftype_at_m153 == 54000)
+            if (category == 54000)
             {
-                value_at_m153 = value_at_m153 * 80 / 100;
+                ret = ret * 80 / 100;
             }
         }
-        if (value_at_m153 <= limitvalue_at_m153)
+        if (ret <= max)
         {
-            value_at_m153 = limitvalue_at_m153;
+            ret = max;
         }
     }
-    if (prm_899 == 1)
+    if (situation == 1)
     {
-        limitvalue_at_m153 = sdata(156, 0) * 250 + 5000;
-        if (value_at_m153 / 3 < limitvalue_at_m153)
+        int max = sdata(156, 0) * 250 + 5000;
+        if (ret / 3 < max)
         {
-            limitvalue_at_m153 = value_at_m153 / 3;
+            max = ret / 3;
         }
-        value_at_m153 = value_at_m153 * (100 + sdata(156, 0) * 5) / 1000;
-        if (reftype_at_m153 < 50000)
+        ret = ret * (100 + sdata(156, 0) * 5) / 1000;
+        if (category < 50000)
         {
-            value_at_m153 /= 20;
+            ret /= 20;
         }
-        if (ibit(9, prm_898))
+        if (ibit(9, ci))
         {
             if (gdata_belongs_to_thieves_guild == 0)
             {
-                value_at_m153 /= 10;
+                ret /= 10;
             }
             else
             {
-                value_at_m153 = value_at_m153 / 3 * 2;
+                ret = ret / 3 * 2;
             }
         }
-        if (value_at_m153 >= limitvalue_at_m153)
+        if (ret >= max)
         {
-            value_at_m153 = limitvalue_at_m153;
+            ret = max;
         }
     }
-    if (prm_899 == 2)
+    if (situation == 2)
     {
-        value_at_m153 = value_at_m153 / 5;
-        if (reftype_at_m153 < 50000)
+        ret = ret / 5;
+        if (category < 50000)
         {
-            value_at_m153 /= 3;
+            ret /= 3;
         }
-        if (value_at_m153 > 15000)
+        if (ret > 15000)
         {
-            value_at_m153 = 15000;
+            ret = 15000;
         }
-        if (ibit(9, prm_898))
+        if (ibit(9, ci))
         {
-            value_at_m153 = 1;
+            ret = 1;
         }
     }
-    if (value_at_m153 <= 0)
+    if (ret <= 0)
     {
-        value_at_m153 = 1;
+        ret = 1;
     }
-    return value_at_m153;
+    return ret;
 }
 
 
