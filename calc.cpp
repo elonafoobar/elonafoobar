@@ -52,7 +52,6 @@ namespace elona
 {
 
 
-int p_at_m77 = 0;
 elona_vector1<int> rangemap;
 int rangedist = 0;
 int value_at_m153 = 0;
@@ -784,30 +783,29 @@ int calcfixlv(int base)
 
 
 
-int calcfame(int prm_574, int prm_575)
+int calcfame(int cc, int base)
 {
-    p_at_m77 = prm_575 * 100
-        / (100
-           + cdata_fame(prm_574) / 100 * (cdata_fame(prm_574) / 100) / 2500);
-    if (p_at_m77 < 5)
+    int ret = base * 100
+        / (100 + cdata_fame(cc) / 100 * (cdata_fame(cc) / 100) / 2500);
+    if (ret < 5)
     {
-        p_at_m77 = rnd(5) + 1;
+        ret = rnd(5) + 1;
     }
-    return p_at_m77;
+    return ret;
 }
 
 
 
-int decfame(int prm_576, int prm_577)
+int decfame(int cc, int base)
 {
-    p_at_m77 = cdata_fame(prm_576) / prm_577 + 5;
-    p_at_m77 = p_at_m77 + rnd(p_at_m77 / 2) - rnd(p_at_m77 / 2);
-    cdata_fame(prm_576) -= p_at_m77;
-    if (cdata_fame(prm_576) < 0)
+    int ret = cdata_fame(cc) / base + 5;
+    ret = ret + rnd(ret / 2) - rnd(ret / 2);
+    cdata_fame(cc) -= ret;
+    if (cdata_fame(cc) < 0)
     {
-        cdata_fame(prm_576) = 0;
+        cdata_fame(cc) = 0;
     }
-    return p_at_m77;
+    return ret;
 }
 
 
