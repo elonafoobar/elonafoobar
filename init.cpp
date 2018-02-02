@@ -25,6 +25,22 @@ redo:
 
 
 
+void load_musiclist()
+{
+    const auto filepath = fs::u8path(u8"./user/music/musiclist.txt");
+    if (!fs::exists(filepath))
+        return;
+
+    for (auto&& [n, line] : fileutil::read_by_line{filepath})
+    {
+        if (std::empty(line))
+            continue;
+        musicfile(n + 50) = strmid(line, 0, instr(line, 0, u8"\t"));
+    }
+}
+
+
+
 } // namespace
 
 
@@ -408,7 +424,8 @@ void label_0192()
     label_0030();
     label_1752();
     label_1618();
-    label_0221();
+    load_random_name_table();
+    load_random_title_table();
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
     label_1883();
@@ -450,7 +467,7 @@ void label_0192()
         }
     }
     label_0066();
-    label_0067();
+    load_musiclist();
     mainskill(0) = 173;
     mainskill(1) = 106;
     mainskill(2) = 108;
