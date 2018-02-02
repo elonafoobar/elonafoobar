@@ -959,7 +959,7 @@ label_2061_internal:
                 }
                 pos(x, y);
                 mes(""s + bodyn(p / 10000));
-                x += (strlen(bodyn(p / 10000)) + 1) * 6;
+                x += (std::size(bodyn(p / 10000)) + 1) * 6;
             }
         }
     }

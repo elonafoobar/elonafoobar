@@ -792,7 +792,7 @@ void getstr(
     }
     if (pos == std::string::npos)
     {
-        pos = source.length();
+        pos = std::size(source);
     }
     if (pos >= offset)
     {
@@ -1552,15 +1552,11 @@ std::string elona_str(int n)
     return std::to_string(n);
 }
 
-size_t strlen(const std::string& str)
-{
-    return str.length();
-}
 
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
-    for (int i = 0; i < str.length();)
+    for (int i = 0; i < std::size(str);)
     {
         const auto byte = byte_count(static_cast<uint8_t>(str[i]));
         ret += byte == 1 ? 1 : 2;
@@ -2300,7 +2296,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
 
     while (1)
     {
-        const auto len = rest.length();
+        const auto len = std::size(rest);
         if (len < max_line_length)
         {
             text += rest;
@@ -2326,7 +2322,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
                 // }
                 text += rest.substr(0, line_length) + '\n';
                 ++n;
-                if (rest.length() > line_length)
+                if (std::size(rest) > line_length)
                 {
                     rest = rest.substr(line_length);
                 }

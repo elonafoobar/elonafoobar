@@ -2813,7 +2813,7 @@ void label_0185()
             await();
             p(0) = instr(buff, 0, u8"{"s);
             p(1) = instr(buff, p, u8"}"s);
-            p(2) = strlen(buff);
+            p(2) = std::size(buff(0));
             if (p == -1)
             {
                 break;
@@ -8092,7 +8092,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     int i_at_m67 = 0;
     word_at_m67 = prm_533;
     p_at_m67 = 0;
-    i_at_m67 = strlen(word_at_m67);
+    i_at_m67 = std::size(word_at_m67);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
@@ -8215,7 +8215,7 @@ void cs_list(
     int tx_at_m72 = 0;
     if (cs == CNT)
     {
-        tx_at_m72 = limit(strlen(prm_543) * 7 + 32 + prm_547, 10, 480);
+        tx_at_m72 = limit(std::size(prm_543) * 7 + 32 + prm_547, 10, 480);
         gsel(3);
         pos(264, 96);
         gcopy(0, prm_544, prm_545, tx_at_m72, prm_546);
@@ -10420,7 +10420,7 @@ void display_window(
     font(lang(cfg_font1, cfg_font2), 15 + en - en * 2, 0);
     color(0, 0, 0);
     pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
-            + limit((strlen(s) * 8 - 120), 0, 200) / 2,
+            + limit((std::size(s(0)) * 8 - 120), 0, 200) / 2,
         prm_669 + 4 + vfix);
     color(20, 10, 0);
     bmes(s, 255, 255, 255);
@@ -10806,7 +10806,7 @@ std::string del_str(const std::string& prm_694, const std::string& prm_695)
             }
             s_at_m99 = strmid(s_at_m99, 0, instr(s_at_m99, 0, prm_695))
                 + strmid(s_at_m99,
-                         (instr(s_at_m99, 0, prm_695) + strlen(prm_695)),
+                         (instr(s_at_m99, 0, prm_695) + std::size(prm_695)),
                          100);
         }
     }
@@ -10830,7 +10830,7 @@ std::string cnv_str(
                 break;
             }
             prm_696 = strmid(prm_696, 0, p_at_m100) + lang(prm_698, prm_698)
-                + strmid(prm_696, (p_at_m100 + strlen(prm_697)), 300);
+                + strmid(prm_696, (p_at_m100 + std::size(prm_697)), 300);
         }
     }
     return prm_696;
@@ -19792,7 +19792,7 @@ void label_1425()
     msgx = 20;
     msgy = 30;
     sx = 760;
-    sx = strlen(s) * 8 + 45;
+    sx = std::size(s(0)) * 8 + 45;
     if (sx > 760)
     {
         sx = 760;
@@ -41933,7 +41933,7 @@ label_18671_internal:
             if (strmid(s, 0, 1) == u8"@"s)
             {
                 s(1) = strmid(s, 1, 2);
-                s = strmid(s, 3, strlen(s) - 3);
+                s = strmid(s, 3, std::size(s(0)) - 3);
                 font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
                 color(250, 240, 230);
                 if (s(1) == u8"BL"s)
@@ -50025,7 +50025,7 @@ label_1973_internal:
             if (strmid(s, 0, 1) == u8"@"s)
             {
                 s(1) = strmid(s, 1, 2);
-                s = strmid(s, 3, strlen(s) - 3);
+                s = strmid(s, 3, std::size(s(0)) - 3);
                 font(lang(cfg_font1, cfg_font2), 10 + en - en * 2, 1);
                 color(0, 0, 200);
                 if (s(1) == u8"QL"s)
@@ -51382,7 +51382,8 @@ label_1998_internal:
             }
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (strlen(inputlog)); cnt < cnt_end;
+                for (int cnt_end = cnt + (std::size(inputlog(0)));
+                     cnt < cnt_end;
                      ++cnt)
                 {
                     if (strutil::contains(
@@ -51552,7 +51553,7 @@ label_1999_internal:
             }
             {
                 int cnt = 0;
-                for (int cnt_end = cnt + (strlen(inputlog) / (1 + jp));
+                for (int cnt_end = cnt + (std::size(inputlog(0)) / (1 + jp));
                      cnt < cnt_end;
                      ++cnt)
                 {
@@ -51669,7 +51670,7 @@ void label_2002()
             }
             if (strutil::contains(s(0), s2))
             {
-                p = 1000 - (strlen(s) - strlen(s2)) * 10;
+                p = 1000 - (std::size(s(0)) - std::size(s2)) * 10;
             }
             if (p != 0)
             {
@@ -55903,9 +55904,11 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
                 }
                 if (jp)
                 {
-                    if (strmid(q_at_m187, strlen(q_at_m187) - 3, 2) == u8"。"s)
+                    if (strmid(q_at_m187, std::size(q_at_m187) - 3, 2)
+                        == u8"。"s)
                     {
-                        q_at_m187 = strmid(q_at_m187, 0, strlen(q_at_m187) - 3);
+                        q_at_m187 =
+                            strmid(q_at_m187, 0, std::size(q_at_m187) - 3);
                     }
                 }
                 else
@@ -56175,7 +56178,7 @@ void label_2068()
                                 {
                                     int cnt = 0;
                                     for (int cnt_end =
-                                             cnt + (strlen(q) / p(1) + 1);
+                                             cnt + (std::size(q(0)) / p(1) + 1);
                                          cnt < cnt_end;
                                          ++cnt)
                                     {
@@ -58594,7 +58597,7 @@ void label_2106()
         dialog(u8"The first letter of the name must be alphabetic."s);
         return;
     }
-    if (strlen_u(s) >= 32 || strlen(s(1)) >= 32)
+    if (strlen_u(s) >= 32 || std::size(s(1)) >= 32)
     {
         dialog(u8"The name is too long."s);
         return;
@@ -58831,7 +58834,7 @@ void label_2113()
             {
                 save_p = 1;
             }
-            save_s = strmid(save_s, 1, strlen(save_s));
+            save_s = strmid(save_s, 1, std::size(save_s));
             if (save_p == 0)
             {
                 bcopy(save_s, file + getpath(save_s, 8));
@@ -59244,7 +59247,7 @@ label_21261_internal:
         val(5) = val(4);
         if (strlen_u(elona_str(val(5))) >= 3)
         {
-            dx += strlen(elona_str(val(5))) * 8;
+            dx += std::size(elona_str(val(5))) * 8;
         }
         redraw(0);
         pos(x + 24, y + 4);
@@ -59668,7 +59671,7 @@ int label_2131()
         val = 1;
         if (strlen_u(elona_str(val(5))) >= 3)
         {
-            dx += strlen(elona_str(val(5))) * 8;
+            dx += std::size(elona_str(val(5))) * 8;
         }
         pos(dx(1) + sx + 24, dy + 4);
         gfini(dx - 42, 35);
@@ -77877,7 +77880,7 @@ void label_2680()
         label_2685();
         return;
     }
-    scidx += strlen(s);
+    scidx += std::size(s(0));
 label_2681:
     await();
     stick(a, 128);
@@ -78082,8 +78085,8 @@ label_2684_internal:
         {
             y = y1 + 31 + (9 - noteinfo(0) / 2 + cnt) * 20;
             noteget(s, cnt);
-            x = windoww / 2 - strlen(s) * 4;
-            dx = 80 + strlen(s) * 8;
+            x = windoww / 2 - std::size(s(0)) * 4;
+            dx = 80 + std::size(s(0)) * 8;
             if (dx < 180)
             {
                 dx = 0;
@@ -78101,7 +78104,7 @@ label_2684_internal:
         {
             y = y1 + 28 + (9 - noteinfo(0) / 2 + cnt) * 20;
             noteget(s, cnt);
-            x = windoww / 2 - strlen(s) * 4;
+            x = windoww / 2 - std::size(s(0)) * 4;
             color(10, 10, 10);
             pos(x, y);
             bmes(s, 240, 240, 240);
@@ -81058,7 +81061,7 @@ void label_2713()
                         break;
                     }
                     s = strmid(s, 0, p + 1) + valn(i) + strmid(s, p(1), 999);
-                    p += strlen(valn(i)) + 2;
+                    p += std::size(valn(i)) + 2;
                     ++i;
                 }
             }
@@ -81127,7 +81130,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81154,7 +81157,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81181,7 +81184,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81208,7 +81211,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81235,7 +81238,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81262,7 +81265,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81289,7 +81292,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81316,7 +81319,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81343,7 +81346,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81370,7 +81373,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81397,7 +81400,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81424,7 +81427,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81451,7 +81454,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81478,7 +81481,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81505,7 +81508,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81532,7 +81535,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81559,7 +81562,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81586,7 +81589,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81613,7 +81616,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81640,7 +81643,7 @@ void label_2715()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81683,7 +81686,7 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81710,7 +81713,7 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81737,7 +81740,7 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }
@@ -81764,7 +81767,7 @@ void label_2719()
                             break;
                         }
                         rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += strlen(rtvaln(i)) + 2;
+                        p += std::size(rtvaln(i)) + 2;
                         ++i;
                     }
                 }

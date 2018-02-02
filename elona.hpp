@@ -605,7 +605,6 @@ void stick(int& out, int = 0);
 
 std::string elona_str(int n);
 
-size_t strlen(const std::string& str);
 size_t strlen_u(const std::string& str);
 
 std::string strmid(const std::string& source, int pos, int length);

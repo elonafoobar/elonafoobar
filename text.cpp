@@ -6050,7 +6050,7 @@ void label_0173()
             await();
             p(0) = instr(buff, 0, u8"{"s);
             p(1) = instr(buff, p, u8"}"s);
-            p(2) = strlen(buff);
+            p(2) = std::size(buff(0));
             if (p == -1)
             {
                 break;
@@ -7337,7 +7337,7 @@ void label_0183()
         notesel(buff);
         return;
     }
-    buff2 = strmid(buff2, p + 1, strlen(buff2) - p - 1);
+    buff2 = strmid(buff2, p + 1, std::size(buff2(0)) - p - 1);
     if (val != 2)
     {
         buff = buff2;
@@ -8010,7 +8010,7 @@ label_0223_internal:
     {
         s_at_m41 += rn2(rnd(length(rn2)));
     }
-    p_at_m41 = strlen(s_at_m41);
+    p_at_m41 = std::size(s_at_m41);
     if (p_at_m41 < 4)
     {
         goto label_0223_internal;
