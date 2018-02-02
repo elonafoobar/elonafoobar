@@ -1793,7 +1793,7 @@ void addnewstopic(const std::string&, const std::string&);
 void anime_halt();
 void animeblood(int = 0, int = 0, int = 0);
 void animeload(int = 0, int = 0);
-void arrayfile();
+void arrayfile(std::string_view);
 void at(int = 0);
 void atxinit();
 void begintempinv();
@@ -2547,73 +2547,7 @@ void txt(Args&&... args)
 
 
 
-struct elona_fmode_t
-{
-    enum class Type
-    {
-        integer,
-        string,
-    } type;
-
-    // FIXME: Use union.
-    int i;
-    std::string s;
-
-    elona_fmode_t()
-        : type(Type::integer)
-        , i(0)
-    {
-    }
-
-    virtual ~elona_fmode_t() = default;
-
-    bool operator==(int i) const noexcept
-    {
-        return type == Type::integer && this->i == i;
-    }
-
-    bool operator==(const std::string& s) const noexcept
-    {
-        return type == Type::string && this->s == s;
-    }
-
-    elona_fmode_t& operator=(int i)
-    {
-        type = Type::integer;
-        this->i = i;
-        s.clear();
-        return *this;
-    }
-
-    elona_fmode_t& operator=(const std::string& s)
-    {
-        type = Type::string;
-        this->s = s;
-        i = 0;
-        return *this;
-    }
-
-
-    std::string to_string() const
-    {
-        switch (type)
-        {
-        case elona_fmode_t::Type::integer: return std::to_string(i);
-        case elona_fmode_t::Type::string: return s;
-        }
-        assert(0);
-    }
-};
-
-
-
-inline std::string operator+(const std::string& lhs, const elona_fmode_t& rhs)
-{
-    return lhs + rhs.to_string();
-}
-
-
-inline elona_fmode_t fmode;
+inline int fmode;
 
 
 
