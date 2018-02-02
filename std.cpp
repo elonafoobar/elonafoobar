@@ -2215,10 +2215,6 @@ void netrequest(const std::string&)
 }
 
 
-void RemoveDirectoryA(const std::string&)
-{
-}
-
 void GetLastError()
 {
 }

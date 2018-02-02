@@ -1285,20 +1285,7 @@ int label_2107()
     }
     if (fmode == 9)
     {
-        folder = fs::u8path(u8"./save/"s + playerid);
-        if (dirlist(buff, folder + u8"\\*.*"s) != 0)
-        {
-            notesel(buff);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-                {
-                    noteget(file, cnt);
-                    elona_delete(folder + u8"\\"s + file);
-                }
-            }
-        }
-        RemoveDirectoryA(folder);
+        elona_delete(fs::u8path(u8"./save/"s + playerid));
     }
     if (fmode == 11 || fmode == 12)
     {

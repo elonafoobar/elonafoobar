@@ -732,8 +732,6 @@ void netdlname(const std::string&);
 void netrequest(const std::string&);
 
 
-void RemoveDirectoryA(const std::string&);
-
 void GetLastError();
 
 int CreateMutexA(int, int, const std::string&);
