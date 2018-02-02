@@ -7,6 +7,14 @@ namespace elona
 {
 
 
+int f_at_m53 = 0;
+int f_at_m54 = 0;
+elona_vector1<int> p_at_m57;
+std::string s_at_m63;
+int a_at_m63 = 0;
+int skip_at_m63 = 0;
+
+
 int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
 {
     itemcreatehack = -1;
@@ -1094,6 +1102,7 @@ void label_0311()
 
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
+    int itemnamehack = 0;
     elona_vector1<int> iqiality_at_m63;
     int num2_at_m63 = 0;
     std::string s2_at_m63;

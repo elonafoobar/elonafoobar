@@ -9,6 +9,11 @@ void label_2743(bool = true);
 
 void label_17402()
 {
+    int maxnpcbk = 0;
+    elona_vector2<int> rolebk;
+    int maxmedal = 0;
+    elona_vector2<int> medalbk;
+    int noaggrorefresh = 0;
 label_17401:
     mapupdate = 0;
     if (gdata_current_dungeon_level > adata(10, gdata_current_map))

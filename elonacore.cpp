@@ -9,6 +9,487 @@ namespace elona
 {
 
 
+elona_vector2<std::string> rankn;
+elona_vector1<int> ranknorma;
+elona_vector1<std::string> popostname;
+elona_vector3<int> pochart;
+elona_vector2<int> podata;
+elona_vector2<int> bdref;
+elona_vector1<std::string> buffname;
+elona_vector2<std::string> bufftxt;
+int f_at_m14 = 0;
+int evproc = 0;
+elona_vector1<int> soundlist;
+int cfg_svolume = 0;
+int enc = 0;
+int enc2 = 0;
+int musicloop = 0;
+int autoturn = 0;
+int firstautoturn = 0;
+elona_vector1<std::string> _impression;
+elona_vector1<std::string> _weather;
+elona_vector1<std::string> _reward;
+elona_vector1<std::string> _time;
+elona_vector1<std::string> _stats2;
+elona_vector1<std::string> _hunger;
+elona_vector1<std::string> _burden;
+elona_vector1<std::string> _sleep;
+elona_vector1<std::string> _consick;
+elona_vector1<std::string> _conpoison;
+elona_vector1<std::string> _condim;
+elona_vector1<std::string> _conangry;
+elona_vector1<std::string> _conbleed;
+elona_vector1<std::string> _coninsane;
+std::string _condrunk;
+std::string _conwet;
+std::string _congravity;
+elona_vector1<std::string> _consleep;
+std::string _conblind;
+std::string _conparalyze;
+std::string _conmochi;
+std::string _conconfuse;
+std::string _confear;
+elona_vector1<std::string> _confatigue;
+elona_vector1<std::string> _resist;
+std::string strhint4;
+std::string strhint6;
+std::string strinteractfail;
+elona_vector1<std::string> actlistn;
+elona_vector1<int> randcolor;
+std::string strbracketleft;
+std::string strbracketright;
+std::string strplat;
+int plat = 0;
+std::string nquestdate;
+int mutex_handle = 0;
+int i_at_m38 = 0;
+int body_at_m38 = 0;
+elona_vector1<std::string> tname;
+elona_vector2<int> cardplayer_at_cardcontrol;
+int cardplayermax_at_cardcontrol = 0;
+int cardholdermax_at_cardcontrol = 0;
+int pilex_at_cardcontrol = 0;
+int piley_at_cardcontrol = 0;
+elona_vector2<int> card_at_cardcontrol;
+int cardmax_at_cardcontrol = 0;
+int nojoker = 0;
+elona_vector1<int> i_at_cardcontrol;
+elona_vector1<int> p_at_cardcontrol;
+int dx_at_cardcontrol = 0;
+int dy_at_cardcontrol = 0;
+int c_at_cardcontrol = 0;
+elona_vector1<int> fsetrare;
+elona_vector1<int> fsetwear;
+elona_vector1<int> fsetitem;
+elona_vector2<int> encref;
+elona_vector2<int> enclist;
+elona_vector2<int> encammoref;
+elona_vector1<int> p_at_m47;
+int enc_at_m48 = 0;
+int encp_at_m48 = 0;
+int p_at_m48 = 0;
+elona_vector2<int> egoenc;
+elona_vector2<int> egoref;
+elona_vector1<int> egolist;
+int maxegominorn = 0;
+elona_vector2<int> mtref;
+elona_vector2<int> mtenc;
+elona_vector2<int> mtbit;
+elona_vector2<int> mtlistmetal;
+elona_vector2<int> mtlistleather;
+elona_vector2<int> fishdata;
+elona_vector1<std::string> rpdatan;
+int i_at_m66 = 0;
+int lv_at_m77 = 0;
+int exp_at_m77 = 0;
+int growth_at_m77 = 0;
+int lvchange_at_m77 = 0;
+int i_at_m79 = 0;
+int cellchara = 0;
+int cellfeat = 0;
+int tc_at_m81 = 0;
+elona_vector2<int> route;
+int maxroute = 0;
+int dy_at_modfov = 0;
+int dx_at_modfov = 0;
+int ay_at_modfov = 0;
+int ax_at_modfov = 0;
+int ty_at_modfov = 0;
+int tx_at_modfov = 0;
+int sx_at_modfov = 0;
+int sy_at_modfov = 0;
+int f2_at_modfov = 0;
+int f1_at_modfov = 0;
+int qy_at_modfov = 0;
+int m_at_modfov = 0;
+int qx_at_modfov = 0;
+int msgy = 0;
+int pagebk = 0;
+int csprev = 0;
+int pagesaved = 0;
+int himc_at_ime_control = 0;
+int hwnd = 0;
+int gmesx = 0;
+int gmesw = 0;
+elona_vector1<int> gmescol;
+int gmesy = 0;
+int gmestype = 0;
+int x2_at_m105 = 0;
+int y2_at_m105 = 0;
+int curmenu = 0;
+int inf_ver = 0;
+elona_vector1<int> matval;
+elona_vector2<int> matref;
+elona_vector2<int> matspot;
+elona_vector1<std::string> matname;
+elona_vector1<std::string> matdesc;
+int matid = 0;
+int characreatehack = 0;
+elona_vector1<std::string> usertxt;
+int p_at_m117 = 0;
+int gspdorg = 0;
+int gspd = 0;
+int f_at_m125 = 0;
+int dx_at_m133 = 0;
+elona_vector1<int> dy_at_m133;
+int f_at_con = 0;
+int res_at_con = 0;
+int p_at_con = 0;
+int dx_at_m136 = 0;
+int dy_at_m136 = 0;
+int ci_at_m138 = 0;
+int p_at_m138 = 0;
+int max_at_m138 = 0;
+int ti_at_m138 = 0;
+elona_vector1<int> list_at_m138;
+int f_at_m138 = 0;
+int a_at_m138 = 0;
+int dmg_at_m141 = 0;
+int rtdmg = 0;
+std::string ndeathcause;
+int catitem = 0;
+int rollanatomy = 0;
+int i_at_m145 = 0;
+std::string url_at_m147;
+std::string chatsendurl;
+std::string conurl_at_m147;
+elona_vector1<std::string> cgiurl3;
+std::string votesendurl;
+elona_vector1<std::string> cgiurl2;
+std::string chatnew;
+std::string textreadurl;
+std::string chatreadurl;
+std::string votereadurl;
+int chatturn = 0;
+int inf_clockarrowx = 0;
+int inf_clockarrowy = 0;
+int inf_clocky = 0;
+int inf_barh = 0;
+int inf_msgh = 0;
+int inf_raderx = 0;
+int inf_raderw = 0;
+int inf_bary = 0;
+int inf_radery = 0;
+int scposy = 0;
+int inf_hpx = 0;
+int inf_hpy = 0;
+int inf_mpx = 0;
+int inf_mpy = 0;
+elona_vector1<int> ap;
+int screendrawhack = 0;
+int racount = 0;
+int anic = 0;
+int scposval = 0;
+elona_vector2<int> fovlist;
+int s_p = 0;
+int weatherbk = 0;
+int evx = 0;
+int evy = 0;
+int evtiles = 0;
+int evscrh = 0;
+int evscrw = 0;
+elona_vector2<int> cbitorg;
+elona_vector2<int> racebit;
+int refreshmode = 0;
+int r3 = 0;
+int refdiff = 0;
+int pcnoise = 0;
+int cequipment = 0;
+int traveldone = 0;
+elona_vector1<int> fsetincome;
+elona_vector1<int> fsetrewardsupply;
+elona_vector1<int> fsetperform;
+elona_vector1<int> fsetdeliver;
+elona_vector1<int> fsetsupply;
+elona_vector1<int> fsetmagic;
+elona_vector1<int> fsetarmor;
+elona_vector1<int> fsetweapon;
+elona_vector1<int> fsetplantartifact;
+elona_vector1<int> fsetplantunknown;
+elona_vector1<int> fsetremain;
+elona_vector1<int> fsetbarrel;
+elona_vector1<int> fsetcollect;
+elona_vector1<int> isetdeed;
+elona_vector1<int> isetthrowpotionminor;
+elona_vector1<int> isetthrowpotionmajor;
+elona_vector1<int> isetthrowpotiongreater;
+elona_vector1<int> isethire;
+elona_vector1<int> isetgiftminor;
+elona_vector1<int> isetgiftmajor;
+elona_vector1<int> isetgiftgrand;
+elona_vector1<int> isethirerole;
+elona_vector1<int> isetcrop;
+elona_vector1<int> isetgod;
+elona_vector1<int> asettown;
+elona_vector1<int> moneybox;
+elona_vector1<int> isetbook;
+elona_vector1<int> rpsourcelist;
+int nooracle = 0;
+int cibk = 0;
+int fdmax = 0;
+elona_vector2<int> fdlist;
+int nutrition = 0;
+int cieat = 0;
+int tile_trap = 0;
+int tile_doorclosed4 = 0;
+int tile_dooropen = 0;
+int tile_downlocked = 0;
+int tile_re = 0;
+int tile_plant = 0;
+int tile_board = 0;
+int tile_votebox = 0;
+int tile_townboard = 0;
+elona_vector2<int> cellobjdata;
+elona_vector1<int> tile_room;
+int tile_pot = 0;
+int rdroomnum = 0;
+elona_vector1<int> roomexist;
+int tx_at_m168 = 0;
+int ty_at_m168 = 0;
+int dir_at_m168 = 0;
+int dest_at_m168 = 0;
+int dir2_at_m168 = 0;
+int rdhiddenpath = 0;
+int rdpos = 0;
+elona_vector1<int> roomwidth;
+int cr = 0;
+elona_vector1<int> roomheight;
+elona_vector1<int> roomx;
+elona_vector1<int> roomy;
+int roomdoor = 0;
+int roomsum = 0;
+int rdroomsizemax = 0;
+int rdroomsizemin = 0;
+int x_at_m169 = 0;
+int y_at_m169 = 0;
+int rdroomupstair = 0;
+int rdroomdownstair = 0;
+int dx_at_m170 = 0;
+int dy_at_m170 = 0;
+int p_at_m170 = 0;
+int rdroomentrance = 0;
+int rdtry = 0;
+elona_vector1<int> rdval;
+int rdtunnel = 0;
+int rdextraroom = 0;
+int _mclass = 0;
+int _bold = 0;
+int rx = 0;
+int rw = 0;
+int ry = 0;
+int rh = 0;
+int rdsize = 0;
+int rdsecond = 0;
+std::string midbk;
+int tlocinitx = 0;
+int tlocinity = 0;
+int sold = 0;
+elona_vector1<int> income;
+int rankorg = 0;
+int rankcur = 0;
+int renewmulti = 0;
+int usermapid = 0;
+elona_vector2<int> card_at_tcg;
+int cp_at_tcg = 0;
+int tp_at_tcg = 0;
+int cl_at_tcg = 0;
+int tl_at_tcg = 0;
+int ch_at_tcg = 0;
+int th_at_tcg = 0;
+int ct_at_tcg = 0;
+elona_vector1<std::string> s_at_tcg;
+int cardrefbg = 0;
+elona_vector1<std::string> domname_at_tcg;
+elona_vector1<std::string> cdrefn_at_tcg;
+elona_vector2<int> clist_at_tcg;
+elona_vector1<int> clistmax_at_tcg;
+int cnt2_at_tcg = 0;
+elona_vector1<int> p_at_tcg;
+int maxcard_at_tcg = 0;
+int f_at_tcg = 0;
+int i_at_tcg = 0;
+elona_vector1<std::string> helpmsg_at_tcg;
+int cursor_at_tcg = 0;
+int cs_at_tcg = 0;
+int csline_at_tcg = 0;
+elona_vector2<int> dlist_at_tcg;
+int dsc_at_tcg = 0;
+elona_vector1<std::string> carddetailn_at_tcg;
+elona_vector1<int> x_at_tcg;
+elona_vector1<int> y_at_tcg;
+int basex_at_tcg = 0;
+int basey_at_tcg = 0;
+elona_vector1<int> holderix_at_tcg;
+int holderspace_at_tcg = 0;
+elona_vector1<int> holderiy_at_tcg;
+elona_vector2<int> cpdata_at_tcg;
+int c_at_tcg = 0;
+int cc_at_tcg = 0;
+int phase_at_tcg = 0;
+int selectmode_at_tcg = 0;
+int cfg_chaintime = 0;
+int chainx_at_tcg = 0;
+int chainy_at_tcg = 0;
+int efllistmax_at_tcg = 0;
+elona_vector2<int> efllist_at_tcg;
+elona_vector2<std::string> cardn_at_tcg;
+int spotspace_at_tcg = 0;
+elona_vector1<int> spotiy_at_tcg;
+int n_at_tcg = 0;
+elona_vector1<int> gravesum_at_tcg;
+elona_vector2<int> gravelist_at_tcg;
+elona_vector1<int> cpx_at_tcg;
+elona_vector1<int> cpy_at_tcg;
+elona_vector1<int> deckix_at_tcg;
+elona_vector1<int> deckiy_at_tcg;
+int sac_at_tcg = 0;
+elona_vector1<int> landix_at_tcg;
+elona_vector1<int> landsum_at_tcg;
+int landspace_at_tcg = 0;
+elona_vector1<int> landiy_at_tcg;
+elona_vector2<int> landlist_at_tcg;
+int spellused_at_tcg = 0;
+int stack_at_tcg = 0;
+elona_vector2<int> cardstack_at_tcg;
+int attacktarget_at_tcg = 0;
+int chainmode_at_tcg = 0;
+int player_at_tcg = 0;
+int aiblock_at_tcg = 0;
+elona_vector1<int> act_at_tcg;
+elona_vector1<int> deckmode_at_tcg;
+std::string deckrefn_at_tcg;
+int turn_at_tcg = 0;
+int cardmode_at_tcg = 0;
+elona_vector2<int> elist_at_tcg;
+elona_vector1<std::string> phasen_at_tcg;
+int basew_at_tcg = 0;
+int baseh_at_tcg = 0;
+elona_vector1<int> graveix_at_tcg;
+elona_vector1<int> graveiy_at_tcg;
+int gravespace_at_tcg = 0;
+elona_vector1<int> domain_at_tcg;
+int curdeck = 0;
+int decksizebk_at_tcg = 0;
+int rtval_at_tcg = 0;
+int cslinebk_at_tcg = 0;
+int cfmax_at_tcg = 0;
+int ccf_at_tcg = 0;
+elona_vector1<int> cflist_at_tcg;
+elona_vector1<std::string> cfname_at_tcg;
+int page_at_tcg = 0;
+int dlistmax_at_tcg = 0;
+int a_at_tcg = 0;
+int chaincontinue_at_tcg = 0;
+int emax_at_tcg = 0;
+int n_at_m174 = 0;
+std::string s_at_m174;
+int prodtype = 0;
+int atxthrough = 0;
+std::string atxbg;
+std::string atxbgbk;
+elona_vector1<int> atxpic;
+elona_vector1<std::string> atxinfon;
+elona_vector1<int> atxid;
+int txtadvmsgfix = 0;
+elona_vector1<int> mattile;
+int atxap = 0;
+int atxlv = 0;
+int txtadvscreenupdate = 0;
+int dbg_skipevent = 0;
+elona_vector2<int> rpdata;
+int rpid = 0;
+elona_vector2<std::string> rfnameorg;
+elona_vector1<int> rpref;
+int rpmode = 0;
+elona_vector1<int> rppage;
+int rpresult = 0;
+int cansee = 0;
+int kdx = 0;
+int kdy = 0;
+elona_vector1<std::string> headtemp;
+std::string username;
+int mousex = 0;
+int mousey = 0;
+int findlocmode = 0;
+int tgloc = 0;
+int tglocx = 0;
+int tglocy = 0;
+int dump_return = 0;
+int questteleport = 0;
+int wishfilter = 0;
+int refx = 0;
+int refy = 0;
+int csskill = 0;
+int attackvar = 0;
+std::string fileext;
+std::string filedsc;
+int lv = 0;
+int lenhead = 0;
+int lensum = 0;
+elona_vector1<std::string> ziptmp1;
+elona_vector1<std::string> ziptmp2;
+elona_vector1<std::string> filebuff;
+elona_vector1<std::string> filetemp;
+int lensum_at_m188 = 0;
+std::string zipfolder_at_m188;
+std::string zipfinalfile_at_m188;
+elona_vector1<std::string> filebuff_at_m188;
+elona_vector1<int> p_at_m188;
+int len_at_m188 = 0;
+int lenhead_at_m188 = 0;
+elona_vector1<std::string> ziptmp1_at_m188;
+elona_vector1<std::string> ziptmp2_at_m188;
+elona_vector1<std::string> filetemp_at_m188;
+elona_vector1<std::string> txtbuff;
+int initunid = 0;
+int cun = 0;
+elona_vector1<int> unaiactsubfreq;
+elona_vector1<int> bmpbuff;
+std::string usertitle;
+elona_vector1<std::string> inputlog2;
+std::string dbm;
+int dbg_exitshowroom = 0;
+int dbg_freemove = 0;
+int movx = 0;
+int movy = 0;
+int digx = 0;
+int digy = 0;
+int npccostmp = 0;
+int noeffect = 0;
+int inumbk = 0;
+int dirsub = 0;
+int ri = 0;
+int attackitem = 0;
+int extraattack = 0;
+int j_at_m193 = 0;
+int p_at_m193 = 0;
+int chatpicloaded = 0;
+elona_vector2<std::string> actor;
+int rewardfix = 0;
+int blockedbychara = 0;
+int ct = 0;
+
+
 void netload(const std::string& prm_194)
 {
     int res_at_m0 = 0;
@@ -1118,6 +1599,11 @@ void label_0066()
 
 void label_0068()
 {
+    int env = 0;
+    int envwprev = 0;
+    int musicprev = 0;
+    std::string musicfolder;
+    int mp3 = 0;
     env = 0;
     if (gdata_weather == 3)
     {
@@ -1395,6 +1881,10 @@ void at(int prm_347)
 
 void text_set()
 {
+    elona_vector1<std::string> _tone;
+    elona_vector1<std::string> _stats;
+    std::string strfix;
+    std::string strsex;
     SDIM3(bodyn, 4, 15);
     bodyn(0) = "";
     bodyn(1) = u8"頭"s;
@@ -3158,6 +3648,9 @@ void addnews(int prm_405, int prm_406)
 
 void label_0193()
 {
+    int ieopen = 0;
+    int ie_event = 0;
+    int ie = 0;
     if (cfg_music == 1)
     {
         DMEND();
@@ -5346,6 +5839,7 @@ void csvsort(
     std::string prm_436,
     int prm_437)
 {
+    int csvmax = 0;
     elona_vector1<int> p_at_m40;
     p_at_m40(0) = 0;
     {
@@ -7606,6 +8100,7 @@ void label_0263()
 
 void label_0264()
 {
+    int mtlv = 0;
     if (cm)
     {
         mtlv = cdata_level(rc) / 15 + 1;
@@ -7704,6 +8199,7 @@ void label_0264()
 
 void label_0265()
 {
+    int originalvalue = 0;
     inv_color(ci) = 0;
     p = inv_material(ci);
     reftype = refitem(inv_id(ci), 5);
@@ -9454,6 +9950,7 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
 
 int breath_list()
 {
+    int breathw = 0;
     DIM3(breathlist, 2, 100);
     maxbreath = 0;
     breathw = 1;
@@ -10881,6 +11378,7 @@ void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 
 void display_msg(int prm_680, int prm_681)
 {
+    int msgclear = 0;
     msgkeep = prm_681;
     msgclear = 1;
     msgy = prm_680;
@@ -10987,6 +11485,8 @@ void fileadd(const std::string& prm_692, int prm_693)
 
 void arrayfile(std::string_view fmode_str)
 {
+    int fidx = 0;
+    int cdatanfix = 0;
     notesel(tmp);
     tmp = "";
     if (fread == 1)
@@ -17043,6 +17543,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
 
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
+    int lasttc = 0;
     int ele_at_m141 = 0;
     int c3_at_m141 = 0;
     int r_at_m141 = 0;
@@ -18848,6 +19349,7 @@ void sickifcursed(int prm_880, int prm_881, int prm_882)
 
 int net_send(const std::string& prm_883, int prm_884)
 {
+    std::string chattemp;
     std::string msg_at_m147;
     if (cfg_net == 0)
     {
@@ -18915,6 +19417,7 @@ int net_send(const std::string& prm_883, int prm_884)
 
 int net_read(int prm_885)
 {
+    int lastchat = 0;
     std::string a_at_m147;
     int sz_at_m147 = 0;
     int t_at_m147 = 0;
@@ -19262,6 +19765,7 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
 
 void label_1398()
 {
+    elona_vector1<std::string> serverlist;
     SDIM1(cgiurl2);
     SDIM1(cgiurl3);
     SDIM2(serverlist, 200);
@@ -19307,6 +19811,7 @@ void label_1398()
 
 void label_1399()
 {
+    int chatdeny = 0;
     if (chatdeny == 1)
     {
         if (chatturn > 20)
@@ -19851,6 +20356,9 @@ void label_1420()
 
 void label_1421()
 {
+    int ap3 = 0;
+    int ap2 = 0;
+    std::string skilltmps;
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
     pos(inf_hpx, inf_hpy);
     gcopy(3, 312, 504, 104, 15);
@@ -20557,6 +21065,7 @@ void label_1424()
 
 void label_1425()
 {
+    int msgx = 0;
     gmode(0);
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
     color(245, 245, 245);
@@ -20599,6 +21108,19 @@ void label_1425()
 
 void label_1426()
 {
+    int anicol = 0;
+    int anisound = 0;
+    int anidx = 0;
+    int anidy = 0;
+    elona_vector1<int> ax;
+    elona_vector1<int> ay;
+    elona_vector1<int> ax2;
+    elona_vector1<int> ay2;
+    int acnt2 = 0;
+    int aniw = 0;
+    int anih = 0;
+    elona_vector1<int> anip;
+    int af = 0;
     if (mode == 9)
     {
         return;
@@ -22068,6 +22590,8 @@ void label_1428()
 
 void label_1429()
 {
+    int ly = 0;
+    int lx = 0;
     slight.clear();
     ++msync;
     sy(2) = cdata_y(0) - 7;
@@ -22198,6 +22722,7 @@ void label_1429()
 
 void label_1433()
 {
+    int losmode = 0;
     screendrawhack = 2;
     cell_draw();
     screendrawhack = 3;
@@ -22491,6 +23016,8 @@ void label_1437()
 
 void label_1438()
 {
+    int scxbk2 = 0;
+    int scybk2 = 0;
     if (std::abs(cdata_next_x(0) - cdata_x(0)) > 1)
     {
         return;
@@ -22702,6 +23229,7 @@ void label_1443()
 
 void label_1444()
 {
+    int evscry = 0;
     redraw(0);
     color(0, 0, 0);
     boxf();
@@ -22761,6 +23289,9 @@ void label_1445()
 
 void label_1446()
 {
+    elona_vector1<int> fishdir;
+    int sx2 = 0;
+    int sy2 = 0;
     fishdir(0) = 0;
     fishdir(1) = 1;
     fishdir(2) = 3;
@@ -23419,6 +23950,10 @@ void cnvbonus(int prm_895, int prm_896)
 
 void label_1477()
 {
+    int chararefreshhack = 0;
+    int rp = 0;
+    int rp2 = 0;
+    int rp3 = 0;
     chararefreshhack = 1;
     if (r1 == 0)
     {
@@ -24013,6 +24548,7 @@ void label_1512()
 
 int label_1513()
 {
+    int r4 = 0;
     f = 1;
     tc = cc;
     if (cdata_blind(cc) != 0)
@@ -24203,6 +24739,7 @@ int label_1517()
 
 int label_1518()
 {
+    int cv = 0;
     cv = 8;
     if (cdata_x(r1) > cdata_x(r2) - cv && cdata_x(r1) < cdata_x(r2) + cv)
     {
@@ -24279,6 +24816,7 @@ void label_1519()
 
 void label_1520()
 {
+    int regen = 0;
     regen = 1;
     if (cdata_sleep(r1) > 0)
     {
@@ -24750,6 +25288,20 @@ void eqrandweaponmage(int prm_929)
 
 void label_1530()
 {
+    elona_vector1<int> eqhelm;
+    elona_vector1<int> eqshield;
+    elona_vector1<int> eqweapon2;
+    elona_vector1<int> eqarmor;
+    elona_vector1<int> eqglove;
+    elona_vector1<int> eqboots;
+    elona_vector1<int> eqcloack;
+    elona_vector1<int> eqgirdle;
+    elona_vector1<int> eqring2;
+    elona_vector1<int> eqamulet1;
+    elona_vector1<int> eqamulet2;
+    int fixeq = 0;
+    int probeq = 0;
+    int eqtwowield = 0;
     if (cdatan(2, rc) == u8"mutant"s)
     {
         r1 = rc;
@@ -25681,6 +26233,7 @@ void label_1531()
 
 void label_1532()
 {
+    int placefail = 0;
     if (rc == -1)
     {
         return;
@@ -26667,6 +27220,8 @@ void label_1572()
 
 void label_1573()
 {
+    int lootrich = 0;
+    int idcupsule = 0;
     if (rc == 0)
     {
         if (gdata_executing_immediate_quest_type != 0)
@@ -28097,6 +28652,7 @@ void label_1581()
 
 int label_1582()
 {
+    int ii_p = 0;
     if (val == 0 || val == -1)
     {
         if (sdata(19, 0) > rnd(5000))
@@ -30191,6 +30747,10 @@ void label_1617()
 
 void label_1618()
 {
+    int tile_doorclosed2 = 0;
+    int tile_doorclosed3 = 0;
+    elona_vector1<std::string> cellobjname;
+    int maxobjid = 0;
     tile_trap = 234;
     tile_doorclosed = 726;
     tile_doorclosed2 = 728;
@@ -30353,6 +30913,10 @@ void map_converttile()
 
 void map_tileset(int prm_933)
 {
+    int tile_trans = 0;
+    int tile_dungeon = 0;
+    int tile_battlesite = 0;
+    int tile_roomlen = 0;
     tile_doorclosed = 726;
     tile_dooropen = 236;
     tile_trans = 999;
@@ -31389,6 +31953,7 @@ void map_setfog(int, int)
 
 void map_createroomdoor()
 {
+    elona_vector1<int> rddoorpos;
     if (rdpos == 3 || rdpos == 0)
     {
         p = roomwidth(cr);
@@ -31489,6 +32054,8 @@ void map_createroomdoor()
 
 int map_createroom(int prm_966)
 {
+    int roompos = 0;
+    int roomwall = 0;
     if (roomsum >= 30)
     {
         return 0;
@@ -32132,6 +32699,8 @@ int label_1659()
 
 int map_connectroom()
 {
+    elona_vector1<int> roomentrancex;
+    elona_vector1<int> roomentrancey;
     cr = 0;
 label_1662_internal:
     if (cr >= roomsum - 1)
@@ -32298,6 +32867,14 @@ void label_1666()
 
 void label_16952()
 {
+    int rdroomdoor = 0;
+    int rdtype = 0;
+    int rdmonsterhouse = 0;
+    int rdcreaturepack = 0;
+    int rdy3 = 0;
+    int rdx3 = 0;
+    int mobdensity = 0;
+    int itemdensity = 0;
 label_16951_internal:
     randomize();
     ++rdtry;
@@ -33390,6 +33967,7 @@ int label_1702()
 
 int label_1703()
 {
+    int roomdiff = 0;
     gdata_left_minutes_of_executing_quest = 60;
     gdata(87) = 9999;
     rdroomsizemin = 5;
@@ -33966,6 +34544,13 @@ void label_1708()
 
 void label_1709()
 {
+    elona_vector1<int> maze;
+    int mdig = 0;
+    int _hole = 0;
+    int sdigx = 0;
+    int sdigy = 0;
+    int digno = 0;
+    int pmdig = 0;
     DIM2(maze, _mclass * _mclass);
     mdig = 0;
     _hole = 0;
@@ -34646,6 +35231,10 @@ void label_1713()
 
 void label_1714()
 {
+    int homemakewall = 0;
+    int cxbk = 0;
+    int cybk = 0;
+    int tchome = 0;
     txtnew();
     if (mdata(6) != 5)
     {
@@ -35436,6 +36025,9 @@ void label_1724()
 
 void label_1725()
 {
+    int shoplv = 0;
+    int customer = 0;
+    int dblistmax = 0;
     worker = getworker(area);
     if (worker == -1)
     {
@@ -36254,6 +36846,7 @@ void label_1733()
 
 void label_1735()
 {
+    int obvjlv = 0;
     dbid = 0;
     if (gdata_current_map == 21)
     {
@@ -36505,6 +37098,7 @@ void label_1736()
 
 void label_1737()
 {
+    int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
     gdata(171) = 0;
     if (mdata(6) == 5)
@@ -42627,6 +43221,7 @@ void label_1848()
 
 int random_material(int prm_1028, int prm_1029)
 {
+    int matnum = 0;
     int f_at_m174 = 0;
     int lv_at_m174 = 0;
     int rare_at_m174 = 0;
@@ -42766,6 +43361,7 @@ void label_1854()
 
 void label_18552()
 {
+    int matuse = 0;
 label_18551_internal:
     listmax = 0;
     page = 0;
@@ -43393,6 +43989,7 @@ label_1861_internal:
 
 void atxinit()
 {
+    std::string atbuff;
     if (atxthrough == 0)
     {
         notesel(atbuff);
@@ -43906,6 +44503,7 @@ void label_1873()
 
 void label_1874()
 {
+    int atxrefval1 = 0;
     atxap = 10;
     atxspot = 19;
     atxinfon(0) = u8"ランダムサイト"s;
@@ -44439,6 +45037,10 @@ void label_1878()
 
 void label_1879()
 {
+    int stake = 0;
+    int winrow = 0;
+    int cardround = 0;
+    int winner = 0;
     atxinit();
     noteadd(lang(
         u8"ブラックジャックは、カードの合計を21に近づけるゲームです。"s,
@@ -48047,6 +48649,7 @@ void label_1921()
 
 void label_1922()
 {
+    elona_vector1<int> blendchecklist;
     step = -1;
     rpid = 0;
     gsel(3);
@@ -50901,6 +51504,7 @@ void label_1968()
 
 int label_196902()
 {
+    int featrq = 0;
 label_196901_internal:
     listmax = 0;
     if (gdata_acquirable_feat_count > 0)
@@ -52904,6 +53508,7 @@ void label_1996()
 
 void label_1997()
 {
+    int wishid = 0;
     txtcopy = "";
     txtef(5);
     txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
@@ -55237,6 +55842,9 @@ void label_2032()
 
 int label_20332()
 {
+    int cs_buff = 0;
+    int returnfromportrait = 0;
+    int cs_buffmax = 0;
 label_20331:
     page = 0;
     pagesize = 16;
@@ -57036,6 +57644,8 @@ void label_2049()
 
 void label_2050()
 {
+    int cs_prev = 0;
+    int mainhand = 0;
     cc = 0;
     page = 0;
     pagesize = 14;
@@ -57840,6 +58450,7 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
 
 void label_2068()
 {
+    int inhmax = 0;
     if (ci < 0)
     {
         dialog(
@@ -58820,6 +59431,7 @@ void label_2081()
 
 void label_2082()
 {
+    int tmat = 0;
     screenupdate = -1;
     label_1419();
     if (inv_id(ci) == 413)
@@ -58917,6 +59529,7 @@ int label_2083()
 
 void label_2084()
 {
+    std::string gnname1;
     if (gdata_wizard)
     {
         snd(27);
@@ -59575,6 +60188,9 @@ void label_2088()
 
 void label_2089()
 {
+    elona_vector1<std::string> file_cnv;
+    int p1 = 0;
+    int p3 = 0;
     if (gdata_version != 1220)
     {
         dialog(lang(
@@ -60058,6 +60674,7 @@ void zipadd(const std::string& prm_1062)
 
 void label_2095()
 {
+    int zipsize = 0;
     p = 12;
     folder = fs::u8path(u8"./user/");
     bload(folder + file, headtemp, 1024);
@@ -60219,6 +60836,7 @@ std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
 
 void label_2104()
 {
+    elona_vector1<std::string> unres;
     if (initunid)
     {
         cdata_cnpc_id(rc) = initunid - 1;
@@ -60503,6 +61121,8 @@ void label_2105()
 
 void label_2106()
 {
+    std::string txtfile;
+    std::string bmpfile;
     fread = 0;
     cun = usernpcmax;
     txt(lang(
@@ -60806,6 +61426,9 @@ void label_2112()
 
 void label_2113()
 {
+    int save_f = 0;
+    std::string save_s;
+    int save_p = 0;
     if (gdata_current_map == 35)
     {
         txtef(3);
@@ -61204,6 +61827,7 @@ label_2122_internal:
 
 void label_2124()
 {
+    elona_vector2<int> fovmap;
     DIM3(fovlist, 2, 15);
     DIM3(fovmap, 34, 30);
     if (cdata_vision_distance(0) < 1)
@@ -61265,6 +61889,8 @@ void label_2124()
 
 void label_21262()
 {
+    int inputfail = 0;
+    int ime_esc = 0;
 label_21261_internal:
     snd(26);
     x = val;
@@ -61867,6 +62493,11 @@ void label_2136()
 
 void label_2138()
 {
+    int dbg_compare = 0;
+    elona_vector2<int> cdata2;
+    elona_vector2<int> sdata2;
+    elona_vector2<int> inv2;
+    elona_vector1<int> mapclient;
     if (strutil::contains(buff(0), u8"?"))
     {
         noteadd(u8"\t1\t\tShows charainfo."s);
@@ -62970,6 +63601,7 @@ label_21451_internal:
 
 void label_2146()
 {
+    int performtips = 0;
     if (cdata_continuous_action_id(cc) == 0)
     {
         if (synccheck(cc, -1))
@@ -63447,6 +64079,7 @@ void label_2146()
 
 void label_2147()
 {
+    int sexhost = 0;
     if (cdata_continuous_action_id(cc) == 0)
     {
         cdata_continuous_action_id(cc) = 11;
@@ -64217,6 +64850,7 @@ void label_2150()
 
 void label_2151()
 {
+    int timeslept = 0;
     if (gdata_current_map == 13)
     {
         txtmore();
@@ -64730,6 +65364,7 @@ void label_2155()
 
 void label_2156()
 {
+    int fishstat = 0;
     if (cdata_continuous_action_id(cc) == 0)
     {
         txt(lang(u8"釣りを始めた。"s, u8"You start fishing."s));
@@ -65026,6 +65661,7 @@ void label_2158()
 
 void label_2159()
 {
+    int countdig = 0;
     if (cdata_continuous_action_id(cc) == 0)
     {
         cdata_continuous_action_id(cc) = 5;
@@ -65387,6 +66023,7 @@ void label_2162()
 
 int label_2163()
 {
+    int cibkread = 0;
     if (cdata_continuous_action_id(cc) == 0)
     {
         if (inv_id(ci) == 687)
@@ -65658,6 +66295,7 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 
 int label_2167()
 {
+    int spellbk = 0;
     spellbk = efid;
     ccbk = cc;
     int stat = label_2168();
@@ -65676,6 +66314,7 @@ int label_2167()
 
 int label_2168()
 {
+    int mp = 0;
     efsource = 3;
     efstatus = 0;
     efp = calcspellpower(efid, cc);
@@ -66636,6 +67275,7 @@ int label_2175()
 
 void label_2187()
 {
+    int subloop = 0;
     subloop = 1;
     if (gdata_mount != 0)
     {
@@ -66692,6 +67332,7 @@ void label_2188()
 
 void label_2189()
 {
+    int ccthrowpotion = 0;
     if (synccheck(cc, -1))
     {
         txt(lang(
@@ -67056,6 +67697,7 @@ void label_2191()
 
 int label_2192()
 {
+    int sellgold = 0;
     if (cc != -1)
     {
         if (inv_id(ci) == 54 || inv_id(ci) == 55)
@@ -68696,6 +69338,7 @@ void label_2206()
 
 void label_2207()
 {
+    int movelevelbystairs = 0;
     if (dbg_freemove)
     {
         txt(lang(
@@ -69055,6 +69698,7 @@ label_2211_internal:
 
 void label_2212()
 {
+    int refweight = 0;
     if (inv_id(ci) == 361)
     {
         modkarma(0, -10);
@@ -69739,6 +70383,8 @@ void label_2216()
 
 int label_2217()
 {
+    int ammox = 0;
+    int ammoy = 0;
     attackrange = 1;
     attacknum = 0;
     ele = 0;
@@ -69949,6 +70595,7 @@ void label_2218()
 
 void label_22192()
 {
+    int expmodifer = 0;
 label_22191_internal:
     if (cdata_state(cc) != 1)
     {
@@ -70577,6 +71224,7 @@ label_22191_internal:
 
 void label_2220()
 {
+    int subdmg = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
@@ -71310,6 +71958,7 @@ void label_2227()
 
 void label_2228()
 {
+    int blendtool = 0;
     screenupdate = -1;
     label_1419();
     tc = cc;
@@ -76348,6 +76997,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 
 void label_2270()
 {
+    elona_vector1<int> bkdata;
     if (initeco)
     {
         gdata(815) = 15;
@@ -78233,6 +78883,7 @@ int label_2298()
 
 void label_2655()
 {
+    int maxnpcid = 0;
     maxnpcid = 356;
     DIM3(cbitorg, 30, maxnpcid);
     filter_creature(2) = "";
@@ -79097,6 +79748,8 @@ void label_2666()
 
 void label_2667()
 {
+    int eqdup = 0;
+    elona_vector1<int> bodylist;
     i = iequiploc(ci);
     if (i != 0)
     {
@@ -79166,6 +79819,8 @@ void label_2667()
 
 void label_2668()
 {
+    int haveweapon = 0;
+    int mustequip = 0;
     haveweapon = 0;
     {
         int cnt = 0;
@@ -80317,6 +80972,8 @@ void label_2679()
 
 void label_2680()
 {
+    int scidx = 0;
+    int scidxtop = 0;
     if (gdata_played_scene < sceneid)
     {
         gdata_played_scene = sceneid;
@@ -80701,6 +81358,7 @@ int ai_check()
 
 void label_2687()
 {
+    int searchfov = 0;
     if (cbit(985, cc))
     {
         if (synccheck(cc, -1))
@@ -83546,6 +84204,7 @@ void label_2714()
 
 void label_2719()
 {
+    std::string userpassword;
     notesel(note_buff);
     noteload(fs::u8path(u8"./user/export.txt"));
     usertitle = "";
@@ -83884,6 +84543,8 @@ label_2729_internal:
 
 void label_2733()
 {
+    int turncost = 0;
+    int spd = 0;
     sound = 0;
     ct = 0;
     {
@@ -84492,6 +85153,7 @@ void label_2736()
 
 void label_2737(bool label_2738_flg)
 {
+    int ef = 0;
     if (label_2738_flg)
     {
         if (ct >= 245)
@@ -85191,6 +85853,8 @@ void label_2742()
 
 void label_2743(bool label_2747_flg)
 {
+    int mousemove = 0;
+    int automove = 0;
     if (label_2747_flg)
     {
         if (gdata_catches_god_signal)
@@ -86514,6 +87178,7 @@ void label_2748()
 
 void label_27492()
 {
+    std::string wincomment;
 label_27491:
     snd(51);
     music = -1;

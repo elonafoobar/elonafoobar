@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 void label_0034()
 {
     DIM3(sdataref, 7, 661);

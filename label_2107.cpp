@@ -5,8 +5,11 @@
 
 namespace elona
 {
+
+
 int label_2107()
 {
+    int fsize = 0;
     notesel(filemod);
     gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;

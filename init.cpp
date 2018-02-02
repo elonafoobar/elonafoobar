@@ -48,8 +48,15 @@ namespace elona
 {
 
 
+elona_vector1<int> keybd_st;
+elona_vector1<std::string> cmrace;
+std::string cmclass;
+elona_vector1<int> cmstats;
+
+
 int main()
 {
+    int randseed = 0;
     devfile = "";
     randomize();
     randseed = rnd(2000);
@@ -71,6 +78,17 @@ int main()
 
 void label_0192()
 {
+    elona_vector1<std::string> csvbuff;
+    elona_vector1<std::string> csvidx;
+    elona_vector1<std::string> msgref;
+    elona_vector1<std::string> randn2;
+    elona_vector1<std::string> iname;
+    elona_vector1<int> idata;
+    elona_vector1<int> val_skill;
+    elona_vector1<std::string> valn_skill;
+    elona_vector2<int> slightbk;
+    std::string msg_log;
+    elona_vector1<std::string> cyclekey;
     tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
@@ -637,6 +655,7 @@ void label_2731()
 
 void label_2115()
 {
+    int water_debug = 0;
     mode = 10;
     lomiaseaster = 0;
     music = 65;
@@ -1305,6 +1324,7 @@ label_1552_internal:
 
 void label_1553(bool label_1554_flg)
 {
+    elona_vector1<int> cmlock;
     if (label_1554_flg)
     {
         snd(101);
@@ -1643,6 +1663,9 @@ label_1559_internal:
 
 void label_1560()
 {
+    int cmportrait = 0;
+    std::string cmname;
+    int msgconfirm = 0;
     pcc(15, 0) = 0;
 label_1561_internal:
     redraw(0);
@@ -2040,6 +2063,7 @@ void label_1567(int CNT)
 
 void label_2732()
 {
+    int dbgchara = 0;
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;

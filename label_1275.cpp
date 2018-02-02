@@ -11,6 +11,7 @@ namespace elona
 
 int label_1275()
 {
+    std::string infilterref;
     if (const auto info = the_item_db[dbid])
     {
         if (dbmode == 10 || dbmode == 3)

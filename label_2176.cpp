@@ -4,8 +4,22 @@
 
 namespace elona
 {
+
+
 int label_2176()
 {
+    int efcibk = 0;
+    int efbad = 0;
+    int chainbomb = 0;
+    elona_vector1<int> chainbomblist;
+    int tcprev = 0;
+    int telex = 0;
+    int teley = 0;
+    int efidprev = 0;
+    int ccprev = 0;
+    int obvisou = 0;
+    int fltbk = 0;
+    int valuebk = 0;
     efcibk = ci;
     efcancel = 0;
     obvious = 1;

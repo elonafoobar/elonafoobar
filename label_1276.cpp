@@ -4,6 +4,8 @@
 
 namespace elona
 {
+
+
 void label_1276()
 {
     filter_item(792) = "";

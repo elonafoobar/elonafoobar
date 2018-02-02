@@ -4,8 +4,11 @@
 
 namespace elona
 {
+
+
 void cell_draw()
 {
+    int deco2 = 0;
     int syfix_at_m85 = 0;
     int sxfix_at_m85 = 0;
     int scrturn_at_m85 = 0;
