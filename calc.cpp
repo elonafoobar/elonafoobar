@@ -52,7 +52,6 @@ namespace elona
 {
 
 
-int p_at_m43 = 0;
 int p_at_m77 = 0;
 elona_vector1<int> rangemap;
 int rangedist = 0;
@@ -734,84 +733,53 @@ int calcskill(int prm_269, int prm_270, int prm_271)
 
 
 
-int calcobjlv(int prm_443)
+int calcobjlv(int base)
 {
-    int objlv_at_m43 = 0;
-    if (prm_443 <= 0)
-    {
-        objlv_at_m43 = gdata_current_dungeon_level;
-    }
-    else
-    {
-        objlv_at_m43 = prm_443;
-    }
+    int ret = base <= 0 ? gdata_current_dungeon_level : base;
     if (gdata_current_map == 30)
     {
-        objlv_at_m43 = 1;
+        ret = 1;
     }
+    for (int i = 0; i < 3; ++i)
     {
-        int cnt = 1;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        if (rnd(30 + i * 5) == 0)
         {
-            p_at_m43 = rnd(30 + cnt * 5);
-            if (p_at_m43 == 0)
-            {
-                objlv_at_m43 += rnd(10 * cnt);
-                continue;
-            }
-            break;
+            ret += rnd(10 * i);
+            continue;
         }
+        break;
     }
-    if (prm_443 <= 3)
+    if (base <= 3)
     {
         if (rnd(4) != 0)
         {
-            objlv_at_m43 = rnd(3) + 1;
+            ret = rnd(3) + 1;
         }
     }
-    return objlv_at_m43;
+    return ret;
 }
 
 
 
-int calcfixlv(int prm_444)
+int calcfixlv(int base)
 {
-    int fixlv_at_m43 = 0;
-    if (prm_444 == 0)
+    int ret = base == 0 ? 2 : base;
+    for (int i = 0; i < 3; ++i)
     {
-        fixlv_at_m43 = 2;
-    }
-    else
-    {
-        fixlv_at_m43 = prm_444;
-    }
-    {
-        int cnt = 1;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        int p = rnd(30 + i * 5);
+        if (p == 0)
         {
-            p_at_m43 = rnd(30 + cnt * 5);
-            if (p_at_m43 == 0)
-            {
-                ++fixlv_at_m43;
-                continue;
-            }
-            if (p_at_m43 < 3)
-            {
-                --fixlv_at_m43;
-                continue;
-            }
-            break;
+            ++ret;
+            continue;
         }
+        else if (p < 3)
+        {
+            --ret;
+            continue;
+        }
+        break;
     }
-    if (fixlv_at_m43 < 1)
-    {
-        fixlv_at_m43 = 1;
-    }
-    if (fixlv_at_m43 > 5)
-    {
-        fixlv_at_m43 = 5;
-    }
-    return fixlv_at_m43;
+    return std::clamp(ret, 1, 5);
 }
 
 
