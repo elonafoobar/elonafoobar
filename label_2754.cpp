@@ -890,9 +890,9 @@ void label_2754()
         label_1417();
         tlocx = evdata1(evnum - (evnum != 0) * 1);
         tlocy = evdata2(evnum - (evnum != 0) * 1);
-        range = 31;
+        range_ = 31;
         ele = 59;
-        aniref = range;
+        aniref = range_;
         animeid = 17;
         anix = tlocx;
         aniy = tlocy;
@@ -900,24 +900,24 @@ void label_2754()
         label_1419();
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (range * 2 + 1); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end; ++cnt)
             {
-                dy = tlocy - range + cnt;
+                dy = tlocy - range_ + cnt;
                 if (dy < 0 || dy >= mdata(1))
                 {
                     continue;
                 }
                 {
                     int cnt = 0;
-                    for (int cnt_end = cnt + (range * 2 + 1); cnt < cnt_end;
+                    for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end;
                          ++cnt)
                     {
-                        dx = tlocx - range + cnt;
+                        dx = tlocx - range_ + cnt;
                         if (dx < 0 || dx >= mdata(0))
                         {
                             continue;
                         }
-                        if (dist(tlocx, tlocy, dx, dy) > range)
+                        if (dist(tlocx, tlocy, dx, dy) > range_)
                         {
                             continue;
                         }

@@ -250,14 +250,14 @@ int label_2176()
                 }
             label_2177_internal:
                 cbitmod(972, cc, 0);
-                range = sdataref(3, efid) % 1000 + 1;
+                range_ = sdataref(3, efid) % 1000 + 1;
                 if (efid == 644)
                 {
-                    range = 2;
+                    range_ = 2;
                 }
                 if (efid != 404 && efid != 637)
                 {
-                    aniref = range;
+                    aniref = range_;
                     animeid = 2;
                     anix = tlocx;
                     aniy = tlocy;
@@ -265,26 +265,26 @@ int label_2176()
                 }
                 {
                     int cnt = 0;
-                    for (int cnt_end = cnt + (range * 2 + 1); cnt < cnt_end;
+                    for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end;
                          ++cnt)
                     {
-                        dy = tlocy - range + cnt;
+                        dy = tlocy - range_ + cnt;
                         if (dy < 0 || dy >= mdata(1))
                         {
                             continue;
                         }
                         {
                             int cnt = 0;
-                            for (int cnt_end = cnt + (range * 2 + 1);
+                            for (int cnt_end = cnt + (range_ * 2 + 1);
                                  cnt < cnt_end;
                                  ++cnt)
                             {
-                                dx = tlocx - range + cnt;
+                                dx = tlocx - range_ + cnt;
                                 if (dx < 0 || dx >= mdata(0))
                                 {
                                     continue;
                                 }
-                                if (dist(tlocx, tlocy, dx, dy) > range)
+                                if (dist(tlocx, tlocy, dx, dy) > range_)
                                 {
                                     continue;
                                 }

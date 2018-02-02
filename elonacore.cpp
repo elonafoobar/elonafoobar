@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "filesystem.hpp"
 #include "main.hpp"
 #include "variables.hpp"
 
@@ -47577,38 +47578,29 @@ label_19431_internal:
     cc = 0;
     cs_bk = -1;
     SDIM2(headtemp, 1024);
-    folder = fs::u8path(u8"./user/");
-    if (comctrl == 0 || comctrl == 2)
+    const auto base_dir = fs::u8path("./user");
+    const auto pattern =
+        comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
+    for (const auto& entry : filesystem::dir_entries{
+             base_dir, filesystem::dir_entries::type::file, pattern})
     {
-        dirlist(buff, folder + u8"*.eum"s);
-    }
-    if (comctrl == 1)
-    {
-        dirlist(buff, folder + u8"*.ept"s);
-    }
-    notesel(buff);
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(file, cnt);
-            if (file == u8"temp.eum"s || file == u8"temp.ept"s)
-            {
-                continue;
-            }
-            bload(folder + file, headtemp, 1024);
-            notesel(headtemp);
-            noteget(s, 0);
-            noteget(s(1), 1);
-            noteget(s(2), 4);
-            list(0, listmax) = listmax;
-            list(1, listmax) = 0;
-            list(2, listmax) = elona_int(s(2));
-            listn(0, listmax) = u8"("s + file + u8") "s + s + u8" "s + s(1);
-            listn(1, listmax) = file;
-            ++listmax;
-            noteunsel();
-        }
+        const auto path = entry.path();
+        if (path == fs::u8path(u8"temp.enum")
+            || path == fs::u8path(u8"temp.ept"))
+            continue;
+        bload(path, headtemp, 1024);
+        notesel(headtemp);
+        noteget(s, 0);
+        noteget(s(1), 1);
+        noteget(s(2), 4);
+        list(0, listmax) = listmax;
+        list(1, listmax) = 0;
+        list(2, listmax) = elona_int(s(2));
+        listn(0, listmax) = u8"("s + path.filename().generic_u8string()
+            + u8") "s + s + u8" "s + s(1);
+        listn(1, listmax) = path.filename();
+        ++listmax;
+        noteunsel();
     }
     if (cfg_net != 0)
     {
@@ -52374,21 +52366,19 @@ int label_2014()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    folder = fs::u8path(u8"./user/talk/");
-    dirlist(buff, folder + u8"*.txt"s);
-    notesel(buff);
     list(0, 0) = -999;
     listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
     ++listmax;
+    const auto base_dir = fs::u8path(u8"./user/talk");
+    for (const auto& entry :
+         filesystem::dir_entries{base_dir,
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(.*\.txt)"}})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(s, cnt);
-            list(0, listmax) = listmax;
-            listn(0, listmax) = s;
-            ++listmax;
-        }
+        list(0, listmax) = listmax;
+        listn(0, listmax) =
+            fs::relative(entry.path(), base_dir).generic_u8string();
+        ++listmax;
     }
     windowshadow = 1;
 label_2015_internal:
@@ -57794,36 +57784,30 @@ void label_2089()
                         adata(cnt, p) = 0;
                     }
                 }
-                folder = fs::u8path(u8"./tmp");
-                if (dirlist(buff, folder + u8"/*_"s + p + u8"_*.*"s) != 0)
+                for (const auto& entry : filesystem::dir_entries{
+                         fs::u8path(u8"./tmp"),
+                         filesystem::dir_entries::type::file,
+                         std::regex{u8R"(.*_)"s + std::to_string(p)
+                                    + u8R"(_.*\..*)"}})
                 {
-                    notesel(buff);
+                    file = entry.path().filename().generic_u8string();
+                    p1 = instr(file, 0, u8"_"s);
+                    p2 = instr(file, p1 + 1, u8"_"s);
+                    if (p >= 150)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
-                             ++cnt)
-                        {
-                            noteget(file, cnt);
-                            p1 = instr(file, 0, u8"_"s);
-                            p2 = instr(file, p1 + 1, u8"_"s);
-                            if (p >= 150)
-                            {
-                                p3 = p - 150 + 450;
-                            }
-                            else
-                            {
-                                p3 = p - 100 + 300;
-                            }
-                            file_cnv = folder + u8"/"s
-                                + strmid(file, 0, (p1 + 1)) + p3
-                                + strmid(file, (p1 + p2 + 1), 20);
-                            file = folder + u8"/"s + file;
-                            bcopy(file, file_cnv);
-                            fileadd(file_cnv);
-                            elona_delete(file);
-                            fileadd(file, 1);
-                        }
+                        p3 = p - 150 + 450;
                     }
+                    else
+                    {
+                        p3 = p - 100 + 300;
+                    }
+                    file_cnv = folder + u8"/"s + strmid(file, 0, (p1 + 1)) + p3
+                        + strmid(file, (p1 + p2 + 1), 20);
+                    file = folder + u8"/"s + file;
+                    bcopy(file, file_cnv);
+                    fileadd(file_cnv);
+                    elona_delete(file);
+                    fileadd(file, 1);
                 }
             }
         }
@@ -58256,7 +58240,15 @@ void label_2104()
 }
 void label_2105()
 {
-    dirlist(buff, fs::u8path(u8"./user/*.npc"s));
+    buff(0).clear();
+    for (const auto& entry :
+         filesystem::dir_entries{fs::u8path(u8"./user"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(.*\.npc)"}})
+    {
+        buff += entry.path().filename().generic_u8string();
+        buff += '\n';
+    }
     notesel(buff);
     usernpcmax = noteinfo(0);
     if (usernpcmax >= 100)
@@ -58426,18 +58418,15 @@ void label_2105()
     label_2111();
     label_2110();
     gsel(5);
-    folder = fs::u8path(u8"./user/graphic/");
-    dirlist(buff, folder + u8"chara_*.bmp"s);
-    notesel(buff);
+    for (const auto& entry :
+         filesystem::dir_entries{fs::u8path(u8"./user/graphic"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(chara_.*\.bmp)"}})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(file, cnt);
-            p = elona_int(strmid(file, 6, instr(file, 6, u8"."s)));
-            pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
-            picload(folder + file, 1);
-        }
+        file = entry.path().filename().generic_u8string();
+        p = elona_int(strmid(file, 6, instr(file, 6, u8"."s)));
+        pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
+        picload(folder + file, 1);
     }
     gsel(0);
     return;
@@ -58643,39 +58632,30 @@ void label_2109()
 }
 void label_2110()
 {
-    dirlist(buff, fs::u8path(u8"./user/_tmp_*.npc"s));
-    notesel(buff);
+    for (const auto& entry :
+         filesystem::dir_entries{fs::u8path(u8"./user"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(_tmp_.*\.npc)"}})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(file, cnt);
-            elona_delete(fs::u8path(u8"./user/"s + file));
-        }
+        elona_delete(entry.path());
     }
-    dirlist(buff, fs::u8path(u8"./user/!tmp*.npc"s));
-    notesel(buff);
+    for (const auto& entry :
+         filesystem::dir_entries{fs::u8path(u8"./user"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(!tmp.*\.npc)"}})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(file, cnt);
-            elona_delete(fs::u8path(u8"./user/"s + file));
-        }
+        elona_delete(entry.path());
     }
     return;
 }
 void label_2111()
 {
-    dirlist(buff, fs::u8path(u8"./user/*.t"s));
-    notesel(buff);
+    for (const auto& entry :
+         filesystem::dir_entries{fs::u8path(u8"./user"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(.*\.t)"}})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-        {
-            noteget(file, cnt);
-            elona_delete(fs::u8path(u8"./user/"s + file));
-        }
+        elona_delete(entry.path());
     }
     return;
 }
@@ -58689,7 +58669,15 @@ void label_2112()
     exist(folder + u8"filelist.txt"s);
     if (strsize == -1)
     {
-        dirlist(buff, folder + u8"*.*"s);
+        buff(0).clear();
+        for (const auto& entry :
+             filesystem::dir_entries{fs::u8path(folder(0)),
+                                     filesystem::dir_entries::type::file,
+                                     std::regex{u8R"(.*\..*)"}})
+        {
+            buff += entry.path().filename().generic_u8string();
+            buff += '\n';
+        }
     }
     else
     {
@@ -58744,22 +58732,17 @@ void label_2113()
     file = u8"inv_"s + mid + u8".s2"s;
     fmode = 4;
     label_2107();
-    file = fs::u8path(u8"./save/"s + playerid);
-    dirlist(save_buff, file, 5);
-    notesel(save_buff);
     save_f = 0;
+    for (const auto& entry : filesystem::dir_entries{
+             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        if (entry.path().filename().generic_u8string() == playerid)
         {
-            noteget(save_s, cnt);
-            if (save_s == playerid)
-            {
-                save_f = 1;
-                break;
-            }
+            save_f = 1;
+            break;
         }
     }
+    file = fs::u8path(u8"./save") / playerid;
     if (save_f == 0)
     {
         mkdir(file);
@@ -58797,7 +58780,15 @@ void label_2113()
     fmode = 8;
     label_2107();
     filemod = "";
-    dirlist(buff, fs::u8path(u8"./tmp/*.*"s));
+    buff(0).clear();
+    for (const auto& entry :
+         filesystem::dir_entries{fs::u8path(u8"./tmp"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(.*\..*)"}})
+    {
+        buff += entry.path().filename().generic_u8string();
+        buff += '\n';
+    }
     notesel(buff);
     notesave(fs::u8path(u8"./save/"s + playerid + u8"/filelist.txt"));
     return;
@@ -58838,37 +58829,25 @@ void label_2118()
         s = u8"Which save game do you want to continue?"s;
     }
     label_1425();
-    file = fs::u8path(u8"./save/*");
-    dirlist(buff, file, 5);
-    notesel(buff);
     keyrange = 0;
+    int save_data_count = 0;
+    for (const auto& entry : filesystem::dir_entries{
+             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        s = entry.path().filename().generic_u8string();
+        file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
+        exist(file);
+        if (strsize == -1)
         {
-            noteget(s, cnt);
-            file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
-            exist(file);
-            if (strsize == -1)
-            {
-                notedel(cnt);
-                if (cnt < noteinfo(0))
-                {
-                    --cnt;
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            bload(file, playerheader);
-            list(0, cnt) = cnt;
-            listn(0, cnt) = s;
-            listn(1, cnt) = ""s + playerheader;
-            key_list(cnt) = key_select(cnt);
-            ++keyrange;
+            continue;
         }
+        bload(file, playerheader);
+        list(0, save_data_count) = save_data_count;
+        listn(0, save_data_count) = s;
+        listn(1, save_data_count) = ""s + playerheader;
+        key_list(save_data_count) = key_select(save_data_count);
+        ++keyrange;
+        ++save_data_count;
     }
     windowshadow = 1;
 label_2119_internal:
@@ -58888,7 +58867,7 @@ label_2119_internal:
     cs_listbk();
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        for (int cnt_end = cnt + save_data_count; cnt < cnt_end; ++cnt)
         {
             x = wx + 20;
             y = cnt * 40 + wy + 50;
@@ -58901,7 +58880,7 @@ label_2119_internal:
         }
     }
     cs_bk = cs;
-    if (noteinfo(0) == 0)
+    if (save_data_count == 0)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
@@ -59033,31 +59012,26 @@ void label_2121()
         s = u8"Which gene do you want to incarnate?"s;
     }
     label_1425();
-    file = fs::u8path(u8"./save/*");
-    dirlist(buff, file, 5);
-    notesel(buff);
     keyrange = 0;
     listmax = 0;
+    for (const auto& entry : filesystem::dir_entries{
+             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        s = entry.path().filename().generic_u8string();
+        file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
+        exist(file);
+        await();
+        if (strsize == -1)
         {
-            noteget(s, cnt);
-            file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
-            exist(file);
-            await();
-            if (strsize == -1)
-            {
-                continue;
-            }
-            bload(file, playerheader);
-            list(0, listmax) = listmax;
-            listn(0, listmax) = s;
-            listn(1, listmax) = ""s + playerheader;
-            key_list(listmax) = key_select(listmax);
-            ++keyrange;
-            ++listmax;
+            continue;
         }
+        bload(file, playerheader);
+        list(0, listmax) = listmax;
+        listn(0, listmax) = s;
+        listn(1, listmax) = ""s + playerheader;
+        key_list(listmax) = key_select(listmax);
+        ++keyrange;
+        ++listmax;
     }
     windowshadow = 1;
 label_2122_internal:

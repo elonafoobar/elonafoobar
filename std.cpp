@@ -634,66 +634,6 @@ std::string dirinfo(int n)
 }
 
 
-
-namespace dirlist_detail
-{
-void replace_str(std::string& s, const char* from, const char* to)
-{
-    for (auto pos = s.find(from); pos != std::string::npos;
-         pos = s.find(from, pos + std::string::traits_type::length(to)))
-    {
-        s.replace(pos, std::string::traits_type::length(from), to);
-    }
-}
-
-
-// Ad hoc implementation.
-std::regex glob2regex(const std::string& glob)
-{
-    std::string ret{glob};
-    replace_str(ret, ".", "\\.");
-    replace_str(ret, "*", ".*");
-    LOG("dirlist:glob2regex", glob, ret);
-    return std::regex{ret};
-}
-
-} // namespace dirlist_detail
-
-
-
-int dirlist(std::string& out, const fs::path& glob, int attr)
-{
-    LOG("dirlist", attr, glob.parent_path());
-
-    assert(attr == 0 || attr == 5);
-
-    out = "";
-    int n = 0;
-
-    const auto regex = dirlist_detail::glob2regex(glob);
-
-    auto cond = [=, &regex](const auto& path) {
-        const auto appreciate_attribute = attr != 5 || fs::is_directory(path);
-        const auto match = std::regex_match(path.u8string(), regex);
-
-        return appreciate_attribute && match;
-    };
-
-    for (const auto& dir : fs::directory_iterator(glob.parent_path()))
-    {
-        if (cond(dir.path()))
-        {
-            out += fs::relative(dir.path(), glob.parent_path()).u8string();
-            out += '\n';
-            ++n;
-            LOG("dirlist:dir/file",
-                fs::relative(dir.path(), glob.parent_path()).u8string());
-        }
-    }
-
-    return n;
-}
-
 double elona_double(const std::string& s)
 {
     return std::stod(s);
