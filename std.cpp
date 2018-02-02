@@ -523,6 +523,11 @@ void bsave(const fs::path& filename, elona_vector1<int>& data)
 void buffer(int window_id, int width, int height)
 {
     LOG("buffer", window_id, width, height);
+    // Cannot create zero-width or zero-height texture.
+    if (width == 0)
+        width = 1;
+    if (height == 0)
+        height = 1;
     if (window_id >= std::size(detail::tex_buffers))
     {
         detail::tex_buffers.resize(window_id + 1);
