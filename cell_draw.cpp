@@ -223,7 +223,7 @@ void cell_draw()
                                     }
                                     else
                                     {
-                                        gmode(6 - 1, -1, 110);
+                                        gmode(6, -1, -1, 110);
                                         color(0, 0, 0);
                                         pos(px_at_m85 + 8, py_at_m85 + 20);
                                         gcopy(3, 240, 384, 32, 16);
@@ -483,7 +483,7 @@ void cell_draw()
                                         chipc(1, p_at_m85(1)) + 2,
                                         chipc(2, p_at_m85(1)) - 16,
                                         chipc(3, p_at_m85(1)) - 8);
-                                    gmode(4 - 1, -1, 150);
+                                    gmode(4, -1, -1, 150);
                                     color(0, 0, 0);
                                     pos(0,
                                         960
@@ -606,7 +606,7 @@ void cell_draw()
                                             chipc(1, i_at_m85) + 2,
                                             chipc(2, i_at_m85) - 16,
                                             chipc(3, i_at_m85) - 8);
-                                        gmode(4 - 1, -1, 150);
+                                        gmode(4, -1, -1, 150);
                                         color(0, 0, 0);
                                         pos(0,
                                             960
@@ -802,7 +802,7 @@ void cell_draw()
                                     chipc(1, i_at_m85) + 2,
                                     chipc(2, i_at_m85) - 16,
                                     chipc(3, i_at_m85) - 8);
-                                gmode(4 - 1, -1, 150);
+                                gmode(4, -1, -1, 150);
                                 color(0, 0, 0);
                                 pos(0,
                                     960
@@ -979,7 +979,7 @@ void cell_draw()
                                     }
                                     else
                                     {
-                                        gmode(6 - 1, -1, 110);
+                                        gmode(6, -1, -1, 110);
                                         color(0, 0, 0);
                                         pos(dx_at_m85 + 8, dy_at_m85 + 20);
                                         gcopy(3, 240, 384, 32, 16);
@@ -1106,7 +1106,7 @@ void cell_draw()
                                         }
                                         else
                                         {
-                                            gmode(6 - 1, -1, 110);
+                                            gmode(6, -1, -1, 110);
                                             color(0, 0, 0);
                                             pos(dx_at_m85 + 8, dy_at_m85 + 20);
                                             gcopy(3, 240, 384, 32, 16);
@@ -1311,7 +1311,7 @@ void cell_draw()
             int cnt = 0;
             for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
-                gmode(5 - 1, -1, 7 + cnt * 2);
+                gmode(5, -1, -1, 7 + cnt * 2);
                 x_at_m85 = (cloud(0, cnt) - cdata_x(0) * 48 + sxfix) * 100
                         / (40 + cnt * 5)
                     + scrturn * 100 / (50 + cnt * 20);

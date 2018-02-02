@@ -3267,7 +3267,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3297,7 +3297,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3327,7 +3327,7 @@ void create_pcpic(int prm_409, int prm_410)
                 1);
             color(0, 0, 0);
             boxf(256, 0, 384, 198);
-            gmode(4 - 1, -1, 256);
+            gmode(4, -1, -1, 256);
             color(43, 133, 133);
             pget(128, 0);
             pos(256, 0);
@@ -3358,7 +3358,7 @@ void create_pcpic(int prm_409, int prm_410)
                 1);
             color(0, 0, 0);
             boxf(256, 0, 384, 198);
-            gmode(4 - 1, -1, 256);
+            gmode(4, -1, -1, 256);
             color(43, 133, 133);
             pget(128, 0);
             pos(256, 0);
@@ -3387,7 +3387,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3417,7 +3417,7 @@ void create_pcpic(int prm_409, int prm_410)
                 1);
             color(0, 0, 0);
             boxf(256, 0, 384, 198);
-            gmode(4 - 1, -1, 256);
+            gmode(4, -1, -1, 256);
             color(43, 133, 133);
             pget(128, 0);
             pos(256, 0);
@@ -3446,7 +3446,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3478,7 +3478,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3510,7 +3510,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3541,7 +3541,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3572,7 +3572,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3606,7 +3606,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3640,7 +3640,7 @@ void create_pcpic(int prm_409, int prm_410)
                     1);
                 color(0, 0, 0);
                 boxf(256, 0, 384, 198);
-                gmode(4 - 1, -1, 256);
+                gmode(4, -1, -1, 256);
                 color(43, 133, 133);
                 pget(128, 0);
                 pos(256, 0);
@@ -3670,7 +3670,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3698,7 +3698,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3726,7 +3726,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3754,7 +3754,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -3782,7 +3782,7 @@ void create_pcpic(int prm_409, int prm_410)
             1);
         color(0, 0, 0);
         boxf(256, 0, 384, 198);
-        gmode(4 - 1, -1, 256);
+        gmode(4, -1, -1, 256);
         color(43, 133, 133);
         pget(128, 0);
         pos(256, 0);
@@ -10411,7 +10411,7 @@ void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
                 }
                 else
                 {
-                    gmode(6 - 1, -1, 80);
+                    gmode(6, -1, -1, 80);
                     x_at_m91 = prm_646 + 3;
                     y_at_m91 = prm_647 + 3;
                     windowshadow = 0;
@@ -10543,7 +10543,7 @@ void window(
     int cnt2_at_m92 = 0;
     if (prm_655 == -1)
     {
-        gmode(6 - 1, -1, 80);
+        gmode(6, -1, -1, 80);
         color(0, 0, 0);
     }
     else
@@ -11796,7 +11796,7 @@ void drawmenu(int prm_742)
             gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
             if (curmenu == cnt)
             {
-                gmode(5 - 1, -1, 70);
+                gmode(5, -1, -1, 70);
                 pos(x_at_m107 + cnt * 50 + 20, y_at_m107 - 24);
                 gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
                 gmode(2);
@@ -20005,7 +20005,7 @@ void label_1421()
             {
                 if (cdata_continuous_action_id(0) == 0)
                 {
-                    gmode(4 - 1, -1, 150);
+                    gmode(4, -1, -1, 150);
                 }
             }
         }
@@ -20362,7 +20362,7 @@ void label_1421()
     gcopy(3, 448, 408, inf_clockw, inf_clockh);
     pos(inf_clockx + 78, inf_clocky + 8);
     gcopy(3, 448, 376, 128, 24);
-    gmode(4 - 1, -1, 180);
+    gmode(4, -1, -1, 180);
     sx = windoww - 40;
     sy = inf_ver - 40;
     {
@@ -21113,7 +21113,7 @@ void label_1426()
                 chipc(1, aniref(1)) + 2,
                 chipc(2, aniref(1)) - 16,
                 chipc(3, aniref(1)) - 8);
-            gmode(4 - 1, -1, 150);
+            gmode(4, -1, -1, 150);
             color(0, 0, 0);
             pos(0, 960 + (chipc(3, aniref(1)) == inf_tiles) * 48);
             gcopy(
@@ -21302,7 +21302,7 @@ void label_1426()
                     chipc(1, inv_image(aniref) / 1000) + 2,
                     chipc(2, inv_image(aniref) / 1000) - 16,
                     chipc(3, inv_image(aniref) / 1000) - 8);
-                gmode(4 - 1, -1, 150);
+                gmode(4, -1, -1, 150);
                 color(0, 0, 0);
                 pos(0,
                     960
@@ -22271,7 +22271,7 @@ void label_1433()
                                     gfinc(ap, ap(1), ap(2));
                                     if (cnt == camera)
                                     {
-                                        gmode(4 - 1, -1, 120);
+                                        gmode(4, -1, -1, 120);
                                         color(0, 0, 0);
                                         pos(sx + 36, sy + 32);
                                         gcopy(3, 240, 410, 24, 16);
@@ -34988,7 +34988,7 @@ void label_1714()
                         chipc(1, inv_color(p)) + 2,
                         chipc(2, inv_color(p)) - 16,
                         chipc(3, inv_color(p)) - 8);
-                    gmode(4 - 1, -1, 150);
+                    gmode(4, -1, -1, 150);
                     color(0, 0, 0);
                     pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
                     gcopy(
@@ -37335,7 +37335,7 @@ void label_1746()
     gfini(33 * inf_tiles, 25 * inf_tiles);
     gfdec2(p, p(1), p(2));
     color(255, 255, 255);
-    gmode(4 - 1, -1, 30);
+    gmode(4, -1, -1, 30);
     if (mdata(2) == 0)
     {
         pos(0, 192);
@@ -39485,14 +39485,14 @@ void tcgdrawcard(int prm_994, int prm_995)
                 }
                 x_at_tcg = basex_at_tcg + 20;
                 y_at_tcg = basey_at_tcg + 490;
-                gmode(6 - 1, -1, 140);
+                gmode(6, -1, -1, 140);
                 pos(x_at_tcg - 6, y_at_tcg - 6);
                 gcopy(7, 168, 144, 82, 106);
             }
             gmode(2);
             if (card_at_tcg(6, prm_994) == 2)
             {
-                gmode(4 - 1, -1, card_at_tcg(7, prm_994) * 15);
+                gmode(4, -1, -1, card_at_tcg(7, prm_994) * 15);
             }
             pos(x_at_tcg, y_at_tcg);
             if (cdbit(1, prm_994) == 1
@@ -39728,7 +39728,7 @@ label_1772_internal:
         }
         if (chaintime_at_tcg > 5)
         {
-            gmode(5 - 1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
+            gmode(5, -1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
             color(0, 0, 0);
             cnt2_at_tcg = 0;
             {
@@ -39782,7 +39782,7 @@ label_1772_internal:
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-                gmode(5 - 1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 color(0, 0, 0);
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
@@ -39807,7 +39807,7 @@ label_1772_internal:
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
                 color(255, 255, 255);
-                gmode(5 - 1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 color(0, 0, 0);
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
@@ -41396,12 +41396,12 @@ void label_1824()
             color(0, 0, 0);
             if (ccf_at_tcg == cnt)
             {
-                gmode(4 - 1, -1, 255);
+                gmode(4, -1, -1, 255);
                 color(255, 255, 255);
             }
             else
             {
-                gmode(4 - 1, -1, 120);
+                gmode(4, -1, -1, 120);
                 color(200, 200, 200);
             }
             pos(x_at_tcg, y_at_tcg);
@@ -41606,7 +41606,7 @@ void label_1825()
 
 void label_1826()
 {
-    gmode(4 - 1, -1, 180);
+    gmode(4, -1, -1, 180);
     redraw(0);
     {
         int cnt = 0;
@@ -43012,7 +43012,7 @@ label_1857_internal:
                     chipc(1, 0) + 2,
                     chipc(2, 0) - 16,
                     chipc(3, 0) - 8);
-                gmode(4 - 1, -1, 150);
+                gmode(4, -1, -1, 150);
                 color(0, 0, 0);
                 pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
                 gcopy(
@@ -43287,7 +43287,7 @@ label_1861_internal:
                     chipc(1, 0) + 2,
                     chipc(2, 0) - 16,
                     chipc(3, 0) - 8);
-                gmode(4 - 1, -1, 150);
+                gmode(4, -1, -1, 150);
                 color(0, 0, 0);
                 pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
                 gcopy(
@@ -48464,7 +48464,7 @@ label_1928_internal:
                     chipc(1, inv_color(p)) + 2,
                     chipc(2, inv_color(p)) - 16,
                     chipc(3, inv_color(p)) - 8);
-                gmode(4 - 1, -1, 150);
+                gmode(4, -1, -1, 150);
                 color(0, 0, 0);
                 pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
                 gcopy(
@@ -55406,7 +55406,7 @@ label_20331:
     if (returnfromportrait == 0)
     {
         redraw(0);
-        gmode(6 - 1, -1, 80);
+        gmode(6, -1, -1, 80);
         pos(wx + 4, wy + 4);
         gcopy(7, 0, 0, 700, 400);
         gmode(2);
@@ -55825,7 +55825,7 @@ label_2035_internal:
                 y = wy + 151 + cnt % 3 * 32;
                 if (cdata(280 + cnt * 3, cc) == 0)
                 {
-                    gmode(4 - 1, -1, 120);
+                    gmode(4, -1, -1, 120);
                     pos(x, y);
                     gcopy(3, 320, 160, 32, 32);
                     gmode(2);
@@ -57261,7 +57261,7 @@ label_2052_internal:
                         chipc(1, inv_color(p(1))) + 2,
                         chipc(2, inv_color(p(1))) - 16,
                         chipc(3, inv_color(p(1))) - 8);
-                    gmode(4 - 1, -1, 150);
+                    gmode(4, -1, -1, 150);
                     color(0, 0, 0);
                     pos(0, 960 + (chipc(3, inv_color(p(1))) == inf_tiles) * 48);
                     gcopy(
@@ -61482,7 +61482,7 @@ label_21261_internal:
                         }
                     }
                 }
-                gmode(4 - 1, -1, p(1) / 2 + 50);
+                gmode(4, -1, -1, p(1) / 2 + 50);
                 pos(x + 34 + p(4) * 8, y + 5);
                 color(0, 0, 0);
                 gcopy(3, 0, 336, 12, 24);
@@ -64261,7 +64261,7 @@ void label_2151()
         int cnt = 0;
         for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
         {
-            gmode(4 - 1, -1, cnt * 10);
+            gmode(4, -1, -1, cnt * 10);
             label_2149();
             await(200);
         }
@@ -75289,7 +75289,7 @@ void label_22600()
     wy = winposy(380);
     ww = 600;
     wh = 380;
-    gmode(6 - 1, -1, 80);
+    gmode(6, -1, -1, 80);
     pos(wx + 4, wy - 16);
     gcopy(7, 0, 0, 600, 380);
     return;
@@ -80433,7 +80433,7 @@ label_2682_internal:
             {
                 redraw(1);
                 pos(0, 0);
-                gmode(4 - 1, -1, cnt * 15);
+                gmode(4, -1, -1, cnt * 15);
                 pos(0, 0);
                 gcopy(4, 0, 0, windoww, windowh);
                 gmode(2);
@@ -80605,7 +80605,7 @@ label_2684_internal:
             {
                 scene_cut = 1;
             }
-            gmode(4 - 1, -1, cnt * 16);
+            gmode(4, -1, -1, cnt * 16);
             pos(0, 0);
             gcopy(4, 0, 0, windoww, windowh);
             redraw(1);
@@ -82613,7 +82613,7 @@ label_2699_internal:
                 (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
             if (cs == cnt)
             {
-                gmode(5 - 1, -1, 140);
+                gmode(5, -1, -1, 140);
             }
             pos(x(cnt) + tx, y(cnt) + ty);
             if (cnt == 0 || cnt == 4 || cnt == 8)
