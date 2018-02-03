@@ -6,6 +6,20 @@
 
 
 
+namespace elona
+{
+
+
+elona_vector1<int> keybd_st;
+elona_vector1<std::string> cmrace;
+std::string cmclass;
+elona_vector1<int> cmstats;
+
+
+} // namespace elona
+
+
+
 namespace
 {
 
@@ -41,36 +55,7 @@ void load_musiclist()
 
 
 
-} // namespace
-
-
-namespace elona
-{
-
-
-elona_vector1<int> keybd_st;
-elona_vector1<std::string> cmrace;
-std::string cmclass;
-elona_vector1<int> cmstats;
-
-
-int main()
-{
-    title(u8"Elona ver 1.22"s);
-    try
-    {
-        label_0192();
-    }
-    catch (elona_turn_sequence&)
-    {
-        main_loop();
-    }
-    return 0;
-}
-
-
-
-void label_0192()
+void initialize_elona()
 {
     elona_vector1<std::string> csvbuff;
     elona_vector1<std::string> csvidx;
@@ -593,13 +578,11 @@ void label_0192()
             keybd_event(144, 0, 2);
         }
     }
-    label_2731();
-    return;
 }
 
 
 
-void label_2731()
+void start_elona()
 {
     gdata_year = 517;
     gdata_month = 8;
@@ -643,6 +626,30 @@ void label_2731()
     }
     label_2115();
     return;
+}
+
+
+
+} // namespace
+
+
+namespace elona
+{
+
+
+int main()
+{
+    title(u8"Elona ver 1.22"s);
+    try
+    {
+        initialize_elona();
+        start_elona();
+    }
+    catch (elona_turn_sequence&)
+    {
+        main_loop();
+    }
+    return 0;
 }
 
 
