@@ -10,6 +10,9 @@ namespace elona
 void label_2743(bool = true);
 
 
+int submenu = 0;
+
+
 void label_2723()
 {
     int cfg_sound2 = 0;
@@ -18,7 +21,6 @@ void label_2723()
     int windoww2 = 0;
     int windowh2 = 0;
     int sel = 0;
-    int submenu = 0;
     listmax = 0;
     page = 0;
     pagesize = 18;
