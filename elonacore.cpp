@@ -43976,7 +43976,6 @@ label_1861_internal:
 
 void atxinit()
 {
-    std::string atbuff;
     if (atxthrough == 0)
     {
         notesel(atbuff);
