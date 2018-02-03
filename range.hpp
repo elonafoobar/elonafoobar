@@ -88,4 +88,22 @@ auto find_if(const R& range, F predicate)
 
 
 
+template <typename R, typename T>
+auto fill(R&& range, const T& value)
+{
+    using std::begin, std::end;
+    return std::fill(begin(range), end(range), value);
+}
+
+
+
+template <typename R1, typename R2>
+bool equal(const R1& range1, const R2& range2)
+{
+    using std::begin, std::end;
+    return std::equal(begin(range1), end(range1), begin(range2));
+}
+
+
+
 } // namespace elona::range

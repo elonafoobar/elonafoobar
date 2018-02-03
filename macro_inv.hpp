@@ -1,37 +1,76 @@
 #pragma once
 
 
-#define inv_number(x) inv(0, (x))
-#define inv_value(x) inv(1, (x))
-#define inv_image(x) inv(2, (x))
-#define inv_id(x) inv(3, (x))
-#define inv_quality(x) inv(4, (x))
-#define inv_x(x) inv(5, (x))
-#define inv_y(x) inv(6, (x))
-#define inv_weight(x) inv(7, (x))
-#define inv_identification_state(x) inv(8, (x))
-#define inv_count(x) inv(9, (x))
-#define inv_dice_x(x) inv(10, (x))
-#define inv_dice_y(x) inv(11, (x))
-#define inv_damage_bonus(x) inv(12, (x))
-#define inv_hit_bonus(x) inv(13, (x))
-#define inv_dv(x) inv(14, (x))
-#define inv_pv(x) inv(15, (x))
-#define inv_skill(x) inv(16, (x))
-#define inv_curse_state(x) inv(17, (x))
-#define inv_body_part(x) inv(18, (x))
-#define inv_function(x) inv(19, (x))
-#define inv_enhancement(x) inv(20, (x))
-#define inv_own_state(x) inv(21, (x))
-#define inv_color(x) inv(22, (x))
-#define inv_subname(x) inv(23, (x))
-#define inv_material(x) inv(24, (x))
-#define inv_param1(x) inv(25, (x))
-#define inv_param2(x) inv(26, (x))
-#define inv_param3(x) inv(27, (x))
-#define inv_param4(x) inv(28, (x))
-#define inv_difficulty_of_identification(x) inv(29, (x))
-#define inv_turn(x) inv(30, (x))
+#define inv_number(ci) inv(ci).number
+#define inv_value(ci) inv(ci).value
+#define inv_image(ci) inv(ci).image
+#define inv_id(ci) inv(ci).id
+#define inv_quality(ci) inv(ci).quality
+#define inv_x(ci) inv(ci).position.x
+#define inv_y(ci) inv(ci).position.y
+#define inv_weight(ci) inv(ci).weight
+#define inv_identification_state(ci) inv(ci).identification_state
+#define inv_count(ci) inv(ci).count
+#define inv_dice_x(ci) inv(ci).dice_x
+#define inv_dice_y(ci) inv(ci).dice_y
+#define inv_damage_bonus(ci) inv(ci).damage_bonus
+#define inv_hit_bonus(ci) inv(ci).hit_bonus
+#define inv_dv(ci) inv(ci).dv
+#define inv_pv(ci) inv(ci).pv
+#define inv_skill(ci) inv(ci).skill
+#define inv_curse_state(ci) inv(ci).curse_state
+#define inv_body_part(ci) inv(ci).body_part
+#define inv_function(ci) inv(ci).function
+#define inv_enhancement(ci) inv(ci).enhancement
+#define inv_own_state(ci) inv(ci).own_state
+#define inv_color(ci) inv(ci).color
+#define inv_subname(ci) inv(ci).subname
+#define inv_material(ci) inv(ci).material
+#define inv_param1(ci) inv(ci).param1
+#define inv_param2(ci) inv(ci).param2
+#define inv_param3(ci) inv(ci).param3
+#define inv_param4(ci) inv(ci).param4
+#define inv_difficulty_of_identification(ci) \
+    inv(ci).difficulty_of_identification
+#define inv_turn(ci) inv(ci).turn
 
-#define inv_enchantment_id(x, i) inv(40 + (i)*2, (x))
-#define inv_enchantment_power(x, i) inv(40 + (i)*2 + 1, (x))
+#define inv_enchantment_id(ci, i) inv(ci).enchantments[i].id
+#define inv_enchantment_power(ci, i) inv(ci).enchantments[i].power
+
+
+
+/*
+number                       0
+value                        1
+image                        2
+id                           3
+quality                      4
+x                            5
+y                            6
+weight                       7
+identification_state         8
+count                        9
+dice_x                       10
+dice_y                       11
+damage_bonus                 12
+hit_bonus                    13
+dv                           14
+pv                           15
+skill                        16
+curse_state                  17
+body_part                    18
+function                     19
+enhancement                  20
+own_state                    21
+color                        22
+subname                      23
+material                     24
+param1                       25
+param2                       26
+param3                       27
+param4                       28
+difficulty_of_identification 29
+turn                         30
+enchantment_id               40 + i*2
+enchantment_power            40 + i*2 + 1
+*/

@@ -1,3 +1,5 @@
+#include "item.hpp"
+#include <iostream>
 #include "elona.hpp"
 #include "main.hpp"
 #include "variables.hpp"
@@ -5,6 +7,242 @@
 
 namespace elona
 {
+
+
+void item::clear()
+{
+    item tmp;
+    std::swap(*this, tmp);
+}
+
+
+bool item::almost_euqals(const item& other, bool ignore_position)
+{
+    return true
+        // && number == other.number
+        && value == other.value && image == other.image
+        && id == other.id
+        // && quality == other.quality
+        && (ignore_position || position == other.position)
+        && weight == other.weight
+        && identification_state == other.identification_state
+        && count == other.count && dice_x == other.dice_x
+        && dice_y == other.dice_y && damage_bonus == other.damage_bonus
+        && hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv
+        && skill == other.skill && curse_state == other.curse_state
+        && body_part == other.body_part && function == other.function
+        && enhancement == other.enhancement && own_state == other.own_state
+        && color == other.color && subname == other.subname
+        && material == other.material && param1 == other.param1
+        && param2 == other.param2 && param3 == other.param3
+        && param4 == other.param4
+        && difficulty_of_identification == other.difficulty_of_identification
+        // && turn == other.turn
+        && flags == other.flags
+        && range::equal(enchantments, other.enchantments);
+}
+
+
+
+// Serialize the entire data from offset
+std::unique_ptr<char[]> inventory::serialize(int offset) const
+{
+#define PUT(value) \
+    do \
+    { \
+        *reinterpret_cast<decltype(storage[i].value)*>( \
+            buf.get() + (i - offset) * sizeof(int) * 70 + j) = \
+            storage[i].value; \
+        j += sizeof(storage[i].value); \
+    } while (0);
+
+    std::unique_ptr<char[]> buf{
+        new char[(std::size(storage) - offset) * sizeof(int) * 70]};
+    std::fill(
+        buf.get(),
+        buf.get() + (std::size(storage) - offset) * sizeof(int) * 70,
+        0);
+    for (size_t i = offset; i < std::size(storage) - offset; ++i)
+    {
+        size_t j = 0;
+        PUT(number);
+        PUT(value);
+        PUT(image);
+        PUT(id);
+        PUT(quality);
+        PUT(position.x);
+        PUT(position.y);
+        PUT(weight);
+        PUT(identification_state);
+        PUT(count);
+        PUT(dice_x);
+        PUT(dice_y);
+        PUT(damage_bonus);
+        PUT(hit_bonus);
+        PUT(dv);
+        PUT(pv);
+        PUT(skill);
+        PUT(curse_state);
+        PUT(body_part);
+        PUT(function);
+        PUT(enhancement);
+        PUT(own_state);
+        PUT(color);
+        PUT(subname);
+        PUT(material);
+        PUT(param1);
+        PUT(param2);
+        PUT(param3);
+        PUT(param4);
+        PUT(difficulty_of_identification);
+        PUT(turn);
+        PUT(flags);
+        PUT(enchantments[0].id);
+        PUT(enchantments[0].power);
+        PUT(enchantments[1].id);
+        PUT(enchantments[1].power);
+        PUT(enchantments[2].id);
+        PUT(enchantments[2].power);
+        PUT(enchantments[3].id);
+        PUT(enchantments[3].power);
+        PUT(enchantments[4].id);
+        PUT(enchantments[4].power);
+        PUT(enchantments[5].id);
+        PUT(enchantments[5].power);
+        PUT(enchantments[6].id);
+        PUT(enchantments[6].power);
+        PUT(enchantments[7].id);
+        PUT(enchantments[7].power);
+        PUT(enchantments[8].id);
+        PUT(enchantments[8].power);
+        PUT(enchantments[9].id);
+        PUT(enchantments[9].power);
+        PUT(enchantments[10].id);
+        PUT(enchantments[10].power);
+        PUT(enchantments[11].id);
+        PUT(enchantments[11].power);
+        PUT(enchantments[12].id);
+        PUT(enchantments[12].power);
+        PUT(enchantments[13].id);
+        PUT(enchantments[13].power);
+        PUT(enchantments[14].id);
+        PUT(enchantments[14].power);
+    }
+    return std::move(buf);
+#undef PUT
+}
+
+
+
+void inventory::deserialize(
+    std::unique_ptr<char[]> raw_data,
+    int size,
+    int offset)
+{
+#define GET(value) \
+    do \
+    { \
+        storage[i].value = *reinterpret_cast<decltype(storage[i].value)*>( \
+            raw_data.get() + (i - offset) * sizeof(int) * 70 + j); \
+        j += sizeof(storage[i].value); \
+    } while (0);
+
+    for (size_t i = size_t(offset);; ++i)
+    {
+        size_t j = 0;
+        GET(number);
+        GET(value);
+        GET(image);
+        GET(id);
+        GET(quality);
+        GET(position.x);
+        GET(position.y);
+        GET(weight);
+        GET(identification_state);
+        GET(count);
+        GET(dice_x);
+        GET(dice_y);
+        GET(damage_bonus);
+        GET(hit_bonus);
+        GET(dv);
+        GET(pv);
+        GET(skill);
+        GET(curse_state);
+        GET(body_part);
+        GET(function);
+        GET(enhancement);
+        GET(own_state);
+        GET(color);
+        GET(subname);
+        GET(material);
+        GET(param1);
+        GET(param2);
+        GET(param3);
+        GET(param4);
+        GET(difficulty_of_identification);
+        GET(turn);
+        GET(flags);
+        GET(enchantments[0].id);
+        GET(enchantments[0].power);
+        GET(enchantments[1].id);
+        GET(enchantments[1].power);
+        GET(enchantments[2].id);
+        GET(enchantments[2].power);
+        GET(enchantments[3].id);
+        GET(enchantments[3].power);
+        GET(enchantments[4].id);
+        GET(enchantments[4].power);
+        GET(enchantments[5].id);
+        GET(enchantments[5].power);
+        GET(enchantments[6].id);
+        GET(enchantments[6].power);
+        GET(enchantments[7].id);
+        GET(enchantments[7].power);
+        GET(enchantments[8].id);
+        GET(enchantments[8].power);
+        GET(enchantments[9].id);
+        GET(enchantments[9].power);
+        GET(enchantments[10].id);
+        GET(enchantments[10].power);
+        GET(enchantments[11].id);
+        GET(enchantments[11].power);
+        GET(enchantments[12].id);
+        GET(enchantments[12].power);
+        GET(enchantments[13].id);
+        GET(enchantments[13].power);
+        GET(enchantments[14].id);
+        GET(enchantments[14].power);
+        size -= 70 * sizeof(int);
+        if (size == 0)
+            return;
+    }
+
+#undef GET
+}
+
+
+
+int ibit(int type, int ci)
+{
+    assert(type < sizeof(item::flags) * 8);
+    return inv(ci).flags & (1 << type) ? 1 : 0;
+}
+
+
+
+void ibitmod(int type, int ci, int on)
+{
+    assert(type < sizeof(item::flags) * 8);
+    if (on)
+    {
+        inv(ci).flags |= 1 << type;
+    }
+    else
+    {
+        inv(ci).flags &= ~(1 << type);
+    }
+}
+
 
 
 int f_at_m53 = 0;
@@ -530,38 +768,22 @@ void item_copy(int prm_498, int prm_499)
     {
         return;
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (70); cnt < cnt_end; ++cnt)
-        {
-            inv(cnt, prm_499) = inv(cnt, prm_498);
-        }
-    }
-    return;
+    inv(prm_499) = inv(prm_498);
 }
 
 
 
 void item_exchange(int prm_500, int prm_501)
 {
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (70); cnt < cnt_end; ++cnt)
-        {
-            p_at_m57 = inv(cnt, prm_501);
-            inv(cnt, prm_501) = inv(cnt, prm_500);
-            inv(cnt, prm_500) = p_at_m57;
-        }
-    }
-    return;
+    using std::swap;
+    swap(inv(prm_500), inv(prm_501));
 }
 
 
 
 void item_delete(int prm_502)
 {
-    inv.clear(prm_502);
-    return;
+    inv(prm_502).clear();
 }
 
 
@@ -1805,29 +2027,9 @@ int item_stack(int prm_525, int prm_526, int prm_527)
                 goto label_0319_internal;
             }
             p_at_m65(1) = cnt;
-            p_at_m65(2) = 0;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (70); cnt < cnt_end; ++cnt)
-                {
-                    if (cnt == 0 || cnt == 4 || cnt == 30)
-                    {
-                        continue;
-                    }
-                    if (prm_525 != -1 || mode == 6)
-                    {
-                        if (cnt == 5 || cnt == 6)
-                        {
-                            continue;
-                        }
-                    }
-                    if (inv(cnt, p_at_m65(1)) != inv(cnt, prm_526))
-                    {
-                        ++p_at_m65(2);
-                        break;
-                    }
-                }
-            }
+            p_at_m65(2) =
+                !inv(p_at_m65(1))
+                     .almost_euqals(inv(prm_526), prm_525 != -1 || mode == 6);
         label_0319_internal:
             if (p_at_m65(2) == 0)
             {

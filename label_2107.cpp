@@ -1,5 +1,6 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "item.hpp"
 #include "variables.hpp"
 
 

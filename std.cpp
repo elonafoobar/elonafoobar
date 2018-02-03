@@ -2000,6 +2000,14 @@ void zWrite(elona_vector1<std::string>& data, int, int size)
 
 
 
+void zWrite(std::unique_ptr<char[]> data, int size)
+{
+    LOG("zWrite raw", size);
+    gzip_detail::file.write(data.get(), size);
+}
+
+
+
 void zRead(elona_vector1<int>& data, int, int size)
 {
     LOG("zRead", size);
@@ -2089,6 +2097,14 @@ void zRead(elona_vector1<std::string>& data, int, int size)
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
     data(0) = {buf.get(), static_cast<size_t>(size)};
+}
+
+
+
+void zRead(char* buf, int size)
+{
+    LOG("zRead raw", size);
+    gzip_detail::file.readsome(buf, size);
 }
 
 

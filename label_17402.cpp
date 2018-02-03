@@ -1,9 +1,12 @@
 #include "elona.hpp"
+#include "item.hpp"
 #include "variables.hpp"
 
 
 namespace elona
 {
+
+
 void label_2743(bool = true);
 
 
