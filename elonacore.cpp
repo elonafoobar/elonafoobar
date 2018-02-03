@@ -62,7 +62,6 @@ std::string strbracketright;
 std::string strplat;
 int plat = 0;
 std::string nquestdate;
-int mutex_handle = 0;
 int i_at_m38 = 0;
 int body_at_m38 = 0;
 elona_vector1<std::string> tname;
@@ -54768,7 +54767,7 @@ void label_2012()
     {
         gsel(4);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
+        picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
         gsel(0);
         ccbk = cc;
         cc = tc;
@@ -55959,7 +55958,7 @@ label_20331:
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
     if (cdata_portrait(cc) < 0)
     {
         s = fs::u8path(u8"./user/graphic/face"s)
@@ -56959,7 +56958,7 @@ int label_2039()
     windowanime(wx, wy, ww, wh, 10, 7);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
     buffer(7, 800, 112);
     color(0, 0, 0);
     boxf();
@@ -60933,7 +60932,7 @@ void label_2105()
     gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/character"s + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/character.bmp"), 1);
     gmode(0);
     fread = 1;
     func_1(buff, 1);
@@ -63125,24 +63124,6 @@ void label_2139()
     noteadd(""s);
     objprm(1, dbm);
     objprm(2, ""s);
-    return;
-}
-
-
-
-void label_2140()
-{
-    mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
-    if (func_3() == 183)
-    {
-        dialog(
-            lang(
-                u8"二重起動のため終了します。"s,
-                u8"The program is already running."s),
-            1);
-        end();
-        return;
-    }
     return;
 }
 
@@ -75149,7 +75130,7 @@ void label_2249()
         label_1441();
         gsel(4);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
+        picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
         gsel(0);
         cdata_blind(0) = 0;
         txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
@@ -81151,7 +81132,7 @@ label_2684_internal:
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/"s + file + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/"s + file + u8".bmp"), 1);
     pos(0, y1);
     gzoom(windoww, y2 - y1, 4, 0, 0, 640, 480);
     gmode(2);
@@ -86294,8 +86275,7 @@ label_2747:
         if (a)
         {
             buffer(3, 1440, 800);
-            picload(
-                fs::u8path(u8"./graphic/interface"s + devfile + u8".bmp"s), 1);
+            picload(fs::u8path(u8"./graphic/interface.bmp"s), 1);
             gsel(0);
             label_1893();
         }

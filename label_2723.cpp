@@ -63,7 +63,7 @@ void label_2723()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/title"s + devfile + u8".bmp"), 1);
+        picload(fs::u8path(u8"./graphic/title.bmp"), 1);
         gzoom(windoww, windowh, 4, 0, 0, 800, 600);
         gsel(0);
         gmode(0);
