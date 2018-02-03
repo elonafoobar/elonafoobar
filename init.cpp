@@ -56,11 +56,6 @@ elona_vector1<int> cmstats;
 
 int main()
 {
-    int randseed = 0;
-    randomize();
-    randseed = rnd(2000);
-    randomize(randseed);
-    exrand_randomize(randseed);
     title(u8"Elona ver 1.22"s);
     try
     {
