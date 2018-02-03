@@ -57,17 +57,6 @@ void load_musiclist()
 
 void initialize_elona()
 {
-    elona_vector1<std::string> csvbuff;
-    elona_vector1<std::string> csvidx;
-    elona_vector1<std::string> msgref;
-    elona_vector1<std::string> randn2;
-    elona_vector1<std::string> iname;
-    elona_vector1<int> idata;
-    elona_vector1<int> val_skill;
-    elona_vector1<std::string> valn_skill;
-    elona_vector2<int> slightbk;
-    std::string msg_log;
-    elona_vector1<std::string> cyclekey;
     tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
@@ -196,16 +185,12 @@ void initialize_elona()
     DIM3(dblist, 2, 800);
     SDIM3(csv, 1000, 40);
     SDIM1(filemod);
-    SDIM2(csvbuff, 10000);
-    SDIM3(csvidx, 100, 40);
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);
     SDIM3(msg, 120, inf_maxlog);
     SDIM2(msgtemp, 1000);
-    SDIM2(msgref, 200);
     SDIM3(randn1, 30, 20);
-    SDIM3(randn2, 30, 20);
     SDIM2(select, 200);
     DIM2(n, 40);
     DIM2(rtval, 10);
@@ -242,7 +227,6 @@ void initialize_elona()
     DIM2(invmark, 35);
     DIM2(commark, 3);
     DIM2(feat, 5);
-    SDIM2(iname, 40);
     DIM2(val, 10);
     SDIM3(valn, 50, 10);
     DIM3(dirchk, 3, 2);
@@ -265,7 +249,6 @@ void initialize_elona()
     label_0034();
     label_0031();
     label_0478();
-    DIM2(idata, 8);
     DIM3(dirxy, 2, 4);
     dirxy(0, 3) = 0;
     dirxy(1, 3) = -1;
@@ -343,8 +326,6 @@ void initialize_elona()
     dirchk(0, 1) = 1;
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
-    DIM2(val_skill, 5);
-    SDIM3(valn_skill, 40, 3);
     DIM2(cs_posbk, 4);
     DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
@@ -354,7 +335,6 @@ void initialize_elona()
     SDIM3(soundfile, 30, 122);
     SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
-    DIM3(slightbk, inf_screenw + 4, inf_screenh + 4);
     gsel(3);
     gmode(0);
     redraw(0);
@@ -374,18 +354,6 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    notesel(msg_log);
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (inf_maxlog - 2); cnt < cnt_end; ++cnt)
-        {
-            noteadd(""s);
-        }
-    }
-    noteadd(lang(u8"■メッセージログ"s, u8"<Message Log>"s));
-    noteadd(lang(
-        u8"過去の20行分のメッセージが表示されます。"s,
-        u8"Past 20 message lines are logged."s));
     fmode = 10;
     label_2107();
     tc = 0;
@@ -469,7 +437,6 @@ void initialize_elona()
     mainskill(1) = 106;
     mainskill(2) = 108;
     DIM3(cycle, 15, 5);
-    SDIM3(cyclekey, 5, 15);
     cycle(0, 0) = 1;
     cycle(1, 0) = 2;
     cycle(2, 0) = 5;
