@@ -1,6 +1,7 @@
 #include "calc.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "item.hpp"
 #include "main.hpp"
 #include "variables.hpp"
 
@@ -1144,26 +1145,6 @@ void label_0043()
         trait(160) = 1;
         trait(161) = 1;
     }
-    return;
-}
-
-
-
-int ibit(int prm_274, int prm_275)
-{
-    return HMMBITCHECK(inv(35 + prm_274 / 32, prm_275), prm_274 % 32);
-}
-
-
-
-void ibitmod(int prm_276, int prm_277, int prm_278)
-{
-    if (prm_278 == 0)
-    {
-        HMMBITOFF(inv(35 + prm_276 / 32, prm_277), prm_276 % 32);
-        return;
-    }
-    HMMBITON(inv(35 + prm_276 / 32, prm_277), prm_276 % 32);
     return;
 }
 
@@ -14426,14 +14407,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
                     ci = cnt2_at_m125;
                 }
             }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (70); cnt < cnt_end; ++cnt)
-                {
-                    inv(cnt, cnt2_at_m125) = inv(cnt, p_at_m125);
-                    inv(cnt, p_at_m125) = 0;
-                }
-            }
+            inv(cnt2_at_m125) = inv(p_at_m125);
+            inv(p_at_m125).clear();
             inv_body_part(cnt) = 0;
             ++p_at_m125;
         }

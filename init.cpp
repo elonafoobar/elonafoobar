@@ -1,5 +1,6 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "item.hpp"
 #include "main.hpp"
 #include "range.hpp"
 #include "variables.hpp"
@@ -214,7 +215,6 @@ void initialize_elona()
     DIM2(spell, 200);
     DIM2(spact, 500);
     DIM2(mat, 400);
-    DIM3(inv, 70, 5480);
     DIM2(trait, 500);
     DIM3(itemmemory, 3, 800);
     DIM3(npcmemory, 2, 800);

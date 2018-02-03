@@ -11,7 +11,6 @@
 #include <unordered_map>
 #include "macro_cdata.hpp"
 #include "macro_gdata.hpp"
-#include "macro_inv.hpp"
 #include "util.hpp"
 
 #if __has_include(<filesystem>)
@@ -821,12 +820,48 @@ void zWrite(elona_vector2<int>&, int, int size, int offset);
 void zWrite(elona_vector3<int>&, int, int size);
 void zWrite(elona_vector1<std::string>&, int, int size);
 
+void zWrite(std::unique_ptr<char[]>, int size);
+
 
 void zRead(elona_vector1<int>&, int, int size);
 void zRead(elona_vector2<int>&, int, int size);
 void zRead(elona_vector2<int>&, int, int size, int offset);
 void zRead(elona_vector3<int>&, int, int size);
 void zRead(elona_vector1<std::string>&, int, int size);
+
+void zRead(char*, int size);
+
+
+template <typename T>
+void zWrite(const T& data, int, int size)
+{
+    zWrite(data.serialize(), size);
+}
+
+
+template <typename T>
+void zWrite(const T& data, int, int size, int offset)
+{
+    zWrite(data.serialize(offset), size);
+}
+
+
+template <typename T>
+void zRead(T& data, int, int size)
+{
+    std::unique_ptr<char[]> buf{new char[size]};
+    zRead(buf.get(), size);
+    data.deserialize(std::move(buf), size);
+}
+
+
+template <typename T>
+void zRead(T& data, int, int size, int offset)
+{
+    std::unique_ptr<char[]> buf{new char[size]};
+    zRead(buf.get(), size);
+    data.deserialize(std::move(buf), size, offset);
+}
 
 
 
