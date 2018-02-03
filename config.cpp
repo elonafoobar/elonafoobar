@@ -726,51 +726,45 @@ void label_2716()
 
 void label_2713()
 {
-    notesel(note_buff);
-    noteload(fs::u8path(u8"./config.txt"));
-    f = 0;
+    std::vector<std::string> lines;
+    range::transform(fileutil::read_by_line{fs::u8path(u8"./config.txt")}, std::back_inserter(lines), [](const auto& pair) { return pair.second; });
+    bool already_exists = false;
+    for (auto&& line : lines)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
+        if (!strutil::contains(line, valn(0)))
+            continue;
+        std::string tmp = line;
+        int i = 1;
+        int p = 0;
+        while (1)
         {
-            noteget(s, cnt);
-            if (!strutil::contains(s(0), valn(0)))
-            {
-                continue;
-            }
-            i = 1;
-            p = 0;
-            {
-                int cnt = 0;
-                for (;; ++cnt)
-                {
-                    p(2) = instr(s, p, u8"\""s);
-                    if (p(2) == -1)
-                    {
-                        break;
-                    }
-                    p += p(2);
-                    p(1) = instr(s, p + 1, u8"\""s) + p + 1;
-                    if (p(1) == -1)
-                    {
-                        break;
-                    }
-                    s = strmid(s, 0, p + 1) + valn(i) + strmid(s, p(1), 999);
-                    p += std::size(valn(i)) + 2;
-                    ++i;
-                }
-            }
-            noteadd(s, cnt, 1);
-            f = 1;
-            break;
+            int p2 = instr(tmp, p, u8"\"");
+            if (p2 == -1)
+                break;
+            p += p2;
+            int p1 = instr(tmp, p + 1, u8"\"") + p + 1;
+            if (p1 == -1)
+                break;
+            tmp = strmid(tmp, 0, p + 1) + valn(i) + strmid(tmp, p1, 999);
+            p += std::size(valn(i)) + 2;
+            ++i;
         }
+        line = tmp;
+        already_exists = true;
+        break;
     }
-    if (f == 0)
+
+    if (!already_exists)
     {
-        noteadd(""s + valn + u8" \""s + valn(1) + u8"\""s);
+        lines.emplace_back(valn(0) + u8" \"" + valn(1) + u8"\"");
     }
-    notesave(fs::u8path(u8"./config.txt"));
-    return;
+
+    std::ofstream out{fs::u8path(u8"./config.txt")};
+    if (!out)
+    {
+        throw config_loading_error{u8"Failed to open: ./config.txt"};
+    }
+    range::for_each(lines, [&](const auto& line) { out << line << std::endl; });
 }
 
 

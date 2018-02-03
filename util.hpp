@@ -41,6 +41,20 @@ inline std::string to_lower(std::string_view source)
 
 
 
+inline std::vector<std::string> split_lines(const std::string& str)
+{
+    std::vector<std::string> lines;
+    std::istringstream ss{str};
+    std::string buf;
+    while (std::getline(ss, buf))
+    {
+        lines.push_back(buf);
+    }
+    return lines;
+}
+
+
+
 } // namespace strutil
 
 
