@@ -4,6 +4,8 @@
 #include "range.hpp"
 #include "variables.hpp"
 
+using namespace elona;
+
 
 
 namespace elona
@@ -55,54 +57,58 @@ void load_musiclist()
 
 
 
+void backup_config_files()
+{
+    std::tuple<const char*, const char*> files[] = {
+        {u8"./original/config.txt", u8"./config.txt"},
+        {u8"./original/export.txt", u8"./user/export.txt"},
+        {u8"./original/lastwords.txt", u8"./user/lastwords.txt"},
+        {u8"./original/lastwords-e.txt", u8"./user/lastwords-e.txt"},
+        {u8"./original/musiclist.txt", u8"./user/music/musiclist.txt"},
+        {u8"./original/face1.bmp", u8"./user/graphic/face1.bmp"},
+    };
+
+    for (const auto& [from, to] : files)
+    {
+        const auto from_path = fs::u8path(from);
+        const auto to_path = fs::u8path(to);
+        if (!fs::exists(to_path))
+        {
+            fs::copy_file(from_path, to_path);
+        }
+    }
+}
+
+
+
+void check_double_launching()
+{
+    mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
+    if (func_3() == 183)
+    {
+        dialog(
+            lang(
+                u8"二重起動のため終了します。"s,
+                u8"The program is already running."s),
+            1);
+        end();
+        return;
+    }
+    return;
+}
+
+
+
 void initialize_elona()
 {
     tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
-    exist(fs::u8path(u8"./config.txt"));
-    if (strsize == -1)
-    {
-        bcopy(
-            fs::u8path(u8"./original/config.txt"s),
-            fs::u8path(u8"./config.txt"s));
-    }
-    exist(fs::u8path(u8"./user/export.txt"));
-    if (strsize == -1)
-    {
-        bcopy(
-            fs::u8path(u8"./original/export.txt"s),
-            fs::u8path(u8"./user/export.txt"s));
-    }
-    exist(fs::u8path(u8"./user/lastwords.txt"));
-    if (strsize == -1)
-    {
-        bcopy(
-            fs::u8path(u8"./original/lastwords.txt"s),
-            fs::u8path(u8"./user/lastwords.txt"s));
-    }
-    exist(fs::u8path(u8"./user/lastwords-e.txt"));
-    if (strsize == -1)
-    {
-        bcopy(
-            fs::u8path(u8"./original/lastwords-e.txt"s),
-            fs::u8path(u8"./user/lastwords-e.txt"s));
-    }
-    exist(fs::u8path(u8"./user/music/musiclist.txt"));
-    if (strsize == -1)
-    {
-        bcopy(
-            fs::u8path(u8"./original/musiclist.txt"s),
-            fs::u8path(u8"./user/music/musiclist.txt"s));
-    }
-    exist(fs::u8path(u8"./user/graphic/face1.bmp"));
-    if (strsize == -1)
-    {
-        bcopy(
-            fs::u8path(u8"./original/face1.bmp"s),
-            fs::u8path(u8"./user/graphic/face1.bmp"s));
-    }
-    label_2140();
+
+    backup_config_files();
+
+    check_double_launching();
+
     SDIM3(s, 160, 40);
     DIM2(p, 100);
     DIM2(rtval, 10);
@@ -137,32 +143,20 @@ void initialize_elona()
     {
         buffer(8, windoww, windowh);
         p = windoww / 192;
+        for (int i = 0; i < inf_maxlog; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (inf_maxlog); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < p + 1; ++j)
             {
-                cnt2 = cnt;
+                if (j == p)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
-                    {
-                        if (cnt == p)
-                        {
-                            x = (windoww - inf_msgx) % 192;
-                        }
-                        else
-                        {
-                            x = 192;
-                        }
-                        pos(cnt * 192, cnt2 * inf_msgspace);
-                        gcopy(
-                            3,
-                            496,
-                            536 + cnt2 % 4 * inf_msgspace,
-                            x,
-                            inf_msgspace);
-                    }
+                    x = (windoww - inf_msgx) % 192;
                 }
+                else
+                {
+                    x = 192;
+                }
+                pos(j * 192, i * inf_msgspace);
+                gcopy(3, 496, 536 + i % 4 * inf_msgspace, x, inf_msgspace);
             }
         }
         gsel(0);
@@ -179,6 +173,7 @@ void initialize_elona()
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
     buffer(7, 24, 24);
     buffer(9, 24, 24);
+
     DIM3(cmapdata, 5, 400);
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
@@ -230,26 +225,33 @@ void initialize_elona()
     DIM2(val, 10);
     SDIM3(valn, 50, 10);
     DIM3(dirchk, 3, 2);
+
     dirchk(0, 0) = -1;
     dirchk(1, 0) = 0;
     dirchk(2, 0) = 1;
     dirchk(0, 1) = 1;
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
+
     DIM2(chatval, 5);
     DIM2(evlist, 10);
     DIM2(matneed, 20);
     DIM3(pcc, 30, 20);
+
     maxrain = windoww * windowh / 3500;
+
     DIM2(rainx, maxrain * 2);
     DIM2(rainy, maxrain * 2);
     SDIM1(fltnrace);
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);
+
     label_0034();
     label_0031();
     label_0478();
+
     DIM3(dirxy, 2, 4);
+
     dirxy(0, 3) = 0;
     dirxy(1, 3) = -1;
     dirxy(0, 0) = 0;
@@ -258,7 +260,9 @@ void initialize_elona()
     dirxy(1, 1) = 0;
     dirxy(0, 2) = 1;
     dirxy(1, 2) = 0;
+
     DIM3(c_col, 3, 30);
+
     c_col(0, 0) = 0;
     c_col(1, 0) = 0;
     c_col(2, 0) = 0;
@@ -319,13 +323,16 @@ void initialize_elona()
     c_col(0, 20) = 45;
     c_col(1, 20) = 5;
     c_col(2, 20) = 95;
+
     DIM3(dirchk, 3, 2);
+
     dirchk(0, 0) = -1;
     dirchk(1, 0) = 0;
     dirchk(2, 0) = 1;
     dirchk(0, 1) = 1;
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
+
     DIM2(cs_posbk, 4);
     DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
@@ -335,21 +342,19 @@ void initialize_elona()
     SDIM3(soundfile, 30, 122);
     SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
+
     gsel(3);
     gmode(0);
     redraw(0);
     color(1, 1, 1);
     font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+    for (int i = 0; i < 18; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (18); cnt < cnt_end; ++cnt)
-        {
-            pos(cnt * 24 + 72, 30);
-            gcopy(3, 0, 30, 24, 18);
-            pos(cnt * 24 + 77, 31);
-            color(50, 60, 80);
-            bmes(key_select(cnt), 250, 240, 230);
-        }
+        pos(i * 24 + 72, 30);
+        gcopy(3, 0, 30, 24, 18);
+        pos(i * 24 + 77, 31);
+        color(50, 60, 80);
+        bmes(key_select(i), 250, 240, 230);
     }
     gsel(0);
     gmode(2);
@@ -409,19 +414,13 @@ void initialize_elona()
     label_1713();
     label_0002();
     label_2105();
-    if (cfg_music == 1)
+    if (cfg_music == 1 && DMINIT() == 0)
     {
-        if (DMINIT() == 0)
-        {
-            cfg_music = 2;
-        }
+        cfg_music = 2;
     }
-    if (cfg_sound == 1)
+    if (cfg_sound == 1 && DSINIT() == 0)
     {
-        if (DSINIT() == 0)
-        {
-            cfg_sound = 2;
-        }
+        cfg_sound = 2;
     }
     if (cfg_joypad == 1)
     {
@@ -436,6 +435,7 @@ void initialize_elona()
     mainskill(0) = 173;
     mainskill(1) = 106;
     mainskill(2) = 108;
+
     DIM3(cycle, 15, 5);
     cycle(0, 0) = 1;
     cycle(1, 0) = 2;
@@ -462,11 +462,13 @@ void initialize_elona()
     cycle(2, 3) = -1;
     cycle(0, 4) = 2;
     cycle(1, 4) = -1;
+
     cyclemax(0) = 9;
     cyclemax(1) = 4;
     cyclemax(2) = 1;
     cyclemax(3) = 1;
     cyclemax(4) = 0;
+
     shadowmap(0) = 0;
     shadowmap(1) = 9;
     shadowmap(2) = 10;
@@ -484,7 +486,9 @@ void initialize_elona()
     shadowmap(14) = 2;
     shadowmap(15) = 0;
     shadowmap(16) = 0;
+
     lastctrl = 1;
+
     DIM2(invicon, 40);
     SDIM3(invkey, 4, 40);
     invkey(0) = "";
@@ -536,6 +540,7 @@ void initialize_elona()
     invicon(27) = -1;
     invicon(28) = -1;
     invicon(29) = -1;
+
     if (cfg_autonumlock)
     {
         GetKeyboardState(keybd_st);

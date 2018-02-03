@@ -62,7 +62,6 @@ std::string strbracketright;
 std::string strplat;
 int plat = 0;
 std::string nquestdate;
-int mutex_handle = 0;
 int i_at_m38 = 0;
 int body_at_m38 = 0;
 elona_vector1<std::string> tname;
@@ -63125,24 +63124,6 @@ void label_2139()
     noteadd(""s);
     objprm(1, dbm);
     objprm(2, ""s);
-    return;
-}
-
-
-
-void label_2140()
-{
-    mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
-    if (func_3() == 183)
-    {
-        dialog(
-            lang(
-                u8"二重起動のため終了します。"s,
-                u8"The program is already running."s),
-            1);
-        end();
-        return;
-    }
     return;
 }
 
