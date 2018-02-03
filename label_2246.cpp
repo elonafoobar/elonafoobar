@@ -1159,7 +1159,7 @@ void label_2246()
             label_1441();
             gsel(4);
             pos(0, 0);
-            picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
+            picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
             gsel(0);
             listmax = 0;
             buff = lang(
@@ -1358,7 +1358,7 @@ void label_2246()
             label_1441();
             gsel(4);
             pos(0, 0);
-            picload(fs::u8path(u8"./graphic/face1"s + devfile + u8".bmp"), 1);
+            picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
             gsel(0);
             listmax = 0;
             buff = lang(

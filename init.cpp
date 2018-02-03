@@ -57,7 +57,6 @@ elona_vector1<int> cmstats;
 int main()
 {
     int randseed = 0;
-    devfile = "";
     randomize();
     randseed = rnd(2000);
     randomize(randseed);
@@ -162,7 +161,7 @@ void label_0192()
     redraw(1);
     onkey_0();
     buffer(3, 1440, 800);
-    picload(fs::u8path(u8"./graphic/interface"s + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
     cfg_exlog = 1;
     if (cfg_exlog)
@@ -201,7 +200,7 @@ void label_0192()
     }
     folder = fs::u8path(u8"./user/graphic/");
     buffer(1, 1584, 1200);
-    picload(fs::u8path(u8"./graphic/item"s + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/item.bmp"), 1);
     if (inf_tiles != 48)
     {
         pos(0, 0);
@@ -683,7 +682,7 @@ void label_2115()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/title"s + devfile + u8".bmp"), 1);
+    picload(fs::u8path(u8"./graphic/title.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);

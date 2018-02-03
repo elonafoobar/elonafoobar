@@ -630,7 +630,6 @@ inline std::string classname;
 inline std::string cmaka;
 inline std::string dbidn;
 inline std::string defload;
-inline std::string devfile;
 inline std::string fmapfile;
 inline std::string geneuse;
 inline std::string homepage;
