@@ -86679,12 +86679,10 @@ void label_2752()
     }
     buff = "";
     notesel(buff);
-    file = fs::u8path(u8"./save/bone");
-    exist(file + u8".txt"s);
-    if (strsize != -1)
+    file = fs::u8path(u8"./save/bone.txt");
+    if (fs::exists(file))
     {
-        buff(0).clear();
-        std::ifstream in{file + u8".txt"s};
+        std::ifstream in{file};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -86707,12 +86705,10 @@ void label_2752()
     noteadd(s, 3);
     if (noteinfo(0) >= 320)
     {
+        int cnt = 320;
+        for (int cnt_end = cnt + (noteinfo(0) - 320); cnt < cnt_end; ++cnt)
         {
-            int cnt = 320;
-            for (int cnt_end = cnt + (noteinfo(0) - 320); cnt < cnt_end; ++cnt)
-            {
-                notedel(320);
-            }
+            notedel(320);
         }
     }
     page = 0;
@@ -86770,7 +86766,7 @@ void label_2752()
         }
     }
     {
-        std::ofstream out{file + u8".txt"s};
+        std::ofstream out{file};
         out << buff(0) << std::endl;
     }
     redraw(0);
@@ -86864,21 +86860,27 @@ void label_2753()
             pos(x - 80, y + 10);
             color(10, 10, 10);
             mes(s);
+            bool no_entry = false;
             if (p >= noteinfo(0))
             {
-                s = u8"no entry"s;
+                no_entry = true;
             }
             else
             {
                 noteget(s, p + 1);
+                if (std::empty(s(0)))
+                {
+                    no_entry = true;
+                }
             }
             pos(x, y);
             color(10, 10, 10);
-            mes(s);
-            if (p >= noteinfo(0))
+            if (no_entry)
             {
+                mes(u8"no entry");
                 continue;
             }
+            mes(s);
             noteget(s, p + 2);
             pos(x, y + 20);
             color(10, 10, 10);
