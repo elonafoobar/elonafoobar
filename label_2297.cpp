@@ -1,3 +1,4 @@
+#include "character.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
 
@@ -156,7 +157,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"kobolt"s;
-            cdata(158, rc) = 1;
+            cdata_158(rc) = 1;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -229,7 +230,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"orc"s;
-            cdata(158, rc) = 2;
+            cdata_158(rc) = 2;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -302,7 +303,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"troll"s;
-            cdata(158, rc) = 3;
+            cdata_158(rc) = 3;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -373,7 +374,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"lizardman"s;
-            cdata(158, rc) = 4;
+            cdata_158(rc) = 4;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -446,7 +447,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"minotaur"s;
-            cdata(158, rc) = 5;
+            cdata_158(rc) = 5;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -521,7 +522,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"yerles"s;
-            cdata(158, rc) = 6;
+            cdata_158(rc) = 6;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(20) + 15);
@@ -600,7 +601,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"norland"s;
-            cdata(158, rc) = 7;
+            cdata_158(rc) = 7;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(20) + 15);
@@ -681,7 +682,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"eulderna"s;
-            cdata(158, rc) = 8;
+            cdata_158(rc) = 8;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(20) + 16);
@@ -761,7 +762,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"fairy"s;
-            cdata(158, rc) = 9;
+            cdata_158(rc) = 9;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(100) + 5);
@@ -845,7 +846,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"asura"s;
-            cdata(158, rc) = 10;
+            cdata_158(rc) = 10;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(20) + 15);
@@ -918,7 +919,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"slime"s;
-            cdata(158, rc) = 11;
+            cdata_158(rc) = 11;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 2;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 1);
@@ -990,7 +991,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"wolf"s;
-            cdata(158, rc) = 12;
+            cdata_158(rc) = 12;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 2);
@@ -1064,7 +1065,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"dwarf"s;
-            cdata(158, rc) = 13;
+            cdata_158(rc) = 13;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(60) + 20);
@@ -1140,7 +1141,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"juere"s;
-            cdata(158, rc) = 14;
+            cdata_158(rc) = 14;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -1218,7 +1219,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"zombie"s;
-            cdata(158, rc) = 15;
+            cdata_158(rc) = 15;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(200) + 10);
@@ -1297,7 +1298,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"elea"s;
-            cdata(158, rc) = 16;
+            cdata_158(rc) = 16;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(200) + 10);
@@ -1374,7 +1375,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"rabbit"s;
-            cdata(158, rc) = 17;
+            cdata_158(rc) = 17;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(5) + 2);
@@ -1445,7 +1446,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"sheep"s;
-            cdata(158, rc) = 18;
+            cdata_158(rc) = 18;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(5) + 2);
@@ -1517,7 +1518,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"frog"s;
-            cdata(158, rc) = 19;
+            cdata_158(rc) = 19;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(5) + 2);
@@ -1589,7 +1590,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"centipede"s;
-            cdata(158, rc) = 20;
+            cdata_158(rc) = 20;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -1662,7 +1663,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"snail"s;
-            cdata(158, rc) = 21;
+            cdata_158(rc) = 21;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -1733,7 +1734,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"mandrake"s;
-            cdata(158, rc) = 22;
+            cdata_158(rc) = 22;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -1806,7 +1807,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"beetle"s;
-            cdata(158, rc) = 23;
+            cdata_158(rc) = 23;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -1878,7 +1879,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"mushroom"s;
-            cdata(158, rc) = 24;
+            cdata_158(rc) = 24;
             cdata_melee_attack_type(rc) = 7;
             cdata_special_attack_type(rc) = 5;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -1950,7 +1951,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"bat"s;
-            cdata(158, rc) = 25;
+            cdata_158(rc) = 25;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2021,7 +2022,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"ent"s;
-            cdata(158, rc) = 26;
+            cdata_158(rc) = 26;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2095,7 +2096,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"lich"s;
-            cdata(158, rc) = 27;
+            cdata_158(rc) = 27;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2172,7 +2173,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"hound"s;
-            cdata(158, rc) = 28;
+            cdata_158(rc) = 28;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2244,7 +2245,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"ghost"s;
-            cdata(158, rc) = 29;
+            cdata_158(rc) = 29;
             cdata_melee_attack_type(rc) = 6;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2320,7 +2321,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"spirit"s;
-            cdata(158, rc) = 30;
+            cdata_158(rc) = 30;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2392,7 +2393,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"eye"s;
-            cdata(158, rc) = 31;
+            cdata_158(rc) = 31;
             cdata_melee_attack_type(rc) = 4;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2464,7 +2465,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"wyvern"s;
-            cdata(158, rc) = 32;
+            cdata_158(rc) = 32;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2536,7 +2537,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"wasp"s;
-            cdata(158, rc) = 33;
+            cdata_158(rc) = 33;
             cdata_melee_attack_type(rc) = 5;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2607,7 +2608,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"giant"s;
-            cdata(158, rc) = 34;
+            cdata_158(rc) = 34;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2680,7 +2681,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"imp"s;
-            cdata(158, rc) = 35;
+            cdata_158(rc) = 35;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2752,7 +2753,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"hand"s;
-            cdata(158, rc) = 36;
+            cdata_158(rc) = 36;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2823,7 +2824,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"snake"s;
-            cdata(158, rc) = 37;
+            cdata_158(rc) = 37;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2894,7 +2895,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"drake"s;
-            cdata(158, rc) = 38;
+            cdata_158(rc) = 38;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -2968,7 +2969,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"goblin"s;
-            cdata(158, rc) = 39;
+            cdata_158(rc) = 39;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3042,7 +3043,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"bear"s;
-            cdata(158, rc) = 40;
+            cdata_158(rc) = 40;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3115,7 +3116,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"armor"s;
-            cdata(158, rc) = 41;
+            cdata_158(rc) = 41;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3188,7 +3189,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"medusa"s;
-            cdata(158, rc) = 42;
+            cdata_158(rc) = 42;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3260,7 +3261,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"cupid"s;
-            cdata(158, rc) = 43;
+            cdata_158(rc) = 43;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3332,7 +3333,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"phantom"s;
-            cdata(158, rc) = 44;
+            cdata_158(rc) = 44;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3409,7 +3410,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"harpy"s;
-            cdata(158, rc) = 45;
+            cdata_158(rc) = 45;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3481,7 +3482,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"dragon"s;
-            cdata(158, rc) = 46;
+            cdata_158(rc) = 46;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3553,7 +3554,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"dinosaur"s;
-            cdata(158, rc) = 47;
+            cdata_158(rc) = 47;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3625,7 +3626,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"cerberus"s;
-            cdata(158, rc) = 48;
+            cdata_158(rc) = 48;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3697,7 +3698,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"spider"s;
-            cdata(158, rc) = 49;
+            cdata_158(rc) = 49;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 1;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3771,7 +3772,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"golem"s;
-            cdata(158, rc) = 50;
+            cdata_158(rc) = 50;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3844,7 +3845,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"rock"s;
-            cdata(158, rc) = 51;
+            cdata_158(rc) = 51;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3917,7 +3918,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"crab"s;
-            cdata(158, rc) = 52;
+            cdata_158(rc) = 52;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -3989,7 +3990,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"skeleton"s;
-            cdata(158, rc) = 53;
+            cdata_158(rc) = 53;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4067,7 +4068,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"piece"s;
-            cdata(158, rc) = 54;
+            cdata_158(rc) = 54;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4140,7 +4141,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"cat"s;
-            cdata(158, rc) = 55;
+            cdata_158(rc) = 55;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 4;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4213,7 +4214,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"dog"s;
-            cdata(158, rc) = 56;
+            cdata_158(rc) = 56;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4287,7 +4288,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"roran"s;
-            cdata(158, rc) = 57;
+            cdata_158(rc) = 57;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4364,7 +4365,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"rat"s;
-            cdata(158, rc) = 58;
+            cdata_158(rc) = 58;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4436,7 +4437,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"shell"s;
-            cdata(158, rc) = 59;
+            cdata_158(rc) = 59;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4508,7 +4509,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"catgod"s;
-            cdata(158, rc) = 60;
+            cdata_158(rc) = 60;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4581,7 +4582,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"machinegod"s;
-            cdata(158, rc) = 61;
+            cdata_158(rc) = 61;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4653,7 +4654,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"undeadgod"s;
-            cdata(158, rc) = 62;
+            cdata_158(rc) = 62;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4725,7 +4726,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"machine"s;
-            cdata(158, rc) = 63;
+            cdata_158(rc) = 63;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 6;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4799,7 +4800,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"wisp"s;
-            cdata(158, rc) = 64;
+            cdata_158(rc) = 64;
             cdata_melee_attack_type(rc) = 4;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4871,7 +4872,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"chicken"s;
-            cdata(158, rc) = 65;
+            cdata_158(rc) = 65;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -4943,7 +4944,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"stalker"s;
-            cdata(158, rc) = 66;
+            cdata_158(rc) = 66;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -5019,7 +5020,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"catsister"s;
-            cdata(158, rc) = 67;
+            cdata_158(rc) = 67;
             cdata_melee_attack_type(rc) = 1;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (10 + rnd(4));
@@ -5094,7 +5095,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"mutant"s;
-            cdata(158, rc) = 68;
+            cdata_158(rc) = 68;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(50) + 25);
@@ -5170,7 +5171,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"yeek"s;
-            cdata(158, rc) = 69;
+            cdata_158(rc) = 69;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(30) + 15);
@@ -5242,7 +5243,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"yith"s;
-            cdata(158, rc) = 70;
+            cdata_158(rc) = 70;
             cdata_melee_attack_type(rc) = 6;
             cdata_special_attack_type(rc) = 3;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -5316,7 +5317,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"servant"s;
-            cdata(158, rc) = 71;
+            cdata_158(rc) = 71;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(200) + 100);
@@ -5397,7 +5398,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"horse"s;
-            cdata(158, rc) = 72;
+            cdata_158(rc) = 72;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -5468,7 +5469,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"god"s;
-            cdata(158, rc) = 73;
+            cdata_158(rc) = 73;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - 999999;
@@ -5546,7 +5547,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"quickling"s;
-            cdata(158, rc) = 74;
+            cdata_158(rc) = 74;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -5620,7 +5621,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"metal"s;
-            cdata(158, rc) = 75;
+            cdata_158(rc) = 75;
             cdata_melee_attack_type(rc) = 3;
             cdata_special_attack_type(rc) = 0;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);
@@ -5693,7 +5694,7 @@ int label_2297()
         if (dbmode == 3)
         {
             cdatan(2, rc) = u8"bike"s;
-            cdata(158, rc) = 76;
+            cdata_158(rc) = 76;
             cdata_melee_attack_type(rc) = 0;
             cdata_special_attack_type(rc) = 6;
             cdata_birth_year(rc) = gdata_year - (rnd(10) + 10);

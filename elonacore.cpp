@@ -1,4 +1,5 @@
 #include "calc.hpp"
+#include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -552,26 +553,6 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
     {
         return prm_247;
     }
-}
-
-
-
-int cbit(int prm_253, int prm_254)
-{
-    return HMMBITCHECK(cdata(450 + prm_253 / 32, prm_254), prm_253 % 32);
-}
-
-
-
-void cbitmod(int prm_255, int prm_256, int prm_257)
-{
-    if (prm_257 == 0)
-    {
-        HMMBITOFF(cdata(450 + prm_255 / 32, prm_256), prm_255 % 32);
-        return;
-    }
-    HMMBITON(cdata(450 + prm_255 / 32, prm_256), prm_255 % 32);
-    return;
 }
 
 
@@ -3682,16 +3663,13 @@ void create_pcpic(int prm_409, int prm_410)
         pcc(3, prm_409) = 0;
         pcc(8, prm_409) = 0;
         pcc(5, prm_409) = 0;
+        for (int i = 0; i < 30; ++i)
         {
-            int cnt = 100;
-            for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            if (cdata_body_part(prm_409, i) % 10000 != 0)
             {
-                if (cdata(cnt, prm_409) % 10000 != 0)
-                {
-                    i_at_m38 = cdata(cnt, prm_409) % 10000 - 1;
-                    body_at_m38 = iequiploc(i_at_m38);
-                    label_0196();
-                }
+                i_at_m38 = cdata_body_part(prm_409, i) % 10000 - 1;
+                body_at_m38 = iequiploc(i_at_m38);
+                label_0196();
             }
         }
     }
@@ -9427,10 +9405,11 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         {
             if (prm_569 <= 19)
             {
-                if (cdata(270 + prm_569 - 10, prm_570) > 0)
+                if (cdata_growth_buff(prm_570, prm_569 - 10) > 0)
                 {
                     exp_at_m77 = exp_at_m77
-                        * (100 + cdata((270 + prm_569 - 10), prm_570)) / 100;
+                        * (100 + cdata_growth_buff(prm_570, prm_569 - 10))
+                        / 100;
                 }
             }
         }
@@ -13356,25 +13335,16 @@ int label_1280()
 
 void fixaiact(int prm_753)
 {
-    int p_at_m112 = 0;
     int i_at_m112 = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            if (cnt < 5)
-            {
-                p_at_m112 = 215 + cnt;
-            }
-            else
-            {
-                p_at_m112 = 220 + cnt - 5;
-            }
-            i_at_m112 = cdata(p_at_m112, prm_753);
+            i_at_m112 = cdata_ai_act(prm_753, cnt);
             if (i_at_m112 == 464 || i_at_m112 == 441 || i_at_m112 == 660
                 || i_at_m112 == 657)
             {
-                cdata(p_at_m112, prm_753) = -1;
+                cdata_ai_act(prm_753, cnt) = -1;
             }
         }
     }
@@ -14317,7 +14287,7 @@ void del_chara(int prm_783)
         }
     }
     sdata.clear(prm_783);
-    cdata.clear(prm_783);
+    cdata(prm_783).clear();
     return;
 }
 
@@ -14421,14 +14391,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
             sdata(cnt, prm_784) = 0;
         }
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
-        {
-            cdata(cnt, tc_at_m125) = cdata(cnt, prm_784);
-            cdata(cnt, prm_784) = 0;
-        }
-    }
+    cdata(tc_at_m125) = cdata(prm_784);
+    cdata(prm_784).clear();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -14438,10 +14402,10 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
         }
     }
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        for (int i = 0; i < 30; ++i)
         {
-            cdata(cnt, tc_at_m125) = cdata(cnt, tc_at_m125) / 10000 * 10000;
+            cdata_body_part(tc_at_m125, i) =
+                cdata_body_part(tc_at_m125, i) / 10000 * 10000;
         }
     }
     if (prm_786 == 1)
@@ -14797,11 +14761,11 @@ int findbuff(int prm_799, int prm_800)
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(280 + cnt * 3, prm_799) == 0)
+            if (cdata_buff_id(prm_799, cnt) == 0)
             {
                 break;
             }
-            if (cdata(280 + cnt * 3, prm_799) == prm_800)
+            if (cdata_buff_id(prm_799, cnt) == prm_800)
             {
                 f_at_m131 = cnt;
                 break;
@@ -14827,9 +14791,9 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(280 + cnt * 3, prm_801) == prm_802)
+            if (cdata_buff_id(prm_801, cnt) == prm_802)
             {
-                if (cdata(280 + cnt * 3 + 2, prm_801) < prm_804)
+                if (cdata_buff_turns(prm_801, cnt) < prm_804)
                 {
                     p_at_m132 = cnt;
                     break;
@@ -14840,7 +14804,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
                     break;
                 }
             }
-            if (cdata(280 + cnt * 3, prm_801) == 0)
+            if (cdata_buff_id(prm_801, cnt) == 0)
             {
                 p_at_m132 = cnt;
                 break;
@@ -14898,9 +14862,9 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         }
         if (findbuff(prm_801, 10) != -1)
         {
-            if (cdata(280 + findbuff(prm_801, 10) * 3 + 1, prm_801) + 50
+            if (cdata_buff_power(prm_801, findbuff(prm_801, 10)) + 50
                     > prm_803 * 5 / 2
-                || rnd(cdata(280 + findbuff(prm_801, 10) * 3 + 1, prm_801) + 50)
+                || rnd(cdata_buff_power(prm_801, findbuff(prm_801, 10)) + 50)
                     > rnd(prm_803 + 1))
             {
                 txt(lang(
@@ -14934,9 +14898,9 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
             name(prm_801) + u8" "s + bufftxt(0, prm_802) + _s(prm_801)
                 + bufftxt(1, prm_802)));
     }
-    cdata(280 + p_at_m132 * 3 + 0, prm_801) = prm_802;
-    cdata(280 + p_at_m132 * 3 + 1, prm_801) = prm_803;
-    cdata(280 + p_at_m132 * 3 + 2, prm_801) = fixeddur_at_m132;
+    cdata_buff_id(prm_801, p_at_m132) = prm_802;
+    cdata_buff_power(prm_801, p_at_m132) = prm_803;
+    cdata_buff_turns(prm_801, p_at_m132) = fixeddur_at_m132;
     r1 = prm_801;
     label_1477();
     return 0;
@@ -14950,44 +14914,44 @@ void delbuff(int prm_805, int prm_806)
     {
         txtef(8);
         txt(lang(
-            ""s + buffname(cdata((280 + prm_806 * 3), prm_805))
+            ""s + buffname(cdata_buff_id(prm_805, prm_806))
                 + u8"の効果が切れた。"s,
-            u8"The effect of "s + buffname(cdata((280 + prm_806 * 3), prm_805))
+            u8"The effect of "s + buffname(cdata_buff_id(prm_805, prm_806))
                 + u8" ends."s));
     }
-    if (cdata(280 + prm_806 * 3, prm_805) == 15)
+    if (cdata_buff_id(prm_805, prm_806) == 15)
     {
         if (prm_805 == 0)
         {
             incognitoend();
         }
     }
-    if (cdata(280 + prm_806 * 3, prm_805) == 16)
+    if (cdata_buff_id(prm_805, prm_806) == 16)
     {
         cbitmod(973, prm_805, 0);
     }
-    if (cdata(280 + prm_806 * 3, prm_805) == 18)
+    if (cdata_buff_id(prm_805, prm_806) == 18)
     {
         cbitmod(980, prm_805, 0);
     }
-    cdata(280 + prm_806 * 3, prm_805) = 0;
+    cdata_buff_id(prm_805, prm_806) = 0;
     {
         int cnt = prm_806;
         for (int cnt_end = cnt + (16 - prm_806 - 1); cnt < cnt_end; ++cnt)
         {
-            if (cdata(280 + cnt * 3, prm_805) == 0)
+            if (cdata_buff_id(prm_805, cnt) == 0)
             {
-                if (cdata(280 + (cnt + 1) * 3, prm_805) != 0)
+                if (cdata_buff_id(prm_805, cnt + 1) != 0)
                 {
-                    cdata(280 + cnt * 3 + 0, prm_805) =
-                        cdata(280 + (cnt + 1) * 3, prm_805);
-                    cdata(280 + cnt * 3 + 1, prm_805) =
-                        cdata(280 + (cnt + 1) * 3 + 1, prm_805);
-                    cdata(280 + cnt * 3 + 2, prm_805) =
-                        cdata(280 + (cnt + 1) * 3 + 2, prm_805);
-                    cdata(280 + (cnt + 1) * 3 + 0, prm_805) = 0;
-                    cdata(280 + (cnt + 1) * 3 + 1, prm_805) = 0;
-                    cdata(280 + (cnt + 1) * 3 + 2, prm_805) = 0;
+                    cdata_buff_id(prm_805, cnt) =
+                        cdata_buff_id(prm_805, cnt + 1);
+                    cdata_buff_power(prm_805, cnt) =
+                        cdata_buff_power(prm_805, cnt + 1);
+                    cdata_buff_turns(prm_805, cnt) =
+                        cdata_buff_turns(prm_805, cnt + 1);
+                    cdata_buff_id(prm_805, cnt + 1) = 0;
+                    cdata_buff_power(prm_805, cnt + 1) = 0;
+                    cdata_buff_turns(prm_805, cnt + 1) = 0;
                 }
                 else
                 {
@@ -16561,27 +16525,24 @@ void item_acid(int prm_838, int prm_839)
     else
     {
         ci_at_m138 = -1;
+        for (int i = 0; i < 30; ++i)
         {
-            int cnt = 100;
-            for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            body_at_m138 = cdata_body_part(prm_838, i) / 10000;
+            if (body_at_m138 == 0)
             {
-                body_at_m138 = cdata(cnt, prm_838) / 10000;
-                if (body_at_m138 == 0)
+                break;
+            }
+            p_at_m138 = cdata_body_part(prm_838, i) % 10000 - 1;
+            if (p_at_m138 == -1)
+            {
+                continue;
+            }
+            if (rnd(std::clamp(30, 1, 30)) == 0)
+            {
+                if (inv_enhancement(p_at_m138) > -4)
                 {
+                    ci_at_m138 = p_at_m138;
                     break;
-                }
-                p_at_m138 = cdata(cnt, prm_838) % 10000 - 1;
-                if (p_at_m138 == -1)
-                {
-                    continue;
-                }
-                if (rnd(std::clamp(30, 1, 30)) == 0)
-                {
-                    if (inv_enhancement(p_at_m138) > -4)
-                    {
-                        ci_at_m138 = p_at_m138;
-                        break;
-                    }
                 }
             }
         }
@@ -16807,8 +16768,10 @@ int item_fire(int prm_840, int prm_841)
                                         + _s(prm_840) + u8" turn"s
                                         + _s2(p_at_m138) + u8" to dust."s));
                             }
-                            cdata(inv_body_part(ci_at_m138), prm_840) =
-                                cdata(inv_body_part(ci_at_m138), prm_840)
+                            cdata_body_part(
+                                prm_840, inv_body_part(ci_at_m138)) =
+                                cdata_body_part(
+                                    prm_840, inv_body_part(ci_at_m138))
                                 / 10000 * 10000;
                             inv_body_part(ci_at_m138) = 0;
                             r1 = prm_840;
@@ -17114,7 +17077,7 @@ int copy_chara(int prm_848)
     }
     del_chara(c_at_m139);
     memcpy(sdata, 0, c_at_m139, sdata, 0, prm_848, 4800);
-    memcpy(cdata, 0, c_at_m139, cdata, 0, prm_848, 2000);
+    cdata(c_at_m139) = cdata(prm_848);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -17127,12 +17090,10 @@ int copy_chara(int prm_848)
     cdata_y(c_at_m139) = y_at_m139;
     cdata_impression(c_at_m139) = 0;
     cdata_gold(c_at_m139) = 0;
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
-        {
-            cdata(cnt, c_at_m139) = cdata(cnt, c_at_m139) / 10000 * 10000;
-        }
+        cdata_body_part(c_at_m139, i) =
+            cdata_body_part(c_at_m139, i) / 10000 * 10000;
     }
     cdata_original_relationship(c_at_m139) = -3;
     cbitmod(967, c_at_m139, 0);
@@ -17598,9 +17559,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (cdata_hp(prm_853) - dmg_at_m141 <= 0)
         {
             if (std::clamp(
-                    25
-                        + cdata((280 + findbuff(prm_853, 18) * 3 + 1), prm_853)
-                            / 17,
+                    25 + cdata_buff_power(prm_853, findbuff(prm_853, 18)) / 17,
                     25,
                     80)
                 >= rnd(100))
@@ -18813,11 +18772,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         int cnt = 0;
                         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
                         {
-                            if (cdata(280 + cnt * 3, p_at_m141) == 0)
+                            if (cdata_buff_id(p_at_m141, cnt) == 0)
                             {
                                 break;
                             }
-                            if (cdata(280 + cnt * 3, p_at_m141) == 16)
+                            if (cdata_buff_id(p_at_m141, cnt) == 16)
                             {
                                 delbuff(p_at_m141, cnt);
                                 --cnt;
@@ -19153,17 +19112,17 @@ void chara_vomit(int prm_876)
                     + u8" alien children from "s + his(prm_876) + u8" body!"s));
         }
     }
-    if (cdata(280, prm_876) != 0)
+    if (cdata_buff_id(prm_876, 0) != 0)
     {
         {
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata(280 + cnt * 3, prm_876) == 0)
+                if (cdata_buff_id(prm_876, cnt) == 0)
                 {
                     break;
                 }
-                if (bdataref(0, cdata(280 + cnt * 3, prm_876)) == 3)
+                if (bdataref(0, cdata_buff_id(prm_876, cnt)) == 3)
                 {
                     delbuff(prm_876, cnt);
                     --cnt;
@@ -20380,7 +20339,7 @@ void label_1421()
             sx = inf_raderw + cnt * 47 + 168;
             if (cnt < 8)
             {
-                if (cdata(240 + cnt, 0) < 0)
+                if (cdata_attr_adj(0, cnt) < 0)
                 {
                     color(200, 0, 0);
                 }
@@ -20815,18 +20774,18 @@ void label_1421()
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            if (cdata(280 + cnt * 3, 0) == 0)
+            if (cdata_buff_id(0, cnt) == 0)
             {
                 break;
             }
             pos(sx, sy);
-            gcopy(5, cdata((280 + cnt * 3), 0) * 32, 1120, 32, 32);
+            gcopy(5, cdata_buff_id(0, cnt) * 32, 1120, 32, 32);
             color(0, 0, 0);
             pos(sx + 3, sy + 19);
-            mes(cdata(280 + cnt * 3 + 2, 0));
+            mes(cdata_buff_turns(0, cnt));
             color(255, 255, 255);
             pos(sx + 2, sy + 18);
-            mes(cdata(280 + cnt * 3 + 2, 0));
+            mes(cdata_buff_turns(0, cnt));
             sy -= 32;
         }
     }
@@ -23399,14 +23358,11 @@ std::string cnveqweight(int prm_891)
 void label_1452()
 {
     cdata_speed_correction_value(r1) = 0;
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(r1, i) != 0)
         {
-            if (cdata(cnt, r1) != 0)
-            {
-                ++cdata_speed_correction_value(r1);
-            }
+            ++cdata_speed_correction_value(r1);
         }
     }
     if (cdata_speed_correction_value(r1) > 13)
@@ -23425,152 +23381,149 @@ void label_1452()
 
 void label_1453()
 {
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(r1, i) != 0)
         {
-            if (cdata(cnt, r1) != 0)
-            {
-                continue;
-            }
-            if (rnd(7) == 0)
-            {
-                cdata(cnt, r1) = 20000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(2)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(2)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(9) == 0)
-            {
-                cdata(cnt, r1) = 30000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(3)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(3)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(8) == 0)
-            {
-                cdata(cnt, r1) = 50000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(5)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(5)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(4) == 0)
-            {
-                cdata(cnt, r1) = 60000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(6)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(6)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(6) == 0)
-            {
-                cdata(cnt, r1) = 70000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(7)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(7)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(5) == 0)
-            {
-                cdata(cnt, r1) = 80000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(8)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(8)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(5) == 0)
-            {
-                cdata(cnt, r1) = 90000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(9)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(9)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            if (rnd(1) == 0)
-            {
-                cdata(cnt, r1) = 10000;
-                if (cm)
-                {
-                    break;
-                }
-                else
-                {
-                    txt(lang(
-                        name(r1) + u8"の身体から新たな"s + bodyn(1)
-                            + u8"が生えてきた！"s,
-                        name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(1)
-                            + u8"!"s));
-                    break;
-                }
-            }
-            break;
+            continue;
         }
+        if (rnd(7) == 0)
+        {
+            cdata_body_part(r1, i) = 20000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(2)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(2)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(9) == 0)
+        {
+            cdata_body_part(r1, i) = 30000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(3)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(3)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(8) == 0)
+        {
+            cdata_body_part(r1, i) = 50000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(5)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(5)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(4) == 0)
+        {
+            cdata_body_part(r1, i) = 60000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(6)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(6)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(6) == 0)
+        {
+            cdata_body_part(r1, i) = 70000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(7)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(7)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(5) == 0)
+        {
+            cdata_body_part(r1, i) = 80000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(8)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(8)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(5) == 0)
+        {
+            cdata_body_part(r1, i) = 90000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(9)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(9)
+                        + u8"!"s));
+                break;
+            }
+        }
+        if (rnd(1) == 0)
+        {
+            cdata_body_part(r1, i) = 10000;
+            if (cm)
+            {
+                break;
+            }
+            else
+            {
+                txt(lang(
+                    name(r1) + u8"の身体から新たな"s + bodyn(1)
+                        + u8"が生えてきた！"s,
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(1)
+                        + u8"!"s));
+                break;
+            }
+        }
+        break;
     }
     label_1452();
     return;
@@ -23627,7 +23580,7 @@ void label_1454()
         p += trait(154);
     }
     cdata_skill_bonus(r1) += p;
-    cdata(42, r1) += p;
+    cdata_total_skill_bonus(r1) += p;
     if (cdatan(2, r1) == u8"mutant"s || r1 == 0 && trait(0) == 1)
     {
         if (cdata_level(r1) < 37)
@@ -23933,57 +23886,61 @@ void label_1477()
             sdata(cnt, r1) = sdata((cnt + 600), r1) / 1000000;
         }
     }
-    if (cdata(158, r1) == 0)
+    if (cdata_158(r1) == 0)
     {
         label_2295();
     }
     if (r1 == 0)
     {
-        cdata.clear(r1, 450, (120) / sizeof(int));
+        cdata(r1).clear_flags();
         if (trait(161) != 0)
         {
+            for (int i = 0; i < 30; ++i)
             {
-                int cnt = 100;
-                for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+                if (cdata_body_part(r1, i) % 10000 == 0)
                 {
-                    if (cdata(cnt, r1) % 10000 == 0)
-                    {
-                        continue;
-                    }
-                    rp = cdata(cnt, r1) % 10000 - 1;
-                    if (inv_weight(rp) >= 1000)
-                    {
-                        cdata(cnt, r1) = cdata(cnt, r1) / 10000 * 10000;
-                        inv_body_part(rp) = 0;
-                    }
+                    continue;
+                }
+                rp = cdata_body_part(r1, i) % 10000 - 1;
+                if (inv_weight(rp) >= 1000)
+                {
+                    cdata_body_part(r1, i) =
+                        cdata_body_part(r1, i) / 10000 * 10000;
+                    inv_body_part(rp) = 0;
                 }
             }
         }
     }
     else if (cdata_id(r1) == 343)
     {
-        memcpy(cdata, 450, r1, userdata, 40, cdata_cnpc_id(r1), 120);
+        for (int i = 0; i < 30; ++i)
+        {
+            cdata(r1).flags[i] = userdata(40 + i, cdata_cnpc_id(r1));
+        }
     }
     else
     {
-        memcpy(cdata, 450, r1, cbitorg, 0, cdata_id(r1), 120);
+        for (int i = 0; i < 30; ++i)
+        {
+            cdata(r1).flags[i] = cbitorg(i, cdata_id(r1));
+        }
     }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            if (racebit(cnt, cdata(158, r1)) == 0)
+            if (racebit(cnt, cdata_158(r1)) == 0)
             {
                 break;
             }
-            cbitmod(racebit(cnt, cdata(158, r1)), r1, 1);
+            cbitmod(racebit(cnt, cdata_158(r1)), r1, 1);
         }
     }
     {
         int cnt = 10;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            cdata(270 + cnt - 10, r1) = 0;
+            cdata_growth_buff(r1, cnt - 10) = 0;
         }
     }
     cdata_dv(r1) = 0;
@@ -24008,237 +23965,233 @@ void label_1477()
     cdata_decrease_physical_damage(r1) = 0;
     cdata_nullify_damage(r1) = 0;
     cdata_cut_counterattack(r1) = 0;
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(r1, i) % 10000 == 0)
         {
-            if (cdata(cnt, r1) % 10000 == 0)
+            continue;
+        }
+        rp = cdata_body_part(r1, i) % 10000 - 1;
+        cdata_sum_of_equipment_weight(r1) += inv_weight(rp);
+        if (inv_skill(rp) == 168)
+        {
+            if (!(cdata_equipment_type(r1) & 1))
             {
-                continue;
+                cdata_equipment_type(r1) += 1;
             }
-            rp = cdata(cnt, r1) % 10000 - 1;
-            cdata_sum_of_equipment_weight(r1) += inv_weight(rp);
-            if (inv_skill(rp) == 168)
+        }
+        cdata_dv(r1) += inv_dv(rp);
+        cdata_pv(r1) += inv_pv(rp);
+        if (inv_dice_x(rp) == 0)
+        {
+            cdata_hit_bonus(r1) += inv_hit_bonus(rp);
+            cdata_damage_bonus(r1) += inv_damage_bonus(rp);
+            cdata_pv(r1) +=
+                inv_enhancement(rp) * 2 + (inv_curse_state(rp) == 1) * 2;
+        }
+        else if (cdata_body_part(r1, i) / 10000 == 5)
+        {
+            ++attacknum;
+        }
+        if (inv_curse_state(rp) == -1)
+        {
+            cdata_curse_power(r1) += 20;
+        }
+        if (inv_curse_state(rp) == -2)
+        {
+            cdata_curse_power(r1) += 100;
+        }
+        if (inv_material(rp) == 8)
+        {
+            if (r1 == 0)
             {
-                if (!(cdata_equipment_type(r1) & 1))
+                gdata_ether_disease_speed += 5;
+            }
+        }
+        {
+            int cnt = 0;
+            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+            {
+                if (inv_enchantment_id(rp, cnt) == 0)
                 {
-                    cdata_equipment_type(r1) += 1;
+                    break;
                 }
-            }
-            cdata_dv(r1) += inv_dv(rp);
-            cdata_pv(r1) += inv_pv(rp);
-            if (inv_dice_x(rp) == 0)
-            {
-                cdata_hit_bonus(r1) += inv_hit_bonus(rp);
-                cdata_damage_bonus(r1) += inv_damage_bonus(rp);
-                cdata_pv(r1) +=
-                    inv_enhancement(rp) * 2 + (inv_curse_state(rp) == 1) * 2;
-            }
-            else if (cdata(cnt, r1) / 10000 == 5)
-            {
-                ++attacknum;
-            }
-            if (inv_curse_state(rp) == -1)
-            {
-                cdata_curse_power(r1) += 20;
-            }
-            if (inv_curse_state(rp) == -2)
-            {
-                cdata_curse_power(r1) += 100;
-            }
-            if (inv_material(rp) == 8)
-            {
-                if (r1 == 0)
+                rp2 = inv_enchantment_id(rp, cnt);
+                if (rp2 >= 10000)
                 {
-                    gdata_ether_disease_speed += 5;
-                }
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
-                {
-                    if (inv_enchantment_id(rp, cnt) == 0)
+                    rp3 = rp2 % 10000;
+                    rp2 = rp2 / 10000;
+                    if (rp2 == 1)
                     {
-                        break;
+                        sdata(rp3, r1) +=
+                            inv_enchantment_power(rp, cnt) / 50 + 1;
+                        continue;
                     }
-                    rp2 = inv_enchantment_id(rp, cnt);
-                    if (rp2 >= 10000)
+                    if (rp2 == 2)
                     {
-                        rp3 = rp2 % 10000;
-                        rp2 = rp2 / 10000;
-                        if (rp2 == 1)
+                        sdata(rp3, r1) += inv_enchantment_power(rp, cnt) / 2;
+                        if (sdata(rp3, r1) < 0)
+                        {
+                            sdata(rp3, r1) = 1;
+                        }
+                        continue;
+                    }
+                    if (rp2 == 3)
+                    {
+                        if (sorg(rp3, r1) != 0)
                         {
                             sdata(rp3, r1) +=
                                 inv_enchantment_power(rp, cnt) / 50 + 1;
-                            continue;
-                        }
-                        if (rp2 == 2)
-                        {
-                            sdata(rp3, r1) +=
-                                inv_enchantment_power(rp, cnt) / 2;
-                            if (sdata(rp3, r1) < 0)
+                            if (sdata(rp3, r1) < 1)
                             {
                                 sdata(rp3, r1) = 1;
                             }
-                            continue;
                         }
-                        if (rp2 == 3)
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (rp2 == 56)
+                    {
+                        if (r1 == 0)
                         {
-                            if (sorg(rp3, r1) != 0)
-                            {
-                                sdata(rp3, r1) +=
-                                    inv_enchantment_power(rp, cnt) / 50 + 1;
-                                if (sdata(rp3, r1) < 1)
-                                {
-                                    sdata(rp3, r1) = 1;
-                                }
-                            }
+                            gdata_catches_god_signal = 1;
                             continue;
                         }
                     }
-                    else
+                    if (rp2 == 59)
                     {
-                        if (rp2 == 56)
-                        {
-                            if (r1 == 0)
-                            {
-                                gdata_catches_god_signal = 1;
-                                continue;
-                            }
-                        }
-                        if (rp2 == 59)
-                        {
-                            if (r1 == 0)
-                            {
-                                gdata_reveals_religion = 1;
-                                continue;
-                            }
-                        }
-                        if (rp2 == 29)
-                        {
-                            sdata(18, r1) +=
-                                inv_enchantment_power(rp, cnt) / 50 + 1;
-                            if (r1 == 0)
-                            {
-                                gdata_seven_league_boot_effect +=
-                                    inv_enchantment_power(rp, cnt) / 8;
-                                continue;
-                            }
-                        }
-                        if (rp2 == 32)
-                        {
-                            cbitmod(5, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 35)
-                        {
-                            cbitmod(7, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 23)
-                        {
-                            cbitmod(9, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 24)
-                        {
-                            cbitmod(12, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 25)
-                        {
-                            cbitmod(8, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 26)
-                        {
-                            cbitmod(10, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 27)
-                        {
-                            cbitmod(11, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 28)
-                        {
-                            cbitmod(13, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 42)
-                        {
-                            cbitmod(14, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 41)
-                        {
-                            cbitmod(15, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 55)
-                        {
-                            cbitmod(29, r1, 1);
-                            continue;
-                        }
-                        if (rp2 == 52)
-                        {
-                            cdata_decrease_physical_damage(r1) +=
-                                inv_enchantment_power(rp, cnt) / 40 + 5;
-                            continue;
-                        }
-                        if (rp2 == 53)
-                        {
-                            cdata_nullify_damage(r1) +=
-                                inv_enchantment_power(rp, cnt) / 60 + 3;
-                            continue;
-                        }
-                        if (rp2 == 54)
-                        {
-                            cdata_cut_counterattack(r1) +=
-                                inv_enchantment_power(rp, cnt) / 5;
-                            continue;
-                        }
-                        if (rp2 == 44)
-                        {
-                            cdata_rate_of_critical_hit(r1) +=
-                                inv_enchantment_power(rp, cnt) / 50;
-                            continue;
-                        }
-                        if (rp2 == 39)
-                        {
-                            cdata_rate_to_pierce(r1) +=
-                                inv_enchantment_power(rp, cnt) / 50;
-                            continue;
-                        }
-                        if (rp2 == 50)
-                        {
-                            cdata_extra_attack(r1) +=
-                                inv_enchantment_power(rp, cnt) / 15;
-                            continue;
-                        }
-                        if (rp2 == 51)
-                        {
-                            cdata_extra_shot(r1) +=
-                                inv_enchantment_power(rp, cnt) / 15;
-                            continue;
-                        }
-                        if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
-                        {
-                            cbitmod(24, r1, 1);
-                            continue;
-                        }
                         if (r1 == 0)
                         {
-                            if (rp2 == 30)
-                            {
-                                gdata_protects_from_etherwind = 1;
-                                continue;
-                            }
-                            if (rp2 == 31)
-                            {
-                                gdata_protects_from_bad_weather = 1;
-                                continue;
-                            }
+                            gdata_reveals_religion = 1;
+                            continue;
+                        }
+                    }
+                    if (rp2 == 29)
+                    {
+                        sdata(18, r1) +=
+                            inv_enchantment_power(rp, cnt) / 50 + 1;
+                        if (r1 == 0)
+                        {
+                            gdata_seven_league_boot_effect +=
+                                inv_enchantment_power(rp, cnt) / 8;
+                            continue;
+                        }
+                    }
+                    if (rp2 == 32)
+                    {
+                        cbitmod(5, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 35)
+                    {
+                        cbitmod(7, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 23)
+                    {
+                        cbitmod(9, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 24)
+                    {
+                        cbitmod(12, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 25)
+                    {
+                        cbitmod(8, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 26)
+                    {
+                        cbitmod(10, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 27)
+                    {
+                        cbitmod(11, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 28)
+                    {
+                        cbitmod(13, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 42)
+                    {
+                        cbitmod(14, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 41)
+                    {
+                        cbitmod(15, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 55)
+                    {
+                        cbitmod(29, r1, 1);
+                        continue;
+                    }
+                    if (rp2 == 52)
+                    {
+                        cdata_decrease_physical_damage(r1) +=
+                            inv_enchantment_power(rp, cnt) / 40 + 5;
+                        continue;
+                    }
+                    if (rp2 == 53)
+                    {
+                        cdata_nullify_damage(r1) +=
+                            inv_enchantment_power(rp, cnt) / 60 + 3;
+                        continue;
+                    }
+                    if (rp2 == 54)
+                    {
+                        cdata_cut_counterattack(r1) +=
+                            inv_enchantment_power(rp, cnt) / 5;
+                        continue;
+                    }
+                    if (rp2 == 44)
+                    {
+                        cdata_rate_of_critical_hit(r1) +=
+                            inv_enchantment_power(rp, cnt) / 50;
+                        continue;
+                    }
+                    if (rp2 == 39)
+                    {
+                        cdata_rate_to_pierce(r1) +=
+                            inv_enchantment_power(rp, cnt) / 50;
+                        continue;
+                    }
+                    if (rp2 == 50)
+                    {
+                        cdata_extra_attack(r1) +=
+                            inv_enchantment_power(rp, cnt) / 15;
+                        continue;
+                    }
+                    if (rp2 == 51)
+                    {
+                        cdata_extra_shot(r1) +=
+                            inv_enchantment_power(rp, cnt) / 15;
+                        continue;
+                    }
+                    if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
+                    {
+                        cbitmod(24, r1, 1);
+                        continue;
+                    }
+                    if (r1 == 0)
+                    {
+                        if (rp2 == 30)
+                        {
+                            gdata_protects_from_etherwind = 1;
+                            continue;
+                        }
+                        if (rp2 == 31)
+                        {
+                            gdata_protects_from_bad_weather = 1;
+                            continue;
                         }
                     }
                 }
@@ -24266,16 +24219,16 @@ void label_1477()
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            if (cdata(240 + cnt, r1) != 0)
+            if (cdata_attr_adj(r1, cnt) != 0)
             {
                 if (cdata_quality(r1) >= 4)
                 {
-                    if (cdata(240 + cnt, r1) < sorg((10 + cnt), r1) / 5)
+                    if (cdata_attr_adj(r1, cnt) < sorg((10 + cnt), r1) / 5)
                     {
-                        cdata(240 + cnt, r1) = sorg((10 + cnt), r1) / 5;
+                        cdata_attr_adj(r1, cnt) = sorg((10 + cnt), r1) / 5;
                     }
                 }
-                sdata(10 + cnt, r1) += cdata(240 + cnt, r1);
+                sdata(10 + cnt, r1) += cdata_attr_adj(r1, cnt);
             }
             if (sdata(10 + cnt, r1) < 1)
             {
@@ -24368,12 +24321,12 @@ void label_1477()
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            rp = cdata(280 + cnt * 3, r1);
+            rp = cdata_buff_id(r1, cnt);
             if (rp == 0)
             {
                 break;
             }
-            apply_buff(r1, rp, cdata(280 + cnt * 3 + 1, r1));
+            apply_buff(r1, rp, cdata_buff_power(r1, cnt));
         }
     }
     if (cdata_equipment_type(r1) & 4)
@@ -24849,7 +24802,7 @@ void label_1520()
             p = rnd(10);
             if (encfind(r1, 60010 + p) == -1)
             {
-                cdata(240 + p, r1) -= sorg((10 + p), r1) / 25 + 1;
+                cdata_attr_adj(r1, p) -= sorg((10 + p), r1) / 25 + 1;
                 label_1477();
             }
         }
@@ -25629,447 +25582,443 @@ void label_1530()
             eqamulet1 = 722;
         }
     }
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        p = cdata_body_part(rc, i) / 10000;
+        if (p == 0)
         {
-            p = cdata(cnt, rc) / 10000;
-            if (p == 0)
+            break;
+        }
+        if (p == 2)
+        {
+            if (eqamulet1)
             {
-                break;
-            }
-            if (p == 2)
-            {
-                if (eqamulet1)
+                if (eqamulet1 >= 10000)
                 {
-                    if (eqamulet1 >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqamulet1(1)));
-                        flttypeminor = eqamulet1;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqamulet1;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqamulet1 = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqamulet1(1)));
+                    flttypeminor = eqamulet1;
+                    dbid = -1;
                 }
-                if (eqamulet2)
+                else
                 {
-                    if (eqamulet2 >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqamulet2(1)));
-                        flttypeminor = eqamulet2;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqamulet2;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqamulet2 = 0;
-                    continue;
+                    flt();
+                    dbid = eqamulet1;
                 }
-            }
-            if (p == 6)
-            {
-                if (eqring1)
-                {
-                    if (eqring1 >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqring1(1)));
-                        flttypeminor = eqring1;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqring1;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqring1 = 0;
-                    continue;
-                }
-                if (eqring2)
-                {
-                    if (eqring2 >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqring2(1)));
-                        flttypeminor = eqring2;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqring2;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqring2 = 0;
-                    continue;
-                }
-            }
-            if (p == 3)
-            {
-                if (eqcloack)
-                {
-                    if (eqcloack >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqcloack(1)));
-                        flttypeminor = eqcloack;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqcloack;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqcloack = 0;
-                    continue;
-                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqamulet1 = 0;
                 continue;
             }
-            if (p == 8)
+            if (eqamulet2)
             {
-                if (eqgirdle)
+                if (eqamulet2 >= 10000)
                 {
-                    if (eqgirdle >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqgirdle(1)));
-                        flttypeminor = eqgirdle;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqgirdle;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqgirdle = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqamulet2(1)));
+                    flttypeminor = eqamulet2;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqamulet2;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqamulet2 = 0;
                 continue;
             }
-            if (p == 1)
+        }
+        if (p == 6)
+        {
+            if (eqring1)
             {
-                if (eqhelm)
+                if (eqring1 >= 10000)
                 {
-                    if (eqhelm >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqhelm(1)));
-                        flttypeminor = eqhelm;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqhelm;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqhelm = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqring1(1)));
+                    flttypeminor = eqring1;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqring1;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqring1 = 0;
                 continue;
             }
-            if (p == 4)
+            if (eqring2)
             {
-                if (eqarmor)
+                if (eqring2 >= 10000)
                 {
-                    if (eqarmor >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqarmor(1)));
-                        flttypeminor = eqarmor;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqarmor;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqarmor = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqring2(1)));
+                    flttypeminor = eqring2;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqring2;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqring2 = 0;
                 continue;
             }
-            if (p == 7)
+        }
+        if (p == 3)
+        {
+            if (eqcloack)
             {
-                if (eqglove)
+                if (eqcloack >= 10000)
                 {
-                    if (eqglove >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqglove(1)));
-                        flttypeminor = eqglove;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqglove;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqglove = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqcloack(1)));
+                    flttypeminor = eqcloack;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqcloack;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqcloack = 0;
                 continue;
             }
-            if (p == 9)
+            continue;
+        }
+        if (p == 8)
+        {
+            if (eqgirdle)
             {
-                if (eqboots)
+                if (eqgirdle >= 10000)
                 {
-                    if (eqboots >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqboots(1)));
-                        flttypeminor = eqboots;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqboots;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqboots = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqgirdle(1)));
+                    flttypeminor = eqgirdle;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqgirdle;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqgirdle = 0;
                 continue;
             }
-            if (p == 5)
+            continue;
+        }
+        if (p == 1)
+        {
+            if (eqhelm)
             {
-                if (eqmultiweapon)
+                if (eqhelm >= 10000)
+                {
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqhelm(1)));
+                    flttypeminor = eqhelm;
+                    dbid = -1;
+                }
+                else
+                {
+                    flt();
+                    dbid = eqhelm;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqhelm = 0;
+                continue;
+            }
+            continue;
+        }
+        if (p == 4)
+        {
+            if (eqarmor)
+            {
+                if (eqarmor >= 10000)
+                {
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqarmor(1)));
+                    flttypeminor = eqarmor;
+                    dbid = -1;
+                }
+                else
+                {
+                    flt();
+                    dbid = eqarmor;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqarmor = 0;
+                continue;
+            }
+            continue;
+        }
+        if (p == 7)
+        {
+            if (eqglove)
+            {
+                if (eqglove >= 10000)
+                {
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqglove(1)));
+                    flttypeminor = eqglove;
+                    dbid = -1;
+                }
+                else
+                {
+                    flt();
+                    dbid = eqglove;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqglove = 0;
+                continue;
+            }
+            continue;
+        }
+        if (p == 9)
+        {
+            if (eqboots)
+            {
+                if (eqboots >= 10000)
+                {
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqboots(1)));
+                    flttypeminor = eqboots;
+                    dbid = -1;
+                }
+                else
+                {
+                    flt();
+                    dbid = eqboots;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqboots = 0;
+                continue;
+            }
+            continue;
+        }
+        if (p == 5)
+        {
+            if (eqmultiweapon)
+            {
+                {
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                    {
+                        flt(calcobjlv(cdata_level(rc)), calcfixlv(2 + fixeq));
+                        itemcreate(rc, eqmultiweapon, -1, -1, 0);
+                        if (inv_weight(ci) > 1500)
+                        {
+                            if (cnt < 14)
+                            {
+                                inv_number(ci) = 0;
+                                continue;
+                            }
+                        }
+                        break;
+                    }
+                }
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqweapon1 = 0;
+                continue;
+            }
+            if (eqweapon1)
+            {
+                if (eqweapon1 >= 10000)
                 {
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                         {
                             flt(calcobjlv(cdata_level(rc)),
-                                calcfixlv(2 + fixeq));
-                            itemcreate(rc, eqmultiweapon, -1, -1, 0);
-                            if (inv_weight(ci) > 1500)
+                                calcfixlv(fixeq + eqweapon1(1)));
+                            flttypeminor = eqweapon1;
+                            dbid = -1;
+                            itemcreate(rc, dbid, -1, -1, 0);
+                            if (eqtwohand)
                             {
-                                if (cnt < 14)
+                                if (inv_weight(ci) < 4000)
                                 {
-                                    inv_number(ci) = 0;
-                                    continue;
+                                    if (cnt < 14)
+                                    {
+                                        inv_number(ci) = 0;
+                                        continue;
+                                    }
+                                }
+                            }
+                            if (eqtwowield)
+                            {
+                                if (inv_weight(ci) > 1500)
+                                {
+                                    if (cnt < 14)
+                                    {
+                                        inv_number(ci) = 0;
+                                        continue;
+                                    }
                                 }
                             }
                             break;
                         }
                     }
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqweapon1 = 0;
-                    continue;
                 }
-                if (eqweapon1)
+                else
                 {
-                    if (eqweapon1 >= 10000)
+                    flt();
+                    dbid = eqweapon1;
+                    itemcreate(rc, dbid, -1, -1, 0);
+                }
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqweapon1 = 0;
+                continue;
+            }
+            if (eqweapon2)
+            {
+                if (eqweapon2 >= 10000)
+                {
                     {
+                        int cnt = 0;
+                        for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                         {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                            flt(calcobjlv(cdata_level(rc)),
+                                calcfixlv(fixeq + eqweapon2(1)));
+                            flttypeminor = eqweapon2;
+                            dbid = -1;
+                            itemcreate(rc, dbid, -1, -1, 0);
+                            if (eqtwowield)
                             {
-                                flt(calcobjlv(cdata_level(rc)),
-                                    calcfixlv(fixeq + eqweapon1(1)));
-                                flttypeminor = eqweapon1;
-                                dbid = -1;
-                                itemcreate(rc, dbid, -1, -1, 0);
-                                if (eqtwohand)
+                                if (inv_weight(ci) > 1500)
                                 {
-                                    if (inv_weight(ci) < 4000)
+                                    if (cnt < 14)
                                     {
-                                        if (cnt < 14)
-                                        {
-                                            inv_number(ci) = 0;
-                                            continue;
-                                        }
+                                        inv_number(ci) = 0;
+                                        continue;
                                     }
                                 }
-                                if (eqtwowield)
-                                {
-                                    if (inv_weight(ci) > 1500)
-                                    {
-                                        if (cnt < 14)
-                                        {
-                                            inv_number(ci) = 0;
-                                            continue;
-                                        }
-                                    }
-                                }
-                                break;
                             }
+                            break;
                         }
                     }
-                    else
-                    {
-                        flt();
-                        dbid = eqweapon1;
-                        itemcreate(rc, dbid, -1, -1, 0);
-                    }
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqweapon1 = 0;
-                    continue;
                 }
-                if (eqweapon2)
+                else
                 {
-                    if (eqweapon2 >= 10000)
-                    {
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
-                            {
-                                flt(calcobjlv(cdata_level(rc)),
-                                    calcfixlv(fixeq + eqweapon2(1)));
-                                flttypeminor = eqweapon2;
-                                dbid = -1;
-                                itemcreate(rc, dbid, -1, -1, 0);
-                                if (eqtwowield)
-                                {
-                                    if (inv_weight(ci) > 1500)
-                                    {
-                                        if (cnt < 14)
-                                        {
-                                            inv_number(ci) = 0;
-                                            continue;
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqweapon2;
-                        itemcreate(rc, dbid, -1, -1, 0);
-                    }
-                    eqweapon2 = 0;
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    continue;
-                }
-                if (eqshield)
-                {
-                    if (eqshield >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqshield(1)));
-                        flttypeminor = eqshield;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqshield;
-                    }
+                    flt();
+                    dbid = eqweapon2;
                     itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqshield = 0;
-                    continue;
                 }
+                eqweapon2 = 0;
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
                 continue;
             }
-            if (p == 10)
+            if (eqshield)
             {
-                if (eqrange)
+                if (eqshield >= 10000)
                 {
-                    if (eqrange >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqrange(1)));
-                        flttypeminor = eqrange;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqrange;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqrange = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqshield(1)));
+                    flttypeminor = eqshield;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqshield;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqshield = 0;
                 continue;
             }
-            if (p == 11)
+            continue;
+        }
+        if (p == 10)
+        {
+            if (eqrange)
             {
-                if (eqammo)
+                if (eqrange >= 10000)
                 {
-                    if (eqammo >= 10000)
-                    {
-                        flt(calcobjlv(cdata_level(rc)),
-                            calcfixlv(fixeq + eqammo(1)));
-                        flttypeminor = eqammo;
-                        dbid = -1;
-                    }
-                    else
-                    {
-                        flt();
-                        dbid = eqammo;
-                    }
-                    itemcreate(rc, dbid, -1, -1, 0);
-                    r1 = rc;
-                    body = cnt;
-                    label_2194();
-                    eqammo = 0;
-                    continue;
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqrange(1)));
+                    flttypeminor = eqrange;
+                    dbid = -1;
                 }
+                else
+                {
+                    flt();
+                    dbid = eqrange;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqrange = 0;
                 continue;
             }
+            continue;
+        }
+        if (p == 11)
+        {
+            if (eqammo)
+            {
+                if (eqammo >= 10000)
+                {
+                    flt(calcobjlv(cdata_level(rc)),
+                        calcfixlv(fixeq + eqammo(1)));
+                    flttypeminor = eqammo;
+                    dbid = -1;
+                }
+                else
+                {
+                    flt();
+                    dbid = eqammo;
+                }
+                itemcreate(rc, dbid, -1, -1, 0);
+                r1 = rc;
+                body = 100 + i;
+                label_2194();
+                eqammo = 0;
+                continue;
+            }
+            continue;
         }
     }
     if (cdata_id(rc) == 326)
@@ -26117,7 +26066,7 @@ void label_1530()
 
 void label_1531()
 {
-    p = 100;
+    p = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
@@ -26129,63 +26078,63 @@ void label_1531()
             }
             if (s == u8"HD"s)
             {
-                cdata(p, rc) = 10000;
+                cdata_body_part(rc, p) = 10000;
                 ++p;
                 continue;
             }
             if (s == u8"N_"s)
             {
-                cdata(p, rc) = 20000;
+                cdata_body_part(rc, p) = 20000;
                 ++p;
                 continue;
             }
             if (s == u8"BK"s)
             {
-                cdata(p, rc) = 30000;
+                cdata_body_part(rc, p) = 30000;
                 ++p;
                 continue;
             }
             if (s == u8"BD"s)
             {
-                cdata(p, rc) = 40000;
+                cdata_body_part(rc, p) = 40000;
                 ++p;
                 continue;
             }
             if (s == u8"HA"s)
             {
-                cdata(p, rc) = 50000;
+                cdata_body_part(rc, p) = 50000;
                 ++p;
                 continue;
             }
             if (s == u8"R_"s)
             {
-                cdata(p, rc) = 60000;
+                cdata_body_part(rc, p) = 60000;
                 ++p;
                 continue;
             }
             if (s == u8"A_"s)
             {
-                cdata(p, rc) = 70000;
+                cdata_body_part(rc, p) = 70000;
                 ++p;
                 continue;
             }
             if (s == u8"W_"s)
             {
-                cdata(p, rc) = 80000;
+                cdata_body_part(rc, p) = 80000;
                 ++p;
                 continue;
             }
             if (s == u8"L_"s)
             {
-                cdata(p, rc) = 90000;
+                cdata_body_part(rc, p) = 90000;
                 ++p;
                 continue;
             }
         }
     }
-    cdata(p, rc) = 100000;
+    cdata_body_part(rc, p) = 100000;
     ++p;
-    cdata(p, rc) = 110000;
+    cdata_body_part(rc, p) = 110000;
     ++p;
     return;
 }
@@ -26612,7 +26561,7 @@ void label_1536()
     }
     label_0043();
     cdata_skill_bonus(r1) = 5 + trait(154);
-    cdata(42, r1) = 5 + trait(154);
+    cdata_total_skill_bonus(r1) = 5 + trait(154);
     inv_getheader(0);
     {
         int cnt = invhead;
@@ -26711,20 +26660,20 @@ void label_15390()
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            cdata(240 + cnt, rc) = 0;
+            cdata_attr_adj(rc, cnt) = 0;
         }
     }
-    if (cdata(280, rc) != 0)
+    if (cdata_buff_id(rc, 0) != 0)
     {
         {
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata(280 + cnt * 3, rc) == 0)
+                if (cdata_buff_id(rc, cnt) == 0)
                 {
                     break;
                 }
-                if (cdata(280 + cnt * 3, rc) == 13)
+                if (cdata_buff_id(rc, cnt) == 13)
                 {
                     continue;
                 }
@@ -27272,8 +27221,8 @@ void label_1573()
                 }
                 if (inv_body_part(ci) != 0)
                 {
-                    cdata(inv_body_part(ci), rc) =
-                        cdata(inv_body_part(ci), rc) / 10000 * 10000;
+                    cdata_body_part(rc, inv_body_part(ci)) =
+                        cdata_body_part(rc, inv_body_part(ci)) / 10000 * 10000;
                     inv_body_part(ci) = 0;
                 }
                 f = 0;
@@ -27449,8 +27398,8 @@ void label_1573()
             }
             if (inv_body_part(ci) != 0)
             {
-                cdata(inv_body_part(ci), rc) =
-                    cdata(inv_body_part(ci), rc) / 10000 * 10000;
+                cdata_body_part(rc, inv_body_part(ci)) =
+                    cdata_body_part(rc, inv_body_part(ci)) / 10000 * 10000;
                 inv_body_part(ci) = 0;
             }
             inv_x(ci) = cdata_x(rc);
@@ -28345,128 +28294,117 @@ void label_1578()
 
 void label_1579()
 {
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(cc, i) % 10000 == 0)
         {
-            if (cdata(cnt, cc) % 10000 == 0)
+            continue;
+        }
+        ci = cdata_body_part(cc, i) % 10000 - 1;
+        {
+            int cnt = 0;
+            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
-                continue;
-            }
-            ci = cdata(cnt, cc) % 10000 - 1;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                if (inv_enchantment_id(ci, cnt) == 0)
                 {
-                    if (inv_enchantment_id(ci, cnt) == 0)
+                    break;
+                }
+                if (inv_enchantment_id(ci, cnt) == 21)
+                {
+                    if (mdata(6) != 1)
                     {
-                        break;
-                    }
-                    if (inv_enchantment_id(ci, cnt) == 21)
-                    {
-                        if (mdata(6) != 1)
+                        if (rnd(25)
+                            < std::clamp(
+                                  std::abs(inv_enchantment_power(ci, cnt)) / 50,
+                                  1,
+                                  25))
                         {
-                            if (rnd(25)
+                            efid = 408;
+                            tc = cc;
+                            label_2176();
+                            continue;
+                        }
+                    }
+                }
+                if (inv_enchantment_id(ci, cnt) == 45)
+                {
+                    if (rnd(4) == 0)
+                    {
+                        if (synccheck(cc, -1))
+                        {
+                            txtef(8);
+                            txt(lang(
+                                u8"何かが"s + name(cc) + u8"の血を吸った。"s,
+                                u8"Something sucks "s + name(cc) + your(cc)
+                                    + u8" blood."s));
+                        }
+                        cdata_bleeding(cc) +=
+                            std::abs(inv_enchantment_power(ci, cnt)) / 25 + 3;
+                        continue;
+                    }
+                }
+                if (inv_enchantment_id(ci, cnt) == 46)
+                {
+                    if (rnd(20) == 0)
+                    {
+                        if (synccheck(cc, -1))
+                        {
+                            txtef(8);
+                            txt(lang(
+                                name(cc) + u8"は未熟になった。"s,
+                                name(cc) + u8" become"s + _s(cc)
+                                    + u8" inexperienced."s));
+                        }
+                        cdata_experience(cc) -= cdata_required_experience(cc)
+                                / (300
+                                   - std::clamp(
+                                         std::abs(
+                                             inv_enchantment_power(ci, cnt))
+                                             / 2,
+                                         0,
+                                         50))
+                            + rnd(100);
+                        if (cdata_experience(cc) < 0)
+                        {
+                            cdata_experience(cc) = 0;
+                        }
+                        continue;
+                    }
+                }
+                if (inv_enchantment_id(ci, cnt) == 47)
+                {
+                    if (mdata(6) != 1)
+                    {
+                        if (mdata(6) != 5)
+                        {
+                            if (rnd(50)
                                 < std::clamp(
                                       std::abs(inv_enchantment_power(ci, cnt))
                                           / 50,
                                       1,
-                                      25))
+                                      50))
                             {
-                                efid = 408;
-                                tc = cc;
-                                label_2176();
-                                continue;
-                            }
-                        }
-                    }
-                    if (inv_enchantment_id(ci, cnt) == 45)
-                    {
-                        if (rnd(4) == 0)
-                        {
-                            if (synccheck(cc, -1))
-                            {
-                                txtef(8);
-                                txt(lang(
-                                    u8"何かが"s + name(cc)
-                                        + u8"の血を吸った。"s,
-                                    u8"Something sucks "s + name(cc) + your(cc)
-                                        + u8" blood."s));
-                            }
-                            cdata_bleeding(cc) +=
-                                std::abs(inv_enchantment_power(ci, cnt)) / 25
-                                + 3;
-                            continue;
-                        }
-                    }
-                    if (inv_enchantment_id(ci, cnt) == 46)
-                    {
-                        if (rnd(20) == 0)
-                        {
-                            if (synccheck(cc, -1))
-                            {
-                                txtef(8);
-                                txt(lang(
-                                    name(cc) + u8"は未熟になった。"s,
-                                    name(cc) + u8" become"s + _s(cc)
-                                        + u8" inexperienced."s));
-                            }
-                            cdata_experience(cc) -=
-                                cdata_required_experience(cc)
-                                    / (300
-                                       - std::clamp(
-                                             std::abs(
-                                                 inv_enchantment_power(ci, cnt))
-                                                 / 2,
-                                             0,
-                                             50))
-                                + rnd(100);
-                            if (cdata_experience(cc) < 0)
-                            {
-                                cdata_experience(cc) = 0;
-                            }
-                            continue;
-                        }
-                    }
-                    if (inv_enchantment_id(ci, cnt) == 47)
-                    {
-                        if (mdata(6) != 1)
-                        {
-                            if (mdata(6) != 5)
-                            {
-                                if (rnd(50)
-                                    < std::clamp(
-                                          std::abs(
-                                              inv_enchantment_power(ci, cnt))
-                                              / 50,
-                                          1,
-                                          50))
+                                if (synccheck(cc, -1))
                                 {
-                                    if (synccheck(cc, -1))
-                                    {
-                                        txtef(8);
-                                        txt(lang(
-                                            u8"魔力の渦が何かを召喚した！"s,
-                                            u8"Several creatures are summoned from a vortex of magic."s));
-                                    }
-                                    {
-                                        int cnt = 0;
-                                        for (int cnt_end = cnt + (1 + rnd(3));
-                                             cnt < cnt_end;
-                                             ++cnt)
-                                        {
-                                            flt(calcobjlv(
-                                                    cdata_level(0) * 3 / 2 + 3),
-                                                calcfixlv(2));
-                                            characreate(
-                                                -1,
-                                                0,
-                                                cdata_x(cc),
-                                                cdata_y(cc));
-                                        }
-                                    }
-                                    continue;
+                                    txtef(8);
+                                    txt(lang(
+                                        u8"魔力の渦が何かを召喚した！"s,
+                                        u8"Several creatures are summoned from a vortex of magic."s));
                                 }
+                                {
+                                    int cnt = 0;
+                                    for (int cnt_end = cnt + (1 + rnd(3));
+                                         cnt < cnt_end;
+                                         ++cnt)
+                                    {
+                                        flt(calcobjlv(
+                                                cdata_level(0) * 3 / 2 + 3),
+                                            calcfixlv(2));
+                                        characreate(
+                                            -1, 0, cdata_x(cc), cdata_y(cc));
+                                    }
+                                }
+                                continue;
                             }
                         }
                     }
@@ -46923,18 +46861,15 @@ label_1894_internal:
         {
             f = 0;
             tc = 0;
+            for (int i = 0; i < 30; ++i)
             {
-                int cnt = 100;
-                for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+                if (cdata_body_part(tc, i) % 10000 == 0)
                 {
-                    if (cdata(cnt, tc) % 10000 == 0)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        f = 1;
-                    }
+                    continue;
+                }
+                else
+                {
+                    f = 1;
                 }
             }
             if (f)
@@ -51632,7 +51567,7 @@ label_196901_internal:
         }
     }
     r1 = tc;
-    if (cdata(158, r1) == 0)
+    if (cdata_158(r1) == 0)
     {
         label_2295();
     }
@@ -51700,33 +51635,30 @@ label_196901_internal:
     }
     xnotesel(buff);
     buff = "";
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(tc, i) % 10000 != 0)
         {
-            if (cdata(cnt, tc) % 10000 != 0)
+            ci = cdata_body_part(tc, i) % 10000 - 1;
+        }
+        {
+            int cnt = 0;
+            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
-                ci = cdata(cnt, tc) % 10000 - 1;
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                if (inv_enchantment_id(ci, cnt) == 0)
                 {
-                    if (inv_enchantment_id(ci, cnt) == 0)
-                    {
-                        break;
-                    }
-                    val(0) = inv_enchantment_id(ci, cnt);
-                    val(1) = inv_enchantment_power(ci, cnt);
-                    val(2) = 1;
-                    val(3) = 0;
-                    label_0247();
-                    if (s == ""s)
-                    {
-                        continue;
-                    }
-                    xnoteadd(s);
+                    break;
                 }
+                val(0) = inv_enchantment_id(ci, cnt);
+                val(1) = inv_enchantment_power(ci, cnt);
+                val(2) = 1;
+                val(3) = 0;
+                label_0247();
+                if (s == ""s)
+                {
+                    continue;
+                }
+                xnoteadd(s);
             }
         }
     }
@@ -56369,7 +56301,7 @@ label_2035_internal:
             {
                 x = wx + 430 + cnt / 3 * 40;
                 y = wy + 151 + cnt % 3 * 32;
-                if (cdata(280 + cnt * 3, cc) == 0)
+                if (cdata_buff_id(cc, cnt) == 0)
                 {
                     gmode(4, -1, -1, 120);
                     pos(x, y);
@@ -56379,7 +56311,7 @@ label_2035_internal:
                 }
                 ++cs_buffmax;
                 pos(x, y);
-                gcopy(5, cdata((280 + cnt * 3), cc) * 32, 1120, 32, 32);
+                gcopy(5, cdata_buff_id(cc, cnt) * 32, 1120, 32, 32);
                 if (cs_buff == cnt)
                 {
                     pos(x, y);
@@ -56391,11 +56323,11 @@ label_2035_internal:
         if (cs_buffmax != 0)
         {
             const auto duration = calc_buff_duration(
-                cdata(280 + cs_buff * 3, cc), cdata(280 + cs_buff * 3 + 1, cc));
+                cdata_buff_id(cc, cs_buff), cdata_buff_power(cc, cs_buff));
             const auto description = get_buff_description(
-                cdata(280 + cs_buff * 3, cc), cdata(280 + cs_buff * 3 + 1, cc));
-            s = ""s + buffname(cdata((280 + cs_buff * 3), cc)) + u8": "s
-                + cdata((280 + cs_buff * 3 + 2), cc)
+                cdata_buff_id(cc, cs_buff), cdata_buff_power(cc, cs_buff));
+            s = ""s + buffname(cdata_buff_id(cc, cs_buff)) + u8": "s
+                + cdata_buff_turns(cc, cs_buff)
                 + lang(
                       (u8"("s + duration + u8")ﾀｰﾝの間、"s),
                       (u8"("s + duration + u8") "s))
@@ -57430,19 +57362,19 @@ void label_2047()
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
             body = 100 + cnt;
-            if (cdata(body, cc) % 10000 == 0)
+            if (cdata_body_part(cc, cnt) % 10000 == 0)
             {
                 continue;
             }
-            if (cdata(body, cc) / 10000 == 10)
+            if (cdata_body_part(cc, cnt) / 10000 == 10)
             {
                 continue;
             }
-            if (cdata(body, cc) / 10000 == 11)
+            if (cdata_body_part(cc, cnt) / 10000 == 11)
             {
                 continue;
             }
-            cw = cdata(body, cc) % 10000 - 1;
+            cw = cdata_body_part(cc, cnt) % 10000 - 1;
             if (inv_dice_x(cw) > 0)
             {
                 attackskill = inv_skill(cw);
@@ -57528,15 +57460,15 @@ void label_2049()
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
             body = 100 + cnt;
-            if (cdata(body, cc) / 10000 != 5)
+            if (cdata_body_part(cc, cnt) / 10000 != 5)
             {
                 continue;
             }
-            if (cdata(body, cc) % 10000 == 0)
+            if (cdata_body_part(cc, cnt) % 10000 == 0)
             {
                 continue;
             }
-            cw = cdata(body, cc) % 10000 - 1;
+            cw = cdata_body_part(cc, cnt) % 10000 - 1;
             if (inv_dice_x(cw) == 0)
             {
                 continue;
@@ -57620,44 +57552,41 @@ void label_2050()
     }
     curmenu = 1;
     mainhand = 0;
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(cc, i) != 0)
         {
-            if (cdata(cnt, cc) != 0)
+            if (trait(206) != 0)
             {
-                if (trait(206) != 0)
+                if (cdata_body_part(cc, i) / 10000 == 2)
                 {
-                    if (cdata(cnt, cc) / 10000 == 2)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
-                if (trait(203) != 0)
-                {
-                    if (cdata(cnt, cc) / 10000 == 9)
-                    {
-                        continue;
-                    }
-                }
-                if (trait(205) != 0)
-                {
-                    if (cdata(cnt, cc) / 10000 == 3)
-                    {
-                        continue;
-                    }
-                }
-                if (mainhand == 0)
-                {
-                    if (cdata(cnt, cc) / 10000 == 5)
-                    {
-                        mainhand = cnt;
-                    }
-                }
-                list(0, listmax) = cnt;
-                list(1, listmax) = cdata(cnt, cc) / 10000;
-                ++listmax;
             }
+            if (trait(203) != 0)
+            {
+                if (cdata_body_part(cc, i) / 10000 == 9)
+                {
+                    continue;
+                }
+            }
+            if (trait(205) != 0)
+            {
+                if (cdata_body_part(cc, i) / 10000 == 3)
+                {
+                    continue;
+                }
+            }
+            if (mainhand == 0)
+            {
+                if (cdata_body_part(cc, i) / 10000 == 5)
+                {
+                    mainhand = i + 100;
+                }
+            }
+            list(0, listmax) = i + 100;
+            list(1, listmax) = cdata_body_part(cc, i) / 10000;
+            ++listmax;
         }
     }
     label_2056();
@@ -57767,7 +57696,7 @@ label_2052_internal:
                 break;
             }
             display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
-            p(1) = cdata(list(0, p), cc);
+            p(1) = cdata_body_part(cc, list(0, p));
             s(0) = u8"-    "s;
             s(1) = u8"-"s;
             if (p(1) % 10000 != 0)
@@ -57885,10 +57814,10 @@ label_2052_internal:
     {
         cs_prev = cs;
         body = p;
-        if (cdata(body, cc) % 10000 != 0)
+        if (cdata_body_part(cc, body) % 10000 != 0)
         {
             gdata(808) = 1;
-            ci = cdata(body, cc) % 10000 - 1;
+            ci = cdata_body_part(cc, body) % 10000 - 1;
             if (inv_curse_state(ci) == -1 || inv_curse_state(ci) == -2)
             {
                 txt(lang(
@@ -57905,7 +57834,7 @@ label_2052_internal:
             txt(lang(
                 itemname(ci) + u8"を外した。"s,
                 u8"You unequip "s + itemname(ci) + u8"."s));
-            if (cdata(body, cc) / 10000 == 5)
+            if (cdata_body_part(cc, body) / 10000 == 5)
             {
                 label_2049();
             }
@@ -57923,9 +57852,9 @@ label_2052_internal:
     if (key == key_identify)
     {
         p = list(0, pagesize * page + cs);
-        if (cdata(p, cc) % 10000 != 0)
+        if (cdata_body_part(cc, p) % 10000 != 0)
         {
-            ci = cdata(p, cc) % 10000 - 1;
+            ci = cdata_body_part(cc, p) % 10000 - 1;
             cs_prev = cs;
             label_2068();
             nowindowanime = 1;
@@ -58986,17 +58915,17 @@ int label_2075()
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
             body = 100 + cnt;
-            if (cdata(body, cc) % 10000 == 0)
+            if (cdata_body_part(cc, cnt) % 10000 == 0)
             {
                 continue;
             }
-            if (cdata(body, cc) / 10000 == 10)
+            if (cdata_body_part(cc, cnt) / 10000 == 10)
             {
-                cw = cdata(body, cc) % 10000 - 1;
+                cw = cdata_body_part(cc, cnt) % 10000 - 1;
             }
-            if (cdata(body, cc) / 10000 == 11)
+            if (cdata_body_part(cc, cnt) / 10000 == 11)
             {
-                ammo = cdata(body, cc) % 10000 - 1;
+                ammo = cdata_body_part(cc, cnt) % 10000 - 1;
             }
         }
     }
@@ -59836,30 +59765,30 @@ void label_2085()
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            if (cdata(cnt, cc) != 0)
+            if (cdata_body_part(cc, cnt) != 0)
             {
                 if (trait(206) != 0)
                 {
-                    if (cdata(cnt, cc) / 10000 == 2)
+                    if (cdata_body_part(cc, cnt) / 10000 == 2)
                     {
                         continue;
                     }
                 }
                 if (trait(203) != 0)
                 {
-                    if (cdata(cnt, cc) / 10000 == 9)
+                    if (cdata_body_part(cc, cnt) / 10000 == 9)
                     {
                         continue;
                     }
                 }
                 if (trait(205) != 0)
                 {
-                    if (cdata(cnt, cc) / 10000 == 3)
+                    if (cdata_body_part(cc, cnt) / 10000 == 3)
                     {
                         continue;
                     }
                 }
-                p(1) = cdata(cnt, cc);
+                p(1) = cdata_body_part(cc, cnt);
                 q(0) = u8"装備なし"s;
                 q(1) = "";
                 if (p(1) % 10000 != 0)
@@ -59875,7 +59804,7 @@ void label_2085()
                 {
                     listmax = 0;
                 }
-                s = bodyn(cdata(cnt, cc) / 10000);
+                s = bodyn(cdata_body_part(cc, cnt) / 10000);
                 if (strmid(s, 0, 2) == u8"　"s)
                 {
                     s = strmid(s, 2, 2);
@@ -59991,13 +59920,13 @@ void label_2086()
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
             body = 100 + cnt;
-            if (cdata(body, cc) % 10000 == 0)
+            if (cdata_body_part(cc, cnt) % 10000 == 0)
             {
                 continue;
             }
-            if (cdata(body, cc) / 10000 == 11)
+            if (cdata_body_part(cc, cnt) / 10000 == 11)
             {
-                ci = cdata(body, cc) % 10000 - 1;
+                ci = cdata_body_part(cc, cnt) % 10000 - 1;
                 f = 1;
                 break;
             }
@@ -60313,7 +60242,7 @@ void label_2089()
             {
                 if (cdata_character_role(cnt) == 13)
                 {
-                    cdata(156, cnt) = 100;
+                    cdata_156(cnt) = 100;
                 }
             }
         }
@@ -60536,14 +60465,8 @@ void label_2092()
             sdata(cnt, 0) = 0;
         }
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
-        {
-            cdata(cnt, 56) = cdata(cnt, 0);
-            cdata(cnt, 0) = 0;
-        }
-    }
+    cdata(56) = cdata(0);
+    cdata(0).clear();
     inv_getheader(-1);
     {
         int cnt = invhead;
@@ -60821,8 +60744,8 @@ void label_2104()
         int cnt = 0;
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
         {
-            cdata(215 + cnt, rc) = userdata(15 + cnt, cun);
-            cdata(220 + cnt, rc) = userdata(20 + cnt, cun);
+            cdata_ai_act(rc, cnt) = userdata(15 + cnt, cun);
+            cdata_ai_act_sub(rc, cnt) = userdata(20 + cnt, cun);
         }
     }
     if (userdatan(5, cun) != ""s)
@@ -60843,7 +60766,7 @@ void label_2104()
         }
     }
     cdata_can_talk(rc) = 1;
-    cdata(40, rc) = -10000;
+    cdata_40(rc) = -10000;
     cdatan(0, rc) = userdatan(1, cun);
     cdatan(5, rc) = userdatan(0, cun);
     cdata_relationship(rc) = std::clamp(userdata(4, cun), -3, 10);
@@ -64002,7 +63925,7 @@ void label_2148()
             if (tc != -1)
             {
                 p = inv_body_part(ci);
-                cdata(p, tc) = cdata(p, tc) / 10000 * 10000;
+                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
             }
             inv_body_part(ci) = 0;
             r1 = tc;
@@ -67445,7 +67368,7 @@ int label_2194()
     {
         return 0;
     }
-    if (cdata(body, r1) % 10000 != 0)
+    if (cdata_body_part(r1, body) % 10000 != 0)
     {
         return 0;
     }
@@ -67459,7 +67382,8 @@ int label_2194()
         item_identify(ci, 2);
     }
     inv_body_part(ci) = body;
-    cdata(body, r1) = cdata(body, r1) / 10000 * 10000 + ci + 1;
+    cdata_body_part(r1, body) =
+        cdata_body_part(r1, body) / 10000 * 10000 + ci + 1;
     return 1;
 }
 
@@ -67467,14 +67391,14 @@ int label_2194()
 
 void label_2195()
 {
-    p = cdata(body, r1) % 10000;
+    p = cdata_body_part(r1, body) % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
     ci = p - 1;
-    cdata(body, r1) = cdata(body, r1) / 10000 * 10000;
+    cdata_body_part(r1, body) = cdata_body_part(r1, body) / 10000 * 10000;
     inv_body_part(ci) = 0;
     item_stack(r1, ci);
     return;
@@ -67488,16 +67412,17 @@ void label_2196()
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            if (cdata(cnt, r1) / 10000 == body)
+            if (cdata_body_part(r1, cnt) / 10000 == body)
             {
-                p = cdata(cnt, r1) % 10000;
+                p = cdata_body_part(r1, cnt) % 10000;
                 if (p == 0)
                 {
                     continue;
                 }
                 --p;
                 inv_body_part(p) = 0;
-                cdata(cnt, r1) = cdata(cnt, r1) / 10000 * 10000;
+                cdata_body_part(r1, cnt) =
+                    cdata_body_part(r1, cnt) / 10000 * 10000;
             }
         }
     }
@@ -67782,7 +67707,7 @@ void label_2201()
                 {
                     if (cdata_quality(cc) < 4 && encfind(cc, 60010) == -1)
                     {
-                        --cdata(240, cc);
+                        --cdata_attr_adj(cc, 0);
                         r1 = cc;
                         label_1477();
                         if (synccheck(cc, -1))
@@ -69846,19 +69771,19 @@ void label_2218()
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
             body = 100 + cnt;
-            if (cdata(body, cc) % 10000 == 0)
+            if (cdata_body_part(cc, cnt) % 10000 == 0)
             {
                 continue;
             }
-            if (cdata(body, cc) / 10000 == 10)
+            if (cdata_body_part(cc, cnt) / 10000 == 10)
             {
                 continue;
             }
-            if (cdata(body, cc) / 10000 == 11)
+            if (cdata_body_part(cc, cnt) / 10000 == 11)
             {
                 continue;
             }
-            cw = cdata(body, cc) % 10000 - 1;
+            cw = cdata_body_part(cc, cnt) % 10000 - 1;
             attackitem = cw;
             if (inv_dice_x(cw) > 0)
             {
@@ -72386,7 +72311,7 @@ void label_2228()
             int stat = label_2231();
             if (stat != -1)
             {
-                cdata(stat, rc) = rtval * 10000;
+                cdata_body_part(rc, stat) = rtval * 10000;
                 txtef(2);
                 txt(lang(
                     cdatan(0, rc) + u8"は新しい"s + bodyn(rtval)
@@ -72610,14 +72535,11 @@ int label_2231()
         return -1;
     }
     rtval(1) = -1;
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(rc, i) == 0)
         {
-            if (cdata(cnt, rc) == 0)
-            {
-                rtval(1) = cnt;
-            }
+            rtval(1) = i + 100;
         }
     }
     if (rtval(1) == -1)
@@ -72628,7 +72550,7 @@ int label_2231()
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            f = cdata(cnt, tc) / 10000;
+            f = cdata_body_part(tc, cnt) / 10000;
             if (f == 11 || f == 10 || f == 4)
             {
                 continue;
@@ -72651,18 +72573,15 @@ int label_2231()
         {
             rtval = dblist(0, rnd(dbmax));
             f = 0;
+            for (int i = 0; i < 30; ++i)
             {
-                int cnt = 100;
-                for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+                if (cdata_body_part(rc, i) == 0)
                 {
-                    if (cdata(cnt, rc) == 0)
-                    {
-                        continue;
-                    }
-                    if (cdata(cnt, rc) / 10000 == rtval)
-                    {
-                        f = 1;
-                    }
+                    continue;
+                }
+                if (cdata_body_part(rc, i) / 10000 == rtval)
+                {
+                    f = 1;
                 }
             }
             if (f)
@@ -72677,12 +72596,9 @@ int label_2231()
         return rtval(1);
     }
     DIM3(dblist, 2, 800);
+    for (int i = 0; i < 30; ++i)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
-        {
-            ++dblist(0, cdata(cnt, tc) / 10000);
-        }
+        ++dblist(0, cdata_body_part(tc, i) / 10000);
     }
     {
         int cnt = 0;
@@ -72690,14 +72606,11 @@ int label_2231()
         {
             rtval = rnd(15) + 1;
             f = 0;
+            for (int i = 0; i < 30; ++i)
             {
-                int cnt = 100;
-                for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+                if (cdata_body_part(rc, i) / 10000 == rtval)
                 {
-                    if (cdata(cnt, rc) / 10000 == rtval)
-                    {
-                        ++f;
-                    }
+                    ++f;
                 }
             }
             if (f < dblist(0, rtval))
@@ -77008,382 +76921,382 @@ void label_2295()
 {
     if (cdatan(2, r1) == u8"kobolt"s)
     {
-        cdata(158, r1) = 1;
+        cdata_158(r1) = 1;
         return;
     }
     if (cdatan(2, r1) == u8"orc"s)
     {
-        cdata(158, r1) = 2;
+        cdata_158(r1) = 2;
         return;
     }
     if (cdatan(2, r1) == u8"troll"s)
     {
-        cdata(158, r1) = 3;
+        cdata_158(r1) = 3;
         return;
     }
     if (cdatan(2, r1) == u8"lizardman"s)
     {
-        cdata(158, r1) = 4;
+        cdata_158(r1) = 4;
         return;
     }
     if (cdatan(2, r1) == u8"minotaur"s)
     {
-        cdata(158, r1) = 5;
+        cdata_158(r1) = 5;
         return;
     }
     if (cdatan(2, r1) == u8"yerles"s)
     {
-        cdata(158, r1) = 6;
+        cdata_158(r1) = 6;
         return;
     }
     if (cdatan(2, r1) == u8"norland"s)
     {
-        cdata(158, r1) = 7;
+        cdata_158(r1) = 7;
         return;
     }
     if (cdatan(2, r1) == u8"eulderna"s)
     {
-        cdata(158, r1) = 8;
+        cdata_158(r1) = 8;
         return;
     }
     if (cdatan(2, r1) == u8"fairy"s)
     {
-        cdata(158, r1) = 9;
+        cdata_158(r1) = 9;
         return;
     }
     if (cdatan(2, r1) == u8"asura"s)
     {
-        cdata(158, r1) = 10;
+        cdata_158(r1) = 10;
         return;
     }
     if (cdatan(2, r1) == u8"slime"s)
     {
-        cdata(158, r1) = 11;
+        cdata_158(r1) = 11;
         return;
     }
     if (cdatan(2, r1) == u8"wolf"s)
     {
-        cdata(158, r1) = 12;
+        cdata_158(r1) = 12;
         return;
     }
     if (cdatan(2, r1) == u8"dwarf"s)
     {
-        cdata(158, r1) = 13;
+        cdata_158(r1) = 13;
         return;
     }
     if (cdatan(2, r1) == u8"juere"s)
     {
-        cdata(158, r1) = 14;
+        cdata_158(r1) = 14;
         return;
     }
     if (cdatan(2, r1) == u8"zombie"s)
     {
-        cdata(158, r1) = 15;
+        cdata_158(r1) = 15;
         return;
     }
     if (cdatan(2, r1) == u8"elea"s)
     {
-        cdata(158, r1) = 16;
+        cdata_158(r1) = 16;
         return;
     }
     if (cdatan(2, r1) == u8"rabbit"s)
     {
-        cdata(158, r1) = 17;
+        cdata_158(r1) = 17;
         return;
     }
     if (cdatan(2, r1) == u8"sheep"s)
     {
-        cdata(158, r1) = 18;
+        cdata_158(r1) = 18;
         return;
     }
     if (cdatan(2, r1) == u8"frog"s)
     {
-        cdata(158, r1) = 19;
+        cdata_158(r1) = 19;
         return;
     }
     if (cdatan(2, r1) == u8"centipede"s)
     {
-        cdata(158, r1) = 20;
+        cdata_158(r1) = 20;
         return;
     }
     if (cdatan(2, r1) == u8"snail"s)
     {
-        cdata(158, r1) = 21;
+        cdata_158(r1) = 21;
         return;
     }
     if (cdatan(2, r1) == u8"mandrake"s)
     {
-        cdata(158, r1) = 22;
+        cdata_158(r1) = 22;
         return;
     }
     if (cdatan(2, r1) == u8"beetle"s)
     {
-        cdata(158, r1) = 23;
+        cdata_158(r1) = 23;
         return;
     }
     if (cdatan(2, r1) == u8"mushroom"s)
     {
-        cdata(158, r1) = 24;
+        cdata_158(r1) = 24;
         return;
     }
     if (cdatan(2, r1) == u8"bat"s)
     {
-        cdata(158, r1) = 25;
+        cdata_158(r1) = 25;
         return;
     }
     if (cdatan(2, r1) == u8"ent"s)
     {
-        cdata(158, r1) = 26;
+        cdata_158(r1) = 26;
         return;
     }
     if (cdatan(2, r1) == u8"lich"s)
     {
-        cdata(158, r1) = 27;
+        cdata_158(r1) = 27;
         return;
     }
     if (cdatan(2, r1) == u8"hound"s)
     {
-        cdata(158, r1) = 28;
+        cdata_158(r1) = 28;
         return;
     }
     if (cdatan(2, r1) == u8"ghost"s)
     {
-        cdata(158, r1) = 29;
+        cdata_158(r1) = 29;
         return;
     }
     if (cdatan(2, r1) == u8"spirit"s)
     {
-        cdata(158, r1) = 30;
+        cdata_158(r1) = 30;
         return;
     }
     if (cdatan(2, r1) == u8"eye"s)
     {
-        cdata(158, r1) = 31;
+        cdata_158(r1) = 31;
         return;
     }
     if (cdatan(2, r1) == u8"wyvern"s)
     {
-        cdata(158, r1) = 32;
+        cdata_158(r1) = 32;
         return;
     }
     if (cdatan(2, r1) == u8"wasp"s)
     {
-        cdata(158, r1) = 33;
+        cdata_158(r1) = 33;
         return;
     }
     if (cdatan(2, r1) == u8"giant"s)
     {
-        cdata(158, r1) = 34;
+        cdata_158(r1) = 34;
         return;
     }
     if (cdatan(2, r1) == u8"imp"s)
     {
-        cdata(158, r1) = 35;
+        cdata_158(r1) = 35;
         return;
     }
     if (cdatan(2, r1) == u8"hand"s)
     {
-        cdata(158, r1) = 36;
+        cdata_158(r1) = 36;
         return;
     }
     if (cdatan(2, r1) == u8"snake"s)
     {
-        cdata(158, r1) = 37;
+        cdata_158(r1) = 37;
         return;
     }
     if (cdatan(2, r1) == u8"drake"s)
     {
-        cdata(158, r1) = 38;
+        cdata_158(r1) = 38;
         return;
     }
     if (cdatan(2, r1) == u8"goblin"s)
     {
-        cdata(158, r1) = 39;
+        cdata_158(r1) = 39;
         return;
     }
     if (cdatan(2, r1) == u8"bear"s)
     {
-        cdata(158, r1) = 40;
+        cdata_158(r1) = 40;
         return;
     }
     if (cdatan(2, r1) == u8"armor"s)
     {
-        cdata(158, r1) = 41;
+        cdata_158(r1) = 41;
         return;
     }
     if (cdatan(2, r1) == u8"medusa"s)
     {
-        cdata(158, r1) = 42;
+        cdata_158(r1) = 42;
         return;
     }
     if (cdatan(2, r1) == u8"cupid"s)
     {
-        cdata(158, r1) = 43;
+        cdata_158(r1) = 43;
         return;
     }
     if (cdatan(2, r1) == u8"phantom"s)
     {
-        cdata(158, r1) = 44;
+        cdata_158(r1) = 44;
         return;
     }
     if (cdatan(2, r1) == u8"harpy"s)
     {
-        cdata(158, r1) = 45;
+        cdata_158(r1) = 45;
         return;
     }
     if (cdatan(2, r1) == u8"dragon"s)
     {
-        cdata(158, r1) = 46;
+        cdata_158(r1) = 46;
         return;
     }
     if (cdatan(2, r1) == u8"dinosaur"s)
     {
-        cdata(158, r1) = 47;
+        cdata_158(r1) = 47;
         return;
     }
     if (cdatan(2, r1) == u8"cerberus"s)
     {
-        cdata(158, r1) = 48;
+        cdata_158(r1) = 48;
         return;
     }
     if (cdatan(2, r1) == u8"spider"s)
     {
-        cdata(158, r1) = 49;
+        cdata_158(r1) = 49;
         return;
     }
     if (cdatan(2, r1) == u8"golem"s)
     {
-        cdata(158, r1) = 50;
+        cdata_158(r1) = 50;
         return;
     }
     if (cdatan(2, r1) == u8"rock"s)
     {
-        cdata(158, r1) = 51;
+        cdata_158(r1) = 51;
         return;
     }
     if (cdatan(2, r1) == u8"crab"s)
     {
-        cdata(158, r1) = 52;
+        cdata_158(r1) = 52;
         return;
     }
     if (cdatan(2, r1) == u8"skeleton"s)
     {
-        cdata(158, r1) = 53;
+        cdata_158(r1) = 53;
         return;
     }
     if (cdatan(2, r1) == u8"piece"s)
     {
-        cdata(158, r1) = 54;
+        cdata_158(r1) = 54;
         return;
     }
     if (cdatan(2, r1) == u8"cat"s)
     {
-        cdata(158, r1) = 55;
+        cdata_158(r1) = 55;
         return;
     }
     if (cdatan(2, r1) == u8"dog"s)
     {
-        cdata(158, r1) = 56;
+        cdata_158(r1) = 56;
         return;
     }
     if (cdatan(2, r1) == u8"roran"s)
     {
-        cdata(158, r1) = 57;
+        cdata_158(r1) = 57;
         return;
     }
     if (cdatan(2, r1) == u8"rat"s)
     {
-        cdata(158, r1) = 58;
+        cdata_158(r1) = 58;
         return;
     }
     if (cdatan(2, r1) == u8"shell"s)
     {
-        cdata(158, r1) = 59;
+        cdata_158(r1) = 59;
         return;
     }
     if (cdatan(2, r1) == u8"catgod"s)
     {
-        cdata(158, r1) = 60;
+        cdata_158(r1) = 60;
         return;
     }
     if (cdatan(2, r1) == u8"machinegod"s)
     {
-        cdata(158, r1) = 61;
+        cdata_158(r1) = 61;
         return;
     }
     if (cdatan(2, r1) == u8"undeadgod"s)
     {
-        cdata(158, r1) = 62;
+        cdata_158(r1) = 62;
         return;
     }
     if (cdatan(2, r1) == u8"machine"s)
     {
-        cdata(158, r1) = 63;
+        cdata_158(r1) = 63;
         return;
     }
     if (cdatan(2, r1) == u8"wisp"s)
     {
-        cdata(158, r1) = 64;
+        cdata_158(r1) = 64;
         return;
     }
     if (cdatan(2, r1) == u8"chicken"s)
     {
-        cdata(158, r1) = 65;
+        cdata_158(r1) = 65;
         return;
     }
     if (cdatan(2, r1) == u8"stalker"s)
     {
-        cdata(158, r1) = 66;
+        cdata_158(r1) = 66;
         return;
     }
     if (cdatan(2, r1) == u8"catsister"s)
     {
-        cdata(158, r1) = 67;
+        cdata_158(r1) = 67;
         return;
     }
     if (cdatan(2, r1) == u8"mutant"s)
     {
-        cdata(158, r1) = 68;
+        cdata_158(r1) = 68;
         return;
     }
     if (cdatan(2, r1) == u8"yeek"s)
     {
-        cdata(158, r1) = 69;
+        cdata_158(r1) = 69;
         return;
     }
     if (cdatan(2, r1) == u8"yith"s)
     {
-        cdata(158, r1) = 70;
+        cdata_158(r1) = 70;
         return;
     }
     if (cdatan(2, r1) == u8"servant"s)
     {
-        cdata(158, r1) = 71;
+        cdata_158(r1) = 71;
         return;
     }
     if (cdatan(2, r1) == u8"horse"s)
     {
-        cdata(158, r1) = 72;
+        cdata_158(r1) = 72;
         return;
     }
     if (cdatan(2, r1) == u8"god"s)
     {
-        cdata(158, r1) = 73;
+        cdata_158(r1) = 73;
         return;
     }
     if (cdatan(2, r1) == u8"quickling"s)
     {
-        cdata(158, r1) = 74;
+        cdata_158(r1) = 74;
         return;
     }
     if (cdatan(2, r1) == u8"metal"s)
     {
-        cdata(158, r1) = 75;
+        cdata_158(r1) = 75;
         return;
     }
     if (cdatan(2, r1) == u8"bike"s)
     {
-        cdata(158, r1) = 76;
+        cdata_158(r1) = 76;
         return;
     }
     return;
@@ -78745,7 +78658,7 @@ void label_2661()
     characreate(rc, p(rnd(3)), -1, -1);
     cdata_relationship(rc) = 0;
     cdata_original_relationship(rc) = 0;
-    cdata(156, rc) = 100;
+    cdata_156(rc) = 100;
     cdata_state(rc) = 3;
     cdata_image(rc) = rnd(33) * 2 + 1 + cdata_sex(rc);
     cdatan(0, rc) = randomname();
@@ -79042,15 +78955,12 @@ void label_2667()
     {
         r1 = rc;
         eqdup = 0;
+        for (int j = 0; j < 30; ++j)
         {
-            int cnt = 100;
-            for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            if (cdata_body_part(rc, j) / 10000 == i)
             {
-                if (cdata(cnt, rc) / 10000 == i)
-                {
-                    bodylist(eqdup) = cnt;
-                    ++eqdup;
-                }
+                bodylist(eqdup) = j + 100;
+                ++eqdup;
             }
         }
         if (eqdup == 0)
@@ -79062,7 +78972,7 @@ void label_2667()
             for (int cnt_end = cnt + (eqdup); cnt < cnt_end; ++cnt)
             {
                 body = bodylist(cnt);
-                i = cdata(body, rc) % 10000;
+                i = cdata_body_part(rc, body) % 10000;
                 if (i == 0)
                 {
                     label_2194();
@@ -79076,14 +78986,15 @@ void label_2667()
                 }
                 if (eqdup > cnt + 1)
                 {
-                    if (cdata(bodylist((cnt + 1)), rc) % 10000 == 0)
+                    if (cdata_body_part(rc, bodylist(cnt + 1)) % 10000 == 0)
                     {
                         f = 0;
                     }
                     else if (
                         inv_value(i)
                         >= inv_value(
-                               cdata(bodylist((cnt + 1)), rc) % 10000 - 1))
+                               cdata_body_part(rc, bodylist(cnt + 1)) % 10000
+                               - 1))
                     {
                         f = 0;
                     }
@@ -79158,19 +79069,22 @@ void label_2668()
                 int cnt = 100;
                 for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
                 {
-                    p = cdata(cnt, rc) / 10000;
+                    p = cdata_body_part(rc, cnt) / 10000;
                     if (p == 0)
                     {
                         break;
                     }
-                    if (cdata(cnt, rc) % 10000 != 0)
+                    if (cdata_body_part(rc, cnt) % 10000 != 0)
                     {
                         if (p == 5)
                         {
                             if (haveweapon == 0)
                             {
                                 if (refitem(
-                                        inv_id(cdata(cnt, rc) % 10000 - 1), 5)
+                                        inv_id(
+                                            cdata_body_part(rc, cnt) % 10000
+                                            - 1),
+                                        5)
                                     == 10000)
                                 {
                                     haveweapon = 1;
@@ -81832,25 +81746,25 @@ void label_2693()
         label_2742();
         return;
     }
-    if (cdata(203, cc) <= 0)
+    if (cdata_203(cc) <= 0)
     {
-        cdata(205, cc) = cdata_x(tc);
-        cdata(206, cc) = cdata_y(tc);
+        cdata_205(cc) = cdata_x(tc);
+        cdata_206(cc) = cdata_y(tc);
         if (retreat || cdata_ai_dist(cc) > distance)
         {
-            cdata(205, cc) = cdata_x(cc) + (cdata_x(cc) - cdata_x(tc));
-            cdata(206, cc) = cdata_y(cc) + (cdata_y(cc) - cdata_y(tc));
+            cdata_205(cc) = cdata_x(cc) + (cdata_x(cc) - cdata_x(tc));
+            cdata_206(cc) = cdata_y(cc) + (cdata_y(cc) - cdata_y(tc));
         }
     }
     else
     {
-        --cdata(203, cc);
+        --cdata_203(cc);
     }
     blockedbychara = 0;
-    cdata_next_x(cc) = (cdata(205, cc) > cdata_x(cc))
-        - (cdata(205, cc) < cdata_x(cc)) + cdata_x(cc);
-    cdata_next_y(cc) = (cdata(206, cc) > cdata_y(cc))
-        - (cdata(206, cc) < cdata_y(cc)) + cdata_y(cc);
+    cdata_next_x(cc) = (cdata_205(cc) > cdata_x(cc))
+        - (cdata_205(cc) < cdata_x(cc)) + cdata_x(cc);
+    cdata_next_y(cc) = (cdata_206(cc) > cdata_y(cc))
+        - (cdata_206(cc) < cdata_y(cc)) + cdata_y(cc);
     x = cdata_next_x(cc);
     y = cdata_next_y(cc);
     cell_check(x, y);
@@ -81945,8 +81859,8 @@ void label_2693()
             }
         }
     }
-    if (std::abs(cdata(205, cc) - cdata_x(cc))
-        >= std::abs(cdata(206, cc) - cdata_y(cc)))
+    if (std::abs(cdata_205(cc) - cdata_x(cc))
+        >= std::abs(cdata_206(cc) - cdata_y(cc)))
     {
         {
             int stat = label_2694();
@@ -81984,7 +81898,7 @@ void label_2693()
             }
         }
     }
-    if (cdata(203, cc) > 0)
+    if (cdata_203(cc) > 0)
     {
         cdata_next_x(cc) = rnd(3) - 1 + cdata_x(cc);
         cdata_next_y(cc) = rnd(3) - 1 + cdata_y(cc);
@@ -81999,32 +81913,32 @@ void label_2693()
     {
         if (blockedbychara == 1)
         {
-            cdata(203, cc) = 3;
+            cdata_203(cc) = 3;
         }
         else
         {
-            cdata(203, cc) = 6;
+            cdata_203(cc) = 6;
         }
         dir = dir(1 + rnd(2));
         if (dir == 1)
         {
-            cdata(205, cc) = cdata_x(cc) - 6;
-            cdata(206, cc) = cdata_y(tc);
+            cdata_205(cc) = cdata_x(cc) - 6;
+            cdata_206(cc) = cdata_y(tc);
         }
         if (dir == 2)
         {
-            cdata(205, cc) = cdata_x(cc) + 6;
-            cdata(206, cc) = cdata_y(tc);
+            cdata_205(cc) = cdata_x(cc) + 6;
+            cdata_206(cc) = cdata_y(tc);
         }
         if (dir == 3)
         {
-            cdata(206, cc) = cdata_y(cc) - 6;
-            cdata(205, cc) = cdata_x(tc);
+            cdata_206(cc) = cdata_y(cc) - 6;
+            cdata_205(cc) = cdata_x(tc);
         }
         if (dir == 0)
         {
-            cdata(206, cc) = cdata_y(cc) + 6;
-            cdata(205, cc) = cdata_x(tc);
+            cdata_206(cc) = cdata_y(cc) + 6;
+            cdata_205(cc) = cdata_x(tc);
         }
     }
     label_2742();
@@ -82035,9 +81949,9 @@ void label_2693()
 
 int label_2694()
 {
-    if (cdata(205, cc) > cdata_x(cc))
+    if (cdata_205(cc) > cdata_x(cc))
     {
-        if (cdata(206, cc) > cdata_y(cc))
+        if (cdata_206(cc) > cdata_y(cc))
         {
             p = 1;
         }
@@ -82054,9 +81968,9 @@ int label_2694()
             return 1;
         }
     }
-    if (cdata(205, cc) < cdata_x(cc))
+    if (cdata_205(cc) < cdata_x(cc))
     {
-        if (cdata(206, cc) < cdata_y(cc))
+        if (cdata_206(cc) < cdata_y(cc))
         {
             p = 0;
         }
@@ -82080,9 +81994,9 @@ int label_2694()
 
 int label_2695()
 {
-    if (cdata(206, cc) > cdata_y(cc))
+    if (cdata_206(cc) > cdata_y(cc))
     {
-        if (cdata(205, cc) > cdata_x(cc))
+        if (cdata_205(cc) > cdata_x(cc))
         {
             p = 1;
         }
@@ -82099,9 +82013,9 @@ int label_2695()
             return 1;
         }
     }
-    if (cdata(206, cc) < cdata_y(cc))
+    if (cdata_206(cc) < cdata_y(cc))
     {
-        if (cdata(205, cc) > cdata_x(cc))
+        if (cdata_205(cc) > cdata_x(cc))
         {
             p = 0;
         }
@@ -82129,14 +82043,14 @@ void label_2696()
     {
         pcattacker = cc;
     }
-    act = cdata(215 + rnd(cdata_ai_act_num(cc) % 10), cc);
+    act = cdata_ai_act(cc, rnd(cdata_ai_act_num(cc) % 10));
     if (cdata_ai_act_sub_freq(cc) != 0)
     {
         if (cdata_ai_act_sub_freq(cc) > rnd(100))
         {
             if (cdata_ai_act_num(cc) / 10 != 0)
             {
-                act = cdata(220 + rnd(cdata_ai_act_num(cc) / 10), cc);
+                act = cdata_ai_act_sub(cc, rnd(cdata_ai_act_num(cc) / 10));
             }
             if (act >= -10000 && act < -9995)
             {
@@ -84715,20 +84629,20 @@ label_2738:
             }
         }
     }
-    if (cdata(280, cc) != 0)
+    if (cdata_buff_id(cc, 0) != 0)
     {
         {
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata(280 + cnt * 3, cc) == 0)
+                if (cdata_buff_id(cc, cnt) == 0)
                 {
                     break;
                 }
-                --cdata(280 + cnt * 3 + 2, cc);
-                if (cdata(280 + cnt * 3 + 2, cc) <= 0)
+                --cdata_buff_turns(cc, cnt);
+                if (cdata_buff_turns(cc, cnt) <= 0)
                 {
-                    if (cdata(280 + cnt * 3, cc) == 16)
+                    if (cdata_buff_id(cc, cnt) == 16)
                     {
                         dmghp(cc, 9999, -11);
                     }
@@ -85605,7 +85519,7 @@ label_2747:
                 int cnt = 10;
                 for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                 {
-                    txt(skillname(cnt) + u8":"s + cdata((270 + cnt - 10), 0)
+                    txt(skillname(cnt) + u8":"s + cdata_growth_buff(0, cnt - 10)
                         + u8"%"s);
                 }
             }

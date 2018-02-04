@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "item_db.hpp"

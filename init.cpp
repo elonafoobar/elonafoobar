@@ -1,3 +1,4 @@
+#include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -210,7 +211,6 @@ void initialize_elona()
     SDIM3(mdatan, 20, 2);
     SDIM4(cdatan, 40, 10, 245);
     SDIM2(s1, 1000);
-    DIM3(cdata, 500, 245);
     DIM3(sdata, 1200, 245);
     DIM2(spell, 200);
     DIM2(spact, 500);

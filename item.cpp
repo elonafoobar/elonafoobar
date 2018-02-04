@@ -1,5 +1,7 @@
 #include "item.hpp"
 #include <iostream>
+#include <type_traits>
+#include "character.hpp"
 #include "elona.hpp"
 #include "main.hpp"
 #include "variables.hpp"
@@ -7,6 +9,14 @@
 
 namespace elona
 {
+
+
+
+item::item()
+    : enchantments(15)
+{
+}
+
 
 
 void item::clear()
@@ -44,13 +54,21 @@ bool item::almost_euqals(const item& other, bool ignore_position)
 
 
 
+inventory::inventory()
+    : storage(5480)
+{
+}
+
+
+
 // Serialize the entire data from offset
 std::unique_ptr<char[]> inventory::serialize(int offset) const
 {
 #define PUT(value) \
     do \
     { \
-        *reinterpret_cast<decltype(storage[i].value)*>( \
+        *reinterpret_cast<std::remove_cv_t< \
+            std::remove_reference_t<decltype(storage[i].value)>>*>( \
             buf.get() + (i - offset) * sizeof(int) * 70 + j) = \
             storage[i].value; \
         j += sizeof(storage[i].value); \
@@ -142,7 +160,8 @@ void inventory::deserialize(
 #define GET(value) \
     do \
     { \
-        storage[i].value = *reinterpret_cast<decltype(storage[i].value)*>( \
+        storage[i].value = *reinterpret_cast<std::remove_cv_t< \
+            std::remove_reference_t<decltype(storage[i].value)>>*>( \
             raw_data.get() + (i - offset) * sizeof(int) * 70 + j); \
         j += sizeof(storage[i].value); \
     } while (0);
@@ -438,11 +457,11 @@ int encfind(int prm_479, int prm_480)
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            if (cdata(cnt, prm_479) % 10000 == 0)
+            if (cdata_body_part(prm_479, cnt) % 10000 == 0)
             {
                 continue;
             }
-            i_at_m53 = cdata(cnt, prm_479) % 10000 - 1;
+            i_at_m53 = cdata_body_part(prm_479, cnt) % 10000 - 1;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
@@ -1054,7 +1073,8 @@ int chara_unequip(int prm_511)
     {
         return 0;
     }
-    cdata(p_at_m59, c_at_m59) = cdata(p_at_m59, c_at_m59) / 10000 * 10000;
+    cdata_body_part(c_at_m59, p_at_m59) =
+        cdata_body_part(c_at_m59, p_at_m59) / 10000 * 10000;
     inv_body_part(prm_511) = 0;
     return 1;
 }

@@ -1,3 +1,4 @@
+#include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -946,7 +947,8 @@ int label_2107()
                         int cnt = 100;
                         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
                         {
-                            cdata(cnt, tg) = cdata(cnt, tg) / 10000 * 10000;
+                            cdata_body_part(tg, cnt) =
+                                cdata_body_part(tg, cnt) / 10000 * 10000;
                         }
                     }
                     rc = tg;
