@@ -1394,22 +1394,6 @@ void noteload(const fs::path& filename)
 
 
 
-void notesave(const fs::path& filename)
-{
-    LOG("notesave", filename);
-
-    if (!notemanip::buffer)
-        return;
-
-    std::ofstream out{filename};
-    if (!out)
-        throw notemanip::io_error{u8"Cannot open "s + filename.u8string()};
-
-    out << *notemanip::buffer;
-}
-
-
-
 int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;

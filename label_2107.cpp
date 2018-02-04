@@ -303,7 +303,8 @@ int label_2107()
         notesel(artifactlocation);
         if (fread == 0)
         {
-            notesave(file);
+            std::ofstream out{file};
+            out << artifactlocation(0) << std::endl;
         }
         if (fread == 1)
         {
@@ -313,7 +314,8 @@ int label_2107()
         notesel(newsbuff);
         if (fread == 0)
         {
-            notesave(file);
+            std::ofstream out{file};
+            out << newsbuff(0) << std::endl;
         }
         if (fread == 1)
         {

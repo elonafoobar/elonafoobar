@@ -19704,7 +19704,10 @@ void label_1398()
     p = instr(netbuf, 0, u8"%"s);
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
-    notesave(fs::u8path(u8"./server.txt"));
+    {
+        std::ofstream out{fs::u8path(u8"./server.txt")};
+        out << serverlist(0) << std::endl;
+    }
     if (jp)
     {
         chatreadurl = u8"http://www."s + cgiurl2 + u8"/log.txt"s;
@@ -59905,7 +59908,10 @@ void label_2085()
         }
     }
     s = fs::u8path(u8"./save/"s + playerid + u8".txt");
-    notesave(s);
+    {
+        std::ofstream out{s};
+        out << s(0) << std::endl;
+    }
     exec(s, 16);
     return;
 }
@@ -61385,7 +61391,11 @@ void label_2113()
         buff += '\n';
     }
     notesel(buff);
-    notesave(fs::u8path(u8"./save/"s + playerid + u8"/filelist.txt"));
+    {
+        std::ofstream out{
+            fs::u8path(u8"./save/"s + playerid + u8"/filelist.txt")};
+        out << buff(0) << std::endl;
+    }
     return;
 }
 
@@ -86672,7 +86682,10 @@ void label_2752()
             noteadd(""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
         }
     }
-    notesave(file + u8".txt"s);
+    {
+        std::ofstream out{file + u8".txt"s};
+        out << buff(0) << std::endl;
+    }
     redraw(0);
     gsel(4);
     pos(0, 0);
