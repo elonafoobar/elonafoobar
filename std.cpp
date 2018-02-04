@@ -19,14 +19,6 @@ using namespace snail;
 
 namespace
 {
-template <typename... Args>
-void LOG(Args&&... args)
-{
-    std::cerr << std::setw(10) << ::SDL_GetTicks();
-    using swallow = std::initializer_list<int>;
-    (void)swallow{((void)(std::cerr << ' ' << std::forward<Args>(args)), 0)...};
-    std::cerr << std::endl;
-}
 
 
 
@@ -376,7 +368,6 @@ void axobj(int, const std::string&, int, int)
 
 void bcopy(const fs::path& from, const fs::path& to)
 {
-    LOG("copy", from, to);
     fs::copy_file(from, to, fs::copy_options::overwrite_existing);
 }
 
@@ -419,8 +410,6 @@ void boxf()
 
 void bload(const fs::path& filename, std::string& data, int size, int)
 {
-    LOG("bload", filename);
-
     if (size == 0)
     {
         size = data.size();
@@ -429,7 +418,6 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
-        LOG("Failed");
         throw 0;
     }
     size = in.readsome(buf.get(), size);
@@ -440,13 +428,10 @@ void bload(const fs::path& filename, std::string& data, int size, int)
 
 void bload(const fs::path& filename, int& data, int size, int)
 {
-    LOG("bload", filename);
-
     std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
-        LOG("Failed");
         throw 0;
     }
     size = in.readsome(buf.get(), size);
@@ -457,8 +442,6 @@ void bload(const fs::path& filename, int& data, int size, int)
 
 void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 {
-    LOG("bload", filename);
-
     if (size == 0)
     {
         size = data.size() * sizeof(int);
@@ -467,7 +450,6 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
-        LOG("Failed");
         throw 0;
     }
     size = in.readsome(buf.get(), size);
@@ -484,12 +466,9 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 
 void bsave(const fs::path& filename, const std::string& data)
 {
-    LOG("bsave", filename);
-
     std::ofstream out{filename, std::ios::binary};
     if (!out)
     {
-        LOG("Failed");
         throw 0;
     }
     out.write(reinterpret_cast<const char*>(data.c_str()), std::size(data));
@@ -499,8 +478,6 @@ void bsave(const fs::path& filename, const std::string& data)
 
 void bsave(const fs::path& filename, int data)
 {
-    LOG("bsave", filename);
-
     std::ofstream out{filename, std::ios::binary};
     out.write(reinterpret_cast<const char*>(&data), sizeof(data));
 }
@@ -509,8 +486,6 @@ void bsave(const fs::path& filename, int data)
 
 void bsave(const fs::path& filename, elona_vector1<int>& data)
 {
-    LOG("bsave", filename);
-
     std::ofstream out{filename, std::ios::binary};
     for (int i = 0; i < std::size(data); ++i)
     {
@@ -522,7 +497,6 @@ void bsave(const fs::path& filename, elona_vector1<int>& data)
 
 void buffer(int window_id, int width, int height)
 {
-    LOG("buffer", window_id, width, height);
     // Cannot create zero-width or zero-height texture.
     if (width == 0)
         width = 1;
@@ -633,7 +607,6 @@ void delcom(int)
 
 void elona_delete(const fs::path& filename)
 {
-    LOG("delete", filename);
     fs::remove_all(filename);
 }
 
@@ -1221,7 +1194,6 @@ void mesbox(
 
 void mkdir(const fs::path& path)
 {
-    LOG("mkdir", path);
     fs::create_directory(path);
 }
 
@@ -1432,39 +1404,25 @@ void pget(int x, int y)
 
 void picload(const fs::path& filename, int mode)
 {
-    try
+    std::optional<Color> keycolor = Color{0, 0, 0};
+    if (filename.u8string().find("pcc") != std::string::npos)
     {
-        std::optional<Color> keycolor = Color{0, 0, 0};
-        if (filename.u8string().find("pcc") != std::string::npos)
-        {
-            keycolor = {43, 133, 133};
-        }
-        if (filename.u8string().find("bg") != std::string::npos)
-        {
-            keycolor = std::nullopt;
-        }
-        BasicImage img{filename, keycolor};
-        if (mode == 0)
-        {
-            buffer(detail::current_buffer, img.width(), img.height());
-            LOG("picload 0", filename);
-        }
-        else
-        {
-            LOG("picload 1", filename);
-        }
-        const auto save = Application::instance().renderer().blend_mode();
-        Application::instance().renderer().set_blend_mode(BlendMode::none);
-        Application::instance().renderer().render_image(
-            img,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y);
-        Application::instance().renderer().set_blend_mode(save);
+        keycolor = {43, 133, 133};
     }
-    catch (...)
+    if (filename.u8string().find("bg") != std::string::npos)
     {
-        LOG("picload", "Failed to load", filename);
+        keycolor = std::nullopt;
     }
+    BasicImage img{filename, keycolor};
+    if (mode == 0)
+    {
+        buffer(detail::current_buffer, img.width(), img.height());
+    }
+    const auto save = Application::instance().renderer().blend_mode();
+    Application::instance().renderer().set_blend_mode(BlendMode::none);
+    Application::instance().renderer().render_image(
+        img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
+    Application::instance().renderer().set_blend_mode(save);
 }
 
 
@@ -1613,7 +1571,6 @@ std::string strmid(const std::string& source, int pos, int length)
 
 void title(const std::string& title_str)
 {
-    LOG("SDL_Init");
     Application::instance().initialize(800, 600, title_str);
     detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
         Application::instance().renderer().ptr(),
@@ -1857,17 +1814,14 @@ void zOpen(int&, const fs::path& filename, int mode, int)
 {
     if (mode == 1) // Write
     {
-        LOG("zOpen/w", filename);
         gzip_detail::file.open(filename, std::ios::out | std::ios::binary);
     }
     else // Read
     {
-        LOG("zOpen/r", filename);
         gzip_detail::file.open(filename, std::ios::in | std::ios::binary);
     }
     if (!gzip_detail::file)
     {
-        LOG("Failed");
         throw 0;
     }
 }
@@ -1876,8 +1830,6 @@ void zOpen(int&, const fs::path& filename, int mode, int)
 
 void zWrite(elona_vector1<int>& data, int, int size)
 {
-    LOG("zWrite", size);
-
     for (int i = 0; i < length(data); ++i)
     {
         gzip_detail::file.write(
@@ -1892,8 +1844,6 @@ void zWrite(elona_vector1<int>& data, int, int size)
 
 void zWrite(elona_vector2<int>& data, int, int size)
 {
-    LOG("zWrite", size);
-
     for (int j = 0; j < data.j_size(); ++j)
     {
         for (int i = 0; i < data.i_size(); ++i)
@@ -1911,8 +1861,6 @@ void zWrite(elona_vector2<int>& data, int, int size)
 
 void zWrite(elona_vector2<int>& data, int, int size, int offset)
 {
-    LOG("zWrite", size);
-
     for (int j = offset; j < data.j_size(); ++j)
     {
         for (int i = 0; i < data.i_size(); ++i)
@@ -1930,8 +1878,6 @@ void zWrite(elona_vector2<int>& data, int, int size, int offset)
 
 void zWrite(elona_vector3<int>& data, int, int size)
 {
-    LOG("zWrite", size);
-
     for (int k = 0; k < data.k_size(); ++k)
     {
         for (int j = 0; j < data.j_size(); ++j)
@@ -1952,8 +1898,6 @@ void zWrite(elona_vector3<int>& data, int, int size)
 
 void zWrite(elona_vector1<std::string>& data, int, int size)
 {
-    LOG("zWrite", size);
-
     for (int i = 0; i < length(data); ++i)
     {
         gzip_detail::file.write(
@@ -1968,7 +1912,6 @@ void zWrite(elona_vector1<std::string>& data, int, int size)
 
 void zWrite(std::unique_ptr<char[]> data, int size)
 {
-    LOG("zWrite raw", size);
     gzip_detail::file.write(data.get(), size);
 }
 
@@ -1976,8 +1919,6 @@ void zWrite(std::unique_ptr<char[]> data, int size)
 
 void zRead(elona_vector1<int>& data, int, int size)
 {
-    LOG("zRead", size);
-
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
     for (int i = 0; i < length(data); ++i)
@@ -1993,7 +1934,6 @@ void zRead(elona_vector1<int>& data, int, int size)
 
 void zRead(elona_vector2<int>& data, int, int size)
 {
-    LOG("zRead/int[][]", size, data.j_size(), data.i_size());
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
     for (int j = 0; j < data.j_size(); ++j)
@@ -2013,8 +1953,6 @@ void zRead(elona_vector2<int>& data, int, int size)
 
 void zRead(elona_vector2<int>& data, int, int size, int offset)
 {
-    LOG("zRead/int[][]", size, data.j_size(), data.i_size(), offset);
-
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
     for (int j = offset; j < data.j_size(); ++j)
@@ -2034,8 +1972,6 @@ void zRead(elona_vector2<int>& data, int, int size, int offset)
 
 void zRead(elona_vector3<int>& data, int, int size)
 {
-    LOG("zRead", size);
-
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
     for (int k = 0; k < data.k_size(); ++k)
@@ -2058,8 +1994,6 @@ void zRead(elona_vector3<int>& data, int, int size)
 
 void zRead(elona_vector1<std::string>& data, int, int size)
 {
-    LOG("zRead", size);
-
     std::unique_ptr<char[]> buf{new char[size]};
     size = gzip_detail::file.readsome(buf.get(), size);
     data(0) = {buf.get(), static_cast<size_t>(size)};
@@ -2069,7 +2003,6 @@ void zRead(elona_vector1<std::string>& data, int, int size)
 
 void zRead(char* buf, int size)
 {
-    LOG("zRead raw", size);
     gzip_detail::file.readsome(buf, size);
 }
 
@@ -2077,7 +2010,6 @@ void zRead(char* buf, int size)
 
 void zClose(int)
 {
-    LOG("zClose");
     gzip_detail::file.close();
 }
 
