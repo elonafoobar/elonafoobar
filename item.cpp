@@ -1,5 +1,6 @@
 #include "item.hpp"
 #include <iostream>
+#include "character.hpp"
 #include "elona.hpp"
 #include "main.hpp"
 #include "variables.hpp"
@@ -438,11 +439,11 @@ int encfind(int prm_479, int prm_480)
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            if (cdata(cnt, prm_479) % 10000 == 0)
+            if (cdata_body_part_inv(prm_479, cnt) % 10000 == 0)
             {
                 continue;
             }
-            i_at_m53 = cdata(cnt, prm_479) % 10000 - 1;
+            i_at_m53 = cdata_body_part_inv(prm_479, cnt) % 10000 - 1;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
@@ -1054,7 +1055,8 @@ int chara_unequip(int prm_511)
     {
         return 0;
     }
-    cdata(p_at_m59, c_at_m59) = cdata(p_at_m59, c_at_m59) / 10000 * 10000;
+    cdata_body_part_inv(c_at_m59, p_at_m59) =
+        cdata_body_part_inv(c_at_m59, p_at_m59) / 10000 * 10000;
     inv_body_part(prm_511) = 0;
     return 1;
 }

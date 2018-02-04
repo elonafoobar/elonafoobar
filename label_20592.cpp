@@ -1,3 +1,4 @@
+#include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -215,7 +216,8 @@ label_20591:
                     }
                     if (invctrl == 6)
                     {
-                        if (iequiploc(cnt) != cdata(body, cc) / 10000)
+                        if (iequiploc(cnt)
+                            != cdata_body_part_inv(cc, body) / 10000)
                         {
                             continue;
                         }
@@ -950,11 +952,11 @@ label_2061_internal:
             int cnt = 100;
             for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
             {
-                if (cdata(cnt, tc) == 0)
+                if (cdata_body_part_inv(tc, cnt) == 0)
                 {
                     continue;
                 }
-                p = cdata(cnt, tc);
+                p = cdata_body_part_inv(tc, cnt);
                 if (p % 10000 != 0)
                 {
                     color(50, 50, 200);
@@ -1596,7 +1598,7 @@ label_2061_internal:
                     name(cc) + u8"は何かに見守られている感じがした。"s,
                     u8"You feel as someone is watching you intently."s));
             }
-            if (cdata(body, cc) / 10000 == 5)
+            if (cdata_body_part_inv(cc, body) / 10000 == 5)
             {
                 label_2049();
             }
@@ -1969,7 +1971,8 @@ label_2061_internal:
             if (inv_body_part(citrade) != 0)
             {
                 p = inv_body_part(citrade);
-                cdata(p, tc) = cdata(p, tc) / 10000 * 10000;
+                cdata_body_part_inv(tc, p) =
+                    cdata_body_part_inv(tc, p) / 10000 * 10000;
                 inv_body_part(citrade) = 0;
             }
             ti = citrade;
@@ -2114,7 +2117,8 @@ label_2061_internal:
                     goto label_20591;
                 }
                 p = inv_body_part(ci);
-                cdata(p, tc) = cdata(p, tc) / 10000 * 10000;
+                cdata_body_part_inv(tc, p) =
+                    cdata_body_part_inv(tc, p) / 10000 * 10000;
                 inv_body_part(ci) = 0;
             }
             if (inv_id(ci) == 477 || inv_id(ci) == 473)

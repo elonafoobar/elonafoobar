@@ -1,3 +1,4 @@
+#include "character.hpp"
 #include "elona.hpp"
 #include "random.hpp"
 #include "variables.hpp"

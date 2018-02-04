@@ -1,4 +1,5 @@
 #include "calc.hpp"
+#include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -684,11 +685,11 @@ int label_2176()
                     }
                     if (p != -1)
                     {
-                        i = sorg(10 + p, tc) - cdata((240 + p), tc);
+                        i = sorg(10 + p, tc) - cdata_attr_adj(tc, p);
                         if (i > 0)
                         {
                             i = i * efp / 2000 + 1;
-                            cdata(240 + p, tc) -= i;
+                            cdata_attr_adj(tc, p) -= i;
                         }
                         if (synccheck(tc, -1))
                         {
@@ -1878,19 +1879,19 @@ label_2181_internal:
                         break;
                     }
                 }
-                if (bdataref(0, cdata(280 + i * 3, tc)) != 2)
+                if (bdataref(0, cdata_buff_id(tc, i)) != 2)
                 {
                     continue;
                 }
-                if (cdata(280 + i * 3, tc) == 13)
+                if (cdata_buff_id(tc, i) == 13)
                 {
                     continue;
                 }
-                if (cdata(280 + i * 3, tc) == 0)
+                if (cdata_buff_id(tc, i) == 0)
                 {
                     continue;
                 }
-                if (rnd(efp * 2 + 1) > rnd(cdata(280 + i * 3 + 1, tc) + 1))
+                if (rnd(efp * 2 + 1) > rnd(cdata_buff_power(tc, i) + 1))
                 {
                     delbuff(tc, i);
                     ++p;
@@ -2971,17 +2972,18 @@ label_2181_internal:
                 {
                     if (cdata_quality(tc) <= 3)
                     {
-                        cdata(i, tc) -= rnd(sorg(p(cnt), tc)) / 5 + rnd(5);
+                        cdata_attr_adj(tc, i) -=
+                            rnd(sorg(p(cnt), tc)) / 5 + rnd(5);
                         continue;
                     }
                 }
-                if (cdata(i, tc) < 0)
+                if (cdata_attr_adj(tc, i) < 0)
                 {
-                    cdata(i, tc) = 0;
+                    cdata_attr_adj(tc, i) = 0;
                 }
                 if (efstatus >= 1)
                 {
-                    cdata(i, tc) = sorg(p(cnt), tc) / 10 + 5;
+                    cdata_attr_adj(tc, i) = sorg(p(cnt), tc) / 10 + 5;
                 }
             }
         }
@@ -3207,11 +3209,11 @@ label_2181_internal:
             int cnt = 100;
             for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
             {
-                if (cdata(cnt, tc) % 10000 == 0)
+                if (cdata_body_part_inv(tc, cnt) % 10000 == 0)
                 {
                     continue;
                 }
-                p(i) = cdata(cnt, tc) % 10000 - 1;
+                p(i) = cdata_body_part_inv(tc, cnt) % 10000 - 1;
                 if (inv_curse_state(p(i)) == 1)
                 {
                     if (rnd(10))
@@ -3588,7 +3590,8 @@ label_2181_internal:
             u8"It becomes "s + itemname(ci, 1) + u8"."s));
         if (equip != 0)
         {
-            cdata(equip, cc) = cdata(equip, cc) / 10000 * 10000 + ci + 1;
+            cdata_body_part_inv(cc, equip) =
+                cdata_body_part_inv(cc, equip) / 10000 * 10000 + ci + 1;
             inv_body_part(ci) = equip;
         }
         r1 = cc;
@@ -3675,7 +3678,8 @@ label_2181_internal:
         }
         if (equip != 0)
         {
-            cdata(equip, cc) = cdata(equip, cc) / 10000 * 10000 + ci + 1;
+            cdata_body_part_inv(cc, equip) =
+                cdata_body_part_inv(cc, equip) / 10000 * 10000 + ci + 1;
             inv_body_part(ci) = equip;
         }
         r1 = cc;

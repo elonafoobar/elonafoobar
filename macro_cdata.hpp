@@ -41,6 +41,7 @@
 #define cdata_level(x) cdata(38, x)
 #define cdata_speed_percentage_in_next_turn(x) cdata(39, x)
 #define cdata_skill_bonus(x) cdata(41, x)
+#define cdata_total_skill_bonus(x) cdata(42, x)
 #define cdata_inventory_weight(x) cdata(43, x)
 #define cdata_max_inventory_weight(x) cdata(44, x)
 #define cdata_inventory_weight_type(x) cdata(45, x)
@@ -121,3 +122,26 @@
 #define cdata_gravity(x) cdata(262, x)
 #define cdata_choked(x) cdata(263, x)
 #define cdata_furious(x) cdata(264, x)
+
+#define cdata_growth_buff(x, i) cdata(270 + (i), x)
+
+#define cdata_body_part(x, i) cdata(100 + (i), x)
+#define cdata_body_part_inv(x, i) cdata(i, x)
+
+#define cdata_ai_act(x, i) cdata(215 + (i), x)
+#define cdata_ai_act_sub(x, i) cdata(220 + (i), x)
+
+#define cdata_buff_id(x, i) cdata(280 + (i)*3, x)
+#define cdata_buff_power(x, i) cdata(280 + (i)*3 + 1, x)
+#define cdata_buff_turns(x, i) cdata(280 + (i)*3 + 2, x)
+
+#define cdata_attr_adj(x, i) cdata(240 + i, x)
+
+#define cdata_40(x) cdata(40, x)
+#define cdata_158(x) cdata(158, x)
+
+#define cdata_156(x) cdata(156, x)
+
+#define cdata_203(x) cdata(203, x)
+#define cdata_205(x) cdata(205, x)
+#define cdata_206(x) cdata(206, x)

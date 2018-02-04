@@ -9,7 +9,6 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
-#include "macro_cdata.hpp"
 #include "macro_gdata.hpp"
 #include "util.hpp"
 

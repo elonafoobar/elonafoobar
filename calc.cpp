@@ -1,3 +1,4 @@
+#include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -259,7 +260,7 @@ void apply_buff(int cc, int id, int power)
     case 25:
     case 26:
     case 27:
-    case 28: cdata(270 + (id - 20 + 10) - 10, cc) = effect1; break;
+    case 28: cdata_growth_buff(cc, id - 20) = effect1; break;
     default: assert(0);
     }
 }
