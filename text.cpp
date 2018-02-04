@@ -6337,7 +6337,13 @@ void label_0174()
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     if (noteinfo(0) <= 1)
     {
-        noteload(fs::u8path(u8"./data/talk.txt"));
+        buff(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/talk.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
         p = instr(buff, 0, u8"%DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
         buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     }
@@ -6355,7 +6361,15 @@ void label_0175()
 {
     buff = "";
     notesel(buff);
-    noteload(fs::u8path(u8"./data/talk.txt"));
+    {
+        buff(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/talk.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
     label_0174();
     return;
@@ -6367,7 +6381,15 @@ void label_0176()
 {
     buff = "";
     notesel(buff);
-    noteload(fs::u8path(u8"./data/talk.txt"));
+    {
+        buff(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/talk.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     p = -1;
     {
         int cnt = 0;

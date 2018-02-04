@@ -308,7 +308,13 @@ int label_2107()
         }
         if (fread == 1)
         {
-            noteload(file);
+            artifactlocation(0).clear();
+            std::ifstream in{file};
+            std::string tmp;
+            while (std::getline(in, tmp))
+            {
+                artifactlocation(0) += tmp + '\n';
+            }
         }
         file = folder + u8"news.log"s;
         notesel(newsbuff);
@@ -319,7 +325,13 @@ int label_2107()
         }
         if (fread == 1)
         {
-            noteload(file);
+            newsbuff(0).clear();
+            std::ifstream in{file};
+            std::string tmp;
+            while (std::getline(in, tmp))
+            {
+                newsbuff(0) += tmp + '\n';
+            }
         }
         file = folder + u8"cdatan.s1"s;
         arrayfile(u8"cdatan1");

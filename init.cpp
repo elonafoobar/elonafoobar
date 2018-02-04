@@ -371,7 +371,15 @@ void initialize_elona()
     mesbox(keylog, 0, 0, 1, 10);
     SDIM1(buffboard);
     notesel(buffboard);
-    noteload(fs::u8path(u8"./data/board.txt"));
+    {
+        buffboard(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/board.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buffboard(0) += tmp + '\n';
+        }
+    }
     SDIM1(filter_item);
     SDIM1(rffilter_item);
     SDIM1(ioriginalnameref);

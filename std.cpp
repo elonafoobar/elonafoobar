@@ -1376,24 +1376,6 @@ int noteinfo(int mode)
 
 
 
-void noteload(const fs::path& filename)
-{
-    LOG("noteload", filename);
-
-    std::ifstream in{filename};
-    if (!in)
-        throw notemanip::io_error{u8"Not found "s + filename.u8string()};
-
-    std::string str;
-    notemanip::buffer->clear();
-    while (std::getline(in, str))
-    {
-        *notemanip::buffer += str + '\n';
-    }
-}
-
-
-
 int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;

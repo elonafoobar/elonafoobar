@@ -19592,7 +19592,15 @@ int net_dllist(const std::string& prm_886, int prm_887)
         return 0;
     }
     notesel(netbuf);
-    noteload(file_at_m147);
+    {
+        netbuf(0).clear();
+        std::ifstream in{file_at_m147};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            netbuf(0) += tmp + '\n';
+        }
+    }
     exist(file_at_m147);
     size_at_m147 = strsize;
     p_at_m147 = 0;
@@ -19697,7 +19705,15 @@ void label_1398()
     }
     else
     {
-        noteload(fs::u8path(u8"./server.txt"));
+        {
+            serverlist(0).clear();
+            std::ifstream in{fs::u8path(u8"./server.txt")};
+            std::string tmp;
+            while (std::getline(in, tmp))
+            {
+                serverlist(0) += tmp + '\n';
+            }
+        }
         netbuf = serverlist;
         dialog(""s + serverlist);
     }
@@ -27091,7 +27107,15 @@ void label_1572()
     biten(4) = lang(u8"セミ"s, u8"locust"s);
     biten(5) = lang(u8"ヘラクレス"s, u8"beetle"s);
     notesel(buff);
-    noteload(fs::u8path(u8"./data/book.txt"));
+    {
+        buff(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/book.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     p = instr(buff, 0, u8"%DEFINE"s);
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
@@ -55088,7 +55112,15 @@ void label_2022()
     picload(fs::u8path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     notesel(buff);
-    noteload(fs::u8path(u8"./data/book.txt"));
+    {
+        buff(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/book.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     p = instr(buff, 0, ""s + inv_param1(ci) + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
     {
@@ -61276,7 +61308,13 @@ void label_2112()
     }
     else
     {
-        noteload(folder + u8"filelist.txt"s);
+        buff(0).clear();
+        std::ifstream in{folder + u8"filelist.txt"s};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
     }
     {
         int cnt = 0;
@@ -80201,7 +80239,15 @@ void label_2680()
     y1 = 60;
     y2 = windowh - 60;
     notesel(buff);
-    noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
+    {
+        buff(0).clear();
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s)};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     s = u8"{"s + sceneid + u8"}"s;
     scidx = instr(buff, 0, s);
     if (scidx == -1)
@@ -80223,7 +80269,15 @@ label_2681:
         return;
     }
     notesel(buff);
-    noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
+    {
+        buff(0).clear();
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s)};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     cs = 0;
     key_list = key_enter;
     scidxtop = scidx;
@@ -82591,7 +82645,15 @@ void label_2701()
     gsel(0);
     page = 0;
     notesel(buff);
-    noteload(fs::u8path(u8"./data/exhelp.txt"));
+    {
+        buff(0).clear();
+        std::ifstream in{fs::u8path(u8"./data/exhelp.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     p = instr(buff, 0, u8"%"s + ghelp + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
     {
@@ -82734,8 +82796,16 @@ void label_2703()
         cs_bk2 = cs;
     }
     notesel(buff);
-    noteload(fs::u8path(
-        u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s)));
+    {
+        buff(0).clear();
+        std::ifstream in{fs::u8path(
+            u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     list(0, 0) = 0;
     listn(0, 0) = lang(u8"キーの一覧"s, u8"Key List"s);
     ++listmax;
@@ -83417,7 +83487,15 @@ void label_2719()
 {
     std::string userpassword;
     notesel(note_buff);
-    noteload(fs::u8path(u8"./user/export.txt"));
+    {
+        note_buff.clear();
+        std::ifstream in{fs::u8path(u8"./user/export.txt")};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            note_buff += tmp + '\n';
+        }
+    }
     usertitle = "";
     usermsg = "";
     userpassword = u8"nyaa"s;
@@ -83591,7 +83669,15 @@ void label_2727()
     cs = 0;
     cc = 0;
     notesel(buff);
-    noteload(lang(u8"scene1.hsp"s, u8"scene2.hsp"s));
+    {
+        buff(0).clear();
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s)};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
+    }
     p = 0;
     {
         int cnt = 0;
@@ -86602,7 +86688,13 @@ void label_2752()
     exist(file + u8".txt"s);
     if (strsize != -1)
     {
-        noteload(file + u8".txt"s);
+        buff(0).clear();
+        std::ifstream in{file + u8".txt"s};
+        std::string tmp;
+        while (std::getline(in, tmp))
+        {
+            buff(0) += tmp + '\n';
+        }
     }
     s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + lang(""s, u8" "s) + lastword;
     lenfix(s, 60);
