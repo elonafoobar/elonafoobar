@@ -285,11 +285,10 @@ void snfood(std::string& prm_360)
 void txtsetlastword()
 {
     std::vector<std::string> last_words;
-    range::transform(
+    range::copy(
         fileutil::read_by_line{fs::u8path(u8"./user")
                                / lang(u8"lastwords.txt", u8"lastwords-e.txt")},
-        std::back_inserter(last_words),
-        [](const auto& pair) { return pair.second; });
+        std::back_inserter(last_words));
     lastword = last_words[rnd(std::size(last_words))];
     // TODO: bug? rnd(noteinfo(0)) ?
     // noteget(lastword, rnd(noteinfo(0) + 1));

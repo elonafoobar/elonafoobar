@@ -49,11 +49,13 @@ void load_musiclist()
     if (!fs::exists(filepath))
         return;
 
-    for (auto&& [n, line] : fileutil::read_by_line{filepath})
+    size_t i = 0;
+    for (auto&& line : fileutil::read_by_line{filepath})
     {
         if (std::empty(line))
             continue;
-        musicfile(n + 50) = strmid(line, 0, instr(line, 0, u8"\t"));
+        musicfile(i + 50) = strmid(line, 0, instr(line, 0, u8"\t"));
+        ++i;
     }
 }
 
@@ -337,7 +339,7 @@ void initialize_elona()
     DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
-    SDIM1(artifactlocation);
+    artifactlocation.clear();
     SDIM1(newsbuff);
     SDIM3(soundfile, 30, 122);
     SDIM3(musicfile, 30, 97);

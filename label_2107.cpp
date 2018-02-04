@@ -300,21 +300,19 @@ int label_2107()
             }
         }
         file = folder + u8"art.log"s;
-        notesel(artifactlocation);
         if (fread == 0)
         {
             std::ofstream out{file};
-            out << artifactlocation(0) << std::endl;
+            range::for_each(artifactlocation, [&](const auto& line) {
+                out << line << std::endl;
+            });
         }
         if (fread == 1)
         {
-            artifactlocation(0).clear();
-            std::ifstream in{file};
-            std::string tmp;
-            while (std::getline(in, tmp))
-            {
-                artifactlocation(0) += tmp + '\n';
-            }
+            artifactlocation.clear();
+            range::copy(
+                fileutil::read_by_line{file},
+                std::back_inserter(artifactlocation));
         }
         file = folder + u8"news.log"s;
         notesel(newsbuff);

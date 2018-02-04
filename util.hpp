@@ -69,7 +69,7 @@ struct read_by_line
 {
     struct iterator
     {
-        using value_type = std::pair<size_t, std::string>;
+        using value_type = std::string;
         using difference_type = size_t;
         using pointer = const value_type*;
         using reference = const value_type&;
@@ -88,13 +88,13 @@ struct read_by_line
 
         void operator++()
         {
-            if (std::getline(in, value.second))
+            if (std::getline(in, value))
             {
-                ++value.first;
+                ++n;
             }
             else // EOF
             {
-                value.first = 0; // Becomes equal to end().
+                n = 0; // Becomes equal to end().
             }
         }
 
@@ -113,13 +113,20 @@ struct read_by_line
 
         bool operator!=(const iterator& other) const
         {
-            return value.first != other.value.first;
+            return n != other.n;
+        }
+
+
+        size_t line_number() const noexcept
+        {
+            return n;
         }
 
 
     private:
         std::ifstream& in;
         value_type value;
+        size_t n = 0;
     };
 
 

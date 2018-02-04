@@ -2361,13 +2361,13 @@ label_2181_internal:
         }
         if (efstatus <= -1)
         {
-            artifactlocation = "";
+            artifactlocation.clear();
             txt(lang(
                 u8"何かがあなたの耳元でささやいたが、あなたは聞き取ることができなかった。"s,
                 u8"You hear a sepulchral whisper but the voice is too small to distinguish a word."s));
             goto label_2186_internal;
         }
-        if (artifactlocation == ""s)
+        if (std::empty(artifactlocation))
         {
             txt(lang(
                 u8"まだ特殊なアイテムは生成されていない。"s,
@@ -2375,16 +2375,9 @@ label_2181_internal:
         }
         else
         {
-            notesel(artifactlocation);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end; ++cnt)
-                {
-                    noteget(s, 0);
-                    txt(cnven(s));
-                    notedel(0);
-                }
-            }
+            range::for_each(
+                artifactlocation, [](const auto& line) { txt(cnven(line)); });
+            artifactlocation.clear();
         }
         goto label_2186_internal;
     case 1104:

@@ -5822,11 +5822,10 @@ void csvsort(
 void load_random_name_table()
 {
     std::vector<std::string> lines;
-    range::transform(
+    range::copy(
         fileutil::read_by_line{
             fs::u8path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
-        std::back_inserter(lines),
-        [](const auto& pair) { return pair.second; });
+        std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
     SDIM4(rnlist, 20, 15, std::size(lines));
@@ -5846,10 +5845,9 @@ void load_random_name_table()
 void load_random_title_table()
 {
     std::vector<std::string> lines;
-    range::transform(
+    range::copy(
         fileutil::read_by_line{fs::u8path(u8"data/name.csv"s)},
-        std::back_inserter(lines),
-        [](const auto& pair) { return pair.second; });
+        std::back_inserter(lines));
 
     SDIM3(rn1, 15, std::size(lines));
     SDIM3(rn2, 15, std::size(lines));
@@ -11447,10 +11445,8 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
     std::vector<std::string> lines;
     if (fs::exists(filepath))
     {
-        range::transform(
-            fileutil::read_by_line{filepath},
-            std::back_inserter(lines),
-            [](const auto& pair) { return pair.second; });
+        range::copy(
+            fileutil::read_by_line{filepath}, std::back_inserter(lines));
     }
 
     if (fmode_str == u8"qname"s)
@@ -13578,10 +13574,9 @@ int customtalk(int cc, int talk_type)
         const auto filepath = fs::u8path(u8"./user/talk") / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
-        range::transform(
+        range::copy(
             fileutil::read_by_line{filepath},
-            std::back_inserter(talk_file_buffer),
-            [](const auto& pair) { return pair.second; });
+            std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
     else if (cdata_id(cc) == 343)
@@ -28751,16 +28746,16 @@ int label_1582()
                 {
                     if (cdata_character_role(ii_p) == 13)
                     {
-                        artifactlocation += lang(
+                        artifactlocation.push_back(lang(
                             iknownnameref(inv_id(ci)) + u8"は"s + gdata_year
                                 + u8"年"s + gdata_month + u8"月に"s
                                 + mapname(cdata_current_map(ii_p)) + u8"の"s
-                                + cdatan(0, ii_p) + u8"の手に渡った。\n"s,
+                                + cdatan(0, ii_p) + u8"の手に渡った。"s,
                             cnven(iknownnameref(inv_id(ci)))
                                 + u8" was held by "s + cdatan(0, ii_p)
                                 + u8" at "s + mapname(cdata_current_map(ii_p))
                                 + u8" in "s + gdata_day + u8"/"s + gdata_month
-                                + u8", "s + gdata_year + u8". "s);
+                                + u8", "s + gdata_year + u8". "s));
                     }
                     else
                     {
@@ -28769,13 +28764,13 @@ int label_1582()
                 }
                 if (ii_p == -1)
                 {
-                    artifactlocation += lang(
+                    artifactlocation.push_back(lang(
                         iknownnameref(inv_id(ci)) + u8"は"s + gdata_year
                             + u8"年"s + gdata_month + u8"月に"s + mdatan(0)
-                            + u8"で生成された。\n"s,
+                            + u8"で生成された。"s,
                         cnven(iknownnameref(inv_id(ci))) + u8" was created at "s
                             + mdatan(0) + u8" in "s + gdata_day + u8"/"s
-                            + gdata_month + u8", "s + gdata_year + u8". "s);
+                            + gdata_month + u8", "s + gdata_year + u8". "s));
                 }
             }
         }
