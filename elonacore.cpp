@@ -557,26 +557,6 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
 
 
 
-int cbit(int prm_253, int prm_254)
-{
-    return HMMBITCHECK(cdata(450 + prm_253 / 32, prm_254), prm_253 % 32);
-}
-
-
-
-void cbitmod(int prm_255, int prm_256, int prm_257)
-{
-    if (prm_257 == 0)
-    {
-        HMMBITOFF(cdata(450 + prm_255 / 32, prm_256), prm_255 % 32);
-        return;
-    }
-    HMMBITON(cdata(450 + prm_255 / 32, prm_256), prm_255 % 32);
-    return;
-}
-
-
-
 int refclass(int prm_261, int prm_262)
 {
     dbmode = 16;
@@ -14307,7 +14287,7 @@ void del_chara(int prm_783)
         }
     }
     sdata.clear(prm_783);
-    cdata.clear(prm_783);
+    cdata(prm_783).clear();
     return;
 }
 
@@ -14411,14 +14391,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
             sdata(cnt, prm_784) = 0;
         }
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
-        {
-            cdata(cnt, tc_at_m125) = cdata(cnt, prm_784);
-            cdata(cnt, prm_784) = 0;
-        }
-    }
+    cdata(tc_at_m125) = cdata(prm_784);
+    cdata(prm_784).clear();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -16794,9 +16768,9 @@ int item_fire(int prm_840, int prm_841)
                                         + _s(prm_840) + u8" turn"s
                                         + _s2(p_at_m138) + u8" to dust."s));
                             }
-                            cdata_body_part_inv(
+                            cdata_body_part(
                                 prm_840, inv_body_part(ci_at_m138)) =
-                                cdata_body_part_inv(
+                                cdata_body_part(
                                     prm_840, inv_body_part(ci_at_m138))
                                 / 10000 * 10000;
                             inv_body_part(ci_at_m138) = 0;
@@ -17103,7 +17077,7 @@ int copy_chara(int prm_848)
     }
     del_chara(c_at_m139);
     memcpy(sdata, 0, c_at_m139, sdata, 0, prm_848, 4800);
-    memcpy(cdata, 0, c_at_m139, cdata, 0, prm_848, 2000);
+    cdata(c_at_m139) = cdata(prm_848);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -23918,7 +23892,7 @@ void label_1477()
     }
     if (r1 == 0)
     {
-        cdata.clear(r1, 450, (120) / sizeof(int));
+        cdata(r1).clear_flags();
         if (trait(161) != 0)
         {
             for (int i = 0; i < 30; ++i)
@@ -23939,11 +23913,17 @@ void label_1477()
     }
     else if (cdata_id(r1) == 343)
     {
-        memcpy(cdata, 450, r1, userdata, 40, cdata_cnpc_id(r1), 120);
+        for (int i = 0; i < 30; ++i)
+        {
+            cdata(r1).flags[i] = userdata(40 + i, cdata_cnpc_id(r1));
+        }
     }
     else
     {
-        memcpy(cdata, 450, r1, cbitorg, 0, cdata_id(r1), 120);
+        for (int i = 0; i < 30; ++i)
+        {
+            cdata(r1).flags[i] = cbitorg(i, cdata_id(r1));
+        }
     }
     {
         int cnt = 0;
@@ -27241,9 +27221,8 @@ void label_1573()
                 }
                 if (inv_body_part(ci) != 0)
                 {
-                    cdata_body_part_inv(rc, inv_body_part(ci)) =
-                        cdata_body_part_inv(rc, inv_body_part(ci)) / 10000
-                        * 10000;
+                    cdata_body_part(rc, inv_body_part(ci)) =
+                        cdata_body_part(rc, inv_body_part(ci)) / 10000 * 10000;
                     inv_body_part(ci) = 0;
                 }
                 f = 0;
@@ -27419,8 +27398,8 @@ void label_1573()
             }
             if (inv_body_part(ci) != 0)
             {
-                cdata_body_part_inv(rc, inv_body_part(ci)) =
-                    cdata_body_part_inv(rc, inv_body_part(ci)) / 10000 * 10000;
+                cdata_body_part(rc, inv_body_part(ci)) =
+                    cdata_body_part(rc, inv_body_part(ci)) / 10000 * 10000;
                 inv_body_part(ci) = 0;
             }
             inv_x(ci) = cdata_x(rc);
@@ -57717,7 +57696,7 @@ label_2052_internal:
                 break;
             }
             display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
-            p(1) = cdata_body_part_inv(cc, list(0, p));
+            p(1) = cdata_body_part(cc, list(0, p));
             s(0) = u8"-    "s;
             s(1) = u8"-"s;
             if (p(1) % 10000 != 0)
@@ -57835,10 +57814,10 @@ label_2052_internal:
     {
         cs_prev = cs;
         body = p;
-        if (cdata_body_part(cc, body - 100) % 10000 != 0)
+        if (cdata_body_part(cc, body) % 10000 != 0)
         {
             gdata(808) = 1;
-            ci = cdata_body_part(cc, body - 100) % 10000 - 1;
+            ci = cdata_body_part(cc, body) % 10000 - 1;
             if (inv_curse_state(ci) == -1 || inv_curse_state(ci) == -2)
             {
                 txt(lang(
@@ -57855,7 +57834,7 @@ label_2052_internal:
             txt(lang(
                 itemname(ci) + u8"を外した。"s,
                 u8"You unequip "s + itemname(ci) + u8"."s));
-            if (cdata_body_part(cc, body - 100) / 10000 == 5)
+            if (cdata_body_part(cc, body) / 10000 == 5)
             {
                 label_2049();
             }
@@ -57873,9 +57852,9 @@ label_2052_internal:
     if (key == key_identify)
     {
         p = list(0, pagesize * page + cs);
-        if (cdata_body_part_inv(cc, p) % 10000 != 0)
+        if (cdata_body_part(cc, p) % 10000 != 0)
         {
-            ci = cdata_body_part_inv(cc, p) % 10000 - 1;
+            ci = cdata_body_part(cc, p) % 10000 - 1;
             cs_prev = cs;
             label_2068();
             nowindowanime = 1;
@@ -59786,30 +59765,30 @@ void label_2085()
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            if (cdata_body_part(cc, cnt - 100) != 0)
+            if (cdata_body_part(cc, cnt) != 0)
             {
                 if (trait(206) != 0)
                 {
-                    if (cdata_body_part(cc, cnt - 100) / 10000 == 2)
+                    if (cdata_body_part(cc, cnt) / 10000 == 2)
                     {
                         continue;
                     }
                 }
                 if (trait(203) != 0)
                 {
-                    if (cdata_body_part(cc, cnt - 100) / 10000 == 9)
+                    if (cdata_body_part(cc, cnt) / 10000 == 9)
                     {
                         continue;
                     }
                 }
                 if (trait(205) != 0)
                 {
-                    if (cdata_body_part(cc, cnt - 100) / 10000 == 3)
+                    if (cdata_body_part(cc, cnt) / 10000 == 3)
                     {
                         continue;
                     }
                 }
-                p(1) = cdata_body_part(cc, cnt - 100);
+                p(1) = cdata_body_part(cc, cnt);
                 q(0) = u8"装備なし"s;
                 q(1) = "";
                 if (p(1) % 10000 != 0)
@@ -59825,7 +59804,7 @@ void label_2085()
                 {
                     listmax = 0;
                 }
-                s = bodyn(cdata_body_part(cc, cnt - 100) / 10000);
+                s = bodyn(cdata_body_part(cc, cnt) / 10000);
                 if (strmid(s, 0, 2) == u8"　"s)
                 {
                     s = strmid(s, 2, 2);
@@ -60486,14 +60465,8 @@ void label_2092()
             sdata(cnt, 0) = 0;
         }
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
-        {
-            cdata(cnt, 56) = cdata(cnt, 0);
-            cdata(cnt, 0) = 0;
-        }
-    }
+    cdata(56) = cdata(0);
+    cdata(0).clear();
     inv_getheader(-1);
     {
         int cnt = invhead;
@@ -63952,8 +63925,7 @@ void label_2148()
             if (tc != -1)
             {
                 p = inv_body_part(ci);
-                cdata_body_part_inv(tc, p) =
-                    cdata_body_part_inv(tc, p) / 10000 * 10000;
+                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
             }
             inv_body_part(ci) = 0;
             r1 = tc;
@@ -67396,7 +67368,7 @@ int label_2194()
     {
         return 0;
     }
-    if (cdata_body_part_inv(r1, body) % 10000 != 0)
+    if (cdata_body_part(r1, body) % 10000 != 0)
     {
         return 0;
     }
@@ -67410,8 +67382,8 @@ int label_2194()
         item_identify(ci, 2);
     }
     inv_body_part(ci) = body;
-    cdata_body_part_inv(r1, body) =
-        cdata_body_part_inv(r1, body) / 10000 * 10000 + ci + 1;
+    cdata_body_part(r1, body) =
+        cdata_body_part(r1, body) / 10000 * 10000 + ci + 1;
     return 1;
 }
 
@@ -67419,15 +67391,14 @@ int label_2194()
 
 void label_2195()
 {
-    p = cdata_body_part_inv(r1, body) % 10000;
+    p = cdata_body_part(r1, body) % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
     ci = p - 1;
-    cdata_body_part_inv(r1, body) =
-        cdata_body_part_inv(r1, body) / 10000 * 10000;
+    cdata_body_part(r1, body) = cdata_body_part(r1, body) / 10000 * 10000;
     inv_body_part(ci) = 0;
     item_stack(r1, ci);
     return;
@@ -67441,17 +67412,17 @@ void label_2196()
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            if (cdata_body_part(r1, cnt - 100) / 10000 == body)
+            if (cdata_body_part(r1, cnt) / 10000 == body)
             {
-                p = cdata_body_part(r1, cnt - 100) % 10000;
+                p = cdata_body_part(r1, cnt) % 10000;
                 if (p == 0)
                 {
                     continue;
                 }
                 --p;
                 inv_body_part(p) = 0;
-                cdata_body_part(r1, cnt - 100) =
-                    cdata_body_part(r1, cnt - 100) / 10000 * 10000;
+                cdata_body_part(r1, cnt) =
+                    cdata_body_part(r1, cnt) / 10000 * 10000;
             }
         }
     }
@@ -72340,7 +72311,7 @@ void label_2228()
             int stat = label_2231();
             if (stat != -1)
             {
-                cdata_body_part_inv(rc, stat) = rtval * 10000;
+                cdata_body_part(rc, stat) = rtval * 10000;
                 txtef(2);
                 txt(lang(
                     cdatan(0, rc) + u8"は新しい"s + bodyn(rtval)
@@ -72579,7 +72550,7 @@ int label_2231()
         int cnt = 100;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            f = cdata_body_part(tc, cnt - 100) / 10000;
+            f = cdata_body_part(tc, cnt) / 10000;
             if (f == 11 || f == 10 || f == 4)
             {
                 continue;
@@ -79001,7 +78972,7 @@ void label_2667()
             for (int cnt_end = cnt + (eqdup); cnt < cnt_end; ++cnt)
             {
                 body = bodylist(cnt);
-                i = cdata_body_part_inv(rc, body) % 10000;
+                i = cdata_body_part(rc, body) % 10000;
                 if (i == 0)
                 {
                     label_2194();
@@ -79015,16 +78986,14 @@ void label_2667()
                 }
                 if (eqdup > cnt + 1)
                 {
-                    if (cdata_body_part_inv(rc, bodylist((cnt + 1))) % 10000
-                        == 0)
+                    if (cdata_body_part(rc, bodylist(cnt + 1)) % 10000 == 0)
                     {
                         f = 0;
                     }
                     else if (
                         inv_value(i)
                         >= inv_value(
-                               cdata_body_part_inv(rc, bodylist((cnt + 1)))
-                                   % 10000
+                               cdata_body_part(rc, bodylist(cnt + 1)) % 10000
                                - 1))
                     {
                         f = 0;
@@ -79100,12 +79069,12 @@ void label_2668()
                 int cnt = 100;
                 for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
                 {
-                    p = cdata_body_part_inv(rc, cnt) / 10000;
+                    p = cdata_body_part(rc, cnt) / 10000;
                     if (p == 0)
                     {
                         break;
                     }
-                    if (cdata_body_part_inv(rc, cnt) % 10000 != 0)
+                    if (cdata_body_part(rc, cnt) % 10000 != 0)
                     {
                         if (p == 5)
                         {
@@ -79113,7 +79082,7 @@ void label_2668()
                             {
                                 if (refitem(
                                         inv_id(
-                                            cdata_body_part_inv(rc, cnt) % 10000
+                                            cdata_body_part(rc, cnt) % 10000
                                             - 1),
                                         5)
                                     == 10000)

@@ -3209,11 +3209,11 @@ label_2181_internal:
             int cnt = 100;
             for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
             {
-                if (cdata_body_part_inv(tc, cnt) % 10000 == 0)
+                if (cdata_body_part(tc, cnt) % 10000 == 0)
                 {
                     continue;
                 }
-                p(i) = cdata_body_part_inv(tc, cnt) % 10000 - 1;
+                p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
                 if (inv_curse_state(p(i)) == 1)
                 {
                     if (rnd(10))
@@ -3590,8 +3590,8 @@ label_2181_internal:
             u8"It becomes "s + itemname(ci, 1) + u8"."s));
         if (equip != 0)
         {
-            cdata_body_part_inv(cc, equip) =
-                cdata_body_part_inv(cc, equip) / 10000 * 10000 + ci + 1;
+            cdata_body_part(cc, equip) =
+                cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
             inv_body_part(ci) = equip;
         }
         r1 = cc;
@@ -3678,8 +3678,8 @@ label_2181_internal:
         }
         if (equip != 0)
         {
-            cdata_body_part_inv(cc, equip) =
-                cdata_body_part_inv(cc, equip) / 10000 * 10000 + ci + 1;
+            cdata_body_part(cc, equip) =
+                cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
             inv_body_part(ci) = equip;
         }
         r1 = cc;

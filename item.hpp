@@ -1,7 +1,7 @@
 #pragma once
 
-#include <array>
 #include <memory>
+#include <vector>
 #include "position.hpp"
 
 
@@ -24,6 +24,9 @@ struct enc_t
 
 struct item
 {
+    item();
+
+
     int number = 0;
     int value = 0;
     int image = 0;
@@ -57,7 +60,7 @@ struct item
 
     int flags = 0;
 
-    std::array<enc_t, 15> enchantments;
+    std::vector<enc_t> enchantments;
 
 
     void clear();
@@ -69,6 +72,9 @@ struct item
 
 struct inventory
 {
+    inventory();
+
+
     item& operator()(int index)
     {
         return storage[index];
@@ -82,7 +88,7 @@ struct inventory
 
 
 private:
-    std::array<item, 5480> storage;
+    std::vector<item> storage;
 };
 
 

@@ -947,8 +947,8 @@ int label_2107()
                         int cnt = 100;
                         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
                         {
-                            cdata_body_part_inv(tg, cnt) =
-                                cdata_body_part_inv(tg, cnt) / 10000 * 10000;
+                            cdata_body_part(tg, cnt) =
+                                cdata_body_part(tg, cnt) / 10000 * 10000;
                         }
                     }
                     rc = tg;
