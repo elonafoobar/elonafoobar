@@ -332,10 +332,6 @@ std::unique_ptr<char[]> character_data::serialize(int offset) const
         PUT(_203);
         PUT(_205);
         PUT(_206);
-
-        if (storage[i].state || !std::empty(cdatan(0, i)))
-            std::cout << i << "  " << storage[i].state << cdatan(0, i)
-                      << std::endl;
     }
     return std::move(buf);
 #undef PUT
@@ -626,10 +622,6 @@ void character_data::deserialize(
         GET(_203);
         GET(_205);
         GET(_206);
-
-        if (storage[i].state)
-            std::cout << i << "r  " << cdatan(0, i) << std::endl;
-
         size -= 500 * sizeof(int);
         if (size == 0)
             return;
