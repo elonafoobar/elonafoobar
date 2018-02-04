@@ -24,9 +24,9 @@ struct item_data
     int dv;
     int material;
     int chargelevel;
-    const char* infilterref;
-    std::array<const char*, 4> description_jp;
-    const char* description_en;
+    std::string infilterref;
+    std::array<std::string, 4> description_jp;
+    std::string description_en;
     int dbspec2;
     int dbspec3;
     int dbspec4;
@@ -86,17 +86,17 @@ public:
 
     iterator begin() const
     {
-        return iterator{std::begin(data)};
+        return iterator{std::begin(storage)};
     }
 
     iterator end() const
     {
-        return iterator{std::end(data)};
+        return iterator{std::end(storage)};
     }
 
 
 private:
-    std::unordered_map<int, item_data> data;
+    std::unordered_map<int, item_data> storage;
 };
 
 
