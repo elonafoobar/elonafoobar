@@ -2,6 +2,7 @@
 
 #include <array>
 #include <memory>
+#include "position.hpp"
 
 
 namespace elona

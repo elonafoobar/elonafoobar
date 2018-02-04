@@ -13,13 +13,13 @@ struct position_t
 };
 
 
-bool operator==(const position_t& lhs, const position_t& rhs)
+inline bool operator==(const position_t& lhs, const position_t& rhs)
 {
     return lhs.x == rhs.x && lhs.x == rhs.x;
 }
 
 
-bool operator!=(const position_t& lhs, const position_t& rhs)
+inline bool operator!=(const position_t& lhs, const position_t& rhs)
 {
     return !(lhs == rhs);
 }

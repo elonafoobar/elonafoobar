@@ -62,7 +62,7 @@ std::unique_ptr<char[]> inventory::serialize(int offset) const
         buf.get(),
         buf.get() + (std::size(storage) - offset) * sizeof(int) * 70,
         0);
-    for (size_t i = offset; i < std::size(storage) - offset; ++i)
+    for (size_t i = offset; i < std::size(storage); ++i)
     {
         size_t j = 0;
         PUT(number);
@@ -212,6 +212,7 @@ void inventory::deserialize(
         GET(enchantments[13].power);
         GET(enchantments[14].id);
         GET(enchantments[14].power);
+
         size -= 70 * sizeof(int);
         if (size == 0)
             return;
