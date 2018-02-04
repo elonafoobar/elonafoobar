@@ -539,10 +539,6 @@ void noteget(std::string& out, size_t index);
 
 int noteinfo(int = 0);
 
-void noteload(const fs::path&);
-
-void notesave(const fs::path&);
-
 int notesel(std::string&);
 
 void noteunsel();

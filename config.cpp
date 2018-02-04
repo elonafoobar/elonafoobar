@@ -727,7 +727,9 @@ void label_2716()
 void label_2713()
 {
     std::vector<std::string> lines;
-    range::transform(fileutil::read_by_line{fs::u8path(u8"./config.txt")}, std::back_inserter(lines), [](const auto& pair) { return pair.second; });
+    range::copy(
+        fileutil::read_by_line{fs::u8path(u8"./config.txt")},
+        std::back_inserter(lines));
     bool already_exists = false;
     for (auto&& line : lines)
     {

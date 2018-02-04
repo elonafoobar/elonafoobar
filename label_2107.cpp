@@ -300,24 +300,36 @@ int label_2107()
             }
         }
         file = folder + u8"art.log"s;
-        notesel(artifactlocation);
         if (fread == 0)
         {
-            notesave(file);
+            std::ofstream out{file};
+            range::for_each(artifactlocation, [&](const auto& line) {
+                out << line << std::endl;
+            });
         }
         if (fread == 1)
         {
-            noteload(file);
+            artifactlocation.clear();
+            range::copy(
+                fileutil::read_by_line{file},
+                std::back_inserter(artifactlocation));
         }
         file = folder + u8"news.log"s;
         notesel(newsbuff);
         if (fread == 0)
         {
-            notesave(file);
+            std::ofstream out{file};
+            out << newsbuff(0) << std::endl;
         }
         if (fread == 1)
         {
-            noteload(file);
+            newsbuff(0).clear();
+            std::ifstream in{file};
+            std::string tmp;
+            while (std::getline(in, tmp))
+            {
+                newsbuff(0) += tmp + '\n';
+            }
         }
         file = folder + u8"cdatan.s1"s;
         arrayfile(u8"cdatan1");

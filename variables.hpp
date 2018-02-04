@@ -92,7 +92,7 @@ inline elona_vector1<std::string> _sex;
 inline elona_vector1<std::string> _syujin;
 inline elona_vector1<std::string> _weight;
 inline elona_vector1<std::string> ammoname;
-inline elona_vector1<std::string> artifactlocation;
+inline std::vector<std::string> artifactlocation;
 inline elona_vector1<std::string> bdrefn;
 inline elona_vector1<std::string> biten;
 inline elona_vector1<std::string> bodyn;

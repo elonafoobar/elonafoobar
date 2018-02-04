@@ -61,6 +61,24 @@ auto transform(R&& src, I dst, F func)
 
 
 
+template <typename R, typename I>
+auto copy(const R& src, I dst)
+{
+    using std::begin, std::end;
+    return std::copy(begin(src), end(src), dst);
+}
+
+
+
+template <typename R, typename I>
+auto copy(R&& src, I dst)
+{
+    using std::begin, std::end;
+    return std::copy(begin(src), end(src), dst);
+}
+
+
+
 template <typename R, typename F>
 auto for_each(const R& range, F func)
 {
@@ -103,7 +121,6 @@ bool equal(const R1& range1, const R2& range2)
     using std::begin, std::end;
     return std::equal(begin(range1), end(range1), begin(range2));
 }
-
 
 
 } // namespace elona::range
