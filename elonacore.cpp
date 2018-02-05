@@ -32595,62 +32595,43 @@ int label_1659()
 
 int map_connectroom()
 {
-    elona_vector1<int> roomentrancex;
-    elona_vector1<int> roomentrancey;
     cr = 0;
-label_1662_internal:
-    if (cr >= roomsum - 1)
+    while (cr < roomsum - 1)
     {
-        label_1663();
-        return 0;
-    }
-    p = cr + 1;
-    int stat = 0;
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (rnd(rdroomentrance + 1) + 1); cnt < cnt_end;
-             ++cnt)
+        bool ok = false;
+        for (int i = 0; i < rnd(rdroomentrance + 1) + 1; ++i)
         {
+            for (int j = cr; j < cr + 2; ++j)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+                while (1)
                 {
-                    if (cnt == 0)
-                    {
-                        p = cr;
-                    }
-                    else
-                    {
-                        p = cr + 1;
-                    }
                     dir = rnd(4);
                     x = dirxy(0, dir);
                     y = dirxy(1, dir);
                     if (dir == 1)
                     {
-                        dx = roomx(p);
-                        dy = roomy(p) + rnd((roomheight(p) - 2)) + 1;
+                        dx = roomx(j);
+                        dy = roomy(j) + rnd(roomheight(j) - 2) + 1;
                     }
                     if (dir == 2)
                     {
-                        dx = roomx(p) + roomwidth(p) - 1;
-                        dy = roomy(p) + rnd((roomheight(p) - 2)) + 1;
+                        dx = roomx(j) + roomwidth(j) - 1;
+                        dy = roomy(j) + rnd(roomheight(j) - 2) + 1;
                     }
                     if (dir == 3)
                     {
-                        dx = roomx(p) + rnd((roomwidth(p) - 2)) + 1;
-                        dy = roomy(p);
+                        dx = roomx(j) + rnd(roomwidth(j) - 2) + 1;
+                        dy = roomy(j);
                     }
                     if (dir == 0)
                     {
-                        dx = roomx(p) + rnd((roomwidth(p) - 2)) + 1;
-                        dy = roomy(p) + roomheight(p) - 1;
+                        dx = roomx(j) + rnd(roomwidth(j) - 2) + 1;
+                        dy = roomy(j) + roomheight(j) - 1;
                     }
                     if (x != 0)
                     {
                         if (map(dx, dy - 1, 0) == 3 || map(dx, dy + 1, 0) == 3)
                         {
-                            --cnt;
                             continue;
                         }
                     }
@@ -32658,41 +32639,32 @@ label_1662_internal:
                     {
                         if (map(dx - 1, dy, 0) == 3 || map(dx + 1, dy, 0) == 3)
                         {
-                            --cnt;
                             continue;
                         }
                     }
-                    map(dx, dy, 0) = 3;
-                    roomexist(p) = 1;
-                    dx += x;
-                    dy += y;
-                    roomentrancex(p) = dx;
-                    roomentrancey(p) = dy;
-                    map(dx, dy, 0) = 100;
-                    if (cnt == 0)
-                    {
-                        tx = dx;
-                        ty = dy;
-                    }
+                    break;
+                }
+                map(dx, dy, 0) = 3;
+                roomexist(j) = 1;
+                dx += x;
+                dy += y;
+                map(dx, dy, 0) = 100;
+                if (j == cr)
+                {
+                    tx = dx;
+                    ty = dy;
                 }
             }
-            stat = map_digtoentrance1(tx, ty, dx, dy, 1);
+            ok = map_digtoentrance1(tx, ty, dx, dy, 1);
         }
+        if (!ok)
+        {
+            roomexist(cr) = 0;
+            roomexist(cr + 1) = 0;
+            return 0;
+        }
+        ++cr;
     }
-    if (stat == 0)
-    {
-        roomexist(cr) = 0;
-        roomexist(p) = 0;
-        return 0;
-    }
-    cr += 1;
-    goto label_1662_internal;
-}
-
-
-
-int label_1663()
-{
     return 1;
 }
 
