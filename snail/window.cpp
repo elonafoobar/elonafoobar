@@ -1,10 +1,12 @@
 #include "window.hpp"
 
-using namespace snail;
+
+namespace elona::snail
+{
 
 
 
-Window::Window(
+window::window(
     const std::string& title,
     int x,
     int y,
@@ -22,3 +24,7 @@ Window::Window(
           ::SDL_DestroyWindow)
 {
 }
+
+
+
+} // namespace elona::snail

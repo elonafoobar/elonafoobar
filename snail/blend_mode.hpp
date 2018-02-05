@@ -1,9 +1,11 @@
 #pragma once
 
 
-namespace snail
+namespace elona::snail
 {
-enum class BlendMode
+
+
+enum class blend_mode_t
 {
     none,
     blend,

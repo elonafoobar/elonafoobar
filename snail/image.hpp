@@ -3,14 +3,17 @@
 #include <memory>
 #include <optional>
 #include <string>
-#include "blendmode.hpp"
+#include "../filesystem.hpp"
+#include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-class Image
+
+
+class image_base
 {
 public:
     int width() const noexcept
@@ -45,7 +48,7 @@ public:
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        BlendMode blend_mode,
+        blend_mode_t blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -64,38 +67,46 @@ protected:
 
 
 
-class NullImage : public Image
+class null_image : public image_base
 {
 public:
-    NullImage()
+    null_image()
     {
     }
 
 
-    virtual void
-    _render(::SDL_Renderer*, BlendMode, int, int, int, int, int, int, int, int)
-        override
+    virtual void _render(
+        ::SDL_Renderer*,
+        blend_mode_t,
+        int,
+        int,
+        int,
+        int,
+        int,
+        int,
+        int,
+        int) override
     {
     }
 };
 
 
 
-class BasicImage : public Image
+class basic_image : public image_base
 {
 public:
-    explicit BasicImage(
-        const std::string& filepath,
-        const std::optional<Color>& keycolor = std::nullopt);
+    explicit basic_image(
+        const fs::path& filepath,
+        const std::optional<color>& keycolor = std::nullopt);
 
-    explicit BasicImage(::SDL_Texture* ptr);
+    explicit basic_image(::SDL_Texture* ptr);
 
-    virtual ~BasicImage() = default;
+    virtual ~basic_image() = default;
 
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        BlendMode blend_mode,
+        blend_mode_t blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -108,7 +119,7 @@ public:
 
 
 
-class FrameImage : public Image
+class frame_image : public image_base
 {
     int offset_x() const noexcept
     {
@@ -122,8 +133,8 @@ class FrameImage : public Image
     }
 
 
-    FrameImage(
-        BasicImage& source,
+    frame_image(
+        basic_image& source,
         int offset_x,
         int offset_y,
         int width,
@@ -132,7 +143,7 @@ class FrameImage : public Image
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        BlendMode blend_mode,
+        blend_mode_t blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -149,4 +160,4 @@ private:
 };
 
 
-} // namespace snail
+} // namespace elona::snail

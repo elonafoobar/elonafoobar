@@ -1,17 +1,18 @@
 #include "scene.hpp"
 #include <cassert>
 
-using namespace snail;
+namespace elona::snail
+{
 
 
-Scene::Scene(std::shared_ptr<Scene> parent)
+scene_base::scene_base(std::shared_ptr<scene_base> parent)
     : _parent(parent)
 {
 }
 
 
 
-std::shared_ptr<Scene> SceneManager::current_scene()
+std::shared_ptr<scene_base> scene_manager::current_scene()
 {
     assert(_scene_stack.size() >= 1);
     return _scene_stack.top();
@@ -19,14 +20,14 @@ std::shared_ptr<Scene> SceneManager::current_scene()
 
 
 
-void SceneManager::push(std::shared_ptr<Scene> new_scene)
+void scene_manager::push(std::shared_ptr<scene_base> new_scene)
 {
     _scene_stack.push(new_scene);
 }
 
 
 
-void SceneManager::pop()
+void scene_manager::pop()
 {
     assert(_scene_stack.size() >= 1);
     _scene_stack.pop();
@@ -34,7 +35,7 @@ void SceneManager::pop()
 
 
 
-void SceneManager::pop_all()
+void scene_manager::pop_all()
 {
     while (!_scene_stack.empty())
     {
@@ -44,8 +45,11 @@ void SceneManager::pop_all()
 
 
 
-void SceneManager::replace(std::shared_ptr<Scene> new_scene)
+void scene_manager::replace(std::shared_ptr<scene_base> new_scene)
 {
     pop();
     push(new_scene);
 }
+
+
+} // namespace elona::snail

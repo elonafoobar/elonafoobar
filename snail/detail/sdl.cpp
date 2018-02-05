@@ -1,15 +1,16 @@
 #include "sdl.hpp"
 
-using namespace snail::detail;
 
-
-namespace snail::detail
+namespace elona::snail::detail
 {
+
+
+
 void enforce_sdl(int result)
 {
     if (result != 0)
     {
-        throw SDLError(::SDL_GetError());
+        throw sdl_error{::SDL_GetError()};
     }
 }
 
@@ -18,7 +19,7 @@ void enforce_ttf(int result)
 {
     if (result != 0)
     {
-        throw SDLError(::TTF_GetError());
+        throw sdl_error{::TTF_GetError()};
     }
 }
 
@@ -27,79 +28,80 @@ void enforce_image(int result)
 {
     if (result != 0)
     {
-        throw SDLError(::IMG_GetError());
+        throw sdl_error{::IMG_GetError()};
     }
 }
 
 
 
-// void enforce_mixer(int result)
-// {
-//     if (result != 0)
-//     {
-//         throw SDLError(::MIX_GetError());
-//     }
-// }
+void enforce_mixer(int result)
+{
+    if (result != 0)
+    {
+        // throw sdl_error{::MIX_GetError()};
+    }
+}
 
 
-} // namespace snail::detail
 
-
-SDLCore::SDLCore()
+sdl_core::sdl_core()
 {
     enforce_sdl(::SDL_Init(SDL_INIT_EVERYTHING));
 }
 
 
 
-SDLCore::~SDLCore()
+sdl_core::~sdl_core()
 {
     ::SDL_Quit();
 }
 
 
 
-SDLTTF::SDLTTF()
+sdl_ttf::sdl_ttf()
 {
-    ::enforce_ttf(::TTF_Init());
+    enforce_ttf(::TTF_Init());
 }
 
 
 
-SDLTTF::~SDLTTF()
+sdl_ttf::~sdl_ttf()
 {
     ::TTF_Quit();
 }
 
 
 
-SDLImage::SDLImage()
+sdl_image::sdl_image()
 {
     auto flags = IMG_INIT_PNG | IMG_INIT_JPG;
     auto result = ::IMG_Init(flags);
     if ((flags & result) != flags)
     {
-        throw SDLError("Failed to load SDL2Image");
+        throw sdl_error{"Failed to initialize SDL2Image"};
     }
 }
 
 
 
-SDLImage::~SDLImage()
+sdl_image::~sdl_image()
 {
     ::IMG_Quit();
 }
 
 
 
-SDLMixer::SDLMixer()
+sdl_mixer::sdl_mixer()
 {
     // Does nothing so far.
 }
 
 
 
-SDLMixer::~SDLMixer()
+sdl_mixer::~sdl_mixer()
 {
     // Does nothing so far.
 }
+
+
+} // namespace elona::snail::detail

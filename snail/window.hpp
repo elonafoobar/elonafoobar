@@ -2,23 +2,26 @@
 
 #include <memory>
 #include <string>
-#include "detail/sdl.hpp"
 #include "../lib/noncopyable.hpp"
+#include "detail/sdl.hpp"
 
 
-namespace snail
+
+namespace elona::snail
 {
-class Window : public lib::noncopyable
+
+
+class window : public lib::noncopyable
 {
 public:
-    enum InitialPosition
+    enum initial_position
     {
         position_undefined = SDL_WINDOWPOS_UNDEFINED,
         position_centered = SDL_WINDOWPOS_CENTERED,
     };
 
 
-    enum Flag
+    enum flag
     {
         none = 0,
         fullscreen = SDL_WINDOW_FULLSCREEN,
@@ -50,7 +53,7 @@ public:
     }
 
 
-    Window(
+    window(
         const std::string& title,
         int x,
         int y,
@@ -58,14 +61,13 @@ public:
         int height,
         int flag);
 
-    virtual ~Window() = default;
+    virtual ~window() override = default;
 
 
 private:
-    std::unique_ptr<::SDL_Window, std::decay_t<decltype(::SDL_DestroyWindow)>>
-        _ptr;
+    std::unique_ptr<::SDL_Window, decltype(&::SDL_DestroyWindow)> _ptr;
 };
 
 
 
-} // namespace snail
+} // namespace elona::snail

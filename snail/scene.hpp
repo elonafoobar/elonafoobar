@@ -5,46 +5,50 @@
 #include "node.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-class Scene : public Node
+
+
+
+class scene_base : public node
 {
 public:
-    std::shared_ptr<Scene> parent() noexcept
+    std::shared_ptr<scene_base> parent() noexcept
     {
         return _parent;
     }
 
 
-    explicit Scene(std::shared_ptr<Scene> parent = nullptr);
-    virtual ~Scene() = default;
+    explicit scene_base(std::shared_ptr<scene_base> parent = nullptr);
+    virtual ~scene_base() = default;
 
 
 private:
-    std::shared_ptr<Scene> _parent;
+    std::shared_ptr<scene_base> _parent;
 };
 
 
 
-class SceneManager final : public lib::noncopyable
+class scene_manager final : public lib::noncopyable
 {
 public:
-    std::shared_ptr<Scene> current_scene();
+    std::shared_ptr<scene_base> current_scene();
 
 
-    SceneManager() = default;
-    virtual ~SceneManager() override = default;
+    scene_manager() = default;
+    virtual ~scene_manager() override = default;
 
 
-    void push(std::shared_ptr<Scene> new_scene);
+    void push(std::shared_ptr<scene_base> new_scene);
     void pop();
     void pop_all();
-    void replace(std::shared_ptr<Scene> new_scene);
+    void replace(std::shared_ptr<scene_base> new_scene);
 
 
 private:
-    std::stack<std::shared_ptr<Scene>> _scene_stack;
+    std::stack<std::shared_ptr<scene_base>> _scene_stack;
 };
 
 
-} // namespace snail
+
+} // namespace elona::snail

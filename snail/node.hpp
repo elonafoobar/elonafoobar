@@ -4,9 +4,12 @@
 #include "renderer.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-class Node : public lib::noncopyable
+
+
+
+class node : public lib::noncopyable
 {
 public:
     int frame() const noexcept
@@ -15,12 +18,14 @@ public:
     }
 
 
-    Node() = default;
-    virtual ~Node() override = default;
+    node() = default;
+    virtual ~node() override = default;
 
     virtual void update() = 0;
-    virtual void render(Renderer& renderer) = 0;
+    virtual void render(renderer& renderer) = 0;
 
+
+    // internal
     void _increase_frame()
     {
         ++_frame;
@@ -33,4 +38,4 @@ private:
 
 
 
-} // namespace snail
+} // namespace elona::snail
