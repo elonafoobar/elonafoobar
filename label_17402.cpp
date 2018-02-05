@@ -73,8 +73,7 @@ label_17401:
     getkey(a, 8);
     if (a)
     {
-        exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
-        if (strsize != -1)
+        if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             int stat = dialog(
                 lang(
@@ -88,8 +87,7 @@ label_17401:
             }
         }
     }
-    exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
-    if (strsize != -1)
+    if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
     {
         fmode = 1;
         label_2107();

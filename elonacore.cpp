@@ -1760,12 +1760,10 @@ void label_0068()
         if (music != -1)
         {
             musicfolder = fs::u8path(u8"./user/music/");
-            exist(musicfolder + musicfile(music));
-            if (strsize == -1)
+            if (!fs::exists(musicfolder + musicfile(music)))
             {
                 musicfolder = fs::u8path(u8"./sound/");
-                exist(musicfolder + musicfile(music));
-                if (strsize == -1)
+                if (!fs::exists(musicfolder + musicfile(music)))
                 {
                     return;
                 }
@@ -3679,10 +3677,9 @@ void create_pcpic(int prm_409, int prm_410)
     {
         if (pcc(24, prm_409) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_mantle_"s) + pcc(4, prm_409) % 1000
-                + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_mantle_"s)
+                    + pcc(4, prm_409) % 1000 + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -3709,10 +3706,9 @@ void create_pcpic(int prm_409, int prm_410)
             }
         }
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_hairbk_"s) + pcc(1, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_hairbk_"s) + pcc(1, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -3739,10 +3735,9 @@ void create_pcpic(int prm_409, int prm_410)
     }
     if (prm_409 == 0 && gdata_mount != 0 && pcc(16, prm_409) != 0)
     {
-        exist(
-            fs::u8path(u8"./graphic/pcc_ridebk_"s) + pcc(16, prm_409) % 1000
-            + u8".bmp"s);
-        if (strsize != -1)
+        if (fs::exists(
+                fs::u8path(u8"./graphic/pcc_ridebk_"s) + pcc(16, prm_409) % 1000
+                + u8".bmp"s))
         {
             pos(128, 0);
             picload(
@@ -3770,10 +3765,9 @@ void create_pcpic(int prm_409, int prm_410)
     }
     else
     {
-        exist(
-            fs::u8path(u8"./graphic/pcc_body_"s) + pcc(15, prm_409) % 1000
-            + u8".bmp"s);
-        if (strsize != -1)
+        if (fs::exists(
+                fs::u8path(u8"./graphic/pcc_body_"s) + pcc(15, prm_409) % 1000
+                + u8".bmp"s))
         {
             pos(128, 0);
             picload(
@@ -3799,10 +3793,9 @@ void create_pcpic(int prm_409, int prm_410)
             gcopy(10 + prm_409, 256, 0, 128, 198);
         }
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_eye_"s) + pcc(14, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_eye_"s) + pcc(14, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -3829,10 +3822,9 @@ void create_pcpic(int prm_409, int prm_410)
     }
     if (prm_409 != 0 || gdata_mount == 0 || pcc(16, prm_409) == 0)
     {
-        exist(
-            fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
-            + u8".bmp"s);
-        if (strsize != -1)
+        if (fs::exists(
+                fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
+                + u8".bmp"s))
         {
             pos(128, 0);
             picload(
@@ -3858,10 +3850,9 @@ void create_pcpic(int prm_409, int prm_410)
             gcopy(10 + prm_409, 256, 0, 128, 198);
         }
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_cloth_"s) + pcc(9, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_cloth_"s) + pcc(9, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -3890,10 +3881,9 @@ void create_pcpic(int prm_409, int prm_410)
     {
         if (pcc(20, prm_409) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_chest_"s) + pcc(2, prm_409) % 1000
-                + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_chest_"s)
+                    + pcc(2, prm_409) % 1000 + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -3922,10 +3912,9 @@ void create_pcpic(int prm_409, int prm_410)
         if ((prm_409 != 0 || gdata_mount == 0 || pcc(16, prm_409) == 0)
             && pcc(21, prm_409) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
-                + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
+                    + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -3953,10 +3942,9 @@ void create_pcpic(int prm_409, int prm_410)
         }
         if (pcc(22, prm_409) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_belt_"s) + pcc(5, prm_409) % 1000
-                + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_belt_"s)
+                    + pcc(5, prm_409) % 1000 + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -3984,10 +3972,9 @@ void create_pcpic(int prm_409, int prm_410)
         }
         if (pcc(23, prm_409) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_glove_"s) + pcc(8, prm_409) % 1000
-                + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_glove_"s)
+                    + pcc(8, prm_409) % 1000 + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -4018,10 +4005,9 @@ void create_pcpic(int prm_409, int prm_410)
     {
         if (gdata_mount != 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_ride_"s) + pcc(16, prm_409) % 1000
-                + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_ride_"s)
+                    + pcc(16, prm_409) % 1000 + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -4052,10 +4038,9 @@ void create_pcpic(int prm_409, int prm_410)
     {
         if (pcc(24, prm_409) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_mantlebk_"s)
-                + pcc(4, prm_409) % 1000 + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_mantlebk_"s)
+                    + pcc(4, prm_409) % 1000 + u8".bmp"s))
             {
                 pos(128, 0);
                 picload(
@@ -4082,10 +4067,9 @@ void create_pcpic(int prm_409, int prm_410)
             }
         }
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_hair_"s) + pcc(1, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_hair_"s) + pcc(1, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -4110,10 +4094,9 @@ void create_pcpic(int prm_409, int prm_410)
         pos(0, 0);
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_subhair_"s) + pcc(10, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_subhair_"s) + pcc(10, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -4138,10 +4121,9 @@ void create_pcpic(int prm_409, int prm_410)
         pos(0, 0);
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(11, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(11, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -4166,10 +4148,9 @@ void create_pcpic(int prm_409, int prm_410)
         pos(0, 0);
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(12, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(12, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -4194,10 +4175,9 @@ void create_pcpic(int prm_409, int prm_410)
         pos(0, 0);
         gcopy(10 + prm_409, 256, 0, 128, 198);
     }
-    exist(
-        fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(13, prm_409) % 1000
-        + u8".bmp"s);
-    if (strsize != -1)
+    if (fs::exists(
+            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(13, prm_409) % 1000
+            + u8".bmp"s))
     {
         pos(128, 0);
         picload(
@@ -19574,15 +19554,13 @@ int net_dllist(const std::string& prm_886, int prm_887)
     netinit();
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
     file_at_m147 = fs::u8path(u8"./user/net.tmp");
-    exist(file_at_m147);
-    if (strsize != -1)
+    if (fs::exists(file_at_m147))
     {
         elona_delete(file_at_m147);
     }
     netdlname(file_at_m147);
     netload(u8"cliplog.txt"s);
-    exist(file_at_m147);
-    if (strsize == -1)
+    if (!fs::exists(file_at_m147))
     {
         return 0;
     }
@@ -19596,8 +19574,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
             netbuf(0) += tmp + '\n';
         }
     }
-    exist(file_at_m147);
-    size_at_m147 = strsize;
+    size_at_m147 = fs::file_size(file_at_m147);
     p_at_m147 = 0;
     {
         int cnt = 0;
@@ -19668,16 +19645,14 @@ int net_dllist(const std::string& prm_886, int prm_887)
 
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
-    exist(fs::u8path(u8"./user/"s + prm_889));
-    if (strsize != -1)
+    if (fs::exists(fs::u8path(u8"./user/"s + prm_889)))
     {
         elona_delete(fs::u8path(u8"./user/"s + prm_889));
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
     netdlname(fs::u8path(u8"./user/"s + prm_889));
     netload(prm_888);
-    exist(fs::u8path(u8"./user/"s + prm_889));
-    if (strsize == -1)
+    if (!fs::exists(fs::u8path(u8"./user/"s + prm_889)))
     {
         return 0;
     }
@@ -36124,8 +36099,7 @@ void label_1725()
         label_2107();
     }
     file = u8"shop"s + 5 + u8".s2"s;
-    exist(fs::u8path(u8"./tmp/"s + file));
-    if (strsize != -1)
+    if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
     {
         fmode = 3;
         label_2107();
@@ -37375,8 +37349,7 @@ void label_1737()
     else
     {
         label_1738();
-        exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
-        if (strsize != -1)
+        if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             fmode = 11;
             label_2107();
@@ -41391,8 +41364,7 @@ label_1812_internal:
         {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
             file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
-            exist(file_at_tcg);
-            if (strsize == -1)
+            if (!fs::exists(file_at_tcg))
             {
                 s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
             }
@@ -41424,8 +41396,7 @@ label_1812_internal:
         DIM2(deck, 1000);
         curdeck = rtval;
         file = fs::u8path(u8"./tmp/deck_"s) + curdeck + u8".s2"s;
-        exist(file);
-        if (strsize != -1)
+        if (fs::exists(file))
         {
             promptl(0, promptmax) = lang(u8"デッキの構築"s, u8"Edit Deck"s);
             promptl(1, promptmax) = u8"null"s;
@@ -47288,8 +47259,7 @@ void label_1901()
     fmode = 4;
     label_2107();
     file = u8"shop"s + 4 + u8".s2"s;
-    exist(fs::u8path(u8"./tmp/"s + file));
-    if (strsize != -1)
+    if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
     {
         fmode = 3;
         label_2107();
@@ -50086,8 +50056,7 @@ label_1945_internal:
             if (a == 1)
             {
                 userfile = listn(1, cs + pagesize * page);
-                exist(fs::u8path(u8"./user/"s + userfile));
-                if (strsize == -1)
+                if (!fs::exists(fs::u8path(u8"./user/"s + userfile)))
                 {
                     goto label_1944_internal;
                 }
@@ -55900,10 +55869,9 @@ label_20331:
     {
         s = fs::u8path(u8"./user/graphic/face"s)
             + std::abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
-        exist(s);
         if (cdata_portrait(cc) != -1)
         {
-            if (strsize != -1)
+            if (fs::exists(s))
             {
                 pos(0, 0);
                 picload(s, 1);
@@ -56050,10 +56018,9 @@ label_2035_internal:
         {
             s = fs::u8path(u8"./user/graphic/face"s)
                 + std::abs((cdata_portrait(cc) + 1)) + u8".bmp"s;
-            exist(s);
             if (cdata_portrait(cc) != -1)
             {
-                if (strsize != -1)
+                if (fs::exists(s))
                 {
                     pos(wx + 560, wy + 27);
                     gzoom(80, 112, 4, 0, 0, 80, 112);
@@ -56904,8 +56871,7 @@ int label_2039()
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
             s = fs::u8path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp");
-            exist(s);
-            if (strsize != -1)
+            if (fs::exists(s))
             {
                 pos(cnt * 80, 0);
                 picload(s, 1);
@@ -57166,10 +57132,9 @@ label_2041_internal:
         }
         if (rtval(1) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
-                + (pcc(rtval, cc) % 1000 + 1) + u8".bmp"s);
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
+                    + (pcc(rtval, cc) % 1000 + 1) + u8".bmp"s))
             {
                 ++pcc(rtval, cc);
                 p = 1;
@@ -57199,10 +57164,10 @@ label_2041_internal:
         }
         if (rtval(1) == 0)
         {
-            exist(
-                fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
-                + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s);
-            if (pcc(rtval, cc) % 1000 == 1 && rtval != 15 || strsize != -1)
+            if (pcc(rtval, cc) % 1000 == 1 && rtval != 15
+                || fs::exists(
+                       fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
+                       + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -60215,8 +60180,7 @@ void label_2089()
     if (gdata_version < 975)
     {
         file = fs::u8path(u8"./tmp/");
-        exist(file + u8"mdata_5_103.s2"s);
-        if (strsize != -1)
+        if (fs::exists(file + u8"mdata_5_103.s2"s))
         {
             elona_delete(file + u8"mdata_5_103.s2"s);
         }
@@ -60570,8 +60534,7 @@ void label_2093()
 void zipadd(const std::string& prm_1062)
 {
     p = 12;
-    exist(folder + prm_1062);
-    len = strsize + p * 2;
+    len = fs::file_size(folder + prm_1062) + p * 2;
     lenhead = lensum;
     lensum += len;
     SDIM2(ziptmp1, p);
@@ -60596,8 +60559,7 @@ void label_2095()
     folder = fs::u8path(u8"./user/");
     bload(folder + file, headtemp, 1024);
     label_2720();
-    exist(folder + file);
-    zipsize = strsize;
+    zipsize = fs::file_size(folder + file);
     SDIM2(filebuff, zipsize);
     bload(folder + file, filebuff, zipsize);
     lenhead = 1024;
@@ -60641,8 +60603,7 @@ void zipadd2(const std::string& prm_1065)
     p_at_m188(0) = 50;
     p_at_m188(1) = 40;
     p_at_m188(2) = 10;
-    exist(zipfolder_at_m188 + prm_1065);
-    len_at_m188 = strsize + p_at_m188;
+    len_at_m188 = fs::file_size(zipfolder_at_m188 + prm_1065) + p_at_m188;
     lenhead_at_m188 = lensum_at_m188;
     lensum_at_m188 += len_at_m188;
     SDIM2(ziptmp1_at_m188, p_at_m188(1));
@@ -60682,8 +60643,7 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
     p_at_m188(0) = 50;
     p_at_m188(1) = 40;
     p_at_m188(2) = 10;
-    exist(prm_1066 + prm_1067);
-    zipsize_at_m188 = strsize;
+    zipsize_at_m188 = fs::file_size(prm_1066 + prm_1067);
     SDIM2(filebuff_at_m188, zipsize_at_m188);
     bload(prm_1066 + prm_1067, filebuff_at_m188, zipsize_at_m188);
     lenhead_at_m188 = 0;
@@ -61053,9 +61013,9 @@ void label_2106()
         return;
     }
     txtfile = refstr;
-    exist(txtfile);
-    userdata(1, cun) = strsize;
-    SDIM2(txtbuff, strsize);
+    const auto file_size = fs::file_size(txtfile);
+    userdata(1, cun) = file_size;
+    SDIM2(txtbuff, file_size);
     bload(txtfile, txtbuff);
     if (!strutil::contains(txtbuff(0), u8"%Elona Custom Npc"))
     {
@@ -61074,14 +61034,14 @@ void label_2106()
         }
     }
     bmpfile = refstr;
-    exist(bmpfile);
-    if (strsize > 30000)
+    const auto bmp_file_size = fs::file_size(bmpfile);
+    if (bmp_file_size > 30000)
     {
         txt(u8"The file size must be lower than 30KB. Aborting."s);
         return;
     }
-    userdata(0, cun) = strsize;
-    DIM2(bmpbuff, strsize);
+    userdata(0, cun) = bmp_file_size;
+    DIM2(bmpbuff, bmp_file_size);
     bload(bmpfile, bmpbuff);
     if (fread == 0)
     {
@@ -61288,8 +61248,7 @@ void label_2112()
     label_2107();
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
     notesel(buff);
-    exist(folder + u8"filelist.txt"s);
-    if (strsize == -1)
+    if (!fs::exists(folder + u8"filelist.txt"s))
     {
         buff(0).clear();
         for (const auto& entry :
@@ -61403,10 +61362,11 @@ void label_2113()
             }
             else
             {
-                exist(file + fs::u8path(save_s).filename());
-                if (strsize != -1)
+                const auto path =
+                    fs::u8path(file(0)) / fs::u8path(save_s).filename();
+                if (fs::exists(path) && !fs::is_directory(path))
                 {
-                    elona_delete(file + fs::u8path(save_s).filename());
+                    elona_delete(path);
                 }
             }
         }
@@ -61480,8 +61440,7 @@ void label_2118()
     {
         s = entry.path().filename().generic_u8string();
         file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
-        exist(file);
-        if (strsize == -1)
+        if (!fs::exists(file))
         {
             continue;
         }
@@ -61666,9 +61625,8 @@ void label_2121()
     {
         s = entry.path().filename().generic_u8string();
         file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
-        exist(file);
         await();
-        if (strsize == -1)
+        if (!fs::exists(file))
         {
             continue;
         }
@@ -67035,8 +66993,8 @@ int label_2192()
                 {
                     midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv_count(ci));
-                    exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
-                    if (strsize != -1)
+                    if (fs::exists(
+                            fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
                     {
                         fmode = 11;
                         label_2107();
@@ -69052,8 +69010,7 @@ void label_2212()
         fmode = 4;
         label_2107();
         file = u8"shop"s + invfile + u8".s2"s;
-        exist(fs::u8path(u8"./tmp/"s + file));
-        if (strsize != -1)
+        if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
         {
             fmode = 3;
             label_2107();
@@ -75188,8 +75145,7 @@ void label_22610()
     {
         s = fs::u8path(u8"./user/graphic/face"s)
             + std::abs((cdata_portrait(tc) + 1)) + u8".bmp"s;
-        exist(s);
-        if (strsize == -1 || cdata_portrait(tc) == -1)
+        if (!fs::exists(s) || cdata_portrait(tc) == -1)
         {
             p(0) = cdata_image(tc) % 1000;
             p(1) = cdata_image(tc) / 1000;

@@ -580,11 +580,10 @@ void start_elona()
     }
     if (defload != ""s)
     {
-        exist(fs::u8path(u8"./save/"s + defload + u8"/header.txt"));
-        if (strsize == -1)
+        if (!fs::exists(fs::u8path(u8"./save/"s + defload + u8"/header.txt")))
         {
-            exist(fs::u8path(u8"./save/sav_"s + defload + u8"/header.txt"));
-            if (strsize != -1)
+            if (fs::exists(
+                    fs::u8path(u8"./save/sav_"s + defload + u8"/header.txt")))
             {
                 defload = u8"sav_"s + defload;
             }
