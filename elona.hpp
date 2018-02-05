@@ -399,9 +399,6 @@ std::string dirinfo(int n);
 void exec(const std::string&, int);
 
 
-void exist(const fs::path& filename);
-
-
 void font(const std::string& name, int size, int style);
 
 void gcopy(

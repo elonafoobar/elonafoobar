@@ -4637,8 +4637,7 @@ label_2181_internal:
         fmode = 4;
         label_2107();
         file = u8"shop"s + invfile + u8".s2"s;
-        exist(fs::u8path(u8"./tmp/"s + file));
-        if (strsize != -1)
+        if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
         {
             fmode = 3;
             label_2107();

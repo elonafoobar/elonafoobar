@@ -114,8 +114,7 @@ int label_2107()
                 }
                 if (fread == 1)
                 {
-                    exist(file);
-                    if (strsize == -1)
+                    if (!fs::exists(file))
                     {
                         continue;
                     }
@@ -346,23 +345,19 @@ int label_2107()
         }
         else
         {
-            exist(folder + u8"evnum.s1"s);
-            if (strsize != -1)
+            if (fs::exists(folder + u8"evnum.s1"s))
             {
                 bload(folder + u8"evnum.s1"s, evnum);
             }
-            exist(folder + u8"evdata1.s1"s);
-            if (strsize != -1)
+            if (fs::exists(folder + u8"evdata1.s1"s))
             {
                 bload(folder + u8"evdata1.s1"s, evdata1);
             }
-            exist(folder + u8"evdata2.s1"s);
-            if (strsize != -1)
+            if (fs::exists(folder + u8"evdata2.s1"s))
             {
                 bload(folder + u8"evdata2.s1"s, evdata2);
             }
-            exist(folder + u8"evlist.s1"s);
-            if (strsize != -1)
+            if (fs::exists(folder + u8"evlist.s1"s))
             {
                 bload(folder + u8"evlist.s1"s, evlist);
             }
@@ -440,8 +435,7 @@ int label_2107()
                 }
                 if (fread == 1)
                 {
-                    exist(file);
-                    if (strsize == -1)
+                    if (!fs::exists(file))
                     {
                         continue;
                     }
@@ -814,8 +808,7 @@ int label_2107()
                 }
                 else
                 {
-                    exist(folder + u8"c1_"s + id + u8".t"s);
-                    if (strsize == -1)
+                    if (!fs::exists(folder + u8"c1_"s + id + u8".t"s))
                     {
                         break;
                     }
@@ -912,8 +905,8 @@ int label_2107()
                     zipadd(u8"c4_"s + id + u8".t"s);
                     if (cdata_id(tg) == 343)
                     {
-                        exist(folder + userdatan(6, cdata_cnpc_id(tg)));
-                        if (strsize != -1)
+                        if (fs::exists(
+                                folder + userdatan(6, cdata_cnpc_id(tg))))
                         {
                             if (cdata_cnpc_id(tg) != usernpcmax)
                             {
@@ -1028,8 +1021,7 @@ int label_2107()
                 }
                 if (cnt == 1)
                 {
-                    exist(file);
-                    if (strsize == -1)
+                    if (!fs::exists(file))
                     {
                         continue;
                     }
@@ -1085,8 +1077,7 @@ int label_2107()
                 }
                 if (cnt == 2 && fread == 1)
                 {
-                    exist(file);
-                    if (strsize == -1)
+                    if (!fs::exists(file))
                     {
                         continue;
                     }
@@ -1216,8 +1207,7 @@ int label_2107()
         {
             fread = 1;
         }
-        exist(file + u8"cdata_"s + mid + u8".s2"s);
-        if (strsize == -1)
+        if (!fs::exists(file + u8"cdata_"s + mid + u8".s2"s))
         {
             return 0;
         }
@@ -1295,15 +1285,13 @@ int label_2107()
     {
         if (fmode == 12)
         {
-            exist(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2"));
-            if (strsize == -1)
+            if (!fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
             {
                 return 0;
             }
         }
         file = fs::u8path(u8"./tmp/map_"s + mid + u8".s2");
-        exist(file);
-        if (strsize == -1)
+        if (!fs::exists(file))
         {
             return 0;
         }

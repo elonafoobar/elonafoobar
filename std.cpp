@@ -648,20 +648,6 @@ void exec(const std::string&, int)
 
 
 
-void exist(const fs::path& filename)
-{
-    if (fs::exists(filename) && !fs::is_directory(filename))
-    {
-        strsize = fs::file_size(filename);
-    }
-    else
-    {
-        strsize = -1;
-    }
-}
-
-
-
 namespace font_detail
 {
 std::unordered_map<int, Font> font_cache;
