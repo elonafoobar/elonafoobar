@@ -1649,7 +1649,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                         s_at_m63 += mtname(0, inv_material(prm_518)) + strblank;
                         if (jp)
                         {
-                            if (peek(mtname(0, inv_material(prm_518))) == 131)
+                            if (/* TODO is_katakana */ false)
                             {
                                 alpha_at_m63 = 1;
                             }

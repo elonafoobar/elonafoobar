@@ -548,20 +548,10 @@ void objprm(int, const std::string&);
 void objsel(int);
 
 
-// Peek 1byte.
-std::uint8_t peek(const std::string& str, size_t index = 0);
-
-std::uint8_t peek(elona_vector1<int> v, size_t index = 0);
-
-
 
 void pget(int x, int y);
 
 void picload(const fs::path& file, int immediately = 0);
-
-void poke(std::string& str, size_t index, char c);
-
-void poke(std::string& str, size_t index, const std::string& s);
 
 void pos(int x, int y = 0);
 

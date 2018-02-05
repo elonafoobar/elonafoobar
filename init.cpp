@@ -553,12 +553,8 @@ void initialize_elona()
 
     if (cfg_autonumlock)
     {
-        GetKeyboardState(keybd_st);
-        if (peek(keybd_st, 144) == 1)
-        {
-            keybd_event(144);
-            keybd_event(144, 0, 2);
-        }
+        // TODO
+        // if NumLock key is pressed, send an event to release the key.
     }
 }
 
@@ -736,12 +732,8 @@ void label_2115()
 label_2116_internal:
     if (cfg_autonumlock)
     {
-        GetKeyboardState(keybd_st);
-        if (peek(keybd_st, 144) == 1)
-        {
-            keybd_event(144);
-            keybd_event(144, 0, 2);
-        }
+        // TODO
+        // if NumLock key is pressed, send an event to release the key.
     }
     redraw(0);
     tx += (rnd(10) + 2) * p(1);

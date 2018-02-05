@@ -79,35 +79,25 @@ std::string cnvitemname(int prm_251)
 
 
 
-std::string cnven(const std::string& prm_252)
+std::string cnven(const std::string& source)
 {
-    std::string s_at_m1;
-    int p_at_m1 = 0;
     if (jp)
+        return source;
+    if (std::empty(source))
+        return source;
+
+    std::string ret = source;
+    if (ret[0] == '*')
     {
-        return prm_252;
+        if (std::size(source) == 1)
+            return source;
+        ret[1] = std::toupper(ret[1]);
     }
-    s_at_m1 = prm_252;
-    p_at_m1 = peek(s_at_m1, 0);
-    if (p_at_m1 == 42)
+    else
     {
-        p_at_m1 = peek(s_at_m1, 1);
-        if (p_at_m1 >= 97)
-        {
-            if (p_at_m1 <= 122)
-            {
-                poke(s_at_m1, 1, p_at_m1 - 32);
-            }
-        }
+        ret[0] = std::toupper(ret[0]);
     }
-    else if (p_at_m1 >= 97)
-    {
-        if (p_at_m1 <= 122)
-        {
-            poke(s_at_m1, 0, p_at_m1 - 32);
-        }
-    }
-    return s_at_m1;
+    return ret;
 }
 
 
