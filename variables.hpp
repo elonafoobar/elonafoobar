@@ -851,7 +851,6 @@ int label_2073();
 int label_2075();
 int label_2080();
 int label_2083();
-int label_2107();
 int label_2127();
 int label_2131();
 int label_2143();
@@ -1774,10 +1773,6 @@ void txt(Args&&... args)
     tcol_at_txtfunc(1) = 255;
     tcol_at_txtfunc(2) = 255;
 }
-
-
-
-inline int fmode;
 
 
 

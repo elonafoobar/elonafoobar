@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -63,11 +64,9 @@ label_17401:
         ""s + gdata_current_map + u8"_"s + (100 + gdata_current_dungeon_level);
     if (mode == 3)
     {
-        fmode = 1;
-        label_2107();
+        ctrl_file(1);
         file = u8"inv_"s + mid + u8".s2"s;
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
         goto label_1744_internal;
     }
     getkey(a, 8);
@@ -82,15 +81,13 @@ label_17401:
                 3);
             if (stat == 6)
             {
-                fmode = 11;
-                label_2107();
+                ctrl_file(11);
             }
         }
     }
     if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
     {
-        fmode = 1;
-        label_2107();
+        ctrl_file(1);
         if (mdata(7) == 0)
         {
             goto label_1741_internal;
@@ -105,8 +102,7 @@ label_17401:
             }
         }
         file = u8"inv_"s + mid + u8".s2"s;
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
         if (mode == 2)
         {
             map_placeplayer();
@@ -235,8 +231,7 @@ label_1741_internal:
         file = ""s + userfile;
         id = 0;
         label_2095();
-        fmode = 19;
-        label_2107();
+        ctrl_file(19);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
@@ -253,8 +248,7 @@ label_1741_internal:
             }
         }
         importmode = 0;
-        fmode = 21;
-        label_2107();
+        ctrl_file(21);
         mdata(10) = 0;
         mdata(7) = 0;
         mdata(15) = 0;
@@ -957,8 +951,7 @@ label_1741_internal:
             id = 0;
             label_2095();
             importmode = 1;
-            fmode = 21;
-            label_2107();
+            ctrl_file(21);
             label_2111();
         }
         else
@@ -1069,8 +1062,7 @@ label_1741_internal:
             else
             {
                 file = u8"inv_"s + mid + u8".s2"s;
-                fmode = 3;
-                label_2107();
+                ctrl_file(3);
                 inv_getheader(-1);
                 {
                     int cnt = invhead;
@@ -1085,8 +1077,7 @@ label_1741_internal:
                         cell_refresh(inv_x(cnt), inv_y(cnt));
                     }
                 }
-                fmode = 17;
-                label_2107();
+                ctrl_file(17);
                 {
                     int cnt = 57;
                     for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)

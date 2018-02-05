@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "ctrl_file.hpp"
 #include "filesystem.hpp"
 #include "variables.hpp"
 
@@ -1933,8 +1934,7 @@ label_1812_internal:
             }
             if (rtval == 0)
             {
-                fmode = 24;
-                label_2107();
+                ctrl_file(24);
             }
         }
         decksizebk_at_tcg = gdata(830 + curdeck);
@@ -2898,8 +2898,7 @@ label_1830_internal:
             if (rtval == 0)
             {
                 file = fs::u8path(u8"./tmp/deck_"s) + curdeck + u8".s2"s;
-                fmode = 23;
-                label_2107();
+                ctrl_file(23);
             }
             else
             {

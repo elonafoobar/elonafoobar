@@ -1,4 +1,5 @@
 #include "buff.hpp"
+#include "ctrl_file.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
@@ -30860,8 +30861,7 @@ int dist_town()
 void map_initcustom(const std::string& prm_934)
 {
     fmapfile = fs::u8path(u8"./map/"s + prm_934);
-    fmode = 5;
-    label_2107();
+    ctrl_file(5);
     map_tileset(mdata(12));
     nooracle = 1;
     {
@@ -30931,8 +30931,7 @@ void map_reload(const std::string& prm_935)
     int y_at_m166 = 0;
     int x_at_m166 = 0;
     fmapfile = fs::u8path(u8"./map/"s + prm_935);
-    fmode = 16;
-    label_2107();
+    ctrl_file(16);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
@@ -34804,8 +34803,7 @@ void label_1712()
         label_1713();
         midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
-        fmode = 12;
-        label_2107();
+        ctrl_file(12);
         mid = midbk;
         label_1749();
         levelexitby = 2;
@@ -34821,8 +34819,7 @@ void label_1712()
         label_1737();
         return;
     }
-    fmode = 13;
-    label_2107();
+    ctrl_file(13);
     p = area;
     adata(1, p) = cdata_x(0);
     adata(2, p) = cdata_y(0);
@@ -35749,11 +35746,9 @@ void label_1725()
     if (gdata_current_map != area)
     {
         file = u8"shoptmp.s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
         file = u8"inv_"s + mid + u8".s2"s;
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
     }
     mode = 6;
     dblistmax = 0;
@@ -35885,20 +35880,17 @@ void label_1725()
     if (gdata_current_map != area)
     {
         file = u8"inv_"s + mid + u8".s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
     }
     else
     {
         file = u8"shoptmp.s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
     }
     file = u8"shop"s + 5 + u8".s2"s;
     if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
     {
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
     }
     else
     {
@@ -36008,11 +36000,9 @@ void label_1725()
     }
     mode = 0;
     file = u8"shop"s + 5 + u8".s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     file = u8"shoptmp.s2"s;
-    fmode = 3;
-    label_2107();
+    ctrl_file(3);
     return;
 }
 
@@ -37147,8 +37137,7 @@ void label_1737()
         label_1738();
         if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
-            fmode = 11;
-            label_2107();
+            ctrl_file(11);
         }
         {
             int cnt = 57;
@@ -37211,11 +37200,9 @@ void label_1739()
             }
         }
     }
-    fmode = 2;
-    label_2107();
+    ctrl_file(2);
     file = u8"inv_"s + mid + u8".s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     return;
 }
 
@@ -38663,8 +38650,7 @@ int label_1753()
             }
             p = cnt;
             area = p;
-            fmode = 13;
-            label_2107();
+            ctrl_file(13);
             adata(0, p) = 20 + rnd(4);
             adata(16, p) = 8;
             adata(15, p) = 133;
@@ -40216,8 +40202,7 @@ void atxinit()
 void begintempinv()
 {
     file = u8"shoptmp.s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     inv_getheader(-1);
     {
         int cnt = invhead;
@@ -40234,8 +40219,7 @@ void begintempinv()
 void exittempinv()
 {
     file = u8"shoptmp.s2"s;
-    fmode = 3;
-    label_2107();
+    ctrl_file(3);
     return;
 }
 
@@ -43534,13 +43518,11 @@ void label_1901()
 {
     invfile = 4;
     file = u8"shoptmp.s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     file = u8"shop"s + 4 + u8".s2"s;
     if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
     {
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
     }
     else
     {
@@ -43718,11 +43700,9 @@ void label_1901()
         }
     }
     file = u8"shop"s + invfile + u8".s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     file = u8"shoptmp.s2"s;
-    fmode = 3;
-    label_2107();
+    ctrl_file(3);
     mode = 0;
     if (cfg_extrahelp)
     {
@@ -54321,8 +54301,7 @@ void label_2054()
                             adata(16, area) = 0;
                             removeworker(area);
                             label_1749();
-                            fmode = 13;
-                            label_2107();
+                            ctrl_file(13);
                             snd(58);
                             txt(lang(
                                 u8"建物を撤去した。"s,
@@ -56668,8 +56647,7 @@ void label_2090()
 void label_2091()
 {
     file = u8"shop"s + 3 + u8".s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     p = 0;
     i = 0;
     {
@@ -56721,8 +56699,7 @@ void label_2091()
 
 void label_2092()
 {
-    fmode = 15;
-    label_2107();
+    ctrl_file(15);
     DIM2(spell, 200);
     DIM2(spact, 500);
     {
@@ -56802,8 +56779,7 @@ void label_2092()
 
 void label_2093()
 {
-    fmode = 14;
-    label_2107();
+    ctrl_file(14);
     return;
 }
 
@@ -57430,8 +57406,7 @@ void label_2108()
     headtemp += ""s + usermsg + u8"\n"s;
     headtemp += ""s + userrelation + u8"\n"s;
     memcpy_(filebuff, headtemp, 1024, 0);
-    fmode = 20;
-    label_2107();
+    ctrl_file(20);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
@@ -57452,8 +57427,7 @@ void label_2108()
             }
         }
     }
-    fmode = 22;
-    label_2107();
+    ctrl_file(22);
     bsave(userfile, filebuff);
     label_2111();
     return;
@@ -57475,8 +57449,7 @@ void label_2109()
     headtemp += ""s + n + u8"\n"s;
     headtemp += ""s + lv + u8"\n"s;
     memcpy_(filebuff, headtemp, 1024, 0);
-    fmode = 22;
-    label_2107();
+    ctrl_file(22);
     bsave(userfile, filebuff);
     label_2111();
     return;
@@ -57522,8 +57495,7 @@ void label_2111()
 void label_2112()
 {
     filemod = "";
-    fmode = 10;
-    label_2107();
+    ctrl_file(10);
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
     notesel(buff);
     if (!fs::exists(folder + u8"filelist.txt"s))
@@ -57559,8 +57531,7 @@ void label_2112()
             }
         }
     }
-    fmode = 7;
-    label_2107();
+    ctrl_file(7);
     label_2089();
     label_1277();
     {
@@ -57598,11 +57569,9 @@ void label_2113()
         label_1419();
         return;
     }
-    fmode = 2;
-    label_2107();
+    ctrl_file(2);
     file = u8"inv_"s + mid + u8".s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
              fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
@@ -57649,8 +57618,7 @@ void label_2113()
             }
         }
     }
-    fmode = 8;
-    label_2107();
+    ctrl_file(8);
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
@@ -57855,8 +57823,7 @@ label_2119_internal:
                 if (rtval == 0)
                 {
                     snd(20);
-                    fmode = 9;
-                    label_2107();
+                    ctrl_file(9);
                 }
                 label_2118();
                 return;
@@ -63274,8 +63241,7 @@ int label_2192()
                     if (fs::exists(
                             fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
                     {
-                        fmode = 11;
-                        label_2107();
+                        ctrl_file(11);
                     }
                     mid = midbk;
                     inv_count(ci) = 0;
@@ -65285,13 +65251,11 @@ void label_2212()
             }
         }
         file = u8"shoptmp.s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
         file = u8"shop"s + invfile + u8".s2"s;
         if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
         {
-            fmode = 3;
-            label_2107();
+            ctrl_file(3);
         }
         else
         {
@@ -65340,11 +65304,9 @@ void label_2212()
             refweight = inv_weight_(-1) + 2500;
         }
         file = u8"shop"s + invfile + u8".s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
         file = u8"shoptmp.s2"s;
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
         if (refweight != 0)
         {
             inv_weight(invcontainer(1)) = refweight;
@@ -71557,8 +71519,7 @@ void label_2262()
     }
     mode = 6;
     file = u8"shoptmp.s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     if (cdata_shop_store_id(tc) == 0)
     {
         if (cdata_character_role(tc) == 1010
@@ -71583,8 +71544,7 @@ void label_2262()
     else
     {
         file = u8"shop"s + invfile + u8".s2"s;
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
     }
     invfile = cdata_shop_store_id(tc);
     label_2264();
@@ -71597,11 +71557,9 @@ void label_2263()
 {
     mode = 6;
     file = u8"shoptmp.s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     file = u8"shop"s + invfile + u8".s2"s;
-    fmode = 3;
-    label_2107();
+    ctrl_file(3);
     shoptrade = 0;
     if (tc > 0)
     {
@@ -71619,11 +71577,9 @@ void label_2263()
 void label_2264()
 {
     file = u8"shop"s + invfile + u8".s2"s;
-    fmode = 4;
-    label_2107();
+    ctrl_file(4);
     file = u8"shoptmp.s2"s;
-    fmode = 3;
-    label_2107();
+    ctrl_file(3);
     mode = 0;
     return;
 }
@@ -81888,8 +81844,7 @@ label_2747:
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
                 txt(u8"lv:"s + gdata_current_dungeon_level);
-                fmode = 11;
-                label_2107();
+                ctrl_file(11);
                 mode = 2;
                 levelexitby = 4;
                 label_17402();

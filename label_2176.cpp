@@ -1,4 +1,5 @@
 #include "buff.hpp"
+#include "ctrl_file.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
@@ -4636,13 +4637,11 @@ label_2181_internal:
             u8"You summon 4 dimensional pocket."s));
         invfile = 8;
         file = u8"shoptmp.s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
         file = u8"shop"s + invfile + u8".s2"s;
         if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
         {
-            fmode = 3;
-            label_2107();
+            ctrl_file(3);
         }
         else
         {
@@ -4666,11 +4665,9 @@ label_2181_internal:
         label_20592();
         invcontainer = 0;
         file = u8"shop"s + invfile + u8".s2"s;
-        fmode = 4;
-        label_2107();
+        ctrl_file(4);
         file = u8"shoptmp.s2"s;
-        fmode = 3;
-        label_2107();
+        ctrl_file(3);
         mode = 0;
         goto label_2186_internal;
     }
