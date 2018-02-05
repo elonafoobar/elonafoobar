@@ -1,3 +1,4 @@
+#include "ability.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
@@ -437,7 +438,7 @@ int label_0042()
                     u8"あなたは極度に集中できる[詠唱+8]"s,
                     u8"You concentrate more while casting. [Casting+8]"s);
             }
-            if (sorg(172, 0) == 0)
+            if (sdata.get(172, 0).original_level == 0)
             {
                 return -1;
             }
@@ -468,7 +469,7 @@ int label_0042()
                     u8"あなたは盾で攻撃する機会を多く得る"s,
                     u8"You can bash with your shield more frequently."s);
             }
-            if (sorg(168, 0) == 0)
+            if (sdata.get(168, 0).original_level == 0)
             {
                 return -1;
             }
@@ -527,7 +528,7 @@ int label_0042()
                     u8"あなたは二刀流を極めている[二刀流+8]"s,
                     u8"You mastered multiple weapon style. [Two Wield+8]"s);
             }
-            if (sorg(166, 0) == 0)
+            if (sdata.get(166, 0).original_level == 0)
             {
                 return -1;
             }
@@ -625,7 +626,7 @@ int label_0042()
                     u8"あなたの交渉は神ががっている[交渉+8]"s,
                     u8"You are a great negotiator. [Negotiation+8]"s);
             }
-            if (sorg(156, 0) == 0)
+            if (sdata.get(156, 0).original_level == 0)
             {
                 return -1;
             }
@@ -965,7 +966,7 @@ int label_0042()
                     u8"あなたは回避の達人だ[回避+6]"s,
                     u8"You can really evade enemy attacks. [Evasion+6]"s);
             }
-            if (sorg(173, 0) == 0)
+            if (sdata.get(173, 0).original_level == 0)
             {
                 return -1;
             }

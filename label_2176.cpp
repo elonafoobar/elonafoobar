@@ -1,7 +1,8 @@
+#include "ability.hpp"
 #include "buff.hpp"
-#include "ctrl_file.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -687,7 +688,8 @@ int label_2176()
                     }
                     if (p != -1)
                     {
-                        i = sorg(10 + p, tc) - cdata_attr_adj(tc, p);
+                        i = sdata.get(10 + p, tc).original_level
+                            - cdata_attr_adj(tc, p);
                         if (i > 0)
                         {
                             i = i * efp / 2000 + 1;
@@ -2639,7 +2641,7 @@ label_2181_internal:
                     p = rnd(300) + 100;
                     if (sdataref(0, p) != 0)
                     {
-                        if (sorg(p, tc) == 0)
+                        if (sdata.get(p, tc).original_level == 0)
                         {
                             continue;
                         }
@@ -2717,7 +2719,10 @@ label_2181_internal:
                 int cnt = 10;
                 for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
                 {
-                    modgrowth(tc, cnt, rnd(sgrowth(cnt, tc) / 20 + 3) + 1);
+                    modgrowth(
+                        tc,
+                        cnt,
+                        rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
                 }
             }
             txt(lang(
@@ -2739,7 +2744,7 @@ label_2181_internal:
                     name(tc) + u8"の"s + valn + u8"の潜在能力が上昇した。"s,
                     name(tc) + your(tc) + u8" potential of "s + valn
                         + u8" expands."s));
-                modgrowth(tc, i, rnd(sgrowth(i, tc) / 10 + 10) + 1);
+                modgrowth(tc, i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
                 snd(24);
             }
             else
@@ -2748,7 +2753,10 @@ label_2181_internal:
                     name(tc) + u8"の"s + valn + u8"の潜在能力が減少した。"s,
                     name(tc) + your(tc) + u8" potential of "s + valn
                         + u8" decreases."s));
-                modgrowth(tc, i, (rnd(sgrowth(i, tc) / 10 + 10) + 1) * -1);
+                modgrowth(
+                    tc,
+                    i,
+                    (rnd(sdata.get(i, tc).potential / 10 + 10) + 1) * -1);
                 snd(117);
             }
         }
@@ -2969,7 +2977,8 @@ label_2181_internal:
                     if (cdata_quality(tc) <= 3)
                     {
                         cdata_attr_adj(tc, i) -=
-                            rnd(sorg(p(cnt), tc)) / 5 + rnd(5);
+                            rnd(sdata.get(p(cnt), tc).original_level) / 5
+                            + rnd(5);
                         continue;
                     }
                 }
@@ -2979,7 +2988,8 @@ label_2181_internal:
                 }
                 if (efstatus >= 1)
                 {
-                    cdata_attr_adj(tc, i) = sorg(p(cnt), tc) / 10 + 5;
+                    cdata_attr_adj(tc, i) =
+                        sdata.get(p(cnt), tc).original_level / 10 + 5;
                 }
             }
         }
@@ -3281,7 +3291,7 @@ label_2181_internal:
             for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
                 p = rnd(11) + 50;
-                if (sorg(p, tc) >= 150)
+                if (sdata.get(p, tc).original_level >= 150)
                 {
                     ++f;
                     resistmod(tc, p, 50 * -1);

@@ -1,3 +1,4 @@
+#include "ability.hpp"
 #include "character.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"

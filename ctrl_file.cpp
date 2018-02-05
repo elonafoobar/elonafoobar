@@ -1,4 +1,5 @@
 #include "ctrl_file.hpp"
+#include "ability.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
