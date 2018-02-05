@@ -5,6 +5,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "main.hpp"
 #include "variables.hpp"
@@ -21,8 +22,6 @@ elona_vector1<std::string> popostname;
 elona_vector3<int> pochart;
 elona_vector2<int> podata;
 elona_vector2<int> bdref;
-elona_vector1<std::string> buffname;
-elona_vector2<std::string> bufftxt;
 int f_at_m14 = 0;
 int evproc = 0;
 elona_vector1<int> soundlist;
@@ -772,92 +771,6 @@ void label_0030()
 
 void label_0031()
 {
-    SDIM3(buffname, 20, 29);
-    SDIM4(bufftxt, 30, 2, 29);
-    buffname(1) = lang(u8"聖なる盾"s, u8"Holy Shield"s);
-    bufftxt(0, 1) = lang(u8"は光り輝いた。"s, u8"begin"s);
-    bufftxt(1, 1) = u8" to shine."s;
-    buffname(2) = lang(u8"沈黙の霧"s, u8"Mist of Silence"s);
-    bufftxt(0, 2) = lang(u8"はぼやけた霧に覆われた。"s, u8"get"s);
-    bufftxt(1, 2) = u8" surrounded by hazy mist."s;
-    buffname(3) = lang(u8"リジェネレーション"s, u8"Regeneration"s);
-    bufftxt(0, 3) = lang(u8"の代謝が活性化した。"s, u8"start"s);
-    bufftxt(1, 3) = u8" to regenerate."s;
-    buffname(4) = lang(u8"元素保護"s, u8"Elemental Shield"s);
-    bufftxt(0, 4) = lang(u8"は元素への耐性を得た。"s, u8"obtain"s);
-    bufftxt(1, 4) = u8" resistance to element."s;
-    buffname(5) = lang(u8"加速"s, u8"Speed"s);
-    bufftxt(0, 5) = lang(u8"は機敏になった。"s, u8"speed"s);
-    bufftxt(1, 5) = u8" up."s;
-    buffname(6) = lang(u8"鈍足"s, u8"Slow"s);
-    bufftxt(0, 6) = lang(u8"は鈍重になった。"s, u8"slow"s);
-    bufftxt(1, 6) = u8" down."s;
-    buffname(7) = lang(u8"英雄"s, u8"Hero"s);
-    bufftxt(0, 7) = lang(u8"の士気が向上した。"s, u8"feel"s);
-    bufftxt(1, 7) = u8" heroic."s;
-    buffname(8) = lang(u8"脆弱の霧"s, u8"Mist of Frailness"s);
-    bufftxt(0, 8) = lang(u8"は脆くなった。"s, u8"feel"s);
-    bufftxt(1, 8) = u8" weak."s;
-    buffname(9) = lang(u8"元素の傷跡"s, u8"Element Scar"s);
-    bufftxt(0, 9) = lang(u8"は元素への耐性を失った。"s, u8"lose"s);
-    bufftxt(1, 9) = u8" resistance to element."s;
-    buffname(10) = lang(u8"ホーリーヴェイル"s, u8"Holy Veil"s);
-    bufftxt(0, 10) = lang(u8"は聖なる衣に保護された。"s, u8"receive"s);
-    bufftxt(1, 10) = u8" holy protection."s;
-    buffname(11) = lang(u8"ナイトメア"s, u8"Nightmare"s);
-    bufftxt(0, 11) = lang(u8"は悪夢に襲われた。"s, u8"start"s);
-    bufftxt(1, 11) = u8" to suffer."s;
-    buffname(12) = lang(u8"知者の加護"s, u8"Divine Wisdom"s);
-    bufftxt(0, 12) = lang(u8"の思考は冴え渡った。"s, u8"start"s);
-    bufftxt(1, 12) = u8" to think clearly."s;
-    buffname(13) = lang(u8"天罰"s, u8"Punishment"s);
-    bufftxt(0, 13) = lang(u8"は雷に打たれた！"s, u8"incur"s);
-    bufftxt(1, 13) = u8" the wrath of God."s;
-    buffname(14) = lang(u8"ルルウィの憑依"s, u8"Lulwy's Trick"s);
-    bufftxt(0, 14) = lang(u8"にルルウィが乗り移った。"s, u8"repeat"s);
-    bufftxt(1, 14) = u8"the name of Lulwy."s;
-    buffname(15) = lang(u8"インコグニート"s, u8"Incognito"s);
-    bufftxt(0, 15) = lang(u8"は別人になりすました。"s, u8"start"s);
-    bufftxt(1, 15) = u8" to disguise."s;
-    buffname(16) = lang(u8"死の宣告"s, u8"Death Word"s);
-    bufftxt(0, 16) = lang(u8"は死の宣告を受けた！"s, u8"receive"s);
-    bufftxt(1, 16) = u8" death verdict."s;
-    buffname(17) = lang(u8"ブースト"s, u8"Boost"s);
-    bufftxt(0, 17) = lang(u8"はブーストした！"s, u8"gain"s);
-    bufftxt(1, 17) = u8" massive power."s;
-    buffname(18) = lang(u8"契約"s, u8"Contingency"s);
-    bufftxt(0, 18) = lang(u8"は死神と契約した。"s, u8"set"s);
-    bufftxt(1, 18) = u8" up contracts with the Reaper."s;
-    buffname(19) = lang(u8"幸運"s, u8"Luck"s);
-    bufftxt(0, 19) = lang(u8"に幸運な日が訪れた！"s, u8"feel"s);
-    bufftxt(1, 19) = u8" very lucky today!"s;
-    buffname(20) = lang(u8"筋力の成長"s, u8"Grow Strength"s);
-    bufftxt(0, 20) = "";
-    bufftxt(1, 20) = u8" magical effect."s;
-    buffname(21) = lang(u8"耐久の成長"s, u8"Grow Endurance"s);
-    bufftxt(0, 21) = "";
-    bufftxt(1, 21) = u8" magical effect."s;
-    buffname(22) = lang(u8"器用の成長"s, u8"Grow Dexterity"s);
-    bufftxt(0, 22) = "";
-    bufftxt(1, 22) = u8" magical effect."s;
-    buffname(23) = lang(u8"感覚の成長"s, u8"Grow Perception"s);
-    bufftxt(0, 23) = "";
-    bufftxt(1, 23) = u8" magical effect."s;
-    buffname(24) = lang(u8"学習の成長"s, u8"Grow Learning"s);
-    bufftxt(0, 24) = "";
-    bufftxt(1, 24) = u8" magical effect."s;
-    buffname(25) = lang(u8"意思の成長"s, u8"Grow Will"s);
-    bufftxt(0, 25) = "";
-    bufftxt(1, 25) = u8" magical effect."s;
-    buffname(26) = lang(u8"魔力の成長"s, u8"Grow Magic"s);
-    bufftxt(0, 26) = "";
-    bufftxt(1, 26) = u8" magical effect."s;
-    buffname(27) = lang(u8"魅力の成長"s, u8"Grow Charisma"s);
-    bufftxt(0, 27) = "";
-    bufftxt(1, 27) = u8" magical effect."s;
-    buffname(28) = lang(u8"速度の成長"s, u8"Grow Speed"s);
-    bufftxt(0, 28) = "";
-    bufftxt(1, 28) = u8" magical effect."s;
 }
 
 
@@ -14666,9 +14579,10 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     {
         txtmore();
         txt(lang(
-            name(prm_801) + bufftxt(0, prm_802),
-            name(prm_801) + u8" "s + bufftxt(0, prm_802) + _s(prm_801)
-                + bufftxt(1, prm_802)));
+            name(prm_801) + i18n::_(u8"buff_"s + prm_802 + u8"_message_0"),
+            name(prm_801) + u8" "s
+                + i18n::_(u8"buff_"s + prm_802 + u8"_message_0") + _s(prm_801)
+                + i18n::_(u8"buff_"s + prm_802 + u8"_message_1")));
     }
     cdata_buff_id(prm_801, p_at_m132) = prm_802;
     cdata_buff_power(prm_801, p_at_m132) = prm_803;
@@ -14686,9 +14600,13 @@ void delbuff(int prm_805, int prm_806)
     {
         txtef(8);
         txt(lang(
-            ""s + buffname(cdata_buff_id(prm_805, prm_806))
+            ""s
+                + i18n::_(
+                      u8"buff_"s + cdata_buff_id(prm_805, prm_806) + u8"_name")
                 + u8"の効果が切れた。"s,
-            u8"The effect of "s + buffname(cdata_buff_id(prm_805, prm_806))
+            u8"The effect of "s
+                + i18n::_(
+                      u8"buff_"s + cdata_buff_id(prm_805, prm_806) + u8"_name")
                 + u8" ends."s));
     }
     if (cdata_buff_id(prm_805, prm_806) == 15)
@@ -52574,8 +52492,9 @@ label_2035_internal:
                 cdata_buff_id(cc, cs_buff), cdata_buff_power(cc, cs_buff));
             const auto description = get_buff_description(
                 cdata_buff_id(cc, cs_buff), cdata_buff_power(cc, cs_buff));
-            s = ""s + buffname(cdata_buff_id(cc, cs_buff)) + u8": "s
-                + cdata_buff_turns(cc, cs_buff)
+            s = ""s
+                + i18n::_(u8"buff_"s + cdata_buff_id(cc, cs_buff) + u8"_name")
+                + u8": "s + cdata_buff_turns(cc, cs_buff)
                 + lang(
                       (u8"("s + duration + u8")ﾀｰﾝの間、"s),
                       (u8"("s + duration + u8") "s))
