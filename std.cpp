@@ -7,8 +7,8 @@
 #include <sstream>
 
 
-#include "sdl/application.hpp"
-#include "sdl/input.hpp"
+#include "snail/application.hpp"
+#include "snail/input.hpp"
 
 #include "elona.hpp"
 #include "variables.hpp"
