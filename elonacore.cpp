@@ -1,3 +1,4 @@
+#include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
@@ -777,178 +778,92 @@ void label_0030()
 
 void label_0031()
 {
-    DIM3(bdataref, 7, 29);
     SDIM3(buffname, 20, 29);
     SDIM4(bufftxt, 30, 2, 29);
-    bdataref(0, 1) = 1;
-    bdataref(1, 1) = 1;
-    bdataref(2, 1) = 0;
     buffname(1) = lang(u8"聖なる盾"s, u8"Holy Shield"s);
     bufftxt(0, 1) = lang(u8"は光り輝いた。"s, u8"begin"s);
     bufftxt(1, 1) = u8" to shine."s;
-    bdataref(0, 2) = 2;
-    bdataref(1, 2) = 1;
-    bdataref(2, 2) = 0;
     buffname(2) = lang(u8"沈黙の霧"s, u8"Mist of Silence"s);
     bufftxt(0, 2) = lang(u8"はぼやけた霧に覆われた。"s, u8"get"s);
     bufftxt(1, 2) = u8" surrounded by hazy mist."s;
-    bdataref(0, 3) = 1;
-    bdataref(1, 3) = 1;
-    bdataref(2, 3) = 0;
     buffname(3) = lang(u8"リジェネレーション"s, u8"Regeneration"s);
     bufftxt(0, 3) = lang(u8"の代謝が活性化した。"s, u8"start"s);
     bufftxt(1, 3) = u8" to regenerate."s;
-    bdataref(0, 4) = 1;
-    bdataref(1, 4) = 1;
-    bdataref(2, 4) = 0;
     buffname(4) = lang(u8"元素保護"s, u8"Elemental Shield"s);
     bufftxt(0, 4) = lang(u8"は元素への耐性を得た。"s, u8"obtain"s);
     bufftxt(1, 4) = u8" resistance to element."s;
-    bdataref(0, 5) = 1;
-    bdataref(1, 5) = 1;
-    bdataref(2, 5) = 0;
     buffname(5) = lang(u8"加速"s, u8"Speed"s);
     bufftxt(0, 5) = lang(u8"は機敏になった。"s, u8"speed"s);
     bufftxt(1, 5) = u8" up."s;
-    bdataref(0, 6) = 2;
-    bdataref(1, 6) = 1;
-    bdataref(2, 6) = 0;
     buffname(6) = lang(u8"鈍足"s, u8"Slow"s);
     bufftxt(0, 6) = lang(u8"は鈍重になった。"s, u8"slow"s);
     bufftxt(1, 6) = u8" down."s;
-    bdataref(0, 7) = 1;
-    bdataref(1, 7) = 1;
-    bdataref(2, 7) = 0;
     buffname(7) = lang(u8"英雄"s, u8"Hero"s);
     bufftxt(0, 7) = lang(u8"の士気が向上した。"s, u8"feel"s);
     bufftxt(1, 7) = u8" heroic."s;
-    bdataref(0, 8) = 2;
-    bdataref(1, 8) = 1;
-    bdataref(2, 8) = 0;
     buffname(8) = lang(u8"脆弱の霧"s, u8"Mist of Frailness"s);
     bufftxt(0, 8) = lang(u8"は脆くなった。"s, u8"feel"s);
     bufftxt(1, 8) = u8" weak."s;
-    bdataref(0, 9) = 2;
-    bdataref(1, 9) = 1;
-    bdataref(2, 9) = 0;
     buffname(9) = lang(u8"元素の傷跡"s, u8"Element Scar"s);
     bufftxt(0, 9) = lang(u8"は元素への耐性を失った。"s, u8"lose"s);
     bufftxt(1, 9) = u8" resistance to element."s;
-    bdataref(0, 10) = 1;
-    bdataref(1, 10) = 1;
-    bdataref(2, 10) = 0;
     buffname(10) = lang(u8"ホーリーヴェイル"s, u8"Holy Veil"s);
     bufftxt(0, 10) = lang(u8"は聖なる衣に保護された。"s, u8"receive"s);
     bufftxt(1, 10) = u8" holy protection."s;
-    bdataref(0, 11) = 2;
-    bdataref(1, 11) = 1;
-    bdataref(2, 11) = 0;
     buffname(11) = lang(u8"ナイトメア"s, u8"Nightmare"s);
     bufftxt(0, 11) = lang(u8"は悪夢に襲われた。"s, u8"start"s);
     bufftxt(1, 11) = u8" to suffer."s;
-    bdataref(0, 12) = 1;
-    bdataref(1, 12) = 1;
-    bdataref(2, 12) = 0;
     buffname(12) = lang(u8"知者の加護"s, u8"Divine Wisdom"s);
     bufftxt(0, 12) = lang(u8"の思考は冴え渡った。"s, u8"start"s);
     bufftxt(1, 12) = u8" to think clearly."s;
-    bdataref(0, 13) = 2;
-    bdataref(1, 13) = 1;
-    bdataref(2, 13) = 0;
     buffname(13) = lang(u8"天罰"s, u8"Punishment"s);
     bufftxt(0, 13) = lang(u8"は雷に打たれた！"s, u8"incur"s);
     bufftxt(1, 13) = u8" the wrath of God."s;
-    bdataref(0, 14) = 1;
-    bdataref(1, 14) = 1;
-    bdataref(2, 14) = 0;
     buffname(14) = lang(u8"ルルウィの憑依"s, u8"Lulwy's Trick"s);
     bufftxt(0, 14) = lang(u8"にルルウィが乗り移った。"s, u8"repeat"s);
     bufftxt(1, 14) = u8"the name of Lulwy."s;
-    bdataref(0, 15) = 1;
-    bdataref(1, 15) = 1;
-    bdataref(2, 15) = 0;
     buffname(15) = lang(u8"インコグニート"s, u8"Incognito"s);
     bufftxt(0, 15) = lang(u8"は別人になりすました。"s, u8"start"s);
     bufftxt(1, 15) = u8" to disguise."s;
-    bdataref(0, 16) = 2;
-    bdataref(1, 16) = 1;
-    bdataref(2, 16) = 0;
     buffname(16) = lang(u8"死の宣告"s, u8"Death Word"s);
     bufftxt(0, 16) = lang(u8"は死の宣告を受けた！"s, u8"receive"s);
     bufftxt(1, 16) = u8" death verdict."s;
-    bdataref(0, 17) = 1;
-    bdataref(1, 17) = 1;
-    bdataref(2, 17) = 0;
     buffname(17) = lang(u8"ブースト"s, u8"Boost"s);
     bufftxt(0, 17) = lang(u8"はブーストした！"s, u8"gain"s);
     bufftxt(1, 17) = u8" massive power."s;
-    bdataref(0, 18) = 1;
-    bdataref(1, 18) = 1;
-    bdataref(2, 18) = 0;
     buffname(18) = lang(u8"契約"s, u8"Contingency"s);
     bufftxt(0, 18) = lang(u8"は死神と契約した。"s, u8"set"s);
     bufftxt(1, 18) = u8" up contracts with the Reaper."s;
-    bdataref(0, 19) = 1;
-    bdataref(1, 19) = 1;
-    bdataref(2, 19) = 0;
     buffname(19) = lang(u8"幸運"s, u8"Luck"s);
     bufftxt(0, 19) = lang(u8"に幸運な日が訪れた！"s, u8"feel"s);
     bufftxt(1, 19) = u8" very lucky today!"s;
-    bdataref(0, 20) = 3;
-    bdataref(1, 20) = 1;
-    bdataref(2, 20) = 0;
     buffname(20) = lang(u8"筋力の成長"s, u8"Grow Strength"s);
     bufftxt(0, 20) = "";
     bufftxt(1, 20) = u8" magical effect."s;
-    bdataref(0, 21) = 3;
-    bdataref(1, 21) = 1;
-    bdataref(2, 21) = 0;
     buffname(21) = lang(u8"耐久の成長"s, u8"Grow Endurance"s);
     bufftxt(0, 21) = "";
     bufftxt(1, 21) = u8" magical effect."s;
-    bdataref(0, 22) = 3;
-    bdataref(1, 22) = 1;
-    bdataref(2, 22) = 0;
     buffname(22) = lang(u8"器用の成長"s, u8"Grow Dexterity"s);
     bufftxt(0, 22) = "";
     bufftxt(1, 22) = u8" magical effect."s;
-    bdataref(0, 23) = 3;
-    bdataref(1, 23) = 1;
-    bdataref(2, 23) = 0;
     buffname(23) = lang(u8"感覚の成長"s, u8"Grow Perception"s);
     bufftxt(0, 23) = "";
     bufftxt(1, 23) = u8" magical effect."s;
-    bdataref(0, 24) = 3;
-    bdataref(1, 24) = 1;
-    bdataref(2, 24) = 0;
     buffname(24) = lang(u8"学習の成長"s, u8"Grow Learning"s);
     bufftxt(0, 24) = "";
     bufftxt(1, 24) = u8" magical effect."s;
-    bdataref(0, 25) = 3;
-    bdataref(1, 25) = 1;
-    bdataref(2, 25) = 0;
     buffname(25) = lang(u8"意思の成長"s, u8"Grow Will"s);
     bufftxt(0, 25) = "";
     bufftxt(1, 25) = u8" magical effect."s;
-    bdataref(0, 26) = 3;
-    bdataref(1, 26) = 1;
-    bdataref(2, 26) = 0;
     buffname(26) = lang(u8"魔力の成長"s, u8"Grow Magic"s);
     bufftxt(0, 26) = "";
     bufftxt(1, 26) = u8" magical effect."s;
-    bdataref(0, 27) = 3;
-    bdataref(1, 27) = 1;
-    bdataref(2, 27) = 0;
     buffname(27) = lang(u8"魅力の成長"s, u8"Grow Charisma"s);
     bufftxt(0, 27) = "";
     bufftxt(1, 27) = u8" magical effect."s;
-    bdataref(0, 28) = 3;
-    bdataref(1, 28) = 1;
-    bdataref(2, 28) = 0;
     buffname(28) = lang(u8"速度の成長"s, u8"Grow Speed"s);
     bufftxt(0, 28) = "";
     bufftxt(1, 28) = u8" magical effect."s;
-    return;
 }
 
 
@@ -14710,7 +14625,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         }
     }
     fixeddur_at_m132 = prm_804;
-    if (bdataref(0, prm_802) == 2)
+    if (the_buff_db[prm_802].type == buff_data::type_t::hex)
     {
         f_at_m132 = 0;
         if (sdata(60, prm_801) / 2 > rnd(prm_803 * 2 + 100))
@@ -19005,7 +18920,8 @@ void chara_vomit(int prm_876)
                 {
                     break;
                 }
-                if (bdataref(0, cdata_buff_id(prm_876, cnt)) == 3)
+                if (the_buff_db[cdata_buff_id(prm_876, cnt)].type
+                    == buff_data::type_t::food)
                 {
                     delbuff(prm_876, cnt);
                     --cnt;

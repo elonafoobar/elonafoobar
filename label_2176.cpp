@@ -1,3 +1,4 @@
+#include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
@@ -41,7 +42,7 @@ int label_2176()
             {
                 f = 1;
                 p = sdataref(1, efid) % 1000;
-                if (bdataref(0, p) == 2)
+                if (the_buff_db[p].type == buff_data::type_t::hex)
                 {
                     efbad = 1;
                 }
@@ -74,11 +75,11 @@ int label_2176()
             }
             if (f)
             {
-                if (bdataref(0, p) == 1)
+                if (the_buff_db[p].type == buff_data::type_t::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (bdataref(0, p) == 2)
+                else if (the_buff_db[p].type == buff_data::type_t::hex)
                 {
                     animeid = 6;
                     label_1426();
@@ -1879,7 +1880,8 @@ label_2181_internal:
                         break;
                     }
                 }
-                if (bdataref(0, cdata_buff_id(tc, i)) != 2)
+                if (the_buff_db[cdata_buff_id(tc, i)].type
+                    != buff_data::type_t::hex)
                 {
                     continue;
                 }
