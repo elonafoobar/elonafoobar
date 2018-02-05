@@ -48,7 +48,7 @@ void render(
 
 BasicImage::BasicImage(
     const std::string& filepath,
-    const lib::optional<Color>& keycolor)
+    const std::optional<Color>& keycolor)
 {
     auto surface = detail::enforce_img(::IMG_Load(filepath.c_str()));
 

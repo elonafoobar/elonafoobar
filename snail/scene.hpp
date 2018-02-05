@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stack>
-#include "lib/noncopyable.hpp"
+#include "../lib/noncopyable.hpp"
 #include "node.hpp"
 
 

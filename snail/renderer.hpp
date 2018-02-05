@@ -5,7 +5,7 @@
 #include "detail/sdl.hpp"
 #include "font.hpp"
 #include "image.hpp"
-#include "lib/noncopyable.hpp"
+#include "../lib/noncopyable.hpp"
 #include "window.hpp"
 
 

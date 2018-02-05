@@ -1,13 +1,13 @@
 #pragma once
 
-#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 #include "detail/sdl.hpp"
 #include "effect.hpp"
 #include "fpsmanager.hpp"
-#include "lib/noncopyable.hpp"
+#include "../lib/noncopyable.hpp"
+#include "../lib/scope_guard.hpp"
 #include "renderer.hpp"
 #include "scene.hpp"
 #include "window.hpp"
@@ -15,37 +15,7 @@
 
 namespace snail
 {
-namespace detail
-{
-struct scope_guard
-{
-    scope_guard(std::function<void()> finalizer)
-        : finalizer(finalizer)
-    {
-    }
 
-
-    scope_guard(const scope_guard&) = delete;
-
-    scope_guard(scope_guard&& other)
-        : finalizer(other.finalizer)
-    {
-        other.finalizer = nullptr;
-    }
-
-
-    ~scope_guard()
-    {
-        if (finalizer)
-        {
-            finalizer();
-        }
-    }
-
-private:
-    std::function<void()> finalizer;
-};
-} // namespace detail
 
 
 class Application final : public lib::noncopyable
@@ -134,7 +104,7 @@ private:
     SceneManager _scene_manager;
     FPSManager _fps_manager;
     std::vector<std::unique_ptr<Effect>> _effects;
-    std::vector<detail::scope_guard> _finalizers;
+    std::vector<lib::scope_guard> _finalizers;
 
     Application() = default;
 

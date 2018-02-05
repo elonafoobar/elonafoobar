@@ -1,11 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <string>
 #include "blendmode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
-#include "lib/optional.hpp"
 
 
 namespace snail
@@ -86,7 +86,7 @@ class BasicImage : public Image
 public:
     explicit BasicImage(
         const std::string& filepath,
-        const lib::optional<Color>& keycolor = lib::nullopt);
+        const std::optional<Color>& keycolor = std::nullopt);
 
     explicit BasicImage(::SDL_Texture* ptr);
 

@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "detail/sdl.hpp"
-#include "lib/noncopyable.hpp"
+#include "../lib/noncopyable.hpp"
 
 
 namespace snail
