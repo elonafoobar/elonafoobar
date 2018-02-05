@@ -217,7 +217,6 @@ inline elona_vector1<std::string> traitrefn;
 inline elona_vector1<std::string> untaglist;
 inline elona_vector1<std::string> valn;
 inline elona_vector2<int> adata;
-inline elona_vector2<int> bdataref;
 inline elona_vector2<int> breathlist;
 inline elona_vector2<int> c_col;
 inline elona_vector2<int> card;
