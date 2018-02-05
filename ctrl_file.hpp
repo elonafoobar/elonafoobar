@@ -6,7 +6,5 @@ namespace elona
 {
 
 
-void ctrl_file(int fmode);
-
-
+void ctrl_file(int mode);
 }
