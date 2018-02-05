@@ -1,3 +1,4 @@
+#include "ability.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -863,7 +864,7 @@ void label_0031()
 
 int sorg(int prm_272, int prm_273)
 {
-    return sdata((prm_272 + 600), prm_273) / 1000000;
+    return sdata.get(prm_272, prm_273).original_level;
 }
 
 
@@ -9008,14 +9009,14 @@ void modrank(int prm_552, int prm_553, int prm_554)
 
 int sexp(int prm_555, int prm_556)
 {
-    return sdata((prm_555 + 600), prm_556) % 1000000 / 1000;
+    return sdata.get(prm_555, prm_556).experience;
 }
 
 
 
 int sgrowth(int prm_557, int prm_558)
 {
-    return sdata((prm_557 + 600), prm_558) % 1000;
+    return sdata.get(prm_557, prm_558).potential;
 }
 
 
@@ -9023,7 +9024,7 @@ int sgrowth(int prm_557, int prm_558)
 void modgrowth(int prm_559, int prm_560, int prm_561)
 {
     int growth_at_m76 = 0;
-    growth_at_m76 = sdata((prm_560 + 600), prm_559) % 1000 + prm_561;
+    growth_at_m76 = sgrowth(prm_560, prm_559) + prm_561;
     if (growth_at_m76 > 400)
     {
         growth_at_m76 = 400;
@@ -9032,9 +9033,7 @@ void modgrowth(int prm_559, int prm_560, int prm_561)
     {
         growth_at_m76 = 2;
     }
-    sdata(prm_560 + 600, prm_559) = sorg(prm_560, prm_559) * 1000000
-        + sexp(prm_560, prm_559) * 1000 + growth_at_m76;
-    return;
+    sdata.get(prm_560, prm_559).potential = growth_at_m76;
 }
 
 
@@ -9071,8 +9070,7 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
     {
         modgrowth(prm_562, prm_563, 50);
     }
-    sdata(prm_563 + 600, prm_562) = std::clamp(lv_at_m76, 0, 2000) * 1000000
-        + sexp(prm_563, prm_562) * 1000 + sgrowth(prm_563, prm_562);
+    sdata.get(prm_563, prm_562).original_level = std::clamp(lv_at_m76, 0, 2000);
     r1 = prm_562;
     label_1477();
     return;
@@ -9105,8 +9103,10 @@ int skillmod(int prm_566, int prm_567, int prm_568)
                 }
             }
         }
-        sdata(prm_566 + 600, prm_567) = std::clamp(lv_at_m77, 0, 2000) * 1000000
-            + exp_at_m77 * 1000 + growth_at_m77;
+        sdata.get(prm_566, prm_567).original_level =
+            std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(prm_566, prm_567).experience = exp_at_m77;
+        sdata.get(prm_566, prm_567).potential = growth_at_m77;
         if (synccheck(prm_567, -1))
         {
             if (prm_567 == 0 || prm_567 < 16)
@@ -9147,8 +9147,10 @@ int skillmod(int prm_566, int prm_567, int prm_568)
                 }
             }
         }
-        sdata(prm_566 + 600, prm_567) = std::clamp(lv_at_m77, 0, 2000) * 1000000
-            + exp_at_m77 * 1000 + growth_at_m77;
+        sdata.get(prm_566, prm_567).original_level =
+            std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(prm_566, prm_567).experience = exp_at_m77;
+        sdata.get(prm_566, prm_567).potential = growth_at_m77;
         if (prm_567 == 0 || prm_567 < 16)
         {
             if (synccheck(prm_567, -1))
@@ -9164,8 +9166,9 @@ int skillmod(int prm_566, int prm_567, int prm_568)
         label_1477();
         return 1;
     }
-    sdata(prm_566 + 600, prm_567) = std::clamp(lv_at_m77, 0, 2000) * 1000000
-        + exp_at_m77 * 1000 + growth_at_m77;
+    sdata.get(prm_566, prm_567).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(prm_566, prm_567).experience = exp_at_m77;
+    sdata.get(prm_566, prm_567).potential = growth_at_m77;
     return 0;
 }
 
@@ -9263,8 +9266,10 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
                 }
             }
         }
-        sdata(prm_569 + 600, prm_570) = std::clamp(lv_at_m77, 0, 2000) * 1000000
-            + exp_at_m77 * 1000 + growth_at_m77;
+        sdata.get(prm_569, prm_570).original_level =
+            std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(prm_569, prm_570).experience = exp_at_m77;
+        sdata.get(prm_569, prm_570).potential = growth_at_m77;
         if (synccheck(prm_570, -1))
         {
             if (prm_570 == 0 || prm_570 < 16)
@@ -9306,8 +9311,10 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
                 }
             }
         }
-        sdata(prm_569 + 600, prm_570) = std::clamp(lv_at_m77, 0, 2000) * 1000000
-            + exp_at_m77 * 1000 + growth_at_m77;
+        sdata.get(prm_569, prm_570).original_level =
+            std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(prm_569, prm_570).experience = exp_at_m77;
+        sdata.get(prm_569, prm_570).potential = growth_at_m77;
         if (synccheck(prm_570, -1))
         {
             if (prm_570 == 0 || prm_570 < 16)
@@ -9324,8 +9331,9 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
         label_1477();
         return 1;
     }
-    sdata(prm_569 + 600, prm_570) = std::clamp(lv_at_m77, 0, 2000) * 1000000
-        + exp_at_m77 * 1000 + growth_at_m77;
+    sdata.get(prm_569, prm_570).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(prm_569, prm_570).experience = exp_at_m77;
+    sdata.get(prm_569, prm_570).potential = growth_at_m77;
     return 0;
 }
 
@@ -14172,14 +14180,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
             ++p_at_m125;
         }
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1200); cnt < cnt_end; ++cnt)
-        {
-            sdata(cnt, tc_at_m125) = sdata(cnt, prm_784);
-            sdata(cnt, prm_784) = 0;
-        }
-    }
+    sdata.copy(tc_at_m125, prm_784);
+    sdata.clear(prm_784);
     cdata(tc_at_m125) = cdata(prm_784);
     cdata(prm_784).clear();
     {
@@ -14241,7 +14243,9 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
                 {
                     p_at_m125 = 500;
                 }
-                sdata(cnt + 600, tc_at_m125) = p_at_m125 * 1000000;
+                sdata.get(cnt, tc_at_m125).original_level = p_at_m125;
+                sdata.get(cnt, tc_at_m125).experience = 0;
+                sdata.get(cnt, tc_at_m125).potential = 0;
             }
         }
     }
@@ -15167,8 +15171,8 @@ void resistmod(int prm_812, int prm_813, int prm_814)
                     + your(prm_812) + u8" body."s));
         }
     }
-    sdata(prm_813 + 600, prm_812) = std::clamp(lv_at_m134, 0, 2000) * 1000000
-        + sexp(prm_813, prm_812) * 1000 + sgrowth(prm_813, prm_812);
+    sdata.get(prm_813, prm_812).original_level =
+        std::clamp(lv_at_m134, 0, 2000);
     snd(107);
     animeload(15, prm_812);
     r1 = prm_812;
@@ -16865,7 +16869,7 @@ int copy_chara(int prm_848)
         return 0;
     }
     del_chara(c_at_m139);
-    memcpy(sdata, 0, c_at_m139, sdata, 0, prm_848, 4800);
+    sdata.copy(c_at_m139, prm_848);
     cdata(c_at_m139) = cdata(prm_848);
     {
         int cnt = 0;
@@ -20080,7 +20084,6 @@ void label_1421()
 {
     int ap3 = 0;
     int ap2 = 0;
-    std::string skilltmps;
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
     pos(inf_hpx, inf_hpy);
     gcopy(3, 312, 504, 104, 15);
@@ -20625,11 +20628,13 @@ void label_1421()
             pos(16, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
             bmes(""s + strmid(skillname(ap), 0, 6), 255, 255, 255);
-            skilltmps = ""s + sdata((600 + ap), ap2) / 1000;
             pos(66, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
             bmes(
-                ""s + sorg(ap, ap2) + u8"."s + strmid(skilltmps, -1, 3),
+                ""s + sorg(ap, ap2) + u8"."s
+                    + std::to_string(
+                          1000 + sdata.get(ap, ap2).experience % 1000)
+                          .substr(1),
                 255,
                 255,
                 255);
@@ -23417,18 +23422,22 @@ void label_1455()
         int cnt = 10;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            sdata(cnt + 600, r1) = std::clamp(
-                sdata(cnt + 600, r1) + 1000000 * rnd(3), 1, 2000000000);
+            sdata.get(cnt, r1).original_level += rnd(3);
+            if (sorg(cnt, r1) > 2000)
+            {
+                sdata.get(cnt, r1).original_level = 2000;
+            }
         }
     }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (length(mainskill)); cnt < cnt_end; ++cnt)
         {
-            sdata(mainskill(cnt) + 600, r1) = std::clamp(
-                sdata(mainskill(cnt) + 600, r1) + 1000000 * rnd(3),
-                1,
-                2000000000);
+            sdata.get(mainskill(cnt), r1).original_level += rnd(3);
+            if (sorg(mainskill(cnt), r1) > 2000)
+            {
+                sdata.get(mainskill(cnt), r1).original_level = 2000;
+            }
         }
     }
     return;
@@ -23685,7 +23694,7 @@ void label_1477()
         int cnt = 0;
         for (int cnt_end = cnt + (600); cnt < cnt_end; ++cnt)
         {
-            sdata(cnt, r1) = sdata((cnt + 600), r1) / 1000000;
+            sdata(cnt, r1) = sorg(cnt, r1);
         }
     }
     if (cdata_158(r1) == 0)
@@ -24008,7 +24017,7 @@ void label_1477()
             int cnt = 0;
             for (int cnt_end = cnt + (600); cnt < cnt_end; ++cnt)
             {
-                sdata(cnt, 56) = sdata((cnt + 600), r1) / 1000000;
+                sdata(cnt, 56) = sorg(cnt, r1);
                 if (sdata(cnt, 56) != sdata(cnt, r1))
                 {
                     rp = sdata(cnt, r1) - sdata(cnt, 56);
@@ -24152,11 +24161,11 @@ void label_1477()
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
     elona_vector1<int> p_at_m161;
-    int sdata_at_m161 = sdata(prm_926 + 600, prm_927);
+    int original_level = sorg(prm_926, prm_927);
     if (prm_926 >= 100)
     {
         p_at_m161 = prm_928 * 5;
-        if (sdata_at_m161 / 1000000 == 0)
+        if (original_level == 0)
         {
             p_at_m161 += 100;
         }
@@ -24195,13 +24204,13 @@ void skillinit(int prm_926, int prm_927, int prm_928)
         p_at_m161(1) = prm_928;
         p_at_m161 = 100;
     }
-    if (sdata_at_m161 / 1000000 + p_at_m161(1) > 2000)
+    if (original_level + p_at_m161(1) > 2000)
     {
-        p_at_m161(1) = 2000 - sdata_at_m161 / 1000000;
+        p_at_m161(1) = 2000 - original_level;
     }
-    sdata(prm_926 + 600, prm_927) +=
-        std::clamp(p_at_m161(1), 0, 2000) * 1000000 + p_at_m161;
-    return;
+    sdata.get(prm_926, prm_927).original_level +=
+        std::clamp(p_at_m161(1), 0, 2000);
+    sdata.get(prm_926, prm_927).potential += p_at_m161;
 }
 
 
@@ -24232,7 +24241,9 @@ void label_1512()
             {
                 p = 100;
             }
-            sdata(cnt + 600, r1) = std::clamp(p(0), 1, 2000) * 1000000;
+            sdata.get(cnt, r1).original_level = std::clamp(p(0), 1, 2000);
+            sdata.get(cnt, r1).experience = 0;
+            sdata.get(cnt, r1).potential = 0;
         }
     }
     i = 4;
@@ -52436,7 +52447,7 @@ label_2035_internal:
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 cnt2 = cnt;
-                s = u8"("s + sdata((10 + cnt + 600), cc) / 1000000 + u8")"s;
+                s = u8"("s + sorg(10 + cnt, cc) + u8")"s;
                 if (encfind(cc, 60010 + cnt) != -1)
                 {
                     s += u8"*"s;
@@ -52445,7 +52456,7 @@ label_2035_internal:
                 mes(""s + sdata((10 + cnt), cc));
                 pos(wx + 124, wy + 151 + cnt * 15);
                 mes(s);
-                p = sdata((10 + cnt + 600), cc) % 1000;
+                p = sgrowth(10 + cnt, cc);
                 pos(wx + 176, wy + 152 + cnt * 15);
                 if (p >= 200)
                 {
@@ -52692,9 +52703,9 @@ label_2035_internal:
                     }
                     else
                     {
-                        s = std::to_string(sdata(list(0, p) + 600, cc));
-                        s = strmid(s, -1, 6);
-                        s = ""s + sorg(i, cc) + u8"."s + strmid(s, 0, 3);
+                        s = ""s + sorg(i, cc) + u8"."s
+                            + std::to_string(1000 + sexp(list(0, p), cc) % 1000)
+                                  .substr(1);
                         if (sorg(i, cc) != sdata(i, cc))
                         {
                             p(1) = sdata(i, cc) - sorg(i, cc);
@@ -55953,7 +55964,7 @@ void label_2085()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             s = "";
-            p = sdata((10 + cnt + 600), 0) % 1000;
+            p = sgrowth(10 + cnt, 0);
             if (p >= 200)
             {
                 s += u8"superb"s;
@@ -55977,7 +55988,7 @@ void label_2085()
             s = fixtxt(s, 15);
             s = fixtxt(
                     _stats2(cnt) + u8"    : "s + sdata((10 + cnt), 0) + u8"("s
-                        + sdata((10 + cnt + 600), 0) / 1000000 + u8")"s,
+                        + sorg(10 + cnt, 0) + u8")"s,
                     24)
                 + s;
             noteadd(s + s((1 + cnt)));
@@ -56697,14 +56708,8 @@ void label_2092()
             cdata_state(cnt) = 0;
         }
     }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1200); cnt < cnt_end; ++cnt)
-        {
-            sdata(cnt, 56) = sdata(cnt, 0);
-            sdata(cnt, 0) = 0;
-        }
-    }
+    sdata.copy(56, 0);
+    sdata.clear(0);
     cdata(56) = cdata(0);
     cdata(0).clear();
     inv_getheader(-1);

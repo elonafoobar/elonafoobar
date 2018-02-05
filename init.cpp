@@ -1,3 +1,4 @@
+#include "ability.hpp"
 #include "character.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"
@@ -214,7 +215,6 @@ void initialize_elona()
     SDIM3(mdatan, 20, 2);
     SDIM4(cdatan, 40, 10, 245);
     SDIM2(s1, 1000);
-    DIM3(sdata, 1200, 245);
     DIM2(spell, 200);
     DIM2(spact, 500);
     DIM2(mat, 400);
@@ -1325,9 +1325,12 @@ label_1554:
         {
             if (cmlock(cnt - 10) == 0)
             {
-                sdata(cnt + 600, rc) -=
-                    rnd((sdata((cnt + 600), rc) / 2000000 + 1)) * 1000000;
-                cmstats(cnt - 10) = sdata(cnt + 600, rc);
+                sdata.get(cnt, rc).original_level -=
+                    rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+                cmstats(cnt - 10) =
+                    sdata.get(cnt, rc).original_level * 1'000'000
+                    + sdata.get(cnt, rc).experience * 1'000
+                    + sdata.get(cnt, rc).potential;
             }
         }
     }
@@ -1687,7 +1690,10 @@ label_1563_internal:
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
-            sdata(cnt + 600, rc) = cmstats(cnt - 10);
+            sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
+            sdata.get(cnt, rc).experience =
+                cmstats(cnt - 10) % 1'000'000 / 1'000;
+            sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
         }
     }
     label_1535();

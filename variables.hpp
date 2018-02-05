@@ -247,7 +247,6 @@ inline elona_vector2<int> picfood;
 inline elona_vector2<int> qdata;
 inline elona_vector1<int> roomexit;
 inline elona_vector1<int> roomexitmax;
-inline elona_vector2<int> sdata;
 inline elona_vector2<int> sdataref;
 inline elona_vector2<int> slight;
 inline elona_vector2<int> userdata;
