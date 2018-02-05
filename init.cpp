@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
@@ -362,8 +363,7 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    fmode = 10;
-    label_2107();
+    ctrl_file(10);
     tc = 0;
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;

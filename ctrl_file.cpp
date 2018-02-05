@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -9,7 +10,7 @@ namespace elona
 {
 
 
-int label_2107()
+void ctrl_file(int fmode)
 {
     int fsize = 0;
     notesel(filemod);
@@ -1209,7 +1210,7 @@ int label_2107()
         }
         if (!fs::exists(file + u8"cdata_"s + mid + u8".s2"s))
         {
-            return 0;
+            return;
         }
         {
             int cnt = 0;
@@ -1275,7 +1276,7 @@ int label_2107()
             elona_delete(entry.path());
         }
         if (no_file)
-            return 0;
+            return;
     }
     if (fmode == 9)
     {
@@ -1287,13 +1288,13 @@ int label_2107()
         {
             if (!fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
             {
-                return 0;
+                return;
             }
         }
         file = fs::u8path(u8"./tmp/map_"s + mid + u8".s2");
         if (!fs::exists(file))
         {
-            return 0;
+            return;
         }
         elona_delete(file);
         fileadd(file, 1);
@@ -1340,7 +1341,6 @@ int label_2107()
             fileadd(entry.path().generic_u8string(), 1);
         }
     }
-    return 0;
 }
 
 
