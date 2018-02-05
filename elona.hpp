@@ -260,7 +260,7 @@ struct elona_vector3
     // FIXME: DRY!
     void allocate_and_clear(int i_size, int j_size, int k_size)
     {
-        storage.resize(j_size);
+        storage.resize(k_size);
         for (int k = 0; k < k_size; ++k)
         {
             if (!storage.at(k))
