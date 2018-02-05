@@ -770,15 +770,15 @@ label_2725_internal:
                 {
                     if (jp)
                     {
-                        s(0) = u8"オフ"s;
-                        s(1) = u8"オン"s;
+                        s(0) = u8"オフ(オンには出来ません)"s;
+                        s(1) = u8"オフ(オンには出来ません)"s;
                     }
                     else
                     {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
+                        s(0) = u8"No(unsupported)"s;
+                        s(1) = u8"No(unsupported)"s;
                     }
-                    mes(s(cfg_titleeffect));
+                    mes(s(0));
                 }
                 if (cnt == 3)
                 {
@@ -1546,18 +1546,9 @@ label_2725_internal:
             }
             if (cs == 2)
             {
-                cfg_titleeffect += p;
-                if (cfg_titleeffect > 1)
-                {
-                    cfg_titleeffect = 1;
-                }
-                else if (cfg_titleeffect < 0)
-                {
-                    cfg_titleeffect = 0;
-                }
                 snd(20);
                 valn(0) = u8"titleEffect."s;
-                valn(1) = std::to_string(cfg_titleeffect);
+                valn(1) = std::to_string(0);
                 label_2713();
                 goto label_2724_internal;
             }

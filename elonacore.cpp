@@ -1,7 +1,7 @@
 #include "buff.hpp"
-#include "ctrl_file.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -441,14 +441,6 @@ int zentohan(const std::string& prm_209, std::string& prm_210, int prm_211)
 {
     return LCMapStringA(
         GetUserDefaultLCID(), 4194304, prm_209, -1, prm_210, prm_211);
-}
-
-
-
-void tmset()
-{
-    timeBeginPeriod(1);
-    return;
 }
 
 

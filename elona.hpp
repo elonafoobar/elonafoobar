@@ -720,16 +720,6 @@ int LCMapStringA(int, int, const std::string&, int, const std::string&, int);
 
 int GetUserDefaultLCID();
 
-void water_getimage();
-
-
-void water_setripple(int, int, int, int);
-
-void water_calc();
-
-void water_draw();
-
-
 void AppendMenuA();
 
 void CheckMenuRadioItem();
@@ -747,11 +737,6 @@ void SetMenu();
 void keybd_event(int, int = 0, int = 0);
 
 void GetKeyboardState(elona_vector1<int>&);
-
-void timeBeginPeriod(int);
-
-
-void timeEndPeriod();
 
 int timeGetTime();
 

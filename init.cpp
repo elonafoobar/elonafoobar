@@ -107,7 +107,6 @@ void check_double_launching()
 
 void initialize_elona()
 {
-    tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
@@ -640,7 +639,6 @@ int main()
 
 void label_2115()
 {
-    int water_debug = 0;
     mode = 10;
     lomiaseaster = 0;
     music = 65;
@@ -727,14 +725,6 @@ void label_2115()
         s(4) = u8"Options"s;
         s(5) = u8"Exit"s;
     }
-    if (cfg_titleeffect)
-    {
-        if (water_debug == 0)
-        {
-            water_getimage();
-            water_debug = 1;
-        }
-    }
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_title.bmp"), 1);
@@ -774,15 +764,6 @@ label_2116_internal:
         {
             f = 2;
         }
-    }
-    if (f == 0)
-    {
-        water_setripple(tx, ty, rnd(300), rnd(4));
-    }
-    if (cfg_titleeffect)
-    {
-        water_calc();
-        water_draw();
     }
     cs_listbk();
     {
