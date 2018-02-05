@@ -1890,43 +1890,43 @@ void label_1567(int CNT)
                         int cnt = 0;
                         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
                         {
-                            if (sorg(r, 0) > 13)
+                            if (sdata.get(r, 0).original_level > 13)
                             {
                                 p = 1;
                                 color(0, 0, 200);
                                 break;
                             }
-                            if (sorg(r, 0) > 11)
+                            if (sdata.get(r, 0).original_level > 11)
                             {
                                 p = 2;
                                 color(0, 0, 200);
                                 break;
                             }
-                            if (sorg(r, 0) > 9)
+                            if (sdata.get(r, 0).original_level > 9)
                             {
                                 p = 3;
                                 color(0, 0, 150);
                                 break;
                             }
-                            if (sorg(r, 0) > 7)
+                            if (sdata.get(r, 0).original_level > 7)
                             {
                                 p = 4;
                                 color(0, 0, 150);
                                 break;
                             }
-                            if (sorg(r, 0) > 5)
+                            if (sdata.get(r, 0).original_level > 5)
                             {
                                 p = 5;
                                 color(0, 0, 0);
                                 break;
                             }
-                            if (sorg(r, 0) > 3)
+                            if (sdata.get(r, 0).original_level > 3)
                             {
                                 p = 6;
                                 color(150, 0, 0);
                                 break;
                             }
-                            if (sorg(r, 0) > 0)
+                            if (sdata.get(r, 0).original_level > 0)
                             {
                                 p = 7;
                                 color(200, 0, 0);
@@ -1962,7 +1962,7 @@ void label_1567(int CNT)
         int cnt = 100;
         for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
         {
-            if (sorg(cnt, 0) != 0)
+            if (sdata.get(cnt, 0).original_level != 0)
             {
                 if (r != 0)
                 {
@@ -1986,7 +1986,7 @@ void label_1567(int CNT)
         int cnt = 150;
         for (int cnt_end = cnt + (450); cnt < cnt_end; ++cnt)
         {
-            if (sorg(cnt, 0) != 0)
+            if (sdata.get(cnt, 0).original_level != 0)
             {
                 s = skillname(cnt);
                 if (jp)

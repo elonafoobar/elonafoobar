@@ -2106,7 +2106,7 @@ int calcidentifyvalue(int prm_907)
 
 int calctraincost(int prm_908, int prm_909, int prm_910)
 {
-    value_at_m153 = sorg(prm_908, prm_909) / 5 + 2;
+    value_at_m153 = sdata.get(prm_908, prm_909).original_level / 5 + 2;
     if (prm_910)
     {
         value_at_m153 /= 2;

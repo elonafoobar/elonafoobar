@@ -862,13 +862,6 @@ void label_0031()
 
 
 
-int sorg(int prm_272, int prm_273)
-{
-    return sdata.get(prm_272, prm_273).original_level;
-}
-
-
-
 int randskill()
 {
     return rnd(40) + 150;
@@ -9007,24 +9000,10 @@ void modrank(int prm_552, int prm_553, int prm_554)
 
 
 
-int sexp(int prm_555, int prm_556)
-{
-    return sdata.get(prm_555, prm_556).experience;
-}
-
-
-
-int sgrowth(int prm_557, int prm_558)
-{
-    return sdata.get(prm_557, prm_558).potential;
-}
-
-
-
 void modgrowth(int prm_559, int prm_560, int prm_561)
 {
     int growth_at_m76 = 0;
-    growth_at_m76 = sgrowth(prm_560, prm_559) + prm_561;
+    growth_at_m76 = sdata.get(prm_560, prm_559).potential + prm_561;
     if (growth_at_m76 > 400)
     {
         growth_at_m76 = 400;
@@ -9049,7 +9028,7 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
             modgrowth(prm_562, prm_563, 1);
         }
     }
-    if (sorg(prm_563, prm_562) != 0)
+    if (sdata.get(prm_563, prm_562).original_level != 0)
     {
         if (prm_563 < 400)
         {
@@ -9057,7 +9036,7 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
         }
         return;
     }
-    lv_at_m76 = sorg(prm_563, prm_562) + prm_564;
+    lv_at_m76 = sdata.get(prm_563, prm_562).original_level + prm_564;
     if (lv_at_m76 < 1)
     {
         lv_at_m76 = 1;
@@ -9080,9 +9059,9 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
 
 int skillmod(int prm_566, int prm_567, int prm_568)
 {
-    lv_at_m77 = sorg(prm_566, prm_567);
-    exp_at_m77 = sexp(prm_566, prm_567) + prm_568;
-    growth_at_m77 = sgrowth(prm_566, prm_567);
+    lv_at_m77 = sdata.get(prm_566, prm_567).original_level;
+    exp_at_m77 = sdata.get(prm_566, prm_567).experience + prm_568;
+    growth_at_m77 = sdata.get(prm_566, prm_567).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -9177,7 +9156,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
 int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
 {
     int exp2_at_m77 = 0;
-    if (sorg(prm_569, prm_570) == 0)
+    if (sdata.get(prm_569, prm_570).original_level == 0)
     {
         return 0;
     }
@@ -9189,8 +9168,8 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
     {
         skillexp(sdataref(0, prm_569), prm_570, prm_571 / (2 + prm_572));
     }
-    lv_at_m77 = sorg(prm_569, prm_570);
-    growth_at_m77 = sgrowth(prm_569, prm_570);
+    lv_at_m77 = sdata.get(prm_569, prm_570).original_level;
+    growth_at_m77 = sdata.get(prm_569, prm_570).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -9249,7 +9228,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             }
         }
     }
-    exp_at_m77 += sexp(prm_569, prm_570);
+    exp_at_m77 += sdata.get(prm_569, prm_570).experience;
     if (exp_at_m77 >= 1000)
     {
         lvchange_at_m77 = exp_at_m77 / 1000;
@@ -13834,7 +13813,7 @@ void refreshspeed(int prm_771)
             return;
         }
     }
-    gspdorg = sorg(18, 0);
+    gspdorg = sdata.get(18, 0).original_level;
     if (gdata_mount == 0)
     {
         r_at_m120 = cdata_nutrition(0) / 1000 * 1000;
@@ -14234,10 +14213,10 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
             for (int cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
             {
                 p_at_m125 = 100;
-                if (sorg(cnt, tc_at_m125) >= 500
-                    || sorg(cnt, tc_at_m125) <= 100)
+                if (sdata.get(cnt, tc_at_m125).original_level >= 500
+                    || sdata.get(cnt, tc_at_m125).original_level <= 100)
                 {
-                    p_at_m125 = sorg(cnt, tc_at_m125);
+                    p_at_m125 = sdata.get(cnt, tc_at_m125).original_level;
                 }
                 if (p_at_m125 > 500)
                 {
@@ -15008,7 +14987,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
 void resistmod(int prm_812, int prm_813, int prm_814)
 {
     int lv_at_m134 = 0;
-    lv_at_m134 = sorg(prm_813, prm_812) + prm_814;
+    lv_at_m134 = sdata.get(prm_813, prm_812).original_level + prm_814;
     if (lv_at_m134 < 50)
     {
         lv_at_m134 = 50;
@@ -20631,7 +20610,7 @@ void label_1421()
             pos(66, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
             bmes(
-                ""s + sorg(ap, ap2) + u8"."s
+                ""s + sdata.get(ap, ap2).original_level + u8"."s
                     + std::to_string(
                           1000 + sdata.get(ap, ap2).experience % 1000)
                           .substr(1),
@@ -23370,7 +23349,9 @@ void label_1454()
     {
         addnews(2, r1);
     }
-    p = 5 * (100 + sorg(14, r1) * 10) / (300 + cdata_level(r1) * 15) + 1;
+    p = 5 * (100 + sdata.get(14, r1).original_level * 10)
+            / (300 + cdata_level(r1) * 15)
+        + 1;
     if (r1 == 0)
     {
         if (cdata_level(r1) % 5 == 0)
@@ -23423,7 +23404,7 @@ void label_1455()
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
             sdata.get(cnt, r1).original_level += rnd(3);
-            if (sorg(cnt, r1) > 2000)
+            if (sdata.get(cnt, r1).original_level > 2000)
             {
                 sdata.get(cnt, r1).original_level = 2000;
             }
@@ -23434,7 +23415,7 @@ void label_1455()
         for (int cnt_end = cnt + (length(mainskill)); cnt < cnt_end; ++cnt)
         {
             sdata.get(mainskill(cnt), r1).original_level += rnd(3);
-            if (sorg(mainskill(cnt), r1) > 2000)
+            if (sdata.get(mainskill(cnt), r1).original_level > 2000)
             {
                 sdata.get(mainskill(cnt), r1).original_level = 2000;
             }
@@ -23694,7 +23675,7 @@ void label_1477()
         int cnt = 0;
         for (int cnt_end = cnt + (600); cnt < cnt_end; ++cnt)
         {
-            sdata(cnt, r1) = sorg(cnt, r1);
+            sdata(cnt, r1) = sdata.get(cnt, r1).original_level;
         }
     }
     if (cdata_158(r1) == 0)
@@ -23849,7 +23830,7 @@ void label_1477()
                     }
                     if (rp2 == 3)
                     {
-                        if (sorg(rp3, r1) != 0)
+                        if (sdata.get(rp3, r1).original_level != 0)
                         {
                             sdata(rp3, r1) +=
                                 inv_enchantment_power(rp, cnt) / 50 + 1;
@@ -24017,7 +23998,7 @@ void label_1477()
             int cnt = 0;
             for (int cnt_end = cnt + (600); cnt < cnt_end; ++cnt)
             {
-                sdata(cnt, 56) = sorg(cnt, r1);
+                sdata(cnt, 56) = sdata.get(cnt, r1).original_level;
                 if (sdata(cnt, 56) != sdata(cnt, r1))
                 {
                     rp = sdata(cnt, r1) - sdata(cnt, 56);
@@ -24034,9 +24015,11 @@ void label_1477()
             {
                 if (cdata_quality(r1) >= 4)
                 {
-                    if (cdata_attr_adj(r1, cnt) < sorg((10 + cnt), r1) / 5)
+                    if (cdata_attr_adj(r1, cnt)
+                        < sdata.get(10 + cnt, r1).original_level / 5)
                     {
-                        cdata_attr_adj(r1, cnt) = sorg((10 + cnt), r1) / 5;
+                        cdata_attr_adj(r1, cnt) =
+                            sdata.get(10 + cnt, r1).original_level / 5;
                     }
                 }
                 sdata(10 + cnt, r1) += cdata_attr_adj(r1, cnt);
@@ -24161,7 +24144,7 @@ void label_1477()
 void skillinit(int prm_926, int prm_927, int prm_928)
 {
     elona_vector1<int> p_at_m161;
-    int original_level = sorg(prm_926, prm_927);
+    int original_level = sdata.get(prm_926, prm_927).original_level;
     if (prm_926 >= 100)
     {
         p_at_m161 = prm_928 * 5;
@@ -24615,7 +24598,8 @@ void label_1520()
             p = rnd(10);
             if (encfind(r1, 60010 + p) == -1)
             {
-                cdata_attr_adj(r1, p) -= sorg((10 + p), r1) / 25 + 1;
+                cdata_attr_adj(r1, p) -=
+                    sdata.get(10 + p, r1).original_level / 25 + 1;
                 label_1477();
             }
         }
@@ -24922,7 +24906,7 @@ void label_1521()
 
 void label_1525()
 {
-    if (sorg(174, 0) > 15)
+    if (sdata.get(174, 0).original_level > 15)
     {
         if (spact(29) == 0)
         {
@@ -24943,7 +24927,7 @@ void label_1525()
                 u8"You have learned new ability, "s + skillname(630) + u8"."s));
         }
     }
-    if (sorg(152, 0) > 15)
+    if (sdata.get(152, 0).original_level > 15)
     {
         if (spact(31) == 0)
         {
@@ -29793,11 +29777,17 @@ void label_1588()
             txt(lang(
                 name(cc) + u8"は進化した。"s,
                 name(cc) + u8" evolve"s + _s(cc) + u8"."s));
-            if (rnd(sorg(2, cc) * sorg(2, cc) + 1) < 2000)
+            if (rnd(sdata.get(2, cc).original_level
+                        * sdata.get(2, cc).original_level
+                    + 1)
+                < 2000)
             {
                 skillmod(2, cc, 1000);
             }
-            if (rnd(sorg(3, cc) * sorg(3, cc) + 1) < 2000)
+            if (rnd(sdata.get(3, cc).original_level
+                        * sdata.get(3, cc).original_level
+                    + 1)
+                < 2000)
             {
                 skillmod(3, cc, 1000);
             }
@@ -29805,7 +29795,8 @@ void label_1588()
                 int cnt = 100;
                 for (int cnt_end = cnt + (300); cnt < cnt_end; ++cnt)
                 {
-                    if (sdataref(0, cnt) == 0 || sorg(cnt, cc) == 0)
+                    if (sdataref(0, cnt) == 0
+                        || sdata.get(cnt, cc).original_level == 0)
                     {
                         continue;
                     }
@@ -38861,7 +38852,7 @@ void label_1754()
                     u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
                 modkarma(0, 1);
                 p = rnd(8) + 10;
-                if (sorg(p, 0) >= 10)
+                if (sdata.get(p, 0).original_level >= 10)
                 {
                     skillmod(p, 0, -300);
                 }
@@ -50130,7 +50121,7 @@ label_1999_internal:
         if (skillname(p) != ""s)
         {
             txtef(5);
-            if (sorg(p, 0) == 0)
+            if (sdata.get(p, 0).original_level == 0)
             {
                 txt(lang(
                     skillname(p) + u8"の技術を会得した！"s,
@@ -51969,7 +51960,7 @@ void label_2032()
         {
             p = dblist(0, cnt);
             f = 0;
-            if (sorg(p, cc) == 0)
+            if (sdata.get(p, cc).original_level == 0)
             {
                 if (sdataref(0, p) != 0)
                 {
@@ -52030,7 +52021,7 @@ label_20331:
                     f = 1;
                     if (csctrl == 2)
                     {
-                        if (sorg(cnt, cc) == 0)
+                        if (sdata.get(cnt, cc).original_level == 0)
                         {
                             f = 0;
                         }
@@ -52447,7 +52438,7 @@ label_2035_internal:
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 cnt2 = cnt;
-                s = u8"("s + sorg(10 + cnt, cc) + u8")"s;
+                s = u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
                 if (encfind(cc, 60010 + cnt) != -1)
                 {
                     s += u8"*"s;
@@ -52456,7 +52447,7 @@ label_2035_internal:
                 mes(""s + sdata((10 + cnt), cc));
                 pos(wx + 124, wy + 151 + cnt * 15);
                 mes(s);
-                p = sgrowth(10 + cnt, cc);
+                p = sdata.get(10 + cnt, cc).potential;
                 pos(wx + 176, wy + 152 + cnt * 15);
                 if (p >= 200)
                 {
@@ -52481,10 +52472,13 @@ label_2035_internal:
                 mes(u8"Hopeless"s);
             }
         }
-        s(0) = ""s + sdata(2, cc) + u8"("s + sorg(2, cc) + u8")"s;
-        s(1) = ""s + sdata(3, cc) + u8"("s + sorg(3, cc) + u8")"s;
+        s(0) = ""s + sdata(2, cc) + u8"("s + sdata.get(2, cc).original_level
+            + u8")"s;
+        s(1) = ""s + sdata(3, cc) + u8"("s + sdata.get(3, cc).original_level
+            + u8")"s;
         s(2) = ""s + cdata_insanity(cc);
-        s(3) = ""s + cdata_current_speed(cc) + u8"("s + sorg(18, cc) + u8")"s;
+        s(3) = ""s + cdata_current_speed(cc) + u8"("s
+            + sdata.get(18, cc).original_level + u8")"s;
         s(4) = "";
         s(5) = ""s + cdata_fame(cc);
         s(6) = ""s + cdata_karma(cc);
@@ -52703,14 +52697,17 @@ label_2035_internal:
                     }
                     else
                     {
-                        s = ""s + sorg(i, cc) + u8"."s
-                            + std::to_string(1000 + sexp(list(0, p), cc) % 1000)
+                        s = ""s + sdata.get(i, cc).original_level + u8"."s
+                            + std::to_string(
+                                  1000
+                                  + sdata.get(list(0, p), cc).experience % 1000)
                                   .substr(1);
-                        if (sorg(i, cc) != sdata(i, cc))
+                        if (sdata.get(i, cc).original_level != sdata(i, cc))
                         {
-                            p(1) = sdata(i, cc) - sorg(i, cc);
+                            p(1) =
+                                sdata(i, cc) - sdata.get(i, cc).original_level;
                         }
-                        s += u8"("s + sgrowth(i, cc) + u8"%)"s;
+                        s += u8"("s + sdata.get(i, cc).potential + u8"%)"s;
                     }
                     pos(wx + 280 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
                     mes(s);
@@ -52729,9 +52726,9 @@ label_2035_internal:
                         pos(wx + 322 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
                         mes(s);
                     }
-                    else if (sorg(i, cc) != sdata(i, cc))
+                    else if (sdata.get(i, cc).original_level != sdata(i, cc))
                     {
-                        i = sdata(i, cc) - sorg(i, cc);
+                        i = sdata(i, cc) - sdata.get(i, cc).original_level;
                         if (list(0, p) >= 50)
                         {
                             i = i / 50;
@@ -52871,7 +52868,7 @@ label_2035_internal:
             {
                 goto label_2034_internal;
             }
-            if (sorg(csskill, 0) == 0)
+            if (sdata.get(csskill, 0).original_level == 0)
             {
                 snd(27);
                 goto label_2034_internal;
@@ -52880,7 +52877,9 @@ label_2035_internal:
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
             modgrowth(
-                cc, csskill, std::clamp(15 - sgrowth(csskill, cc) / 15, 2, 15));
+                cc,
+                csskill,
+                std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             redraw(0);
             label_1421();
             goto label_2034_internal;
@@ -55638,7 +55637,7 @@ int label_2083()
 {
     if (inv_id(ci) == 563)
     {
-        if (sorg(inv_param1(ci), 0) == 0)
+        if (sdata.get(inv_param1(ci), 0).original_level == 0)
         {
             txt(lang(
                 u8"この本の内容には興味がない。それでも読む？ "s,
@@ -55950,8 +55949,10 @@ void label_2085()
                   (gdata_play_time + timeGetTime() / 1000 - time_begin)),
         30));
     noteadd(""s);
-    s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s + sorg(2, 0) + u8")"s;
-    s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s + sorg(3, 0) + u8")"s;
+    s(1) = u8"生命力    : "s + sdata(2, 0) + u8"("s
+        + sdata.get(2, 0).original_level + u8")"s;
+    s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s
+        + sdata.get(3, 0).original_level + u8")"s;
     s(3) = u8"狂気度    : 0"s;
     s(4) = u8"速度      : "s + cdata_current_speed(0);
     s(5) = u8"名声度    : "s + cdata_fame(0);
@@ -55964,7 +55965,7 @@ void label_2085()
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             s = "";
-            p = sgrowth(10 + cnt, 0);
+            p = sdata.get(10 + cnt, 0).potential;
             if (p >= 200)
             {
                 s += u8"superb"s;
@@ -55988,7 +55989,7 @@ void label_2085()
             s = fixtxt(s, 15);
             s = fixtxt(
                     _stats2(cnt) + u8"    : "s + sdata((10 + cnt), 0) + u8"("s
-                        + sorg(10 + cnt, 0) + u8")"s,
+                        + sdata.get(10 + cnt, 0).original_level + u8")"s,
                     24)
                 + s;
             noteadd(s + s((1 + cnt)));
@@ -56655,11 +56656,11 @@ void label_2091()
         {
             if (cnt >= 10 && cnt < 20)
             {
-                p += sorg(cnt, 56);
+                p += sdata.get(cnt, 56).original_level;
             }
             if (cnt >= 100 && cnt < 400)
             {
-                i += sorg(cnt, 56);
+                i += sdata.get(cnt, 56).original_level;
             }
         }
     }
@@ -59849,21 +59850,21 @@ void label_2148()
             }
             if (rnd(6) == 0)
             {
-                if (rnd(55) > sorg(10, cc) + 25)
+                if (rnd(55) > sdata.get(10, cc).original_level + 25)
                 {
                     skillexp(10, cc, 50);
                 }
             }
             if (rnd(8) == 0)
             {
-                if (rnd(55) > sorg(11, cc) + 28)
+                if (rnd(55) > sdata.get(11, cc).original_level + 28)
                 {
                     skillexp(11, cc, 50);
                 }
             }
             if (rnd(10) == 0)
             {
-                if (rnd(55) > sorg(15, cc) + 30)
+                if (rnd(55) > sdata.get(15, cc).original_level + 30)
                 {
                     skillexp(15, cc, 50);
                 }
@@ -60458,7 +60459,7 @@ void label_2151()
             int cnt = 10;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
-                i += sorg(cnt, 0);
+                i += sdata.get(cnt, 0).original_level;
             }
         }
         i = std::clamp(i / 6, 10, 1000);
@@ -68601,7 +68602,7 @@ void label_2228()
                 for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
                 {
                     list(0, listmax) = cnt;
-                    list(1, listmax) = sorg(cnt, tc);
+                    list(1, listmax) = sdata.get(cnt, tc).original_level;
                     ++listmax;
                 }
             }
@@ -68612,9 +68613,10 @@ void label_2228()
                 {
                     p = listmax - cnt - 1;
                     i = list(0, p);
-                    if (list(1, p) > sorg(i, rc))
+                    if (list(1, p) > sdata.get(i, rc).original_level)
                     {
-                        p = (list(1, p) - sorg(i, rc)) * 500;
+                        p = (list(1, p) - sdata.get(i, rc).original_level)
+                            * 500;
                         p = std::clamp(
                             p * 10 / std::clamp(lv, 2, 10), 1000, 10000);
                         skillmod(i, rc, p);
@@ -69581,7 +69583,7 @@ void label_2244()
                 listn(0, listmax) =
                     lang(u8"遠慮しとく"s, u8"I think I'll pass."s);
                 ++listmax;
-                if (sorg(csskill, 0) == 0)
+                if (sdata.get(csskill, 0).original_level == 0)
                 {
                     buff = lang(skillname(csskill) +
                             u8"のスキルを、友達価格の"s +
@@ -69677,7 +69679,7 @@ void label_2244()
                         cc,
                         csskill,
                         std::clamp(
-                            15 - sgrowth(csskill, cc) / 15,
+                            15 - sdata.get(csskill, cc).potential / 15,
                             2,
                             15 - (csskill < 18) * 10));
                     listmax = 0;
@@ -71137,7 +71139,9 @@ void label_2254()
         {
             cdata_platinum_coin(0) -= calctraincost(csskill, cc);
             modgrowth(
-                cc, csskill, std::clamp(15 - sgrowth(csskill, cc) / 15, 2, 15));
+                cc,
+                csskill,
+                std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             buff = lang(
                 u8"訓練は完了し"s + _ta()
                     + u8"潜在能力が伸びているはずなので、後は自分で鍛えて"s
@@ -77966,7 +77970,7 @@ void label_2693()
                                     {
                                         p = rnd(300) + 100;
                                     }
-                                    if (sorg(p, cc) == 0)
+                                    if (sdata.get(p, cc).original_level == 0)
                                     {
                                         continue;
                                     }
