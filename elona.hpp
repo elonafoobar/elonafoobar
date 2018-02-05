@@ -548,20 +548,10 @@ void objprm(int, const std::string&);
 void objsel(int);
 
 
-// Peek 1byte.
-std::uint8_t peek(const std::string& str, size_t index = 0);
-
-std::uint8_t peek(elona_vector1<int> v, size_t index = 0);
-
-
 
 void pget(int x, int y);
 
 void picload(const fs::path& file, int immediately = 0);
-
-void poke(std::string& str, size_t index, char c);
-
-void poke(std::string& str, size_t index, const std::string& s);
 
 void pos(int x, int y = 0);
 
@@ -720,16 +710,6 @@ int LCMapStringA(int, int, const std::string&, int, const std::string&, int);
 
 int GetUserDefaultLCID();
 
-void water_getimage();
-
-
-void water_setripple(int, int, int, int);
-
-void water_calc();
-
-void water_draw();
-
-
 void AppendMenuA();
 
 void CheckMenuRadioItem();
@@ -747,11 +727,6 @@ void SetMenu();
 void keybd_event(int, int = 0, int = 0);
 
 void GetKeyboardState(elona_vector1<int>&);
-
-void timeBeginPeriod(int);
-
-
-void timeEndPeriod();
 
 int timeGetTime();
 

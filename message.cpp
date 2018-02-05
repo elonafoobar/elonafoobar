@@ -78,7 +78,7 @@ void key_check(int prm_299)
     if (keylog != ""s)
     {
         keylog = strmid(keylog, 0, 1);
-        if (peek(keylog, 0) == 13)
+        if (keylog(0)[0] == '\n')
         {
             keylog = key_enter;
         }
@@ -952,8 +952,6 @@ void txt_conv()
     {
         if (tcontinue_at_txtfunc == 0)
         {
-            int b = 0;
-            b = peek(msgtemp(0), 0);
             if (strutil::contains(msgtemp(0), u8"\""))
             {
                 if (tcolfix_at_txtfunc == 0)
@@ -967,10 +965,7 @@ void txt_conv()
                     tcolfix_at_txtfunc = 0;
                 }
             }
-            if (b >= 97 && b <= 122)
-            {
-                poke(msgtemp(0), 0, b - 32);
-            }
+            msgtemp(0)[0] = std::toupper(msgtemp(0)[0]);
         }
         else
         {

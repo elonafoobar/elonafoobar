@@ -191,6 +191,8 @@ void set_blend_mode()
 
 namespace mesbox_detail
 {
+
+
 struct MessageBox
 {
     MessageBox(std::string& buffer)
@@ -209,14 +211,7 @@ struct MessageBox
             {
                 c = std::toupper(c);
             }
-            if (c == '\n')
-            {
-                buffer += "\r\n";
-            }
-            else
-            {
-                buffer += c;
-            }
+            buffer += c;
         }
     }
 
@@ -1309,21 +1304,6 @@ void objsel(int)
 
 
 
-// Peek 1byte.
-std::uint8_t peek(const std::string& str, size_t index)
-{
-    return str[index];
-}
-
-
-
-std::uint8_t peek(elona_vector1<int> v, size_t index)
-{
-    return v(index);
-}
-
-
-
 void pget(int x, int y)
 {
 }
@@ -1351,20 +1331,6 @@ void picload(const fs::path& filename, int mode)
     Application::instance().renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
     Application::instance().renderer().set_blend_mode(save);
-}
-
-
-
-void poke(std::string& str, size_t index, char c)
-{
-    str[index] = c;
-}
-
-
-
-void poke(std::string& str, size_t index, const std::string& s)
-{
-    poke(str, index, s[0]);
 }
 
 
@@ -2186,30 +2152,6 @@ int GetUserDefaultLCID()
 
 
 
-void water_getimage()
-{
-}
-
-
-
-void water_setripple(int, int, int, int)
-{
-}
-
-
-
-void water_calc()
-{
-}
-
-
-
-void water_draw()
-{
-}
-
-
-
 void AppendMenuA()
 {
 }
@@ -2253,18 +2195,6 @@ void keybd_event(int, int, int)
 
 
 void GetKeyboardState(elona_vector1<int>&)
-{
-}
-
-
-
-void timeBeginPeriod(int)
-{
-}
-
-
-
-void timeEndPeriod()
 {
 }
 

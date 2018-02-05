@@ -1,7 +1,7 @@
 #include "buff.hpp"
-#include "ctrl_file.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -441,14 +441,6 @@ int zentohan(const std::string& prm_209, std::string& prm_210, int prm_211)
 {
     return LCMapStringA(
         GetUserDefaultLCID(), 4194304, prm_209, -1, prm_210, prm_211);
-}
-
-
-
-void tmset()
-{
-    timeBeginPeriod(1);
-    return;
 }
 
 
@@ -8732,7 +8724,7 @@ void cutname(std::string& prm_541, int prm_542)
                     {
                         break;
                     }
-                    p_at_m71 = peek(prm_541, len_at_m71);
+                    p_at_m71 = prm_541[len_at_m71];
                     if ((p_at_m71 >= 129 && p_at_m71 <= 159 || p_at_m71 >= 224)
                         && p_at_m71 <= 252)
                     {
@@ -11206,38 +11198,36 @@ void page_load()
 
 void fileadd(const std::string& prm_692, int prm_693)
 {
-    elona_vector1<std::string> q_at_m98;
-    int p_at_m98 = 0;
-    std::string a_at_m98;
+    char mark_a;
+    char mark_b;
     if (prm_693 == 0)
     {
-        q_at_m98(0) = u8"*"s;
-        q_at_m98(1) = u8"#"s;
+        mark_a = u8'*';
+        mark_b = u8'#';
     }
     else
     {
-        q_at_m98(0) = u8"#"s;
-        q_at_m98(1) = u8"*"s;
+        mark_a = u8'#';
+        mark_b = u8'*';
     }
     notesel(filemod);
-    p_at_m98 = instr(filemod, 0, prm_692);
+    int p_at_m98 = instr(filemod, 0, prm_692);
     if (p_at_m98 != -1)
     {
-        if (strmid(filemod, p_at_m98 - 1, 1) == q_at_m98(1))
+        if (strmid(filemod, p_at_m98 - 1, 1)[0] == mark_b)
         {
-            cnvstow(a_at_m98, q_at_m98);
-            poke(filemod, p_at_m98 - 1, a_at_m98);
+            filemod(0)[p_at_m98 - 1] = mark_a;
         }
         noteunsel();
         return;
     }
     if (prm_693 != 0)
     {
-        noteadd(q_at_m98 + prm_692);
+        noteadd(std::string{mark_a} + prm_692);
         noteunsel();
         return;
     }
-    noteadd(q_at_m98 + prm_692);
+    noteadd(std::string{mark_a} + prm_692);
     noteunsel();
     return;
 }
@@ -11609,7 +11599,7 @@ void gmes(const std::string& prm_715)
 
     while (1)
     {
-        p_at_m102 = peek(msg_at_m102, i_at_m102);
+        p_at_m102 = msg_at_m102[i_at_m102];
         int brwait_at_m102 = 0;
         if (p_at_m102 >= 0x00 && p_at_m102 <= 0x7F)
             p_at_m102 = 1;
@@ -19142,7 +19132,6 @@ int net_read(int prm_885)
     int sz_at_m147 = 0;
     int t_at_m147 = 0;
     int c_at_m147 = 0;
-    int b_at_m147 = 0;
     int header_at_m147 = 0;
     int tail_at_m147 = 0;
     int chat_count_at_m147 = 0;
@@ -19228,8 +19217,7 @@ label_1393_internal:
             return 0;
         }
     }
-    b_at_m147 = peek(a_at_m147, 0);
-    if (b_at_m147 == 0)
+    if (a_at_m147[0] == 0)
     {
         goto label_1394_internal;
         return 0;
@@ -57341,7 +57329,7 @@ void label_2106()
         dialog(u8"The name contains an invalid word \"_tmp_\""s);
         return;
     }
-    if ((peek(s) < 65 || peek(s) > 90) && (peek(s) < 97 || peek(s) > 122))
+    if (!std::isalpha(s(0)[0]))
     {
         dialog(u8"The first letter of the name must be alphabetic."s);
         return;
@@ -58205,7 +58193,7 @@ label_21261_internal:
                     int cnt = 0;
                     for (int cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
                     {
-                        p(3) = peek(inputlog, p(4));
+                        p(3) = inputlog(0)[p(4)];
                         if (p(3) >= 129 && p(3) <= 159
                             || p(3) >= 224 && p(3) <= 252)
                         {

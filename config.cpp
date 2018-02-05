@@ -300,7 +300,7 @@ void label_2716()
             [&](auto value) { cfg_env = value; }),
         std::make_unique<config_integer>(
             u8"titleEffect.",
-            [&](auto value) { cfg_titleeffect = value; }),
+            [&](auto value) { /* Unsupported option */ }),
         std::make_unique<config_integer>(
             u8"net.",
             [&](auto value) { cfg_net = value; }),

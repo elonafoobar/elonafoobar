@@ -107,7 +107,6 @@ void check_double_launching()
 
 void initialize_elona()
 {
-    tmset();
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
@@ -554,12 +553,8 @@ void initialize_elona()
 
     if (cfg_autonumlock)
     {
-        GetKeyboardState(keybd_st);
-        if (peek(keybd_st, 144) == 1)
-        {
-            keybd_event(144);
-            keybd_event(144, 0, 2);
-        }
+        // TODO
+        // if NumLock key is pressed, send an event to release the key.
     }
 }
 
@@ -640,7 +635,6 @@ int main()
 
 void label_2115()
 {
-    int water_debug = 0;
     mode = 10;
     lomiaseaster = 0;
     music = 65;
@@ -727,14 +721,6 @@ void label_2115()
         s(4) = u8"Options"s;
         s(5) = u8"Exit"s;
     }
-    if (cfg_titleeffect)
-    {
-        if (water_debug == 0)
-        {
-            water_getimage();
-            water_debug = 1;
-        }
-    }
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_title.bmp"), 1);
@@ -746,12 +732,8 @@ void label_2115()
 label_2116_internal:
     if (cfg_autonumlock)
     {
-        GetKeyboardState(keybd_st);
-        if (peek(keybd_st, 144) == 1)
-        {
-            keybd_event(144);
-            keybd_event(144, 0, 2);
-        }
+        // TODO
+        // if NumLock key is pressed, send an event to release the key.
     }
     redraw(0);
     tx += (rnd(10) + 2) * p(1);
@@ -774,15 +756,6 @@ label_2116_internal:
         {
             f = 2;
         }
-    }
-    if (f == 0)
-    {
-        water_setripple(tx, ty, rnd(300), rnd(4));
-    }
-    if (cfg_titleeffect)
-    {
-        water_calc();
-        water_draw();
     }
     cs_listbk();
     {
