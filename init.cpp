@@ -1,6 +1,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "main.hpp"
 #include "range.hpp"
@@ -620,6 +621,8 @@ namespace elona
 
 int main()
 {
+    i18n::load();
+
     title(u8"Elona ver 1.22"s);
     try
     {
