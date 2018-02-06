@@ -66,8 +66,7 @@ label_17401:
     if (mode == 3)
     {
         ctrl_file(1);
-        file = u8"inv_"s + mid + u8".s2"s;
-        ctrl_file(3);
+        ctrl_file(3, u8"inv_"s + mid + u8".s2");
         goto label_1744_internal;
     }
     getkey(a, 8);
@@ -102,8 +101,7 @@ label_17401:
                 goto label_1741_internal;
             }
         }
-        file = u8"inv_"s + mid + u8".s2"s;
-        ctrl_file(3);
+        ctrl_file(3, u8"inv_"s + mid + u8".s2");
         if (mode == 2)
         {
             map_placeplayer();
@@ -229,9 +227,8 @@ label_1741_internal:
     }
     if (adata(16, gdata_current_map) == 35)
     {
-        file = ""s + userfile;
         id = 0;
-        label_2095();
+        label_2095(userfile);
         ctrl_file(19);
         {
             int cnt = 0;
@@ -948,9 +945,8 @@ label_1741_internal:
         petarenawin = 0;
         if (arenaimport == 1)
         {
-            file = ""s + userfile;
             id = 0;
-            label_2095();
+            label_2095(userfile);
             importmode = 1;
             ctrl_file(21);
             label_2111();
@@ -1062,8 +1058,7 @@ label_1741_internal:
             }
             else
             {
-                file = u8"inv_"s + mid + u8".s2"s;
-                ctrl_file(3);
+                ctrl_file(3, u8"inv_"s + mid + u8".s2");
                 inv_getheader(-1);
                 {
                     int cnt = invhead;

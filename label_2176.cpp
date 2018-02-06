@@ -4646,12 +4646,10 @@ label_2181_internal:
             u8"あなたは四次元のポケットを召喚した。"s,
             u8"You summon 4 dimensional pocket."s));
         invfile = 8;
-        file = u8"shoptmp.s2"s;
-        ctrl_file(4);
-        file = u8"shop"s + invfile + u8".s2"s;
-        if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
+        ctrl_file(4, u8"shoptmp.s2");
+        if (fs::exists(fs::u8path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
         {
-            ctrl_file(3);
+            ctrl_file(3, u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -4674,10 +4672,8 @@ label_2181_internal:
         snd(100);
         label_20592();
         invcontainer = 0;
-        file = u8"shop"s + invfile + u8".s2"s;
-        ctrl_file(4);
-        file = u8"shoptmp.s2"s;
-        ctrl_file(3);
+        ctrl_file(4, u8"shop"s + invfile + u8".s2");
+        ctrl_file(3, u8"shoptmp.s2");
         mode = 0;
         goto label_2186_internal;
     }

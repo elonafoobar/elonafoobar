@@ -11339,15 +11339,15 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 
 
 
-void arrayfile(bool fread, std::string_view fmode_str)
+void arrayfile(bool fread, std::string_view fmode_str, const fs::path& filepath)
 {
     if (!fread)
     {
-        arrayfile_write(fmode_str, fs::u8path(file(0)));
+        arrayfile_write(fmode_str, filepath);
     }
     else
     {
-        arrayfile_read(fmode_str, fs::u8path(file(0)));
+        arrayfile_read(fmode_str, filepath);
     }
 
     elona_export = 0;
@@ -35653,10 +35653,8 @@ void label_1725()
     }
     if (gdata_current_map != area)
     {
-        file = u8"shoptmp.s2"s;
-        ctrl_file(4);
-        file = u8"inv_"s + mid + u8".s2"s;
-        ctrl_file(3);
+        ctrl_file(4, u8"shoptmp.s2");
+        ctrl_file(3, u8"inv_"s + mid + u8".s2");
     }
     mode = 6;
     dblistmax = 0;
@@ -35787,18 +35785,15 @@ void label_1725()
     mode = 0;
     if (gdata_current_map != area)
     {
-        file = u8"inv_"s + mid + u8".s2"s;
-        ctrl_file(4);
+        ctrl_file(4, u8"inv_"s + mid + u8".s2");
     }
     else
     {
-        file = u8"shoptmp.s2"s;
-        ctrl_file(4);
+        ctrl_file(4, u8"shoptmp.s2");
     }
-    file = u8"shop"s + 5 + u8".s2"s;
-    if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
+    if (fs::exists(fs::u8path(u8"./tmp") / u8"shop5.s2"))
     {
-        ctrl_file(3);
+        ctrl_file(3, u8"shop5.s2");
     }
     else
     {
@@ -35907,10 +35902,8 @@ void label_1725()
         modrank(5, 30, 2);
     }
     mode = 0;
-    file = u8"shop"s + 5 + u8".s2"s;
-    ctrl_file(4);
-    file = u8"shoptmp.s2"s;
-    ctrl_file(3);
+    ctrl_file(4, u8"shop5.s2");
+    ctrl_file(3, u8"shoptmp.s2");
     return;
 }
 
@@ -37109,8 +37102,7 @@ void label_1739()
         }
     }
     ctrl_file(2);
-    file = u8"inv_"s + mid + u8".s2"s;
-    ctrl_file(4);
+    ctrl_file(4, u8"inv_"s + mid + u8".s2");
     return;
 }
 
@@ -40109,8 +40101,7 @@ void atxinit()
 
 void begintempinv()
 {
-    file = u8"shoptmp.s2"s;
-    ctrl_file(4);
+    ctrl_file(4, u8"shoptmp.s2");
     inv_getheader(-1);
     {
         int cnt = invhead;
@@ -40126,8 +40117,7 @@ void begintempinv()
 
 void exittempinv()
 {
-    file = u8"shoptmp.s2"s;
-    ctrl_file(3);
+    ctrl_file(3, u8"shoptmp.s2");
     return;
 }
 
@@ -42800,18 +42790,16 @@ label_1894_internal:
         }
     }
         s = lang(u8"殺人鬼"s, u8"Murderer"s);
-        file = u8"bg_re9"s;
         buff = lang(
             u8"街のどこかで悲鳴があがった。あなたはガードが慌しく走っていくのを目撃した。「人殺し、人殺しだ！！」"s,
             u8"Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"なむ…"s, u8"Sorry for you."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re9");
         goto label_1895_internal;
     case 14:
         s = lang(u8"謎のご馳走"s, u8"Strange Feast"s);
-        file = u8"bg_re10"s;
         buff = lang(
             u8"あなたは目の前にご馳走をみつけた。"s,
             u8"You come across a strange feast."s);
@@ -42821,7 +42809,7 @@ label_1894_internal:
         list(0, listmax) = 2;
         listn(0, listmax) = lang(u8"立ち去る"s, u8"(Leave)"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re10");
         if (rtval == 1)
         {
             cdata_nutrition(0) = 15000;
@@ -42834,7 +42822,6 @@ label_1894_internal:
         goto label_1895_internal;
     case 13:
         s = lang(u8"ご馳走の匂い"s, u8"Smell of Food"s);
-        file = u8"bg_re10"s;
         buff = lang(
             u8"どこからともなく漂うご馳走の匂いで、あなたの胃は不満を叫び始めた。"s,
             u8"A sweet smell of food floats from nowhere. Your stomach growls but you can't find out where it comes from."s);
@@ -42842,48 +42829,44 @@ label_1894_internal:
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"腹減った…"s, u8"I'm hungry now!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re10");
         goto label_1895_internal;
     case 1:
         s = lang(u8"不運の回避"s, u8"Avoiding Misfortune"s);
-        file = u8"bg_re8"s;
         buff = lang(
             u8"あなたは一瞬嫌な予感がしたが、それはやがて消えた。"s,
             u8"You sense a bad feeling for a moment but it fades away quickly."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re8");
         goto label_1895_internal;
     case 24:
         efid = 1113;
         tc = 0;
         label_2176();
         s = lang(u8"才能の開花"s, u8"Your Potential"s);
-        file = u8"bg_re4"s;
         buff = lang(
             u8"突然あなたの才能は開花した！"s,
             u8"Suddenly you develop your gift!"s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re4");
         goto label_1895_internal;
     case 18:
         skillexp(181, 0, 1000, 6, 1000);
         s = lang(u8"信仰の深まり"s, u8"Gaining Faith"s);
-        file = u8"bg_re12"s;
         buff = lang(
             u8"夢の中で、あなたは偉大なる者の穏やかな威光に触れた。"s,
             u8"In your dream, a saint comes out and blesses you."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"神よ"s, u8"Great."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re12");
         goto label_1895_internal;
     case 12:
         s = lang(u8"マテリアルの発見"s, u8"Small Luck"s);
-        file = u8"bg_re3"s;
         buff = lang(
             u8"石ころにつまずいて転んだ拍子に、あなたは幾つかのマテリアルを見つけた。"s,
             u8"You stumble over a stone and find some materials on the ground. "s);
@@ -42894,7 +42877,7 @@ label_1894_internal:
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Nice."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re3");
         goto label_1895_internal;
     case 23:
         efid = 1117;
@@ -42902,18 +42885,16 @@ label_1894_internal:
         tc = 0;
         label_2176();
         s = lang(u8"夢の中の収穫"s, u8"Dream Harvest"s);
-        file = u8"bg_re3"s;
         buff = lang(
             u8"夢の中で、あなたはのんきにマテリアルを採取していた"s,
             u8"In your dream, you harvest materials peacefully."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"るん♪"s, u8"Sweet."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re3");
         goto label_1895_internal;
     case 10:
         s = lang(u8"野営跡の発見"s, u8"Camping Site"s);
-        file = u8"bg_re3"s;
         buff = lang(
             u8"あなたは何者かが野営した跡を見つけた。辺りには食べ残しやがらくたが散らばっている。もしかしたら、何か役に立つものがあるかもしれない。"s,
             u8"You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some usefull items."s);
@@ -42923,7 +42904,7 @@ label_1894_internal:
         list(0, listmax) = 2;
         listn(0, listmax) = lang(u8"立ち去る"s, u8"(Leave)"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re3");
         if (rtval == 1)
         {
             {
@@ -42947,14 +42928,13 @@ label_1894_internal:
         tc = 0;
         label_2176();
         s = lang(u8"不気味な夢"s, u8"Creepy Dream"s);
-        file = u8"bg_re5"s;
         buff = lang(
             u8"あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。"s,
             u8"In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echos around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"Strange..."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re5");
         goto label_1895_internal;
     case 22:
         snd(116);
@@ -42963,14 +42943,13 @@ label_1894_internal:
         tc = 0;
         label_2176();
         s = lang(u8"怪物の夢"s, u8"Monster Dream"s);
-        file = u8"bg_re2"s;
         buff = lang(
             u8"あなたは怪物と戦っていた。醜い化け物に斬りかかろうとした時、怪物は悲鳴をあげた。「オレハオマエダ！オマエハオレダ！」あなたは自分の呻き声に起こされた。"s,
             u8"You are fighting an ugly monster. You are about to thrust a dagger into the neck of the monster. And the monster screams. \"You are me! I am you!\" You are awakened by your own low moan."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ううぅん…"s, u8"Urrgh..hh.."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re2");
         goto label_1895_internal;
     case 19:
         flt();
@@ -42979,24 +42958,22 @@ label_1894_internal:
             itemname(ci, 1) + u8"をバックパックに入れた。"s,
             u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
         s = lang(u8"宝を埋める夢"s, u8"Treasure of Dream"s);
-        file = u8"bg_re15"s;
         buff = lang(
             u8"あなたは夢の中で宝を埋めた。あなたはすぐに飛び起き、その場所を紙に書き留めた"s,
             u8"You buried treasure in your dream. You quickly get up and write down the location."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re15");
         goto label_1895_internal;
     case 20:
         addbuff(tc, 19, 777, 1500);
         s = lang(u8"幸運の日"s, u8"Lucky Day"s);
-        file = u8"bg_re12"s;
         buff = lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re12");
         goto label_1895_internal;
     case 21:
         flt();
@@ -43005,13 +42982,12 @@ label_1894_internal:
             itemname(ci, 1) + u8"をバックパックに入れた。"s,
             u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
         s = lang(u8"運命の気まぐれ"s, u8"Quirk of Fate"s);
-        file = u8"bg_re15"s;
         buff =
             lang(u8"うみみゃっ、見つけたね！"s, u8"Mewmew? You've found me!"s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re15");
         goto label_1895_internal;
     case 5:
         if (trait(42))
@@ -43047,14 +43023,13 @@ label_1894_internal:
             }
         }
         s = lang(u8"呪いのつぶやき"s, u8"Cursed Whispering"s);
-        file = u8"bg_re5"s;
         buff = lang(
             u8"どこからともなく聞こえる呪いのつぶやきが、あなたの眠りを妨げた。"s,
             u8"Your sleep is disturbed by a harshly whispering that comes from nowhere."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"眠れない…"s, u8"Can't...sleep..."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re5");
         goto label_1895_internal;
     case 8:
         p = rnd(cdata_gold(0) / 8 + 1);
@@ -43076,18 +43051,16 @@ label_1894_internal:
                 u8"The thief fails to steal money from you."s));
         }
         s = lang(u8"悪意ある手"s, u8"Malicious Hand"s);
-        file = u8"bg_re9"s;
         buff = lang(
             u8"悪意のある手が忍び寄り、あなたが気付かない間に金貨を奪って逃げた。"s,
             u8"A malicious hand slips and steals your money."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"盗人め…"s, u8"Bloody thieves..."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re9");
         goto label_1895_internal;
     case 11:
         s = lang(u8"冒険者の遺骸"s, u8"Corpse"s);
-        file = u8"bg_re7"s;
         buff = lang(
             u8"この場所で力尽きた冒険者の遺骸を見つけた。既に朽ちかけている骨と、身に着けていたと思われる幾つかの装備が散らばっている。"s,
             u8"You find a corpse of an adventurer. There're bones and equipment scatters on the ground waiting to decay."s);
@@ -43097,7 +43070,7 @@ label_1894_internal:
         list(0, listmax) = 2;
         listn(0, listmax) = lang(u8"埋葬する"s, u8"(Bury)"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re7");
         if (rtval == 1)
         {
             txt(lang(
@@ -43137,14 +43110,13 @@ label_1894_internal:
         tc = 0;
         label_2176();
         s = lang(u8"魔法使いの夢"s, u8"Wizard's Dream"s);
-        file = u8"bg_re6"s;
         buff = lang(
             u8"夢の中であなたは赤い髪の魔術師に出会った。「誰じゃ、お主は？ふむ、間違った者の夢に現れてしまったようじゃ。すまぬな。お詫びといってはなんじゃが…」魔法使いは指をくるりと回した。あなたは軽い頭痛を覚えた。"s,
             u8"In your dream, you meet a wizard with a red mustache. \"Who are you? Hmm, I guess I picked up the wrong man's dream. My apology for disturbing your sleep. To make up for this...\" The wizard draws a circle in the air and vanishs. You feel the effects of a faint headache."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"A weird dream."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re6");
         goto label_1895_internal;
     case 3:
         efid = 1119;
@@ -43152,50 +43124,46 @@ label_1894_internal:
         tc = 0;
         label_2176();
         s = lang(u8"成長のきざし"s, u8"Development"s);
-        file = u8"bg_re4"s;
         buff = lang(
             u8"長年の鍛錬の成果が実ったようだ。なかなか眠りにつけず考えごとをしていたあなたは、ふと、自らの技術に関する新しいアイデアを思いついた。"s,
             u8"You lie awake, sunk deep into thought. As memories of your journey flow from one into another, you chance upon a new theory to improve one of your skills."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし！"s, u8"Good!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re4");
         goto label_1895_internal;
     case 6:
         skillexp(154, 0, 1000);
         s = lang(u8"自然治癒力の向上"s, u8"Regeneration"s);
-        file = u8"bg_re4"s;
         buff = lang(
             u8"身体が妙に火照ってあなたは目を覚ました。気がつくと、腕にあった傷跡が完全に消えていた。"s,
             u8"Your entire body flushs. When you wake up, a scar in your arm is gone."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re4");
         goto label_1895_internal;
     case 7:
         skillexp(155, 0, 1000);
         s = lang(u8"瞑想力の向上"s, u8"Meditation"s);
-        file = u8"bg_re4"s;
         buff = lang(
             u8"あなたは、夢の中でも驚くほど理性を保っていた。まるで瞑想を行っている時のように、あなたは心の平和を感じた。"s,
             u8"In your dream, you meditate and feel inner peace."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re4");
         goto label_1895_internal;
     case 9:
         ++cdata_platinum_coin(0);
         s = lang(u8"路上に転がる幸運"s, u8"Great Luck"s);
-        file = u8"bg_re1"s;
         buff = lang(
             u8"下を向いて歩いていると、幸運にもプラチナ硬貨を見つけた。"s,
             u8"You stumble over a stone and find a platinum coin."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re1");
         goto label_1895_internal;
     case 16:
         p = rnd(cdata_gold(0) / 10 + 1000) + 1;
@@ -43204,14 +43172,13 @@ label_1894_internal:
             u8"金貨"s + p + u8"枚を手に入れた。"s,
             u8"You pick up "s + p + u8" gold pieces."s));
         s = lang(u8"発狂した金持ち"s, u8"Mad Millionaire"s);
-        file = u8"bg_re1"s;
         buff = lang(
             u8"発狂した金持ちが、何か叫びながら金貨をばらまいている…"s,
             u8"A rich mad man is scattering his money all over the ground."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re1");
         goto label_1895_internal;
     case 17:
         efid = 451;
@@ -43219,14 +43186,13 @@ label_1894_internal:
         tc = 0;
         label_2176();
         s = lang(u8"辻プリースト"s, u8"Wandering Priest"s);
-        file = u8"bg_re11"s;
         buff = lang(
             u8"突然、向かいからやって来た一人の神官が、すれ違いざまにあなたに魔法をかけた。「ノープロブレム」"s,
             u8"A priest comes up to you and casts a spell on you. \"No problem.\""s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"ありがとう"s, u8"Thanks."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re11");
         goto label_1895_internal;
     }
 label_1895_internal:
@@ -43237,7 +43203,7 @@ label_1895_internal:
 
 
 
-int label_1896()
+int label_1896(const std::string& file)
 {
     if (cfg_skiprandevents)
     {
@@ -43425,12 +43391,10 @@ int calcincome(int prm_1036)
 void label_1901()
 {
     invfile = 4;
-    file = u8"shoptmp.s2"s;
-    ctrl_file(4);
-    file = u8"shop"s + 4 + u8".s2"s;
-    if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
+    ctrl_file(4, u8"shoptmp.s2");
+    if (fs::exists(fs::u8path(u8"./tmp") / u8"shop4.s2"s))
     {
-        ctrl_file(3);
+        ctrl_file(3, u8"shop4.s2"s);
     }
     else
     {
@@ -43607,10 +43571,8 @@ void label_1901()
                 u8"You don't have to pay tax until you hit level 6."s));
         }
     }
-    file = u8"shop"s + invfile + u8".s2"s;
-    ctrl_file(4);
-    file = u8"shoptmp.s2"s;
-    ctrl_file(3);
+    ctrl_file(4, u8"shop"s + invfile + u8".s2");
+    ctrl_file(3, u8"shoptmp.s2");
     mode = 0;
     if (cfg_extrahelp)
     {
@@ -51187,8 +51149,7 @@ label_2020_internal:
             + lang(
                   u8"は、あなたの世界に召喚された！"s,
                   u8" has been summoned to your world!"s));
-        file = ""s + userfile;
-        label_2095();
+        label_2095(userfile);
         bcopy(
             fs::u8path(u8"./user/"s + listn(1, listmax)),
             fs::u8path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
@@ -56315,7 +56276,8 @@ void label_2089()
                          std::regex{u8R"(.*_)"s + std::to_string(p)
                                     + u8R"(_.*\..*)"}})
                 {
-                    file = entry.path().filename().generic_u8string();
+                    std::string file =
+                        entry.path().filename().generic_u8string();
                     p1 = instr(file, 0, u8"_"s);
                     p2 = instr(file, p1 + 1, u8"_"s);
                     if (p >= 150)
@@ -56384,8 +56346,7 @@ void label_2090()
 
 void label_2091()
 {
-    file = u8"shop"s + 3 + u8".s2"s;
-    ctrl_file(4);
+    ctrl_file(4, u8"shop3.s2");
     p = 0;
     i = 0;
     {
@@ -56538,7 +56499,7 @@ void zipadd(const std::string& prm_1062)
 
 
 
-void label_2095()
+void label_2095(const fs::path& file)
 {
     int zipsize = 0;
     p = 12;
@@ -56971,7 +56932,7 @@ void label_2105()
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
-        file = entry.path().filename().generic_u8string();
+        const auto file = entry.path().filename().generic_u8string();
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
         pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
         picload(folder + file, 1);
@@ -57302,8 +57263,7 @@ void label_2113()
         return;
     }
     ctrl_file(2);
-    file = u8"inv_"s + mid + u8".s2"s;
-    ctrl_file(4);
+    ctrl_file(4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
              fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
@@ -57314,7 +57274,7 @@ void label_2113()
             break;
         }
     }
-    file = fs::u8path(u8"./save") / playerid;
+    auto file = fs::u8path(u8"./save") / playerid;
     if (save_f == 0)
     {
         mkdir(file);
@@ -57337,12 +57297,11 @@ void label_2113()
             save_s = strmid(save_s, 1, std::size(save_s));
             if (save_p == 0)
             {
-                bcopy(save_s, file + fs::u8path(save_s).filename());
+                bcopy(save_s, file / fs::u8path(save_s).filename());
             }
             else
             {
-                const auto path =
-                    fs::u8path(file(0)) / fs::u8path(save_s).filename();
+                const auto path = file / fs::u8path(save_s).filename();
                 if (fs::exists(path) && !fs::is_directory(path))
                 {
                     elona_delete(path);
@@ -57417,7 +57376,7 @@ void label_2118()
              fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
     {
         s = entry.path().filename().generic_u8string();
-        file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
+        const auto file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
         if (!fs::exists(file))
         {
             continue;
@@ -57601,7 +57560,7 @@ void label_2121()
              fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
     {
         s = entry.path().filename().generic_u8string();
-        file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
+        const auto file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
         await();
         if (!fs::exists(file))
         {
@@ -60148,7 +60107,6 @@ void label_2151()
         if (tc != -1)
         {
             s = lang(u8"遺伝子"s, u8"Gene"s);
-            file = u8"bg_re14"s;
             buff = lang(""s + name(tc) +
                     u8"とあなたは熱い一夜を供にした。新たな遺伝子が生成された。"s,
                 u8"You spent a night with "s + name(tc) +
@@ -60158,7 +60116,7 @@ void label_2151()
             listn(0, listmax) = lang(u8"ふぅ"s, u8"Sweet."s);
             ++listmax;
             cbitmod(962, tc, 0);
-            label_1896();
+            label_1896(u8"bg_re14");
             label_2093();
         }
     }
@@ -64982,10 +64940,8 @@ void label_2212()
                 label_2743(false);
             }
         }
-        file = u8"shoptmp.s2"s;
-        ctrl_file(4);
-        file = u8"shop"s + invfile + u8".s2"s;
-        if (fs::exists(fs::u8path(u8"./tmp/"s + file)))
+        ctrl_file(4, u8"shoptmp.s2");
+        if (fs::exists(fs::u8path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(3);
         }
@@ -65035,10 +64991,8 @@ void label_2212()
         {
             refweight = inv_weight_(-1) + 2500;
         }
-        file = u8"shop"s + invfile + u8".s2"s;
-        ctrl_file(4);
-        file = u8"shoptmp.s2"s;
-        ctrl_file(3);
+        ctrl_file(4, u8"shop"s + invfile + u8".s2");
+        ctrl_file(3, u8"shoptmp.s2");
         if (refweight != 0)
         {
             inv_weight(invcontainer(1)) = refweight;
@@ -71253,8 +71207,7 @@ void label_2262()
         }
     }
     mode = 6;
-    file = u8"shoptmp.s2"s;
-    ctrl_file(4);
+    ctrl_file(4, u8"shoptmp.s2");
     if (cdata_shop_store_id(tc) == 0)
     {
         if (cdata_character_role(tc) == 1010
@@ -71278,8 +71231,7 @@ void label_2262()
     }
     else
     {
-        file = u8"shop"s + invfile + u8".s2"s;
-        ctrl_file(3);
+        ctrl_file(3, u8"shop"s + invfile + u8".s2");
     }
     invfile = cdata_shop_store_id(tc);
     label_2264();
@@ -71291,10 +71243,8 @@ void label_2262()
 void label_2263()
 {
     mode = 6;
-    file = u8"shoptmp.s2"s;
-    ctrl_file(4);
-    file = u8"shop"s + invfile + u8".s2"s;
-    ctrl_file(3);
+    ctrl_file(4, u8"shoptmp.s2");
+    ctrl_file(3, u8"shop"s + invfile + u8".s2");
     shoptrade = 0;
     if (tc > 0)
     {
@@ -71311,10 +71261,8 @@ void label_2263()
 
 void label_2264()
 {
-    file = u8"shop"s + invfile + u8".s2"s;
-    ctrl_file(4);
-    file = u8"shoptmp.s2"s;
-    ctrl_file(3);
+    ctrl_file(4, u8"shop"s + invfile + u8".s2");
+    ctrl_file(3, u8"shoptmp.s2");
     mode = 0;
     return;
 }
@@ -76155,7 +76103,7 @@ void label_2680()
     msgtempprev = msgtemp;
     scenemode = 1;
     SDIM4(actor, 20, 3, 10);
-    file = u8"void"s;
+    std::string file = u8"void"s;
     y1 = 60;
     y2 = windowh - 60;
     notesel(buff);
@@ -82603,10 +82551,10 @@ void label_2752()
     }
     buff = "";
     notesel(buff);
-    file = fs::u8path(u8"./save/bone.txt");
-    if (fs::exists(file))
+    const auto bone_filepath = fs::u8path(u8"./save/bone.txt");
+    if (fs::exists(bone_filepath))
     {
-        std::ifstream in{file};
+        std::ifstream in{bone_filepath};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -82690,7 +82638,7 @@ void label_2752()
         }
     }
     {
-        std::ofstream out{file};
+        std::ofstream out{bone_filepath};
         out << buff(0) << std::endl;
     }
     redraw(0);

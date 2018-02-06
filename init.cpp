@@ -200,7 +200,6 @@ void initialize_elona()
     DIM2(invctrl, 2);
     SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
-    SDIM2(file, 1000);
     SDIM2(folder, 1000);
     SDIM1(msgtempprev);
     DIM3(mef, 9, 200);

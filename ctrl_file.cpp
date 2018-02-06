@@ -14,7 +14,8 @@ namespace
 {
 
 
-void fmode_8_7(int fmode)
+
+void fmode_8_7(int fmode, const fs::path& file)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
@@ -46,11 +47,11 @@ void fmode_8_7(int fmode)
             {u8"krecipe.s1", 4800},
         };
 
-        file = folder + file_info[i].first;
+        const auto filepath = folder + file_info[i].first;
         fsize = file_info[i].second;
         if (read)
         {
-            if (!fs::exists(file))
+            if (!fs::exists(filepath))
             {
                 continue;
             }
@@ -60,13 +61,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(gdata, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(gdata, hgz, fsize);
                 zClose(hgz);
             }
@@ -75,13 +76,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(cdata, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(cdata, hgz, fsize);
                 zClose(hgz);
             }
@@ -90,13 +91,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(sdata, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(sdata, hgz, fsize);
                 zClose(hgz);
             }
@@ -105,13 +106,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(spell, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(spell, hgz, fsize);
                 zClose(hgz);
             }
@@ -120,13 +121,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(inv, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(inv, hgz, fsize);
                 zClose(hgz);
             }
@@ -135,13 +136,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(itemmemory, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(itemmemory, hgz, fsize);
                 zClose(hgz);
             }
@@ -150,13 +151,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(npcmemory, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(npcmemory, hgz, fsize);
                 zClose(hgz);
             }
@@ -165,13 +166,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(adata, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(adata, hgz, fsize);
                 zClose(hgz);
             }
@@ -180,13 +181,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(spact, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(spact, hgz, fsize);
                 zClose(hgz);
             }
@@ -195,13 +196,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(qdata, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(qdata, hgz, fsize);
                 zClose(hgz);
             }
@@ -210,13 +211,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(mat, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(mat, hgz, fsize);
                 zClose(hgz);
             }
@@ -225,13 +226,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(trait, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(trait, hgz, fsize);
                 zClose(hgz);
             }
@@ -240,13 +241,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(pcc, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(pcc, hgz, fsize);
                 zClose(hgz);
             }
@@ -255,13 +256,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(card, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 zRead(card, hgz, fsize);
                 zClose(hgz);
             }
@@ -270,13 +271,13 @@ void fmode_8_7(int fmode)
         {
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
                 zWrite(recipememory, hgz, fsize);
                 zClose(hgz);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
                 if (gdata_version >= 1200)
                 {
                     zRead(recipememory, hgz, fsize);
@@ -286,43 +287,45 @@ void fmode_8_7(int fmode)
         }
     }
 
-    file = folder + u8"art.log"s;
-    if (!read)
     {
-        std::ofstream out{file};
-        range::for_each(artifactlocation, [&](const auto& line) {
-            out << line << std::endl;
-        });
-    }
-    if (read)
-    {
-        artifactlocation.clear();
-        range::copy(
-            fileutil::read_by_line{file}, std::back_inserter(artifactlocation));
-    }
-    file = folder + u8"news.log"s;
-    notesel(newsbuff);
-    if (!read)
-    {
-        std::ofstream out{file};
-        out << newsbuff(0) << std::endl;
-    }
-    if (read)
-    {
-        newsbuff(0).clear();
-        std::ifstream in{file};
-        std::string tmp;
-        while (std::getline(in, tmp))
+        const auto filepath = folder + u8"art.log"s;
+        if (!read)
         {
-            newsbuff(0) += tmp + '\n';
+            std::ofstream out{filepath};
+            range::for_each(artifactlocation, [&](const auto& line) {
+                out << line << std::endl;
+            });
+        }
+        if (read)
+        {
+            artifactlocation.clear();
+            range::copy(
+                fileutil::read_by_line{filepath},
+                std::back_inserter(artifactlocation));
         }
     }
-    file = folder + u8"cdatan.s1"s;
-    arrayfile(read, u8"cdatan1");
-    file = folder + u8"qname.s1"s;
-    arrayfile(read, u8"qname");
-    file = folder + u8"gdatan.s1"s;
-    arrayfile(read, u8"gdatan");
+    {
+        const auto filepath = folder + u8"news.log"s;
+        notesel(newsbuff);
+        if (!read)
+        {
+            std::ofstream out{filepath};
+            out << newsbuff(0) << std::endl;
+        }
+        if (read)
+        {
+            newsbuff(0).clear();
+            std::ifstream in{filepath};
+            std::string tmp;
+            while (std::getline(in, tmp))
+            {
+                newsbuff(0) += tmp + '\n';
+            }
+        }
+    }
+    arrayfile(read, u8"cdatan1", folder + u8"cdatan.s1");
+    arrayfile(read, u8"qname", folder + u8"qname.s1");
+    arrayfile(read, u8"gdatan", folder + u8"gdatan.s1");
     if (!read)
     {
         bsave(folder + u8"evnum.s1"s, evnum);
@@ -352,8 +355,9 @@ void fmode_8_7(int fmode)
 }
 
 
-void fmode_14_15(int fmode)
+void fmode_14_15(int fmode, const fs::path& file)
 {
+    std::string filepath;
     int fsize = 0;
     bool read = fmode == 15;
     if (fmode == 14)
@@ -368,75 +372,75 @@ void fmode_14_15(int fmode)
     {
         playerheader =
             ""s + cdatan(0, 0) + u8"(Lv"s + cdata_level(0) + u8")の遺伝子"s;
-        file = folder + u8"gene_header.txt"s;
-        bsave(file, playerheader);
-        fileadd(file);
+        filepath = folder + u8"gene_header.txt"s;
+        bsave(filepath, playerheader);
+        fileadd(filepath);
     }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (9); cnt < cnt_end; ++cnt)
         {
-            file = folder;
+            filepath = folder;
             if (cnt == 0)
             {
-                file += u8"gene.s1"s;
+                filepath += u8"gene.s1"s;
                 fsize = 400;
             }
             if (cnt == 1)
             {
-                file += u8"g_cdata.s1"s;
+                filepath += u8"g_cdata.s1"s;
                 fsize = 114000;
             }
             if (cnt == 2)
             {
-                file += u8"g_sdata.s1"s;
+                filepath += u8"g_sdata.s1"s;
                 fsize = 273600;
             }
             if (cnt == 3)
             {
-                file += u8"g_spell.s1"s;
+                filepath += u8"g_spell.s1"s;
                 fsize = 800;
             }
             if (cnt == 4)
             {
-                file += u8"g_inv.s1"s;
+                filepath += u8"g_inv.s1"s;
                 fsize = 369600;
             }
             if (cnt == 5)
             {
-                file += u8"g_spact.s1"s;
+                filepath += u8"g_spact.s1"s;
                 fsize = 2000;
             }
             if (cnt == 6)
             {
-                file += u8"g_mat.s1"s;
+                filepath += u8"g_mat.s1"s;
                 fsize = 1600;
             }
             if (cnt == 7)
             {
-                file += u8"g_card.s1"s;
+                filepath += u8"g_card.s1"s;
                 fsize = 16000;
             }
             if (cnt == 8)
             {
-                file += u8"g_genetemp.s1"s;
+                filepath += u8"g_genetemp.s1"s;
                 fsize = 4000;
             }
             if (read)
             {
-                if (!fs::exists(file))
+                if (!fs::exists(filepath))
                 {
                     continue;
                 }
             }
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
-                fileadd(""s + file);
+                zOpen(hgz, filepath, 1, 3);
+                fileadd(""s + filepath);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
             }
             if (cnt == 1)
             {
@@ -532,8 +536,9 @@ void fmode_14_15(int fmode)
 }
 
 
-void fmode_2_1(int fmode)
+void fmode_2_1(int fmode, const fs::path& file)
 {
+    std::string filepath;
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
     bool read = fmode == 1;
@@ -541,10 +546,10 @@ void fmode_2_1(int fmode)
         int cnt = 0;
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
         {
-            file = folder;
+            filepath = folder;
             if (cnt == 0)
             {
-                file += u8"mdata_"s + mid + u8".s2"s;
+                filepath += u8"mdata_"s + mid + u8".s2"s;
                 fsize = 400;
             }
             if (cnt == 1)
@@ -555,17 +560,17 @@ void fmode_2_1(int fmode)
                     DIM3(mapsync, mdata(0), mdata(1));
                     DIM3(mef, 9, 200);
                 }
-                file += u8"map_"s + mid + u8".s2"s;
+                filepath += u8"map_"s + mid + u8".s2"s;
                 fsize = mdata(0) * mdata(1) * 10 * 4;
             }
             if (cnt == 2)
             {
-                file += u8"cdata_"s + mid + u8".s2"s;
+                filepath += u8"cdata_"s + mid + u8".s2"s;
                 fsize = 376000;
             }
             if (cnt == 3)
             {
-                file += u8"sdata_"s + mid + u8".s2"s;
+                filepath += u8"sdata_"s + mid + u8".s2"s;
                 fsize = 902400;
             }
             if (cnt == 4)
@@ -585,17 +590,17 @@ void fmode_2_1(int fmode)
                         continue;
                     }
                 }
-                file += u8"mef_"s + mid + u8".s2"s;
+                filepath += u8"mef_"s + mid + u8".s2"s;
                 fsize = 7200;
             }
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
-                fileadd(""s + file);
+                zOpen(hgz, filepath, 1, 3);
+                fileadd(""s + filepath);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
             }
             if (cnt == 0)
             {
@@ -655,15 +660,14 @@ void fmode_2_1(int fmode)
             zClose(hgz);
         }
     }
-    file = folder + u8"cdatan_"s + mid + u8".s2"s;
-    arrayfile(read, u8"cdatan2");
-    file = folder + u8"mdatan_"s + mid + u8".s2"s;
-    arrayfile(read, u8"mdatan");
+    arrayfile(read, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
+    arrayfile(read, u8"mdatan", folder + u8"mdatan_"s + mid + u8".s2");
 }
 
 
-void fmode_20_19(int fmode)
+void fmode_20_19(int fmode, const fs::path& file)
 {
+    std::string filepath;
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
     bool read = fmode == 19;
@@ -671,10 +675,10 @@ void fmode_20_19(int fmode)
         int cnt = 0;
         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
-            file = folder;
+            filepath = folder;
             if (cnt == 0)
             {
-                file += u8"m1_"s + id + u8".t"s;
+                filepath += u8"m1_"s + id + u8".t"s;
                 fsize = 400;
             }
             if (cnt == 1)
@@ -685,21 +689,21 @@ void fmode_20_19(int fmode)
                     DIM3(mapsync, mdata(0), mdata(1));
                     DIM3(mef, 9, 200);
                 }
-                file += u8"m2_"s + id + u8".t"s;
+                filepath += u8"m2_"s + id + u8".t"s;
                 fsize = mdata(0) * mdata(1) * 10 * 4;
             }
             if (cnt == 2)
             {
-                file += u8"m3_"s + id + u8".t"s;
+                filepath += u8"m3_"s + id + u8".t"s;
                 fsize = 1164800;
             }
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
+                zOpen(hgz, filepath, 1, 3);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
             }
             if (cnt == 0)
             {
@@ -737,9 +741,8 @@ void fmode_20_19(int fmode)
             zClose(hgz);
         }
     }
-    file = folder + u8"m4_"s + id + u8".t"s;
     elona_export = 1;
-    arrayfile(read, u8"mdatan");
+    arrayfile(read, u8"mdatan", folder + u8"m4_"s + id + u8".t");
     if (!read)
     {
         zipadd(u8"m1_"s + id + u8".t"s);
@@ -750,7 +753,7 @@ void fmode_20_19(int fmode)
 }
 
 
-void fmode_22_21(int fmode)
+void fmode_22_21(int fmode, const fs::path& file)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
@@ -802,33 +805,34 @@ void fmode_22_21(int fmode)
                 }
             }
             {
+                std::string filepath;
                 int cnt = 0;
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
-                    file = folder;
+                    filepath = folder;
                     if (cnt == 0)
                     {
-                        file += u8"c1_"s + id + u8".t"s;
+                        filepath += u8"c1_"s + id + u8".t"s;
                         fsize = 2000;
                     }
                     if (cnt == 1)
                     {
-                        file += u8"c2_"s + id + u8".t"s;
+                        filepath += u8"c2_"s + id + u8".t"s;
                         fsize = 4800;
                     }
                     if (cnt == 2)
                     {
-                        file += u8"c3_"s + id + u8".t"s;
+                        filepath += u8"c3_"s + id + u8".t"s;
                         inv_getheader(tg);
                         fsize = 280 * invrange;
                     }
                     if (!read)
                     {
-                        zOpen(hgz, file, 1, 3);
+                        zOpen(hgz, filepath, 1, 3);
                     }
                     if (read)
                     {
-                        zOpen(hgz, file, 0);
+                        zOpen(hgz, filepath, 0);
                     }
                     if (cnt == 0)
                     {
@@ -866,9 +870,8 @@ void fmode_22_21(int fmode)
                     zClose(hgz);
                 }
             }
-            file = folder + u8"c4_"s + id + u8".t"s;
             elona_export = 1;
-            arrayfile(read, u8"cdatan3");
+            arrayfile(read, u8"cdatan3", folder + u8"c4_"s + id + u8".t");
             if (!read)
             {
                 zipadd(u8"c1_"s + id + u8".t"s);
@@ -972,7 +975,7 @@ void fmode_22_21(int fmode)
 }
 
 
-void fmode_16()
+void fmode_16(const fs::path& file)
 {
     DIM3(cmapdata, 5, 400);
 
@@ -980,18 +983,18 @@ void fmode_16()
     zRead(map, hgz, mdata(0) * mdata(1) * 3 * 4);
     zClose(hgz);
 
-    file = fmapfile + u8".obj"s;
-    if (!fs::exists(file))
+    const auto filepath = fmapfile + u8".obj"s;
+    if (!fs::exists(filepath))
     {
         return;
     }
-    zOpen(hgz, file, 0);
+    zOpen(hgz, filepath, 0);
     zRead(cmapdata, hgz, 8000);
     zClose(hgz);
 }
 
 
-void fmode_6_5(int fmode)
+void fmode_6_5(int fmode, const fs::path& file)
 {
     bool read = fmode == 5;
     if (read)
@@ -1001,10 +1004,11 @@ void fmode_6_5(int fmode)
     }
     for (int i = 0; i < 3; ++i)
     {
+        std::string filepath;
         int fsize = 0;
         if (i == 0)
         {
-            file = fmapfile + u8".idx"s;
+            filepath = fmapfile + u8".idx"s;
             fsize = 400;
         }
         if (i == 1)
@@ -1014,28 +1018,28 @@ void fmode_6_5(int fmode)
                 DIM4(map, mdata(0), mdata(1), 10);
                 DIM3(mapsync, mdata(0), mdata(1));
             }
-            file = fmapfile + u8".map"s;
+            filepath = fmapfile + u8".map"s;
             fsize = mdata(0) * mdata(1) * 10 * 4;
         }
         if (i == 2)
         {
-            file = fmapfile + u8".obj"s;
+            filepath = fmapfile + u8".obj"s;
             fsize = 8000;
         }
         if (i == 2 && read)
         {
-            if (!fs::exists(file))
+            if (!fs::exists(filepath))
             {
                 continue;
             }
         }
         if (!read)
         {
-            zOpen(hgz, file, 1, 3);
+            zOpen(hgz, filepath, 1, 3);
         }
         if (read)
         {
-            zOpen(hgz, file, 0);
+            zOpen(hgz, filepath, 0);
         }
         if (i == 0)
         {
@@ -1079,7 +1083,7 @@ void fmode_6_5(int fmode)
 }
 
 
-void fmode_4_3(int fmode)
+void fmode_4_3(int fmode, const fs::path& file)
 {
     const auto path = fs::u8path(u8"./tmp") / file;
     if (fmode == 4)
@@ -1099,7 +1103,7 @@ void fmode_4_3(int fmode)
 
 
 
-void fmode_23_24(int fmode)
+void fmode_23_24(int fmode, const fs::path& file)
 {
     if (fmode == 23)
     {
@@ -1117,12 +1121,12 @@ void fmode_23_24(int fmode)
 }
 
 
-void fmode_18_17(int fmode)
+void fmode_18_17(int fmode, const fs::path& file)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
     bool read = fmode == 17;
-    if (!fs::exists(file + u8"cdata_"s + mid + u8".s2"s))
+    if (!fs::exists(std::string(file) + u8"cdata_"s + mid + u8".s2"s))
     {
         return;
     }
@@ -1130,25 +1134,26 @@ void fmode_18_17(int fmode)
         int cnt = 0;
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
         {
-            file = folder;
+            std::string filepath;
+            filepath = folder;
             if (cnt == 0)
             {
-                file += u8"cdata_"s + mid + u8".s2"s;
+                filepath += u8"cdata_"s + mid + u8".s2"s;
                 fsize = 376000;
             }
             if (cnt == 1)
             {
-                file += u8"sdata_"s + mid + u8".s2"s;
+                filepath += u8"sdata_"s + mid + u8".s2"s;
                 fsize = 902400;
             }
             if (!read)
             {
-                zOpen(hgz, file, 1, 3);
-                fileadd(""s + file);
+                zOpen(hgz, filepath, 1, 3);
+                fileadd(""s + filepath);
             }
             if (read)
             {
-                zOpen(hgz, file, 0);
+                zOpen(hgz, filepath, 0);
             }
             if (cnt == 0)
             {
@@ -1175,12 +1180,11 @@ void fmode_18_17(int fmode)
             zClose(hgz);
         }
     }
-    file = folder + u8"cdatan_"s + mid + u8".s2"s;
-    arrayfile(read, u8"cdatan2");
+    arrayfile(read, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
 }
 
 
-void fmode_10()
+void fmode_10(const fs::path& file)
 {
     for (const auto& entry : filesystem::dir_entries(
              fs::u8path(u8"./tmp"),
@@ -1192,14 +1196,15 @@ void fmode_10()
 }
 
 
-void fmode_9()
+void fmode_9(const fs::path& file)
 {
     elona_delete(fs::u8path(u8"./save/"s + playerid));
 }
 
 
-void fmode_11_12(int fmode)
+void fmode_11_12(int fmode, const fs::path& file)
 {
+    std::string filepath;
     if (fmode == 12)
     {
         if (!fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
@@ -1207,41 +1212,41 @@ void fmode_11_12(int fmode)
             return;
         }
     }
-    file = fs::u8path(u8"./tmp/map_"s + mid + u8".s2");
-    if (!fs::exists(file))
+    filepath = fs::u8path(u8"./tmp/map_"s + mid + u8".s2");
+    if (!fs::exists(filepath))
     {
         return;
     }
-    elona_delete(file);
-    fileadd(file, 1);
+    elona_delete(filepath);
+    fileadd(filepath, 1);
     if (fmode == 11)
     {
-        file = fs::u8path(u8"./tmp/cdata_"s + mid + u8".s2");
-        elona_delete(file);
-        fileadd(file, 1);
-        file = fs::u8path(u8"./tmp/sdata_"s + mid + u8".s2");
-        elona_delete(file);
-        fileadd(file, 1);
-        file = fs::u8path(u8"./tmp/cdatan_"s + mid + u8".s2");
-        elona_delete(file);
-        fileadd(file, 1);
-        file = fs::u8path(u8"./tmp/inv_"s + mid + u8".s2");
-        elona_delete(file);
-        fileadd(file, 1);
+        filepath = fs::u8path(u8"./tmp/cdata_"s + mid + u8".s2");
+        elona_delete(filepath);
+        fileadd(filepath, 1);
+        filepath = fs::u8path(u8"./tmp/sdata_"s + mid + u8".s2");
+        elona_delete(filepath);
+        fileadd(filepath, 1);
+        filepath = fs::u8path(u8"./tmp/cdatan_"s + mid + u8".s2");
+        elona_delete(filepath);
+        fileadd(filepath, 1);
+        filepath = fs::u8path(u8"./tmp/inv_"s + mid + u8".s2");
+        elona_delete(filepath);
+        fileadd(filepath, 1);
     }
-    file = fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2");
-    elona_delete(file);
-    fileadd(file, 1);
-    file = fs::u8path(u8"./tmp/mdatan_"s + mid + u8".s2");
-    elona_delete(file);
-    fileadd(file, 1);
-    file = fs::u8path(u8"./tmp/mef_"s + mid + u8".s2");
-    elona_delete(file);
-    fileadd(file, 1);
+    filepath = fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2");
+    elona_delete(filepath);
+    fileadd(filepath, 1);
+    filepath = fs::u8path(u8"./tmp/mdatan_"s + mid + u8".s2");
+    elona_delete(filepath);
+    fileadd(filepath, 1);
+    filepath = fs::u8path(u8"./tmp/mef_"s + mid + u8".s2");
+    elona_delete(filepath);
+    fileadd(filepath, 1);
 }
 
 
-void fmode_13()
+void fmode_13(const fs::path& file)
 {
     for (int i = 0; i < 40; ++i)
     {
@@ -1266,7 +1271,7 @@ namespace elona
 {
 
 
-void ctrl_file(int mode)
+void ctrl_file(int mode, const fs::path& filepath)
 {
     notesel(filemod);
     gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
@@ -1275,29 +1280,29 @@ void ctrl_file(int mode)
     switch (mode)
     {
     case 8:
-    case 7: fmode_8_7(mode); break;
+    case 7: fmode_8_7(mode, filepath); break;
     case 14:
-    case 15: fmode_14_15(mode); break;
+    case 15: fmode_14_15(mode, filepath); break;
     case 2:
-    case 1: fmode_2_1(mode); break;
+    case 1: fmode_2_1(mode, filepath); break;
     case 20:
-    case 19: fmode_20_19(mode); break;
+    case 19: fmode_20_19(mode, filepath); break;
     case 22:
-    case 21: fmode_22_21(mode); break;
-    case 16: fmode_16(); break;
+    case 21: fmode_22_21(mode, filepath); break;
+    case 16: fmode_16(filepath); break;
     case 6:
-    case 5: fmode_6_5(mode); break;
+    case 5: fmode_6_5(mode, filepath); break;
     case 4:
-    case 3: fmode_4_3(mode); break;
+    case 3: fmode_4_3(mode, filepath); break;
     case 23:
-    case 24: fmode_23_24(mode); break;
+    case 24: fmode_23_24(mode, filepath); break;
     case 18:
-    case 17: fmode_18_17(mode); break;
-    case 10: fmode_10(); break;
-    case 9: fmode_9(); break;
+    case 17: fmode_18_17(mode, filepath); break;
+    case 10: fmode_10(filepath); break;
+    case 9: fmode_9(filepath); break;
     case 11:
-    case 12: fmode_11_12(mode); break;
-    case 13: fmode_13(); break;
+    case 12: fmode_11_12(mode, filepath); break;
+    case 13: fmode_13(filepath); break;
     default: assert(0);
     }
 }
