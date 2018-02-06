@@ -137,7 +137,6 @@ void label_2754()
     case 12:
         label_1419();
         s = lang(u8"ペットとの再会"s, u8"Reunion with your pet"s);
-        file = u8"bg_re13"s;
         buff = lang(
             u8"あなたは懐かしい鳴き声に気付いて、ふと歩みを止めた。なんと、船が難破した時に居なくなったあなたのペットが、嬉しそうに走ってくる！あなたのペットは…"s,
             u8"As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is..."s);
@@ -154,7 +153,7 @@ void label_2754()
         list(0, listmax) = 4;
         listn(0, listmax) = lang(u8"少女だ！"s, u8"a little girl!"s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re13");
         p = 3;
         if (rtval == 1)
         {
@@ -182,7 +181,6 @@ void label_2754()
         music = 80;
         label_0068();
         s = lang(u8"結婚"s, u8"Marriage"s);
-        file = u8"bg_re14"s;
         buff = lang(u8"長い交際の末、遂にあなたと"s + name(marry) +
                 u8"は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。"s,
             u8"At last, you and "s + name(marry) +
@@ -192,7 +190,7 @@ void label_2754()
         listn(0, listmax) = lang(
             u8"生涯をあなたに捧げる"s, u8"Without you, life has no meaning."s);
         ++listmax;
-        label_1896();
+        label_1896(u8"bg_re14");
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)

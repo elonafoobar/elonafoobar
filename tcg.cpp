@@ -1906,8 +1906,7 @@ label_1812_internal:
     {
         DIM2(deck, 1000);
         curdeck = rtval;
-        file = fs::u8path(u8"./tmp/deck_"s) + curdeck + u8".s2"s;
-        if (fs::exists(file))
+        if (fs::exists(fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2")))
         {
             promptl(0, promptmax) = lang(u8"デッキの構築"s, u8"Edit Deck"s);
             promptl(1, promptmax) = u8"null"s;
@@ -2897,8 +2896,7 @@ label_1830_internal:
             label_2131();
             if (rtval == 0)
             {
-                file = fs::u8path(u8"./tmp/deck_"s) + curdeck + u8".s2"s;
-                ctrl_file(23);
+                ctrl_file(23, fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2"));
             }
             else
             {
