@@ -2,14 +2,18 @@
 
 #include <memory>
 #include <string>
+#include <string_view>
+#include "../filesystem.hpp"
 #include "detail/sdl.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-struct Font
+
+
+struct font_t
 {
-    enum class Style
+    enum class style_t
     {
         regular = TTF_STYLE_NORMAL,
         bold = TTF_STYLE_BOLD,
@@ -19,8 +23,7 @@ struct Font
     };
 
 
-
-    const std::string& filepath() const noexcept
+    const fs::path& filepath() const noexcept
     {
         return _filepath;
     }
@@ -32,7 +35,7 @@ struct Font
     }
 
 
-    Style style() const noexcept
+    style_t style() const noexcept
     {
         return _style;
     }
@@ -44,22 +47,25 @@ struct Font
     }
 
 
-    Font(const std::string& filepath, int size, Style style = Style::regular);
-    Font(const Font&) = default;
-    Font(Font&&) = default;
-    Font& operator=(const Font&) = default;
-    Font& operator=(Font&&) = default;
+    font_t(
+        const fs::path& filepath,
+        int size,
+        style_t style = style_t::regular);
+    font_t(const font_t&) = default;
+    font_t(font_t&&) = default;
+    font_t& operator=(const font_t&) = default;
+    font_t& operator=(font_t&&) = default;
 
 
-    virtual ~Font() = default;
+    virtual ~font_t() = default;
 
 
 private:
-    std::string _filepath;
+    fs::path _filepath;
     int _size;
-    Style _style;
+    style_t _style;
     std::shared_ptr<::TTF_Font> _ptr;
 };
 
 
-} // namespace snail
+} // namespace elona::snail

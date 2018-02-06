@@ -1,24 +1,26 @@
 #include "renderer.hpp"
 #include <sstream>
 
-using namespace snail;
+
+namespace elona::snail
+{
 
 
-void Renderer::set_blend_mode(BlendMode blend_mode)
+void renderer::set_blend_mode(blend_mode_t blend_mode)
 {
     _blend_mode = blend_mode;
 
     switch (_blend_mode)
     {
-    case BlendMode::none:
+    case blend_mode_t::none:
         detail::enforce_sdl(
             ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_NONE));
         break;
-    case BlendMode::blend:
+    case blend_mode_t::blend:
         detail::enforce_sdl(
             ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_BLEND));
         break;
-    case BlendMode::add:
+    case blend_mode_t::add:
         detail::enforce_sdl(
             ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_ADD));
         break;
@@ -26,15 +28,15 @@ void Renderer::set_blend_mode(BlendMode blend_mode)
 }
 
 
-void Renderer::set_draw_color(const Color& color)
+void renderer::set_draw_color(const color& color)
 {
     detail::enforce_sdl(
         ::SDL_SetRenderDrawColor(ptr(), color.r, color.g, color.b, color.a));
 }
 
 
-Renderer::Renderer(Window& target_window, int flag)
-    : _font("font/APJapanesefontT.ttf", 16) // TODO
+renderer::renderer(window& target_window, int flag)
+    : _font(u8"font/APJapanesefontT.ttf", 16) // TODO
     , _ptr(
           detail::enforce_sdl(::SDL_CreateRenderer(
               target_window.ptr(),
@@ -50,36 +52,39 @@ Renderer::Renderer(Window& target_window, int flag)
 
 
 
-void Renderer::clear()
+void renderer::clear()
 {
     detail::enforce_sdl(::SDL_RenderClear(ptr()));
 }
 
 
-void Renderer::present()
+void renderer::present()
 {
     ::SDL_RenderPresent(ptr());
 }
 
 
-void Renderer::render_point(int x, int y)
+void renderer::render_point(int x, int y)
 {
     detail::enforce_sdl(::SDL_RenderDrawPoint(ptr(), x, y));
 }
 
 
-void Renderer::fill_rect(int x, int y, int width, int height)
+void renderer::fill_rect(int x, int y, int width, int height)
 {
     ::SDL_Rect rect{x, y, width, height};
     detail::enforce_sdl(::SDL_RenderFillRect(ptr(), &rect));
 }
 
 
-Renderer::Rect
-Renderer::render_text(const std::string& text, int x, int y, const Color& color)
+rect renderer::render_text(
+    const std::string& text,
+    int x,
+    int y,
+    const color& color)
 {
     if (text.empty())
-        return Rect{x, y, 0, 0};
+        return rect{x, y, 0, 0};
 
     // auto surface = detail::enforce_ttf(
     //     ::TTF_RenderUTF8_Blended(_font.ptr(), text.c_str(),
@@ -96,33 +101,33 @@ Renderer::render_text(const std::string& text, int x, int y, const Color& color)
 
     switch (_text_alignment)
     {
-    case TextAlignment::left: x_ = x; break;
-    case TextAlignment::center: x_ = x - width / 2; break;
-    case TextAlignment::right: x_ = x - width; break;
+    case text_alignment_t::left: x_ = x; break;
+    case text_alignment_t::center: x_ = x - width / 2; break;
+    case text_alignment_t::right: x_ = x - width; break;
     }
     switch (_text_baseline)
     {
-    case TextBaseline::top: y_ = y; break;
-    case TextBaseline::middle: y_ = y - height / 2; break;
-    case TextBaseline::bottom: y_ = y - height; break;
+    case text_baseline_t::top: y_ = y; break;
+    case text_baseline_t::middle: y_ = y - height / 2; break;
+    case text_baseline_t::bottom: y_ = y - height; break;
     }
-    ::SDL_Rect dst = {x_, y_, width, height};
+    ::SDL_Rect dst{x_, y_, width, height};
     detail::enforce_sdl(::SDL_RenderCopy(ptr(), texture, nullptr, &dst));
 
     ::SDL_FreeSurface(surface);
     ::SDL_DestroyTexture(texture);
 
-    return Rect{x_, y_, width, height};
+    return rect{x_, y_, width, height};
 }
 
 
 
-Renderer::Rect Renderer::render_text_with_shadow(
+rect renderer::render_text_with_shadow(
     const std::string& text,
     int x,
     int y,
-    const Color& text_color,
-    const Color& shadow_color)
+    const color& text_color,
+    const color& shadow_color)
 {
     // Render shadow.
     for (int dy : {-1, 0, 1})
@@ -140,21 +145,21 @@ Renderer::Rect Renderer::render_text_with_shadow(
 }
 
 
-Renderer::Rect Renderer::render_multiline_text(
+rect renderer::render_multiline_text(
     const std::string& text,
     int x,
     int y,
-    const Color& color)
+    const color& text_color)
 {
     const auto line_skip = ::TTF_FontLineSkip(_font.ptr());
 
-    Rect ret = {x, y, 0, 0};
+    rect ret = {x, y, 0, 0};
     auto i = 0;
     std::istringstream stream{text};
     std::string line;
     while (std::getline(stream, line))
     {
-        const auto r = render_text(line, x, y + line_skip * i, color);
+        const auto r = render_text(line, x, y + line_skip * i, text_color);
         ret.x = std::max(ret.x, r.x);
         ret.width = std::max(ret.width, r.width);
         ret.height += r.height;
@@ -165,7 +170,7 @@ Renderer::Rect Renderer::render_multiline_text(
 }
 
 
-Renderer::Size Renderer::calculate_text_size(const std::string& text)
+size renderer::calculate_text_size(const std::string& text)
 {
     int width;
     int height;
@@ -175,14 +180,14 @@ Renderer::Size Renderer::calculate_text_size(const std::string& text)
 }
 
 
-void Renderer::render_line(int start_x, int start_y, int end_x, int end_y)
+void renderer::render_line(int start_x, int start_y, int end_x, int end_y)
 {
     detail::enforce_sdl(
         ::SDL_RenderDrawLine(ptr(), start_x, start_y, end_x, end_y));
 }
 
 
-void Renderer::render_image(Image& image, int dst_x, int dst_y)
+void renderer::render_image(image_base& image, int dst_x, int dst_y)
 {
     render_image(
         image,
@@ -197,8 +202,8 @@ void Renderer::render_image(Image& image, int dst_x, int dst_y)
 }
 
 
-void Renderer::render_image(
-    Image& image,
+void renderer::render_image(
+    image_base& image,
     int dst_x,
     int dst_y,
     int dst_width,
@@ -217,8 +222,8 @@ void Renderer::render_image(
 }
 
 
-void Renderer::render_image(
-    Image& image,
+void renderer::render_image(
+    image_base& image,
     int src_x,
     int src_y,
     int src_width,
@@ -239,8 +244,8 @@ void Renderer::render_image(
 }
 
 
-void Renderer::render_image(
-    Image& image,
+void renderer::render_image(
+    image_base& image,
     int src_x,
     int src_y,
     int src_width,
@@ -264,7 +269,7 @@ void Renderer::render_image(
 }
 
 
-void Renderer::render_image(::SDL_Texture* image, int dst_x, int dst_y)
+void renderer::render_image(::SDL_Texture* image, int dst_x, int dst_y)
 {
     int img_width;
     int img_height;
@@ -283,7 +288,7 @@ void Renderer::render_image(::SDL_Texture* image, int dst_x, int dst_y)
 }
 
 
-void Renderer::render_image(
+void renderer::render_image(
     ::SDL_Texture* image,
     int dst_x,
     int dst_y,
@@ -307,7 +312,7 @@ void Renderer::render_image(
 }
 
 
-void Renderer::render_image(
+void renderer::render_image(
     ::SDL_Texture* image,
     int src_x,
     int src_y,
@@ -329,7 +334,7 @@ void Renderer::render_image(
 }
 
 
-void Renderer::render_image(
+void renderer::render_image(
     ::SDL_Texture* image,
     int src_x,
     int src_y,
@@ -342,20 +347,24 @@ void Renderer::render_image(
 {
     switch (_blend_mode)
     {
-    case BlendMode::none:
+    case blend_mode_t::none:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_NONE));
         break;
-    case BlendMode::blend:
+    case blend_mode_t::blend:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_BLEND));
         break;
-    case BlendMode::add:
+    case blend_mode_t::add:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_ADD));
         break;
     }
+
     ::SDL_Rect src{src_x, src_y, src_width, src_height};
     ::SDL_Rect dst{dst_x, dst_y, dst_width, dst_height};
     detail::enforce_sdl(::SDL_RenderCopy(ptr(), image, &src, &dst));
 }
+
+
+} // namespace elona::snail

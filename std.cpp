@@ -7,14 +7,11 @@
 #include <sstream>
 
 
-#include "sdl/application.hpp"
-#include "sdl/input.hpp"
+#include "snail/application.hpp"
+#include "snail/input.hpp"
 
 #include "elona.hpp"
 #include "variables.hpp"
-
-
-using namespace snail;
 
 
 namespace
@@ -22,82 +19,82 @@ namespace
 
 
 
-Key hspkey2snailkey(int hsp_key)
+snail::key hspkey2snailkey(int hsp_key)
 {
     switch (hsp_key)
     {
-    case 8: return Key::backspace;
-    case 12: return Key::none; // Maybe one of the keypad keys.
-    case 13: return Key::enter;
-    case 16: return Key::shift;
-    case 17: return Key::ctrl;
-    case 18: return Key::alt;
-    case 27: return Key::escape;
-    case 32: return Key::space;
-    case 33: return Key::pageup;
-    case 34: return Key::pagedown;
-    case 35: return Key::end;
-    case 36: return Key::home;
-    case 38: return Key::up;
-    case 40: return Key::down;
-    case 45: return Key::none; // Maybe one of the keypad keys.
-    case 48: return Key::key_0;
-    case 49: return Key::key_1;
-    case 50: return Key::key_2;
-    case 51: return Key::key_3;
-    case 52: return Key::key_4;
-    case 53: return Key::key_5;
-    case 54: return Key::key_6;
-    case 55: return Key::key_7;
-    case 56: return Key::key_8;
-    case 57: return Key::key_9;
-    case 65: return Key::key_a;
-    case 66: return Key::key_b;
-    case 67: return Key::key_c;
-    case 68: return Key::key_d;
-    case 69: return Key::key_e;
-    case 70: return Key::key_f;
-    case 71: return Key::key_g;
-    case 72: return Key::key_h;
-    case 73: return Key::key_i;
-    case 74: return Key::key_j;
-    case 75: return Key::key_k;
-    case 76: return Key::key_l;
-    case 77: return Key::key_m;
-    case 78: return Key::key_n;
-    case 79: return Key::key_o;
-    case 80: return Key::key_p;
-    case 81: return Key::key_q;
-    case 82: return Key::key_r;
-    case 83: return Key::key_s;
-    case 84: return Key::key_t;
-    case 85: return Key::key_u;
-    case 86: return Key::key_v;
-    case 87: return Key::key_w;
-    case 88: return Key::key_x;
-    case 89: return Key::key_y;
-    case 90: return Key::key_z;
-    case 96: return Key::keypad_0;
-    case 97: return Key::keypad_1;
-    case 98: return Key::keypad_2;
-    case 99: return Key::keypad_3;
-    case 100: return Key::keypad_4;
-    case 101: return Key::keypad_5;
-    case 102: return Key::keypad_6;
-    case 103: return Key::keypad_7;
-    case 104: return Key::keypad_8;
-    case 105: return Key::keypad_9;
-    case 112: return Key::f1;
-    case 113: return Key::f2;
-    case 114: return Key::f3;
-    case 115: return Key::f4;
-    case 116: return Key::f5;
-    case 117: return Key::f6;
-    case 118: return Key::f7;
-    case 119: return Key::f8;
-    case 120: return Key::f9;
-    case 122: return Key::f11;
-    case 123: return Key::f12;
+    case 8: return snail::key::backspace;
+    case 12: return snail::key::none; // Maybe one of the keypad keys.
+    case 13: return snail::key::enter;
+    case 16: return snail::key::shift;
+    case 17: return snail::key::ctrl;
+    case 18: return snail::key::alt;
+    case 27: return snail::key::escape;
+    case 32: return snail::key::space;
+    case 33: return snail::key::pageup;
+    case 34: return snail::key::pagedown;
+    case 35: return snail::key::end;
+    case 36: return snail::key::home;
+    case 38: return snail::key::up;
+    case 40: return snail::key::down;
+    case 45: return snail::key::none; // Maybe one of the keypad keys.
+    case 48: return snail::key::key_0;
+    case 49: return snail::key::key_1;
+    case 50: return snail::key::key_2;
+    case 51: return snail::key::key_3;
+    case 52: return snail::key::key_4;
+    case 53: return snail::key::key_5;
+    case 54: return snail::key::key_6;
+    case 55: return snail::key::key_7;
+    case 56: return snail::key::key_8;
+    case 57: return snail::key::key_9;
+    case 65: return snail::key::key_a;
+    case 66: return snail::key::key_b;
+    case 67: return snail::key::key_c;
+    case 68: return snail::key::key_d;
+    case 69: return snail::key::key_e;
+    case 70: return snail::key::key_f;
+    case 71: return snail::key::key_g;
+    case 72: return snail::key::key_h;
+    case 73: return snail::key::key_i;
+    case 74: return snail::key::key_j;
+    case 75: return snail::key::key_k;
+    case 76: return snail::key::key_l;
+    case 77: return snail::key::key_m;
+    case 78: return snail::key::key_n;
+    case 79: return snail::key::key_o;
+    case 80: return snail::key::key_p;
+    case 81: return snail::key::key_q;
+    case 82: return snail::key::key_r;
+    case 83: return snail::key::key_s;
+    case 84: return snail::key::key_t;
+    case 85: return snail::key::key_u;
+    case 86: return snail::key::key_v;
+    case 87: return snail::key::key_w;
+    case 88: return snail::key::key_x;
+    case 89: return snail::key::key_y;
+    case 90: return snail::key::key_z;
+    case 96: return snail::key::keypad_0;
+    case 97: return snail::key::keypad_1;
+    case 98: return snail::key::keypad_2;
+    case 99: return snail::key::keypad_3;
+    case 100: return snail::key::keypad_4;
+    case 101: return snail::key::keypad_5;
+    case 102: return snail::key::keypad_6;
+    case 103: return snail::key::keypad_7;
+    case 104: return snail::key::keypad_8;
+    case 105: return snail::key::keypad_9;
+    case 112: return snail::key::f1;
+    case 113: return snail::key::f2;
+    case 114: return snail::key::f3;
+    case 115: return snail::key::f4;
+    case 116: return snail::key::f5;
+    case 117: return snail::key::f6;
+    case 118: return snail::key::f7;
+    case 119: return snail::key::f8;
+    case 120: return snail::key::f9;
+    case 122: return snail::key::f11;
+    case 123: return snail::key::f12;
     default: assert(0);
     }
 }
@@ -138,7 +135,7 @@ struct TexBuffer
     ::SDL_Texture* texture = nullptr;
     int tex_width = 32;
     int tex_height = 32;
-    Color color{0, 0, 0, 255};
+    snail::color color{0, 0, 0, 255};
     int x = 0;
     int y = 0;
     int width = 32;
@@ -164,20 +161,20 @@ void set_blend_mode()
     {
     case 0:
     case 1:
-        Application::instance().renderer().set_blend_mode(BlendMode::none);
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
         break;
     case 2:
     case 3:
-        Application::instance().renderer().set_blend_mode(BlendMode::blend);
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::blend);
         break;
     case 4:
-        Application::instance().renderer().set_blend_mode(BlendMode::blend);
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::blend);
         break;
     case 5:
-        Application::instance().renderer().set_blend_mode(BlendMode::add);
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::add);
         break;
     case 6:
-        Application::instance().renderer().set_blend_mode(BlendMode::blend);
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::blend);
         break;
     default: break;
     }
@@ -203,11 +200,11 @@ struct MessageBox
 
     void update()
     {
-        auto c = to_char(Keyboard::instance().get_pressed_key());
+        auto c = snail::to_char(snail::input::instance().get_pressed_key());
         if (c)
         {
             // TODO capslock
-            if (Keyboard::instance().is_pressed_exactly(Key::shift))
+            if (snail::input::instance().is_pressed_exactly(snail::key::shift))
             {
                 c = std::toupper(c);
             }
@@ -272,7 +269,7 @@ uint32_t last_await;
 
 void await(int msec)
 {
-    Application::instance().proc_event();
+    snail::application::instance().proc_event();
     for (auto&& b : mesbox_detail::message_boxes)
     {
         if (b)
@@ -323,10 +320,10 @@ void boxf(int x1, int y1, int x2, int y2)
         && detail::current_tex_buffer().color.g == 0
         && detail::current_tex_buffer().color.b == 0)
     {
-        Application::instance().renderer().set_blend_mode(BlendMode::none);
-        Application::instance().renderer().set_draw_color({0, 0, 0, 0});
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+        snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
     }
-    Application::instance().renderer().fill_rect(x1, y1, x2 - x1, y2 - y1);
+    snail::application::instance().get_renderer().fill_rect(x1, y1, x2 - x1, y2 - y1);
 }
 
 
@@ -337,10 +334,10 @@ void boxf()
         && detail::current_tex_buffer().color.g == 0
         && detail::current_tex_buffer().color.b == 0)
     {
-        Application::instance().renderer().set_blend_mode(BlendMode::none);
-        Application::instance().renderer().set_draw_color({0, 0, 0, 0});
+        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+        snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
     }
-    Application::instance().renderer().clear();
+    snail::application::instance().get_renderer().clear();
 }
 
 
@@ -452,7 +449,7 @@ void buffer(int window_id, int width, int height)
         if (width == img_width && height == img_height)
         {
             gsel(window_id);
-            Application::instance().renderer().clear();
+            snail::application::instance().get_renderer().clear();
             return;
         }
         else
@@ -462,7 +459,7 @@ void buffer(int window_id, int width, int height)
     }
     detail::tex_buffers[window_id] = {
         snail::detail::enforce_sdl(::SDL_CreateTexture(
-            Application::instance().renderer().ptr(),
+            snail::application::instance().get_renderer().ptr(),
             SDL_PIXELFORMAT_ARGB8888,
             SDL_TEXTUREACCESS_TARGET,
             width,
@@ -471,17 +468,17 @@ void buffer(int window_id, int width, int height)
         height,
     };
 
-    Application::instance().register_finalizer(
+    snail::application::instance().register_finalizer(
         [ptr = detail::tex_buffers[window_id].texture]() {
             ::SDL_DestroyTexture(ptr);
         });
 
-    const auto save = Application::instance().renderer().get_render_target();
-    Application::instance().renderer().set_render_target(
+    const auto save = snail::application::instance().get_renderer().render_target();
+    snail::application::instance().get_renderer().set_render_target(
         detail::tex_buffers[window_id].texture);
-    Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-    Application::instance().renderer().clear();
-    Application::instance().renderer().set_render_target(save);
+    snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+    snail::application::instance().get_renderer().clear();
+    snail::application::instance().get_renderer().set_render_target(save);
 
     gsel(window_id);
 }
@@ -523,7 +520,7 @@ void color(int r, int g, int b)
         static_cast<uint8_t>(std::clamp(b, 0, 255)),
         detail::current_tex_buffer().color.a,
     };
-    Application::instance().renderer().set_draw_color(
+    snail::application::instance().get_renderer().set_draw_color(
         detail::current_tex_buffer().color);
 }
 
@@ -587,7 +584,7 @@ void exec(const std::string&, int)
 
 namespace font_detail
 {
-std::unordered_map<int, Font> font_cache;
+std::unordered_map<int, snail::font_t> font_cache;
 }
 
 
@@ -597,7 +594,7 @@ void font(const std::string& name, int size, int style)
     if (auto i = font_detail::font_cache.find(size);
         i != std::end(font_detail::font_cache))
     {
-        Application::instance().renderer().set_font(i->second);
+        snail::application::instance().get_renderer().set_font(i->second);
     }
     else
     {
@@ -605,8 +602,8 @@ void font(const std::string& name, int size, int style)
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                "font/APJapanesefontT.ttf", size, Font::Style::regular));
-        Application::instance().renderer().set_font(i_->second);
+                "font/APJapanesefontT.ttf", size, snail::font_t::style_t::regular));
+        snail::application::instance().get_renderer().set_font(i_->second);
     }
 }
 
@@ -625,22 +622,22 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
             src_width == 0 ? detail::current_tex_buffer().width : src_width,
         src_height =
             src_height == 0 ? detail::current_tex_buffer().height : src_height,
-        Application::instance().renderer().set_render_target(
+        snail::application::instance().get_renderer().set_render_target(
             detail::tmp_buffer);
         if (window_id < 10)
         {
-            Application::instance().renderer().set_blend_mode(BlendMode::none);
-            Application::instance().renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
         }
         else
         {
-            const auto save = Application::instance().renderer().blend_mode();
-            Application::instance().renderer().set_blend_mode(BlendMode::none);
-            Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-            Application::instance().renderer().set_blend_mode(save);
+            const auto save = snail::application::instance().get_renderer().blend_mode();
+            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(save);
         }
-        Application::instance().renderer().clear();
-        Application::instance().renderer().render_image(
+        snail::application::instance().get_renderer().clear();
+        snail::application::instance().get_renderer().render_image(
             detail::tex_buffers[window_id].texture,
             src_x,
             src_y,
@@ -649,7 +646,7 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
             0,
             0);
         gsel(window_id);
-        Application::instance().renderer().render_image(
+        snail::application::instance().get_renderer().render_image(
             detail::tmp_buffer,
             0,
             0,
@@ -660,7 +657,7 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
         return;
     }
 
-    Application::instance().renderer().render_image(
+    snail::application::instance().get_renderer().render_image(
         detail::tex_buffers[window_id].texture,
         src_x,
         src_y,
@@ -674,7 +671,7 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
 
 void getkey(int& out, int key)
 {
-    out = Keyboard::instance().is_pressed(hspkey2snailkey(key));
+    out = snail::input::instance().is_pressed(hspkey2snailkey(key));
 }
 
 
@@ -801,23 +798,23 @@ void grotate2(
         dst_height,
     };
 
-    switch (Application::instance().renderer().blend_mode())
+    switch (snail::application::instance().get_renderer().blend_mode())
     {
-    case BlendMode::none:
+    case snail::blend_mode_t::none:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
             detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_NONE));
         break;
-    case BlendMode::blend:
+    case snail::blend_mode_t::blend:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
             detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_BLEND));
         break;
-    case BlendMode::add:
+    case snail::blend_mode_t::add:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
             detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_ADD));
         break;
     }
     snail::detail::enforce_sdl(::SDL_RenderCopyEx(
-        Application::instance().renderer().ptr(),
+        snail::application::instance().get_renderer().ptr(),
         detail::tex_buffers[window_id].texture,
         &src_rect,
         &dst_rect,
@@ -849,22 +846,22 @@ void grotate(
 
     if (window_id == detail::current_buffer)
     {
-        Application::instance().renderer().set_render_target(
+        snail::application::instance().get_renderer().set_render_target(
             detail::tmp_buffer);
         if (window_id < 10)
         {
-            Application::instance().renderer().set_blend_mode(BlendMode::none);
-            Application::instance().renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
         }
         else
         {
-            const auto save = Application::instance().renderer().blend_mode();
-            Application::instance().renderer().set_blend_mode(BlendMode::none);
-            Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-            Application::instance().renderer().set_blend_mode(save);
+            const auto save = snail::application::instance().get_renderer().blend_mode();
+            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(save);
         }
-        Application::instance().renderer().clear();
-        Application::instance().renderer().render_image(
+        snail::application::instance().get_renderer().clear();
+        snail::application::instance().get_renderer().render_image(
             detail::tex_buffers[window_id].texture,
             src_x,
             src_y,
@@ -880,7 +877,7 @@ void grotate(
             dst_height);
 
         gsel(window_id);
-        Application::instance().renderer().render_image(
+        snail::application::instance().get_renderer().render_image(
             detail::tmp_buffer,
             0,
             0,
@@ -891,7 +888,7 @@ void grotate(
         return;
     }
 
-    Application::instance().renderer().render_image(
+    snail::application::instance().get_renderer().render_image(
         detail::tex_buffers[window_id].texture,
         src_x,
         src_y,
@@ -912,7 +909,7 @@ void grotate(
 void gsel(int window_id)
 {
     detail::current_buffer = window_id;
-    Application::instance().renderer().set_render_target(
+    snail::application::instance().get_renderer().set_render_target(
         detail::current_tex_buffer().texture);
 }
 
@@ -928,28 +925,28 @@ void gzoom(
     int src_height,
     int mode)
 {
-    Application::instance().renderer().set_blend_mode(BlendMode::none);
+    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
     snail::detail::enforce_sdl(
         ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture, 255));
 
     if (window_id == detail::current_buffer)
     {
-        Application::instance().renderer().set_render_target(
+        snail::application::instance().get_renderer().set_render_target(
             detail::tmp_buffer);
         if (window_id < 10)
         {
-            Application::instance().renderer().set_blend_mode(BlendMode::none);
-            Application::instance().renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
         }
         else
         {
-            const auto save = Application::instance().renderer().blend_mode();
-            Application::instance().renderer().set_blend_mode(BlendMode::none);
-            Application::instance().renderer().set_draw_color({0, 0, 0, 0});
-            Application::instance().renderer().set_blend_mode(save);
+            const auto save = snail::application::instance().get_renderer().blend_mode();
+            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(save);
         }
-        Application::instance().renderer().clear();
-        Application::instance().renderer().render_image(
+        snail::application::instance().get_renderer().clear();
+        snail::application::instance().get_renderer().render_image(
             detail::tex_buffers[window_id].texture,
             src_x,
             src_y,
@@ -960,7 +957,7 @@ void gzoom(
             dst_width,
             dst_height);
         gsel(window_id);
-        Application::instance().renderer().render_image(
+        snail::application::instance().get_renderer().render_image(
             detail::tmp_buffer,
             0,
             0,
@@ -971,7 +968,7 @@ void gzoom(
         return;
     }
 
-    Application::instance().renderer().render_image(
+    snail::application::instance().get_renderer().render_image(
         detail::tex_buffers[window_id].texture,
         src_x,
         src_y,
@@ -1024,7 +1021,7 @@ size_t length(const std::string& str)
 
 void line(int x1, int y1, int x2, int y2)
 {
-    Application::instance().renderer().render_line(x1, y1, x2, y2);
+    snail::application::instance().get_renderer().render_line(x1, y1, x2, y2);
 }
 
 
@@ -1077,7 +1074,7 @@ void mes(const std::string& text)
 {
     if (std::size(text) >= 25 /* TODO */)
     {
-        Application::instance().renderer().render_multiline_text(
+        snail::application::instance().get_renderer().render_multiline_text(
             text,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
@@ -1085,7 +1082,7 @@ void mes(const std::string& text)
     }
     else
     {
-        Application::instance().renderer().render_text(
+        snail::application::instance().get_renderer().render_text(
             text,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
@@ -1312,7 +1309,7 @@ void pget(int x, int y)
 
 void picload(const fs::path& filename, int mode)
 {
-    std::optional<Color> keycolor = Color{0, 0, 0};
+    std::optional<snail::color> keycolor = snail::color{0, 0, 0};
     if (filename.u8string().find("pcc") != std::string::npos)
     {
         keycolor = {43, 133, 133};
@@ -1321,16 +1318,16 @@ void picload(const fs::path& filename, int mode)
     {
         keycolor = std::nullopt;
     }
-    BasicImage img{filename, keycolor};
+    snail::basic_image img{filename, keycolor};
     if (mode == 0)
     {
         buffer(detail::current_buffer, img.width(), img.height());
     }
-    const auto save = Application::instance().renderer().blend_mode();
-    Application::instance().renderer().set_blend_mode(BlendMode::none);
-    Application::instance().renderer().render_image(
+    const auto save = snail::application::instance().get_renderer().blend_mode();
+    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    snail::application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
-    Application::instance().renderer().set_blend_mode(save);
+    snail::application::instance().get_renderer().set_blend_mode(save);
 }
 
 
@@ -1372,14 +1369,14 @@ void redraw(int n)
 {
     if (n != 1)
         return;
-    const auto save = Application::instance().renderer().get_render_target();
-    Application::instance().renderer().set_render_target(nullptr);
-    Application::instance().renderer().set_draw_color(Color{0, 0, 0, 255});
-    Application::instance().renderer().clear();
-    Application::instance().renderer().render_image(
+    const auto save = snail::application::instance().get_renderer().render_target();
+    snail::application::instance().get_renderer().set_render_target(nullptr);
+    snail::application::instance().get_renderer().set_draw_color(snail::color{0, 0, 0, 255});
+    snail::application::instance().get_renderer().clear();
+    snail::application::instance().get_renderer().render_image(
         detail::tex_buffers[0].texture, 0, 0);
-    Application::instance().renderer().present();
-    Application::instance().renderer().set_render_target(save);
+    snail::application::instance().get_renderer().present();
+    snail::application::instance().get_renderer().set_render_target(save);
 }
 
 
@@ -1393,33 +1390,33 @@ void screen(int window_id, int width, int height, int mode, int x, int y)
 void stick(int& out, int allow_repeat_keys)
 {
     auto check_key_pressed = [allow_repeat_keys](
-                                 int n, Key key, bool is_modifier) {
+                                 int n, snail::key key, bool is_modifier) {
         if ((1 << n) & allow_repeat_keys)
         {
             if (is_modifier)
-                return (1 << n) * Keyboard::instance().is_pressed_exactly(key);
+                return (1 << n) * snail::input::instance().is_pressed_exactly(key);
             else
-                return (1 << n) * Keyboard::instance().is_pressed(key);
+                return (1 << n) * snail::input::instance().is_pressed(key);
         }
         else
         {
-            return (1 << n) * Keyboard::instance().was_pressed_just_now(key);
+            return (1 << n) * snail::input::instance().was_pressed_just_now(key);
         }
     };
 
     out = 0;
 
-    out += check_key_pressed(0, Key::left, false);
-    out += check_key_pressed(1, Key::up, false);
-    out += check_key_pressed(2, Key::right, false);
-    out += check_key_pressed(3, Key::down, false);
-    out += check_key_pressed(4, Key::space, false);
-    out += check_key_pressed(5, Key::enter, false);
-    out += check_key_pressed(6, Key::ctrl, true);
-    out += check_key_pressed(7, Key::escape, false);
+    out += check_key_pressed(0, snail::key::left, false);
+    out += check_key_pressed(1, snail::key::up, false);
+    out += check_key_pressed(2, snail::key::right, false);
+    out += check_key_pressed(3, snail::key::down, false);
+    out += check_key_pressed(4, snail::key::space, false);
+    out += check_key_pressed(5, snail::key::enter, false);
+    out += check_key_pressed(6, snail::key::ctrl, true);
+    out += check_key_pressed(7, snail::key::escape, false);
     // out += check_key_pressed(8,  /* Mouse left */,  false);
     // out += check_key_pressed(9,  /* Mouse right */, false);
-    out += check_key_pressed(10, Key::tab, false);
+    out += check_key_pressed(10, snail::key::tab, false);
 }
 
 
@@ -1465,17 +1462,17 @@ std::string strmid(const std::string& source, int pos, int length)
 
 void title(const std::string& title_str)
 {
-    Application::instance().initialize(800, 600, title_str);
+    snail::application::instance().initialize(800, 600, title_str);
     detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
-        Application::instance().renderer().ptr(),
+        snail::application::instance().get_renderer().ptr(),
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_TARGET,
         1000,
         1000));
-    Application::instance().register_finalizer(
+    snail::application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
-    Keyboard::instance().set_key_repeat(5, 0);
-    Application::instance().register_finalizer(
+    snail::input::instance().set_key_repeat(7, 0);
+    snail::application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(0, 800, 600);
 }
@@ -1580,7 +1577,7 @@ template <typename F>
 void map(F f)
 {
     // const auto texture =
-    // Application::instance().renderer().get_render_target(); const auto format
+    // snail::application::instance().get_renderer().render_target(); const auto format
     // = snail::detail::enforce_sdl(
     //         ::SDL_AllocFormat(::SDL_MasksToPixelFormatEnum(32, 0, 0, 0, 0)));
     //
@@ -1607,7 +1604,7 @@ void gfini(int width, int height)
 {
     // gf_detail::rect = {detail::current_tex_buffer().x,
     // detail::current_tex_buffer().y, width, height}; const auto texture =
-    // Application::instance().renderer().get_render_target();
+    // snail::application::instance().get_renderer().render_target();
     // ::SDL_LockTexture(texture, &gf_detail::rect, &gf_detail::pixels,
     // &gf_detail::pitch); LOG("gfini", gf_detail::pitch, gf_detail::rect.h);
 }

@@ -1,15 +1,18 @@
 #include "image.hpp"
 #include "renderer.hpp"
 
-using namespace snail;
+
+using namespace elona::snail;
 
 
 namespace
 {
+
+
 void render(
     ::SDL_Texture* texture,
     ::SDL_Renderer* renderer,
-    BlendMode blend_mode,
+    blend_mode_t blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -21,15 +24,15 @@ void render(
 {
     switch (blend_mode)
     {
-    case BlendMode::none:
+    case blend_mode_t::none:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_NONE));
         break;
-    case BlendMode::blend:
+    case blend_mode_t::blend:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_BLEND));
         break;
-    case BlendMode::add:
+    case blend_mode_t::add:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_ADD));
         break;
@@ -46,9 +49,14 @@ void render(
 
 
 
-BasicImage::BasicImage(
-    const std::string& filepath,
-    const lib::optional<Color>& keycolor)
+namespace elona::snail
+{
+
+
+
+basic_image::basic_image(
+    const fs::path& filepath,
+    const std::optional<color>& keycolor)
 {
     auto surface = detail::enforce_img(::IMG_Load(filepath.c_str()));
 
@@ -73,16 +81,16 @@ BasicImage::BasicImage(
 
 
 
-BasicImage::BasicImage(::SDL_Texture* ptr)
+basic_image::basic_image(::SDL_Texture* ptr)
 {
     _ptr.reset(ptr, ::SDL_DestroyTexture);
 }
 
 
 
-void BasicImage::_render(
+void basic_image::_render(
     ::SDL_Renderer* renderer,
-    BlendMode blend_mode,
+    blend_mode_t blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -108,8 +116,8 @@ void BasicImage::_render(
 
 
 
-FrameImage::FrameImage(
-    BasicImage& source,
+frame_image::frame_image(
+    basic_image& source,
     int offset_x,
     int offset_y,
     int width,
@@ -124,9 +132,9 @@ FrameImage::FrameImage(
 
 
 
-void FrameImage::_render(
+void frame_image::_render(
     ::SDL_Renderer* renderer,
-    BlendMode blend_mode,
+    blend_mode_t blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -149,3 +157,6 @@ void FrameImage::_render(
         dst_width,
         dst_height);
 }
+
+
+} // namespace elona::snail

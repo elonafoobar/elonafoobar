@@ -2,47 +2,49 @@
 #include <algorithm>
 #include "input.hpp"
 
-using namespace snail;
 
-
-
-Application& Application::instance() noexcept
+namespace elona::snail
 {
-    static Application application;
-    return application;
+
+
+
+application& application::instance()
+{
+    static application the_instance;
+    return the_instance;
 }
 
 
-void Application::set_title(const std::string& title_str)
+void application::set_title(const std::string& title)
 {
-    _title = title_str;
+    _title = title;
     if (_window)
     {
-        ::SDL_SetWindowTitle(_window->ptr(), title_str.c_str());
+        ::SDL_SetWindowTitle(_window->ptr(), title.c_str());
     }
 }
 
 
 
-void Application::initialize(int width, int height, const std::string& title)
+void application::initialize(int width, int height, const std::string& title)
 {
     _width = width;
     _height = height;
     _title = title;
-    _window.reset(new Window(
+    _window.reset(new window(
         title,
-        Window::position_undefined,
-        Window::position_undefined,
+        window::position_undefined,
+        window::position_undefined,
         width,
         height,
-        Window::shown));
-    _renderer.reset(new Renderer(
-        *_window, Renderer::accelerated | Renderer::present_vsync));
+        window::shown));
+    _renderer.reset(new renderer(
+        *_window, renderer::accelerated | renderer::present_vsync));
 }
 
 
 
-void Application::run(std::shared_ptr<Scene> initial_scene)
+void application::run(std::shared_ptr<scene_base> initial_scene)
 {
     _scene_manager.push(initial_scene);
     main_loop();
@@ -50,53 +52,28 @@ void Application::run(std::shared_ptr<Scene> initial_scene)
 
 
 
-void Application::quit()
+void application::quit()
 {
     _will_quit = true;
 }
 
 
 
-void Application::add_effect(std::unique_ptr<Effect> effect)
+void application::add_effect(std::unique_ptr<effect_base> effect)
 {
     _effects.push_back(std::move(effect));
 }
 
 
 
-void Application::proc_event()
-{
-    ::SDL_Event event;
-    while (::SDL_PollEvent(&event))
-    {
-        handle_event(event);
-    }
-    // Mouse::instance()._update();
-    Keyboard::instance()._update();
-
-    if (_will_quit)
-    {
-        std::exit(0);
-    }
-}
-
-
-
-int Application::get_ticks()
-{
-    return ::SDL_GetTicks();
-}
-
-
-
-void Application::register_finalizer(std::function<void()> finalizer)
+void application::register_finalizer(std::function<void()> finalizer)
 {
     _finalizers.emplace_back(finalizer);
 }
 
 
 
-void Application::main_loop()
+void application::main_loop()
 {
     while (1)
     {
@@ -105,11 +82,11 @@ void Application::main_loop()
         {
             handle_event(event);
         }
-        // Mouse::instance()._update();
-        Keyboard::instance()._update();
+
+        input::instance()._update();
 
         bool user_input_blocked = false;
-        for (const auto& effect : _effects)
+        for (auto&& effect : _effects)
         {
             effect->update();
             effect->_increase_frame();
@@ -118,6 +95,7 @@ void Application::main_loop()
                 user_input_blocked = true;
             }
         }
+
         // Even if the current scene was popped from the scene stack in
         // updating, it will be rendered.
         auto current_scene = _scene_manager.current_scene();
@@ -132,7 +110,7 @@ void Application::main_loop()
 
         _renderer->clear();
         render_scene(current_scene);
-        for (const auto& effect : _effects)
+        for (auto&& effect : _effects)
         {
             if (effect->alive())
             {
@@ -143,30 +121,27 @@ void Application::main_loop()
             std::begin(_effects), std::end(_effects), [](const auto& effect) {
                 return !effect->alive();
             });
-
-        // _renderer->render_text(std::to_string(_fps_manager.actual_fps()), 0,
-        // 0);
-
         _renderer->present();
 
         _fps_manager.wait();
-
         ++_frame;
     }
 }
 
 
 
-void Application::render_scene(std::shared_ptr<Scene> scene)
+void application::render_scene(std::shared_ptr<scene_base> scene)
 {
     if (scene->parent())
+    {
         render_scene(scene->parent());
+    }
     scene->render(*_renderer);
 }
 
 
 
-void Application::handle_event(const ::SDL_Event& event)
+void application::handle_event(const ::SDL_Event& event)
 {
     switch (event.type)
     {
@@ -177,7 +152,27 @@ void Application::handle_event(const ::SDL_Event& event)
         // Mouse::instance()._handle_event(event.button);
         break;
     case SDL_KEYUP:
-    case SDL_KEYDOWN: Keyboard::instance()._handle_event(event.key); break;
+    case SDL_KEYDOWN: input::instance()._handle_event(event.key); break;
     default: break;
     }
 }
+
+
+void application::proc_event()
+{
+    ::SDL_Event event;
+    while (::SDL_PollEvent(&event))
+    {
+        handle_event(event);
+    }
+
+    input::instance()._update();
+
+    if (_will_quit)
+    {
+        std::exit(0);
+    }
+}
+
+
+} // namespace elona::snail

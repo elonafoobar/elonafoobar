@@ -2,11 +2,13 @@
 #include <tuple>
 #include <unordered_map>
 
-using namespace snail;
+
+namespace elona::snail
+{
 
 
 
-Font::Font(const std::string& filepath, int size, Style style)
+font_t::font_t(const fs::path& filepath, int size, style_t style)
     : _filepath(filepath)
     , _size(size)
     , _style(style)
@@ -16,3 +18,7 @@ Font::Font(const std::string& filepath, int size, Style style)
 {
     ::TTF_SetFontStyle(ptr(), static_cast<int>(style));
 }
+
+
+
+} // namespace elona::snail

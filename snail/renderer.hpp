@@ -1,36 +1,26 @@
 #pragma once
 
-#include "blendmode.hpp"
+#include <string>
+#include "../lib/noncopyable.hpp"
+#include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
 #include "font.hpp"
 #include "image.hpp"
-#include "lib/noncopyable.hpp"
+#include "rect.hpp"
+#include "size.hpp"
 #include "window.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-class Renderer : public lib::noncopyable
+
+
+
+class renderer : public lib::noncopyable
 {
 public:
-    struct Rect
-    {
-        int x;
-        int y;
-        int width;
-        int height;
-    };
-
-
-    struct Size
-    {
-        int width;
-        int height;
-    };
-
-
-    enum Flag
+    enum flag_t
     {
         none = 0,
         software = SDL_RENDERER_SOFTWARE,
@@ -40,7 +30,7 @@ public:
     };
 
 
-    enum class TextAlignment
+    enum class text_alignment_t
     {
         left,
         center,
@@ -48,7 +38,7 @@ public:
     };
 
 
-    enum class TextBaseline
+    enum class text_baseline_t
     {
         top,
         middle,
@@ -56,53 +46,53 @@ public:
     };
 
 
-    TextAlignment text_alignment() const noexcept
+    text_alignment_t text_alignment() const noexcept
     {
         return _text_alignment;
     }
 
 
-    void set_text_alignment(TextAlignment text_alignment)
+    void set_text_alignment(text_alignment_t text_alignment)
     {
         _text_alignment = text_alignment;
     }
 
 
-    TextBaseline text_baseline() const noexcept
+    text_baseline_t text_baseline() const noexcept
     {
         return _text_baseline;
     }
 
 
-    void set_text_baseline(TextBaseline text_baseline)
+    void set_text_baseline(text_baseline_t text_baseline)
     {
         _text_baseline = text_baseline;
     }
 
 
-    const Font& font() const noexcept
+    const font_t& font() const noexcept
     {
         return _font;
     }
 
 
-    void set_font(const Font& font)
+    void set_font(const font_t& font)
     {
         _font = font;
     }
 
 
-    BlendMode blend_mode() const noexcept
+    blend_mode_t blend_mode() const noexcept
     {
         return _blend_mode;
     }
 
-    void set_blend_mode(BlendMode blend_mode);
+    void set_blend_mode(blend_mode_t blend_mode);
 
-    void set_draw_color(const Color& color);
+    void set_draw_color(const color&);
 
 
-    ::SDL_Texture* get_render_target()
+    ::SDL_Texture* render_target()
     {
         return ::SDL_GetRenderTarget(ptr());
     }
@@ -120,40 +110,40 @@ public:
     }
 
 
-    Renderer(Window& target_window, int flag);
+    renderer(window& target_window, int flag);
 
 
     void clear();
     void present();
     void render_point(int x, int y);
     void fill_rect(int x, int y, int width, int height);
-    Rect render_text(
+    rect render_text(
         const std::string& text,
         int x,
         int y,
-        const Color& color = Palette::black);
-    Rect render_text_with_shadow(
+        const color& text_color = palette::black);
+    rect render_text_with_shadow(
         const std::string& text,
         int x,
         int y,
-        const Color& text_color = Palette::white,
-        const Color& shadow_color = Palette::black);
-    Rect render_multiline_text(
+        const color& text_color = palette::white,
+        const color& shadow_color = palette::black);
+    rect render_multiline_text(
         const std::string& text,
         int x,
         int y,
-        const Color& color = Palette::black);
-    Size calculate_text_size(const std::string& text);
+        const color& text_color = palette::black);
+    size calculate_text_size(const std::string& text);
     void render_line(int start_x, int start_y, int end_x, int end_y);
-    void render_image(Image& image, int dst_x, int dst_y);
+    void render_image(image_base& image, int dst_x, int dst_y);
     void render_image(
-        Image& image,
+        image_base& image,
         int dst_x,
         int dst_y,
         int dst_width,
         int dst_height);
     void render_image(
-        Image& image,
+        image_base& image,
         int src_x,
         int src_y,
         int src_width,
@@ -161,7 +151,7 @@ public:
         int dst_x,
         int dst_y);
     void render_image(
-        Image& image,
+        image_base& image,
         int src_x,
         int src_y,
         int src_width,
@@ -198,23 +188,21 @@ public:
 
 
 private:
-    TextAlignment _text_alignment = TextAlignment::left;
-    TextBaseline _text_baseline = TextBaseline::top;
-    Font _font;
-    BlendMode _blend_mode = BlendMode::blend;
-    std::unique_ptr<
-        ::SDL_Renderer,
-        std::decay_t<decltype(::SDL_DestroyRenderer)>>
-        _ptr;
+    text_alignment_t _text_alignment = text_alignment_t::left;
+    text_baseline_t _text_baseline = text_baseline_t::top;
+    font_t _font;
+    blend_mode_t _blend_mode = blend_mode_t::blend;
+    std::unique_ptr<::SDL_Renderer, decltype(&::SDL_DestroyRenderer)> _ptr;
 };
 
 
 
 namespace detail
 {
-inline Renderer* current_renderer;
+
+inline renderer* current_renderer;
 }
 
 
 
-} // namespace snail
+} // namespace elona::snail

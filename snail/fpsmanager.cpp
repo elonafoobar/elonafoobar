@@ -1,15 +1,15 @@
 #include "fpsmanager.hpp"
 #include <numeric>
 
-using namespace snail;
-
 
 
 namespace
 {
+
+
 int sum(const std::vector<int>& v)
 {
-    return std::accumulate(v.begin(), v.end(), 0);
+    return std::accumulate(std::begin(v), std::end(v), 0);
 }
 
 
@@ -17,28 +17,32 @@ int sum(const std::vector<int>& v)
 
 
 
-void FPSManager::set_fps(int new_fps)
+namespace elona::snail
+{
+
+
+void fps_manager::set_fps(int new_fps)
 {
     _fps = new_fps;
     _history = std::vector<int>(new_fps, 1000 / _fps);
 }
 
 
-double FPSManager::actual_fps()
+double fps_manager::actual_fps()
 {
     return _fps * 1000.0 / sum(_history);
 }
 
 
 
-FPSManager::FPSManager(int fps)
+fps_manager::fps_manager(int fps)
 {
     set_fps(fps);
 }
 
 
 
-void FPSManager::wait()
+void fps_manager::wait()
 {
     int duration_to_wait;
 
@@ -63,7 +67,7 @@ void FPSManager::wait()
         ::SDL_Delay(duration_to_wait);
     }
 
-    auto now = ::SDL_GetTicks();
+    const auto now = ::SDL_GetTicks();
 
     if (_frame_count == 0)
     {
@@ -79,3 +83,7 @@ void FPSManager::wait()
         _frame_count = 0;
     }
 }
+
+
+
+} // namespace elona::snail

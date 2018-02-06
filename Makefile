@@ -23,12 +23,12 @@ all: build
 build: $(PROGRAM)
 
 
-$(PROGRAM): $(OBJECTS) sdl/sdl.a
+$(PROGRAM): $(OBJECTS) snail/snail.a
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LN_FLAGS)
 
 
-sdl/sdl.a: FORCE
-	cd sdl; make
+snail/snail.a: FORCE
+	cd snail; make
 
 
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp

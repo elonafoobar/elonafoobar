@@ -2,13 +2,16 @@
 
 #include <array>
 #include <string>
+#include "../lib/noncopyable.hpp"
 #include "detail/sdl.hpp"
-#include "lib/noncopyable.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-struct Button
+
+
+
+struct button
 {
     bool is_pressed() const noexcept
     {
@@ -47,7 +50,7 @@ private:
 
 
 
-enum class Key
+enum class key
 {
     none,
 
@@ -226,30 +229,28 @@ enum class Key
 };
 
 
-
-std::string to_string(Key key);
-char to_char(Key key);
+char to_char(key);
 
 
 
-class Keyboard final : public lib::noncopyable
+class input final : public lib::noncopyable
 {
 public:
-    bool is_pressed(Key key) const;
-    bool is_pressed_exactly(Key key) const;
-    bool was_pressed_just_now(Key key) const;
+    bool is_pressed(key k) const;
+    bool is_pressed_exactly(key k) const;
+    bool was_pressed_just_now(key k) const;
 
     void set_key_repeat(int initial_key_wait, int key_wait) noexcept;
 
 
     // Returns only one key even if you are pressing more than one key.
-    Key get_pressed_key() const noexcept;
+    key get_pressed_key() const noexcept;
 
 
-    virtual ~Keyboard() override = default;
+    virtual ~input() override = default;
 
 
-    static Keyboard& instance() noexcept;
+    static input& instance() noexcept;
 
 
     void _update();
@@ -257,13 +258,13 @@ public:
 
 
 private:
-    std::array<Button, static_cast<size_t>(Key::_size)> _keys;
+    std::array<button, static_cast<size_t>(key::_size)> _keys;
     int _initial_key_wait = 30; // frame
     int _key_wait = 5; // frame
 
-    Keyboard() = default;
+    input() = default;
 };
 
 
 
-} // namespace snail
+} // namespace elona::snail

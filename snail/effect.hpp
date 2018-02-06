@@ -3,9 +3,11 @@
 #include "node.hpp"
 
 
-namespace snail
+namespace elona::snail
 {
-class Effect : public Node
+
+
+class effect_base : public node
 {
 public:
     bool alive() const noexcept
@@ -29,4 +31,4 @@ private:
 
 
 
-} // namespace snail
+} // namespace elona::snail
