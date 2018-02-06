@@ -1091,8 +1091,8 @@ void fmode_4_3(int fmode)
     }
     else
     {
-        zRead(inv, hgz, 1164800, 1320);
         zOpen(hgz, path, 0);
+        zRead(inv, hgz, 1164800, 1320);
         zClose(hgz);
     }
 }
