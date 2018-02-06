@@ -18,295 +18,283 @@ void fmode_8_7(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
-    if (fmode == 8)
-    {
-        elona::fread = 0;
-    }
-    if (fmode == 7)
-    {
-        elona::fread = 1;
-    }
+    bool read = fmode == 7;
     if (fmode == 8)
     {
         playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata_level(0) + u8" "s
             + mdatan(0);
         bsave(folder + u8"header.txt"s, playerheader);
     }
+
+    for (int i = 0; i < 15; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        std::pair<const char*, size_t> file_info[] = {
+            {u8"gdata.s1", 4000},
+            {u8"cdata.s1", 114000},
+            {u8"sdata.s1", 273600},
+            {u8"spell.s1", 800},
+            {u8"inv.s1", 369600},
+            {u8"kitem.s1", 9600},
+            {u8"knpc.s1", 6400},
+            {u8"adata.s1", 80000},
+            {u8"spact.s1", 2000},
+            {u8"qdata.s1", 40000},
+            {u8"mat.s1", 1600},
+            {u8"trait.s1", 2000},
+            {u8"pcc.s1", 2400},
+            {u8"card.s1", 16000},
+            {u8"krecipe.s1", 4800},
+        };
+
+        file = folder + file_info[i].first;
+        fsize = file_info[i].second;
+        if (read)
         {
-            file = folder;
-            if (cnt == 0)
+            if (!fs::exists(file))
             {
-                file += u8"gdata.s1"s;
-                fsize = 4000;
+                continue;
             }
-            if (cnt == 1)
-            {
-                file += u8"cdata.s1"s;
-                fsize = 114000;
-            }
-            if (cnt == 2)
-            {
-                file += u8"sdata.s1"s;
-                fsize = 273600;
-            }
-            if (cnt == 3)
-            {
-                file += u8"spell.s1"s;
-                fsize = 800;
-            }
-            if (cnt == 4)
-            {
-                file += u8"inv.s1"s;
-                fsize = 369600;
-            }
-            if (cnt == 5)
-            {
-                file += u8"kitem.s1"s;
-                fsize = 9600;
-            }
-            if (cnt == 6)
-            {
-                file += u8"knpc.s1"s;
-                fsize = 6400;
-            }
-            if (cnt == 7)
-            {
-                file += u8"adata.s1"s;
-                fsize = 80000;
-            }
-            if (cnt == 8)
-            {
-                file += u8"spact.s1"s;
-                fsize = 2000;
-            }
-            if (cnt == 9)
-            {
-                file += u8"qdata.s1"s;
-                fsize = 40000;
-            }
-            if (cnt == 10)
-            {
-                file += u8"mat.s1"s;
-                fsize = 1600;
-            }
-            if (cnt == 11)
-            {
-                file += u8"trait.s1"s;
-                fsize = 2000;
-            }
-            if (cnt == 12)
-            {
-                file += u8"pcc.s1"s;
-                fsize = 2400;
-            }
-            if (cnt == 13)
-            {
-                file += u8"card.s1"s;
-                fsize = 16000;
-            }
-            if (cnt == 14)
-            {
-                file += u8"krecipe.s1"s;
-                fsize = 4800;
-            }
-            if (elona::fread == 1)
-            {
-                if (!fs::exists(file))
-                {
-                    continue;
-                }
-            }
-            if (elona::fread == 0)
+        }
+
+        if (i == 0)
+        {
+            if (!read)
             {
                 zOpen(hgz, file, 1, 3);
+                zWrite(gdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (elona::fread == 1)
+            if (read)
             {
                 zOpen(hgz, file, 0);
+                zRead(gdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 0)
+        }
+        if (i == 1)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(gdata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(gdata, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(cdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 1)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(cdata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(cdata, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(cdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 2)
+        }
+        if (i == 2)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(sdata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(sdata, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(sdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 3)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(spell, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(spell, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(sdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 4)
+        }
+        if (i == 3)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(inv, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(inv, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(spell, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 5)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(itemmemory, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(itemmemory, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(spell, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 6)
+        }
+        if (i == 4)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(npcmemory, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(npcmemory, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(inv, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 7)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(adata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(adata, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(inv, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 8)
+        }
+        if (i == 5)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(spact, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(spact, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(itemmemory, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 9)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(qdata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(qdata, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(itemmemory, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 10)
+        }
+        if (i == 6)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(mat, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(mat, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(npcmemory, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 11)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(trait, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(trait, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(npcmemory, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 12)
+        }
+        if (i == 7)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(pcc, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(pcc, hgz, fsize);
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(adata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 13)
+            if (read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(card, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(card, hgz, fsize);
-                }
+                zOpen(hgz, file, 0);
+                zRead(adata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 14)
+        }
+        if (i == 8)
+        {
+            if (!read)
             {
-                if (elona::fread == 0)
-                {
-                    zWrite(recipememory, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    if (gdata_version >= 1200)
-                    {
-                        zRead(recipememory, hgz, fsize);
-                    }
-                }
+                zOpen(hgz, file, 1, 3);
+                zWrite(spact, hgz, fsize);
+                zClose(hgz);
             }
-            zClose(hgz);
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                zRead(spact, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        if (i == 9)
+        {
+            if (!read)
+            {
+                zOpen(hgz, file, 1, 3);
+                zWrite(qdata, hgz, fsize);
+                zClose(hgz);
+            }
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                zRead(qdata, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        if (i == 10)
+        {
+            if (!read)
+            {
+                zOpen(hgz, file, 1, 3);
+                zWrite(mat, hgz, fsize);
+                zClose(hgz);
+            }
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                zRead(mat, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        if (i == 11)
+        {
+            if (!read)
+            {
+                zOpen(hgz, file, 1, 3);
+                zWrite(trait, hgz, fsize);
+                zClose(hgz);
+            }
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                zRead(trait, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        if (i == 12)
+        {
+            if (!read)
+            {
+                zOpen(hgz, file, 1, 3);
+                zWrite(pcc, hgz, fsize);
+                zClose(hgz);
+            }
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                zRead(pcc, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        if (i == 13)
+        {
+            if (!read)
+            {
+                zOpen(hgz, file, 1, 3);
+                zWrite(card, hgz, fsize);
+                zClose(hgz);
+            }
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                zRead(card, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        if (i == 14)
+        {
+            if (!read)
+            {
+                zOpen(hgz, file, 1, 3);
+                zWrite(recipememory, hgz, fsize);
+                zClose(hgz);
+            }
+            if (read)
+            {
+                zOpen(hgz, file, 0);
+                if (gdata_version >= 1200)
+                {
+                    zRead(recipememory, hgz, fsize);
+                }
+                zClose(hgz);
+            }
         }
     }
+
     file = folder + u8"art.log"s;
-    if (elona::fread == 0)
+    if (!read)
     {
         std::ofstream out{file};
         range::for_each(artifactlocation, [&](const auto& line) {
             out << line << std::endl;
         });
     }
-    if (elona::fread == 1)
+    if (read)
     {
         artifactlocation.clear();
         range::copy(
@@ -314,12 +302,12 @@ void fmode_8_7(int fmode)
     }
     file = folder + u8"news.log"s;
     notesel(newsbuff);
-    if (elona::fread == 0)
+    if (!read)
     {
         std::ofstream out{file};
         out << newsbuff(0) << std::endl;
     }
-    if (elona::fread == 1)
+    if (read)
     {
         newsbuff(0).clear();
         std::ifstream in{file};
@@ -335,7 +323,7 @@ void fmode_8_7(int fmode)
     arrayfile(u8"qname");
     file = folder + u8"gdatan.s1"s;
     arrayfile(u8"gdatan");
-    if (elona::fread == 0)
+    if (!read)
     {
         bsave(folder + u8"evnum.s1"s, evnum);
         bsave(folder + u8"evdata1.s1"s, evdata1);
@@ -367,14 +355,13 @@ void fmode_8_7(int fmode)
 void fmode_14_15(int fmode)
 {
     int fsize = 0;
+    bool read = fmode == 15;
     if (fmode == 14)
     {
-        elona::fread = 0;
         folder = fs::u8path(u8"./tmp/");
     }
     if (fmode == 15)
     {
-        elona::fread = 1;
         folder = fs::u8path(u8"./save/"s + geneuse + u8"/");
     }
     if (fmode == 14)
@@ -435,106 +422,106 @@ void fmode_14_15(int fmode)
                 file += u8"g_genetemp.s1"s;
                 fsize = 4000;
             }
-            if (elona::fread == 1)
+            if (read)
             {
                 if (!fs::exists(file))
                 {
                     continue;
                 }
             }
-            if (elona::fread == 0)
+            if (!read)
             {
                 zOpen(hgz, file, 1, 3);
                 fileadd(""s + file);
             }
-            if (elona::fread == 1)
+            if (read)
             {
                 zOpen(hgz, file, 0);
             }
             if (cnt == 1)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(cdata, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(cdata, hgz, fsize);
                 }
             }
             if (cnt == 2)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(sdata, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(sdata, hgz, fsize);
                 }
             }
             if (cnt == 3)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(spell, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(spell, hgz, fsize);
                 }
             }
             if (cnt == 4)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(inv, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(inv, hgz, fsize);
                 }
             }
             if (cnt == 5)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(spact, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(spact, hgz, fsize);
                 }
             }
             if (cnt == 6)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(mat, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(mat, hgz, fsize);
                 }
             }
             if (cnt == 7)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(card, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(card, hgz, fsize);
                 }
             }
             if (cnt == 8)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(gdata, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(genetemp, hgz, fsize);
                 }
@@ -549,14 +536,7 @@ void fmode_2_1(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
-    if (fmode == 2)
-    {
-        elona::fread = 0;
-    }
-    if (fmode == 1)
-    {
-        elona::fread = 1;
-    }
+    bool read = fmode == 1;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
@@ -569,7 +549,7 @@ void fmode_2_1(int fmode)
             }
             if (cnt == 1)
             {
-                if (elona::fread == 1)
+                if (read)
                 {
                     DIM4(map, mdata(0), mdata(1), 10);
                     DIM3(mapsync, mdata(0), mdata(1));
@@ -590,25 +570,15 @@ void fmode_2_1(int fmode)
             }
             if (cnt == 4)
             {
-                if (elona::fread)
+                if (read)
                 {
                     if (mdata(21) == 0)
                     {
+                        for (int y = 0; y < mdata(1); ++y)
                         {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (mdata(1)); cnt < cnt_end;
-                                 ++cnt)
+                            for (int x = 0; x < mdata(0); ++x)
                             {
-                                cnt2 = cnt;
-                                {
-                                    int cnt = 0;
-                                    for (int cnt_end = cnt + (mdata(0));
-                                         cnt < cnt_end;
-                                         ++cnt)
-                                    {
-                                        map(cnt, cnt2, 8) = 0;
-                                    }
-                                }
+                                map(x, y, 8) = 0;
                             }
                         }
                         mdata(21) = 1;
@@ -618,66 +588,66 @@ void fmode_2_1(int fmode)
                 file += u8"mef_"s + mid + u8".s2"s;
                 fsize = 7200;
             }
-            if (elona::fread == 0)
+            if (!read)
             {
                 zOpen(hgz, file, 1, 3);
                 fileadd(""s + file);
             }
-            if (elona::fread == 1)
+            if (read)
             {
                 zOpen(hgz, file, 0);
             }
             if (cnt == 0)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(mdata, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(mdata, hgz, fsize);
                 }
             }
             if (cnt == 1)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(map, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(map, hgz, fsize);
                 }
             }
             if (cnt == 2)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(cdata, hgz, fsize, 57);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(cdata, hgz, fsize, 57);
                 }
             }
             if (cnt == 3)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(sdata, hgz, fsize, 57);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(sdata, hgz, fsize, 57);
                 }
             }
             if (cnt == 4)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(mef, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(mef, hgz, fsize);
                 }
@@ -696,14 +666,7 @@ void fmode_20_19(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
-    if (fmode == 20)
-    {
-        elona::fread = 0;
-    }
-    if (fmode == 19)
-    {
-        elona::fread = 1;
-    }
+    bool read = fmode == 19;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
@@ -716,7 +679,7 @@ void fmode_20_19(int fmode)
             }
             if (cnt == 1)
             {
-                if (elona::fread == 1)
+                if (read)
                 {
                     DIM4(map, mdata(0), mdata(1), 10);
                     DIM3(mapsync, mdata(0), mdata(1));
@@ -730,43 +693,43 @@ void fmode_20_19(int fmode)
                 file += u8"m3_"s + id + u8".t"s;
                 fsize = 1164800;
             }
-            if (elona::fread == 0)
+            if (!read)
             {
                 zOpen(hgz, file, 1, 3);
             }
-            if (elona::fread == 1)
+            if (read)
             {
                 zOpen(hgz, file, 0);
             }
             if (cnt == 0)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(mdata, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(mdata, hgz, fsize);
                 }
             }
             if (cnt == 1)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(map, hgz, fsize);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(map, hgz, fsize);
                 }
             }
             if (cnt == 2)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(inv, hgz, fsize, 1320);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(inv, hgz, fsize, 1320);
                 }
@@ -777,7 +740,7 @@ void fmode_20_19(int fmode)
     file = folder + u8"m4_"s + id + u8".t"s;
     elona_export = 1;
     arrayfile(u8"mdatan");
-    if (elona::fread == 0)
+    if (!read)
     {
         zipadd(u8"m1_"s + id + u8".t"s);
         zipadd(u8"m2_"s + id + u8".t"s);
@@ -791,14 +754,13 @@ void fmode_22_21(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
+    bool read = fmode == 21;
     if (fmode == 22)
     {
-        elona::fread = 0;
         tg = 1;
     }
     if (fmode == 21)
     {
-        elona::fread = 1;
         tg = 0;
     }
     enemyteam = -1;
@@ -808,7 +770,7 @@ void fmode_22_21(int fmode)
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (elona::fread == 0)
+            if (!read)
             {
                 if (list(0, cnt) == 0)
                 {
@@ -860,43 +822,43 @@ void fmode_22_21(int fmode)
                         inv_getheader(tg);
                         fsize = 280 * invrange;
                     }
-                    if (elona::fread == 0)
+                    if (!read)
                     {
                         zOpen(hgz, file, 1, 3);
                     }
-                    if (elona::fread == 1)
+                    if (read)
                     {
                         zOpen(hgz, file, 0);
                     }
                     if (cnt == 0)
                     {
-                        if (elona::fread == 0)
+                        if (!read)
                         {
                             zWrite(cdata, hgz, fsize, tg);
                         }
-                        if (elona::fread == 1)
+                        if (read)
                         {
                             zRead(cdata, hgz, fsize, tg);
                         }
                     }
                     if (cnt == 1)
                     {
-                        if (elona::fread == 0)
+                        if (!read)
                         {
                             zWrite(sdata, hgz, fsize, tg);
                         }
-                        if (elona::fread == 1)
+                        if (read)
                         {
                             zRead(sdata, hgz, fsize, tg);
                         }
                     }
                     if (cnt == 2)
                     {
-                        if (elona::fread == 0)
+                        if (!read)
                         {
                             zWrite(inv, hgz, fsize, invhead);
                         }
-                        if (elona::fread == 1)
+                        if (read)
                         {
                             zRead(inv, hgz, fsize, invhead);
                         }
@@ -907,7 +869,7 @@ void fmode_22_21(int fmode)
             file = folder + u8"c4_"s + id + u8".t"s;
             elona_export = 1;
             arrayfile(u8"cdatan3");
-            if (elona::fread == 0)
+            if (!read)
             {
                 zipadd(u8"c1_"s + id + u8".t"s);
                 zipadd(u8"c2_"s + id + u8".t"s);
@@ -1010,210 +972,148 @@ void fmode_22_21(int fmode)
 }
 
 
-void fmode_16(int fmode)
+void fmode_16()
 {
-    int fsize = 0;
     DIM3(cmapdata, 5, 400);
+
+    zOpen(hgz, fmapfile + u8".map", 0);
+    zRead(map, hgz, mdata(0) * mdata(1) * 3 * 4);
+    zClose(hgz);
+
+    file = fmapfile + u8".obj"s;
+    if (!fs::exists(file))
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-        {
-            if (cnt == 0)
-            {
-                file = fmapfile + u8".map"s;
-                fsize = mdata(0) * mdata(1) * 3 * 4;
-            }
-            if (cnt == 1)
-            {
-                file = fmapfile + u8".obj"s;
-                fsize = 8000;
-            }
-            if (cnt == 1)
-            {
-                if (!fs::exists(file))
-                {
-                    continue;
-                }
-            }
-            zOpen(hgz, file, 0);
-            if (cnt == 0)
-            {
-                zRead(map, hgz, fsize);
-            }
-            if (cnt == 1)
-            {
-                zRead(cmapdata, hgz, fsize);
-            }
-            zClose(hgz);
-        }
+        return;
     }
+    zOpen(hgz, file, 0);
+    zRead(cmapdata, hgz, 8000);
+    zClose(hgz);
 }
 
 
 void fmode_6_5(int fmode)
 {
-    int fsize = 0;
-    if (fmode == 6)
+    bool read = fmode == 5;
+    if (read)
     {
-        elona::fread = 0;
-    }
-    if (fmode == 5)
-    {
-        elona::fread = 1;
         DIM3(cmapdata, 5, 400);
+        DIM3(mef, 9, 200);
     }
+    for (int i = 0; i < 3; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        int fsize = 0;
+        if (i == 0)
         {
-            if (cnt == 0)
-            {
-                file = fmapfile + u8".idx"s;
-                fsize = 400;
-            }
-            if (cnt == 1)
-            {
-                if (elona::fread == 1)
-                {
-                    DIM4(map, mdata(0), mdata(1), 10);
-                    DIM3(mapsync, mdata(0), mdata(1));
-                    DIM3(mef, 9, 200);
-                }
-                file = fmapfile + u8".map"s;
-                fsize = mdata(0) * mdata(1) * 10 * 4;
-            }
-            if (cnt == 2)
-            {
-                file = fmapfile + u8".obj"s;
-                fsize = 8000;
-            }
-            if (cnt == 2 && elona::fread == 1)
-            {
-                if (!fs::exists(file))
-                {
-                    continue;
-                }
-            }
-            if (elona::fread == 0)
-            {
-                zOpen(hgz, file, 1, 3);
-            }
-            if (elona::fread == 1)
-            {
-                zOpen(hgz, file, 0);
-            }
-            if (cnt == 0)
-            {
-                if (elona::fread == 0)
-                {
-                    zWrite(mdata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(mdatatmp, hgz, fsize);
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
-                        {
-                            mdata(cnt) = mdatatmp(cnt);
-                        }
-                    }
-                }
-            }
-            if (cnt == 1)
-            {
-                if (elona::fread == 0)
-                {
-                    zWrite(map, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(map, hgz, fsize);
-                }
-            }
-            if (cnt == 2)
-            {
-                if (elona::fread == 0)
-                {
-                    zWrite(cmapdata, hgz, fsize);
-                }
-                if (elona::fread == 1)
-                {
-                    zRead(cmapdata, hgz, fsize);
-                }
-            }
-            zClose(hgz);
+            file = fmapfile + u8".idx"s;
+            fsize = 400;
         }
+        if (i == 1)
+        {
+            if (read)
+            {
+                DIM4(map, mdata(0), mdata(1), 10);
+                DIM3(mapsync, mdata(0), mdata(1));
+            }
+            file = fmapfile + u8".map"s;
+            fsize = mdata(0) * mdata(1) * 10 * 4;
+        }
+        if (i == 2)
+        {
+            file = fmapfile + u8".obj"s;
+            fsize = 8000;
+        }
+        if (i == 2 && read)
+        {
+            if (!fs::exists(file))
+            {
+                continue;
+            }
+        }
+        if (!read)
+        {
+            zOpen(hgz, file, 1, 3);
+        }
+        if (read)
+        {
+            zOpen(hgz, file, 0);
+        }
+        if (i == 0)
+        {
+            if (!read)
+            {
+                zWrite(mdata, hgz, fsize);
+            }
+            if (read)
+            {
+                zRead(mdatatmp, hgz, fsize);
+                for (int j = 0; j < 5; ++j)
+                {
+                    mdata(j) = mdatatmp(j);
+                }
+            }
+        }
+        if (i == 1)
+        {
+            if (!read)
+            {
+                zWrite(map, hgz, fsize);
+            }
+            if (read)
+            {
+                zRead(map, hgz, fsize);
+            }
+        }
+        if (i == 2)
+        {
+            if (!read)
+            {
+                zWrite(cmapdata, hgz, fsize);
+            }
+            if (read)
+            {
+                zRead(cmapdata, hgz, fsize);
+            }
+        }
+        zClose(hgz);
     }
 }
 
 
 void fmode_4_3(int fmode)
 {
-    int fsize = 0;
-    folder = fs::u8path(u8"./tmp/");
+    const auto path = fs::u8path(u8"./tmp") / file;
     if (fmode == 4)
     {
-        elona::fread = 0;
+        zOpen(hgz, path, 1, 3);
+        fileadd(path);
+        zWrite(inv, hgz, 1164800, 1320);
+        zClose(hgz);
     }
-    if (fmode == 3)
+    else
     {
-        elona::fread = 1;
+        zRead(inv, hgz, 1164800, 1320);
+        zOpen(hgz, path, 0);
+        zClose(hgz);
     }
-    file = folder + file;
-    fsize = 1164800;
-    if (elona::fread == 0)
-    {
-        zOpen(hgz, file, 1, 3);
-        fileadd(file);
-    }
-    if (elona::fread == 1)
-    {
-        zOpen(hgz, file, 0);
-    }
-    if (elona::fread == 0)
-    {
-        zWrite(inv, hgz, fsize, 1320);
-    }
-    if (elona::fread == 1)
-    {
-        zRead(inv, hgz, fsize, 1320);
-    }
-    zClose(hgz);
 }
 
 
 
 void fmode_23_24(int fmode)
 {
-    int fsize = 0;
     if (fmode == 23)
     {
-        elona::fread = 0;
-    }
-    if (fmode == 24)
-    {
-        elona::fread = 1;
-    }
-    fsize = 4000;
-    if (elona::fread == 0)
-    {
         zOpen(hgz, file, 1, 3);
-        fileadd(""s + file);
+        fileadd(file);
+        zWrite(deck, hgz, 4000);
+        zClose(hgz);
     }
-    if (elona::fread == 1)
+    else
     {
         zOpen(hgz, file, 0);
+        zRead(deck, hgz, 4000);
+        zClose(hgz);
     }
-    if (elona::fread == 0)
-    {
-        zWrite(deck, hgz, fsize);
-    }
-    if (elona::fread == 1)
-    {
-        zRead(deck, hgz, fsize);
-    }
-    zClose(hgz);
 }
 
 
@@ -1221,14 +1121,7 @@ void fmode_18_17(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
-    if (fmode == 18)
-    {
-        elona::fread = 0;
-    }
-    if (fmode == 17)
-    {
-        elona::fread = 1;
-    }
+    bool read = fmode == 17;
     if (!fs::exists(file + u8"cdata_"s + mid + u8".s2"s))
     {
         return;
@@ -1248,33 +1141,33 @@ void fmode_18_17(int fmode)
                 file += u8"sdata_"s + mid + u8".s2"s;
                 fsize = 902400;
             }
-            if (elona::fread == 0)
+            if (!read)
             {
                 zOpen(hgz, file, 1, 3);
                 fileadd(""s + file);
             }
-            if (elona::fread == 1)
+            if (read)
             {
                 zOpen(hgz, file, 0);
             }
             if (cnt == 0)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(cdata, hgz, fsize, 57);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(cdata, hgz, fsize, 57);
                 }
             }
             if (cnt == 1)
             {
-                if (elona::fread == 0)
+                if (!read)
                 {
                     zWrite(sdata, hgz, fsize, 57);
                 }
-                if (elona::fread == 1)
+                if (read)
                 {
                     zRead(sdata, hgz, fsize, 57);
                 }
@@ -1287,33 +1180,26 @@ void fmode_18_17(int fmode)
 }
 
 
-void fmode_10(int fmode)
+void fmode_10()
 {
-    int fsize = 0;
-    bool no_file = true;
     for (const auto& entry : filesystem::dir_entries(
              fs::u8path(u8"./tmp"),
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*\..*)"}))
     {
-        no_file = false;
         elona_delete(entry.path());
     }
-    if (no_file)
-        return;
 }
 
 
-void fmode_9(int fmode)
+void fmode_9()
 {
-    int fsize = 0;
     elona_delete(fs::u8path(u8"./save/"s + playerid));
 }
 
 
 void fmode_11_12(int fmode)
 {
-    int fsize = 0;
     if (fmode == 12)
     {
         if (!fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
@@ -1355,15 +1241,11 @@ void fmode_11_12(int fmode)
 }
 
 
-void fmode_13(int fmode)
+void fmode_13()
 {
-    int fsize = 0;
+    for (int i = 0; i < 40; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
-        {
-            adata(cnt, area) = 0;
-        }
+        adata(i, area) = 0;
     }
     for (const auto& entry : filesystem::dir_entries(
              fs::u8path(u8"./tmp"),
@@ -1402,7 +1284,7 @@ void ctrl_file(int mode)
     case 19: fmode_20_19(mode); break;
     case 22:
     case 21: fmode_22_21(mode); break;
-    case 16: fmode_16(mode); break;
+    case 16: fmode_16(); break;
     case 6:
     case 5: fmode_6_5(mode); break;
     case 4:
@@ -1411,11 +1293,11 @@ void ctrl_file(int mode)
     case 24: fmode_23_24(mode); break;
     case 18:
     case 17: fmode_18_17(mode); break;
-    case 10: fmode_10(mode); break;
-    case 9: fmode_9(mode); break;
+    case 10: fmode_10(); break;
+    case 9: fmode_9(); break;
     case 11:
     case 12: fmode_11_12(mode); break;
-    case 13: fmode_13(mode); break;
+    case 13: fmode_13(); break;
     default: assert(0);
     }
 }
