@@ -122,6 +122,33 @@ size_t byte_count(uint8_t c)
 
 
 
+size_t read_binary(std::istream& in, size_t size, char* buffer)
+{
+    assert(in);
+
+    in.read(buffer, size);
+    if (in.eof())
+    {
+        in.clear();
+    }
+
+    assert(in);
+
+    return size;
+}
+
+
+
+std::pair<std::unique_ptr<char[]>, size_t> read_binary(
+    std::istream& in,
+    size_t size)
+{
+    std::unique_ptr<char[]> buf{new char[size]};
+    return {std::move(buf), read_binary(in, size, buf.get())};
+}
+
+
+
 } // namespace
 
 
@@ -161,20 +188,25 @@ void set_blend_mode()
     {
     case 0:
     case 1:
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::none);
         break;
     case 2:
     case 3:
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::blend);
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::blend);
         break;
     case 4:
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::blend);
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::blend);
         break;
     case 5:
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::add);
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::add);
         break;
     case 6:
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::blend);
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::blend);
         break;
     default: break;
     }
@@ -320,10 +352,13 @@ void boxf(int x1, int y1, int x2, int y2)
         && detail::current_tex_buffer().color.g == 0
         && detail::current_tex_buffer().color.b == 0)
     {
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-        snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::none);
+        snail::application::instance().get_renderer().set_draw_color(
+            {0, 0, 0, 0});
     }
-    snail::application::instance().get_renderer().fill_rect(x1, y1, x2 - x1, y2 - y1);
+    snail::application::instance().get_renderer().fill_rect(
+        x1, y1, x2 - x1, y2 - y1);
 }
 
 
@@ -334,8 +369,10 @@ void boxf()
         && detail::current_tex_buffer().color.g == 0
         && detail::current_tex_buffer().color.b == 0)
     {
-        snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-        snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::none);
+        snail::application::instance().get_renderer().set_draw_color(
+            {0, 0, 0, 0});
     }
     snail::application::instance().get_renderer().clear();
 }
@@ -348,13 +385,12 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     {
         size = data.size();
     }
-    std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
         throw 0;
     }
-    size = in.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(in, size);
     data = {buf.get(), static_cast<size_t>(size)};
 }
 
@@ -362,13 +398,12 @@ void bload(const fs::path& filename, std::string& data, int size, int)
 
 void bload(const fs::path& filename, int& data, int size, int)
 {
-    std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
         throw 0;
     }
-    size = in.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(in, size);
     data = *reinterpret_cast<int*>(buf.get());
 }
 
@@ -380,13 +415,12 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     {
         size = data.size() * sizeof(int);
     }
-    std::unique_ptr<char[]> buf{new char[size]};
     std::ifstream in{filename, std::ios::binary};
     if (!in)
     {
         throw 0;
     }
-    size = in.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(in, size);
     for (int i = 0; i < length(data); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
@@ -473,7 +507,8 @@ void buffer(int window_id, int width, int height)
             ::SDL_DestroyTexture(ptr);
         });
 
-    const auto save = snail::application::instance().get_renderer().render_target();
+    const auto save =
+        snail::application::instance().get_renderer().render_target();
     snail::application::instance().get_renderer().set_render_target(
         detail::tex_buffers[window_id].texture);
     snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
@@ -602,7 +637,9 @@ void font(const std::string& name, int size, int style)
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                "font/APJapanesefontT.ttf", size, snail::font_t::style_t::regular));
+                "font/APJapanesefontT.ttf",
+                size,
+                snail::font_t::style_t::regular));
         snail::application::instance().get_renderer().set_font(i_->second);
     }
 }
@@ -626,14 +663,19 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
             detail::tmp_buffer);
         if (window_id < 10)
         {
-            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(
+                snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color(
+                {0, 0, 0, 0});
         }
         else
         {
-            const auto save = snail::application::instance().get_renderer().blend_mode();
-            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            const auto save =
+                snail::application::instance().get_renderer().blend_mode();
+            snail::application::instance().get_renderer().set_blend_mode(
+                snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color(
+                {0, 0, 0, 0});
             snail::application::instance().get_renderer().set_blend_mode(save);
         }
         snail::application::instance().get_renderer().clear();
@@ -850,14 +892,19 @@ void grotate(
             detail::tmp_buffer);
         if (window_id < 10)
         {
-            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(
+                snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color(
+                {0, 0, 0, 0});
         }
         else
         {
-            const auto save = snail::application::instance().get_renderer().blend_mode();
-            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            const auto save =
+                snail::application::instance().get_renderer().blend_mode();
+            snail::application::instance().get_renderer().set_blend_mode(
+                snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color(
+                {0, 0, 0, 0});
             snail::application::instance().get_renderer().set_blend_mode(save);
         }
         snail::application::instance().get_renderer().clear();
@@ -925,7 +972,8 @@ void gzoom(
     int src_height,
     int mode)
 {
-    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    snail::application::instance().get_renderer().set_blend_mode(
+        snail::blend_mode_t::none);
     snail::detail::enforce_sdl(
         ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture, 255));
 
@@ -935,14 +983,19 @@ void gzoom(
             detail::tmp_buffer);
         if (window_id < 10)
         {
-            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            snail::application::instance().get_renderer().set_blend_mode(
+                snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color(
+                {0, 0, 0, 0});
         }
         else
         {
-            const auto save = snail::application::instance().get_renderer().blend_mode();
-            snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+            const auto save =
+                snail::application::instance().get_renderer().blend_mode();
+            snail::application::instance().get_renderer().set_blend_mode(
+                snail::blend_mode_t::none);
+            snail::application::instance().get_renderer().set_draw_color(
+                {0, 0, 0, 0});
             snail::application::instance().get_renderer().set_blend_mode(save);
         }
         snail::application::instance().get_renderer().clear();
@@ -1323,8 +1376,10 @@ void picload(const fs::path& filename, int mode)
     {
         buffer(detail::current_buffer, img.width(), img.height());
     }
-    const auto save = snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    const auto save =
+        snail::application::instance().get_renderer().blend_mode();
+    snail::application::instance().get_renderer().set_blend_mode(
+        snail::blend_mode_t::none);
     snail::application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
     snail::application::instance().get_renderer().set_blend_mode(save);
@@ -1369,9 +1424,11 @@ void redraw(int n)
 {
     if (n != 1)
         return;
-    const auto save = snail::application::instance().get_renderer().render_target();
+    const auto save =
+        snail::application::instance().get_renderer().render_target();
     snail::application::instance().get_renderer().set_render_target(nullptr);
-    snail::application::instance().get_renderer().set_draw_color(snail::color{0, 0, 0, 255});
+    snail::application::instance().get_renderer().set_draw_color(
+        snail::color{0, 0, 0, 255});
     snail::application::instance().get_renderer().clear();
     snail::application::instance().get_renderer().render_image(
         detail::tex_buffers[0].texture, 0, 0);
@@ -1394,13 +1451,15 @@ void stick(int& out, int allow_repeat_keys)
         if ((1 << n) & allow_repeat_keys)
         {
             if (is_modifier)
-                return (1 << n) * snail::input::instance().is_pressed_exactly(key);
+                return (1 << n)
+                    * snail::input::instance().is_pressed_exactly(key);
             else
                 return (1 << n) * snail::input::instance().is_pressed(key);
         }
         else
         {
-            return (1 << n) * snail::input::instance().was_pressed_just_now(key);
+            return (1 << n)
+                * snail::input::instance().was_pressed_just_now(key);
         }
     };
 
@@ -1577,8 +1636,8 @@ template <typename F>
 void map(F f)
 {
     // const auto texture =
-    // snail::application::instance().get_renderer().render_target(); const auto format
-    // = snail::detail::enforce_sdl(
+    // snail::application::instance().get_renderer().render_target(); const auto
+    // format = snail::detail::enforce_sdl(
     //         ::SDL_AllocFormat(::SDL_MasksToPixelFormatEnum(32, 0, 0, 0, 0)));
     //
     // auto pixels = reinterpret_cast<uint32_t*>(gf_detail::pixels);
@@ -1810,8 +1869,7 @@ void zWrite(std::unique_ptr<char[]> data, int size)
 
 void zRead(elona_vector1<int>& data, int, int size)
 {
-    std::unique_ptr<char[]> buf{new char[size]};
-    size = gzip_detail::file.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(gzip_detail::file, size);
     for (int i = 0; i < length(data); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
@@ -1825,8 +1883,7 @@ void zRead(elona_vector1<int>& data, int, int size)
 
 void zRead(elona_vector2<int>& data, int, int size)
 {
-    std::unique_ptr<char[]> buf{new char[size]};
-    size = gzip_detail::file.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(gzip_detail::file, size);
     for (int j = 0; j < data.j_size(); ++j)
     {
         for (int i = 0; i < data.i_size(); ++i)
@@ -1844,8 +1901,7 @@ void zRead(elona_vector2<int>& data, int, int size)
 
 void zRead(elona_vector2<int>& data, int, int size, int offset)
 {
-    std::unique_ptr<char[]> buf{new char[size]};
-    size = gzip_detail::file.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(gzip_detail::file, size);
     for (int j = offset; j < data.j_size(); ++j)
     {
         for (int i = 0; i < data.i_size(); ++i)
@@ -1863,8 +1919,7 @@ void zRead(elona_vector2<int>& data, int, int size, int offset)
 
 void zRead(elona_vector3<int>& data, int, int size)
 {
-    std::unique_ptr<char[]> buf{new char[size]};
-    size = gzip_detail::file.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(gzip_detail::file, size);
     for (int k = 0; k < data.k_size(); ++k)
     {
         for (int j = 0; j < data.j_size(); ++j)
@@ -1885,8 +1940,7 @@ void zRead(elona_vector3<int>& data, int, int size)
 
 void zRead(elona_vector1<std::string>& data, int, int size)
 {
-    std::unique_ptr<char[]> buf{new char[size]};
-    size = gzip_detail::file.readsome(buf.get(), size);
+    auto [buf, _] = read_binary(gzip_detail::file, size);
     data(0) = {buf.get(), static_cast<size_t>(size)};
 }
 
@@ -1894,7 +1948,7 @@ void zRead(elona_vector1<std::string>& data, int, int size)
 
 void zRead(char* buf, int size)
 {
-    gzip_detail::file.readsome(buf, size);
+    read_binary(gzip_detail::file, size, buf);
 }
 
 

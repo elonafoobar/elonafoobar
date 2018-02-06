@@ -11339,9 +11339,9 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 
 
 
-void arrayfile(std::string_view fmode_str)
+void arrayfile(bool fread, std::string_view fmode_str)
 {
-    if (fread == 0)
+    if (!fread)
     {
         arrayfile_write(fmode_str, fs::u8path(file(0)));
     }
@@ -56811,7 +56811,7 @@ void label_2105()
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/character.bmp"), 1);
     gmode(0);
-    fread = 1;
+    bool fread = 1;
     func_1(buff, 1);
     tg = 0;
     {
@@ -56986,7 +56986,7 @@ void label_2106()
 {
     std::string txtfile;
     std::string bmpfile;
-    fread = 0;
+    bool fread = 0;
     cun = usernpcmax;
     txt(lang(
         u8"どのファイルからNPCを作成する？"s, u8"Choose the original file."s));
