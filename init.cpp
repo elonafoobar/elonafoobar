@@ -1049,8 +1049,7 @@ label_1546_internal:
         label_2115();
         return;
     }
-    getkey(p, 112);
-    if (p)
+    if (getkey(snail::key::f1))
     {
         label_2703();
         label_1544();
@@ -1137,8 +1136,7 @@ label_1549_internal:
         label_1541();
         return;
     }
-    getkey(p, 112);
-    if (p)
+    if (getkey(snail::key::f1))
     {
         label_2703();
         label_1547(false);
@@ -1268,8 +1266,7 @@ label_1552_internal:
     {
         label_1547(false);
     }
-    getkey(p, 112);
-    if (p)
+    if (getkey(snail::key::f1))
     {
         label_2703();
         label_1550(false);
@@ -1449,8 +1446,7 @@ label_1555_internal:
     {
         label_1550(false);
     }
-    getkey(p, 112);
-    if (p)
+    if (getkey(snail::key::f1))
     {
         label_2703();
         label_1553(false);
@@ -1610,8 +1606,7 @@ label_1559_internal:
         label_1557();
         return;
     }
-    getkey(p, 112);
-    if (p)
+    if (getkey(snail::key::f1))
     {
         label_2703();
         label_1557(false);

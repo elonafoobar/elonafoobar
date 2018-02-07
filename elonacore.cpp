@@ -19102,8 +19102,7 @@ label_1393_internal:
     ++t_at_m147;
     if (t_at_m147 > 10000)
     {
-        getkey(c_at_m147, 27);
-        if (c_at_m147)
+        if (getkey(snail::key::escape))
         {
             txt(u8"[Chat Skipped]"s);
             sockclose();
@@ -46176,12 +46175,11 @@ label_1945_internal:
         }
         return 1;
     }
-    getkey(a, 8);
     if (ginfo(2) == 0)
     {
         if (noteinfo(0) != 0)
         {
-            if (a == 1)
+            if (getkey(snail::key::backspace))
             {
                 userfile = listn(1, cs + pagesize * page);
                 if (!fs::exists(fs::u8path(u8"./user/"s + userfile)))
@@ -48181,8 +48179,7 @@ label_1970_internal:
     }
     if (mode == 1)
     {
-        getkey(p, 112);
-        if (p)
+        if (getkey(snail::key::f1))
         {
             label_2703();
             return -1;
@@ -53323,8 +53320,7 @@ label_2041_internal:
     }
     if (mode == 1)
     {
-        getkey(p, 112);
-        if (p)
+        if (getkey(snail::key::f1))
         {
             return -1;
         }
@@ -57453,12 +57449,11 @@ label_2119_internal:
         label_2732();
         return;
     }
-    getkey(a, 8);
     if (ginfo(2) == 0)
     {
         if (noteinfo(0) != 0)
         {
-            if (a == 1)
+            if (getkey(snail::key::backspace))
             {
                 p = list(0, cs);
                 playerid = listn(0, p);
@@ -81450,15 +81445,13 @@ label_2747:
     }
     if (gdata_wizard || 0)
     {
-        getkey(a, 112);
-        if (a)
+        if (getkey(snail::key::f1))
         {
             label_2113();
             txt(lang(u8" *保存* "s, u8" *Save* "s));
             await(100);
         }
-        getkey(a, 113);
-        if (a)
+        if (getkey(snail::key::f2))
         {
             msg_newline();
             msgtemp = u8"  "s;
@@ -81468,16 +81461,14 @@ label_2747:
             label_17402();
             return;
         }
-        getkey(a, 114);
-        if (a)
+        if (getkey(snail::key::f3))
         {
             buffer(3, 1440, 800);
             picload(fs::u8path(u8"./graphic/interface.bmp"s), 1);
             gsel(0);
             label_1893();
         }
-        getkey(a, 115);
-        if (a)
+        if (getkey(snail::key::f4))
         {
             {
                 int cnt = 10;
@@ -81501,15 +81492,13 @@ label_2747:
                 }
             }
         }
-        getkey(a, 116);
-        if (a)
+        if (getkey(snail::key::f5))
         {
             label_1997();
             label_2742();
             return;
         }
-        getkey(a, 117);
-        if (a)
+        if (getkey(snail::key::f6))
         {
             dbg_skipevent = 1;
             ++gdata_hour;
@@ -81519,8 +81508,7 @@ label_2747:
             label_2742();
             return;
         }
-        getkey(a, 118);
-        if (a)
+        if (getkey(snail::key::f7))
         {
             if (mdata(6) != 3)
             {
@@ -81537,8 +81525,7 @@ label_2747:
     }
     else
     {
-        getkey(a, 114);
-        if (a)
+        if (getkey(snail::key::f3))
         {
             tcgmain();
             label_1746();
@@ -81547,16 +81534,14 @@ label_2747:
             return;
         }
     }
-    getkey(a, 119);
-    if (a)
+    if (getkey(snail::key::f8))
     {
         label_2084();
         label_1419();
         keywait = 1;
         goto label_2747;
     }
-    getkey(a, 120);
-    if (a)
+    if (getkey(snail::key::f9))
     {
         redraw(0);
         gmode(2);
@@ -81588,15 +81573,13 @@ label_2747:
         snd(20);
         goto label_2747;
     }
-    getkey(a, 122);
-    if (a)
+    if (getkey(snail::key::f11))
     {
         label_2085();
         await(500);
         goto label_2747;
     }
-    getkey(a, 123);
-    if (a)
+    if (getkey(snail::key::f12))
     {
         label_2134();
         return;

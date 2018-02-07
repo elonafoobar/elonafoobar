@@ -69,8 +69,7 @@ label_17401:
         ctrl_file(3, u8"inv_"s + mid + u8".s2");
         goto label_1744_internal;
     }
-    getkey(a, 8);
-    if (a)
+    if (getkey(snail::key::backspace))
     {
         if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
