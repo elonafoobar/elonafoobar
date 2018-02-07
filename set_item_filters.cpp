@@ -6,7 +6,7 @@ namespace elona
 {
 
 
-void label_1276()
+void set_item_filters()
 {
     filter_item(792) = "";
     rffilter_item(792) = "";

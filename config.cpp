@@ -226,7 +226,7 @@ namespace elona
 {
 
 
-void label_2716()
+void load_config()
 {
     int cfg_scancel = 0;
     int cfg_showskillmod = 0;
@@ -686,7 +686,7 @@ void label_2716()
         cfg_language = p;
         valn(0) = u8"language."s;
         valn(1) = ""s + p;
-        label_2713();
+        set_config();
         redraw(0);
     }
     if (cfg_language == 0)
@@ -718,7 +718,7 @@ void label_2716()
 
 
 
-void label_2713()
+void set_config()
 {
     std::vector<std::string> lines;
     range::copy(
@@ -765,7 +765,7 @@ void label_2713()
 
 
 
-void label_2715()
+void load_config2()
 {
     key_select(0) = u8"a"s;
     key_select(1) = u8"b"s;

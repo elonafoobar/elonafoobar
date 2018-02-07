@@ -765,7 +765,7 @@ void removeitem(int prm_496, int prm_497)
     inv[prm_496].number -= n_at_m56;
     if (prm_496 < 200)
     {
-        label_1521();
+        refresh_burden_state();
     }
     if (inv[prm_496].number <= 0)
     {
@@ -1013,7 +1013,7 @@ void item_num(int prm_508, int prm_509)
     }
     else
     {
-        label_1521();
+        refresh_burden_state();
     }
     return;
 }
@@ -1061,7 +1061,7 @@ int item_separate(int& prm_510)
             txt(lang(
                 u8"何かが地面に落ちた。"s,
                 u8"Something falls to the ground from your backpack."s));
-            label_1521();
+            refresh_burden_state();
         }
     }
     return ti_at_m59;

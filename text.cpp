@@ -333,7 +333,7 @@ void txtsetwinword(int prm_361)
 
 
 
-void label_0140()
+void initialize_nefia_names()
 {
     SDIM4(mapnamerd, 20, 2, 5);
     mapnamerd(0, 0) = lang(u8"はじまりの"s, u8"Beginner's "s);
@@ -6192,7 +6192,7 @@ std::string _ta(int prm_398)
 
 
 
-void label_0173()
+void replace_tags_in_quest_board()
 {
     {
         int cnt = 0;
@@ -6340,7 +6340,7 @@ void label_0174()
     p = rnd(noteinfo(0));
     noteget(s, p);
     buff = s;
-    label_0173();
+    replace_tags_in_quest_board();
     return;
 }
 
@@ -6537,7 +6537,7 @@ std::string fltname(int prm_400)
 
 
 
-void label_0180()
+void update_main_quest_journal()
 {
     noteadd(lang(u8"@QM[メインクエスト]"s, u8"@QM[Main Quest]"s));
     if (gdata_main_quest_flag >= 0 && gdata_main_quest_flag < 30)
@@ -7516,7 +7516,7 @@ void label_0182()
 
 
 
-void label_0183()
+void parse_quest_board_text()
 {
     elona_vector1<std::string> buff2;
     notesel(buffboard);

@@ -9,7 +9,7 @@ namespace elona
 {
 
 
-void label_0481()
+void get_random_item_id()
 {
     weighted_random_sampler<int> sampler;
 

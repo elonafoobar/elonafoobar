@@ -6,7 +6,7 @@ namespace elona
 {
 
 
-int label_1756()
+int get_card_info()
 {
     if (dbid == 0)
     {

@@ -6,7 +6,7 @@ namespace elona
 {
 
 
-void label_0034()
+void set_sdataref()
 {
     DIM3(sdataref, 7, 661);
     SDIM3(skillname, 16, 661);

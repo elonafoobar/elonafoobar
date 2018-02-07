@@ -225,7 +225,7 @@ int card_ref(int prm_991)
     cardrefdomain = 0;
     cardrefrare = 100;
     dbid = prm_991;
-    label_1756();
+    get_card_info();
     if (cardreftype == 0)
     {
         cardreftype = 10;

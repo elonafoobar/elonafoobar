@@ -11,7 +11,7 @@ namespace elona
 {
 
 
-int label_1275()
+int access_item_db()
 {
     std::string infilterref;
     const auto info = the_item_db[dbid];
