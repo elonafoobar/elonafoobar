@@ -1098,7 +1098,6 @@ void flt(int = 0, int = 0);
 void fltn(const std::string&);
 void generatemoney(int = 0);
 void getrandomcard(int = 0);
-void gmes(const std::string&);
 void gohostile();
 void gravecard(int = 0);
 void healcon(int = 0, int = 0, int = 0);

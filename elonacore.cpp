@@ -8,7 +8,145 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "main.hpp"
+#include "snail/color.hpp"
 #include "variables.hpp"
+
+using namespace elona;
+
+
+namespace
+{
+
+
+
+position_t gmes(
+    const std::string& text,
+    int x_base,
+    int y_base,
+    int width,
+    const snail::color& text_color_base,
+    bool shadow)
+{
+    int font_size = 14;
+    font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
+
+    const auto message = text + u8"$end";
+    int x = x_base;
+    int y = y_base;
+    size_t pos = 0;
+    snail::color text_color = text_color_base;
+
+    while (message.find(u8"$end", pos) != pos)
+    {
+        bool wait_to_break_line = false;
+        uint8_t first = message[pos];
+        size_t byte;
+        if (first >= 0x00 && first <= 0x7F)
+            byte = 1;
+        else if (first >= 0xc2 && first <= 0xdf)
+            byte = 2;
+        else if (first >= 0xe0 && first <= 0xef)
+            byte = 3;
+        else if (first >= 0xf0 && first <= 0xf7)
+            byte = 4;
+        else if (first >= 0xf8 && first <= 0xfb)
+            byte = 5;
+        else if (first >= 0xfc && first <= 0xfd)
+            byte = 6;
+        else
+            byte = 1;
+        std::string m_ = strmid(message, pos, byte);
+        pos += byte;
+        if (m_ == u8"。" || m_ == u8"、" || m_ == u8"」" || m_ == u8"』"
+            || m_ == u8"！" || m_ == u8"？" || m_ == u8"…")
+        {
+            wait_to_break_line = true;
+        }
+        else if (m_ == u8"<")
+        {
+            const auto tag = strmid(message, pos, instr(message, pos, u8">"));
+            pos += instr(message, pos, u8">") + 1;
+            if (tag == u8"emp1")
+            {
+                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 4);
+                text_color = {50, 50, 255};
+            }
+            else if (tag == u8"emp2")
+            {
+                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                text_color = {40, 130, 40};
+            }
+            else if (tag == u8"title1")
+            {
+                font_size = 12;
+                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                text_color = {100, 50, 50};
+            }
+            else if (tag == u8"def")
+            {
+                font_size = 14;
+                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
+                text_color = text_color_base;
+            }
+            else if (tag == u8"p")
+            {
+                y += 24;
+                x = x_base;
+            }
+            else if (tag == u8"br")
+            {
+                y += 16;
+                x = x_base;
+            }
+            else if (tag == u8"b")
+            {
+                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+            }
+            else if (tag == u8"green")
+            {
+                text_color = {20, 120, 20};
+            }
+            else if (tag == u8"red")
+            {
+                text_color = {120, 20, 20};
+            }
+            else if (tag == u8"col")
+            {
+                text_color = text_color_base;
+            }
+            continue;
+        }
+        if (m_ == u8"^")
+        {
+            m_ = strmid(message, pos, 1);
+            ++pos;
+        }
+        if (!wait_to_break_line)
+        {
+            if (x >= x_base + width)
+            {
+                x = x_base;
+                y += font_size + 2;
+            }
+        }
+        if (shadow)
+        {
+            color(180, 160, 140);
+            elona::pos(x + 1, y + 1);
+            mes(m_);
+        }
+        color(text_color.r, text_color.g, text_color.b);
+        elona::pos(x, y);
+        mes(m_);
+        x += font_size / 2 * (byte == 1 ? 1 : 2);
+    }
+
+    return {x_base, y + font_size + 4};
+}
+
+
+
+} // namespace
 
 
 
@@ -133,11 +271,6 @@ int csprev = 0;
 int pagesaved = 0;
 int himc_at_ime_control = 0;
 int hwnd = 0;
-int gmesx = 0;
-int gmesw = 0;
-elona_vector1<int> gmescol;
-int gmesy = 0;
-int gmestype = 0;
 int x2_at_m105 = 0;
 int y2_at_m105 = 0;
 int curmenu = 0;
@@ -11478,165 +11611,6 @@ int imeget()
     imesw_at_ime_control = ImmGetOpenStatus(himc_at_ime_control);
     ImmReleaseContext(hwnd, himc_at_ime_control);
     return imesw_at_ime_control;
-}
-
-
-
-void gmes(const std::string& prm_715)
-{
-    std::string m_at_m102;
-    std::string msg_at_m102 = prm_715 + u8"$end";
-    int i_at_m102 = 0;
-    int xorg_at_m102 = gmesx;
-    int size_at_m102 = 14;
-    elona_vector1<int> col_at_m102;
-    int lim_at_m102 = gmesx + gmesw;
-    int p_at_m102 = 0;
-    std::string s_at_m102;
-    col_at_m102(0) = gmescol;
-    col_at_m102(1) = gmescol(1);
-    col_at_m102(2) = gmescol(2);
-    col_at_m102(3) = 180;
-    col_at_m102(4) = 160;
-    col_at_m102(5) = 140;
-    font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 0);
-
-    while (1)
-    {
-        p_at_m102 = msg_at_m102[i_at_m102];
-        int brwait_at_m102 = 0;
-        if (p_at_m102 >= 0x00 && p_at_m102 <= 0x7F)
-            p_at_m102 = 1;
-        else if (p_at_m102 >= 0xc2 && p_at_m102 <= 0xdf)
-            p_at_m102 = 2;
-        else if (p_at_m102 >= 0xe0 && p_at_m102 <= 0xef)
-            p_at_m102 = 3;
-        else if (p_at_m102 >= 0xf0 && p_at_m102 <= 0xf7)
-            p_at_m102 = 4;
-        else if (p_at_m102 >= 0xf8 && p_at_m102 <= 0xfb)
-            p_at_m102 = 5;
-        else if (p_at_m102 >= 0xfc && p_at_m102 <= 0xfd)
-            p_at_m102 = 6;
-        else
-            p_at_m102 = 1;
-        m_at_m102 = strmid(msg_at_m102, i_at_m102, p_at_m102);
-        i_at_m102 += p_at_m102;
-        if (m_at_m102 == u8"$"s)
-        {
-            s_at_m102 = strmid(msg_at_m102, i_at_m102, 3);
-            p_at_m102 += 3;
-            if (s_at_m102 == u8"end"s)
-            {
-                break;
-            }
-            continue;
-        }
-        else if (
-            m_at_m102 == u8"。"s || m_at_m102 == u8"、"s || m_at_m102 == u8"」"s
-            || m_at_m102 == u8"』"s || m_at_m102 == u8"！"s
-            || m_at_m102 == u8"？"s || m_at_m102 == u8"…"s)
-        {
-            brwait_at_m102 = 1;
-        }
-        if (m_at_m102 == u8"<"s)
-        {
-            s_at_m102 = strmid(
-                msg_at_m102, i_at_m102, instr(msg_at_m102, i_at_m102, u8">"s));
-            i_at_m102 += instr(msg_at_m102, i_at_m102, u8">"s) + 1;
-            if (s_at_m102 == u8"emp1"s)
-            {
-                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 4);
-                col_at_m102(0) = 50;
-                col_at_m102(1) = 50;
-                col_at_m102(2) = 255;
-            }
-            if (s_at_m102 == u8"emp2"s)
-            {
-                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
-                col_at_m102(0) = 40;
-                col_at_m102(1) = 130;
-                col_at_m102(2) = 40;
-            }
-            if (s_at_m102 == u8"title1"s)
-            {
-                size_at_m102 = 12;
-                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
-                col_at_m102(0) = 100;
-                col_at_m102(1) = 50;
-                col_at_m102(2) = 50;
-            }
-            if (s_at_m102 == u8"def"s)
-            {
-                size_at_m102 = 14;
-                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 0);
-                col_at_m102(0) = gmescol;
-                col_at_m102(1) = gmescol(1);
-                col_at_m102(2) = gmescol(2);
-            }
-            if (s_at_m102 == u8"p"s)
-            {
-                gmesy += 24;
-                gmesx = xorg_at_m102;
-            }
-            if (s_at_m102 == u8"br"s)
-            {
-                gmesy += 16;
-                gmesx = xorg_at_m102;
-            }
-            if (s_at_m102 == u8"b"s)
-            {
-                font(lang(cfg_font1, cfg_font2), size_at_m102 - en * 2, 1);
-            }
-            if (s_at_m102 == u8"green"s)
-            {
-                col_at_m102(0) = 20;
-                col_at_m102(1) = 120;
-                col_at_m102(2) = 20;
-            }
-            if (s_at_m102 == u8"red"s)
-            {
-                col_at_m102(0) = 120;
-                col_at_m102(1) = 20;
-                col_at_m102(2) = 20;
-            }
-            if (s_at_m102 == u8"col"s)
-            {
-                col_at_m102(0) = gmescol;
-                col_at_m102(1) = gmescol(1);
-                col_at_m102(2) = gmescol(2);
-                col_at_m102(3) = 180;
-                col_at_m102(4) = 160;
-                col_at_m102(5) = 140;
-            }
-            continue;
-        }
-        if (m_at_m102 == u8"^"s)
-        {
-            m_at_m102 = strmid(msg_at_m102, i_at_m102, 1);
-            ++i_at_m102;
-        }
-        if (brwait_at_m102 == 0)
-        {
-            if (gmesx >= lim_at_m102)
-            {
-                gmesx = xorg_at_m102;
-                gmesy += size_at_m102 + 2;
-            }
-        }
-        if (gmestype == 1)
-        {
-            color(col_at_m102(3), col_at_m102(4), col_at_m102(5));
-            pos(gmesx + 1, gmesy + 1);
-            mes(m_at_m102);
-        }
-        color(col_at_m102(0), col_at_m102(1), col_at_m102(2));
-        pos(gmesx, gmesy);
-        mes(m_at_m102);
-        gmesx += size_at_m102 / 2 * p_at_m102;
-    }
-
-    gmesx = xorg_at_m102;
-    gmesy += size_at_m102 + 4;
 }
 
 
@@ -42092,15 +42066,8 @@ label_1887_internal:
         255,
         255,
         255);
-    gmesx = wx + 23;
-    gmesy = wy + 60;
-    gmesw = dx - 60;
-    gmescol(0) = 30;
-    gmescol(1) = 30;
-    gmescol(2) = 30;
-    gmestype = 1;
     label_1885();
-    gmes(buff);
+    gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     cs_listbk();
     {
@@ -47563,15 +47530,8 @@ label_1965_internal:
                 break;
             }
             noteget(s, p);
-            gmesx = wx + 40;
-            gmesy = wy + 66 + cnt * 19 + 2;
-            gmesw = 600;
-            gmescol(0) = 30;
-            gmescol(1) = 30;
-            gmescol(2) = 30;
-            gmestype = 0;
             pos(wx + 54, wy + 66 + cnt * 19 + 2);
-            gmes(s);
+            gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
         }
     }
     redraw(1);
@@ -78915,14 +78875,8 @@ void label_2701()
             ty = wy + 55;
             font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
             color(30, 30, 30);
-            gmesx = tx;
-            gmesy = ty;
-            gmesw = 330;
-            gmescol(0) = 30;
-            gmescol(1) = 30;
-            gmescol(2) = 30;
-            gmestype = 1;
             {
+                int y = ty;
                 int cnt = 0;
                 for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                 {
@@ -78932,7 +78886,9 @@ void label_2701()
                     {
                         break;
                     }
-                    gmes(s);
+                    const auto [_, ny] =
+                        gmes(s, tx, y, 330, {30, 30, 30}, true);
+                    y = ny;
                 }
             }
             gmode(2);
@@ -79244,14 +79200,8 @@ label_2705_internal:
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
         p = list(0, pagesize * page_bk + cs_bk2);
-        gmesx = wx + 216;
-        gmesy = wy + 60;
-        gmesw = 510;
-        gmescol(0) = 30;
-        gmescol(1) = 30;
-        gmescol(2) = 30;
-        gmestype = 0;
         {
+            int y = wy + 60;
             int cnt = p;
             for (int cnt_end = cnt + (noteinfo(0) - p); cnt < cnt_end; ++cnt)
             {
@@ -79261,7 +79211,9 @@ label_2705_internal:
                 {
                     break;
                 }
-                gmes(s1);
+                const auto [_, ny] =
+                    gmes(s1, wx + 216, y, 510, {30, 30, 30}, false);
+                y = ny;
             }
         }
     }
