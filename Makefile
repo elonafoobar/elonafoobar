@@ -1,12 +1,16 @@
 CXX := /usr/local/bin/g++-HEAD
 #CXX_FLAGS := -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++17
-CXX_FLAGS := -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include
+CXX_FLAGS := -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include $(EX_CXX_FLAGS)
 LN_FLAGS := -lstdc++fs -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua
 BIN_DIR := bin
 SRC_DIR := .
 SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJECTS := $(foreach i, $(SOURCES), $(BIN_DIR)/$(basename $(i)).o)
 PROGRAM := ./runtime/elonafoobar
+
+
+ifdef SYNTAX_ONLY
+endif
 
 
 FORMAT := clang-format
@@ -42,6 +46,10 @@ clean:
 
 format: FORCE
 	$(FIND) $(SRC_DIR) \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
+
+
+checksyntax:
+	$(MAKE) EX_CXX_FLAGS=-fsyntax-only
 
 
 
