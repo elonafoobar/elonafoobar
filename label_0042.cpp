@@ -849,7 +849,7 @@ int label_0042()
             }
             if (trait(tid) == 1)
             {
-                if (cdata_level(0) < 5)
+                if (cdata[0].level < 5)
                 {
                     return -1;
                 }
@@ -891,15 +891,15 @@ int label_0042()
             }
             if (trait(tid) == 1)
             {
-                if (cdata_level(0) < 5)
+                if (cdata[0].level < 5)
                 {
                     return -1;
                 }
             }
             return 1;
         }
-        cdata_pv(0) = std::clamp(
-            cdata_pv(0) + trait(tid) * 5, int{cdata_pv(0) > 0}, 9999);
+        cdata[0].pv = std::clamp(
+            cdata[0].pv + trait(tid) * 5, int{cdata[0].pv > 0}, 9999);
         return 1;
     }
     if (tid == 8)
@@ -933,8 +933,8 @@ int label_0042()
             }
             return 1;
         }
-        cdata_dv(0) = std::clamp(
-            cdata_dv(0) + trait(tid) * 4, int{cdata_dv(0) > 0}, 9999);
+        cdata[0].dv = std::clamp(
+            cdata[0].dv + trait(tid) * 4, int{cdata[0].dv > 0}, 9999);
         return 1;
     }
     if (tid == 10)
@@ -1048,7 +1048,7 @@ int label_0042()
                 u8"あなたの皮膚は薄くなった。"s, u8"Your skin becomes pale."s);
             return 1;
         }
-        cdata_pv(0) += trait(tid) * 3;
+        cdata[0].pv += trait(tid) * 3;
         return 1;
     }
     if (tid == 26)
@@ -1766,9 +1766,9 @@ int label_0042()
             }
             return 1;
         }
-        if (cdata_dv(0) > 0)
+        if (cdata[0].dv > 0)
         {
-            cdata_dv(0) = cdata_dv(0) * 125 / 100 + 50;
+            cdata[0].dv = cdata[0].dv * 125 / 100 + 50;
         }
         return 1;
     }
@@ -2140,19 +2140,19 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの顔はただれている[魅力"s
-                        + -1 * (4 + cdata_level(0) / 5) + u8"]"s,
+                        + -1 * (4 + cdata[0].level / 5) + u8"]"s,
                     u8"You have sores on your face. [CHR"s
-                        + -1 * (4 + cdata_level(0) / 5) + u8"]"s);
+                        + -1 * (4 + cdata[0].level / 5) + u8"]"s);
                 traitrefn(4) = lang(
                     u8"あなたの顔中に蕁麻疹が出ている[魅力"s
-                        + -2 * (4 + cdata_level(0) / 5) + u8"]"s,
+                        + -2 * (4 + cdata[0].level / 5) + u8"]"s,
                     u8"Your face is ulcerate. [CHR"s
-                        + -2 * (4 + cdata_level(0) / 5) + u8"]"s);
+                        + -2 * (4 + cdata[0].level / 5) + u8"]"s);
                 traitrefn(5) = lang(
                     u8"あなたの顔は崩れかけている[魅力"s
-                        + -3 * (4 + cdata_level(0) / 5) + u8"]"s,
+                        + -3 * (4 + cdata[0].level / 5) + u8"]"s,
                     u8"Your face is crumbling. [CHR"s
-                        + -3 * (4 + cdata_level(0) / 5) + u8"]"s);
+                        + -3 * (4 + cdata[0].level / 5) + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの顔のただれは軽くなった。"s,
@@ -2162,7 +2162,7 @@ int label_0042()
             return 1;
         }
         sdata(17, 0) = std::clamp(
-            sdata(17, 0) + trait(tid) * (4 + cdata_level(0) / 5),
+            sdata(17, 0) + trait(tid) * (4 + cdata[0].level / 5),
             int{sdata(17, 0) > 0},
             9999);
         return 1;
@@ -2183,9 +2183,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの足の裏は蹄になっている[足装備不可 速度+"s
-                        + (20 + cdata_level(0) / 2) + u8"]"s,
+                        + (20 + cdata[0].level / 2) + u8"]"s,
                     u8"Your feet transformed into hooves. [SPD+"s
-                        + (20 + cdata_level(0) / 2) + u8" Can't wear boots]"s);
+                        + (20 + cdata[0].level / 2) + u8" Can't wear boots]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの足は元に戻った。"s, u8"Your feet become normal."s);
@@ -2195,7 +2195,7 @@ int label_0042()
             return 1;
         }
         sdata(18, 0) = std::clamp(
-            sdata(18, 0) + (20 + cdata_level(0) / 2),
+            sdata(18, 0) + (20 + cdata[0].level / 2),
             int{sdata(18, 0) > 0},
             9999);
         return 1;
@@ -2215,10 +2215,10 @@ int label_0042()
             {
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
-                    u8"あなたの目は4つある[感覚+"s + (5 + cdata_level(0) / 3)
-                        + u8" 魅力"s + (5 + cdata_level(0) / 3) * -1 + u8"]"s,
-                    u8"You have 4 eyes. [PER+"s + (5 + cdata_level(0) / 3)
-                        + u8" CHR"s + (5 + cdata_level(0) / 3) * -1 + u8"]"s);
+                    u8"あなたの目は4つある[感覚+"s + (5 + cdata[0].level / 3)
+                        + u8" 魅力"s + (5 + cdata[0].level / 3) * -1 + u8"]"s,
+                    u8"You have 4 eyes. [PER+"s + (5 + cdata[0].level / 3)
+                        + u8" CHR"s + (5 + cdata[0].level / 3) * -1 + u8"]"s);
             }
             traitrefn(0) =
                 lang(u8"あなたの目は減った。"s, u8"Your eyes become normal."s);
@@ -2227,11 +2227,11 @@ int label_0042()
             return 1;
         }
         sdata(17, 0) = std::clamp(
-            sdata(17, 0) + (5 + cdata_level(0) / 3) * -1,
+            sdata(17, 0) + (5 + cdata[0].level / 3) * -1,
             int{sdata(17, 0) > 0},
             9999);
         sdata(13, 0) = std::clamp(
-            sdata(13, 0) + (5 + cdata_level(0) / 3),
+            sdata(13, 0) + (5 + cdata[0].level / 3),
             int{sdata(13, 0) > 0},
             9999);
         return 1;
@@ -2252,9 +2252,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの背中には羽がある[背中装備不可 重量-20% 速度+"s
-                        + (12 + cdata_level(0) / 4) + u8"]"s,
+                        + (12 + cdata[0].level / 4) + u8"]"s,
                     u8"You have grown feather. [SPD+"s
-                        + (12 + cdata_level(0) / 4)
+                        + (12 + cdata[0].level / 4)
                         + u8" Weight-20% Can't wear cloaks]"s);
             }
             traitrefn(0) = lang(
@@ -2266,7 +2266,7 @@ int label_0042()
         }
         cbitmod(5, 0, 1);
         sdata(18, 0) = std::clamp(
-            sdata(18, 0) + (12 + cdata_level(0) / 4),
+            sdata(18, 0) + (12 + cdata[0].level / 4),
             int{sdata(18, 0) > 0},
             9999);
         return 1;
@@ -2287,11 +2287,11 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの首はもの凄く太い[首装備不可 魅力"s
-                        + (5 + cdata_level(0) / 5) * -1 + u8" PV+"s
-                        + (12 + cdata_level(0)) + u8"]"s,
+                        + (5 + cdata[0].level / 5) * -1 + u8" PV+"s
+                        + (12 + cdata[0].level) + u8"]"s,
                     u8"Your neck is extremely thick. [CHR"s
-                        + (5 + cdata_level(0) / 5) * -1 + u8" PV+"s
-                        + (12 + cdata_level(0)) + u8" Can't wear amulets]"s);
+                        + (5 + cdata[0].level / 5) * -1 + u8" PV+"s
+                        + (12 + cdata[0].level) + u8" Can't wear amulets]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの首は細くなった。"s, u8"Your neck becomes thin."s);
@@ -2301,10 +2301,10 @@ int label_0042()
             return 1;
         }
         sdata(17, 0) = std::clamp(
-            sdata(17, 0) + (5 + cdata_level(0) / 5) * -1,
+            sdata(17, 0) + (5 + cdata[0].level / 5) * -1,
             int{sdata(17, 0) > 0},
             9999);
-        cdata_pv(0) += 12 + cdata_level(0);
+        cdata[0].pv += 12 + cdata[0].level;
         return 1;
     }
     if (tid == 207)
@@ -2323,12 +2323,12 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは殺戮に飢えている[DV"s
-                        + (15 + cdata_level(0) * 3 / 2) * -1
-                        + u8" ダメージ修正+"s + (5 + cdata_level(0) * 2 / 3)
+                        + (15 + cdata[0].level * 3 / 2) * -1
+                        + u8" ダメージ修正+"s + (5 + cdata[0].level * 2 / 3)
                         + u8"]"s,
                     u8"Desire for violence arises withn in you. [DV"s
-                        + (15 + cdata_level(0) * 3 / 2) * -1 + u8" Dmg bonus+"s
-                        + (5 + cdata_level(0) * 2 / 3) + u8"]"s);
+                        + (15 + cdata[0].level * 3 / 2) * -1 + u8" Dmg bonus+"s
+                        + (5 + cdata[0].level * 2 / 3) + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの心は落ち着いた。"s,
@@ -2338,7 +2338,7 @@ int label_0042()
                 u8"Hatred dominates your soul."s);
             return 1;
         }
-        cdata_dv(0) += (15 + cdata_level(0) * 3 / 2) * -1;
+        cdata[0].dv += (15 + cdata[0].level * 3 / 2) * -1;
         return 1;
     }
     if (tid == 208)
@@ -2357,15 +2357,15 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの頭は巨大化している[耐久"s
-                        + (5 + cdata_level(0) / 3) * -1 + u8" 器用"s
-                        + (4 + cdata_level(0) / 4) * -1 + u8" 習得+"s
-                        + (6 + cdata_level(0) / 2) + u8" 意思+"s
-                        + (2 + cdata_level(0) / 6) + u8"]"s,
+                        + (5 + cdata[0].level / 3) * -1 + u8" 器用"s
+                        + (4 + cdata[0].level / 4) * -1 + u8" 習得+"s
+                        + (6 + cdata[0].level / 2) + u8" 意思+"s
+                        + (2 + cdata[0].level / 6) + u8"]"s,
                     u8"Your head has grown huge. [END"s
-                        + (5 + cdata_level(0) / 3) * -1 + u8" DEX"s
-                        + (4 + cdata_level(0) / 4) * -1 + u8" LER+"s
-                        + (6 + cdata_level(0) / 2) + u8" WIL+"s
-                        + (2 + cdata_level(0) / 6) + u8"]"s);
+                        + (5 + cdata[0].level / 3) * -1 + u8" DEX"s
+                        + (4 + cdata[0].level / 4) * -1 + u8" LER+"s
+                        + (6 + cdata[0].level / 2) + u8" WIL+"s
+                        + (2 + cdata[0].level / 6) + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの頭は元に戻った。"s,
@@ -2376,19 +2376,19 @@ int label_0042()
             return 1;
         }
         sdata(11, 0) = std::clamp(
-            sdata(11, 0) + (5 + cdata_level(0) / 3) * -1,
+            sdata(11, 0) + (5 + cdata[0].level / 3) * -1,
             int{sdata(11, 0) > 0},
             9999);
         sdata(12, 0) = std::clamp(
-            sdata(12, 0) + (4 + cdata_level(0) / 4) * -1,
+            sdata(12, 0) + (4 + cdata[0].level / 4) * -1,
             int{sdata(12, 0) > 0},
             9999);
         sdata(14, 0) = std::clamp(
-            sdata(14, 0) + (6 + cdata_level(0) / 2),
+            sdata(14, 0) + (6 + cdata[0].level / 2),
             int{sdata(14, 0) > 0},
             9999);
         sdata(15, 0) = std::clamp(
-            sdata(15, 0) + (2 + cdata_level(0) / 6),
+            sdata(15, 0) + (2 + cdata[0].level / 6),
             int{sdata(15, 0) > 0},
             9999);
         return 1;
@@ -2465,9 +2465,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは衰弱している[HP-15% 筋力"s
-                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s,
+                        + (4 + cdata[0].level / 2) * -1 + u8"]"s,
                     u8"You suffer debilitation. [HP-15% STR"s
-                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s);
+                        + (4 + cdata[0].level / 2) * -1 + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたは健康になった。"s, u8"You become healthy again."s);
@@ -2476,7 +2476,7 @@ int label_0042()
             return 1;
         }
         sdata(10, 0) = std::clamp(
-            sdata(10, 0) + (4 + cdata_level(0) / 2) * -1,
+            sdata(10, 0) + (4 + cdata[0].level / 2) * -1,
             int{sdata(10, 0) > 0},
             9999);
         sdata(2, 0) = std::clamp(sdata(2, 0) + -15, int{sdata(2, 0) > 0}, 9999);
@@ -2498,9 +2498,9 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは痴呆になっている[MP-15% 魔力"s
-                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s,
+                        + (4 + cdata[0].level / 2) * -1 + u8"]"s,
                     u8"You have dementia. [MP-15% MAG"s
-                        + (4 + cdata_level(0) / 2) * -1 + u8"]"s);
+                        + (4 + cdata[0].level / 2) * -1 + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたは明晰になった。"s, u8"You become confident again."s);
@@ -2509,7 +2509,7 @@ int label_0042()
             return 1;
         }
         sdata(16, 0) = std::clamp(
-            sdata(16, 0) + (4 + cdata_level(0) / 2) * -1,
+            sdata(16, 0) + (4 + cdata[0].level / 2) * -1,
             int{sdata(16, 0) > 0},
             9999);
         sdata(3, 0) = std::clamp(sdata(3, 0) + -15, int{sdata(3, 0) > 0}, 9999);
@@ -2531,11 +2531,11 @@ int label_0042()
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたは重い甲殻で覆われている[PV+"s
-                        + (15 + cdata_level(0) / 2) + u8" 速度"s
-                        + (20 + cdata_level(0) / 2) * -1 + u8"]"s,
+                        + (15 + cdata[0].level / 2) + u8" 速度"s
+                        + (20 + cdata[0].level / 2) * -1 + u8"]"s,
                     u8"You are covered by heavy carapace. [PV+"s
-                        + (15 + cdata_level(0) / 2) + u8" SPD"s
-                        + (20 + cdata_level(0) / 2) * -1 + u8"]"s);
+                        + (15 + cdata[0].level / 2) + u8" SPD"s
+                        + (20 + cdata[0].level / 2) * -1 + u8"]"s);
             }
             traitrefn(0) = lang(
                 u8"あなたの皮膚から甲殻が消えた。"s,
@@ -2546,10 +2546,10 @@ int label_0042()
             return 1;
         }
         sdata(18, 0) = std::clamp(
-            sdata(18, 0) + (20 + cdata_level(0) / 2) * -1,
+            sdata(18, 0) + (20 + cdata[0].level / 2) * -1,
             int{sdata(18, 0) > 0},
             9999);
-        cdata_pv(0) += 15 + cdata_level(0) / 2;
+        cdata[0].pv += 15 + cdata[0].level / 2;
         return 1;
     }
     if (tid == 214)

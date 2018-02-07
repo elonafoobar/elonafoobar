@@ -172,8 +172,8 @@ label_20591:
                         else if (
                             invctrl != 11 && invctrl != 22 && invctrl != 28)
                         {
-                            if (inv[cnt].position.x != cdata_x(cc)
-                                || inv[cnt].position.y != cdata_y(cc))
+                            if (inv[cnt].position.x != cdata[cc].position.x
+                                || inv[cnt].position.y != cdata[cc].position.y)
                             {
                                 continue;
                             }
@@ -574,7 +574,7 @@ label_20591:
     {
         if (tc > 0)
         {
-            if (cdata_relationship(tc) == 10)
+            if (cdata[tc].relationship == 10)
             {
                 txt(lang(
                     u8"仲間からは盗みたくない。"s,
@@ -921,8 +921,8 @@ label_2061_internal:
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
     s = ""s + listmax + u8" items"s;
-    s += u8"  (重さ合計 "s + cnvweight(cdata_inventory_weight(0)) + u8"/"s
-        + cnvweight(cdata_max_inventory_weight(0)) + u8"  荷車 "s
+    s += u8"  (重さ合計 "s + cnvweight(cdata[0].inventory_weight) + u8"/"s
+        + cnvweight(cdata[0].max_inventory_weight) + u8"  荷車 "s
         + cnvweight(gdata_cargo_weight) + u8")"s;
     if (invctrl == 25)
     {
@@ -939,10 +939,10 @@ label_2061_internal:
         window(x, y, w, h - h % 8, 0, 0);
         font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
         pos(x + 16, y + 17);
-        mes(u8"Dv:"s + cdata_dv(tc) + u8" Pv:"s + cdata_pv(tc));
+        mes(u8"Dv:"s + cdata[tc].dv + u8" Pv:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
         mes(lang(u8"装備重量:"s, u8"EquipWt:"s)
-            + cnvweight(cdata_sum_of_equipment_weight(tc)) + ""s
+            + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
             + cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
@@ -1145,7 +1145,7 @@ label_2061_internal:
             gcopy(3, 0, 392, 24, 24);
             color(0, 0, 0);
             pos(wx + 368, wy + 37 - en * 2);
-            mes(""s + cdata_gold(tc) + u8" gp"s);
+            mes(""s + cdata[tc].gold + u8" gp"s);
         }
     }
     redraw(1);
@@ -1455,7 +1455,7 @@ label_2061_internal:
                 }
                 if (invctrl == 11)
                 {
-                    if (calcitemvalue(ci, 0) * in > cdata_gold(0))
+                    if (calcitemvalue(ci, 0) * in > cdata[0].gold)
                     {
                         screenupdate = -1;
                         label_1419();
@@ -1471,9 +1471,9 @@ label_2061_internal:
                 }
                 if (invctrl == 12)
                 {
-                    if (cdata_character_role(tc) != 1009)
+                    if (cdata[tc].character_role != 1009)
                     {
-                        if (calcitemvalue(ci, 1) * in > cdata_gold(tc))
+                        if (calcitemvalue(ci, 1) * in > cdata[tc].gold)
                         {
                             screenupdate = -1;
                             label_1419();
@@ -1537,7 +1537,7 @@ label_2061_internal:
             screenupdate = -1;
             label_1419();
             savecycle();
-            if (cdata_nutrition(0) > 10000)
+            if (cdata[0].nutrition > 10000)
             {
                 txt(lang(
                         u8"今はとても食べられない。"s,
@@ -1642,7 +1642,7 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             ti = inv_getfreeid(tc);
-            if (cdata_sleep(tc))
+            if (cdata[tc].sleep)
             {
                 txt(lang(
                     name(tc) + u8"は眠っている。"s,
@@ -1673,14 +1673,14 @@ label_2061_internal:
                         + _thanks(2) + u8"」"s,
                     cnvtalk(u8"Thank you!"s)));
                 modimp(tc, giftvalue(inv[ci].param4));
-                cdata_emotion_icon(tc) = 317;
+                cdata[tc].emotion_icon = 317;
                 label_1419();
                 label_2743(false);
             }
             f = 0;
             p = sdata(10, tc) * 500 + sdata(11, tc) * 500
                 + sdata(153, tc) * 2500 + 25000;
-            if (cdata_id(tc) == 265)
+            if (cdata[tc].id == 265)
             {
                 p *= 5;
             }
@@ -1688,7 +1688,7 @@ label_2061_internal:
             {
                 f = 1;
             }
-            if (cdata_id(tc) != 265)
+            if (cdata[tc].id != 265)
             {
                 if (reftype == 60000)
                 {
@@ -1715,7 +1715,7 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             f = 0;
-            if (cdata_relationship(tc) == 10)
+            if (cdata[tc].relationship == 10)
             {
                 f = 1;
             }
@@ -1755,7 +1755,7 @@ label_2061_internal:
                     f = 1;
                     if (refitem(inv[ci].id, 9) == 52002)
                     {
-                        if (cdata_drunk(tc))
+                        if (cdata[tc].drunk)
                         {
                             snd(27);
                             txt(lang(
@@ -1799,7 +1799,7 @@ label_2061_internal:
                         name(tc) + u8"は顔を赤らめた。"s,
                         name(tc) + u8" blushes."s));
                     modimp(tc, 15);
-                    cdata_emotion_icon(tc) = 317;
+                    cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
                 {
@@ -1822,7 +1822,7 @@ label_2061_internal:
                             name(tc) + u8"「ガード！ガード！ガード！」"s,
                             cnvtalk(u8"Guard! Guard! Guard!"s)));
                     modimp(tc, -20);
-                    cdata_emotion_icon(tc) = 318;
+                    cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
                     goto label_20591;
                 }
@@ -1957,11 +1957,11 @@ label_2061_internal:
                     u8"It's set as no-drop. You can reset it from the <examine> menu."s));
                 goto label_2060_internal;
             }
-            if (cdata_continuous_action_id(tc) != 0)
+            if (cdata[tc].continuous_action_id != 0)
             {
-                cdata_continuous_action_id(tc) = 0;
-                cdata_continuous_action_turn(tc) = 0;
-                cdata_continuous_action_item(tc) = 0;
+                cdata[tc].continuous_action_id = 0;
+                cdata[tc].continuous_action_turn = 0;
+                cdata[tc].continuous_action_item = 0;
             }
             snd(13);
             ibitmod(12, citrade, 0);
@@ -1980,9 +1980,9 @@ label_2061_internal:
             convertartifact(ci);
             rc = tc;
             ci = citrade;
-            if (cdata_item_which_will_be_used(rc) == ci)
+            if (cdata[rc].item_which_will_be_used == ci)
             {
-                cdata_item_which_will_be_used(rc) = 0;
+                cdata[rc].item_which_will_be_used = 0;
             }
             label_2666();
             if (tc >= 16)
@@ -2051,7 +2051,7 @@ label_2061_internal:
             }
             if (invctrl(1) == 2)
             {
-                if (cdata_gold(0) < inv[ci].subname)
+                if (cdata[0].gold < inv[ci].subname)
                 {
                     snd(27);
                     txt(lang(
@@ -2066,7 +2066,7 @@ label_2061_internal:
                         u8"You don't have to pay your tax yet."s));
                     goto label_20591;
                 }
-                cdata_gold(0) -= inv[ci].subname;
+                cdata[0].gold -= inv[ci].subname;
                 snd(12);
                 txtef(2);
                 txt(lang(
@@ -2130,7 +2130,7 @@ label_2061_internal:
                         + u8" angrily."s));
                 snd(65);
                 modimp(tc, -20);
-                cdata_emotion_icon(tc) = 318;
+                cdata[tc].emotion_icon = 318;
                 --inv[ci].number;
                 goto label_20591;
             }
@@ -2149,7 +2149,7 @@ label_2061_internal:
                 u8"You take "s + itemname(ci, in) + u8"."s));
             if (inv[ci].id == 54)
             {
-                cdata_gold(0) += in;
+                cdata[0].gold += in;
                 inv[ci].number = 0;
             }
             else

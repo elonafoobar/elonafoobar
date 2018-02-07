@@ -983,8 +983,8 @@ std::string name(int prm_309)
     {
         return lang(u8"何か"s, u8"something"s);
     }
-    if (cdata_blind(0) != 0
-        || cbit(6, prm_309) == 1 && cbit(7, 0) == 0 && cdata_wet(prm_309) == 0)
+    if (cdata[0].blind != 0
+        || cbit(6, prm_309) == 1 && cbit(7, 0) == 0 && cdata[prm_309].wet == 0)
     {
         return lang(u8"何か"s, u8"something"s);
     }
@@ -1142,7 +1142,7 @@ std::string he(int prm_320, int prm_321)
     {
         if (jp)
         {
-            if (cdata_sex(prm_320) == 0)
+            if (cdata[prm_320].sex == 0)
             {
                 return u8"彼"s;
             }
@@ -1151,7 +1151,7 @@ std::string he(int prm_320, int prm_321)
                 return u8"彼女"s;
             }
         }
-        if (cdata_sex(prm_320) == 0)
+        if (cdata[prm_320].sex == 0)
         {
             return u8"he"s;
         }
@@ -1172,7 +1172,7 @@ std::string he(int prm_320, int prm_321)
     {
         return u8"you"s;
     }
-    if (cdata_sex(prm_320) == 0)
+    if (cdata[prm_320].sex == 0)
     {
         return u8"he"s;
     }
@@ -1191,7 +1191,7 @@ std::string his(int prm_322, int prm_323)
             {
                 return u8"あなたの"s;
             }
-            else if (cdata_sex(prm_322) == 0)
+            else if (cdata[prm_322].sex == 0)
             {
                 return u8"彼の"s;
             }
@@ -1204,7 +1204,7 @@ std::string his(int prm_322, int prm_323)
         {
             return u8"your"s;
         }
-        else if (cdata_sex(prm_322) == 0)
+        else if (cdata[prm_322].sex == 0)
         {
             return u8"his"s;
         }
@@ -1225,7 +1225,7 @@ std::string his(int prm_322, int prm_323)
     {
         return u8"your"s;
     }
-    if (cdata_sex(prm_322) == 0)
+    if (cdata[prm_322].sex == 0)
     {
         return u8"his"s;
     }
@@ -1240,7 +1240,7 @@ std::string him(int prm_324, int prm_325)
     {
         if (jp)
         {
-            if (cdata_sex(prm_324) == 0)
+            if (cdata[prm_324].sex == 0)
             {
                 return u8"彼"s;
             }
@@ -1249,7 +1249,7 @@ std::string him(int prm_324, int prm_325)
                 return u8"彼女"s;
             }
         }
-        if (cdata_sex(prm_324) == 0)
+        if (cdata[prm_324].sex == 0)
         {
             return u8"him"s;
         }
@@ -1270,7 +1270,7 @@ std::string him(int prm_324, int prm_325)
     {
         return u8"yourself"s;
     }
-    if (cdata_sex(prm_324) == 0)
+    if (cdata[prm_324].sex == 0)
     {
         return u8"him"s;
     }
@@ -1308,7 +1308,7 @@ std::string yourself(int prm_328)
     {
         return u8"yourself"s;
     }
-    if (cdata_sex(prm_328) == 0)
+    if (cdata[prm_328].sex == 0)
     {
         return u8"himself"s;
     }
@@ -1344,7 +1344,7 @@ void txt_check(int prm_329)
     }
     if (prm_329 == 2)
     {
-        if (cc == 0 || cdata_relationship(cc) == 10)
+        if (cc == 0 || cdata[cc].relationship == 10)
         {
             txtvalid = 0;
             return;
@@ -1386,7 +1386,7 @@ void txt_check(int prm_329)
 
 void stxt(int prm_340, const std::string& prm_341)
 {
-    if (prm_340 == 0 || synccheck(prm_340, -1) && cdata_blind(0) == 0)
+    if (prm_340 == 0 || synccheck(prm_340, -1) && cdata[0].blind == 0)
     {
         txt(prm_341);
     }

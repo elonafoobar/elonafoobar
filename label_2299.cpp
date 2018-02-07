@@ -3657,7 +3657,7 @@ void label_2299()
     dbid = id;
     if (id == 343)
     {
-        cdata_cnpc_id(rc) = cnpcid;
+        cdata[rc].cnpc_id = cnpcid;
     }
 }
 

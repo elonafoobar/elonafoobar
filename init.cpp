@@ -1314,7 +1314,7 @@ label_1554:
     dbidn = cmclass;
     dbmode = 3;
     label_2298();
-    cdata_level(rc) = 1;
+    cdata[rc].level = 1;
     {
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -1657,7 +1657,7 @@ label_1561_internal:
         }
     }
     label_1566();
-    cmportrait = cdata_portrait(rc);
+    cmportrait = cdata[rc].portrait;
 label_1562_internal:
     snd(94);
 label_1563_internal:
@@ -1679,7 +1679,7 @@ label_1563_internal:
     label_2298();
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
-    cdata_level(rc) = 1;
+    cdata[rc].level = 1;
     {
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -1692,7 +1692,7 @@ label_1563_internal:
     }
     label_1535();
     label_1536();
-    cdata_portrait(rc) = cmportrait;
+    cdata[rc].portrait = cmportrait;
     create_pcpic(0, 1);
     mode = 1;
     csctrl = 1;
@@ -1788,7 +1788,7 @@ label_1565_internal:
     }
     snd(101);
     cdatan(0, rc) = cmname;
-    cdata_gold(0) = 400 + rnd(200);
+    cdata[0].gold = 400 + rnd(200);
     if (geneuse != ""s)
     {
         label_2091();
@@ -2081,13 +2081,13 @@ void label_2732()
         gdata_home_scale = 0;
         gdata_number_of_waiting_guests = 2;
         gdata_charge_power = 1000;
-        cdata_god(0) = 2;
-        cdata_piety_point(0) = 1000;
-        cdata_praying_point(0) = 1000;
+        cdata[0].god = 2;
+        cdata[0].piety_point = 1000;
+        cdata[0].praying_point = 1000;
         gdata_pael_and_her_mom = 1000;
-        cdata_gold(0) += 1000000;
-        cdata_platinum_coin(0) = 30;
-        cdata_fame(0) = 65000;
+        cdata[0].gold += 1000000;
+        cdata[0].platinum_coin = 30;
+        cdata[0].fame = 65000;
         gdata_main_quest_flag = 100;
         r1 = 0;
         label_1477();

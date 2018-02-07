@@ -402,8 +402,8 @@ int item_find(int prm_476, int prm_477, int prm_478)
                     }
                     if (p_at_m52(2) == 0)
                     {
-                        if (inv[cnt].position.x != cdata_x(0)
-                            || inv[cnt].position.y != cdata_y(0))
+                        if (inv[cnt].position.x != cdata[0].position.x
+                            || inv[cnt].position.y != cdata[0].position.y)
                         {
                             continue;
                         }
@@ -541,15 +541,15 @@ int itemusingfind(int prm_485, int prm_486)
         int cnt = 0;
         for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            if (cdata_state(cnt) != 1)
+            if (cdata[cnt].state != 1)
             {
                 continue;
             }
-            if (cdata_continuous_action_id(cnt) != 0)
+            if (cdata[cnt].continuous_action_id != 0)
             {
-                if (cdata_continuous_action_turn(cnt) > 0)
+                if (cdata[cnt].continuous_action_turn > 0)
                 {
-                    if (cdata_continuous_action_item(cnt) == prm_485)
+                    if (cdata[cnt].continuous_action_item == prm_485)
                     {
                         if (prm_486 == 0 || prm_486 == 1 && cnt != 0)
                         {
@@ -1049,8 +1049,10 @@ int item_separate(int& prm_510)
         {
             if (inv_getowner(prm_510) != -1)
             {
-                inv[prm_510].position.x = cdata_x(inv_getowner(prm_510));
-                inv[prm_510].position.y = cdata_y(inv_getowner(prm_510));
+                inv[prm_510].position.x =
+                    cdata[inv_getowner(prm_510)].position.x;
+                inv[prm_510].position.y =
+                    cdata[inv_getowner(prm_510)].position.y;
             }
             inv[ti_at_m59].position.x = inv[prm_510].position.x;
             inv[ti_at_m59].position.y = inv[prm_510].position.y;
@@ -1968,9 +1970,9 @@ label_0313_internal:
 
 void remain_make(int prm_521, int prm_522)
 {
-    inv[prm_521].subname = cdata_id(prm_522);
-    inv[prm_521].color = cdata_image(prm_522) / 1000;
-    inv[prm_521].weight = cdata_weight(prm_522);
+    inv[prm_521].subname = cdata[prm_522].id;
+    inv[prm_521].color = cdata[prm_522].image / 1000;
+    inv[prm_521].weight = cdata[prm_522].weight;
     if (inv[prm_521].id == 204)
     {
         inv[prm_521].weight = 250 * (inv[prm_521].weight + 100) / 100 + 500;
@@ -1979,15 +1981,15 @@ void remain_make(int prm_521, int prm_522)
     else
     {
         inv[prm_521].weight = 20 * (inv[prm_521].weight + 500) / 500;
-        inv[prm_521].value = cdata_level(prm_522) * 40 + 600;
-        if (refchara(cdata_id(prm_522), 6) < 20)
+        inv[prm_521].value = cdata[prm_522].level * 40 + 600;
+        if (refchara(cdata[prm_522].id, 6) < 20)
         {
-            if (cdata_original_relationship(prm_522) < -1)
+            if (cdata[prm_522].original_relationship < -1)
             {
                 inv[prm_521].value =
                     inv[prm_521].value
                     * std::clamp(
-                          (4 - refchara(cdata_id(prm_522), 6) / 5), 1, 5);
+                          (4 - refchara(cdata[prm_522].id, 6) / 5), 1, 5);
             }
         }
     }

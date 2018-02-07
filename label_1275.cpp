@@ -131,7 +131,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 787:
@@ -1492,7 +1492,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 616:
@@ -1807,7 +1807,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 553:
@@ -1817,7 +1817,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 552:
@@ -2049,7 +2049,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 511:
@@ -2172,43 +2172,43 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 495:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 494:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 492:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 491:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 490:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 489:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 488:
@@ -2218,19 +2218,19 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 487:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 486:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 485:
@@ -2273,7 +2273,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 481:
@@ -2462,7 +2462,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 420:
@@ -2472,7 +2472,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 419:
@@ -2482,7 +2482,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 418:
@@ -2492,7 +2492,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 417:
@@ -2502,7 +2502,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 412:
@@ -3153,7 +3153,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 353:
@@ -3164,7 +3164,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 352:
@@ -3175,7 +3175,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 351:
@@ -3186,7 +3186,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 350:
@@ -3197,7 +3197,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 349:
@@ -3208,7 +3208,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 348:
@@ -3219,7 +3219,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 347:
@@ -3230,7 +3230,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 346:
@@ -3241,7 +3241,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 345:
@@ -3252,7 +3252,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 344:
@@ -3595,7 +3595,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 260:
@@ -3837,7 +3837,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 230:
@@ -3847,7 +3847,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 229:
@@ -3857,7 +3857,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 3;
+            return cdata[0].god == 3;
         }
         break;
     case 228:
@@ -3916,7 +3916,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 3;
+            return cdata[0].god == 3;
         }
         break;
     case 211:
@@ -4037,7 +4037,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 200:
@@ -4048,7 +4048,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 199:
@@ -4059,7 +4059,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 198:
@@ -4070,7 +4070,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 197:
@@ -4108,7 +4108,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 192:
@@ -4131,7 +4131,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 188:
@@ -4142,7 +4142,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 187:
@@ -4152,7 +4152,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 186:
@@ -4163,7 +4163,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 185:
@@ -4174,7 +4174,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 184:
@@ -4220,7 +4220,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 178:
@@ -4639,7 +4639,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 59:
@@ -4655,7 +4655,7 @@ int label_1275()
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 57:
@@ -4697,55 +4697,55 @@ int label_1275()
     case 44:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 42:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 41:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 40:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 39:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 38:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 37:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 36:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 35:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 34:
