@@ -295,7 +295,7 @@ void label_2754()
         flt();
         itemcreate(-1, 236, cdata_x(0), cdata_y(0), 0);
         flt();
-        itemcreate(-1, 54, cdata_x(0), cdata_y(0), 200 + inv_number(ci) * 5);
+        itemcreate(-1, 54, cdata_x(0), cdata_y(0), 200 + inv[ci].number * 5);
         flt();
         itemcreate(
             -1,
@@ -305,7 +305,7 @@ void label_2754()
             std::clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
         flt();
         itemcreate(-1, 239, cdata_x(0), cdata_y(0), 0);
-        inv_param2(ci) = 0;
+        inv[ci].param2 = 0;
         txtef(2);
         txt(lang(
             u8"クエストを達成した！"s, u8"You have completed the quest!"s));
@@ -605,19 +605,23 @@ void label_2754()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        if (inv_function(cnt) != 44)
+                        if (inv[cnt].function != 44)
                         {
                             continue;
                         }
                         if (c == tc)
                         {
-                            if (inv_param1(cnt) == 2)
+                            if (inv[cnt].param1 == 2)
                             {
-                                cell_swap(c, -1, inv_x(cnt), inv_y(cnt));
+                                cell_swap(
+                                    c,
+                                    -1,
+                                    inv[cnt].position.x,
+                                    inv[cnt].position.y);
                                 i = cnt;
                                 p = cnt;
                                 break;
@@ -635,11 +639,16 @@ void label_2754()
                         {
                             continue;
                         }
-                        p(2) = dist(inv_x(cnt), inv_y(cnt), inv_x(i), inv_y(i));
+                        p(2) = dist(
+                            inv[cnt].position.x,
+                            inv[cnt].position.y,
+                            inv[i].position.x,
+                            inv[i].position.y);
                         if (p(2) < p(1))
                         {
-                            if (map(inv_x(cnt), inv_y(cnt), 1) == 0 || c == 0
-                                || c == tc)
+                            if (map(inv[cnt].position.x, inv[cnt].position.y, 1)
+                                    == 0
+                                || c == 0 || c == tc)
                             {
                                 p(0) = cnt;
                                 p(1) = p(2);
@@ -647,7 +656,7 @@ void label_2754()
                         }
                         if (c == 0)
                         {
-                            if (inv_param1(cnt) == 1)
+                            if (inv[cnt].param1 == 1)
                             {
                                 p = cnt;
                                 break;
@@ -657,7 +666,7 @@ void label_2754()
                 }
                 if (p != 0)
                 {
-                    cell_swap(c, -1, inv_x(p), inv_y(p));
+                    cell_swap(c, -1, inv[p].position.x, inv[p].position.y);
                 }
                 cdata_direction(c) =
                     direction(cdata_x(c), cdata_y(c), cdata_x(tc), cdata_y(tc));

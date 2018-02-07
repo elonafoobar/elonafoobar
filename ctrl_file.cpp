@@ -916,7 +916,7 @@ void fmode_22_21(int fmode, const fs::path& file)
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        inv_body_part(cnt) = 0;
+                        inv[cnt].body_part = 0;
                     }
                 }
                 {

@@ -1198,14 +1198,14 @@ int calcattackhit(int prm_893)
     }
     else
     {
-        tohitorg = sdata(12, cc) / 4 + sdata(inv_skill(cw), cc) / 3
+        tohitorg = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3
             + sdata(attackskill, cc) + 50;
-        tohitfix = cdata_hit_bonus(cc) + inv_hit_bonus(cw);
+        tohitfix = cdata_hit_bonus(cc) + inv[cw].hit_bonus;
         if (ammo != -1)
         {
-            tohitfix += inv_hit_bonus(ammo);
+            tohitfix += inv[ammo].hit_bonus;
         }
-        calcweaponfix(inv_id(cw));
+        calcweaponfix(inv[cw].id);
     }
     tohit = tohitorg + tohitfix;
     if (attackskill != 106)
@@ -1227,7 +1227,7 @@ int calcattackhit(int prm_893)
             if (cdata_equipment_type(cc) & 2)
             {
                 tohit += 25;
-                if (inv_weight(cw) >= 4000)
+                if (inv[cw].weight >= 4000)
                 {
                     tohit += sdata(167, cc);
                 }
@@ -1236,15 +1236,15 @@ int calcattackhit(int prm_893)
             {
                 if (attacknum == 1)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv_weight(cw) - 4000 + 400)
+                        tohit -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(166, cc) / 5);
                     }
                 }
-                else if (inv_weight(cw) > 1500)
+                else if (inv[cw].weight > 1500)
                 {
-                    tohit -= (inv_weight(cw) - 1500 + 100)
+                    tohit -= (inv[cw].weight - 1500 + 100)
                         / (10 + sdata(166, cc) / 5);
                 }
             }
@@ -1260,9 +1260,9 @@ int calcattackhit(int prm_893)
             {
                 if (attackrange == 0)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv_weight(cw) - 4000 + 400)
+                        tohit -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(301, cc) / 5);
                     }
                 }
@@ -1276,9 +1276,9 @@ int calcattackhit(int prm_893)
             {
                 if (attackrange == 0)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv_weight(cw) - 4000 + 400)
+                        tohit -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(10, cc) / 10);
                     }
                 }
@@ -1417,17 +1417,17 @@ int calcattackdmg(int prm_894)
     }
     else
     {
-        dmgfix = cdata_damage_bonus(cc) + inv_damage_bonus(cw)
-            + inv_enhancement(cw) + (inv_curse_state(cw) == 1);
-        dice1 = inv_dice_x(cw);
-        dice2 = inv_dice_y(cw);
+        dmgfix = cdata_damage_bonus(cc) + inv[cw].damage_bonus
+            + inv[cw].enhancement + (inv[cw].curse_state == 1);
+        dice1 = inv[cw].dice_x;
+        dice2 = inv[cw].dice_y;
         if (ammo != -1)
         {
-            dmgfix += inv_damage_bonus(ammo)
-                + inv_dice_x(ammo) * inv_dice_y(ammo) / 2;
+            dmgfix += inv[ammo].damage_bonus
+                + inv[ammo].dice_x * inv[ammo].dice_y / 2;
             dmgmulti = 0.5
                 + double(
-                      (sdata(13, cc) + sdata(inv_skill(cw), cc) / 5
+                      (sdata(13, cc) + sdata(inv[cw].skill, cc) / 5
                        + sdata(attackskill, cc) / 5 + sdata(189, cc) * 3 / 2))
                     / 40;
         }
@@ -1435,7 +1435,7 @@ int calcattackdmg(int prm_894)
         {
             dmgmulti = 0.6
                 + double(
-                      (sdata(10, cc) + sdata(inv_skill(cw), cc) / 5
+                      (sdata(10, cc) + sdata(inv[cw].skill, cc) / 5
                        + sdata(attackskill, cc) / 5 + sdata(152, cc) * 2))
                     / 45;
         }
@@ -1449,7 +1449,7 @@ int calcattackdmg(int prm_894)
     }
     else if (cdata_equipment_type(cc) & 2)
     {
-        if (inv_weight(cw) >= 4000)
+        if (inv[cw].weight >= 4000)
         {
             dmgmulti *= 1.5;
         }
@@ -1510,12 +1510,12 @@ int calcattackdmg(int prm_894)
         else if (ammo != -1)
         {
             dmgmulti = dmgmulti
-                * std::clamp((inv_weight(ammo) / 100 + 100), 100, 150) / 100;
+                * std::clamp((inv[ammo].weight / 100 + 100), 100, 150) / 100;
         }
         else
         {
             dmgmulti = dmgmulti
-                * std::clamp((inv_weight(cw) / 200 + 100), 100, 150) / 100;
+                * std::clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
@@ -1596,7 +1596,7 @@ int calcattackdmg(int prm_894)
 
 int calcmedalvalue(int ci)
 {
-    switch (inv_id(ci))
+    switch (inv[ci].id)
     {
     case 430: return 5;
     case 431: return 8;
@@ -1625,13 +1625,13 @@ int calcmedalvalue(int ci)
 
 int calcitemvalue(int ci, int situation)
 {
-    int category = refitem(inv_id(ci), 5);
+    int category = refitem(inv[ci].id, 5);
     int ret = 0;
-    if (inv_identification_state(ci) == 0)
+    if (inv[ci].identification_state == 0)
     {
         if (situation == 2)
         {
-            ret = inv_value(ci) * 4 / 10;
+            ret = inv[ci].value * 4 / 10;
         }
         else
         {
@@ -1642,46 +1642,46 @@ int calcitemvalue(int ci, int situation)
     }
     else if (category >= 50000)
     {
-        ret = inv_value(ci);
+        ret = inv[ci].value;
     }
     else
     {
-        if (inv_identification_state(ci) == 1)
+        if (inv[ci].identification_state == 1)
         {
-            ret = inv_value(ci) * 2 / 10;
+            ret = inv[ci].value * 2 / 10;
         }
-        if (inv_identification_state(ci) == 2)
+        if (inv[ci].identification_state == 2)
         {
-            ret = inv_value(ci) * 5 / 10;
+            ret = inv[ci].value * 5 / 10;
         }
-        if (inv_identification_state(ci) >= 3)
+        if (inv[ci].identification_state >= 3)
         {
-            ret = inv_value(ci);
+            ret = inv[ci].value;
         }
     }
-    if (inv_identification_state(ci) >= 3)
+    if (inv[ci].identification_state >= 3)
     {
-        if (inv_curse_state(ci) == 1)
+        if (inv[ci].curse_state == 1)
         {
             ret = ret * 120 / 100;
         }
-        if (inv_curse_state(ci) == -1)
+        if (inv[ci].curse_state == -1)
         {
             ret = ret / 2;
         }
-        if (inv_curse_state(ci) == -2)
+        if (inv[ci].curse_state == -2)
         {
             ret = ret / 5;
         }
     }
     if (category == 57000)
     {
-        if (inv_param2(ci) > 0)
+        if (inv[ci].param2 > 0)
         {
-            ret = ret * inv_param2(ci) * inv_param2(ci) / 10;
+            ret = ret * inv[ci].param2 * inv[ci].param2 / 10;
         }
     }
-    if (inv_id(ci) == 333)
+    if (inv[ci].id == 333)
     {
         if (situation == 0)
         {
@@ -1689,13 +1689,13 @@ int calcitemvalue(int ci, int situation)
                 cdata_fame(0) / 40 + ret * (cdata_fame(0) / 80) / 100, 0, 800);
         }
     }
-    if (inv_weight(ci) < 0)
+    if (inv[ci].weight < 0)
     {
         if (mode == 6)
         {
             if (category == 92000)
             {
-                ret = ret * trate(inv_param1(ci)) / 100;
+                ret = ret * trate(inv[ci].param1) / 100;
                 if (situation == 1)
                 {
                     ret = ret * 65 / 100;
@@ -1706,25 +1706,25 @@ int calcitemvalue(int ci, int situation)
     }
     if (ibit(4, ci) == 1)
     {
-        dbid = inv_id(ci);
+        dbid = inv[ci].id;
         dbmode = 2;
         label_1275();
-        if (inv_count(ci) < 0)
+        if (inv[ci].count < 0)
         {
             ret = ret / 10;
         }
         else if (category == 54000)
         {
-            ret = ret / 5 + ret * inv_count(ci) / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * inv[ci].count / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret = ret / 2 + ret * inv_count(ci) / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * inv[ci].count / (ichargelevel * 3 + 1);
         }
     }
     if (category == 72000)
     {
-        if (inv_param1(ci) == 0)
+        if (inv[ci].param1 == 0)
         {
             ret = ret / 100 + 1;
         }
@@ -2004,11 +2004,11 @@ int calccostreload(int prm_905, int prm_906)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (refitem(inv_id(cnt), 5) != 25000)
+            if (refitem(inv[cnt].id, 5) != 25000)
             {
                 continue;
             }
@@ -2017,11 +2017,11 @@ int calccostreload(int prm_905, int prm_906)
                 int cnt = 0;
                 for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_enchantment_id(ci_at_m153, cnt) == 0)
+                    if (inv[ci_at_m153].enchantments[cnt].id == 0)
                     {
                         break;
                     }
-                    enc_at_m153 = inv_enchantment_id(ci_at_m153, cnt);
+                    enc_at_m153 = inv[ci_at_m153].enchantments[cnt].id;
                     i_at_m153 = enc_at_m153 / 10000;
                     if (i_at_m153 != 0)
                     {
@@ -2029,14 +2029,14 @@ int calccostreload(int prm_905, int prm_906)
                         if (i_at_m153 == 9)
                         {
                             i_at_m153(0) =
-                                inv_enchantment_power(ci_at_m153, cnt) % 1000;
+                                inv[ci_at_m153].enchantments[cnt].power % 1000;
                             i_at_m153(1) =
-                                inv_enchantment_power(ci_at_m153, cnt) / 1000;
+                                inv[ci_at_m153].enchantments[cnt].power / 1000;
                             cost_at_m153 += (i_at_m153(1) - i_at_m153)
                                 * (50 + enc_at_m153 * enc_at_m153 * 10);
                             if (prm_906 == 1)
                             {
-                                inv_enchantment_power(ci_at_m153, cnt) =
+                                inv[ci_at_m153].enchantments[cnt].power =
                                     i_at_m153(1) * 1000 + i_at_m153(1);
                             }
                         }
@@ -2079,11 +2079,11 @@ int calcidentifyvalue(int prm_907)
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_identification_state(cnt) < 3)
+                if (inv[cnt].identification_state < 3)
                 {
                     ++p_at_m153;
                 }

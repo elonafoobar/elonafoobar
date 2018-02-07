@@ -245,7 +245,7 @@ void label_2246()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata_x(0), cdata_y(0), 0);
-            inv_material(ci) = 15;
+            inv[ci].material = 15;
             flt();
             itemcreate(-1, 54, cdata_x(0), cdata_y(0), 100000);
             flt();
@@ -466,11 +466,11 @@ void label_2246()
         {
             flt();
             itemcreate(-1, 18, cdata_x(0), cdata_y(0), 0);
-            inv_count(ci) = 12;
+            inv[ci].count = 12;
             flt();
             nostack = 1;
             itemcreate(-1, 685, cdata_x(0), cdata_y(0), 0);
-            inv_param2(ci) = 5;
+            inv[ci].param2 = 5;
             flt();
             itemcreate(-1, 54, cdata_x(0), cdata_y(0), 1500);
             flt();
@@ -684,7 +684,7 @@ void label_2246()
                     u8"Something is put on the ground."s));
                 flt();
                 itemcreate(-1, 14, cdata_x(0), cdata_y(0), 0);
-                inv_identification_state(ci) = 3;
+                inv[ci].identification_state = 3;
                 listmax = 0;
                 buff = lang(
                     u8"どうやら何かを掘り当てたようだな。"s,
@@ -778,8 +778,8 @@ void label_2246()
                 SCENE_CUT();
                 flt();
                 itemcreate(-1, 240, cdata_x(0), cdata_y(0), 0);
-                inv_param1(ci) = 35;
-                inv_param2(ci) = 25;
+                inv[ci].param1 = 35;
+                inv[ci].param2 = 25;
                 flt();
                 itemcreate(-1, 636, cdata_x(0), cdata_y(0), 2);
                 txt(lang(
@@ -881,8 +881,8 @@ void label_2246()
             SCENE_CUT();
             flt();
             itemcreate(-1, 204, cdata_x(0), cdata_y(0), 0);
-            inv_subname(ci) = 9;
-            inv_identification_state(ci) = 3;
+            inv[ci].subname = 9;
+            inv[ci].identification_state = 3;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -1016,14 +1016,14 @@ void label_2246()
             SCENE_CUT();
             flt();
             itemcreate(-1, 58, cdata_x(0), cdata_y(0), 0);
-            inv_curse_state(ci) = -1;
+            inv[ci].curse_state = -1;
             flt();
             itemcreate(-1, 61, cdata_x(0), cdata_y(0), 0);
-            inv_curse_state(ci) = 0;
+            inv[ci].curse_state = 0;
             flt();
             itemcreate(-1, 363, cdata_x(0), cdata_y(0), 0);
-            inv_identification_state(ci) = 3;
-            inv_curse_state(ci) = 1;
+            inv[ci].identification_state = 3;
+            inv[ci].curse_state = 1;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -1072,7 +1072,7 @@ void label_2246()
             }
             flt();
             itemcreate(-1, 68, cdata_x(0), cdata_y(0), 0);
-            inv_identification_state(ci) = 3;
+            inv[ci].identification_state = 3;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -1238,7 +1238,7 @@ void label_2246()
             itemcreate(-1, 55, cdata_x(tc), cdata_y(tc), 3);
             flt();
             itemcreate(-1, 239, cdata_x(tc), cdata_y(tc), 0);
-            inv_param2(ci) = 0;
+            inv[ci].param2 = 0;
             snd(44);
             txtef(2);
             txt(lang(
@@ -1758,7 +1758,7 @@ void label_2246()
             itemcreate(-1, 55, cdata_x(tc), cdata_y(tc), 3);
             flt();
             itemcreate(-1, 239, cdata_x(tc), cdata_y(tc), 0);
-            inv_param2(ci) = 0;
+            inv[ci].param2 = 0;
             snd(44);
             txtef(2);
             txt(lang(
@@ -1835,7 +1835,7 @@ void label_2246()
             if (stat != -1)
             {
                 ci = stat;
-                if (inv_number(ci) >= calccargoupdatecost())
+                if (inv[ci].number >= calccargoupdatecost())
                 {
                     list(0, listmax) = 1;
                     listn(0, listmax) =
@@ -1864,7 +1864,7 @@ void label_2246()
                 u8"Your cart's weight limit has increased by "s
                     + cnvweight(calccargoupdate()) + u8"."s));
             snd(58);
-            inv_number(ci) -= calccargoupdatecost();
+            inv[ci].number -= calccargoupdatecost();
             gdata_current_cart_limit += calccargoupdate();
             label_1521();
             listmax = 0;
@@ -2150,7 +2150,7 @@ void label_2246()
                 if (chatval == 2)
                 {
                     int stat = inv_find(559, 0);
-                    --inv_number(stat);
+                    --inv[stat].number;
                     txt(lang(
                         u8"エーテル抗体を1本渡した。"s,
                         u8"You hand her a potion."s));
@@ -2226,7 +2226,7 @@ void label_2246()
             if (chatval == 2)
             {
                 int stat = inv_find(559, 0);
-                --inv_number(stat);
+                --inv[stat].number;
                 txt(lang(
                     u8"エーテル抗体を1本渡した。"s,
                     u8"You hand her a potion."s));
@@ -2774,7 +2774,7 @@ void label_2246()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata_x(0), cdata_y(0), 0);
-            inv_material(ci) = 24;
+            inv[ci].material = 24;
             flt();
             itemcreate(-1, 54, cdata_x(0), cdata_y(0), 25500);
             flt();
@@ -3272,13 +3272,13 @@ void label_2246()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_number(cnt) == 0)
+                    if (inv[cnt].number == 0)
                     {
                         continue;
                     }
-                    if (inv_id(cnt) == 668)
+                    if (inv[cnt].id == 668)
                     {
-                        p(inv_param2(cnt)) = 1;
+                        p(inv[cnt].param2) = 1;
                     }
                 }
             }
@@ -3316,16 +3316,16 @@ void label_2246()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        if (inv_id(cnt) == 668)
+                        if (inv[cnt].id == 668)
                         {
-                            if (p(inv_param2(cnt)) == 0)
+                            if (p(inv[cnt].param2) == 0)
                             {
-                                --inv_number(cnt);
-                                p(inv_param2(cnt)) = 1;
+                                --inv[cnt].number;
+                                p(inv[cnt].param2) = 1;
                             }
                         }
                     }
@@ -3480,7 +3480,7 @@ void label_2246()
             snd(12);
             flt();
             itemcreate(-1, 24, cdata_x(0), cdata_y(0), 0);
-            inv_param1(ci) = 13;
+            inv[ci].param1 = 13;
             listmax = 0;
             buff = lang(
                 u8"ホホホッ。取引成立ですね。では、この招待状をあなたに渡しましょう。"s,
@@ -3522,7 +3522,7 @@ void label_2246()
             flt();
             nostack = 1;
             itemcreate(-1, 672, cdata_x(0), cdata_y(0), 0);
-            inv_param1(ci) = 162;
+            inv[ci].param1 = 162;
             flt();
             itemcreate(-1, 55, cdata_x(0), cdata_y(0), 6);
             txt(lang(
@@ -3670,7 +3670,7 @@ void label_2246()
             flt();
             nostack = 1;
             itemcreate(-1, 685, cdata_x(0), cdata_y(0), 6);
-            inv_param2(ci) = 5;
+            inv[ci].param2 = 5;
             snd(44);
             txtef(2);
             txt(lang(
@@ -3704,13 +3704,13 @@ void label_2246()
                     {
                         break;
                     }
-                    if (inv_number(cnt) > 0)
+                    if (inv[cnt].number > 0)
                     {
-                        if (inv_id(cnt) == 685)
+                        if (inv[cnt].id == 685)
                         {
-                            if (inv_subname(cnt) != 0)
+                            if (inv[cnt].subname != 0)
                             {
-                                --inv_number(cnt);
+                                --inv[cnt].number;
                                 ++gdata_ambitious_scientist;
                                 f = 1;
                                 txt(itemname(cnt, 1) + u8"を納入した。"s);
@@ -3854,7 +3854,7 @@ void label_2246()
             flt();
             nostack = 1;
             itemcreate(-1, 685, cdata_x(0), cdata_y(0), 0);
-            inv_param2(ci) = 30;
+            inv[ci].param2 = 30;
             flt();
             itemcreate(-1, 54, cdata_x(0), cdata_y(0), 15000);
             flt();
@@ -4703,7 +4703,7 @@ void label_2246()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata_x(0), cdata_y(0), 0);
-            inv_material(ci) = 31;
+            inv[ci].material = 31;
             flt();
             itemcreate(-1, 54, cdata_x(0), cdata_y(0), 50000);
             flt();
@@ -4762,15 +4762,15 @@ void label_2246()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_number(cnt) > 0)
+                    if (inv[cnt].number > 0)
                     {
-                        if (refitem(inv_id(cnt), 10) == 1)
+                        if (refitem(inv[cnt].id, 10) == 1)
                         {
                             txtmore();
                             txt(lang(
                                 itemname(cnt) + u8"を渡した。"s,
                                 u8"You hand over "s + itemname(cnt) + u8"."s));
-                            inv_number(cnt) = 0;
+                            inv[cnt].number = 0;
                         }
                     }
                 }
@@ -4920,9 +4920,9 @@ void label_2246()
                                 int stat = itemcreate(-1, cnt, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    if (inv_quality(ci) < 4)
+                                    if (inv[ci].quality < 4)
                                     {
-                                        inv_number(ci) = 0;
+                                        inv[ci].number = 0;
                                     }
                                 }
                             }
@@ -5068,7 +5068,7 @@ void label_2246()
                 if (chatval == 1)
                 {
                     int stat = inv_find(771, 0);
-                    --inv_number(stat);
+                    --inv[stat].number;
                     txt(lang(
                         u8"カプセルドラッグを1錠渡した。"s,
                         u8"You hand him a capsule drag."s));

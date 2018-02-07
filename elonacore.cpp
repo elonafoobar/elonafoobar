@@ -867,7 +867,7 @@ int refitem(int prm_279, int prm_280)
 int iequiploc(int prm_281)
 {
     int p_at_m13 = 0;
-    p_at_m13 = refitem(inv_id(prm_281), 5);
+    p_at_m13 = refitem(inv[prm_281].id, 5);
     if (p_at_m13 == 12000)
     {
         return 1;
@@ -3934,7 +3934,7 @@ void create_pcpic(int prm_409, int prm_410)
 void label_0196()
 {
     int p_at_m38 = 0;
-    p_at_m38 = refitem(inv_id(i_at_m38), 18);
+    p_at_m38 = refitem(inv[i_at_m38].id, 18);
     if (p_at_m38 == 0)
     {
         p_at_m38 = 1;
@@ -3945,27 +3945,27 @@ void label_0196()
     }
     if (body_at_m38 == 3)
     {
-        pcc(4, prm_409) = p_at_m38 + inv_color(i_at_m38) * 1000;
+        pcc(4, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
         return;
     }
     if (body_at_m38 == 4)
     {
-        pcc(2, prm_409) = p_at_m38 + inv_color(i_at_m38) * 1000;
+        pcc(2, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
         return;
     }
     if (body_at_m38 == 9)
     {
-        pcc(3, prm_409) = p_at_m38 + inv_color(i_at_m38) * 1000;
+        pcc(3, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
         return;
     }
     if (body_at_m38 == 7)
     {
-        pcc(8, prm_409) = p_at_m38 + inv_color(i_at_m38) * 1000;
+        pcc(8, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
         return;
     }
     if (body_at_m38 == 8)
     {
-        pcc(5, prm_409) = p_at_m38 + inv_color(i_at_m38) * 1000;
+        pcc(5, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
         return;
     }
     return;
@@ -5569,7 +5569,7 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
 {
     int p_at_m42 = 0;
     int f_at_m42 = 0;
-    randomize(inv_turn(prm_440) + 1);
+    randomize(inv[prm_440].turn + 1);
     DIM2(prm_441, 15);
     prm_442 = 0;
     {
@@ -5577,7 +5577,7 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
             p_at_m42 = rnd(15);
-            if (inv_enchantment_id(prm_440, p_at_m42) == 0)
+            if (inv[prm_440].enchantments[p_at_m42].id == 0)
             {
                 continue;
             }
@@ -5598,7 +5598,7 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
                 continue;
             }
             if (rnd(4) > prm_442
-                || inv_enchantment_power(prm_440, p_at_m42) < 0)
+                || inv[prm_440].enchantments[p_at_m42].power < 0)
             {
                 prm_441(prm_442) = p_at_m42;
                 ++prm_442;
@@ -6280,17 +6280,17 @@ void sortenc(int prm_454)
                 for (int cnt_end = cnt + (14); cnt < cnt_end; ++cnt)
                 {
                     cnt2_at_m47 = cnt + 1;
-                    if (inv_enchantment_id(prm_454, cnt)
-                        < inv_enchantment_id(prm_454, cnt2_at_m47))
+                    if (inv[prm_454].enchantments[cnt].id
+                        < inv[prm_454].enchantments[cnt2_at_m47].id)
                     {
-                        p_at_m47(0) = inv_enchantment_id(prm_454, cnt);
-                        p_at_m47(1) = inv_enchantment_power(prm_454, cnt);
-                        inv_enchantment_id(prm_454, cnt) =
-                            inv_enchantment_id(prm_454, cnt2_at_m47);
-                        inv_enchantment_id(prm_454, cnt2_at_m47) = p_at_m47;
-                        inv_enchantment_power(prm_454, cnt) =
-                            inv_enchantment_power(prm_454, cnt2_at_m47);
-                        inv_enchantment_power(prm_454, cnt2_at_m47) =
+                        p_at_m47(0) = inv[prm_454].enchantments[cnt].id;
+                        p_at_m47(1) = inv[prm_454].enchantments[cnt].power;
+                        inv[prm_454].enchantments[cnt].id =
+                            inv[prm_454].enchantments[cnt2_at_m47].id;
+                        inv[prm_454].enchantments[cnt2_at_m47].id = p_at_m47;
+                        inv[prm_454].enchantments[cnt].power =
+                            inv[prm_454].enchantments[cnt2_at_m47].power;
+                        inv[prm_454].enchantments[cnt2_at_m47].power =
                             p_at_m47(1);
                         f_at_m47 = 1;
                     }
@@ -6327,12 +6327,12 @@ void encremove(int prm_455, int prm_456, int prm_457)
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
         {
-            if (inv_enchantment_id(prm_455, cnt) == enc_at_m48)
+            if (inv[prm_455].enchantments[cnt].id == enc_at_m48)
             {
-                inv_enchantment_power(prm_455, cnt) -= encp_at_m48;
-                if (inv_enchantment_power(prm_455, cnt) == 0)
+                inv[prm_455].enchantments[cnt].power -= encp_at_m48;
+                if (inv[prm_455].enchantments[cnt].power == 0)
                 {
-                    inv_enchantment_id(prm_455, cnt) = 0;
+                    inv[prm_455].enchantments[cnt].id = 0;
                 }
                 break;
             }
@@ -6346,7 +6346,7 @@ void encremove(int prm_455, int prm_456, int prm_457)
     {
         p_at_m48 = prm_456 / 10000;
     }
-    inv_value(prm_455) = inv_value(prm_455) * 100 / encref(1, p_at_m48);
+    inv[prm_455].value = inv[prm_455].value * 100 / encref(1, p_at_m48);
     sortenc(prm_455);
     return;
 }
@@ -6513,14 +6513,14 @@ int encadd(
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
         {
-            if (inv_enchantment_id(prm_458, cnt) == enc_at_m48)
+            if (inv[prm_458].enchantments[cnt].id == enc_at_m48)
             {
                 i_at_m48 = cnt;
                 continue;
             }
             if (i_at_m48 == -1)
             {
-                if (inv_enchantment_id(prm_458, cnt) == 0)
+                if (inv[prm_458].enchantments[cnt].id == 0)
                 {
                     i_at_m48 = cnt;
                 }
@@ -6531,7 +6531,7 @@ int encadd(
     {
         return 0;
     }
-    if (inv_enchantment_id(prm_458, i_at_m48) == enc_at_m48)
+    if (inv[prm_458].enchantments[i_at_m48].id == enc_at_m48)
     {
         if (reftype == 25000)
         {
@@ -6548,12 +6548,12 @@ int encadd(
         rtval(1) = encp_at_m48;
         return 0;
     }
-    if (inv_enchantment_id(prm_458, i_at_m48) == enc_at_m48)
+    if (inv[prm_458].enchantments[i_at_m48].id == enc_at_m48)
     {
-        encp_at_m48 += inv_enchantment_power(prm_458, i_at_m48);
+        encp_at_m48 += inv[prm_458].enchantments[i_at_m48].power;
     }
-    inv_enchantment_id(prm_458, i_at_m48) = enc_at_m48;
-    inv_enchantment_power(prm_458, i_at_m48) = encp_at_m48;
+    inv[prm_458].enchantments[i_at_m48].id = enc_at_m48;
+    inv[prm_458].enchantments[i_at_m48].power = encp_at_m48;
     if (prm_459 < 10000)
     {
         p_at_m48 = prm_459;
@@ -6562,9 +6562,9 @@ int encadd(
     {
         p_at_m48 = prm_459 / 10000;
     }
-    if (inv_value(prm_458) * encref(1, p_at_m48) / 100 > 0)
+    if (inv[prm_458].value * encref(1, p_at_m48) / 100 > 0)
     {
-        inv_value(prm_458) = inv_value(prm_458) * encref(1, p_at_m48) / 100;
+        inv[prm_458].value = inv[prm_458].value * encref(1, p_at_m48) / 100;
     }
     sortenc(prm_458);
     return 1;
@@ -6702,7 +6702,7 @@ void label_0259()
             encadd(ci, randomenc(randomenclv(egolv)), randomencp(), 8);
         }
     }
-    inv_subname(ci) = 20000 + rnd(maxegominorn);
+    inv[ci].subname = 20000 + rnd(maxegominorn);
     return;
 }
 
@@ -6735,7 +6735,7 @@ void label_0260()
         return;
     }
     p = egolist(rnd(p));
-    inv_subname(ci) = 10000 + p;
+    inv[ci].subname = 10000 + p;
     egoadd(ci, p);
     if (rnd(2) == 0)
     {
@@ -6754,7 +6754,7 @@ void label_0261()
 {
     if (reftype == 25000)
     {
-        inv_count(ci) = -1;
+        inv[ci].count = -1;
     }
     if (fixlv <= 2)
     {
@@ -6767,8 +6767,8 @@ void label_0261()
     else
     {
         egolv = rnd(std::clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
-        inv_value(ci) = inv_value(ci) * 3;
-        inv_difficulty_of_identification(ci) =
+        inv[ci].value = inv[ci].value * 3;
+        inv[ci].difficulty_of_identification =
             50 + rnd((std::abs((fixlv - 2)) * 100 + 100));
     }
     if (reftypeminor == 10006)
@@ -6816,7 +6816,7 @@ void label_0261()
     }
     if (fixlv == 4 || fixlv == 5)
     {
-        inv_subname(ci) = 40000 + rnd(30000);
+        inv[ci].subname = 40000 + rnd(30000);
         if (fixlv == 5 || fixlv == 4 && rnd(10) == 0)
         {
             encadd(ci, randomenc(99), randomencp());
@@ -6826,7 +6826,7 @@ void label_0261()
             if (reftype == 24000 || reftype == 10000)
             {
                 ibitmod(10, ci, 1);
-                inv_param1(ci) = 1;
+                inv[ci].param1 = 1;
                 return;
             }
         }
@@ -6846,7 +6846,7 @@ void label_0261()
                 {
                     ibitmod(15, ci, 1);
                     encadd(ci, randomenc(99), randomencp());
-                    inv_curse_state(ci) = 1;
+                    inv[ci].curse_state = 1;
                 }
             }
         }
@@ -6873,16 +6873,16 @@ void label_0261()
             }
         }
     }
-    if (inv_curse_state(ci) <= -1)
+    if (inv[ci].curse_state <= -1)
     {
         encadd(
             ci,
             randomenc(randomenclv(egolv)),
             std::clamp(randomencp(), 250, 10000)
-                * (125 + (inv_curse_state(ci) == -2) * 25) / 100);
+                * (125 + (inv[ci].curse_state == -2) * 25) / 100);
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (1 + (inv_curse_state(ci) == -2) + rnd(2));
+            for (int cnt_end = cnt + (1 + (inv[ci].curse_state == -2) + rnd(2));
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -7768,16 +7768,16 @@ void label_0264()
     {
         mtlv = rnd((objlv + 1)) / 10 + 1;
     }
-    if (inv_id(ci) == 630)
+    if (inv[ci].id == 630)
     {
         mtlv = rnd(mtlv + 1);
         if (rnd(3))
         {
-            inv_material(ci) = 1000;
+            inv[ci].material = 1000;
         }
         else
         {
-            inv_material(ci) = 1001;
+            inv[ci].material = 1001;
         }
     }
     p = rnd(100);
@@ -7818,38 +7818,38 @@ void label_0264()
     {
         if (rnd(2) == 0)
         {
-            inv_material(ci) = 1000;
+            inv[ci].material = 1000;
         }
         else
         {
-            inv_material(ci) = 1001;
+            inv[ci].material = 1001;
         }
     }
-    if (inv_material(ci) == 1000)
+    if (inv[ci].material == 1000)
     {
         if (rnd(10) != 0)
         {
-            inv_material(ci) = mtlistmetal(p, mtlv);
+            inv[ci].material = mtlistmetal(p, mtlv);
         }
         else
         {
-            inv_material(ci) = mtlistleather(p, mtlv);
+            inv[ci].material = mtlistleather(p, mtlv);
         }
     }
-    if (inv_material(ci) == 1001)
+    if (inv[ci].material == 1001)
     {
         if (rnd(10) != 0)
         {
-            inv_material(ci) = mtlistleather(p, mtlv);
+            inv[ci].material = mtlistleather(p, mtlv);
         }
         else
         {
-            inv_material(ci) = mtlistmetal(p, mtlv);
+            inv[ci].material = mtlistmetal(p, mtlv);
         }
     }
     if (rnd(25) == 0)
     {
-        inv_material(ci) = 35;
+        inv[ci].material = 35;
     }
     return;
 }
@@ -7859,10 +7859,10 @@ void label_0264()
 void label_0265()
 {
     int originalvalue = 0;
-    inv_color(ci) = 0;
-    p = inv_material(ci);
-    reftype = refitem(inv_id(ci), 5);
-    fixlv = inv_quality(ci);
+    inv[ci].color = 0;
+    p = inv[ci].material;
+    reftype = refitem(inv[ci].id, 5);
+    fixlv = inv[ci].quality;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -7874,14 +7874,14 @@ void label_0265()
             encremove(ci, mtenc(cnt * 2, p), mtenc(cnt * 2 + 1, p));
         }
     }
-    originalvalue = inv_value(ci) * 100 / mtref(1, p);
-    dbid = inv_id(ci);
+    originalvalue = inv[ci].value * 100 / mtref(1, p);
+    dbid = inv[ci].id;
     dbmode = 10;
     label_1275();
-    inv_value(ci) = originalvalue;
+    inv[ci].value = originalvalue;
     if (fixmaterial != 0)
     {
-        inv_material(ci) = fixmaterial;
+        inv[ci].material = fixmaterial;
         fixmaterial = 0;
     }
     else
@@ -7901,25 +7901,25 @@ void label_0266()
 {
     if (reftype == 60000)
     {
-        if (inv_material(ci) == 3 || inv_material(ci) == 16
-            || inv_material(ci) == 21 || inv_material(ci) == 2)
+        if (inv[ci].material == 3 || inv[ci].material == 16
+            || inv[ci].material == 21 || inv[ci].material == 2)
         {
-            inv_material(ci) = 43;
+            inv[ci].material = 43;
         }
     }
-    p = inv_material(ci);
-    inv_weight(ci) = inv_weight(ci) * mtref(0, p) / 100;
+    p = inv[ci].material;
+    inv[ci].weight = inv[ci].weight * mtref(0, p) / 100;
     if (reftype == 60000)
     {
-        inv_value(ci) += mtref(1, p) * 2;
+        inv[ci].value += mtref(1, p) * 2;
     }
     else
     {
-        inv_value(ci) = inv_value(ci) * mtref(1, p) / 100;
+        inv[ci].value = inv[ci].value * mtref(1, p) / 100;
     }
-    if (inv_color(ci) == 0)
+    if (inv[ci].color == 0)
     {
-        inv_color(ci) = mtref(7, p);
+        inv[ci].color = mtref(7, p);
     }
     p(1) = 120;
     p(2) = 80;
@@ -7938,27 +7938,27 @@ void label_0266()
         p(1) = 80;
         p(2) = 70;
     }
-    if (inv_hit_bonus(ci) != 0)
+    if (inv[ci].hit_bonus != 0)
     {
-        inv_hit_bonus(ci) =
-            mtref(2, p) * inv_hit_bonus(ci) * 9 / (p(1) - rnd(30));
+        inv[ci].hit_bonus =
+            mtref(2, p) * inv[ci].hit_bonus * 9 / (p(1) - rnd(30));
     }
-    if (inv_damage_bonus(ci) != 0)
+    if (inv[ci].damage_bonus != 0)
     {
-        inv_damage_bonus(ci) =
-            mtref(3, p) * inv_damage_bonus(ci) * 5 / (p(1) - rnd(30));
+        inv[ci].damage_bonus =
+            mtref(3, p) * inv[ci].damage_bonus * 5 / (p(1) - rnd(30));
     }
-    if (inv_dv(ci) != 0)
+    if (inv[ci].dv != 0)
     {
-        inv_dv(ci) = mtref(4, p) * inv_dv(ci) * 7 / (p(1) - rnd(30));
+        inv[ci].dv = mtref(4, p) * inv[ci].dv * 7 / (p(1) - rnd(30));
     }
-    if (inv_pv(ci) != 0)
+    if (inv[ci].pv != 0)
     {
-        inv_pv(ci) = mtref(5, p) * inv_pv(ci) * 9 / (p(1) - rnd(30));
+        inv[ci].pv = mtref(5, p) * inv[ci].pv * 9 / (p(1) - rnd(30));
     }
-    if (inv_dice_y(ci) != 0)
+    if (inv[ci].dice_y != 0)
     {
-        inv_dice_y(ci) = inv_dice_y(ci) * mtref(6, p) / (p(1) + rnd(25));
+        inv[ci].dice_y = inv[ci].dice_y * mtref(6, p) / (p(1) + rnd(25));
     }
     label_0267();
     return;
@@ -7968,7 +7968,7 @@ void label_0266()
 
 void label_0267()
 {
-    p = inv_material(ci);
+    p = inv[ci].material;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -8449,7 +8449,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
 {
     int p_at_m66 = 0;
     std::string s_at_m66;
-    if (inv_identification_state(prm_529) < 3)
+    if (inv[prm_529].identification_state < 3)
     {
         return;
     }
@@ -8457,7 +8457,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
         {
-            p_at_m66 = inv_enchantment_id(prm_529, cnt);
+            p_at_m66 = inv[prm_529].enchantments[cnt].id;
             if (p_at_m66 == 0)
             {
                 break;
@@ -8470,7 +8470,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             i_at_m66 = p_at_m66 % 10000;
             pos(prm_530 + (i_at_m66 - 50) * 20, prm_531);
             p_at_m66 =
-                std::abs(inv_enchantment_power(prm_529, cnt) / 2 / 50) + 1;
+                std::abs(inv[prm_529].enchantments[cnt].power / 2 / 50) + 1;
             if (p_at_m66 > 5)
             {
                 s_at_m66 = u8"+"s;
@@ -8482,7 +8482,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
             if (jp)
             {
                 colorres();
-                if (inv_enchantment_power(prm_529, cnt) >= 0)
+                if (inv[prm_529].enchantments[cnt].power >= 0)
                 {
                     mes(u8"●"s);
                 }
@@ -8545,7 +8545,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
 
 int cargocheck()
 {
-    if (refitem(inv_id(ci), 10) == 0)
+    if (refitem(inv[ci].id, 10) == 0)
     {
         return 1;
     }
@@ -8691,18 +8691,18 @@ void cs_list(
     if (prm_548 == 1)
     {
         color(0, 0, 0);
-        if (inv_identification_state(prm_549) >= 3)
+        if (inv[prm_549].identification_state >= 3)
         {
             color(10, 40, 120);
-            if (inv_curse_state(prm_549) == 1)
+            if (inv[prm_549].curse_state == 1)
             {
                 color(10, 110, 30);
             }
-            if (inv_curse_state(prm_549) == -1)
+            if (inv[prm_549].curse_state == -1)
             {
                 color(150, 10, 10);
             }
-            if (inv_curse_state(prm_549) == -2)
+            if (inv[prm_549].curse_state == -2)
             {
                 color(100, 10, 100);
             }
@@ -9748,9 +9748,10 @@ int cell_itemlist(int prm_625, int prm_626)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) > 0)
+            if (inv[cnt].number > 0)
             {
-                if (inv_x(cnt) == prm_625 && inv_y(cnt) == prm_626)
+                if (inv[cnt].position.x == prm_625
+                    && inv[cnt].position.y == prm_626)
                 {
                     list(0, listmax) = cnt;
                     ++listmax;
@@ -9772,9 +9773,10 @@ int cell_itemoncell(int prm_627, int prm_628)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) > 0)
+            if (inv[cnt].number > 0)
             {
-                if (inv_x(cnt) == prm_627 && inv_y(cnt) == prm_628)
+                if (inv[cnt].position.x == prm_627
+                    && inv[cnt].position.y == prm_628)
                 {
                     ++rtval;
                     rtval(1) = cnt;
@@ -13965,7 +13967,7 @@ void del_chara(int prm_783)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            inv_number(cnt) = 0;
+            inv[cnt].number = 0;
         }
     }
     {
@@ -14068,7 +14070,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
             }
             inv(cnt2_at_m125) = inv(p_at_m125);
             inv(p_at_m125).clear();
-            inv_body_part(cnt) = 0;
+            inv[cnt].body_part = 0;
             ++p_at_m125;
         }
     }
@@ -16229,7 +16231,7 @@ void item_acid(int prm_838, int prm_839)
             }
             if (rnd(std::clamp(30, 1, 30)) == 0)
             {
-                if (inv_enhancement(p_at_m138) > -4)
+                if (inv[p_at_m138].enhancement > -4)
                 {
                     ci_at_m138 = p_at_m138;
                     break;
@@ -16241,7 +16243,7 @@ void item_acid(int prm_838, int prm_839)
     {
         return;
     }
-    if (refitem(inv_id(ci_at_m138), 5) >= 50000)
+    if (refitem(inv[ci_at_m138].id, 5) >= 50000)
     {
         return;
     }
@@ -16254,7 +16256,7 @@ void item_acid(int prm_838, int prm_839)
                 + u8"は酸で傷ついた。"s,
             name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
                 + u8" is damaged by acid."s));
-        --inv_enhancement(ci_at_m138);
+        --inv[ci_at_m138].enhancement;
     }
     else
     {
@@ -16289,11 +16291,11 @@ int item_fire(int prm_840, int prm_841)
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_id(cnt) == 567)
+                if (inv[cnt].id == 567)
                 {
                     if (ti_at_m138 == -1)
                     {
@@ -16320,7 +16322,7 @@ int item_fire(int prm_840, int prm_841)
         for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
             ci_at_m138 = list_at_m138(rnd(max_at_m138));
-            if (inv_number(ci_at_m138) <= 0)
+            if (inv[ci_at_m138].number <= 0)
             {
                 continue;
             }
@@ -16329,27 +16331,28 @@ int item_fire(int prm_840, int prm_841)
             {
                 if (ibit(5, ci_at_m138) == 0)
                 {
-                    a_at_m138 = refitem(inv_id(ci_at_m138), 5);
+                    a_at_m138 = refitem(inv[ci_at_m138].id, 5);
                     if (a_at_m138 == 57000)
                     {
-                        if (inv_param2(ci_at_m138) == 0)
+                        if (inv[ci_at_m138].param2 == 0)
                         {
                             if (prm_840 == -1)
                             {
                                 if (synccheck(
-                                        inv_x(ci_at_m138), inv_y(ci_at_m138)))
+                                        inv[ci_at_m138].position.x,
+                                        inv[ci_at_m138].position.y))
                                 {
                                     txtef(11);
                                     txt(lang(
                                         u8"地面の"s
                                             + itemname(
                                                   ci_at_m138,
-                                                  inv_number(ci_at_m138))
+                                                  inv[ci_at_m138].number)
                                             + u8"はこんがりと焼き上がった。"s,
                                         itemname(
-                                            ci_at_m138, inv_number(ci_at_m138))
+                                            ci_at_m138, inv[ci_at_m138].number)
                                             + u8" on the ground get"s
-                                            + _s2(inv_number(ci_at_m138))
+                                            + _s2(inv[ci_at_m138].number)
                                             + u8" perfectly broiled."s));
                                 }
                             }
@@ -16362,15 +16365,15 @@ int item_fire(int prm_840, int prm_841)
                                         name(prm_840) + u8"の"s
                                             + itemname(
                                                   ci_at_m138,
-                                                  inv_number(ci_at_m138))
+                                                  inv[ci_at_m138].number)
                                             + u8"はこんがりと焼き上がった。"s,
                                         name(prm_840) + your(prm_840) + u8" "s
                                             + itemname(
                                                   ci_at_m138,
-                                                  inv_number(ci_at_m138),
+                                                  inv[ci_at_m138].number,
                                                   1)
                                             + u8" get"s
-                                            + _s2(inv_number(ci_at_m138))
+                                            + _s2(inv[ci_at_m138].number)
                                             + u8" perfectly broiled."s));
                                 }
                             }
@@ -16380,11 +16383,11 @@ int item_fire(int prm_840, int prm_841)
                         }
                     }
                     if (a_at_m138 == 72000 || a_at_m138 == 59000
-                        || a_at_m138 == 68000 || inv_quality(ci_at_m138) >= 4)
+                        || a_at_m138 == 68000 || inv[ci_at_m138].quality >= 4)
                     {
                         continue;
                     }
-                    if (inv_body_part(ci_at_m138) != 0)
+                    if (inv[ci_at_m138].body_part != 0)
                     {
                         if (rnd(2))
                         {
@@ -16409,7 +16412,7 @@ int item_fire(int prm_840, int prm_841)
                     }
                     if (ti_at_m138 != -1)
                     {
-                        if (inv_number(ti_at_m138) > 0)
+                        if (inv[ti_at_m138].number > 0)
                         {
                             if (synccheck(prm_840, -1))
                             {
@@ -16421,13 +16424,13 @@ int item_fire(int prm_840, int prm_841)
                                         + name(prm_840) + your(prm_840)
                                         + u8" stuff from fire."s));
                             }
-                            if (inv_count(ti_at_m138) > 0)
+                            if (inv[ti_at_m138].count > 0)
                             {
-                                --inv_count(ti_at_m138);
+                                --inv[ti_at_m138].count;
                             }
                             else if (rnd(20) == 0)
                             {
-                                --inv_number(ti_at_m138);
+                                --inv[ti_at_m138].number;
                                 if (synccheck(prm_840, -1))
                                 {
                                     txt(lang(
@@ -16441,10 +16444,10 @@ int item_fire(int prm_840, int prm_841)
                             continue;
                         }
                     }
-                    p_at_m138 = rnd(inv_number(ci_at_m138)) / 2 + 1;
+                    p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
                     if (prm_840 != -1)
                     {
-                        if (inv_body_part(ci_at_m138) != 0)
+                        if (inv[ci_at_m138].body_part != 0)
                         {
                             if (synccheck(prm_840, -1))
                             {
@@ -16459,11 +16462,11 @@ int item_fire(int prm_840, int prm_841)
                                         + _s2(p_at_m138) + u8" to dust."s));
                             }
                             cdata_body_part(
-                                prm_840, inv_body_part(ci_at_m138)) =
+                                prm_840, inv[ci_at_m138].body_part) =
                                 cdata_body_part(
-                                    prm_840, inv_body_part(ci_at_m138))
+                                    prm_840, inv[ci_at_m138].body_part)
                                 / 10000 * 10000;
-                            inv_body_part(ci_at_m138) = 0;
+                            inv[ci_at_m138].body_part = 0;
                             r1 = prm_840;
                             label_1477();
                         }
@@ -16480,7 +16483,9 @@ int item_fire(int prm_840, int prm_841)
                                     + u8" to dust."s));
                         }
                     }
-                    else if (synccheck(inv_x(ci_at_m138), inv_y(ci_at_m138)))
+                    else if (synccheck(
+                                 inv[ci_at_m138].position.x,
+                                 inv[ci_at_m138].position.y))
                     {
                         txtef(8);
                         txt(lang(
@@ -16490,8 +16495,9 @@ int item_fire(int prm_840, int prm_841)
                                 + u8" on the ground turn"s + _s(p_at_m138)
                                 + u8" to dust."s));
                     }
-                    inv_number(ci_at_m138) -= p_at_m138;
-                    cell_refresh(inv_x(ci_at_m138), inv_y(ci_at_m138));
+                    inv[ci_at_m138].number -= p_at_m138;
+                    cell_refresh(
+                        inv[ci_at_m138].position.x, inv[ci_at_m138].position.y);
                     f_at_m138 = 1;
                 }
             }
@@ -16515,13 +16521,13 @@ void mapitem_fire(int prm_842, int prm_843)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (inv_x(cnt) == prm_842)
+            if (inv[cnt].position.x == prm_842)
             {
-                if (inv_y(cnt) == prm_843)
+                if (inv[cnt].position.y == prm_843)
                 {
                     ci_at_m138 = cnt;
                     break;
@@ -16567,11 +16573,11 @@ int item_cold(int prm_844, int prm_845)
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_id(cnt) == 568)
+                if (inv[cnt].id == 568)
                 {
                     if (ti_at_m138 == -1)
                     {
@@ -16598,7 +16604,7 @@ int item_cold(int prm_844, int prm_845)
         for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
         {
             ci_at_m138 = list_at_m138(rnd(max_at_m138));
-            if (inv_number(ci_at_m138) <= 0)
+            if (inv[ci_at_m138].number <= 0)
             {
                 continue;
             }
@@ -16606,7 +16612,7 @@ int item_cold(int prm_844, int prm_845)
             txtmore();
             if (ibit(5, ci_at_m138) == 0)
             {
-                a_at_m138 = refitem(inv_id(ci_at_m138), 5);
+                a_at_m138 = refitem(inv[ci_at_m138].id, 5);
                 if (prm_844 == -1)
                 {
                     s_at_m138 = "";
@@ -16620,8 +16626,8 @@ int item_cold(int prm_844, int prm_845)
                 {
                     continue;
                 }
-                if (inv_quality(ci_at_m138) >= 4
-                    || inv_body_part(ci_at_m138) != 0)
+                if (inv[ci_at_m138].quality >= 4
+                    || inv[ci_at_m138].body_part != 0)
                 {
                     continue;
                 }
@@ -16634,7 +16640,7 @@ int item_cold(int prm_844, int prm_845)
                 }
                 if (ti_at_m138 != -1)
                 {
-                    if (inv_number(ti_at_m138) > 0)
+                    if (inv[ti_at_m138].number > 0)
                     {
                         txt(lang(
                             itemname(ti_at_m138, 1) + u8"が"s + name(prm_844)
@@ -16642,9 +16648,9 @@ int item_cold(int prm_844, int prm_845)
                             itemname(ti_at_m138, 1) + u8" protects "s
                                 + name(prm_844) + your(prm_844)
                                 + u8" stuff from cold."s));
-                        if (inv_count(ti_at_m138) > 0)
+                        if (inv[ti_at_m138].count > 0)
                         {
-                            --inv_count(ti_at_m138);
+                            --inv[ti_at_m138].count;
                         }
                         else if (rnd(20) == 0)
                         {
@@ -16652,20 +16658,20 @@ int item_cold(int prm_844, int prm_845)
                                 itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
                                 itemname(ti_at_m138, 1)
                                     + u8" is broken to pieces."s));
-                            --inv_number(ti_at_m138);
+                            --inv[ti_at_m138].number;
                             break;
                         }
                         continue;
                     }
                 }
-                p_at_m138 = rnd(inv_number(ci_at_m138)) / 2 + 1;
+                p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
                 txtef(8);
                 txt(lang(
                     s_at_m138 + itemname(ci_at_m138, p_at_m138)
                         + u8"は粉々に砕けた。"s,
                     s_at_m138 + itemname(ci_at_m138, p_at_m138) + u8" break"s
                         + _s2(p_at_m138) + u8" to pieces."s));
-                inv_number(ci_at_m138) -= p_at_m138;
+                inv[ci_at_m138].number -= p_at_m138;
                 f_at_m138 = 1;
             }
         }
@@ -16688,13 +16694,13 @@ void mapitem_cold(int prm_846, int prm_847)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (inv_x(cnt) == prm_846)
+            if (inv[cnt].position.x == prm_846)
             {
-                if (inv_y(cnt) == prm_847)
+                if (inv[cnt].position.y == prm_847)
                 {
                     ci_at_m138 = cnt;
                     break;
@@ -18127,14 +18133,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        if (inv_weight(cnt) > p_at_m141(1))
+                        if (inv[cnt].weight > p_at_m141(1))
                         {
                             p_at_m141(0) = cnt;
-                            p_at_m141(1) = inv_weight(cnt);
+                            p_at_m141(1) = inv[cnt].weight;
                         }
                     }
                 }
@@ -18830,9 +18836,9 @@ void chara_vomit(int prm_876)
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) > 0)
+                if (inv[cnt].number > 0)
                 {
-                    if (inv_id(cnt) == 704)
+                    if (inv[cnt].id == 704)
                     {
                         ++p_at_m146;
                     }
@@ -18848,7 +18854,7 @@ void chara_vomit(int prm_876)
             {
                 if (prm_876 != 0)
                 {
-                    inv_subname(ci) = cdata_id(prm_876);
+                    inv[ci].subname = cdata_id(prm_876);
                 }
             }
         }
@@ -21358,7 +21364,7 @@ void label_1426()
         }
         if (animeid == 110)
         {
-            ap = refitem(inv_id(aniref), 9);
+            ap = refitem(inv[aniref].id, 9);
             if (ap == 24021)
             {
                 gsel(1);
@@ -21392,9 +21398,9 @@ void label_1426()
             boxf(
                 0,
                 960,
-                chipi(2, inv_image(aniref) % 1000),
-                chipi(3, inv_image(aniref) % 1000) + 960);
-            if (inv_image(aniref) % 1000 == 528)
+                chipi(2, inv[aniref].image % 1000),
+                chipi(3, inv[aniref].image % 1000) + 960);
+            if (inv[aniref].image % 1000 == 528)
             {
                 gmode(2);
                 pos(0, 960);
@@ -21404,39 +21410,39 @@ void label_1426()
                     22,
                     20,
                     5,
-                    chipc(0, inv_image(aniref) / 1000) + 8,
-                    chipc(1, inv_image(aniref) / 1000) + 4
-                        + (chipc(3, inv_image(aniref) / 1000) > inf_tiles) * 8,
-                    chipc(2, inv_image(aniref) / 1000) - 16,
-                    chipc(3, inv_image(aniref) / 1000) - 8
-                        - (chipc(3, inv_image(aniref) / 1000) > inf_tiles) * 10,
+                    chipc(0, inv[aniref].image / 1000) + 8,
+                    chipc(1, inv[aniref].image / 1000) + 4
+                        + (chipc(3, inv[aniref].image / 1000) > inf_tiles) * 8,
+                    chipc(2, inv[aniref].image / 1000) - 16,
+                    chipc(3, inv[aniref].image / 1000) - 8
+                        - (chipc(3, inv[aniref].image / 1000) > inf_tiles) * 10,
                     1);
                 pos(6, 974);
                 gcopy(1, 0, 1008, 22, 20);
                 gsel(selcur);
             }
-            else if (inv_image(aniref) % 1000 == 531)
+            else if (inv[aniref].image % 1000 == 531)
             {
-                pos(8, 1058 - chipc(3, inv_image(aniref) / 1000));
+                pos(8, 1058 - chipc(3, inv[aniref].image / 1000));
                 gcopy(
                     5,
-                    chipc(0, inv_image(aniref) / 1000) + 8,
-                    chipc(1, inv_image(aniref) / 1000) + 2,
-                    chipc(2, inv_image(aniref) / 1000) - 16,
-                    chipc(3, inv_image(aniref) / 1000) - 8);
+                    chipc(0, inv[aniref].image / 1000) + 8,
+                    chipc(1, inv[aniref].image / 1000) + 2,
+                    chipc(2, inv[aniref].image / 1000) - 16,
+                    chipc(3, inv[aniref].image / 1000) - 8);
                 gmode(4, -1, -1, 150);
                 color(0, 0, 0);
                 pos(0,
                     960
-                        + (chipc(3, inv_image(aniref) / 1000) == inf_tiles)
+                        + (chipc(3, inv[aniref].image / 1000) == inf_tiles)
                             * 48);
                 gcopy(
                     1,
                     144,
-                    768 + (chipc(3, inv_image(aniref) / 1000) > inf_tiles) * 48,
+                    768 + (chipc(3, inv[aniref].image / 1000) > inf_tiles) * 48,
                     inf_tiles,
-                    chipc(3, inv_image(aniref) / 1000)
-                        + (chipc(3, inv_image(aniref) / 1000) > inf_tiles)
+                    chipc(3, inv[aniref].image / 1000)
+                        + (chipc(3, inv[aniref].image / 1000) > inf_tiles)
                             * 48);
                 gmode(2);
                 gsel(selcur);
@@ -21446,17 +21452,17 @@ void label_1426()
                 pos(0, 960);
                 gcopy(
                     1,
-                    chipi(0, inv_image(aniref) % 1000),
-                    chipi(1, inv_image(aniref) % 1000),
-                    chipi(2, inv_image(aniref) % 1000),
-                    chipi(3, inv_image(aniref) % 1000));
+                    chipi(0, inv[aniref].image % 1000),
+                    chipi(1, inv[aniref].image % 1000),
+                    chipi(2, inv[aniref].image % 1000),
+                    chipi(3, inv[aniref].image % 1000));
                 gfini(
-                    chipi(2, inv_image(aniref) % 1000),
-                    chipi(3, inv_image(aniref) % 1000));
+                    chipi(2, inv[aniref].image % 1000),
+                    chipi(3, inv[aniref].image % 1000));
                 gfdec2(
-                    c_col(0, inv_image(aniref) / 1000),
-                    c_col(1, inv_image(aniref) / 1000),
-                    c_col(2, inv_image(aniref) / 1000));
+                    c_col(0, inv[aniref].image / 1000),
+                    c_col(1, inv[aniref].image / 1000),
+                    c_col(2, inv[aniref].image / 1000));
                 gsel(selcur);
                 snd(31);
             }
@@ -23611,11 +23617,11 @@ void label_1477()
                     continue;
                 }
                 rp = cdata_body_part(r1, i) % 10000 - 1;
-                if (inv_weight(rp) >= 1000)
+                if (inv[rp].weight >= 1000)
                 {
                     cdata_body_part(r1, i) =
                         cdata_body_part(r1, i) / 10000 * 10000;
-                    inv_body_part(rp) = 0;
+                    inv[rp].body_part = 0;
                 }
             }
         }
@@ -23681,36 +23687,36 @@ void label_1477()
             continue;
         }
         rp = cdata_body_part(r1, i) % 10000 - 1;
-        cdata_sum_of_equipment_weight(r1) += inv_weight(rp);
-        if (inv_skill(rp) == 168)
+        cdata_sum_of_equipment_weight(r1) += inv[rp].weight;
+        if (inv[rp].skill == 168)
         {
             if (!(cdata_equipment_type(r1) & 1))
             {
                 cdata_equipment_type(r1) += 1;
             }
         }
-        cdata_dv(r1) += inv_dv(rp);
-        cdata_pv(r1) += inv_pv(rp);
-        if (inv_dice_x(rp) == 0)
+        cdata_dv(r1) += inv[rp].dv;
+        cdata_pv(r1) += inv[rp].pv;
+        if (inv[rp].dice_x == 0)
         {
-            cdata_hit_bonus(r1) += inv_hit_bonus(rp);
-            cdata_damage_bonus(r1) += inv_damage_bonus(rp);
+            cdata_hit_bonus(r1) += inv[rp].hit_bonus;
+            cdata_damage_bonus(r1) += inv[rp].damage_bonus;
             cdata_pv(r1) +=
-                inv_enhancement(rp) * 2 + (inv_curse_state(rp) == 1) * 2;
+                inv[rp].enhancement * 2 + (inv[rp].curse_state == 1) * 2;
         }
         else if (cdata_body_part(r1, i) / 10000 == 5)
         {
             ++attacknum;
         }
-        if (inv_curse_state(rp) == -1)
+        if (inv[rp].curse_state == -1)
         {
             cdata_curse_power(r1) += 20;
         }
-        if (inv_curse_state(rp) == -2)
+        if (inv[rp].curse_state == -2)
         {
             cdata_curse_power(r1) += 100;
         }
-        if (inv_material(rp) == 8)
+        if (inv[rp].material == 8)
         {
             if (r1 == 0)
             {
@@ -23721,11 +23727,11 @@ void label_1477()
             int cnt = 0;
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
-                if (inv_enchantment_id(rp, cnt) == 0)
+                if (inv[rp].enchantments[cnt].id == 0)
                 {
                     break;
                 }
-                rp2 = inv_enchantment_id(rp, cnt);
+                rp2 = inv[rp].enchantments[cnt].id;
                 if (rp2 >= 10000)
                 {
                     rp3 = rp2 % 10000;
@@ -23733,12 +23739,12 @@ void label_1477()
                     if (rp2 == 1)
                     {
                         sdata(rp3, r1) +=
-                            inv_enchantment_power(rp, cnt) / 50 + 1;
+                            inv[rp].enchantments[cnt].power / 50 + 1;
                         continue;
                     }
                     if (rp2 == 2)
                     {
-                        sdata(rp3, r1) += inv_enchantment_power(rp, cnt) / 2;
+                        sdata(rp3, r1) += inv[rp].enchantments[cnt].power / 2;
                         if (sdata(rp3, r1) < 0)
                         {
                             sdata(rp3, r1) = 1;
@@ -23750,7 +23756,7 @@ void label_1477()
                         if (sdata.get(rp3, r1).original_level != 0)
                         {
                             sdata(rp3, r1) +=
-                                inv_enchantment_power(rp, cnt) / 50 + 1;
+                                inv[rp].enchantments[cnt].power / 50 + 1;
                             if (sdata(rp3, r1) < 1)
                             {
                                 sdata(rp3, r1) = 1;
@@ -23780,11 +23786,11 @@ void label_1477()
                     if (rp2 == 29)
                     {
                         sdata(18, r1) +=
-                            inv_enchantment_power(rp, cnt) / 50 + 1;
+                            inv[rp].enchantments[cnt].power / 50 + 1;
                         if (r1 == 0)
                         {
                             gdata_seven_league_boot_effect +=
-                                inv_enchantment_power(rp, cnt) / 8;
+                                inv[rp].enchantments[cnt].power / 8;
                             continue;
                         }
                     }
@@ -23846,43 +23852,43 @@ void label_1477()
                     if (rp2 == 52)
                     {
                         cdata_decrease_physical_damage(r1) +=
-                            inv_enchantment_power(rp, cnt) / 40 + 5;
+                            inv[rp].enchantments[cnt].power / 40 + 5;
                         continue;
                     }
                     if (rp2 == 53)
                     {
                         cdata_nullify_damage(r1) +=
-                            inv_enchantment_power(rp, cnt) / 60 + 3;
+                            inv[rp].enchantments[cnt].power / 60 + 3;
                         continue;
                     }
                     if (rp2 == 54)
                     {
                         cdata_cut_counterattack(r1) +=
-                            inv_enchantment_power(rp, cnt) / 5;
+                            inv[rp].enchantments[cnt].power / 5;
                         continue;
                     }
                     if (rp2 == 44)
                     {
                         cdata_rate_of_critical_hit(r1) +=
-                            inv_enchantment_power(rp, cnt) / 50;
+                            inv[rp].enchantments[cnt].power / 50;
                         continue;
                     }
                     if (rp2 == 39)
                     {
                         cdata_rate_to_pierce(r1) +=
-                            inv_enchantment_power(rp, cnt) / 50;
+                            inv[rp].enchantments[cnt].power / 50;
                         continue;
                     }
                     if (rp2 == 50)
                     {
                         cdata_extra_attack(r1) +=
-                            inv_enchantment_power(rp, cnt) / 15;
+                            inv[rp].enchantments[cnt].power / 15;
                         continue;
                     }
                     if (rp2 == 51)
                     {
                         cdata_extra_shot(r1) +=
-                            inv_enchantment_power(rp, cnt) / 15;
+                            inv[rp].enchantments[cnt].power / 15;
                         continue;
                     }
                     if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
@@ -24783,7 +24789,7 @@ void label_1520()
 
 void label_1521()
 {
-    cdata_inventory_weight(0) = std::clamp(inv_weight_(0), 0, 20000000)
+    cdata_inventory_weight(0) = std::clamp(inv_weight(0), 0, 20000000)
         * (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata_max_inventory_weight(0) =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
@@ -25553,11 +25559,11 @@ void label_1530()
                     {
                         flt(calcobjlv(cdata_level(rc)), calcfixlv(2 + fixeq));
                         itemcreate(rc, eqmultiweapon, -1, -1, 0);
-                        if (inv_weight(ci) > 1500)
+                        if (inv[ci].weight > 1500)
                         {
                             if (cnt < 14)
                             {
-                                inv_number(ci) = 0;
+                                inv[ci].number = 0;
                                 continue;
                             }
                         }
@@ -25585,22 +25591,22 @@ void label_1530()
                             itemcreate(rc, dbid, -1, -1, 0);
                             if (eqtwohand)
                             {
-                                if (inv_weight(ci) < 4000)
+                                if (inv[ci].weight < 4000)
                                 {
                                     if (cnt < 14)
                                     {
-                                        inv_number(ci) = 0;
+                                        inv[ci].number = 0;
                                         continue;
                                     }
                                 }
                             }
                             if (eqtwowield)
                             {
-                                if (inv_weight(ci) > 1500)
+                                if (inv[ci].weight > 1500)
                                 {
                                     if (cnt < 14)
                                     {
-                                        inv_number(ci) = 0;
+                                        inv[ci].number = 0;
                                         continue;
                                     }
                                 }
@@ -25636,11 +25642,11 @@ void label_1530()
                             itemcreate(rc, dbid, -1, -1, 0);
                             if (eqtwowield)
                             {
-                                if (inv_weight(ci) > 1500)
+                                if (inv[ci].weight > 1500)
                                 {
                                     if (cnt < 14)
                                     {
-                                        inv_number(ci) = 0;
+                                        inv[ci].number = 0;
                                         continue;
                                     }
                                 }
@@ -25760,11 +25766,11 @@ void label_1530()
                 int stat = itemcreate(rc, 772, -1, -1, 0);
                 if (stat != 0)
                 {
-                    inv_number(ci) += rnd(4);
+                    inv[ci].number += rnd(4);
                     if (rnd(2))
                     {
-                        inv_param3(ci) = -1;
-                        inv_image(ci) = 336;
+                        inv[ci].param3 = -1;
+                        inv[ci].image = 336;
                     }
                 }
             }
@@ -26234,18 +26240,18 @@ void label_1536()
     cbitmod(967, rc, 1);
     flt();
     itemcreate(0, 333, -1, -1, 0);
-    inv_number(ci) = 8;
+    inv[ci].number = 8;
     flt();
     itemcreate(0, 233, -1, -1, 0);
-    inv_number(ci) = 4;
+    inv[ci].number = 4;
     flt();
     itemcreate(0, 31, -1, -1, 0);
-    inv_number(ci) = 2;
+    inv[ci].number = 2;
     if (sdata(150, 0) == 0)
     {
         flt();
         itemcreate(0, 68, -1, -1, 0);
-        inv_number(ci) = 3;
+        inv[ci].number = 3;
     }
     if (cdatan(3, 0) == u8"pianist"s)
     {
@@ -26263,13 +26269,13 @@ void label_1536()
         itemcreate(0, 116, -1, -1, 0);
         flt();
         itemcreate(0, 257, -1, -1, 0);
-        inv_number(ci) = 3;
+        inv[ci].number = 3;
     }
     if (cdatan(3, 0) == u8"priest"s)
     {
         flt();
         itemcreate(0, 249, -1, -1, 0);
-        inv_number(ci) = 3;
+        inv[ci].number = 3;
         flt();
         itemcreate(0, 378, -1, -1, 0);
     }
@@ -26281,11 +26287,11 @@ void label_1536()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            inv_identification_state(cnt) = 3;
+            inv[cnt].identification_state = 3;
         }
     }
     r1 = 0;
@@ -26466,15 +26472,15 @@ int convertartifact(int prm_930, int prm_931)
     int f_at_m163 = 0;
     int tc_at_m163 = 0;
     std::string n_at_m163;
-    if (refitem(inv_id(prm_930), 5) >= 50000)
+    if (refitem(inv[prm_930].id, 5) >= 50000)
     {
         return prm_930;
     }
-    if (inv_quality(prm_930) != 6)
+    if (inv[prm_930].quality != 6)
     {
         return prm_930;
     }
-    if (inv_body_part(prm_930) != 0)
+    if (inv[prm_930].body_part != 0)
     {
         return prm_930;
     }
@@ -26503,9 +26509,9 @@ int convertartifact(int prm_930, int prm_931)
                     continue;
                 }
             }
-            if (inv_number(cnt) > 0)
+            if (inv[cnt].number > 0)
             {
-                if (inv_id(cnt) == inv_id(prm_930))
+                if (inv[cnt].id == inv[prm_930].id)
                 {
                     if (cnt != prm_930)
                     {
@@ -26522,11 +26528,16 @@ int convertartifact(int prm_930, int prm_931)
     }
     n_at_m163 = ""s + itemname(prm_930);
 label_1569_internal:
-    flt(refitem(inv_id(prm_930), 7), 4);
-    flttypeminor = refitem(inv_id(prm_930), 9);
-    inv_number(prm_930) = 0;
-    itemcreate(inv_getowner(prm_930), 0, inv_x(prm_930), inv_y(prm_930), 0);
-    if (inv_quality(prm_930) != 6)
+    flt(refitem(inv[prm_930].id, 7), 4);
+    flttypeminor = refitem(inv[prm_930].id, 9);
+    inv[prm_930].number = 0;
+    itemcreate(
+        inv_getowner(prm_930),
+        0,
+        inv[prm_930].position.x,
+        inv[prm_930].position.y,
+        0);
+    if (inv[prm_930].quality != 6)
     {
         goto label_1570_internal;
         return 0;
@@ -26866,13 +26877,13 @@ void label_1573()
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
                 ci = cnt;
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
                 if (mdata(7) == 0)
                 {
-                    if (inv_body_part(cnt) != 0)
+                    if (inv[cnt].body_part != 0)
                     {
                         continue;
                     }
@@ -26889,7 +26900,7 @@ void label_1573()
                 {
                     continue;
                 }
-                if (refitem(inv_id(ci), 10) == 1)
+                if (refitem(inv[ci].id, 10) == 1)
                 {
                     if (mdata(6) != 1 && mdata(6) != 5 && mdata(6) != 3
                         && mdata(6) != 4 && mdata(6) != 6 && mdata(6) != 2)
@@ -26902,27 +26913,27 @@ void label_1573()
                     }
                 }
                 f = 0;
-                if (inv_body_part(ci) != 0)
+                if (inv[ci].body_part != 0)
                 {
                     if (rnd(10))
                     {
                         f = 1;
                     }
-                    if (inv_curse_state(ci) >= 1)
+                    if (inv[ci].curse_state >= 1)
                     {
                         if (rnd(2))
                         {
                             f = 1;
                         }
                     }
-                    if (inv_curse_state(ci) <= -1)
+                    if (inv[ci].curse_state <= -1)
                     {
                         if (rnd(2))
                         {
                             f = 0;
                         }
                     }
-                    if (inv_curse_state(ci) <= -2)
+                    if (inv[ci].curse_state <= -2)
                     {
                         if (rnd(2))
                         {
@@ -26930,7 +26941,7 @@ void label_1573()
                         }
                     }
                 }
-                else if (inv_identification_state(ci) >= 3)
+                else if (inv[ci].identification_state >= 3)
                 {
                     if (rnd(4))
                     {
@@ -26941,11 +26952,11 @@ void label_1573()
                 {
                     continue;
                 }
-                if (inv_body_part(ci) != 0)
+                if (inv[ci].body_part != 0)
                 {
-                    cdata_body_part(rc, inv_body_part(ci)) =
-                        cdata_body_part(rc, inv_body_part(ci)) / 10000 * 10000;
-                    inv_body_part(ci) = 0;
+                    cdata_body_part(rc, inv[ci].body_part) =
+                        cdata_body_part(rc, inv[ci].body_part) / 10000 * 10000;
+                    inv[ci].body_part = 0;
                 }
                 f = 0;
                 if (ibit(5, ci) == 0)
@@ -26954,21 +26965,21 @@ void label_1573()
                     {
                         f = 1;
                     }
-                    if (inv_curse_state(ci) >= 1)
+                    if (inv[ci].curse_state >= 1)
                     {
                         if (rnd(3) == 0)
                         {
                             f = 0;
                         }
                     }
-                    if (inv_curse_state(ci) <= -1)
+                    if (inv[ci].curse_state <= -1)
                     {
                         if (rnd(3) == 0)
                         {
                             f = 1;
                         }
                     }
-                    if (inv_curse_state(ci) <= -2)
+                    if (inv[ci].curse_state <= -2)
                     {
                         if (rnd(3) == 0)
                         {
@@ -26978,11 +26989,11 @@ void label_1573()
                 }
                 if (f)
                 {
-                    inv_number(ci) = 0;
+                    inv[ci].number = 0;
                     continue;
                 }
-                inv_x(ci) = cdata_x(rc);
-                inv_y(ci) = cdata_y(rc);
+                inv[ci].position.x = cdata_x(rc);
+                inv[ci].position.y = cdata_y(rc);
                 int stat = item_stack(-1, ci);
                 if (stat == 0)
                 {
@@ -26992,9 +27003,9 @@ void label_1573()
                         break;
                     }
                     item_copy(ci, ti);
-                    inv_own_state(ti) = -2;
+                    inv[ti].own_state = -2;
                 }
-                inv_number(ci) = 0;
+                inv[ci].number = 0;
             }
         }
         cell_refresh(cdata_x(rc), cdata_y(rc));
@@ -27042,7 +27053,7 @@ void label_1573()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
@@ -27052,7 +27063,7 @@ void label_1573()
             {
                 break;
             }
-            if (inv_quality(ci) > 4 || inv_id(ci) == 55)
+            if (inv[ci].quality > 4 || inv[ci].id == 55)
             {
                 f = 1;
             }
@@ -27081,7 +27092,7 @@ void label_1573()
                     f = 0;
                 }
             }
-            if (inv_quality(ci) == 6)
+            if (inv[ci].quality == 6)
             {
                 f = 1;
             }
@@ -27097,9 +27108,9 @@ void label_1573()
             {
                 if (ibit(8, ci) == 0)
                 {
-                    if (refitem(inv_id(ci), 5) < 50000)
+                    if (refitem(inv[ci].id, 5) < 50000)
                     {
-                        if (inv_quality(ci) >= 3)
+                        if (inv[ci].quality >= 3)
                         {
                             if (rnd(3))
                             {
@@ -27107,7 +27118,7 @@ void label_1573()
                                 txt(name(catitem) + u8"は"s + itemname(ci)
                                     + u8"をぺろぺろと舐めた。"s);
                                 ibitmod(8, ci, 1);
-                                reftype = refitem(inv_id(ci), 5);
+                                reftype = refitem(inv[ci].id, 5);
                                 encadd(
                                     ci,
                                     randomenc(randomenclv(rnd(4))),
@@ -27118,14 +27129,14 @@ void label_1573()
                     }
                 }
             }
-            if (inv_body_part(ci) != 0)
+            if (inv[ci].body_part != 0)
             {
-                cdata_body_part(rc, inv_body_part(ci)) =
-                    cdata_body_part(rc, inv_body_part(ci)) / 10000 * 10000;
-                inv_body_part(ci) = 0;
+                cdata_body_part(rc, inv[ci].body_part) =
+                    cdata_body_part(rc, inv[ci].body_part) / 10000 * 10000;
+                inv[ci].body_part = 0;
             }
-            inv_x(ci) = cdata_x(rc);
-            inv_y(ci) = cdata_y(rc);
+            inv[ci].position.x = cdata_x(rc);
+            inv[ci].position.y = cdata_y(rc);
             itemturn(ci);
             int stat = item_stack(-1, ci);
             if (stat == 0)
@@ -27137,7 +27148,7 @@ void label_1573()
                 }
                 item_copy(ci, ti);
             }
-            inv_number(ci) = 0;
+            inv[ci].number = 0;
         }
     }
     if (cdata_quality(rc) >= 4 || rnd(20) == 0 || cbit(17, rc) == 1 || rc < 16)
@@ -27482,9 +27493,9 @@ label_1575_internal:
         {
             flt();
             itemcreate(-1, 504, cdata_x(rc), cdata_y(rc), 0);
-            inv_color(ci) = cdata_image(rc) % 1000;
-            inv_subname(ci) = cdata_id(rc);
-            cell_refresh(inv_x(ci), inv_y(ci));
+            inv[ci].color = cdata_image(rc) % 1000;
+            inv[ci].subname = cdata_id(rc);
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         if (rnd(175) == 0 || cdata_quality(rc) == 6 || 0
             || cdata_quality(rc) == 4 && rnd(2) == 0
@@ -27492,17 +27503,17 @@ label_1575_internal:
         {
             flt();
             itemcreate(-1, 503, cdata_x(rc), cdata_y(rc), 0);
-            inv_color(ci) = cdata_image(rc) % 1000;
-            inv_subname(ci) = cdata_id(rc);
-            cell_refresh(inv_x(ci), inv_y(ci));
+            inv[ci].color = cdata_image(rc) % 1000;
+            inv[ci].subname = cdata_id(rc);
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
     }
     if (cdata_character_role(rc) == 1010)
     {
         flt();
         itemcreate(-1, 361, cdata_x(rc), cdata_y(rc), 0);
-        inv_param1(ci) = cdata_shop_store_id(rc);
-        inv_own_state(ci) = 2;
+        inv[ci].param1 = cdata_shop_store_id(rc);
+        inv[ci].own_state = 2;
     }
     if (rollanatomy == 1 || cdata_quality(rc) >= 4 || 0 || cbit(960, rc) == 1
         || 0)
@@ -27516,7 +27527,7 @@ label_1575_internal:
             {
                 if (sdata(161, 0) != 0)
                 {
-                    inv_number(ci) +=
+                    inv[ci].number +=
                         rnd(1 + (sdata(161, 0) > cdata_level(rc)));
                 }
             }
@@ -27688,7 +27699,7 @@ label_1575_internal:
             int stat = itemcreate(-1, 672, cdata_x(rc), cdata_y(rc), 0);
             if (stat != 0)
             {
-                inv_param1(ci) = 169;
+                inv[ci].param1 = 169;
             }
         }
     }
@@ -27725,9 +27736,9 @@ label_1575_internal:
                 flt(cdata_level(rc), 2);
                 flttypemajor = 92000;
                 itemcreate(-1, 0, cdata_x(rc), cdata_y(rc), 0);
-                if (inv_value(ci) < 800)
+                if (inv[ci].value < 800)
                 {
-                    inv_number(ci) = rnd(5) + 1;
+                    inv[ci].number = rnd(5) + 1;
                 }
             }
         }
@@ -27765,8 +27776,8 @@ label_1575_internal:
                 {
                     if (stat != 0)
                     {
-                        inv_param3(ci) = -1;
-                        inv_image(ci) = 336;
+                        inv[ci].param3 = -1;
+                        inv[ci].image = 336;
                     }
                 }
             }
@@ -27807,26 +27818,26 @@ void label_1576()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_number(cnt) == 0)
+                    if (inv[cnt].number == 0)
                     {
                         continue;
                     }
-                    if (inv_material(cnt) == 35)
+                    if (inv[cnt].material == 35)
                     {
-                        if (inv_param3(cnt) > 0)
+                        if (inv[cnt].param3 > 0)
                         {
-                            if (inv_param3(cnt) <= i)
+                            if (inv[cnt].param3 <= i)
                             {
-                                if (inv_own_state(cnt) <= 0)
+                                if (inv[cnt].own_state <= 0)
                                 {
                                     if (p == -1)
                                     {
-                                        if (inv_id(cnt) == 204)
+                                        if (inv[cnt].id == 204)
                                         {
                                             if (chipm(
                                                     0,
-                                                    map(inv_x(cnt),
-                                                        inv_y(cnt),
+                                                    map(inv[cnt].position.x,
+                                                        inv[cnt].position.y,
                                                         0))
                                                 == 1)
                                             {
@@ -27839,19 +27850,20 @@ void label_1576()
                                                     itemname(cnt)
                                                         + u8"は上手い具合に干された。"s,
                                                     itemname(cnt)
-                                                        + is2(inv_number(cnt))
+                                                        + is2(inv[cnt].number)
                                                         + u8" dried up in the sun."s));
-                                                inv_param3(cnt) = gdata_hour
+                                                inv[cnt].param3 = gdata_hour
                                                     + gdata_day * 24
                                                     + gdata_month * 24 * 30
                                                     + gdata_year * 24 * 30 * 12
                                                     + 2160;
-                                                inv_image(cnt) = 337;
-                                                inv_id(cnt) = 571;
-                                                inv_param1(cnt) = 0;
-                                                inv_param2(cnt) = 5;
+                                                inv[cnt].image = 337;
+                                                inv[cnt].id = 571;
+                                                inv[cnt].param1 = 0;
+                                                inv[cnt].param2 = 5;
                                                 cell_refresh(
-                                                    inv_x(cnt), inv_y(cnt));
+                                                    inv[cnt].position.x,
+                                                    inv[cnt].position.y);
                                                 continue;
                                             }
                                         }
@@ -27863,21 +27875,23 @@ void label_1576()
                                             txt(lang(
                                                 itemname(cnt) + u8"は腐った。"s,
                                                 itemname(cnt) + u8" rot"s
-                                                    + _s2(inv_number(cnt))
+                                                    + _s2(inv[cnt].number)
                                                     + u8"."s));
                                         }
                                     }
-                                    inv_param3(cnt) = -1;
-                                    inv_image(cnt) = 336;
+                                    inv[cnt].param3 = -1;
+                                    inv[cnt].image = 336;
                                     if (p == -1)
                                     {
-                                        cell_refresh(inv_x(cnt), inv_y(cnt));
+                                        cell_refresh(
+                                            inv[cnt].position.x,
+                                            inv[cnt].position.y);
                                     }
                                     if (p == 0)
                                     {
                                         if (cdata_god(0) == 7)
                                         {
-                                            i = refitem(inv_id(cnt), 9);
+                                            i = refitem(inv[cnt].id, 9);
                                             if (rnd(3) == 0)
                                             {
                                                 txtmore();
@@ -27888,9 +27902,9 @@ void label_1576()
                                                     u8"You extract plant seeds from "s
                                                         + itemname(cnt)
                                                         + u8"."s));
-                                                p = rnd(inv_number(cnt)) + 1;
+                                                p = rnd(inv[cnt].number) + 1;
                                                 removeitem(
-                                                    cnt, inv_number(cnt));
+                                                    cnt, inv[cnt].number);
                                                 flt(calcobjlv(cdata_level(0)));
                                                 flttypeminor = 58500;
                                                 itemcreate(0, 0, -1, -1, p);
@@ -28027,17 +28041,18 @@ void label_1579()
             int cnt = 0;
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
-                if (inv_enchantment_id(ci, cnt) == 0)
+                if (inv[ci].enchantments[cnt].id == 0)
                 {
                     break;
                 }
-                if (inv_enchantment_id(ci, cnt) == 21)
+                if (inv[ci].enchantments[cnt].id == 21)
                 {
                     if (mdata(6) != 1)
                     {
                         if (rnd(25)
                             < std::clamp(
-                                  std::abs(inv_enchantment_power(ci, cnt)) / 50,
+                                  std::abs(inv[ci].enchantments[cnt].power)
+                                      / 50,
                                   1,
                                   25))
                         {
@@ -28048,7 +28063,7 @@ void label_1579()
                         }
                     }
                 }
-                if (inv_enchantment_id(ci, cnt) == 45)
+                if (inv[ci].enchantments[cnt].id == 45)
                 {
                     if (rnd(4) == 0)
                     {
@@ -28061,11 +28076,11 @@ void label_1579()
                                     + u8" blood."s));
                         }
                         cdata_bleeding(cc) +=
-                            std::abs(inv_enchantment_power(ci, cnt)) / 25 + 3;
+                            std::abs(inv[ci].enchantments[cnt].power) / 25 + 3;
                         continue;
                     }
                 }
-                if (inv_enchantment_id(ci, cnt) == 46)
+                if (inv[ci].enchantments[cnt].id == 46)
                 {
                     if (rnd(20) == 0)
                     {
@@ -28081,7 +28096,7 @@ void label_1579()
                                 / (300
                                    - std::clamp(
                                          std::abs(
-                                             inv_enchantment_power(ci, cnt))
+                                             inv[ci].enchantments[cnt].power)
                                              / 2,
                                          0,
                                          50))
@@ -28093,7 +28108,7 @@ void label_1579()
                         continue;
                     }
                 }
-                if (inv_enchantment_id(ci, cnt) == 47)
+                if (inv[ci].enchantments[cnt].id == 47)
                 {
                     if (mdata(6) != 1)
                     {
@@ -28101,7 +28116,7 @@ void label_1579()
                         {
                             if (rnd(50)
                                 < std::clamp(
-                                      std::abs(inv_enchantment_power(ci, cnt))
+                                      std::abs(inv[ci].enchantments[cnt].power)
                                           / 50,
                                       1,
                                       50))
@@ -28151,22 +28166,22 @@ void label_1580()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0 || inv_identification_state(cnt) >= 3)
+            if (inv[cnt].number == 0 || inv[cnt].identification_state >= 3)
             {
                 continue;
             }
-            if (refitem(inv_id(cnt), 5) >= 50000)
+            if (refitem(inv[cnt].id, 5) >= 50000)
             {
                 continue;
             }
             ci = cnt;
             p(0) = sdata(13, 0) + sdata(162, 0) * 5;
-            p(1) = 1500 + inv_difficulty_of_identification(ci) * 5;
+            p(1) = 1500 + inv[ci].difficulty_of_identification * 5;
             if (p > rnd(p(1) * 5))
             {
                 s = itemname(ci);
                 item_identify(ci, 3);
-                itemmemory(0, inv_id(ci)) = 1;
+                itemmemory(0, inv[ci].id) = 1;
                 if (cfg_hideautoidentify <= 1)
                 {
                     txt(lang(
@@ -28177,7 +28192,7 @@ void label_1580()
                 }
                 skillexp(162, 0, 50);
             }
-            if (inv_identification_state(ci) < 2)
+            if (inv[ci].identification_state < 2)
             {
                 if (p > rnd(p(1)))
                 {
@@ -28185,10 +28200,10 @@ void label_1580()
                     {
                         txt(lang(
                             u8"バックパックの中の"s + itemname(ci) + u8"は"s
-                                + _quality(inv_quality(ci))
+                                + _quality(inv[ci].quality)
                                 + u8"だという感じがする。"s,
                             u8"You sense the quality of "s + itemname(ci)
-                                + u8" is "s + _quality(inv_quality(ci))
+                                + u8" is "s + _quality(inv[ci].quality)
                                 + u8"."s));
                     }
                     item_identify(ci, 2);
@@ -28208,27 +28223,27 @@ void label_1581()
     {
         if (rnd(12) == 0)
         {
-            inv_curse_state(ci) = 1;
+            inv[ci].curse_state = 1;
         }
         if (rnd(13) == 0)
         {
-            inv_curse_state(ci) = -1;
-            if (refitem(inv_id(ci), 5) < 50000)
+            inv[ci].curse_state = -1;
+            if (refitem(inv[ci].id, 5) < 50000)
             {
                 if (rnd(4) == 0)
                 {
-                    inv_curse_state(ci) = -2;
+                    inv[ci].curse_state = -2;
                 }
             }
         }
     }
-    if (cm || mode == 1 || inv_quality(ci) == 6)
+    if (cm || mode == 1 || inv[ci].quality == 6)
     {
-        inv_curse_state(ci) = 0;
+        inv[ci].curse_state = 0;
     }
     if (reftype < 50000 || reftype == 60000 && rnd(5) == 0)
     {
-        if (inv_material(ci) >= 1000 || reftype == 60000)
+        if (inv[ci].material >= 1000 || reftype == 60000)
         {
             label_0263();
         }
@@ -28262,9 +28277,9 @@ void label_1581()
     {
         label_0261();
     }
-    else if (inv_quality(ci) != 6)
+    else if (inv[ci].quality != 6)
     {
-        inv_quality(ci) = 2;
+        inv[ci].quality = 2;
     }
     return;
 }
@@ -28329,8 +28344,8 @@ int label_1582()
                     if (cnt == 0)
                     {
                         p = 1;
-                        inv_x(ci) = sx;
-                        inv_y(ci) = sy;
+                        inv[ci].position.x = sx;
+                        inv[ci].position.y = sy;
                         break;
                     }
                 }
@@ -28346,8 +28361,8 @@ int label_1582()
                 if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
                 {
                     p = 1;
-                    inv_x(ci) = sx;
-                    inv_y(ci) = sy;
+                    inv[ci].position.x = sx;
+                    inv[ci].position.y = sy;
                     break;
                 }
             }
@@ -28405,36 +28420,36 @@ int label_1582()
     label_1275();
     dbmode = 2;
     label_1275();
-    inv_color(ci) = icolref(inv_id(ci));
-    if (inv_color(ci) == 1)
+    inv[ci].color = icolref(inv[ci].id);
+    if (inv[ci].color == 1)
     {
-        inv_color(ci) = randcolor(rnd(length(randcolor)));
+        inv[ci].color = randcolor(rnd(length(randcolor)));
     }
-    if (inv_id(ci) == 519)
+    if (inv[ci].id == 519)
     {
-        inv_color(ci) = rnd(21);
+        inv[ci].color = rnd(21);
     }
-    if (inv_id(ci) == 24)
+    if (inv[ci].id == 24)
     {
-        if (inv_param1(ci) == 0)
+        if (inv[ci].param1 == 0)
         {
-            inv_param1(ci) = isetbook(rnd(length(isetbook)));
+            inv[ci].param1 = isetbook(rnd(length(isetbook)));
         }
     }
-    if (inv_id(ci) == 563)
+    if (inv[ci].id == 563)
     {
-        if (inv_param1(ci) == 0)
+        if (inv[ci].param1 == 0)
         {
-            inv_param1(ci) = randskill();
+            inv[ci].param1 = randskill();
         }
     }
-    if (inv_id(ci) == 783)
+    if (inv[ci].id == 783)
     {
-        inv_subname(ci) = rpsourcelist(rnd(length(rpsourcelist)));
-        inv_param1(ci) = 1;
+        inv[ci].subname = rpsourcelist(rnd(length(rpsourcelist)));
+        inv[ci].param1 = 1;
     }
     ++itemmemory(1, dbid);
-    inv_quality(ci) = fixlv;
+    inv[ci].quality = fixlv;
     if (fixlv == 6)
     {
         if (mode != 6)
@@ -28447,11 +28462,11 @@ int label_1582()
                     if (cdata_character_role(ii_p) == 13)
                     {
                         artifactlocation.push_back(lang(
-                            iknownnameref(inv_id(ci)) + u8"は"s + gdata_year
+                            iknownnameref(inv[ci].id) + u8"は"s + gdata_year
                                 + u8"年"s + gdata_month + u8"月に"s
                                 + mapname(cdata_current_map(ii_p)) + u8"の"s
                                 + cdatan(0, ii_p) + u8"の手に渡った。"s,
-                            cnven(iknownnameref(inv_id(ci)))
+                            cnven(iknownnameref(inv[ci].id))
                                 + u8" was held by "s + cdatan(0, ii_p)
                                 + u8" at "s + mapname(cdata_current_map(ii_p))
                                 + u8" in "s + gdata_day + u8"/"s + gdata_month
@@ -28465,156 +28480,156 @@ int label_1582()
                 if (ii_p == -1)
                 {
                     artifactlocation.push_back(lang(
-                        iknownnameref(inv_id(ci)) + u8"は"s + gdata_year
+                        iknownnameref(inv[ci].id) + u8"は"s + gdata_year
                             + u8"年"s + gdata_month + u8"月に"s + mdatan(0)
                             + u8"で生成された。"s,
-                        cnven(iknownnameref(inv_id(ci))) + u8" was created at "s
+                        cnven(iknownnameref(inv[ci].id)) + u8" was created at "s
                             + mdatan(0) + u8" in "s + gdata_day + u8"/"s
                             + gdata_month + u8", "s + gdata_year + u8". "s));
                 }
             }
         }
     }
-    if (inv_id(ci) == 617)
+    if (inv[ci].id == 617)
     {
-        inv_param1(ci) = rnd(6);
-        inv_image(ci) = 385 + inv_param1(ci);
-        inv_value(ci) = inv_param1(ci) * inv_param1(ci) * 500 + 200;
+        inv[ci].param1 = rnd(6);
+        inv[ci].image = 385 + inv[ci].param1;
+        inv[ci].value = inv[ci].param1 * inv[ci].param1 * 500 + 200;
     }
-    if (inv_id(ci) == 344)
+    if (inv[ci].id == 344)
     {
-        inv_param1(ci) = rnd(5) + 1;
+        inv[ci].param1 = rnd(5) + 1;
         if (mode != 6)
         {
-            inv_param1(ci) = 2;
+            inv[ci].param1 = 2;
         }
-        inv_subname(ci) = inv_param1(ci);
-        inv_value(ci) = 5000
-            + 4500 * inv_param1(ci) * inv_param1(ci) * inv_param1(ci)
-            + inv_param1(ci) * 20000;
-        if (inv_param1(ci) == 5)
+        inv[ci].subname = inv[ci].param1;
+        inv[ci].value = 5000
+            + 4500 * inv[ci].param1 * inv[ci].param1 * inv[ci].param1
+            + inv[ci].param1 * 20000;
+        if (inv[ci].param1 == 5)
         {
-            inv_value(ci) *= 2;
+            inv[ci].value *= 2;
         }
     }
-    if (inv_id(ci) == 54)
+    if (inv[ci].id == 54)
     {
-        inv_number(ci) = calcinitgold(val);
-        if (inv_quality(ci) == 3)
+        inv[ci].number = calcinitgold(val);
+        if (inv[ci].quality == 3)
         {
-            inv_number(ci) = inv_number(ci) * 2;
+            inv[ci].number = inv[ci].number * 2;
         }
-        if (inv_quality(ci) >= 4)
+        if (inv[ci].quality >= 4)
         {
-            inv_number(ci) = inv_number(ci) * 4;
+            inv[ci].number = inv[ci].number * 4;
         }
         if (val >= 0)
         {
-            cdata_gold(val) += inv_number(ci);
-            inv_number(ci) = 0;
+            cdata_gold(val) += inv[ci].number;
+            inv[ci].number = 0;
             return 1;
         }
     }
-    if (inv_id(ci) == 729)
+    if (inv[ci].id == 729)
     {
-        inv_param4(ci) = rnd(rnd(rnd(length(giftvalue)) + 1) + 1);
-        inv_value(ci) = inv_param4(ci) * 2500 + 500;
+        inv[ci].param4 = rnd(rnd(rnd(length(giftvalue)) + 1) + 1);
+        inv[ci].value = inv[ci].param4 * 2500 + 500;
     }
-    if (inv_id(ci) == 578)
+    if (inv[ci].id == 578)
     {
-        inv_param2(ci) = rnd(rnd(length(moneybox)) + 1);
-        inv_value(ci) =
-            inv_param2(ci) * inv_param2(ci) * inv_param2(ci) * 1000 + 1000;
+        inv[ci].param2 = rnd(rnd(length(moneybox)) + 1);
+        inv[ci].value =
+            inv[ci].param2 * inv[ci].param2 * inv[ci].param2 * 1000 + 1000;
     }
-    if (inv_id(ci) == 685)
+    if (inv[ci].id == 685)
     {
-        inv_param2(ci) = rnd(objlv + 1) + 1;
-        inv_value(ci) =
-            2000 + inv_param2(ci) * inv_param2(ci) + inv_param2(ci) * 100;
+        inv[ci].param2 = rnd(objlv + 1) + 1;
+        inv[ci].value =
+            2000 + inv[ci].param2 * inv[ci].param2 + inv[ci].param2 * 100;
     }
-    if (inv_id(ci) == 630)
+    if (inv[ci].id == 630)
     {
         label_0264();
         label_0266();
     }
-    if (inv_id(ci) == 687)
+    if (inv[ci].id == 687)
     {
-        inv_param1(ci) = rnd(rnd(std::clamp(objlv / 2, 1, 14)) + 1);
+        inv[ci].param1 = rnd(rnd(std::clamp(objlv / 2, 1, 14)) + 1);
     }
-    if (inv_id(ci) == 667)
+    if (inv[ci].id == 667)
     {
         ibitmod(17, ci, 1);
     }
-    if (inv_id(ci) == 641)
+    if (inv[ci].id == 641)
     {
         ++gdata_next_inventory_serial_id;
-        inv_count(ci) = gdata_next_inventory_serial_id;
+        inv[ci].count = gdata_next_inventory_serial_id;
     }
-    if (inv_id(ci) == 510)
+    if (inv[ci].id == 510)
     {
-        inv_count(ci) = 3;
+        inv[ci].count = 3;
     }
-    if (inv_id(ci) == 561)
+    if (inv[ci].id == 561)
     {
-        inv_count(ci) = 5;
+        inv[ci].count = 5;
     }
-    if (inv_id(ci) == 547)
+    if (inv[ci].id == 547)
     {
-        inv_count(ci) = 4;
+        inv[ci].count = 4;
     }
-    if (inv_id(ci) == 579)
+    if (inv[ci].id == 579)
     {
-        inv_count(ci) = 6;
+        inv[ci].count = 6;
     }
     if (reftype == 72000)
     {
-        inv_param1(ci) =
+        inv[ci].param1 =
             gdata_current_dungeon_level * (gdata_current_map != 30) + 5;
-        if (inv_id(ci) == 283)
+        if (inv[ci].id == 283)
         {
-            inv_param1(ci) = (rnd(10) + 1) * (cdata_level(0) / 10 + 1);
+            inv[ci].param1 = (rnd(10) + 1) * (cdata_level(0) / 10 + 1);
         }
-        if (inv_id(ci) == 415 || inv_id(ci) == 416)
+        if (inv[ci].id == 415 || inv[ci].id == 416)
         {
-            inv_param1(ci) = cdata_level(0);
+            inv[ci].param1 = cdata_level(0);
         }
-        inv_param2(ci) = rnd(
+        inv[ci].param2 = rnd(
             std::abs(gdata_current_dungeon_level) * (gdata_current_map != 30)
             + 1);
-        if (inv_id(ci) == 284 || inv_id(ci) == 283)
+        if (inv[ci].id == 284 || inv[ci].id == 283)
         {
-            inv_param2(ci) = rnd(15);
+            inv[ci].param2 = rnd(15);
         }
-        inv_param3(ci) = rnd(30000);
-        if (inv_id(ci) == 734)
+        inv[ci].param3 = rnd(30000);
+        if (inv[ci].id == 734)
         {
-            inv_param2(ci) = rnd(rnd(100) + 1) + 1;
-            inv_value(ci) = inv_param2(ci) * 25 + 150;
+            inv[ci].param2 = rnd(rnd(100) + 1) + 1;
+            inv[ci].value = inv[ci].param2 * 25 + 150;
             initnum = rnd(8);
         }
     }
     if (reftype == 57000)
     {
-        if (inv_param1(ci) != 0)
+        if (inv[ci].param1 != 0)
         {
             if (mode == 6)
             {
                 if (rnd(2) == 0)
                 {
-                    inv_param2(ci) = 0;
+                    inv[ci].param2 = 0;
                 }
                 else
                 {
-                    inv_param2(ci) = 3 + rnd(3);
+                    inv[ci].param2 = 3 + rnd(3);
                 }
             }
-            if (inv_param2(ci) != 0)
+            if (inv[ci].param2 != 0)
             {
-                inv_image(ci) = picfood(inv_param2(ci), inv_param1(ci) / 1000);
+                inv[ci].image = picfood(inv[ci].param2, inv[ci].param1 / 1000);
             }
-            if (inv_material(ci) == 35)
+            if (inv[ci].material == 35)
             {
-                inv_param3(ci) += gdata_hour + gdata_day * 24
+                inv[ci].param3 += gdata_hour + gdata_day * 24
                     + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
             }
         }
@@ -28624,32 +28639,32 @@ int label_1582()
     {
         if (rnd(3) == 0)
         {
-            inv_subname(ci) = rnd(rnd(12) + 1);
+            inv[ci].subname = rnd(rnd(12) + 1);
         }
         else
         {
-            inv_subname(ci) = 0;
+            inv[ci].subname = 0;
         }
     }
     if (mode == 6)
     {
-        inv_identification_state(ci) = 3;
+        inv[ci].identification_state = 3;
     }
-    if (reftype == 68000 || reftype == 69000 || inv_id(ci) == 622
-        || inv_id(ci) == 724 || inv_id(ci) == 730 || inv_id(ci) == 615)
+    if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
+        || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
-        inv_curse_state(ci) = 0;
-        inv_identification_state(ci) = 3;
+        inv[ci].curse_state = 0;
+        inv[ci].identification_state = 3;
     }
     if (reftype == 92000)
     {
-        inv_identification_state(ci) = 3;
-        inv_curse_state(ci) = 0;
-        itemmemory(0, inv_id(ci)) = 1;
+        inv[ci].identification_state = 3;
+        inv[ci].curse_state = 0;
+        itemmemory(0, inv[ci].id) = 1;
     }
     if (reftype == 62000 || reftype == 64000 || reftype == 77000)
     {
-        inv_curse_state(ci) = 0;
+        inv[ci].curse_state = 0;
     }
     if (mode != 6)
     {
@@ -28657,7 +28672,7 @@ int label_1582()
         {
             if (rnd(sdata(162, 0) + 1) > 5)
             {
-                inv_identification_state(ci) = 2;
+                inv[ci].identification_state = 2;
             }
         }
     }
@@ -28665,7 +28680,7 @@ int label_1582()
     itemturn(ci);
     if (initnum != 0)
     {
-        inv_number(ci) = initnum;
+        inv[ci].number = initnum;
     }
     if (nostack == 1)
     {
@@ -28682,7 +28697,7 @@ int label_1582()
     }
     if (val == -1)
     {
-        cell_refresh(inv_x(ci), inv_y(ci));
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     return 1;
 }
@@ -28693,9 +28708,9 @@ void label_1583()
 {
     if (reftype == 60000)
     {
-        if (inv_subname(ci) != 0)
+        if (inv[ci].subname != 0)
         {
-            inv_value(ci) = inv_value(ci) * (80 + inv_subname(ci) * 20) / 100;
+            inv[ci].value = inv[ci].value * (80 + inv[ci].subname * 20) / 100;
         }
     }
     return;
@@ -28719,9 +28734,9 @@ void lovemiracle(int prm_932)
         int stat = itemcreate(-1, 573, cdata_x(prm_932), cdata_y(prm_932), 0);
         if (stat)
         {
-            inv_subname(ci) = cdata_id(prm_932);
-            inv_weight(ci) = cdata_weight(prm_932) * 10 + 250;
-            inv_value(ci) = std::clamp(
+            inv[ci].subname = cdata_id(prm_932);
+            inv[ci].weight = cdata_weight(prm_932) * 10 + 250;
+            inv[ci].value = std::clamp(
                 cdata_weight(prm_932) * cdata_weight(prm_932) / 10000,
                 200,
                 40000);
@@ -28732,7 +28747,7 @@ void lovemiracle(int prm_932)
         int stat = itemcreate(-1, 574, cdata_x(prm_932), cdata_y(prm_932), 0);
         if (stat)
         {
-            inv_subname(ci) = cdata_id(prm_932);
+            inv[ci].subname = cdata_id(prm_932);
         }
     }
     ci = cibk;
@@ -28815,7 +28830,7 @@ void label_1587()
     snd(25);
     item_separate(ci);
     s = itemname(ci);
-    p = rnd(sdata(184, cc) + 6) + rnd((inv_param1(cooktool) / 50 + 1));
+    p = rnd(sdata(184, cc) + 6) + rnd((inv[cooktool].param1 / 50 + 1));
     if (p > sdata(184, cc) / 5 + 7)
     {
         p = sdata(184, cc) / 5 + 7;
@@ -28845,7 +28860,7 @@ void label_1587()
             }
         }
     }
-    p += inv_param1(cooktool) / 100;
+    p += inv[cooktool].param1 / 100;
     if (p > 9)
     {
         p = 9;
@@ -28860,7 +28875,7 @@ void label_1587()
             + u8"を作った。"s,
         u8"You cook "s + s + u8" with "s + itemname(cooktool, 1)
             + u8" and make "s + itemname(ci, 1) + u8"."s));
-    r1 = inv_param2(ci);
+    r1 = inv[ci].param2;
     if (r1 > 2)
     {
         skillexp(184, cc, 30 + r1 * 5);
@@ -28884,12 +28899,12 @@ void label_1588()
         }
     }
     nutrition = 2500;
-    if (refitem(inv_id(ci), 10) == 1)
+    if (refitem(inv[ci].id, 10) == 1)
     {
         nutrition += 2500;
     }
     fdmax = 0;
-    i = inv_param1(ci) / 1000;
+    i = inv[ci].param1 / 1000;
     if (i == 1)
     {
         if (fdmax < 10)
@@ -29060,37 +29075,37 @@ void label_1588()
         }
         nutrition = 3500;
     }
-    nutrition = nutrition * (100 + inv_param2(ci) * 15) / 100;
+    nutrition = nutrition * (100 + inv[ci].param2 * 15) / 100;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (fdmax); cnt < cnt_end; ++cnt)
         {
             if (fdlist(1, cnt) > 0)
             {
-                if (inv_param2(ci) < 3)
+                if (inv[ci].param2 < 3)
                 {
                     fdlist(1, cnt) = fdlist(1, cnt) / 2;
                 }
                 else
                 {
                     fdlist(1, cnt) =
-                        fdlist(1, cnt) * (50 + inv_param2(ci) * 20) / 100;
+                        fdlist(1, cnt) * (50 + inv[ci].param2 * 20) / 100;
                 }
             }
-            else if (inv_param2(ci) < 3)
+            else if (inv[ci].param2 < 3)
             {
                 fdlist(1, cnt) =
-                    fdlist(1, cnt) * ((3 - inv_param2(ci)) * 100 + 100) / 100;
+                    fdlist(1, cnt) * ((3 - inv[ci].param2) * 100 + 100) / 100;
             }
             else
             {
-                fdlist(1, cnt) = fdlist(1, cnt) * 100 / (inv_param2(ci) * 50);
+                fdlist(1, cnt) = fdlist(1, cnt) * 100 / (inv[ci].param2 * 50);
             }
         }
     }
     if (cc == 0)
     {
-        p = inv_param1(ci) / 1000;
+        p = inv[ci].param1 / 1000;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
@@ -29099,9 +29114,9 @@ void label_1588()
                 {
                     if (trait(41))
                     {
-                        if (inv_id(ci) == 204)
+                        if (inv[ci].id == 204)
                         {
-                            s = refchara_str(inv_subname(ci), 8);
+                            s = refchara_str(inv[ci].subname, 8);
                             if (strutil::contains(s(0), u8"/man/"))
                             {
                                 txt(lang(u8"ウマイ！"s, u8"Delicious!"s));
@@ -29110,9 +29125,9 @@ void label_1588()
                         }
                     }
                 }
-                if (inv_material(ci) == 35)
+                if (inv[ci].material == 35)
                 {
-                    if (inv_param3(ci) < 0)
+                    if (inv[ci].param3 < 0)
                     {
                         txt(lang(
                             u8"うげっ！腐ったものを食べてしまった…うわ…"s,
@@ -29120,7 +29135,7 @@ void label_1588()
                         break;
                     }
                 }
-                if (inv_param2(ci) == 0)
+                if (inv[ci].param2 == 0)
                 {
                     if (p == 1)
                     {
@@ -29147,7 +29162,7 @@ void label_1588()
                         lang(u8"平凡な味だ。"s, u8"Very boring food."s));
                     break;
                 }
-                if (inv_param2(ci) < 3)
+                if (inv[ci].param2 < 3)
                 {
                     txt(lang(
                             u8"うぅ…腹を壊しそうだ。"s,
@@ -29156,7 +29171,7 @@ void label_1588()
                         lang(u8"ひどい味だ！"s, u8"Awful taste!!"s));
                     break;
                 }
-                if (inv_param2(ci) < 5)
+                if (inv[ci].param2 < 5)
                 {
                     txt(lang(
                             u8"まあまあの味だ。"s,
@@ -29164,13 +29179,13 @@ void label_1588()
                         lang(u8"悪くない味だ。"s, u8"The taste is not bad."s));
                     break;
                 }
-                if (inv_param2(ci) < 7)
+                if (inv[ci].param2 < 7)
                 {
                     txt(lang(u8"かなりいける。"s, u8"It tasted good."s),
                         lang(u8"それなりに美味しかった。"s, u8"Decent meal."s));
                     break;
                 }
-                if (inv_param2(ci) < 9)
+                if (inv[ci].param2 < 9)
                 {
                     txt(lang(u8"美味しい！"s, u8"Delicious!"s),
                         lang(u8"これはいける！"s, u8"Gee what a good taste!"s),
@@ -29185,16 +29200,16 @@ void label_1588()
             }
         }
     }
-    else if (inv_material(ci) == 35)
+    else if (inv[ci].material == 35)
     {
-        if (inv_param3(ci) < 0)
+        if (inv[ci].param3 < 0)
         {
             txt(lang(
                 name(cc) + u8"は渋い顔をした。"s,
                 name(cc) + u8" looks glum."s));
         }
     }
-    if (inv_id(ci) == 425)
+    if (inv[ci].id == 425)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -29255,7 +29270,7 @@ void label_1588()
                 u8"This herb invigorates you."s));
         }
     }
-    if (inv_id(ci) == 422)
+    if (inv[ci].id == 422)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -29318,7 +29333,7 @@ void label_1588()
                 u8"You feel might coming through your body."s));
         }
     }
-    if (inv_id(ci) == 423)
+    if (inv[ci].id == 423)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -29381,7 +29396,7 @@ void label_1588()
                 u8"You feel magical power springs up inside you."s));
         }
     }
-    if (inv_id(ci) == 424)
+    if (inv[ci].id == 424)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -29444,7 +29459,7 @@ void label_1588()
                 u8"You feel as your sense is sharpened."s));
         }
     }
-    if (inv_id(ci) == 426)
+    if (inv[ci].id == 426)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -29507,7 +29522,7 @@ void label_1588()
                 u8"Your hormones are activated."s));
         }
     }
-    if (inv_id(ci) == 427)
+    if (inv[ci].id == 427)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -29560,23 +29575,23 @@ void label_1588()
         }
         nutrition = 20000;
     }
-    if (inv_id(ci) == 738)
+    if (inv[ci].id == 738)
     {
         nutrition = 750;
     }
     if (cc == 0)
     {
-        if (inv_material(ci) == 35)
+        if (inv[ci].material == 35)
         {
-            if (inv_param3(ci) < 0)
+            if (inv[ci].param3 < 0)
             {
                 label_1586();
             }
         }
     }
-    if (inv_id(ci) == 204)
+    if (inv[ci].id == 204)
     {
-        s = refchara_str(inv_subname(ci), 8);
+        s = refchara_str(inv[ci].subname, 8);
         if (cc == 0)
         {
             if (strutil::contains(s(0), u8"/man/"))
@@ -29618,11 +29633,11 @@ void label_1588()
             }
         }
     }
-    if (inv_id(ci) == 204
-        || (inv_id(ci) == 571 || inv_id(ci) == 573) && rnd(3) == 0)
+    if (inv[ci].id == 204
+        || (inv[ci].id == 571 || inv[ci].id == 573) && rnd(3) == 0)
     {
         dbmode = 12;
-        dbid = inv_subname(ci);
+        dbid = inv[ci].subname;
         label_2654();
     }
     {
@@ -29638,9 +29653,9 @@ void label_1588()
             if (cc != 0)
             {
                 i = 1500;
-                if (inv_material(ci) == 35)
+                if (inv[ci].material == 35)
                 {
-                    if (inv_param3(ci) < 0)
+                    if (inv[ci].param3 < 0)
                     {
                         i = 500;
                     }
@@ -29652,11 +29667,11 @@ void label_1588()
             }
         }
     }
-    if (inv_curse_state(ci) >= 1)
+    if (inv[ci].curse_state >= 1)
     {
         nutrition = nutrition * 150 / 100;
     }
-    if (inv_curse_state(ci) <= -1)
+    if (inv[ci].curse_state <= -1)
     {
         nutrition = nutrition * 50 / 100;
     }
@@ -29686,9 +29701,9 @@ void label_1588()
             ci = cibk;
         }
     }
-    if (inv_id(ci) == 204)
+    if (inv[ci].id == 204)
     {
-        if (inv_subname(ci) == 319)
+        if (inv[ci].subname == 319)
         {
             txtef(2);
             txt(lang(
@@ -29722,28 +29737,28 @@ void label_1588()
             }
         }
     }
-    if (inv_id(ci) == 755)
+    if (inv[ci].id == 755)
     {
         txt(lang(u8"これは縁起がいい！"s, u8"The food is a charm!"s));
         skillmod(19, cc, 2000);
     }
-    if (inv_id(ci) == 702)
+    if (inv[ci].id == 702)
     {
         skillmod(19, cc, 1000);
     }
-    if (inv_id(ci) == 639)
+    if (inv[ci].id == 639)
     {
         skillmod(19, cc, 20000);
     }
-    if (inv_id(ci) == 655)
+    if (inv[ci].id == 655)
     {
         skillmod(2, cc, 3000);
     }
-    if (inv_id(ci) == 662)
+    if (inv[ci].id == 662)
     {
         skillmod(3, cc, 3000);
     }
-    if (inv_id(ci) == 738)
+    if (inv[ci].id == 738)
     {
         if (cc < 16)
         {
@@ -29752,7 +29767,7 @@ void label_1588()
                 name(cc) + u8" read"s + _s(cc) + u8" the paper fortune."s));
             valn = u8"%COOKIE2"s;
             label_0175();
-            if (inv_curse_state(ci) >= 1 || inv_curse_state(ci) == 0 && rnd(2))
+            if (inv[ci].curse_state >= 1 || inv[ci].curse_state == 0 && rnd(2))
             {
                 valn = u8"%COOKIE1"s;
                 label_0175();
@@ -29761,7 +29776,7 @@ void label_1588()
             txt(""s + buff);
         }
     }
-    if (inv_id(ci) == 667)
+    if (inv[ci].id == 667)
     {
         txtmore();
         txt(lang(
@@ -29825,20 +29840,20 @@ void label_1588()
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
         {
-            if (inv_enchantment_id(ci, cnt) == 0)
+            if (inv[ci].enchantments[cnt].id == 0)
             {
                 break;
             }
-            enc = inv_enchantment_id(ci, cnt);
+            enc = inv[ci].enchantments[cnt].id;
             if (enc == 36)
             {
-                p = rnd(inv_enchantment_power(ci, cnt) / 50 + 1) + 1;
+                p = rnd(inv[ci].enchantments[cnt].power / 50 + 1) + 1;
                 healsp(cc, p);
                 continue;
             }
             if (enc == 38)
             {
-                p = rnd(inv_enchantment_power(ci, cnt) / 25 + 1) + 1;
+                p = rnd(inv[ci].enchantments[cnt].power / 25 + 1) + 1;
                 healmp(cc, p / 5);
                 continue;
             }
@@ -29856,7 +29871,7 @@ void label_1588()
                         name(cc) + u8"は時を止めた。"s,
                         name(cc) + u8" stop"s + _s(cc) + u8" time."s));
                     gdata_left_turns_of_timestop =
-                        inv_enchantment_power(ci, cnt) / 100 + 1 + 1;
+                        inv[ci].enchantments[cnt].power / 100 + 1 + 1;
                     continue;
                 }
             }
@@ -29869,11 +29884,11 @@ void label_1588()
                     skillexp(
                         enc,
                         cc,
-                        (inv_enchantment_power(ci, cnt) / 50 + 1) * 100
+                        (inv[ci].enchantments[cnt].power / 50 + 1) * 100
                             * (1 + (cc != 0) * 5));
                     if (synccheck(cc, -1))
                     {
-                        if (inv_enchantment_power(ci, cnt) >= 0)
+                        if (inv[ci].enchantments[cnt].power >= 0)
                         {
                             txt(lang(
                                 name(cc) + u8"の"s + skillname(enc)
@@ -29905,7 +29920,7 @@ void label_1588()
                     addbuff(
                         cc,
                         20 + (enc - 10),
-                        (inv_enchantment_power(ci, cnt) / 50 + 1) * 5
+                        (inv[ci].enchantments[cnt].power / 50 + 1) * 5
                             * (1 + (cc != 0) * 2),
                         2000);
                     continue;
@@ -29913,7 +29928,7 @@ void label_1588()
             }
         }
     }
-    eatstatus(inv_curse_state(cieat), cc);
+    eatstatus(inv[cieat].curse_state, cc);
     return;
 }
 
@@ -30790,7 +30805,7 @@ void map_initcustom(const std::string& prm_934)
                     0);
                 if (stat != 0)
                 {
-                    inv_own_state(ci) = cmapdata(3, cnt);
+                    inv[ci].own_state = cmapdata(3, cnt);
                 }
             }
             if (cmapdata(4, cnt) == 1)
@@ -30866,14 +30881,14 @@ void map_reload(const std::string& prm_935)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) > 0)
+            if (inv[cnt].number > 0)
             {
-                if (inv_own_state(cnt) == 1)
+                if (inv[cnt].own_state == 1)
                 {
-                    if (refitem(inv_id(cnt), 5) == 57000)
+                    if (refitem(inv[cnt].id, 5) == 57000)
                     {
-                        inv_number(cnt) = 0;
-                        cell_refresh(inv_x(cnt), inv_y(cnt));
+                        inv[cnt].number = 0;
+                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                     }
                 }
             }
@@ -30898,7 +30913,7 @@ void map_reload(const std::string& prm_935)
                         -1, cmapdata(0, cnt), x_at_m166, y_at_m166, 0);
                     if (stat != 0)
                     {
-                        inv_own_state(ci) = cmapdata(3, cnt);
+                        inv[ci].own_state = cmapdata(3, cnt);
                     }
                 }
                 cell_refresh(x_at_m166, y_at_m166);
@@ -32085,15 +32100,15 @@ void map_randsite(int prm_971, int prm_972)
             {
                 flt();
                 itemcreate(-1, 173, x_at_m169, y_at_m169, 0);
-                inv_own_state(ci) = 1;
+                inv[ci].own_state = 1;
                 return;
             }
             if (rnd(100) == 0)
             {
                 flt();
                 itemcreate(-1, 172, x_at_m169, y_at_m169, 0);
-                inv_own_state(ci) = 1;
-                inv_param1(ci) = isetgod(rnd(length(isetgod)));
+                inv[ci].own_state = 1;
+                inv[ci].param1 = isetgod(rnd(length(isetgod)));
                 return;
             }
         }
@@ -33040,7 +33055,7 @@ void label_1696()
             flt();
             flttypemajor = 80000;
             itemcreate(-1, 0, -1, -1, 0);
-            inv_own_state(ci) = 1;
+            inv[ci].own_state = 1;
         }
     }
     return;
@@ -33133,11 +33148,11 @@ int label_1697()
                             }
                             flt();
                             itemcreate(-1, dbid, x, y, 0);
-                            inv_own_state(ci) = 4;
+                            inv[ci].own_state = 4;
                             p = std::clamp(size + rnd((rnd(4) + 1)), 0, 9);
-                            inv_weight(ci) =
-                                inv_weight(ci) * (80 + p * p * 100) / 100;
-                            inv_subname(ci) = p;
+                            inv[ci].weight =
+                                inv[ci].weight * (80 + p * p * 100) / 100;
+                            inv[ci].subname = p;
                         }
                     }
                 }
@@ -33150,7 +33165,7 @@ int label_1697()
     map_placeplayer();
     flt();
     itemcreate(-1, 560, cdata_x(0) + 1, cdata_y(0), 0);
-    inv_own_state(ci) = 1;
+    inv[ci].own_state = 1;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (70 + rnd(20)); cnt < cnt_end; ++cnt)
@@ -33166,7 +33181,7 @@ int label_1697()
                         flt();
                         flttypemajor = 80000;
                         itemcreate(-1, 0, x, y, 0);
-                        inv_own_state(ci) = 1;
+                        inv[ci].own_state = 1;
                     }
                     else
                     {
@@ -33916,9 +33931,9 @@ int label_1703()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) > 0)
+            if (inv[cnt].number > 0)
             {
-                inv_own_state(cnt) = 1;
+                inv[cnt].own_state = 1;
             }
         }
     }
@@ -33970,18 +33985,18 @@ void label_1704()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
             f = 0;
-            if (inv_id(cnt) == 109 || inv_id(cnt) == 173)
+            if (inv[cnt].id == 109 || inv[cnt].id == 173)
             {
-                inv_param1(cnt) = -10;
+                inv[cnt].param1 = -10;
             }
-            if (inv_id(cnt) == 241)
+            if (inv[cnt].id == 241)
             {
-                inv_param1(cnt) = 0;
+                inv[cnt].param1 = 0;
             }
         }
     }
@@ -34702,11 +34717,11 @@ void label_1712()
         label_1419();
         label_2743(false);
     }
-    if (inv_id(ci) == 344)
+    if (inv[ci].id == 344)
     {
-        gdata_home_scale = inv_param1(ci);
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        gdata_home_scale = inv[ci].param1;
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         label_1713();
         midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
@@ -34740,35 +34755,35 @@ void label_1712()
     adata(4, p) = 1;
     adata(3, p) = 8;
     adata(30, p) = gdata(850);
-    if (inv_id(ci) == 521)
+    if (inv[ci].id == 521)
     {
         adata(16, p) = 101;
         adata(15, p) = 151;
         adata(21, p) = 1;
         s = lang(u8"博物館"s, u8"museum"s);
     }
-    if (inv_id(ci) == 522)
+    if (inv[ci].id == 522)
     {
         adata(16, p) = 102;
         adata(15, p) = 150;
         adata(21, p) = 1;
         s = lang(u8"店"s, u8"shop"s);
     }
-    if (inv_id(ci) == 542)
+    if (inv[ci].id == 542)
     {
         adata(16, p) = 103;
         adata(15, p) = 152;
         adata(21, p) = 2;
         s = lang(u8"畑"s, u8"crop"s);
     }
-    if (inv_id(ci) == 543)
+    if (inv[ci].id == 543)
     {
         adata(16, p) = 104;
         adata(15, p) = 153;
         adata(21, p) = 1;
         s = lang(u8"倉庫"s, u8"storage"s);
     }
-    if (inv_id(ci) == 572)
+    if (inv[ci].id == 572)
     {
         adata(16, p) = 31;
         adata(15, p) = 154;
@@ -34776,7 +34791,7 @@ void label_1712()
         adata(12, p) = 1;
         s = lang(u8"牧場"s, u8"ranch"s);
     }
-    if (inv_id(ci) == 712)
+    if (inv[ci].id == 712)
     {
         adata(16, p) = 39;
         adata(15, p) = 138;
@@ -34790,8 +34805,8 @@ void label_1712()
         u8"あなたは"s + s + u8"を建設した！ "s,
         u8"You've built a "s + s + u8"!"s));
     label_1749();
-    --inv_number(ci);
-    cell_refresh(inv_x(ci), inv_y(ci));
+    --inv[ci].number;
+    cell_refresh(inv[ci].position.x, inv[ci].position.y);
     label_2742();
     return;
 }
@@ -34850,9 +34865,9 @@ void label_1714()
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
             ++p(2);
-            if (inv_number(cnt) != 0)
+            if (inv[cnt].number != 0)
             {
-                if (refitem(inv_id(cnt), 5) != 60000)
+                if (refitem(inv[cnt].id, 5) != 60000)
                 {
                     ++p;
                 }
@@ -35116,7 +35131,7 @@ void label_1714()
                 {
                     continue;
                 }
-                p(1) = inv_image(p) % 1000;
+                p(1) = inv[p].image % 1000;
                 gsel(1);
                 color(0);
                 boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
@@ -35130,12 +35145,12 @@ void label_1714()
                         22,
                         20,
                         5,
-                        chipc(0, inv_color(p)) + 8,
-                        chipc(1, inv_color(p)) + 4
-                            + (chipc(3, inv_color(p)) > inf_tiles) * 8,
-                        chipc(2, inv_color(p)) - 16,
-                        chipc(3, inv_color(p)) - 8
-                            - (chipc(3, inv_color(p)) > inf_tiles) * 10,
+                        chipc(0, inv[p].color) + 8,
+                        chipc(1, inv[p].color) + 4
+                            + (chipc(3, inv[p].color) > inf_tiles) * 8,
+                        chipc(2, inv[p].color) - 16,
+                        chipc(3, inv[p].color) - 8
+                            - (chipc(3, inv[p].color) > inf_tiles) * 10,
                         1);
                     pos(6, 974);
                     gcopy(1, 0, 1008, 22, 20);
@@ -35143,23 +35158,23 @@ void label_1714()
                 }
                 else if (p(1) == 531)
                 {
-                    pos(8, 1058 - chipc(3, inv_color(p)));
+                    pos(8, 1058 - chipc(3, inv[p].color));
                     gcopy(
                         5,
-                        chipc(0, inv_color(p)) + 8,
-                        chipc(1, inv_color(p)) + 2,
-                        chipc(2, inv_color(p)) - 16,
-                        chipc(3, inv_color(p)) - 8);
+                        chipc(0, inv[p].color) + 8,
+                        chipc(1, inv[p].color) + 2,
+                        chipc(2, inv[p].color) - 16,
+                        chipc(3, inv[p].color) - 8);
                     gmode(4, -1, -1, 150);
                     color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
+                    pos(0, 960 + (chipc(3, inv[p].color) == inf_tiles) * 48);
                     gcopy(
                         1,
                         144,
-                        768 + (chipc(3, inv_color(p)) > inf_tiles) * 48,
+                        768 + (chipc(3, inv[p].color) > inf_tiles) * 48,
                         inf_tiles,
-                        chipc(3, inv_color(p))
-                            + (chipc(3, inv_color(p)) > inf_tiles) * 48);
+                        chipc(3, inv[p].color)
+                            + (chipc(3, inv[p].color) > inf_tiles) * 48);
                     gmode(2);
                     gsel(selcur);
                 }
@@ -35174,9 +35189,9 @@ void label_1714()
                         chipi(3, p(1)));
                     gfini(chipi(2, p(1)), chipi(3, p(1)));
                     gfdec2(
-                        c_col(0, inv_color(p)),
-                        c_col(1, inv_color(p)),
-                        c_col(2, inv_color(p)));
+                        c_col(0, inv[p].color),
+                        c_col(1, inv[p].color),
+                        c_col(2, inv[p].color));
                     gsel(selcur);
                 }
                 pos(wx + 37, cnt * 16 + wy + 138);
@@ -35662,47 +35677,47 @@ void label_1725()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) <= 0)
+            if (inv[cnt].number <= 0)
             {
                 continue;
             }
-            if (inv_id(cnt) == 561)
+            if (inv[cnt].id == 561)
             {
                 continue;
             }
-            if (inv_id(cnt) == 562)
+            if (inv[cnt].id == 562)
             {
                 continue;
             }
-            if (inv_id(cnt) == 24)
+            if (inv[cnt].id == 24)
             {
                 continue;
             }
-            if (inv_id(cnt) == 54)
+            if (inv[cnt].id == 54)
             {
                 continue;
             }
-            if (inv_id(cnt) == 555)
+            if (inv[cnt].id == 555)
             {
                 continue;
             }
-            if (inv_id(cnt) == 344)
+            if (inv[cnt].id == 344)
             {
                 continue;
             }
-            if (inv_weight(cnt) < 0)
+            if (inv[cnt].weight < 0)
             {
                 continue;
             }
-            if (inv_quality(cnt) >= 6)
+            if (inv[cnt].quality >= 6)
             {
                 continue;
             }
-            if (inv_value(cnt) < 50)
+            if (inv[cnt].value < 50)
             {
                 continue;
             }
-            a = refitem(inv_id(cnt), 5);
+            a = refitem(inv[cnt].id, 5);
             if (a == 60000)
             {
                 continue;
@@ -35733,7 +35748,7 @@ void label_1725()
             {
                 continue;
             }
-            if (inv_number(ci) <= 0)
+            if (inv[ci].number <= 0)
             {
                 continue;
             }
@@ -35741,14 +35756,14 @@ void label_1725()
             {
                 continue;
             }
-            in = rnd(inv_number(ci)) + 1;
-            inv_number(ci) -= in;
+            in = rnd(inv[ci].number) + 1;
+            inv[ci].number -= in;
             sold += in;
             val = val * in;
             if (rnd(4) == 0)
             {
-                list(0, listmax) = refitem(inv_id(ci), 7);
-                list(1, listmax) = inv_quality(ci);
+                list(0, listmax) = refitem(inv[ci].id, 7);
+                list(1, listmax) = inv[ci].quality;
                 listn(0, listmax) = std::to_string(a);
                 listn(1, listmax) = std::to_string(val);
                 ++listmax;
@@ -35801,7 +35816,7 @@ void label_1725()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                inv_number(cnt) = 0;
+                inv[cnt].number = 0;
             }
         }
     }
@@ -35828,14 +35843,14 @@ void label_1725()
                         f = 0;
                         break;
                     }
-                    if (inv_value(ci) > elona::stoi(listn(1, cnt2)) * 2)
+                    if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
                     {
                         f = 1;
                         break;
                     }
                     else
                     {
-                        inv_number(ci) = 0;
+                        inv[ci].number = 0;
                         if (cnt == 3)
                         {
                             f = 0;
@@ -35931,12 +35946,12 @@ void label_1726()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) <= 0)
+            if (inv[cnt].number <= 0)
             {
                 continue;
             }
-            x = inv_x(cnt);
-            y = inv_y(cnt);
+            x = inv[cnt].position.x;
+            y = inv[cnt].position.y;
             if (x < 0 || x >= mdata(0) || y < 0 || y >= mdata(1))
             {
                 continue;
@@ -35996,19 +36011,20 @@ void label_1728()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (inv_id(cnt) != 503 && inv_id(cnt) != 504)
+            if (inv[cnt].id != 503 && inv[cnt].id != 504)
             {
                 continue;
             }
-            if (wpeek(map(inv_x(cnt), inv_y(cnt), 4), 0) != inv_image(cnt))
+            if (wpeek(map(inv[cnt].position.x, inv[cnt].position.y, 4), 0)
+                != inv[cnt].image)
             {
                 continue;
             }
-            if (inv_id(cnt) == 503)
+            if (inv[cnt].id == 503)
             {
                 val = 0;
             }
@@ -36016,9 +36032,9 @@ void label_1728()
             {
                 val = 1;
             }
-            dbid = inv_subname(cnt);
+            dbid = inv[cnt].subname;
             label_1727();
-            if (inv_id(cnt) == 503)
+            if (inv[cnt].id == 503)
             {
                 rankcur += rtval;
             }
@@ -36061,12 +36077,12 @@ void label_1728()
 
 void label_1729()
 {
-    a = refitem(inv_id(val), 5);
+    a = refitem(inv[val].id, 5);
     if (a == 60000)
     {
-        gdata(77) += std::clamp(inv_value(val) / 50, 50, 500);
+        gdata(77) += std::clamp(inv[val].value / 50, 50, 500);
     }
-    p = inv_value(val);
+    p = inv[val].value;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
@@ -36133,11 +36149,12 @@ void label_1730()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (wpeek(map(inv_x(cnt), inv_y(cnt), 4), 0) != inv_image(cnt))
+            if (wpeek(map(inv[cnt].position.x, inv[cnt].position.y, 4), 0)
+                != inv[cnt].image)
             {
                 continue;
             }
@@ -36342,9 +36359,9 @@ void label_1733()
                             int stat = itemcreate(-1, 573, x, y, 0);
                             if (stat)
                             {
-                                inv_subname(ci) = cdata_id(cnt);
-                                inv_weight(ci) = cdata_weight(cnt) * 10 + 250;
-                                inv_value(ci) = std::clamp(
+                                inv[ci].subname = cdata_id(cnt);
+                                inv[ci].weight = cdata_weight(cnt) * 10 + 250;
+                                inv[ci].value = std::clamp(
                                     cdata_weight(cnt) * cdata_weight(cnt)
                                         / 10000,
                                     200,
@@ -36372,7 +36389,7 @@ void label_1733()
                             int stat = itemcreate(-1, 574, x, y, 0);
                             if (stat)
                             {
-                                inv_subname(ci) = cdata_id(cnt);
+                                inv[ci].subname = cdata_id(cnt);
                             }
                         }
                         continue;
@@ -36388,9 +36405,9 @@ void label_1733()
                             int stat = itemcreate(-1, 575, x, y, 0);
                             if (stat)
                             {
-                                inv_subname(ci) = cdata_id(cnt);
-                                inv_weight(ci) = cdata_weight(cnt) * 40 + 300;
-                                inv_value(ci) = std::clamp(
+                                inv[ci].subname = cdata_id(cnt);
+                                inv[ci].weight = cdata_weight(cnt) * 40 + 300;
+                                inv[ci].value = std::clamp(
                                     cdata_weight(cnt) * cdata_weight(cnt)
                                         / 5000,
                                     1,
@@ -37152,29 +37169,31 @@ void label_1745()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        if (inv_id(cnt) == 526)
+                        if (inv[cnt].id == 526)
                         {
-                            if (inv_param1(cnt) < 10)
+                            if (inv[cnt].param1 < 10)
                             {
-                                inv_param1(cnt) += 1;
-                                inv_image(cnt) = 591;
-                                cell_refresh(inv_x(cnt), inv_y(cnt));
+                                inv[cnt].param1 += 1;
+                                inv[cnt].image = 591;
+                                cell_refresh(
+                                    inv[cnt].position.x, inv[cnt].position.y);
                             }
                         }
                         if (mdata(6) == 3 || mdata(6) == 2)
                         {
-                            if (inv_own_state(cnt) < 0)
+                            if (inv[cnt].own_state < 0)
                             {
-                                ++inv_own_state(cnt);
+                                ++inv[cnt].own_state;
                             }
-                            if (inv_own_state(cnt) == 0)
+                            if (inv[cnt].own_state == 0)
                             {
-                                inv_number(cnt) = 0;
-                                cell_refresh(inv_x(cnt), inv_y(cnt));
+                                inv[cnt].number = 0;
+                                cell_refresh(
+                                    inv[cnt].position.x, inv[cnt].position.y);
                             }
                         }
                     }
@@ -37355,10 +37374,10 @@ void label_1745()
                                 int stat = itemcreate(rc, 0, -1, -1, 0);
                                 if (stat != 0)
                                 {
-                                    if (inv_weight(ci) <= 0
-                                        || inv_weight(ci) >= 4000)
+                                    if (inv[ci].weight <= 0
+                                        || inv[ci].weight >= 4000)
                                     {
-                                        inv_number(ci) = 0;
+                                        inv[ci].number = 0;
                                     }
                                 }
                             }
@@ -38956,12 +38975,12 @@ void label_1755()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_id(cnt) == 555 || inv_id(cnt) == 600)
+            if (inv[cnt].id == 555 || inv[cnt].id == 600)
             {
                 continue;
             }
-            inv_number(cnt) = 0;
-            cell_refresh(inv_x(cnt), inv_y(cnt));
+            inv[cnt].number = 0;
+            cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
         }
     }
     if (adata(29, gdata_current_map) == 1)
@@ -38970,14 +38989,14 @@ void label_1755()
         int stat = itemcreate(-1, 763, 29, 16, 0);
         if (stat != 0)
         {
-            inv_own_state(ci) = 1;
+            inv[ci].own_state = 1;
         }
         {
             flt();
             int stat = itemcreate(-1, 686, 29, 16, 0);
             if (stat != 0)
             {
-                inv_own_state(ci) = 1;
+                inv[ci].own_state = 1;
             }
         }
         {
@@ -38985,8 +39004,8 @@ void label_1755()
             int stat = itemcreate(-1, 171, 29, 17, 0);
             if (stat != 0)
             {
-                inv_param1(ci) = 6;
-                inv_own_state(ci) = 1;
+                inv[ci].param1 = 6;
+                inv[ci].own_state = 1;
             }
         }
         {
@@ -38994,7 +39013,7 @@ void label_1755()
             int stat = itemcreate(-1, 756, 29, 17, 0);
             if (stat != 0)
             {
-                inv_own_state(ci) = 5;
+                inv[ci].own_state = 5;
             }
         }
         {
@@ -40106,7 +40125,7 @@ void begintempinv()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            inv_number(cnt) = 0;
+            inv[cnt].number = 0;
         }
     }
     return;
@@ -40519,7 +40538,7 @@ void label_1873()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) != 0)
+            if (inv[cnt].number != 0)
             {
                 f = 1;
             }
@@ -41425,7 +41444,7 @@ void label_1879()
                     i);
                 flttypemajor = fsetwear(rnd(length(fsetwear)));
                 itemcreate(-1, 0, -1, -1, 0);
-                if (inv_number(ci) == 0)
+                if (inv[ci].number == 0)
                 {
                     --cnt;
                     continue;
@@ -41434,9 +41453,9 @@ void label_1879()
         }
         snd(41);
         noteadd(lang(
-            u8"@GRアイテム："s + itemname(ci, inv_number(ci))
+            u8"@GRアイテム："s + itemname(ci, inv[ci].number)
                 + u8"を戦利品に加えた！"s,
-            u8"@GR"s + itemname(ci, inv_number(ci))
+            u8"@GR"s + itemname(ci, inv[ci].number)
                 + u8" has been added to your loot list!"s));
         if (winrow > 3)
         {
@@ -41446,9 +41465,9 @@ void label_1879()
                 itemcreate(-1, 559, -1, -1, 0);
                 snd(41);
                 noteadd(lang(
-                    u8"@GRアイテム："s + itemname(ci, inv_number(ci))
+                    u8"@GRアイテム："s + itemname(ci, inv[ci].number)
                         + u8"を戦利品に加えた！"s,
-                    u8"@GR"s + itemname(ci, inv_number(ci))
+                    u8"@GR"s + itemname(ci, inv[ci].number)
                         + u8" has been added to your loot list!"s));
             }
         }
@@ -41796,7 +41815,7 @@ void label_1884()
 void label_1885()
 {
     buff = u8" "s;
-    if (inv_param1(ci) == 1)
+    if (inv[ci].param1 == 1)
     {
         buff = lang(
             u8"マニは機械仕掛けの神です。マニを信仰した者は、機械や罠に対する膨大な知識を得、またそれらを効果的に利用する術を知ります。<p><p>"s,
@@ -41811,7 +41830,7 @@ void label_1885()
             u8"特殊能力: マニの分解術(自動:罠からマテリアルを取り出す)<p>"s,
             u8"Ability : Mani's decomposition (Passive: Extracts materials<br>from traps.)<p>"s);
     }
-    if (inv_param1(ci) == 2)
+    if (inv[ci].param1 == 2)
     {
         buff = lang(
             u8"ルルウィは風を司る女神です。ルルウィを信仰した者は、風の恩恵を受け素早く動くことが可能になります。<p><p>"s,
@@ -41825,7 +41844,7 @@ void label_1885()
             u8"特殊能力: ルルウィの憑依(スキル:瞬間的に高速になる)<p>"s,
             u8"Ability : Lulwy's trick (Boosts your speed for a short time.)<p>"s);
     }
-    if (inv_param1(ci) == 3)
+    if (inv[ci].param1 == 3)
     {
         buff = lang(
             u8"イツパロトルは元素を司る神です。イツパロトルを信仰した者は、魔力を大気から吸収し、元素に対する保護を受けることができます。<p><p>"s,
@@ -41839,7 +41858,7 @@ void label_1885()
             u8"特殊能力: マナの抽出(スキル:周囲の空気からマナを吸い出す)<p>"s,
             u8"Ability : Absorb mana (Absorbs mana from the air.)<p>"s);
     }
-    if (inv_param1(ci) == 4)
+    if (inv[ci].param1 == 4)
     {
         buff = lang(
             u8"エヘカトルは幸運の女神です。エヘカトルを信仰した者は、運を味方につけます。<p><p>"s,
@@ -41853,7 +41872,7 @@ void label_1885()
             u8"特殊能力: エヘカトル流魔術(自動:マナの消費がランダムになる)<p>"s,
             u8"Ability : Ehekatl school of magic (Passive: randomize casting mana<br>cost.)<p>"s);
     }
-    if (inv_param1(ci) == 5)
+    if (inv[ci].param1 == 5)
     {
         buff = lang(
             u8"オパートスは大地の神です。オパートスを信仰した者は、高い防御力と破壊力を身につけます。<p><p>"s,
@@ -41867,7 +41886,7 @@ void label_1885()
             u8"特殊能力: オパートスの甲殻(自動:受ける物理ダメージを減らす)<p>"s,
             u8"Ability : Opatos' shell (Passive: Reduce any physical damage you<br>receive.)<p>"s);
     }
-    if (inv_param1(ci) == 6)
+    if (inv[ci].param1 == 6)
     {
         buff = lang(
             u8"ジュアは癒しの女神です。ジュアを信仰した者は、傷ついた身体を癒すことができます。<p><p>"s,
@@ -41881,7 +41900,7 @@ void label_1885()
             u8"特殊能力: ジュアの祈り(スキル:失った体力を回復)<p>"s,
             u8"Ability : Prayer of Jure (Heal yourself.)<p>"s);
     }
-    if (inv_param1(ci) == 7)
+    if (inv[ci].param1 == 7)
     {
         buff = lang(
             u8"クミロミは収穫の神です。クミロミを信仰した者は、大地の恵みを収穫し、それを加工する術を知ります。<p><p>"s,
@@ -41915,15 +41934,15 @@ void label_1886()
     chatesc = 2;
     if (cdata_god(0) != 0)
     {
-        if (inv_param1(ci) == 0)
+        if (inv[ci].param1 == 0)
         {
             s = lang(u8"信仰を捨てる"s, u8"Abandon God"s);
         }
         else
         {
             s = lang(
-                godname(inv_param1(ci)) + u8"に改宗する"s,
-                u8"Convert to "s + godname(inv_param1(ci)));
+                godname(inv[ci].param1) + u8"に改宗する"s,
+                u8"Convert to "s + godname(inv[ci].param1));
         }
         list(0, listmax) = 0;
         listn(0, listmax) = s;
@@ -41933,8 +41952,8 @@ void label_1886()
     {
         list(0, listmax) = 0;
         listn(0, listmax) = lang(
-            godname(inv_param1(ci)) + u8"を信仰する"s,
-            u8"Believe in "s + godname(inv_param1(ci)));
+            godname(inv[ci].param1) + u8"を信仰する"s,
+            u8"Believe in "s + godname(inv[ci].param1));
         ++listmax;
     }
     list(0, listmax) = 2;
@@ -41980,7 +41999,7 @@ label_1887_internal:
     pos(wx + 20, wy + 20);
     color(0, 0, 0);
     bmes(
-        lang(u8"《 "s, u8"< "s) + godname(inv_param1(ci))
+        lang(u8"《 "s, u8"< "s) + godname(inv[ci].param1)
             + lang(u8" 》"s, u8" >"s),
         255,
         255,
@@ -42075,7 +42094,7 @@ void label_1888()
             mode = 0;
             await(500);
         }
-        cdata_god(0) = inv_param1(ci);
+        cdata_god(0) = inv[ci].param1;
         label_1889();
         msg_halt();
     }
@@ -42339,15 +42358,15 @@ void label_1890()
                 itemcreate(-1, 672, cdata_x(0), cdata_y(0), 0);
                 if (cdata_god(0) == 3)
                 {
-                    inv_param1(ci) = 165;
+                    inv[ci].param1 = 165;
                 }
                 if (cdata_god(0) == 4)
                 {
-                    inv_param1(ci) = 163;
+                    inv[ci].param1 = 163;
                 }
                 if (cdata_god(0) == 5)
                 {
-                    inv_param1(ci) = 164;
+                    inv[ci].param1 = 164;
                 }
             }
             if (cdata_god(0) == 6)
@@ -42355,7 +42374,7 @@ void label_1890()
                 flt();
                 nostack = 1;
                 itemcreate(-1, 672, cdata_x(0), cdata_y(0), 0);
-                inv_param1(ci) = 166;
+                inv[ci].param1 = 166;
             }
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
@@ -42441,10 +42460,10 @@ void label_1891()
         label_2742();
         return;
     }
-    if (inv_id(ci) == 204)
+    if (inv[ci].id == 204)
     {
-        i = std::clamp(inv_weight(ci) / 200, 1, 50);
-        if (inv_param3(ci) < 0)
+        i = std::clamp(inv[ci].weight / 200, 1, 50);
+        if (inv[ci].param3 < 0)
         {
             i = 1;
         }
@@ -42453,10 +42472,10 @@ void label_1891()
     {
         i = 25;
     }
-    if (inv_param1(ti) != cdata_god(0))
+    if (inv[ti].param1 != cdata_god(0))
     {
         f = 0;
-        if (inv_param1(ti) == 0)
+        if (inv[ti].param1 == 0)
         {
             f = 1;
             txt(lang(
@@ -42468,10 +42487,10 @@ void label_1891()
         {
             txt(lang(
                 u8"異様な霧が現れ、"s + godname(cdata_god(0)) + u8"と"s
-                    + godname(inv_param1(ti)) + u8"の幻影がせめぎあった。"s,
+                    + godname(inv[ti].param1) + u8"の幻影がせめぎあった。"s,
                 u8"Strange fogs surround all over the place. You see shadows of "s
                     + godname(cdata_god(0)) + u8" and "s
-                    + godname(inv_param1(ti)) + u8" make a fierce dance."s));
+                    + godname(inv[ti].param1) + u8" make a fierce dance."s));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -42489,7 +42508,7 @@ void label_1891()
             animode = 100;
             label_1426();
             snd(120);
-            if (inv_param1(ti) != 0)
+            if (inv[ti].param1 != 0)
             {
                 txt(lang(
                     u8"あなたの神の幻影は、次第に色濃くなった。"s,
@@ -42501,14 +42520,14 @@ void label_1891()
                     + u8"を支配した。"s,
                 godname(cdata_god(0)) + u8" takes over the altar."s));
             txtgod(cdata_god(0), 2);
-            inv_param1(ti) = cdata_god(0);
+            inv[ti].param1 = cdata_god(0);
         }
         else
         {
             txt(lang(
-                godname(inv_param1(ti)) + u8"は祭壇を守りきった。"s,
-                godname(inv_param1(ti)) + u8" keeps the altar."s));
-            txtgod(inv_param1(ti), 3);
+                godname(inv[ti].param1) + u8"は祭壇を守りきった。"s,
+                godname(inv[ti].param1) + u8" keeps the altar."s));
+            txtgod(inv[ti].param1, 3);
             label_1892();
         }
     }
@@ -42523,9 +42542,9 @@ void label_1891()
                 {
                     txt(lang(
                         itemname(ci) + u8"はまばゆく輝いて消えた。"s,
-                        itemname(ci) + u8" shine"s + _s2(inv_number(ci))
+                        itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                             + u8" all around and disappear"s
-                            + _s2(inv_number(ci)) + u8"."s));
+                            + _s2(inv[ci].number) + u8"."s));
                     txtgod(cdata_god(0), 4);
                     break;
                 }
@@ -42534,9 +42553,9 @@ void label_1891()
                     txt(lang(
                         itemname(ci)
                             + u8"は輝いて消え、三つ葉のクローバーがふってきた。"s,
-                        itemname(ci) + u8" shine"s + _s2(inv_number(ci))
+                        itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                             + u8" for a moment and disappear"s
-                            + _s2(inv_number(ci))
+                            + _s2(inv[ci].number)
                             + u8". A three-leaved falls from the altar."s));
                     break;
                 }
@@ -42544,16 +42563,16 @@ void label_1891()
                 {
                     txt(lang(
                         itemname(ci) + u8"は一瞬輝いて消えた。"s,
-                        itemname(ci) + u8" shine"s + _s2(inv_number(ci))
+                        itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                             + u8" for a moment and disappear"s
-                            + _s2(inv_number(ci)) + u8"."s));
+                            + _s2(inv[ci].number) + u8"."s));
                     break;
                 }
                 if (i >= 1)
                 {
                     txt(lang(
                         itemname(ci) + u8"は消えた。"s,
-                        itemname(ci) + u8" disappear"s + _s2(inv_number(ci))
+                        itemname(ci) + u8" disappear"s + _s2(inv[ci].number)
                             + u8"."s));
                     break;
                 }
@@ -42562,7 +42581,7 @@ void label_1891()
         modpiety(i);
         cdata_praying_point(0) += i * 7;
     }
-    removeitem(ci, inv_number(ci));
+    removeitem(ci, inv[ci].number);
     label_2742();
     return;
 }
@@ -43402,7 +43421,7 @@ void label_1901()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                inv_number(cnt) = 0;
+                inv[cnt].number = 0;
             }
         }
     }
@@ -43493,7 +43512,7 @@ void label_1901()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_number(cnt) == 0)
+                    if (inv[cnt].number == 0)
                     {
                         p = cnt;
                         break;
@@ -43506,9 +43525,9 @@ void label_1901()
             }
             flt();
             itemcreate(-1, 615, -1, -1, 0);
-            inv_subname(ci) =
+            inv[ci].subname =
                 gdata_cost_to_hire + calccostbuilding() + calccosttax();
-            inv_subname(ci) = inv_subname(ci) * (100 + rnd(20)) / 100;
+            inv[ci].subname = inv[ci].subname * (100 + rnd(20)) / 100;
             mode = 0;
             ++gdata_left_bill;
             txtmore();
@@ -43641,7 +43660,7 @@ int blendcheckext(int prm_1038, int prm_1039)
         {
             return 0;
         }
-        if (inv_subname(prm_1038) == p_at_m178)
+        if (inv[prm_1038].subname == p_at_m178)
         {
             return 1;
         }
@@ -43720,11 +43739,11 @@ int rpdiff(int, int prm_1042, int prm_1043)
                     break;
                 }
                 i_at_m180 = rpref(10 + cnt * 2);
-                if (inv_curse_state(i_at_m180) >= 1)
+                if (inv[i_at_m180].curse_state >= 1)
                 {
                     f2_at_m180 -= 10;
                 }
-                if (inv_curse_state(i_at_m180) <= -1)
+                if (inv[i_at_m180].curse_state <= -1)
                 {
                     f2_at_m180 += 20;
                 }
@@ -43845,20 +43864,20 @@ int blendcheckmat(int prm_1044)
                         for (int cnt_end = cnt + (invrange); cnt < cnt_end;
                              ++cnt)
                         {
-                            if (inv_number(cnt) <= 0)
+                            if (inv[cnt].number <= 0)
                             {
                                 continue;
                             }
                             if ((rpdata(2, rpid) <= 0 || step_at_m181 != 0)
-                                && inv_own_state(cnt) > 0)
+                                && inv[cnt].own_state > 0)
                             {
                                 continue;
                             }
                             if (o_at_m181 == -1)
                             {
                                 if (dist(
-                                        inv_x(cnt),
-                                        inv_y(cnt),
+                                        inv[cnt].position.x,
+                                        inv[cnt].position.y,
                                         cdata_x(0),
                                         cdata_y(0))
                                     > 4)
@@ -43876,7 +43895,7 @@ int blendcheckmat(int prm_1044)
                             }
                             if (id_at_m181 < 9000)
                             {
-                                if (inv_id(cnt) == id_at_m181)
+                                if (inv[cnt].id == id_at_m181)
                                 {
                                     f_at_m181 = 1;
                                     break;
@@ -43886,7 +43905,7 @@ int blendcheckmat(int prm_1044)
                             if (id_at_m181 < 10000)
                             {
                                 if (instr(
-                                        rffilter_item(inv_id(cnt)),
+                                        rffilter_item(inv[cnt].id),
                                         0,
                                         u8"/"s
                                             + rfnameorg(0, (id_at_m181 - 9000))
@@ -43899,7 +43918,7 @@ int blendcheckmat(int prm_1044)
                                 }
                                 continue;
                             }
-                            if (refitem(inv_id(cnt), 5) == id_at_m181)
+                            if (refitem(inv[cnt].id, 5) == id_at_m181)
                             {
                                 f_at_m181 = 1;
                                 break;
@@ -43945,18 +43964,22 @@ int blendmatnum(int prm_1045, int prm_1046)
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_number(cnt) <= 0)
+                    if (inv[cnt].number <= 0)
                     {
                         continue;
                     }
                     if ((rpdata(2, rpid) <= 0 || prm_1046 != 0)
-                        && inv_own_state(cnt) > 0)
+                        && inv[cnt].own_state > 0)
                     {
                         continue;
                     }
                     if (o_at_m182 == -1)
                     {
-                        if (dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0))
+                        if (dist(
+                                inv[cnt].position.x,
+                                inv[cnt].position.y,
+                                cdata_x(0),
+                                cdata_y(0))
                             > 4)
                         {
                             continue;
@@ -43972,29 +43995,29 @@ int blendmatnum(int prm_1045, int prm_1046)
                     }
                     if (prm_1045 < 9000)
                     {
-                        if (inv_id(cnt) == prm_1045)
+                        if (inv[cnt].id == prm_1045)
                         {
-                            m_at_m182 += inv_number(cnt);
+                            m_at_m182 += inv[cnt].number;
                         }
                         continue;
                     }
                     if (prm_1045 < 10000)
                     {
                         if (instr(
-                                rffilter_item(inv_id(cnt)),
+                                rffilter_item(inv[cnt].id),
                                 0,
                                 u8"/"s + rfnameorg(0, (prm_1045 - 9000))
                                     + u8"/"s)
                                 != -1
                             || prm_1045 == 9004)
                         {
-                            m_at_m182 += inv_number(cnt);
+                            m_at_m182 += inv[cnt].number;
                         }
                         continue;
                     }
-                    if (refitem(inv_id(cnt), 5) == prm_1045)
+                    if (refitem(inv[cnt].id, 5) == prm_1045)
                     {
-                        m_at_m182 += inv_number(cnt);
+                        m_at_m182 += inv[cnt].number;
                         continue;
                     }
                 }
@@ -44036,24 +44059,28 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     {
                         break;
                     }
-                    if (inv_number(cnt) <= 0)
+                    if (inv[cnt].number <= 0)
                     {
                         continue;
                     }
                     if ((rpdata(2, rpid) <= 0 || step != 0)
-                        && inv_own_state(cnt) > 0)
+                        && inv[cnt].own_state > 0)
                     {
                         continue;
                     }
                     if (o_at_m183 == -1)
                     {
-                        if (dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0))
+                        if (dist(
+                                inv[cnt].position.x,
+                                inv[cnt].position.y,
+                                cdata_x(0),
+                                cdata_y(0))
                             > 4)
                         {
                             continue;
                         }
                     }
-                    reftype_at_m183 = refitem(inv_id(cnt), 5);
+                    reftype_at_m183 = refitem(inv[cnt].id, 5);
                     if (rpdata(40 + prm_1048, rpid))
                     {
                         int stat = blendcheckext(cnt, prm_1048);
@@ -44064,7 +44091,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     }
                     if (id_at_m183 < 9000)
                     {
-                        if (inv_id(cnt) != id_at_m183)
+                        if (inv[cnt].id != id_at_m183)
                         {
                             continue;
                         }
@@ -44072,7 +44099,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     else if (id_at_m183 < 10000)
                     {
                         if (instr(
-                                rffilter_item(inv_id(cnt)),
+                                rffilter_item(inv[cnt].id),
                                 0,
                                 u8"/"s + rfnameorg(0, (id_at_m183 - 9000))
                                     + u8"/"s)
@@ -44108,7 +44135,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     }
                     prm_1047(0, m_at_m183) = cnt;
                     prm_1047(1, m_at_m183) =
-                        reftype_at_m183 * 1000 + inv_id(cnt);
+                        reftype_at_m183 * 1000 + inv[cnt].id;
                     ++m_at_m183;
                 }
             }
@@ -44377,7 +44404,7 @@ void window_recipe_(
     dy_at_m184 += 20;
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(0, 0, 0);
-    if (inv_identification_state(prm_1050) < 2)
+    if (inv[prm_1050].identification_state < 2)
     {
         pos(dx_at_m184, dy_at_m184);
         mes(lang(
@@ -44394,17 +44421,17 @@ void window_recipe_(
             for (int cnt_end = cnt + (p_at_m184); cnt < cnt_end; ++cnt)
             {
                 cnt2_at_m184 = inhlist_at_m184(cnt);
-                if (inv_enchantment_id(prm_1050, cnt2_at_m184) == 0)
+                if (inv[prm_1050].enchantments[cnt2_at_m184].id == 0)
                 {
                     break;
                 }
-                val(0) = inv_enchantment_id(prm_1050, cnt2_at_m184);
-                val(1) = inv_enchantment_power(prm_1050, cnt2_at_m184);
+                val(0) = inv[prm_1050].enchantments[cnt2_at_m184].id;
+                val(1) = inv[prm_1050].enchantments[cnt2_at_m184].power;
                 val(2) = 0;
-                val(3) = refitem(inv_id(prm_1050), 5);
+                val(3) = refitem(inv[prm_1050].id, 5);
                 label_0247();
                 color(0, 0, 100);
-                if (inv_enchantment_power(prm_1050, cnt2_at_m184) < 0)
+                if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
                 {
                     color(180, 0, 0);
                 }
@@ -44707,9 +44734,9 @@ label_1923:
                     {
                         continue;
                     }
-                    if (inv_number(rpref(10 + cnt * 2)) < p)
+                    if (inv[rpref(10 + cnt * 2)].number < p)
                     {
-                        p = inv_number(rpref(10 + cnt * 2));
+                        p = inv[rpref(10 + cnt * 2)].number;
                     }
                 }
             }
@@ -45017,14 +45044,14 @@ label_1928_internal:
                 break;
             }
             p = list(0, p);
-            s = itemname(p, inv_number(p));
+            s = itemname(p, inv[p].number);
             s = strmid(s, 0, 28);
             if (p >= 5080)
             {
                 s += lang(u8"(地面)"s, u8" (Ground)"s);
             }
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-            p(1) = inv_image(p) % 1000;
+            p(1) = inv[p].image % 1000;
             gsel(1);
             color(0);
             boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
@@ -45038,12 +45065,12 @@ label_1928_internal:
                     22,
                     20,
                     5,
-                    chipc(0, inv_color(p)) + 8,
-                    chipc(1, inv_color(p)) + 4
-                        + (chipc(3, inv_color(p)) > inf_tiles) * 8,
-                    chipc(2, inv_color(p)) - 16,
-                    chipc(3, inv_color(p)) - 8
-                        - (chipc(3, inv_color(p)) > inf_tiles) * 10,
+                    chipc(0, inv[p].color) + 8,
+                    chipc(1, inv[p].color) + 4
+                        + (chipc(3, inv[p].color) > inf_tiles) * 8,
+                    chipc(2, inv[p].color) - 16,
+                    chipc(3, inv[p].color) - 8
+                        - (chipc(3, inv[p].color) > inf_tiles) * 10,
                     1);
                 pos(6, 974);
                 gcopy(1, 0, 1008, 22, 20);
@@ -45051,23 +45078,23 @@ label_1928_internal:
             }
             else if (p(1) == 531)
             {
-                pos(8, 1058 - chipc(3, inv_color(p)));
+                pos(8, 1058 - chipc(3, inv[p].color));
                 gcopy(
                     5,
-                    chipc(0, inv_color(p)) + 8,
-                    chipc(1, inv_color(p)) + 2,
-                    chipc(2, inv_color(p)) - 16,
-                    chipc(3, inv_color(p)) - 8);
+                    chipc(0, inv[p].color) + 8,
+                    chipc(1, inv[p].color) + 2,
+                    chipc(2, inv[p].color) - 16,
+                    chipc(3, inv[p].color) - 8);
                 gmode(4, -1, -1, 150);
                 color(0, 0, 0);
-                pos(0, 960 + (chipc(3, inv_color(p)) == inf_tiles) * 48);
+                pos(0, 960 + (chipc(3, inv[p].color) == inf_tiles) * 48);
                 gcopy(
                     1,
                     144,
-                    768 + (chipc(3, inv_color(p)) > inf_tiles) * 48,
+                    768 + (chipc(3, inv[p].color) > inf_tiles) * 48,
                     inf_tiles,
-                    chipc(3, inv_color(p))
-                        + (chipc(3, inv_color(p)) > inf_tiles) * 48);
+                    chipc(3, inv[p].color)
+                        + (chipc(3, inv[p].color) > inf_tiles) * 48);
                 gmode(2);
                 gsel(selcur);
             }
@@ -45082,9 +45109,9 @@ label_1928_internal:
                     chipi(3, p(1)));
                 gfini(chipi(2, p(1)), chipi(3, p(1)));
                 gfdec2(
-                    c_col(0, inv_color(p)),
-                    c_col(1, inv_color(p)),
-                    c_col(2, inv_color(p)));
+                    c_col(0, inv[p].color),
+                    c_col(1, inv[p].color),
+                    c_col(2, inv[p].color));
                 gsel(selcur);
             }
             pos(wx + 37, wy + 69 + cnt * 19);
@@ -45096,7 +45123,7 @@ label_1928_internal:
                 0,
                 chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
                 inf_tiles);
-            if (inv_body_part(p) != 0)
+            if (inv[p].body_part != 0)
             {
                 pos(wx + 46, wy + 72 + cnt * 18 - 3);
                 gcopy(3, 12, 348, 12, 12);
@@ -45160,7 +45187,7 @@ label_1928_internal:
         snd(17);
         ci = p;
         rpref(10 + step * 2 + 0) = ci;
-        rpref(10 + step * 2 + 1) = inv_id(ci);
+        rpref(10 + step * 2 + 1) = inv[ci].id;
         txt(lang(
             itemname(ci) + u8"を選んだ。"s,
             u8"You add "s + itemname(ci) + u8"."s));
@@ -45214,8 +45241,8 @@ int label_1931()
                 f = 0;
                 break;
             }
-            if (inv_number(rpref(10 + cnt * 2)) <= 0
-                || inv_id(rpref(10 + cnt * 2)) != rpref(11 + cnt * 2))
+            if (inv[rpref(10 + cnt * 2)].number <= 0
+                || inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
             {
                 f = 0;
                 break;
@@ -45244,7 +45271,7 @@ int label_1932()
             }
             if ((rpdata(2, rpid) <= 0 || cnt != 0) && rpresult)
             {
-                --inv_number(rpref(10 + cnt * 2));
+                --inv[rpref(10 + cnt * 2)].number;
             }
             else if (rnd(3) == 0)
             {
@@ -45252,10 +45279,11 @@ int label_1932()
                     itemname(rpref(10 + cnt * 2), 1) + u8"を失った。"s,
                     u8"You lose "s + itemname(rpref((10 + cnt * 2)), 1)
                         + u8"."s));
-                --inv_number(rpref(10 + cnt * 2));
+                --inv[rpref(10 + cnt * 2)].number;
             }
             cell_refresh(
-                inv_x(rpref(10 + cnt * 2)), inv_y(rpref(10 + cnt * 2)));
+                inv[rpref(10 + cnt * 2)].position.x,
+                inv[rpref(10 + cnt * 2)].position.y);
         }
     }
     label_1521();
@@ -45451,7 +45479,7 @@ void label_1935()
     {
         item_separate(ci);
     }
-    else if (inv_number(ci) <= 1)
+    else if (inv[ci].number <= 1)
     {
         rpref(10) = -2;
     }
@@ -45481,7 +45509,7 @@ void label_1935()
         snd(65);
         goto label_1936_internal;
     case 10001:
-        inv_color(ci) = inv_color(ti);
+        inv[ci].color = inv[ti].color;
         txtef(2);
         txt(lang(
             u8"あなたは"s + itemname(ci) + u8"を染めた。"s,
@@ -45503,7 +45531,7 @@ void label_1935()
             itemname(ci) + u8"に"s + itemname(ti, 1) + u8"を塗りたくった。"s,
             u8"You put "s + itemname(ti, 1) + u8" on "s + itemname(ci)
                 + u8"."s));
-        if (inv_id(ci) == 567)
+        if (inv[ci].id == 567)
         {
             txt(lang(u8"いいアイデアだ！しかし…"s, u8"A good idea! But..."s));
         }
@@ -45534,14 +45562,14 @@ void label_1935()
             itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に装着した。"s,
             u8"You bait "s + itemname(ci) + u8" with "s + itemname(ti, 1)
                 + u8"."s));
-        if (inv_param4(ci) == inv_param1(ti))
+        if (inv[ci].param4 == inv[ti].param1)
         {
-            inv_count(ci) += rnd(10) + 15;
+            inv[ci].count += rnd(10) + 15;
         }
         else
         {
-            inv_count(ci) = rnd(10) + 15;
-            inv_param4(ci) = inv_param1(ti);
+            inv[ci].count = rnd(10) + 15;
+            inv[ci].param4 = inv[ti].param1;
         }
         snd(13);
         goto label_1936_internal;
@@ -45551,23 +45579,23 @@ void label_1935()
             itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に降りかけた。"s,
             u8"You shower "s + itemname(ci) + u8" on "s + itemname(ti, 1)
                 + u8"."s));
-        if (inv_curse_state(ti) >= 1)
+        if (inv[ti].curse_state >= 1)
         {
             txtef(5);
             txt(lang(
                 itemname(ci) + u8"は銀色に輝いた。"s,
-                itemname(ci) + u8" shine"s + _s2(inv_number(ci))
+                itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
-            inv_curse_state(ci) = 1;
+            inv[ci].curse_state = 1;
         }
-        if (inv_curse_state(ti) <= -1)
+        if (inv[ti].curse_state <= -1)
         {
             txtef(8);
             txt(lang(
                 itemname(ci) + u8"は黒いオーラに包まれた。"s,
-                itemname(ci) + u8" "s + is2(inv_number(ci))
+                itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
-            inv_curse_state(ci) = -1;
+            inv[ci].curse_state = -1;
         }
         snd(17);
         goto label_1936_internal;
@@ -45576,7 +45604,7 @@ void label_1935()
             itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に放り込んだ。"s,
             u8"You throw "s + itemname(ci) + u8" into "s + itemname(ti, 1)
                 + u8"."s));
-        if (inv_id(ti) == 601)
+        if (inv[ti].id == 601)
         {
             txt(lang(
                 u8"空き瓶の割れる音がした。"s,
@@ -45584,12 +45612,12 @@ void label_1935()
             goto label_1936_internal;
         }
         snd(17);
-        if (inv_id(ci) == 602)
+        if (inv[ci].id == 602)
         {
             txt(lang(u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
             goto label_1936_internal;
         }
-        if (inv_param3(ci) >= 20)
+        if (inv[ci].param3 >= 20)
         {
             txt(lang(
                 itemname(ci) + u8"は完全に枯れている。"s,
@@ -45600,18 +45628,18 @@ void label_1935()
         txt(lang(
             itemname(ci) + u8"は一瞬輝いた。"s,
             itemname(ci) + u8" shines for a moment."s));
-        if (inv_id(ti) == 587)
+        if (inv[ti].id == 587)
         {
             txt(lang(u8"しかしこんな量では… "s, u8"But the snow just melts."s));
         }
         else
         {
-            inv_param1(ci) += rnd(3);
+            inv[ci].param1 += rnd(3);
         }
         goto label_1936_internal;
     case 10008:
-        if (inv_param1(ci) < -5 || inv_param3(ci) >= 20
-            || inv_id(ci) == 602 && gdata_holy_well_count <= 0)
+        if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
+            || inv[ci].id == 602 && gdata_holy_well_count <= 0)
         {
             valn = itemname(ci);
             txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
@@ -45622,19 +45650,19 @@ void label_1935()
             goto label_1936_internal;
         }
         cibk = ci;
-        if (inv_id(ci) == 602)
+        if (inv[ci].id == 602)
         {
             --gdata_holy_well_count;
             flt();
             int stat = itemcreate(0, 516, -1, -1, 0);
             if (stat != 0)
             {
-                inv_curse_state(ci) = 1;
+                inv[ci].curse_state = 1;
             }
         }
         else
         {
-            inv_param1(ci) -= 3;
+            inv[ci].param1 -= 3;
             flt(20);
             flttypemajor = 52000;
             itemcreate(0, 0, -1, -1, 0);
@@ -45654,13 +45682,13 @@ void label_1935()
     }
 label_1936_internal:
     item_stack(0, ci);
-    if (inv_body_part(ci) != 0)
+    if (inv[ci].body_part != 0)
     {
         create_pcpic(0, 1);
     }
     if (inv_getowner(ci) == -1)
     {
-        cell_refresh(inv_x(ci), inv_y(ci));
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     r1 = 0;
     label_1477();
@@ -45705,13 +45733,13 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
         {
             rtvaln = itemname(rtval(1));
         }
-        if (inv_own_state(rtval(1)) <= 0)
+        if (inv[rtval(1)].own_state <= 0)
         {
             return lang(
                 rtvaln + u8"が落ちている。"s,
                 u8"You see "s + rtvaln + u8" here."s);
         }
-        else if (inv_own_state(rtval(1)) == 3)
+        else if (inv[rtval(1)].own_state == 3)
         {
             return lang(
                 rtvaln + u8"が設置されている。"s,
@@ -45912,8 +45940,8 @@ void label_1942()
     txt(lang(
         u8"あなたはゲートに足を踏み入れた。ゲートはあなたの背後で消滅した。"s,
         u8"You stepped into the gate. The gate disappears."s));
-    --inv_number(ci);
-    cell_refresh(inv_x(ci), inv_y(ci));
+    --inv[ci].number;
+    cell_refresh(inv[ci].position.x, inv[ci].position.y);
     if (cfg_net == 0)
     {
         if (jp)
@@ -47762,12 +47790,12 @@ label_196901_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
-                if (inv_enchantment_id(ci, cnt) == 0)
+                if (inv[ci].enchantments[cnt].id == 0)
                 {
                     break;
                 }
-                val(0) = inv_enchantment_id(ci, cnt);
-                val(1) = inv_enchantment_power(ci, cnt);
+                val(0) = inv[ci].enchantments[cnt].id;
+                val(1) = inv[ci].enchantments[cnt].power;
                 val(2) = 1;
                 val(3) = 0;
                 label_0247();
@@ -49847,76 +49875,76 @@ label_1998_internal:
                 nooracle = 1;
                 itemcreate(-1, p, cdata_x(cc), cdata_y(cc), 0);
                 nooracle = 0;
-                if (ibit(5, ci) == 1 || inv_quality(ci) == 6)
+                if (ibit(5, ci) == 1 || inv[ci].quality == 6)
                 {
                     if (gdata_wizard == 0)
                     {
                         dblist(1, wishid) = 0;
-                        inv_number(ci) = 0;
-                        --itemmemory(1, inv_id(ci));
-                        cell_refresh(inv_x(ci), inv_y(ci));
+                        inv[ci].number = 0;
+                        --itemmemory(1, inv[ci].id);
+                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
                         continue;
                     }
                 }
-                if (inv_id(ci) == 54)
+                if (inv[ci].id == 54)
                 {
-                    inv_number(ci) =
+                    inv[ci].number =
                         cdata_level(0) * cdata_level(0) * 50 + 20000;
                 }
-                if (inv_id(ci) == 55)
+                if (inv[ci].id == 55)
                 {
-                    inv_number(ci) = 8 + rnd(5);
+                    inv[ci].number = 8 + rnd(5);
                 }
-                if (inv_id(ci) == 602)
+                if (inv[ci].id == 602)
                 {
-                    inv_number(ci) = 0;
+                    inv[ci].number = 0;
                     flt();
                     itemcreate(-1, 516, cdata_x(cc), cdata_y(cc), 3);
-                    inv_curse_state(ci) = 1;
+                    inv[ci].curse_state = 1;
                     txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
                     txtmore();
                 }
-                if (refitem(inv_id(ci), 5) == 52000
-                    || refitem(inv_id(ci), 5) == 53000)
+                if (refitem(inv[ci].id, 5) == 52000
+                    || refitem(inv[ci].id, 5) == 53000)
                 {
-                    inv_number(ci) = 3 + rnd(2);
-                    if (inv_id(ci) == 559)
+                    inv[ci].number = 3 + rnd(2);
+                    if (inv[ci].id == 559)
                     {
-                        inv_number(ci) = 2 + rnd(2);
+                        inv[ci].number = 2 + rnd(2);
                     }
-                    if (inv_id(ci) == 502)
+                    if (inv[ci].id == 502)
                     {
-                        inv_number(ci) = 2;
+                        inv[ci].number = 2;
                     }
-                    if (inv_id(ci) == 243)
+                    if (inv[ci].id == 243)
                     {
-                        inv_number(ci) = 1;
+                        inv[ci].number = 1;
                     }
-                    if (inv_id(ci) == 621)
+                    if (inv[ci].id == 621)
                     {
-                        inv_number(ci) = 1;
+                        inv[ci].number = 1;
                     }
-                    if (inv_id(ci) == 706)
+                    if (inv[ci].id == 706)
                     {
-                        inv_number(ci) = 1;
+                        inv[ci].number = 1;
                     }
-                    if (inv_value(ci) >= 5000)
+                    if (inv[ci].value >= 5000)
                     {
-                        inv_number(ci) = 3;
+                        inv[ci].number = 3;
                     }
-                    if (inv_value(ci) >= 10000)
+                    if (inv[ci].value >= 10000)
                     {
-                        inv_number(ci) = 2;
+                        inv[ci].number = 2;
                     }
-                    if (inv_value(ci) >= 20000)
+                    if (inv[ci].value >= 20000)
                     {
-                        inv_number(ci) = 1;
+                        inv[ci].number = 1;
                     }
                 }
                 item_identify(ci, 3);
                 txt(lang(
                     u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-                    ""s + itemname(ci) + u8" appear"s + _s2(inv_number(ci))
+                    ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
                         + u8"."s));
                 f = 1;
                 break;
@@ -50035,13 +50063,13 @@ void label_2000()
     characreate(56, dbid, -3, 0);
     flt();
     itemcreate(-1, 504, cdata_x(0), cdata_y(0), 0);
-    inv_subname(ci) = cdata_id(56);
-    inv_color(ci) = cdata_image(56) % 1000;
+    inv[ci].subname = cdata_id(56);
+    inv[ci].color = cdata_image(56) % 1000;
     chara_vanquish(56);
     cell_refresh(cdata_x(0), cdata_y(0));
     txt(lang(
         u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-        ""s + itemname(ci) + u8" appear"s + _s2(inv_number(ci))
+        ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
             + u8" from nowhere."s));
     label_1996();
     return;
@@ -50056,13 +50084,13 @@ void label_2001()
     characreate(56, dbid, -3, 0);
     flt();
     itemcreate(-1, 503, cdata_x(0), cdata_y(0), 0);
-    inv_subname(ci) = cdata_id(56);
-    inv_color(ci) = cdata_image(56) % 1000;
+    inv[ci].subname = cdata_id(56);
+    inv[ci].color = cdata_image(56) % 1000;
     chara_vanquish(56);
     cell_refresh(cdata_x(0), cdata_y(0));
     txt(lang(
         u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-        ""s + itemname(ci) + u8" appear"s + _s2(inv_number(ci))
+        ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
             + u8" from nowhere."s));
     label_1996();
     return;
@@ -51209,7 +51237,7 @@ void label_2022()
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, ""s + inv_param1(ci) + u8","s + lang(u8"JP"s, u8"EN"s));
+    p = instr(buff, 0, ""s + inv[ci].param1 + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
     {
         return;
@@ -53502,9 +53530,9 @@ void label_2047()
                 continue;
             }
             cw = cdata_body_part(cc, cnt) % 10000 - 1;
-            if (inv_dice_x(cw) > 0)
+            if (inv[cw].dice_x > 0)
             {
-                attackskill = inv_skill(cw);
+                attackskill = inv[cw].skill;
                 ++p(1);
                 s(1) = lang(u8"武器"s, u8"Melee"s) + p(1);
                 ++attacknum;
@@ -53542,7 +53570,7 @@ void label_2048()
         mes(s(1));
     }
     attackrange = 0;
-    if (refitem(inv_id(cw), 5) == 24000)
+    if (refitem(inv[cw].id, 5) == 24000)
     {
         attackrange = 1;
     }
@@ -53596,14 +53624,14 @@ void label_2049()
                 continue;
             }
             cw = cdata_body_part(cc, cnt) % 10000 - 1;
-            if (inv_dice_x(cw) == 0)
+            if (inv[cw].dice_x == 0)
             {
                 continue;
             }
             ++attacknum;
             if (cdata_equipment_type(cc) & 2)
             {
-                if (inv_weight(cw) >= 4000)
+                if (inv[cw].weight >= 4000)
                 {
                     txt(lang(
                         u8"装備中の"s + itemname(cw)
@@ -53624,7 +53652,7 @@ void label_2049()
             {
                 if (attacknum == 1)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
                         txt(lang(
                             u8"装備中の"s + itemname(cw)
@@ -53633,7 +53661,7 @@ void label_2049()
                                 + u8" is too heavy for two-wield fighting style."s));
                     }
                 }
-                else if (inv_weight(cw) > 1500)
+                else if (inv[cw].weight > 1500)
                 {
                     txt(lang(
                         u8"装備中の"s + itemname(cw)
@@ -53648,7 +53676,7 @@ void label_2049()
     {
         if (gdata_mount != 0)
         {
-            if (inv_weight(cw) >= 4000)
+            if (inv[cw].weight >= 4000)
             {
                 txt(lang(
                     u8"装備中の"s + itemname(cw)
@@ -53830,8 +53858,8 @@ label_2052_internal:
             {
                 p(1) = p(1) % 10000 - 1;
                 s(0) = itemname(p(1));
-                s(1) = cnvweight(inv_weight(p(1)));
-                p(2) = inv_image(p(1));
+                s(1) = cnvweight(inv[p(1)].weight);
+                p(2) = inv[p(1)].image;
                 gsel(1);
                 color(0);
                 boxf(0, 960, chipi(2, p(2)), chipi(3, p(2)) + 960);
@@ -53845,12 +53873,12 @@ label_2052_internal:
                         22,
                         20,
                         5,
-                        chipc(0, inv_color(p(1))) + 8,
-                        chipc(1, inv_color(p(1))) + 4
-                            + (chipc(3, inv_color(p(1))) > inf_tiles) * 8,
-                        chipc(2, inv_color(p(1))) - 16,
-                        chipc(3, inv_color(p(1))) - 8
-                            - (chipc(3, inv_color(p(1))) > inf_tiles) * 10,
+                        chipc(0, inv[p(1)].color) + 8,
+                        chipc(1, inv[p(1)].color) + 4
+                            + (chipc(3, inv[p(1)].color) > inf_tiles) * 8,
+                        chipc(2, inv[p(1)].color) - 16,
+                        chipc(3, inv[p(1)].color) - 8
+                            - (chipc(3, inv[p(1)].color) > inf_tiles) * 10,
                         1);
                     pos(6, 974);
                     gcopy(1, 0, 1008, 22, 20);
@@ -53858,23 +53886,23 @@ label_2052_internal:
                 }
                 else if (p(2) == 531)
                 {
-                    pos(8, 1058 - chipc(3, inv_color(p(1))));
+                    pos(8, 1058 - chipc(3, inv[p(1)].color));
                     gcopy(
                         5,
-                        chipc(0, inv_color(p(1))) + 8,
-                        chipc(1, inv_color(p(1))) + 2,
-                        chipc(2, inv_color(p(1))) - 16,
-                        chipc(3, inv_color(p(1))) - 8);
+                        chipc(0, inv[p(1)].color) + 8,
+                        chipc(1, inv[p(1)].color) + 2,
+                        chipc(2, inv[p(1)].color) - 16,
+                        chipc(3, inv[p(1)].color) - 8);
                     gmode(4, -1, -1, 150);
                     color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, inv_color(p(1))) == inf_tiles) * 48);
+                    pos(0, 960 + (chipc(3, inv[p(1)].color) == inf_tiles) * 48);
                     gcopy(
                         1,
                         144,
-                        768 + (chipc(3, inv_color(p(1))) > inf_tiles) * 48,
+                        768 + (chipc(3, inv[p(1)].color) > inf_tiles) * 48,
                         inf_tiles,
-                        chipc(3, inv_color(p(1)))
-                            + (chipc(3, inv_color(p(1))) > inf_tiles) * 48);
+                        chipc(3, inv[p(1)].color)
+                            + (chipc(3, inv[p(1)].color) > inf_tiles) * 48);
                     gmode(2);
                     gsel(selcur);
                 }
@@ -53889,9 +53917,9 @@ label_2052_internal:
                         chipi(3, p(2)));
                     gfini(chipi(2, p(2)), chipi(3, p(2)));
                     gfdec2(
-                        c_col(0, inv_color(p(1))),
-                        c_col(1, inv_color(p(1))),
-                        c_col(2, inv_color(p(1))));
+                        c_col(0, inv[p(1)].color),
+                        c_col(1, inv[p(1)].color),
+                        c_col(2, inv[p(1)].color));
                     gsel(selcur);
                 }
                 pos(wx + 126, wy + 70 + cnt * 19);
@@ -53945,7 +53973,7 @@ label_2052_internal:
         {
             gdata(808) = 1;
             ci = cdata_body_part(cc, body) % 10000 - 1;
-            if (inv_curse_state(ci) == -1 || inv_curse_state(ci) == -2)
+            if (inv[ci].curse_state == -1 || inv[ci].curse_state == -2)
             {
                 txt(lang(
                     itemname(ci) + u8"は外せない。"s,
@@ -54214,8 +54242,8 @@ void label_2054()
                         int stat = itemcreate(0, 587, -1, -1, 0);
                         if (stat != 0)
                         {
-                            inv_curse_state(ci) = 0;
-                            inv_identification_state(ci) = 3;
+                            inv[ci].curse_state = 0;
+                            inv[ci].identification_state = 3;
                             item_stack(0, ci, 1);
                         }
                     }
@@ -54238,16 +54266,16 @@ void label_2054()
         label_20592();
         return;
     }
-    if (inv_own_state(ci) > 0 && inv_own_state(ci) < 3
-        || inv_own_state(ci) == 5)
+    if (inv[ci].own_state > 0 && inv[ci].own_state < 3
+        || inv[ci].own_state == 5)
     {
         snd(27);
         ++msgdup;
-        if (inv_own_state(ci) == 2)
+        if (inv[ci].own_state == 2)
         {
             txt(lang(u8"それは持ち運べない。"s, u8"You can't carry it."s));
         }
-        if (inv_own_state(ci) == 1 || inv_own_state(ci) == 5)
+        if (inv[ci].own_state == 1 || inv[ci].own_state == 5)
         {
             txt(lang(
                     u8"それはあなたの物ではない。"s,
@@ -54260,7 +54288,7 @@ void label_2054()
         label_1419();
         label_2743(false);
     }
-    in = inv_number(ci);
+    in = inv[ci].number;
     {
         int stat = label_2192();
         if (stat == 1 || stat == -1)
@@ -54480,14 +54508,14 @@ void label_2068()
     listmax = 0;
     p = 0;
     s = "";
-    reftype = refitem(inv_id(ci), 5);
+    reftype = refitem(inv[ci].id, 5);
     getinheritance(ci, inhlist, inhmax);
-    dbid = inv_id(ci);
+    dbid = inv[ci].id;
     dbmode = 2;
     label_1275();
     dbmode = 17;
     label_1275();
-    if (inv_identification_state(ci) >= 3)
+    if (inv[ci].identification_state >= 3)
     {
         buf = trimdesc(description(3), 1);
         if (buf != ""s)
@@ -54497,17 +54525,17 @@ void label_2068()
             ++p;
         }
     }
-    if (inv_identification_state(ci) >= 2)
+    if (inv[ci].identification_state >= 2)
     {
-        if (inv_material(ci) != 0)
+        if (inv[ci].material != 0)
         {
             list(0, p) = 7;
             listn(0, p) = lang(
-                u8"それは"s + mtname(0, inv_material(ci)) + u8"で作られている"s,
-                u8"It is made of "s + mtname(0, inv_material(ci)) + u8"."s);
+                u8"それは"s + mtname(0, inv[ci].material) + u8"で作られている"s,
+                u8"It is made of "s + mtname(0, inv[ci].material) + u8"."s);
             ++p;
         }
-        if (inv_material(ci) == 8)
+        if (inv[ci].material == 8)
         {
             list(0, p) = 7;
             listn(0, p) = lang(
@@ -54553,9 +54581,9 @@ void label_2068()
         {
             list(0, p) = 7;
             listn(0, p) = lang(u8"それは生きている"s, u8"It is alive."s)
-                + u8" [Lv:"s + inv_param1(ci) + u8" Exp:"s
-                + std::clamp(inv_param2(ci) * 100
-                                 / calcexpalive(inv_param1(ci)),
+                + u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s
+                + std::clamp(inv[ci].param2 * 100
+                                 / calcexpalive(inv[ci].param1),
                              0,
                              100)
                 + u8"%]"s;
@@ -54576,19 +54604,19 @@ void label_2068()
                 u8"それは心温まる手作り品だ"s, u8"It is a hand-made item."s);
             ++p;
         }
-        calcweaponfix(inv_id(ci));
-        if (inv_dice_x(ci) != 0)
+        calcweaponfix(inv[ci].id);
+        if (inv[ci].dice_x != 0)
         {
             list(0, p) = 5;
             listn(0, p) = lang(
                               u8"それは武器として扱うことができる"s,
                               u8"It can be wielded as a weapon."s)
-                + u8" ("s + inv_dice_x(ci) + u8"d"s + inv_dice_y(ci)
+                + u8" ("s + inv[ci].dice_x + u8"d"s + inv[ci].dice_y
                 + lang(u8" 貫通 "s, u8" Pierce "s) + pierce + u8"%)"s;
             ++p;
             if (reftype == 10000)
             {
-                if (inv_weight(ci) <= 1500)
+                if (inv[ci].weight <= 1500)
                 {
                     list(0, p) = 5;
                     listn(0, p) = lang(
@@ -54596,7 +54624,7 @@ void label_2068()
                         u8"It is a light weapon."s);
                     ++p;
                 }
-                if (inv_weight(ci) >= 4000)
+                if (inv[ci].weight >= 4000)
                 {
                     list(0, p) = 5;
                     listn(0, p) = lang(
@@ -54606,30 +54634,30 @@ void label_2068()
                 }
             }
         }
-        if (inv_hit_bonus(ci) != 0 || inv_damage_bonus(ci) != 0)
+        if (inv[ci].hit_bonus != 0 || inv[ci].damage_bonus != 0)
         {
             list(0, p) = 5;
             listn(0, p) = lang(
-                u8"それは攻撃修正に"s + inv_hit_bonus(ci)
-                    + u8"を加え、ダメージを"s + inv_damage_bonus(ci)
+                u8"それは攻撃修正に"s + inv[ci].hit_bonus
+                    + u8"を加え、ダメージを"s + inv[ci].damage_bonus
                     + u8"増加させる"s,
-                u8"It modifies hit bonus by "s + inv_hit_bonus(ci)
-                    + u8" and damage bonus by "s + inv_damage_bonus(ci)
+                u8"It modifies hit bonus by "s + inv[ci].hit_bonus
+                    + u8" and damage bonus by "s + inv[ci].damage_bonus
                     + u8"."s);
             ++p;
         }
-        if (inv_pv(ci) != 0 || inv_dv(ci) != 0)
+        if (inv[ci].pv != 0 || inv[ci].dv != 0)
         {
             list(0, p) = 6;
             listn(0, p) = lang(
-                u8"それはDVを"s + inv_dv(ci) + u8"上昇させ、PVを"s + inv_pv(ci)
+                u8"それはDVを"s + inv[ci].dv + u8"上昇させ、PVを"s + inv[ci].pv
                     + u8"上昇させる"s,
-                u8"It modifies DV by "s + inv_dv(ci) + u8" and PV by "s
-                    + inv_pv(ci) + u8"."s);
+                u8"It modifies DV by "s + inv[ci].dv + u8" and PV by "s
+                    + inv[ci].pv + u8"."s);
             ++p;
         }
     }
-    if (inv_identification_state(ci) < 2)
+    if (inv[ci].identification_state < 2)
     {
         list(0, p) = 0;
         listn(0, p) = lang(
@@ -54637,18 +54665,18 @@ void label_2068()
             u8"You have to identify the item to gain knowledge."s);
         ++p;
     }
-    if (inv_identification_state(ci) >= 3)
+    if (inv[ci].identification_state >= 3)
     {
         {
             int cnt = 0;
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
-                if (inv_enchantment_id(ci, cnt) == 0)
+                if (inv[ci].enchantments[cnt].id == 0)
                 {
                     break;
                 }
-                val(0) = inv_enchantment_id(ci, cnt);
-                val(1) = inv_enchantment_power(ci, cnt);
+                val(0) = inv[ci].enchantments[cnt].id;
+                val(1) = inv[ci].enchantments[cnt].power;
                 val(2) = 0;
                 val(3) = reftype;
                 label_0247();
@@ -55062,7 +55090,7 @@ int label_2075()
     }
     if (ammo == -1)
     {
-        if (inv_skill(cw) != 111)
+        if (inv[cw].skill != 111)
         {
             cw = 0;
             return -2;
@@ -55070,12 +55098,12 @@ int label_2075()
     }
     if (ammo != -1)
     {
-        if (inv_skill(cw) != inv_skill(ammo))
+        if (inv[cw].skill != inv[ammo].skill)
         {
             return -3;
         }
     }
-    attackskill = inv_skill(cw);
+    attackskill = inv[cw].skill;
     return 1;
 }
 
@@ -55450,11 +55478,11 @@ void label_2082()
     int tmat = 0;
     screenupdate = -1;
     label_1419();
-    if (inv_id(ci) == 413)
+    if (inv[ci].id == 413)
     {
         tmat = 40;
     }
-    if (inv_id(ci) == 414)
+    if (inv[ci].id == 414)
     {
         tmat = 41;
     }
@@ -55479,7 +55507,7 @@ void label_2082()
         {
             snd(56);
             matdelmain(tmat);
-            if (inv_id(ci) == 413)
+            if (inv[ci].id == 413)
             {
                 p = 415;
             }
@@ -55490,7 +55518,7 @@ void label_2082()
             int stat = itemcreate(-1, p, cdata_x(cc), cdata_y(cc), 0);
             if (stat != 0)
             {
-                inv_param2(ci) = 0;
+                inv[ci].param2 = 0;
             }
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
@@ -55511,9 +55539,9 @@ void label_2082()
 
 int label_2083()
 {
-    if (inv_id(ci) == 563)
+    if (inv[ci].id == 563)
     {
-        if (sdata.get(inv_param1(ci), 0).original_level == 0)
+        if (sdata.get(inv[ci].param1, 0).original_level == 0)
         {
             txt(lang(
                 u8"この本の内容には興味がない。それでも読む？ "s,
@@ -55923,7 +55951,7 @@ void label_2085()
                 {
                     p(1) = p(1) % 10000 - 1;
                     q(0) = itemname(p(1));
-                    q(1) = cnvweight(inv_weight(p(1)));
+                    q(1) = cnvweight(inv[p(1)].weight);
                     ci = p(1);
                     dump_return = 1;
                     label_2068();
@@ -56074,18 +56102,18 @@ void label_2086()
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
         {
-            if (inv_enchantment_id(ci, cnt) == 0)
+            if (inv[ci].enchantments[cnt].id == 0)
             {
                 break;
             }
-            enc = inv_enchantment_id(ci, cnt);
+            enc = inv[ci].enchantments[cnt].id;
             i = enc / 10000;
             if (i != 0)
             {
                 enc = enc % 10000;
                 if (i == 9)
                 {
-                    if (inv_count(ci) == cnt)
+                    if (inv[ci].count == cnt)
                     {
                         cs = cnt;
                     }
@@ -56098,7 +56126,7 @@ void label_2086()
     }
     if (listmax == 0)
     {
-        inv_count(ci) = -1;
+        inv[ci].count = -1;
         txt(lang(
             itemname(ci) + u8"は切り替えに対応していない。"s,
             itemname(ci) + u8" isn't capable of changing ammos."s));
@@ -56108,11 +56136,11 @@ void label_2086()
     ++cs;
     if (cs >= listmax)
     {
-        inv_count(ci) = -1;
+        inv[ci].count = -1;
     }
     else
     {
-        inv_count(ci) = list(0, cs);
+        inv[ci].count = list(0, cs);
     }
     txt(lang(u8"現在の装填弾:"s, u8"Current Ammo Type:"s));
     {
@@ -56127,13 +56155,13 @@ void label_2086()
             else
             {
                 p = list(0, cnt - 1);
-                i(0) = inv_enchantment_power(ci, p) % 1000;
-                i(1) = inv_enchantment_power(ci, p) / 1000;
-                s(0) = ammoname(inv_enchantment_id(ci, p) % 10000);
+                i(0) = inv[ci].enchantments[p].power % 1000;
+                i(1) = inv[ci].enchantments[p].power / 1000;
+                s(0) = ammoname(inv[ci].enchantments[p].id % 10000);
                 s(1) = ""s + i + u8"/"s + i(1);
             }
             s = s + u8":"s + s(1);
-            if (inv_count(ci) == cnt - 1)
+            if (inv[ci].count == cnt - 1)
             {
                 s = u8"["s + s + u8"]"s;
                 txtef(4);
@@ -56158,9 +56186,9 @@ void label_2087()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_id(cnt) == 504 || inv_id(cnt) == 503)
+            if (inv[cnt].id == 504 || inv[cnt].id == 503)
             {
-                inv_number(cnt) = 0;
+                inv[cnt].number = 0;
             }
         }
     }
@@ -56413,7 +56441,7 @@ void label_2092()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            inv_number(cnt) = 0;
+            inv[cnt].number = 0;
         }
     }
     inv_getheader(0);
@@ -56421,23 +56449,23 @@ void label_2092()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (inv_id(cnt) == 717)
+            if (inv[cnt].id == 717)
             {
                 lomiaseaster = 1;
             }
-            if (inv_id(cnt) == 511 || refitem(inv_id(cnt), 9) == 53100)
+            if (inv[cnt].id == 511 || refitem(inv[cnt].id, 9) == 53100)
             {
                 continue;
             }
-            if (inv_id(cnt) == 578)
+            if (inv[cnt].id == 578)
             {
                 continue;
             }
-            if (inv_quality(cnt) == 6)
+            if (inv[cnt].quality == 6)
             {
                 continue;
             }
@@ -56445,11 +56473,11 @@ void label_2092()
             {
                 continue;
             }
-            if (refitem(inv_id(cnt), 5) == 25000)
+            if (refitem(inv[cnt].id, 5) == 25000)
             {
-                inv_count(cnt) = -1;
+                inv[cnt].count = -1;
             }
-            inv_body_part(cnt) = 0;
+            inv[cnt].body_part = 0;
             item_copy(cnt, inv_getfreeid(-1));
         }
     }
@@ -58921,7 +58949,7 @@ void label_2146()
                     {
                         p = cdata_quality_of_performance(cc)
                                 * cdata_quality_of_performance(cc)
-                                * (100 + inv_param1(ci) / 5) / 100 / 1000
+                                * (100 + inv[ci].param1 / 5) / 100 / 1000
                             + rnd(10);
                         p = std::clamp(
                             cdata_gold(tc) * std::clamp(p(0), 1, 100) / 125,
@@ -59093,19 +59121,23 @@ void label_2146()
                                             itemcreate(-1, dbid, x, y, 1);
                                         if (stat != 0)
                                         {
-                                            --inv_number(ci);
-                                            cell_refresh(inv_x(ci), inv_y(ci));
+                                            --inv[ci].number;
+                                            cell_refresh(
+                                                inv[ci].position.x,
+                                                inv[ci].position.y);
                                             ccbk = cc;
                                             cc = tc;
                                             animeid = 15;
-                                            aniref(0) = inv_image(ci);
-                                            aniref(1) = inv_color(ci);
-                                            anix = inv_x(ci);
-                                            aniy = inv_y(ci);
+                                            aniref(0) = inv[ci].image;
+                                            aniref(1) = inv[ci].color;
+                                            anix = inv[ci].position.x;
+                                            aniy = inv[ci].position.y;
                                             label_1426();
                                             cc = ccbk;
-                                            ++inv_number(ci);
-                                            cell_refresh(inv_x(ci), inv_y(ci));
+                                            ++inv[ci].number;
+                                            cell_refresh(
+                                                inv[ci].position.x,
+                                                inv[ci].position.y);
                                             ++performtips;
                                         }
                                     }
@@ -59195,7 +59227,7 @@ void label_2146()
     if (cdata_quality_of_performance(cc) > 40)
     {
         cdata_quality_of_performance(cc) =
-            cdata_quality_of_performance(cc) * (100 + inv_param1(ci) / 5) / 100;
+            cdata_quality_of_performance(cc) * (100 + inv[ci].param1 / 5) / 100;
     }
     if (cdata_tip_gold(cc) != 0)
     {
@@ -59447,7 +59479,7 @@ void label_2148()
                 itemname(ci, 1) + u8"に目星をつけた。"s,
                 u8"You target "s + itemname(ci, 1) + u8"."s));
             cdata_continuous_action_turn(cc) =
-                2 + std::clamp(inv_weight(ci) / 500, 0, 50);
+                2 + std::clamp(inv[ci].weight / 500, 0, 50);
         }
         if (gdata(91) == 100)
         {
@@ -59482,7 +59514,7 @@ void label_2148()
                 itemname(ci, 1) + u8"を掘り始めた。"s,
                 u8"You start to pick "s + itemname(ci, 1) + u8"."s));
             cdata_continuous_action_turn(cc) = 10
-                + std::clamp(inv_weight(ci)
+                + std::clamp(inv[ci].weight
                                  / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
                              1,
                              100);
@@ -59503,11 +59535,11 @@ void label_2148()
             gdata_time_when_textbook_becomes_available = gdata_hour
                 + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12 + 48;
-            if (inv_id(ci) == 563)
+            if (inv[ci].id == 563)
             {
                 txt(lang(
-                    skillname(inv_param1(ci)) + u8"の学習を始めた。"s,
-                    u8"You begin to study "s + skillname(inv_param1(ci))
+                    skillname(inv[ci].param1) + u8"の学習を始めた。"s,
+                    u8"You begin to study "s + skillname(inv[ci].param1)
                         + u8"."s));
             }
             else
@@ -59599,11 +59631,11 @@ void label_2148()
                     }
                 }
             }
-            if (inv_id(ci) == 563)
+            if (inv[ci].id == 563)
             {
                 if (rnd(p) == 0)
                 {
-                    skillexp(inv_param1(ci), cc, 25);
+                    skillexp(inv[ci].param1, cc, 25);
                 }
             }
             else if (rnd(p) == 0)
@@ -59613,7 +59645,7 @@ void label_2148()
         }
         if (gdata(91) == 105)
         {
-            if (inv_id(ci) == 688)
+            if (inv[ci].id == 688)
             {
                 if (rnd(15) == 0)
                 {
@@ -59625,7 +59657,7 @@ void label_2148()
                     return;
                 }
             }
-            if (inv_id(ci) == 689)
+            if (inv[ci].id == 689)
             {
                 if (rnd(15) == 0)
                 {
@@ -59652,11 +59684,11 @@ void label_2148()
             {
                 i = i * 15 / 10;
             }
-            if (inv_quality(ci) == 3)
+            if (inv[ci].quality == 3)
             {
                 i = i * 8 / 10;
             }
-            if (inv_quality(ci) >= 4)
+            if (inv[ci].quality >= 4)
             {
                 i = i * 5 / 10;
             }
@@ -59786,7 +59818,7 @@ void label_2148()
                     }
                 }
             }
-            if (inv_number(ci) <= 0)
+            if (inv[ci].number <= 0)
             {
                 f = 1;
             }
@@ -59798,7 +59830,7 @@ void label_2148()
                     f = 1;
                 }
             }
-            if (inv_weight(ci) >= sdata(10, 0) * 500)
+            if (inv[ci].weight >= sdata(10, 0) * 500)
             {
                 if (f != 1)
                 {
@@ -59838,9 +59870,9 @@ void label_2148()
             }
         }
         in = 1;
-        if (inv_id(ci) == 54)
+        if (inv[ci].id == 54)
         {
-            in = inv_number(ci);
+            in = inv[ci].number;
         }
         ibitmod(12, ci, 0);
         ti = inv_getfreeid(0);
@@ -59851,34 +59883,34 @@ void label_2148()
                 u8"Your inventory is full."s));
             return;
         }
-        if (inv_body_part(ci) != 0)
+        if (inv[ci].body_part != 0)
         {
             tc = inv_getowner(ci);
             if (tc != -1)
             {
-                p = inv_body_part(ci);
+                p = inv[ci].body_part;
                 cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
             }
-            inv_body_part(ci) = 0;
+            inv[ci].body_part = 0;
             r1 = tc;
             label_1477();
         }
         item_copy(ci, ti);
-        inv_number(ti) = in;
+        inv[ti].number = in;
         ibitmod(9, ti, 1);
-        inv_own_state(ti) = 0;
-        inv_number(ci) -= in;
-        if (inv_number(ci) <= 0)
+        inv[ti].own_state = 0;
+        inv[ci].number -= in;
+        if (inv[ci].number <= 0)
         {
-            cell_refresh(inv_x(ci), inv_y(ci));
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         txt(lang(
             itemname(ti) + u8"を盗んだ。"s,
             u8"You successfully steal "s + itemname(ti) + u8"."s));
-        if (inv_id(ci) == 54)
+        if (inv[ci].id == 54)
         {
             snd(11);
-            inv_number(ti) = 0;
+            inv[ti].number = 0;
             cdata_gold(0) += in;
         }
         else
@@ -59887,7 +59919,7 @@ void label_2148()
             snd(14 + rnd(2));
         }
         label_1521();
-        skillexp(300, 0, std::clamp(inv_weight(ti) / 25, 0, 450) + 50);
+        skillexp(300, 0, std::clamp(inv[ti].weight / 25, 0, 450) + 50);
         if (cdata_karma(0) >= -30)
         {
             if (rnd(3) == 0)
@@ -59926,26 +59958,26 @@ void label_2148()
         gdata_previous_x = cdata_x(0);
         gdata_previous_y = cdata_y(0);
         gdata_destination_map = 30;
-        gdata_destination_dungeon_level = inv_count(ci);
+        gdata_destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
         snd(49);
     }
     if (gdata(91) == 103)
     {
         txt(lang(
-            itemname(ci, 1) + u8"を収穫した("s + cnvweight(inv_weight(ci))
+            itemname(ci, 1) + u8"を収穫した("s + cnvweight(inv[ci].weight)
                 + u8")"s,
             u8"You harvest "s + itemname(ci, 1) + u8". ("s
-                + cnvweight(inv_weight(ci)) + u8")"s));
+                + cnvweight(inv[ci].weight) + u8")"s));
         label_2192();
     }
     if (gdata(91) == 104)
     {
-        if (inv_id(ci) == 563)
+        if (inv[ci].id == 563)
         {
             txt(lang(
-                skillname(inv_param1(ci)) + u8"の学習を終えた。"s,
-                u8"You finish studying "s + skillname(inv_param1(ci))
+                skillname(inv[ci].param1) + u8"の学習を終えた。"s,
+                u8"You finish studying "s + skillname(inv[ci].param1)
                     + u8"."s));
         }
         else
@@ -60133,8 +60165,8 @@ void label_2151()
     else
     {
         ci = cdata_continuous_action_item(0);
-        if (inv_param1(ci) == 0 || inv_number(ci) == 0
-            || refitem(inv_id(ci), 9) != 60004)
+        if (inv[ci].param1 == 0 || inv[ci].number == 0
+            || refitem(inv[ci].id, 9) != 60004)
         {
             f = 1;
         }
@@ -60155,7 +60187,7 @@ void label_2151()
         }
         i = std::clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
-        gdata_sleep_experience = gdata_sleep_experience * inv_param1(ci) / 100;
+        gdata_sleep_experience = gdata_sleep_experience * inv[ci].param1 / 100;
         grown = 0;
         {
             int cnt = 0;
@@ -60287,11 +60319,11 @@ void label_2153()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (refitem(inv_id(cnt), 5) == 91000)
+                if (refitem(inv[cnt].id, 5) == 91000)
                 {
                     f = 1;
                     ci = cnt;
@@ -60454,7 +60486,7 @@ void label_2154()
                 continue;
             }
             i = std::clamp(
-                inv_param4(ci) + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
+                inv[ci].param4 + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
             if (fishdata(1, cnt) != i)
             {
                 continue;
@@ -60491,9 +60523,9 @@ void label_2155()
 {
     flt();
     itemcreate(0, fishdata(7, fish), -1, -1, 0);
-    inv_subname(ci) = fish;
-    inv_value(ci) = fishdata(6, fish);
-    inv_weight(ci) = fishdata(5, fish);
+    inv[ci].subname = fish;
+    inv[ci].value = fishdata(6, fish);
+    inv[ci].weight = fishdata(5, fish);
     txt(lang(
         itemname(ci, 1) + u8"を釣り上げた！"s,
         u8"You get "s + itemname(ci, 1) + u8"!"s));
@@ -60727,17 +60759,17 @@ void label_2158()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_id(cnt) == 621)
+                if (inv[cnt].id == 621)
                 {
-                    if (inv_param1(cnt) != 0)
+                    if (inv[cnt].param1 != 0)
                     {
-                        if (inv_param1(cnt) == cdata_x(0))
+                        if (inv[cnt].param1 == cdata_x(0))
                         {
-                            if (inv_param2(cnt) == cdata_y(0))
+                            if (inv[cnt].param2 == cdata_y(0))
                             {
                                 snd(23);
                                 txtef(5);
@@ -60784,7 +60816,7 @@ void label_2158()
                                     u8"何かが足元に転がってきた。"s,
                                     u8"Something is put on the ground."s));
                                 autosave = 1 * (gdata_current_map != 35);
-                                --inv_number(cnt);
+                                --inv[cnt].number;
                                 break;
                             }
                         }
@@ -60903,7 +60935,7 @@ void label_2159()
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
-                inv_curse_state(ci) = -1;
+                inv[ci].curse_state = -1;
                 txt(lang(
                     u8"何かを見つけた。"s,
                     u8"You found something out of crushed heaps of rock."s));
@@ -60960,7 +60992,7 @@ void label_2160()
         if (synccheck(cc, -1))
         {
             snd(18);
-            if (inv_own_state(ci) == 1 && cc < 16)
+            if (inv[ci].own_state == 1 && cc < 16)
             {
                 txt(lang(
                     name(cc) + u8"は"s + itemname(ci, 1)
@@ -60975,7 +61007,7 @@ void label_2160()
                     name(cc) + u8" start"s + _s(cc) + u8" to eat "s
                         + itemname(ci, 1) + u8"."s));
             }
-            if (inv_id(ci) == 204 && inv_subname(ci) == 344)
+            if (inv[ci].id == 204 && inv[ci].subname == 344)
             {
                 txt(lang(
                     u8"「いただきマンモス」"s, cnvtalk(u8"Let's eatammoth."s)));
@@ -61016,10 +61048,10 @@ void label_2161()
         r1 = cc;
         label_1477();
     }
-    --inv_number(ci);
+    --inv[ci].number;
     if (ci >= 5080)
     {
-        cell_refresh(inv_x(ci), inv_y(ci));
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     else if (cc == 0)
     {
@@ -61037,9 +61069,9 @@ void label_2161()
         }
         if (cbit(987, cc))
         {
-            if (inv_material(ci) == 35)
+            if (inv[ci].material == 35)
             {
-                if (inv_param3(ci) < 0)
+                if (inv[ci].param3 < 0)
                 {
                     txtef(9);
                     if (jp)
@@ -61078,7 +61110,7 @@ void label_2161()
         }
     }
     chara_anorexia(cc);
-    if (inv_id(ci) == 755 && rnd(3) || inv_id(ci) == 756 && rnd(10) == 0)
+    if (inv[ci].id == 755 && rnd(3) || inv[ci].id == 756 && rnd(10) == 0)
     {
         if (synccheck(cc, -1))
         {
@@ -61167,9 +61199,9 @@ int label_2163()
     int cibkread = 0;
     if (cdata_continuous_action_id(cc) == 0)
     {
-        if (inv_id(ci) == 687)
+        if (inv[ci].id == 687)
         {
-            if (inv_param2(ci) != 0)
+            if (inv[ci].param2 != 0)
             {
                 txt(lang(
                     u8"それは既に解読済みだ。"s,
@@ -61188,13 +61220,13 @@ int label_2163()
             return 0;
         }
         cdata_continuous_action_id(cc) = 2;
-        if (inv_id(ci) == 783)
+        if (inv[ci].id == 783)
         {
             p = 50;
         }
-        else if (inv_id(ci) == 687)
+        else if (inv[ci].id == 687)
         {
-            p = 50 + inv_param1(ci) * 50 + inv_param1(ci) * inv_param1(ci) * 20;
+            p = 50 + inv[ci].param1 * 50 + inv[ci].param1 * inv[ci].param1 * 20;
         }
         else
         {
@@ -61217,14 +61249,14 @@ int label_2163()
         ci = cdata_continuous_action_item(cc);
         cibkread = ci;
         label_1458();
-        if (inv_id(ci) == 783)
+        if (inv[ci].id == 783)
         {
             return 0;
         }
-        if (inv_id(ci) == 687)
+        if (inv[ci].id == 687)
         {
             r2 =
-                50 + inv_param1(ci) * 50 + inv_param1(ci) * inv_param1(ci) * 20;
+                50 + inv[ci].param1 * 50 + inv[ci].param1 * inv[ci].param1 * 20;
             r3 = 0;
         }
         else
@@ -61232,11 +61264,11 @@ int label_2163()
             r2 = sdataref(4, efid);
             r3 = efid;
         }
-        if (inv_curse_state(ci) >= 1)
+        if (inv[ci].curse_state >= 1)
         {
             r2 = r2 * 100 / 120;
         }
-        if (inv_curse_state(ci) <= -1)
+        if (inv[ci].curse_state <= -1)
         {
             r2 = r2 * 150 / 100;
         }
@@ -61245,17 +61277,17 @@ int label_2163()
         if (stat == 0)
         {
             rowactend(cc);
-            --inv_count(ci);
-            if (inv_count(ci) < 0)
+            --inv[ci].count;
+            if (inv[ci].count < 0)
             {
-                inv_count(ci) = 0;
+                inv[ci].count = 0;
             }
-            if (inv_count(ci) == 0)
+            if (inv[ci].count == 0)
             {
-                --inv_number(ci);
+                --inv[ci].number;
                 if (ci >= 5080)
                 {
-                    cell_refresh(inv_x(ci), inv_y(ci));
+                    cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 }
                 else
                 {
@@ -61277,16 +61309,16 @@ int label_2163()
             npcn(cc) + itemname(ci, 1) + u8"を読み終えた。"s,
             name(cc) + u8" "s + have(cc) + u8" finished reading the book."s));
     }
-    if (inv_id(ci) == 783)
+    if (inv[ci].id == 783)
     {
-        if (inv_param1(ci) == 0)
+        if (inv[ci].param1 == 0)
         {
             rowactend(cc);
             return 1;
         }
         txt(lang(
             itemname(ci, 1) + u8"を覚えた！"s, u8"You learned the recipe!"s));
-        ++recipememory(inv_subname(ci));
+        ++recipememory(inv[ci].subname);
         item_identify(ci, 1);
         removeitem(ci, 1);
         if (synccheck(cc, -1))
@@ -61298,14 +61330,14 @@ int label_2163()
         rowactend(cc);
         return 1;
     }
-    if (inv_id(ci) == 687)
+    if (inv[ci].id == 687)
     {
         item_identify(ci, 3);
         txt(lang(
             itemname(ci, 1) + u8"を解読した！"s,
             u8"You finished decoding "s + itemname(ci, 1) + u8"!"s));
-        inv_param2(ci) = 1;
-        inv_count(ci) = 1;
+        inv[ci].param2 = 1;
+        inv[ci].count = 1;
         ibitmod(4, ci, 0);
         item_stack(0, ci, 1);
     }
@@ -61319,20 +61351,20 @@ int label_2163()
                     / std::clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
         label_1471();
-        if (itemmemory(2, inv_id(ci)) == 0)
+        if (itemmemory(2, inv[ci].id) == 0)
         {
-            itemmemory(2, inv_id(ci)) = 1;
+            itemmemory(2, inv[ci].id) = 1;
         }
     }
     item_identify(ci, 1);
-    if (inv_id(ci) != 687)
+    if (inv[ci].id != 687)
     {
-        --inv_count(ci);
-        if (inv_count(ci) < 0)
+        --inv[ci].count;
+        if (inv[ci].count < 0)
         {
-            inv_count(ci) = 0;
+            inv[ci].count = 0;
         }
-        if (inv_count(ci) == 0)
+        if (inv[ci].count == 0)
         {
             removeitem(ci, 1);
             if (synccheck(cc, -1))
@@ -61361,7 +61393,7 @@ int label_2164()
         }
         return 0;
     }
-    if (inv_id(ci) == 742)
+    if (inv[ci].id == 742)
     {
         snd(59);
         txt(lang(
@@ -61369,7 +61401,7 @@ int label_2164()
             u8"According to the card, you are permitted to explore the void now."s));
         return 1;
     }
-    if (inv_id(ci) == 563)
+    if (inv[ci].id == 563)
     {
         int stat = label_2083();
         if (stat == 1)
@@ -61381,7 +61413,7 @@ int label_2164()
             return 0;
         }
     }
-    if (inv_id(ci) == 668)
+    if (inv[ci].id == 668)
     {
         snd(59);
         txt(lang(
@@ -61656,12 +61688,12 @@ int label_2169()
         if (potionthrow)
         {
             efp = efp * potionthrow / 100;
-            efstatus = inv_curse_state(ci);
+            efstatus = inv[ci].curse_state;
         }
     }
     else
     {
-        efstatus = inv_curse_state(ci);
+        efstatus = inv[ci].curse_state;
         if (synccheck(tc, -1))
         {
             snd(17);
@@ -61686,10 +61718,10 @@ int label_2169()
                 item_identify(ci, 1);
             }
         }
-        --inv_number(ci);
+        --inv[ci].number;
         if (ci >= 5080)
         {
-            cell_refresh(inv_x(ci), inv_y(ci));
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         else if (tc == 0)
         {
@@ -61714,8 +61746,8 @@ int label_2169()
 
 int label_2170()
 {
-    if (inv_param1(ci) < -5 || inv_param3(ci) >= 20
-        || inv_id(ci) == 602 && gdata_holy_well_count <= 0)
+    if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
+        || inv[ci].id == 602 && gdata_holy_well_count <= 0)
     {
         valn = itemname(ci);
         txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
@@ -61763,7 +61795,7 @@ int label_2170()
                     break;
                 }
             }
-            if (inv_id(ci) == 602)
+            if (inv[ci].id == 602)
             {
                 if (rnd(2) == 0)
                 {
@@ -61815,7 +61847,7 @@ int label_2170()
             {
                 flt();
                 itemcreate(-1, 54, cdata_x(cc), cdata_y(cc), 0);
-                inv_number(ci) = rnd(sdata(159, cc) / 2 * 50 + 100) + 1;
+                inv[ci].number = rnd(sdata(159, cc) / 2 * 50 + 100) + 1;
                 txt(lang(
                     name(cc) + u8"は水の中に金貨を見つけた。"s,
                     name(cc) + u8" find"s + _s(cc)
@@ -61912,15 +61944,15 @@ int label_2170()
     {
         cdata_nutrition(cc) += 500;
     }
-    if (inv_id(ci) == 602)
+    if (inv[ci].id == 602)
     {
         --gdata_holy_well_count;
     }
     else
     {
-        inv_param1(ci) -= rnd(3);
-        inv_param3(ci) += rnd(3);
-        if (inv_param3(ci) >= 20)
+        inv[ci].param1 -= rnd(3);
+        inv[ci].param3 += rnd(3);
+        if (inv[ci].param3 >= 20)
         {
             txt(lang(
                 itemname(ci) + u8"は完全に干上がった。"s,
@@ -61928,7 +61960,7 @@ int label_2170()
             return 1;
         }
     }
-    if (inv_param1(ci) < -5)
+    if (inv[ci].param1 < -5)
     {
         txt(lang(
             itemname(ci) + u8"は干上がった。"s,
@@ -61944,7 +61976,7 @@ int label_2171()
     tc = cc;
     tlocx = cdata_x(cc);
     tlocy = cdata_y(cc);
-    efstatus = inv_curse_state(ci);
+    efstatus = inv[ci].curse_state;
     efsource = 2;
     if (cdata_blind(cc) != 0)
     {
@@ -61979,12 +62011,12 @@ int label_2171()
                 + u8"."s));
         txtmore();
     }
-    if (inv_id(ci) != 621)
+    if (inv[ci].id != 621)
     {
-        --inv_number(ci);
+        --inv[ci].number;
         if (ci >= 5080)
         {
-            cell_refresh(inv_x(ci), inv_y(ci));
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         else
         {
@@ -62007,7 +62039,7 @@ int label_2171()
 
 int label_2172()
 {
-    if (inv_count(ci) <= 0)
+    if (inv[ci].count <= 0)
     {
         if (synccheck(cc, -1))
         {
@@ -62018,7 +62050,7 @@ int label_2172()
         }
         return 0;
     }
-    efstatus = inv_curse_state(ci);
+    efstatus = inv[ci].curse_state;
     if (efstatus >= 1)
     {
         efstatus = 0;
@@ -62060,11 +62092,11 @@ int label_2172()
     {
         f = 0;
         r1 = sdata(174, cc) * 20 + 100;
-        if (inv_curse_state(ci) >= 1)
+        if (inv[ci].curse_state >= 1)
         {
             r1 = r1 * 125 / 100;
         }
-        if (inv_curse_state(ci) <= -1)
+        if (inv[ci].curse_state <= -1)
         {
             r1 = r1 * 50 / 100;
         }
@@ -62085,7 +62117,7 @@ int label_2172()
     {
         f = 0;
     }
-    if (f == 1 || inv_id(ci) == 290 || cc != 0)
+    if (f == 1 || inv[ci].id == 290 || cc != 0)
     {
         label_2176();
         if (cc == 0)
@@ -62105,16 +62137,16 @@ int label_2172()
     }
 label_2173_internal:
     efsource = 0;
-    if (inv_number(ci) == 0)
+    if (inv[ci].number == 0)
     {
         if (ci >= 5080)
         {
-            cell_refresh(inv_x(ci), inv_y(ci));
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
             return 1;
         }
     }
     item_separate(ci);
-    --inv_count(ci);
+    --inv[ci].count;
     return 1;
 }
 
@@ -62506,21 +62538,21 @@ void label_2189()
         }
     }
     animeid = 15;
-    aniref(0) = inv_image(ci);
-    aniref(1) = inv_color(ci);
+    aniref(0) = inv[ci].image;
+    aniref(1) = inv[ci].color;
     anix = tlocx;
     aniy = tlocy;
     label_1426();
     ti = inv_getfreeid(-1);
     removeitem(ci, 1);
-    if (inv_id(ci) == 685)
+    if (inv[ci].id == 685)
     {
         if (ti != -1)
         {
             item_copy(ci, ti);
-            inv_number(ti) = 1;
-            inv_x(ti) = tlocx;
-            inv_y(ti) = tlocy;
+            inv[ti].number = 1;
+            inv[ti].position.x = tlocx;
+            inv[ti].position.y = tlocy;
             ci = ti;
         }
     }
@@ -62532,10 +62564,10 @@ void label_2189()
     x = tlocx;
     y = tlocy;
     label_1426();
-    if (inv_id(ci) == 685 || inv_id(ci) == 699)
+    if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         if (map(tlocx, tlocy, 1) != 0)
         {
             tc = map(tlocx, tlocy, 1) - 1;
@@ -62543,7 +62575,7 @@ void label_2189()
             txt(lang(
                 name(tc) + u8"に見事に命中した！"s,
                 u8"It hits "s + name(tc) + u8"!"s));
-            if (inv_id(ci) == 685)
+            if (inv[ci].id == 685)
             {
                 if (tc < 57 || cdata_character_role(tc) != 0
                     || cdata_quality(tc) == 6 || cbit(976, tc) == 1)
@@ -62554,7 +62586,7 @@ void label_2189()
                     label_2742();
                     return;
                 }
-                if (cdata_level(tc) > inv_param2(ci))
+                if (cdata_level(tc) > inv[ci].param2)
                 {
                     txt(lang(
                         u8"その生物を捕獲するには、より高レベルのモンスターボールが必要だ。"s,
@@ -62575,10 +62607,10 @@ void label_2189()
                     name(tc) + u8"をモンスターボールに捕獲した。"s,
                     u8"You capture "s + name(tc) + u8"."s));
                 animeload(8, tc);
-                inv_subname(ci) = cdata_id(tc);
-                inv_param3(ci) = cdata_level(tc);
-                inv_weight(ci) = std::clamp(cdata_weight(tc), 10000, 100000);
-                inv_value(ci) = 1000;
+                inv[ci].subname = cdata_id(tc);
+                inv[ci].param3 = cdata_level(tc);
+                inv[ci].weight = std::clamp(cdata_weight(tc), 10000, 100000);
+                inv[ci].value = 1000;
             }
             else
             {
@@ -62606,13 +62638,13 @@ void label_2189()
         label_2742();
         return;
     }
-    if (refitem(inv_id(ci), 5) == 52000 || inv_id(ci) == 772)
+    if (refitem(inv[ci].id, 5) == 52000 || inv[ci].id == 772)
     {
-        if (inv_id(ci) != 601)
+        if (inv[ci].id != 601)
         {
             if (synccheck(tlocx, tlocy))
             {
-                if (inv_id(ci) == 587)
+                if (inv[ci].id == 587)
                 {
                     snd(86);
                 }
@@ -62632,7 +62664,7 @@ void label_2189()
                     wet(tc, 25);
                 }
                 rowact_check(tc);
-                if (inv_id(ci) == 587)
+                if (inv[ci].id == 587)
                 {
                     if (synccheck(tc, -1))
                     {
@@ -62657,14 +62689,14 @@ void label_2189()
                     label_2742();
                     return;
                 }
-                if (inv_id(ci) == 772)
+                if (inv[ci].id == 772)
                 {
                     if (synccheck(tc, -1))
                     {
                         txtef(4);
                         txt(lang(u8" *ぷちゅ* "s, u8"*crumble*"s));
                     }
-                    if (inv_param3(ci) == -1)
+                    if (inv[ci].param3 == -1)
                     {
                         if (synccheck(tc, -1))
                         {
@@ -62687,13 +62719,13 @@ void label_2189()
                 potionthrow = 100;
                 cc = tc;
                 dbmode = 15;
-                dbid = inv_id(ci);
+                dbid = inv[ci].id;
                 label_1275();
                 cc = ccthrowpotion;
                 label_2742();
                 return;
             }
-            if (inv_id(ci) == 587)
+            if (inv[ci].id == 587)
             {
                 if (map(tlocx, tlocy, 4) != 0)
                 {
@@ -62705,7 +62737,7 @@ void label_2189()
                              ++cnt)
                         {
                             p = list(0, cnt);
-                            if (inv_id(p) == 541)
+                            if (inv[p].id == 541)
                             {
                                 if (synccheck(tlocx, tlocy))
                                 {
@@ -62716,7 +62748,7 @@ void label_2189()
                                         u8"It hits "s + itemname(p, 1)
                                             + u8" and breaks it."s));
                                 }
-                                --inv_number(p);
+                                --inv[p].number;
                                 f = 1;
                                 break;
                             }
@@ -62730,7 +62762,7 @@ void label_2189()
                     }
                 }
             }
-            if (inv_id(ci) == 587)
+            if (inv[ci].id == 587)
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 4)
                 {
@@ -62752,7 +62784,7 @@ void label_2189()
                     u8"それは地面に落ちて砕けた。"s,
                     u8"It falls on the ground and shatters."s));
             }
-            if (inv_id(ci) == 772)
+            if (inv[ci].id == 772)
             {
                 if (synccheck(tlocx, tlocy))
                 {
@@ -62763,13 +62795,13 @@ void label_2189()
                 return;
             }
             efp = 50 + sdata(111, cc) * 10;
-            if (inv_id(ci) == 392)
+            if (inv[ci].id == 392)
             {
                 addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
                 label_2742();
                 return;
             }
-            if (inv_id(ci) == 577)
+            if (inv[ci].id == 577)
             {
                 addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
@@ -62784,9 +62816,9 @@ void label_2189()
                 -1,
                 efp,
                 cc,
-                inv_id(ci),
-                inv_curse_state(ci),
-                inv_color(ci));
+                inv[ci].id,
+                inv[ci].curse_state,
+                inv[ci].color);
             label_2742();
             return;
         }
@@ -62798,10 +62830,10 @@ void label_2189()
             u8"It falls on the ground and shatters."s));
         snd(47);
     }
-    if (inv_id(ci) == 578)
+    if (inv[ci].id == 578)
     {
         flt();
-        itemcreate(-1, 54, tlocx, tlocy, inv_param1(ci));
+        itemcreate(-1, 54, tlocx, tlocy, inv[ci].param1);
     }
     label_2742();
     return;
@@ -62815,7 +62847,7 @@ void label_2190()
     if (stat != -1)
     {
         ci = stat;
-        if (inv_param1(ci) != cdata_god(0))
+        if (inv[ci].param1 != cdata_god(0))
         {
             label_1886();
             label_2742();
@@ -62841,19 +62873,19 @@ int label_2192()
     int sellgold = 0;
     if (cc != -1)
     {
-        if (inv_id(ci) == 54 || inv_id(ci) == 55)
+        if (inv[ci].id == 54 || inv[ci].id == 55)
         {
             snd(11);
             ti = ci;
-            in = inv_number(ci);
-            inv_number(ci) = 0;
+            in = inv[ci].number;
+            inv[ci].number = 0;
             msgkeep = 1;
             txt(lang(
                 name(cc) + u8"は"s + itemname(ti, in) + u8"を拾った。"s,
                 name(cc) + u8" pick"s + _s(cc) + u8" up "s + itemname(ti, in)
                     + u8"."s));
-            cell_refresh(inv_x(ci), inv_y(ci));
-            if (inv_id(ci) == 54)
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
+            if (inv[ci].id == 54)
             {
                 cdata_gold(cc) += in;
             }
@@ -62880,9 +62912,9 @@ int label_2192()
                 }
             }
         }
-        if (refitem(inv_id(ci), 5) == 57000)
+        if (refitem(inv[ci].id, 5) == 57000)
         {
-            if (inv_own_state(ci) == 4)
+            if (inv[ci].own_state == 4)
             {
                 if (cdata_continuous_action_id(0) == 0)
                 {
@@ -62899,7 +62931,7 @@ int label_2192()
                 }
             }
         }
-        if (inv_own_state(ci) == 3)
+        if (inv[ci].own_state == 3)
         {
             txt(lang(
                 itemname(ci) + u8"を撤去する？ "s,
@@ -62919,18 +62951,18 @@ int label_2192()
             if (rtval == 0)
             {
                 snd(58);
-                if (inv_id(ci) == 555)
+                if (inv[ci].id == 555)
                 {
                     midbk = mid;
-                    mid = ""s + 30 + u8"_"s + (100 + inv_count(ci));
+                    mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
                     if (fs::exists(
                             fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(11);
                     }
                     mid = midbk;
-                    inv_count(ci) = 0;
-                    inv_own_state(ci) = 0;
+                    inv[ci].count = 0;
+                    inv[ci].own_state = 0;
                 }
             }
             else
@@ -62946,18 +62978,18 @@ int label_2192()
             return 0;
         }
     }
-    inumbk = inv_number(ci) - in;
-    inv_number(ci) = in;
+    inumbk = inv[ci].number - in;
+    inv[ci].number = in;
     if (cc == 0)
     {
         if (trait(215) != 0)
         {
-            if (refitem(inv_id(ci), 5) == 56000)
+            if (refitem(inv[ci].id, 5) == 56000)
             {
-                if (inv_count(ci) > 0)
+                if (inv[ci].count > 0)
                 {
                     dbmode = 14;
-                    dbid = inv_id(ci);
+                    dbid = inv[ci].id;
                     label_1275();
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
@@ -62965,36 +62997,36 @@ int label_2192()
                         u8"You absorb magic from "s + itemname(ci) + u8"."s));
                     if (efid >= 400 && efid < 467)
                     {
-                        spell(efid - 400) += inv_count(ci) * 5 * inv_number(ci);
+                        spell(efid - 400) += inv[ci].count * 5 * inv[ci].number;
                     }
                     else
                     {
-                        healmp(0, inv_count(ci) * 5 * inv_number(ci));
+                        healmp(0, inv[ci].count * 5 * inv[ci].number);
                     }
-                    inv_count(ci) = 0;
+                    inv[ci].count = 0;
                 }
             }
         }
         if (trait(216) != 0)
         {
-            if (refitem(inv_id(ci), 5) == 52000)
+            if (refitem(inv[ci].id, 5) == 52000)
             {
-                if (inv_id(ci) != 262 && inv_id(ci) != 559)
+                if (inv[ci].id != 262 && inv[ci].id != 559)
                 {
                     if (rnd(5) == 0)
                     {
                         txt(lang(
                             u8"あなたの手から毒が滴った。"s,
                             u8"Poison drips from your hands."s));
-                        inv_id(ci) = 262;
+                        inv[ci].id = 262;
                     }
                 }
             }
         }
     }
-    if (inv_own_state(ci) < 0)
+    if (inv[ci].own_state < 0)
     {
-        inv_own_state(ci) = 0;
+        inv[ci].own_state = 0;
     }
     ibitmod(12, ci, 0);
     int stat = item_stack(cc, ci);
@@ -63003,7 +63035,7 @@ int label_2192()
         ti = inv_getfreeid(cc);
         if (ti == -1)
         {
-            inv_number(ci) = inumbk + in;
+            inv[ci].number = inumbk + in;
             if (invctrl == 12)
             {
                 txt(lang(
@@ -63019,39 +63051,39 @@ int label_2192()
             return 0;
         }
         item_copy(ci, ti);
-        inv_number(ti) = in;
+        inv[ti].number = in;
     }
-    inv_number(ci) = inumbk;
+    inv[ci].number = inumbk;
     if (mode == 6)
     {
-        if (refitem(inv_id(ti), 5) == 57000)
+        if (refitem(inv[ti].id, 5) == 57000)
         {
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
                 {
-                    if (inv_param3(ti) > 0)
+                    if (inv[ti].param3 > 0)
                     {
-                        inv_param3(ti) += gdata_hour + gdata_day * 24
+                        inv[ti].param3 += gdata_hour + gdata_day * 24
                             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
                     }
                 }
-                else if (inv_param3(ti) != 0)
+                else if (inv[ti].param3 != 0)
                 {
-                    inv_param3(ti) = gdata_hour + gdata_day * 24
+                    inv[ti].param3 = gdata_hour + gdata_day * 24
                         + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-                        + refitem(inv_id(ti), 19);
-                    if (inv_param2(ti) != 0)
+                        + refitem(inv[ti].id, 19);
+                    if (inv[ti].param2 != 0)
                     {
-                        inv_param3(ti) += 72;
+                        inv[ti].param3 += 72;
                     }
                 }
             }
             if (invctrl == 24 && invctrl(1) == 3)
             {
-                if (inv_param3(ti) > 0)
+                if (inv[ti].param3 > 0)
                 {
-                    inv_param3(ti) = inv_param3(ti)
+                    inv[ti].param3 = inv[ti].param3
                         - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                            + gdata_year * 24 * 30 * 12);
                 }
@@ -63068,9 +63100,9 @@ int label_2192()
             snd(12);
             cdata_gold(0) -= sellgold;
             cdata_gold(tc) += sellgold;
-            if (refitem(inv_id(ti), 5) == 92000)
+            if (refitem(inv[ti].id, 5) == 92000)
             {
-                inv_param2(ti) = calcitemvalue(ti, 0);
+                inv[ti].param2 = calcitemvalue(ti, 0);
             }
         }
         if (invctrl == 12)
@@ -63114,7 +63146,7 @@ int label_2192()
             {
                 cdata_gold(tc) = 0;
             }
-            inv_identification_state(ti) = 3;
+            inv[ti].identification_state = 3;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -63144,8 +63176,9 @@ int label_2192()
     }
     else
     {
-        cell_refresh(inv_x(ci), inv_y(ci));
-        map(inv_x(ci), inv_y(ci), 5) = map(inv_x(ci), inv_y(ci), 4);
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        map(inv[ci].position.x, inv[ci].position.y, 5) =
+            map(inv[ci].position.x, inv[ci].position.y, 4);
         snd(14 + rnd(2));
         msgkeep = 1;
         txt(lang(
@@ -63155,7 +63188,7 @@ int label_2192()
     }
     if (cc == 0)
     {
-        if (inv_id(ti) == 255)
+        if (inv[ti].id == 255)
         {
             inv_getheader(-1);
             if (mdata(20) == 1)
@@ -63165,11 +63198,11 @@ int label_2192()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        if (inv_id(cnt) == 255)
+                        if (inv[cnt].id == 255)
                         {
                             f = 1;
                             break;
@@ -63212,10 +63245,10 @@ int label_2192()
 
 int label_2193()
 {
-    inumbk = inv_number(ci) - in;
-    inv_number(ci) = in;
-    inv_x(ci) = cdata_x(cc);
-    inv_y(ci) = cdata_y(cc);
+    inumbk = inv[ci].number - in;
+    inv[ci].number = in;
+    inv[ci].position.x = cdata_x(cc);
+    inv[ci].position.y = cdata_y(cc);
     itemturn(ci);
     int stat = item_stack(-1, ci);
     if (stat == 0 || dropval == 0)
@@ -63233,12 +63266,12 @@ int label_2193()
     }
     if (dropval == 1)
     {
-        inv_own_state(ti) = 3;
-        inv_count(ti) = gdata_next_shelter_serial_id + 100;
+        inv[ti].own_state = 3;
+        inv[ti].count = gdata_next_shelter_serial_id + 100;
         ++gdata_next_shelter_serial_id;
     }
-    inv_number(ci) = inumbk;
-    cell_refresh(inv_x(ti), inv_y(ti));
+    inv[ci].number = inumbk;
+    cell_refresh(inv[ti].position.x, inv[ti].position.y);
     if (dropval == 0)
     {
         screenupdate = -1;
@@ -63249,18 +63282,18 @@ int label_2193()
             u8"You drop "s + itemname(ti, in) + u8"."s));
     }
     label_1521();
-    if (inv_id(ti) == 516)
+    if (inv[ti].id == 516)
     {
         int stat = item_find(60002, 0);
         if (stat != -1)
         {
             p = stat;
-            if (inv_param1(p) == cdata_god(cc))
+            if (inv[p].param1 == cdata_god(cc))
             {
-                if (inv_curse_state(ti) != 1)
+                if (inv[ti].curse_state != 1)
                 {
                     snd(64);
-                    inv_curse_state(ti) = 1;
+                    inv[ti].curse_state = 1;
                     txtef(2);
                     txt(lang(
                         u8"水は祝福を受けた。"s, u8"The water is blessed."s));
@@ -63282,7 +63315,7 @@ int label_2193()
             label_1730();
         }
     }
-    if (inv_id(ti) == 255)
+    if (inv[ti].id == 255)
     {
         mdata(20) = 1;
         label_0068();
@@ -63302,7 +63335,7 @@ int label_2194()
     {
         return 0;
     }
-    if (inv_body_part(ci) != 0)
+    if (inv[ci].body_part != 0)
     {
         return 0;
     }
@@ -63311,7 +63344,7 @@ int label_2194()
     {
         item_identify(ci, 2);
     }
-    inv_body_part(ci) = body;
+    inv[ci].body_part = body;
     cdata_body_part(r1, body) =
         cdata_body_part(r1, body) / 10000 * 10000 + ci + 1;
     return 1;
@@ -63329,7 +63362,7 @@ void label_2195()
     }
     ci = p - 1;
     cdata_body_part(r1, body) = cdata_body_part(r1, body) / 10000 * 10000;
-    inv_body_part(ci) = 0;
+    inv[ci].body_part = 0;
     item_stack(r1, ci);
     return;
 }
@@ -63350,7 +63383,7 @@ void label_2196()
                     continue;
                 }
                 --p;
-                inv_body_part(p) = 0;
+                inv[p].body_part = 0;
                 cdata_body_part(r1, cnt) =
                     cdata_body_part(r1, cnt) / 10000 * 10000;
             }
@@ -63363,9 +63396,9 @@ void label_2196()
 
 void label_2197()
 {
-    if (inv_id(ci) == 783)
+    if (inv[ci].id == 783)
     {
-        if (inv_subname(ci) == 0)
+        if (inv[ci].subname == 0)
         {
             txt(lang(
                 u8"最後に調合したアイテムを、レシピに加えることができる。(まだ未実装)"s,
@@ -63376,7 +63409,7 @@ void label_2197()
     }
     efid = 0;
     dbmode = 13;
-    dbid = inv_id(ci);
+    dbid = inv[ci].id;
     label_1275();
     if (efid == 1115)
     {
@@ -63433,7 +63466,7 @@ void label_2198()
 void label_2199()
 {
     dbmode = 15;
-    dbid = inv_id(ci);
+    dbid = inv[ci].id;
     label_1275();
     label_2742();
     return;
@@ -63444,7 +63477,7 @@ void label_2199()
 void label_2200()
 {
     dbmode = 14;
-    dbid = inv_id(ci);
+    dbid = inv[ci].id;
     label_1275();
     int stat = label_2172();
     if (stat == 0)
@@ -63470,7 +63503,7 @@ void label_2201()
             txt(lang(
                 itemname(ci) + u8"に体当たりした。"s,
                 u8"You throw your weight against "s + itemname(ci) + u8"."s));
-            if (inv_own_state(ci) == 5 || inv_param1(ci) <= 0)
+            if (inv[ci].own_state == 5 || inv[ci].param1 <= 0)
             {
                 txtmore();
                 txt(lang(
@@ -63479,10 +63512,10 @@ void label_2201()
                 label_2742();
                 return;
             }
-            --inv_param1(ci);
-            if (inv_param1(ci) <= 0)
+            --inv[ci].param1;
+            if (inv[ci].param1 <= 0)
             {
-                inv_image(ci) = 592;
+                inv[ci].image = 592;
                 cell_refresh(x, y);
             }
             if (y + 1 < mdata(1))
@@ -63493,7 +63526,7 @@ void label_2201()
                 }
             }
             flt();
-            itemcreate(-1, inv_param2(ci), x, y, 0);
+            itemcreate(-1, inv[ci].param2, x, y, 0);
             txt(lang(
                 itemname(ci, 1) + u8"が降ってきた。"s,
                 itemname(ci, 1) + u8" falls down from the tree."s));
@@ -64800,8 +64833,8 @@ int label_2209()
     {
         if (rnd(3) == 0)
         {
-            --inv_number(ti);
-            cell_refresh(inv_x(ti), inv_y(ti));
+            --inv[ti].number;
+            cell_refresh(inv[ti].position.x, inv[ti].position.y);
             txtmore();
             txt(lang(u8"ロックピックは壊れた。"s, u8"Your lockpick breaks."s));
         }
@@ -64841,12 +64874,12 @@ label_2211_internal:
 void label_2212()
 {
     int refweight = 0;
-    if (inv_id(ci) == 361)
+    if (inv[ci].id == 361)
     {
         modkarma(0, -10);
         invctrl(0) = 22;
         invctrl(1) = 0;
-        invfile = inv_param1(ci);
+        invfile = inv[ci].param1;
         snd(23);
         label_2263();
         screenupdate = -1;
@@ -64854,7 +64887,7 @@ void label_2212()
         label_2742();
         return;
     }
-    if (inv_id(ci) == 560)
+    if (inv[ci].id == 560)
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
@@ -64862,7 +64895,7 @@ void label_2212()
         label_20592();
         return;
     }
-    if (inv_id(ci) == 616)
+    if (inv[ci].id == 616)
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
@@ -64870,7 +64903,7 @@ void label_2212()
         label_20592();
         return;
     }
-    if (inv_id(ci) == 600)
+    if (inv[ci].id == 600)
     {
         snd(22);
         txt(lang(u8"足枷を外した。"s, u8"You unlock the shackle."s));
@@ -64901,11 +64934,11 @@ void label_2212()
         label_2742();
         return;
     }
-    if (inv_count(ci) != 0)
+    if (inv[ci].count != 0)
     {
-        invfile = inv_count(ci);
+        invfile = inv[ci].count;
         invcontainer(1) = ci;
-        if (inv_id(ci) == 641)
+        if (inv[ci].id == 641)
         {
             refweight = -1;
         }
@@ -64913,7 +64946,7 @@ void label_2212()
         {
             refweight = 0;
         }
-        if (inv_count(ci) == 3 || inv_count(ci) == 4 || inv_count(ci) == 6)
+        if (inv[ci].count == 3 || inv[ci].count == 4 || inv[ci].count == 6)
         {
             if (gdata_current_map != 7)
             {
@@ -64924,7 +64957,7 @@ void label_2212()
                 label_2743(false);
             }
         }
-        if (inv_count(ci) == 5)
+        if (inv[ci].count == 5)
         {
             if (adata(16, gdata_current_map) != 102)
             {
@@ -64947,7 +64980,7 @@ void label_2212()
                 int cnt = invhead;
                 for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                 {
-                    inv_number(cnt) = 0;
+                    inv[cnt].number = 0;
                 }
             }
         }
@@ -64965,7 +64998,7 @@ void label_2212()
                     + u8"."s));
             invctrl(1) = 1;
         }
-        if (invfile == 6 || inv_id(invcontainer(1)) == 641)
+        if (invfile == 6 || inv[invcontainer(1)].id == 641)
         {
             if (invfile == 6)
             {
@@ -64984,13 +65017,13 @@ void label_2212()
         invcontainer = 0;
         if (refweight == -1)
         {
-            refweight = inv_weight_(-1) + 2500;
+            refweight = inv_weight(-1) + 2500;
         }
         ctrl_file(4, u8"shop"s + invfile + u8".s2");
         ctrl_file(3, u8"shoptmp.s2");
         if (refweight != 0)
         {
-            inv_weight(invcontainer(1)) = refweight;
+            inv[invcontainer(1)].weight = refweight;
             label_1521();
         }
         label_1419();
@@ -64999,11 +65032,11 @@ void label_2212()
         return;
     }
     item_separate(ci);
-    if (inv_param1(ci) != 0)
+    if (inv[ci].param1 != 0)
     {
-        if (inv_param2(ci) != 0)
+        if (inv[ci].param2 != 0)
         {
-            val = inv_param2(ci);
+            val = inv[ci].param2;
             int stat = label_2209();
             if (stat == 0)
             {
@@ -65014,13 +65047,13 @@ void label_2212()
             }
         }
     }
-    if (inv_param1(ci) == 0)
+    if (inv[ci].param1 == 0)
     {
         txt(lang(u8"中身は空っぽだ。"s, u8"It's empty!"s));
     }
     else
     {
-        if (inv_id(ci) == 752)
+        if (inv[ci].id == 752)
         {
             label_2214();
         }
@@ -65046,22 +65079,22 @@ void label_2213()
         u8"You open "s + itemname(ci) + u8"."s));
     msg_halt();
     ri = ci;
-    if (inv_id(ri) == 394)
+    if (inv[ri].id == 394)
     {
         tc = cc;
         efid = 1117;
-        efp = 100 + inv_param1(ri) * 10;
-        inv_param1(ri) = 0;
+        efp = 100 + inv[ri].param1 * 10;
+        inv[ri].param1 = 0;
         label_2176();
         label_2742();
         return;
     }
     p = 3 + rnd(5);
-    if (inv_id(ri) == 415 || inv_id(ri) == 416 || inv_id(ri) == 734)
+    if (inv[ri].id == 415 || inv[ri].id == 416 || inv[ri].id == 734)
     {
         p = 1;
     }
-    randomize(inv_param3(ri));
+    randomize(inv[ri].param3);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
@@ -65075,7 +65108,7 @@ void label_2213()
             {
                 p = 2;
             }
-            if (inv_id(ri) == 239)
+            if (inv[ri].id == 239)
             {
                 if (cnt == 0 && rnd(3) == 0)
                 {
@@ -65090,7 +65123,7 @@ void label_2213()
                     dbid = 559;
                 }
             }
-            flt(calcobjlv(inv_param1(ri)), calcfixlv(p));
+            flt(calcobjlv(inv[ri].param1), calcfixlv(p));
             flttypemajor = fsetchest(rnd(length(fsetchest)));
             if (cnt > 0)
             {
@@ -65108,7 +65141,7 @@ void label_2213()
                     }
                 }
             }
-            if (inv_id(ri) == 241)
+            if (inv[ri].id == 241)
             {
                 if (rnd(3) != 0)
                 {
@@ -65121,12 +65154,12 @@ void label_2213()
                     flttypeminor = 77001;
                 }
             }
-            if (inv_id(ri) == 415 || inv_id(ri) == 416)
+            if (inv[ri].id == 415 || inv[ri].id == 416)
             {
                 flttypeminor = 0;
                 flttypemajor = fsetwear(rnd(length(fsetwear)));
                 fixlv = 3;
-                if (inv_id(ri) == 416)
+                if (inv[ri].id == 416)
                 {
                     fixlv = 4;
                 }
@@ -65136,20 +65169,20 @@ void label_2213()
                 }
             }
             in = 0;
-            if (inv_id(ri) == 734)
+            if (inv[ri].id == 734)
             {
                 dbid = 54;
                 randomize();
                 if (rnd(75) == 0)
                 {
-                    in = 50 * inv_value(ci);
+                    in = 50 * inv[ci].value;
                 }
                 else
                 {
-                    in = rnd(inv_value(ci) / 10 + 1) + 1;
+                    in = rnd(inv[ci].value / 10 + 1) + 1;
                 }
             }
-            if (inv_id(ri) == 284)
+            if (inv[ri].id == 284)
             {
                 dbid = 54;
                 in = rnd(1000) + 1;
@@ -65171,14 +65204,14 @@ void label_2213()
     }
     randomize();
     f = 0;
-    if (inv_id(ri) != 734)
+    if (inv[ri].id != 734)
     {
         if (rnd(10) == 0)
         {
             f = 1;
         }
     }
-    if (inv_id(ri) == 239 || inv_id(ri) == 240)
+    if (inv[ri].id == 239 || inv[ri].id == 240)
     {
         if (rnd(5) == 0)
         {
@@ -65196,12 +65229,12 @@ void label_2213()
         itemname(ri) + u8"から溢れ出た高級品が、足元に散らばった。"s,
         u8"Several quality goods spread out from "s + itemname(ri) + u8"."s));
     autosave = 1 * (gdata_current_map != 35);
-    inv_param1(ri) = 0;
-    if (inv_id(ri) == 284)
+    inv[ri].param1 = 0;
+    if (inv[ri].id == 284)
     {
         modkarma(0, -4);
     }
-    if (inv_id(ri) == 283)
+    if (inv[ri].id == 283)
     {
         modkarma(0, -8);
     }
@@ -65221,8 +65254,8 @@ void label_2214()
     randomize();
     ri = ci;
     cc = 0;
-    inv_param1(ri) = 0;
-    if (inv_param3(ri) < 100)
+    inv[ri].param1 = 0;
+    if (inv[ri].param3 < 100)
     {
         if (rnd(3) == 0)
         {
@@ -65279,7 +65312,7 @@ void label_2214()
         label_2176();
         return;
     }
-    if (inv_param3(ri) < 200)
+    if (inv[ri].param3 < 200)
     {
         if (rnd(4) == 0)
         {
@@ -65527,16 +65560,16 @@ int label_2217()
     attackitem = cw;
     if (ammo != -1)
     {
-        if (inv_count(ammo) != -1)
+        if (inv[ammo].count != -1)
         {
-            if (inv_enchantment_power(ammo, inv_count(ammo)) % 1000 <= 0)
+            if (inv[ammo].enchantments[inv[ammo].count].power % 1000 <= 0)
             {
                 txt(lang(u8"通常弾を装填した。"s, u8"You load normal ammo."s));
-                inv_count(ammo) = -1;
+                inv[ammo].count = -1;
             }
             else
             {
-                ammoproc = inv_enchantment_id(ammo, inv_count(ammo)) % 10000;
+                ammoproc = inv[ammo].enchantments[inv[ammo].count].id % 10000;
                 if (cc == 0)
                 {
                     if (cdata_sp(0) < 50)
@@ -65553,7 +65586,7 @@ int label_2217()
                     }
                     dmgsp(0, rnd(encammoref(2, ammoproc) + 1));
                 }
-                --inv_enchantment_power(ammo, inv_count(ammo));
+                --inv[ammo].enchantments[inv[ammo].count].power;
             }
         }
     }
@@ -65706,9 +65739,9 @@ void label_2218()
             }
             cw = cdata_body_part(cc, cnt) % 10000 - 1;
             attackitem = cw;
-            if (inv_dice_x(cw) > 0)
+            if (inv[cw].dice_x > 0)
             {
-                attackskill = inv_skill(cw);
+                attackskill = inv[cw].skill;
                 ++attacknum;
                 extraattack = 0;
                 label_22192();
@@ -65802,21 +65835,21 @@ label_22191_internal:
         dmg = calcattackdmg();
         if (attackskill != 106)
         {
-            if (inv_quality(cw) >= 4)
+            if (inv[cw].quality >= 4)
             {
-                if (inv_quality(cw) == 6)
+                if (inv[cw].quality == 6)
                 {
-                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv_id(cw));
+                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv[cw].id);
                 }
-                else if (inv_subname(cw) >= 40000)
+                else if (inv[cw].subname >= 40000)
                 {
-                    randomize(inv_subname(cw) - 40000);
+                    randomize(inv[cw].subname - 40000);
                     s(1) = random_title(1);
                     randomize();
                 }
                 else
                 {
-                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv_id(cw));
+                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv[cw].id);
                 }
                 s(1) = lang(u8"『"s, u8"<"s) + s(1) + lang(u8"』"s, u8">"s);
                 if (synccheck(cc, -1))
@@ -66318,10 +66351,10 @@ label_22191_internal:
             cw = attackitem;
             if (ibit(10, cw))
             {
-                if (inv_param2(cw) < calcexpalive(inv_param1(cw)))
+                if (inv[cw].param2 < calcexpalive(inv[cw].param1))
                 {
-                    inv_param2(cw) += rnd(cdata_level(tc) / inv_param1(cw) + 1);
-                    if (inv_param2(cw) >= calcexpalive(inv_param1(cw)))
+                    inv[cw].param2 += rnd(cdata_level(tc) / inv[cw].param1 + 1);
+                    if (inv[cw].param2 >= calcexpalive(inv[cw].param1))
                     {
                         txtef(2);
                         snd(61);
@@ -66363,21 +66396,21 @@ void label_2220()
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
         {
             cw = attackitem;
-            if (inv_enchantment_id(cw, cnt) == 0)
+            if (inv[cw].enchantments[cnt].id == 0)
             {
                 break;
             }
-            enc = inv_enchantment_id(cw, cnt);
+            enc = inv[cw].enchantments[cnt].id;
             if (enc == 36)
             {
-                p = rnd(inv_enchantment_power(cw, cnt) / 50 + 1) + 1;
+                p = rnd(inv[cw].enchantments[cnt].power / 50 + 1) + 1;
                 healsp(cc, p);
                 dmgsp(tc, p / 2);
                 continue;
             }
             if (enc == 38)
             {
-                p = rnd(inv_enchantment_power(cw, cnt) / 25 + 1) + 1;
+                p = rnd(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
                 healmp(cc, p / 5);
                 if (cdata_state(tc) != 1)
                 {
@@ -66405,7 +66438,7 @@ void label_2220()
                             name(cc) + u8"は時を止めた。"s,
                             name(cc) + u8" stop"s + _s(cc) + u8" time."s));
                         gdata_left_turns_of_timestop =
-                            inv_enchantment_power(cw, cnt) / 100 + 1 + 1;
+                            inv[cw].enchantments[cnt].power / 100 + 1 + 1;
                     }
                     continue;
                 }
@@ -66461,13 +66494,13 @@ void label_2220()
                     gdata(809) = 1;
                     dmghp(
                         tc,
-                        rnd(orgdmg * (100 + inv_enchantment_power(cw, cnt))
+                        rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power)
                                 / 1000
                             + 1)
                             + 5,
                         cc,
                         ele,
-                        inv_enchantment_power(cw, cnt) / 2 + 100);
+                        inv[cw].enchantments[cnt].power / 2 + 100);
                     subdmg = 0;
                     continue;
                 }
@@ -66494,7 +66527,7 @@ void label_2220()
                     if (rnd(100) < p)
                     {
                         efid = enc;
-                        efp = inv_enchantment_power(cw, cnt)
+                        efp = inv[cw].enchantments[cnt].power
                             + sdata(attackskill, cc) * 10;
                         label_2176();
                     }
@@ -66546,21 +66579,29 @@ void label_2221()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_own_state(cnt) != 5)
+                if (inv[cnt].own_state != 5)
                 {
                     continue;
                 }
-                if (inv_id(cnt) != 748)
+                if (inv[cnt].id != 748)
                 {
                     continue;
                 }
-                if (p > dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0)))
+                if (p > dist(
+                            inv[cnt].position.x,
+                            inv[cnt].position.y,
+                            cdata_x(0),
+                            cdata_y(0)))
                 {
-                    p = dist(inv_x(cnt), inv_y(cnt), cdata_x(0), cdata_y(0));
+                    p = dist(
+                        inv[cnt].position.x,
+                        inv[cnt].position.y,
+                        cdata_x(0),
+                        cdata_y(0));
                 }
             }
         }
@@ -66773,16 +66814,16 @@ void label_2224()
 
 void dipcursed(int prm_1078, int)
 {
-    if (refitem(inv_id(prm_1078), 5) == 57000)
+    if (refitem(inv[prm_1078].id, 5) == 57000)
     {
-        if (inv_material(prm_1078) == 35)
+        if (inv[prm_1078].material == 35)
         {
             txt(lang(
                 itemname(prm_1078) + u8"は腐ってしまった…"s,
                 ""s + itemname(prm_1078) + u8" rots."s));
-            inv_param3(prm_1078) = -1;
-            inv_image(prm_1078) = 336;
-            cell_refresh(inv_x(prm_1078), inv_y(prm_1078));
+            inv[prm_1078].param3 = -1;
+            inv[prm_1078].image = 336;
+            cell_refresh(inv[prm_1078].position.x, inv[prm_1078].position.y);
             return;
         }
         else
@@ -66793,9 +66834,9 @@ void dipcursed(int prm_1078, int)
             return;
         }
     }
-    if (refitem(inv_id(prm_1078), 5) < 50000)
+    if (refitem(inv[prm_1078].id, 5) < 50000)
     {
-        --inv_enhancement(prm_1078);
+        --inv[prm_1078].enhancement;
         txt(lang(
             itemname(prm_1078) + u8"は錆びてしまった…"s,
             ""s + itemname(prm_1078) + u8" rusts."s));
@@ -66814,7 +66855,7 @@ void dipcursed(int prm_1078, int)
 
 void label_2227()
 {
-    if (inv_id(cidip) == 617)
+    if (inv[cidip].id == 617)
     {
         item_separate(ci);
         item_num(cidip, -1);
@@ -66823,26 +66864,26 @@ void label_2227()
             itemname(cidip, 1) + u8"を"s + itemname(ci) + u8"に装着した。"s,
             u8"You bait "s + itemname(ci) + u8" with "s + itemname(cidip, 1)
                 + u8"."s));
-        if (inv_param4(ci) == inv_param1(cidip))
+        if (inv[ci].param4 == inv[cidip].param1)
         {
-            inv_count(ci) += rnd(10) + 15;
+            inv[ci].count += rnd(10) + 15;
         }
         else
         {
-            inv_count(ci) = rnd(10) + 15;
-            inv_param4(ci) = inv_param1(cidip);
+            inv[ci].count = rnd(10) + 15;
+            inv[ci].param4 = inv[cidip].param1;
         }
         label_2742();
         return;
     }
     snd(17);
-    if (refitem(inv_id(cidip), 5) == 52000)
+    if (refitem(inv[cidip].id, 5) == 52000)
     {
-        if (refitem(inv_id(ci), 9) == 60001)
+        if (refitem(inv[ci].id, 9) == 60001)
         {
             item_separate(ci);
             item_num(cidip, -1);
-            if (inv_id(cidip) != 601)
+            if (inv[cidip].id != 601)
             {
                 txt(lang(
                     itemname(cidip, 1) + u8"を"s + itemname(ci)
@@ -66850,14 +66891,14 @@ void label_2227()
                     u8"You dip "s + itemname(ci) + u8" into "s
                         + itemname(cidip, 1) + u8"."s));
                 txtmore();
-                if (inv_id(ci) == 602)
+                if (inv[ci].id == 602)
                 {
                     txt(lang(
                         u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
                     label_2742();
                     return;
                 }
-                if (inv_param3(ci) >= 20)
+                if (inv[ci].param3 >= 20)
                 {
                     txt(lang(
                         itemname(ci) + u8"は完全に枯れている。"s,
@@ -66868,21 +66909,21 @@ void label_2227()
                 txt(lang(
                     itemname(ci) + u8"は一瞬輝いた。"s,
                     itemname(ci) + u8" shines for a moment."s));
-                if (inv_id(cidip) == 587)
+                if (inv[cidip].id == 587)
                 {
                     txt(lang(u8"こんな量では… "s, u8"Snow just melts."s));
                 }
                 else
                 {
-                    inv_param1(ci) += rnd(3);
+                    inv[ci].param1 += rnd(3);
                 }
                 label_2742();
                 return;
             }
             else
             {
-                if (inv_param1(ci) < -5 || inv_param3(ci) >= 20
-                    || inv_id(ci) == 602 && gdata_holy_well_count <= 0)
+                if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
+                    || inv[ci].id == 602 && gdata_holy_well_count <= 0)
                 {
                     valn = itemname(ci);
                     txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
@@ -66893,19 +66934,19 @@ void label_2227()
                     label_2742();
                     return;
                 }
-                if (inv_id(ci) == 602)
+                if (inv[ci].id == 602)
                 {
                     --gdata_holy_well_count;
                     flt();
                     int stat = itemcreate(0, 516, -1, -1, 0);
                     if (stat != 0)
                     {
-                        inv_curse_state(ci) = 1;
+                        inv[ci].curse_state = 1;
                     }
                 }
                 else
                 {
-                    inv_param1(ci) -= 3;
+                    inv[ci].param1 -= 3;
                     flt(20);
                     flttypemajor = 52000;
                     itemcreate(0, 0, -1, -1, 0);
@@ -66922,9 +66963,9 @@ void label_2227()
             }
         }
     }
-    if (inv_id(cidip) == 262)
+    if (inv[cidip].id == 262)
     {
-        if (refitem(inv_id(ci), 5) == 57000)
+        if (refitem(inv[ci].id, 5) == 57000)
         {
             item_num(cidip, -1);
             item_separate(ci);
@@ -66932,7 +66973,7 @@ void label_2227()
                 itemname(ci) + u8"に"s + itemname(cidip, 1)
                     + u8"を混入した！あなたはにやりと笑った。"s,
                 u8"You made aphrodisiac food! You grin."s));
-            if (inv_curse_state(cidip) <= -1)
+            if (inv[cidip].curse_state <= -1)
             {
                 dipcursed(ci);
             }
@@ -66941,9 +66982,9 @@ void label_2227()
             return;
         }
     }
-    if (inv_id(cidip) == 620)
+    if (inv[cidip].id == 620)
     {
-        if (refitem(inv_id(ci), 5) == 57000)
+        if (refitem(inv[ci].id, 5) == 57000)
         {
             item_num(cidip, -1);
             item_separate(ci);
@@ -66951,7 +66992,7 @@ void label_2227()
                 itemname(ci) + u8"に"s + itemname(cidip, 1)
                     + u8"を混入した！あなたはうしろめたさを感じた…"s,
                 u8"You made aphrodisiac food! You kind of feel guilty..."s));
-            if (inv_curse_state(cidip) <= -1)
+            if (inv[cidip].curse_state <= -1)
             {
                 dipcursed(ci);
             }
@@ -66960,11 +67001,11 @@ void label_2227()
             return;
         }
     }
-    if (inv_id(cidip) == 519)
+    if (inv[cidip].id == 519)
     {
-        if (inv_curse_state(cidip) == 1)
+        if (inv[cidip].curse_state == 1)
         {
-            in = inv_number(cidip);
+            in = inv[cidip].number;
         }
         else
         {
@@ -66972,26 +67013,26 @@ void label_2227()
             item_separate(ci);
         }
         item_num(cidip, -1);
-        inv_color(ci) = inv_color(cidip);
+        inv[ci].color = inv[cidip].color;
         txt(lang(
             u8"あなたは"s + itemname(ci) + u8"を染めた。"s,
             u8"You dye "s + itemname(ci) + u8"."s));
         if (inv_getowner(ci) == -1)
         {
-            cell_refresh(inv_x(ci), inv_y(ci));
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
-        if (inv_body_part(ci) != 0)
+        if (inv[ci].body_part != 0)
         {
             create_pcpic(cc, 1);
         }
         label_2742();
         return;
     }
-    if (inv_id(cidip) == 566)
+    if (inv[cidip].id == 566)
     {
-        if (inv_curse_state(cidip) == 1)
+        if (inv[cidip].curse_state == 1)
         {
-            in = inv_number(cidip);
+            in = inv[cidip].number;
         }
         else
         {
@@ -67002,7 +67043,7 @@ void label_2227()
             itemname(ci) + u8"に"s + itemname(cidip, 1) + u8"を塗りたくった。"s,
             u8"You put "s + itemname(cidip, 1) + u8" on "s + itemname(ci)
                 + u8"."s));
-        if (inv_curse_state(cidip) <= -1)
+        if (inv[cidip].curse_state <= -1)
         {
             dipcursed(ci);
         }
@@ -67017,11 +67058,11 @@ void label_2227()
         label_2742();
         return;
     }
-    if (inv_id(cidip) == 736)
+    if (inv[cidip].id == 736)
     {
-        if (inv_curse_state(cidip) == 1)
+        if (inv[cidip].curse_state == 1)
         {
-            in = inv_number(cidip);
+            in = inv[cidip].number;
         }
         else
         {
@@ -67033,11 +67074,11 @@ void label_2227()
                 + u8"を塗りたくった。"s,
             u8"You put "s + itemname(cidip, 1) + u8" on "s + itemname(ci, in)
                 + u8"."s));
-        if (inv_curse_state(cidip) <= -1)
+        if (inv[cidip].curse_state <= -1)
         {
             dipcursed(ci);
         }
-        else if (inv_id(ci) == 567)
+        else if (inv[ci].id == 567)
         {
             txt(lang(u8"いいアイデアだ！しかし…"s, u8"A good idea! But..."s));
         }
@@ -67052,30 +67093,30 @@ void label_2227()
         label_2742();
         return;
     }
-    if (inv_id(cidip) == 516)
+    if (inv[cidip].id == 516)
     {
         item_num(cidip, -1);
-        if (inv_curse_state(cidip) == 1)
+        if (inv[cidip].curse_state == 1)
         {
             txtef(2);
             txt(lang(
                 itemname(ci) + u8"は銀色に輝いた。"s,
-                itemname(ci) + u8" shine"s + _s2(inv_number(ci))
+                itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
-            inv_curse_state(ci) = 1;
+            inv[ci].curse_state = 1;
             r1 = cc;
             label_1477();
             label_2742();
             return;
         }
-        if (inv_curse_state(cidip) <= -1)
+        if (inv[cidip].curse_state <= -1)
         {
             txtef(8);
             txt(lang(
                 itemname(ci) + u8"は黒いオーラに包まれた。"s,
-                itemname(ci) + u8" "s + is2(inv_number(ci))
+                itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
-            inv_curse_state(ci) = -1;
+            inv[ci].curse_state = -1;
             r1 = cc;
             label_1477();
             label_2742();
@@ -67101,43 +67142,43 @@ void label_2228()
     {
         if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12
-            < inv_count(ci))
+            < inv[ci].count)
         {
             txt(lang(
                 u8"そのアイテムが次に使用できるのは"s
-                    + cnvdate(inv_count(ci), 1) + u8"だ。"s,
+                    + cnvdate(inv[ci].count, 1) + u8"だ。"s,
                 u8"This item will be useable again at "s
-                    + cnvdate(inv_count(ci), 1) + u8"."s));
+                    + cnvdate(inv[ci].count, 1) + u8"."s));
             label_1419();
             label_2743(false);
         }
         item_separate(ci);
-        inv_count(ci) = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + inv_param3(ci);
+        inv[ci].count = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+            + gdata_year * 24 * 30 * 12 + inv[ci].param3;
     }
     if (ibit(4, ci) == 1)
     {
-        if (inv_count(ci) <= 0)
+        if (inv[ci].count <= 0)
         {
             txt(lang(u8"それはもう使えない。"s, u8"It's out of charge."s));
             label_1419();
             label_2743(false);
         }
         item_separate(ci);
-        --inv_count(ci);
+        --inv[ci].count;
     }
-    if (refitem(inv_id(ci), 9) == 58500)
+    if (refitem(inv[ci].id, 9) == 58500)
     {
         label_2232();
         return;
     }
-    if (refitem(inv_id(ci), 9) == 59500)
+    if (refitem(inv[ci].id, 9) == 59500)
     {
         blendtool = ci;
         label_1922();
         return;
     }
-    if (refitem(inv_id(ci), 9) == 60004)
+    if (refitem(inv[ci].id, 9) == 60004)
     {
         if (gdata_continuous_active_hours < 15)
         {
@@ -67150,23 +67191,23 @@ void label_2228()
         label_2742();
         return;
     }
-    if (inv_id(ci) == 413 || inv_id(ci) == 414)
+    if (inv[ci].id == 413 || inv[ci].id == 414)
     {
         label_2082();
         return;
     }
-    if (inv_id(ci) == 312 || inv_id(ci) == 313 || inv_id(ci) == 314
-        || inv_id(ci) == 315)
+    if (inv[ci].id == 312 || inv[ci].id == 313 || inv[ci].id == 314
+        || inv[ci].id == 315)
     {
         atxid = 1;
         label_1866();
         label_2742();
         return;
     }
-    if (inv_function(ci) == 1 || inv_function(ci) == 2 || inv_function(ci) == 3
-        || inv_function(ci) == 4)
+    if (inv[ci].function == 1 || inv[ci].function == 2 || inv[ci].function == 3
+        || inv[ci].function == 4)
     {
-        prodtype = inv_function(ci);
+        prodtype = inv[ci].function;
         snd(26);
         invctrl = 0;
         label_18552();
@@ -67175,7 +67216,7 @@ void label_2228()
     }
     if (ibit(10, ci))
     {
-        if (inv_param2(ci) < calcexpalive(inv_param1(ci)))
+        if (inv[ci].param2 < calcexpalive(inv[ci].param1))
         {
             txt(lang(
                 u8"この武器はまだ血を吸い足りない。"s,
@@ -67187,24 +67228,24 @@ void label_2228()
             txt(lang(
                 itemname(ci) + u8"は十分に血を吸い成長できる！"s,
                 itemname(ci) + u8" sucked enough blood and ready to grow!"s));
-            randomize(inv_subname(ci));
-            exrand_randomize(inv_subname(ci));
-            if (inv_param1(ci) >= 4 + rnd(12))
+            randomize(inv[ci].subname);
+            exrand_randomize(inv[ci].subname);
+            if (inv[ci].param1 >= 4 + rnd(12))
             {
                 txt(lang(
                     u8"しかし、なんだか様子がおかしい…"s,
                     u8"But you sense something weird."s));
             }
             txt(lang(u8"それは…"s, u8"It..."s));
-            reftype = refitem(inv_id(ci), 5);
+            reftype = refitem(inv[ci].id, 5);
             listmax = 0;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
-                    randomize(inv_subname(ci) + inv_param1(ci) * 10 + cnt);
+                    randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                     exrand_randomize(
-                        inv_subname(ci) + inv_param1(ci) * 10 + cnt);
+                        inv[ci].subname + inv[ci].param1 * 10 + cnt);
                     int stat = encadd(
                         ci, randomenc(randomenclv(4)), randomencp(), 0, 0, 1);
                     if (stat != 0)
@@ -67253,7 +67294,7 @@ void label_2228()
             {
                 if (list(0, rtval) == -1)
                 {
-                    ++inv_enhancement(ci);
+                    ++inv[ci].enhancement;
                 }
                 else
                 {
@@ -67263,9 +67304,9 @@ void label_2228()
                 txt(lang(
                     itemname(ci) + u8"は嬉しげに震えた。"s,
                     itemname(ci) + u8" vibrates as if she is pleased."s));
-                randomize(inv_subname(ci));
-                exrand_randomize(inv_subname(ci));
-                if (inv_param1(ci) >= 4 + rnd(12))
+                randomize(inv[ci].subname);
+                exrand_randomize(inv[ci].subname);
+                if (inv[ci].param1 >= 4 + rnd(12))
                 {
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
@@ -67273,14 +67314,14 @@ void label_2228()
                     int stat = encadd(ci, 45, 50);
                     if (stat == 0)
                     {
-                        inv_enchantment_id(ci, 14) = 0;
+                        inv[ci].enchantments[14].id = 0;
                         txt(lang(
                             itemname(ci) + u8"はエンチャントを消した。"s,
                             itemname(ci) + u8" removes an enchantment."s));
                     }
                 }
-                inv_param2(ci) = 0;
-                ++inv_param1(ci);
+                inv[ci].param2 = 0;
+                ++inv[ci].param1;
             }
             randomize();
             exrand_randomize();
@@ -67290,7 +67331,7 @@ void label_2228()
         label_1419();
         label_2743(false);
     }
-    switch (inv_function(ci))
+    switch (inv[ci].function)
     {
     case 24:
         x = cdata_x(cc);
@@ -67306,8 +67347,8 @@ void label_2228()
             txt(lang(u8"ここには置けない。"s, u8"You can't place it here."s));
             label_2743(false);
         }
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         cell_featset(x, y, 0, 14, 7, cc);
         txt(lang(u8"地雷を設置した。"s, u8"You set up the mine."s));
         snd(58);
@@ -67328,7 +67369,7 @@ void label_2228()
         promptl(1, promptmax) = u8"null"s;
         promptl(2, promptmax) = ""s + 0;
         ++promptmax;
-        if (inv_param1(ci) != 1)
+        if (inv[ci].param1 != 1)
         {
             promptl(0, promptmax) =
                 lang(u8"マイチェアにする"s, u8"It's my chair."s);
@@ -67336,7 +67377,7 @@ void label_2228()
             promptl(2, promptmax) = ""s + 1;
             ++promptmax;
         }
-        if (inv_param1(ci) != 2)
+        if (inv[ci].param1 != 2)
         {
             promptl(0, promptmax) =
                 lang(u8"お客用のチェアにする"s, u8"It's for my guest."s);
@@ -67344,7 +67385,7 @@ void label_2228()
             promptl(2, promptmax) = ""s + 2;
             ++promptmax;
         }
-        if (inv_param1(ci) != 0)
+        if (inv[ci].param1 != 0)
         {
             promptl(0, promptmax) =
                 lang(u8"誰でも座っていい"s, u8"It's free to use."s);
@@ -67375,7 +67416,7 @@ void label_2228()
             txt(lang(
                 itemname(ci, 1) + u8"はあなた専用の席になった！"s,
                 itemname(ci, 1) + u8" is your seat now."s));
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
             goto label_2229_internal;
         }
         if (rtval == 2)
@@ -67383,7 +67424,7 @@ void label_2228()
             txt(lang(
                 itemname(ci, 1) + u8"は訪問者の席になった！"s,
                 itemname(ci, 1) + u8" is used by your guests now."s));
-            inv_param1(ci) = 2;
+            inv[ci].param1 = 2;
             goto label_2229_internal;
         }
         if (rtval == 3)
@@ -67391,7 +67432,7 @@ void label_2228()
             txt(lang(
                 itemname(ci, 1) + u8"は誰でも座っていい席になった！"s,
                 itemname(ci, 1) + u8" can be used by anyone."s));
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
             goto label_2229_internal;
         }
         goto label_2229_internal;
@@ -67452,7 +67493,7 @@ void label_2228()
     case 14:
         if (cc == 0)
         {
-            if (inv_number(ci) < 5)
+            if (inv[ci].number < 5)
             {
                 txt(lang(u8"雪が足りない…"s, u8"You need more snow."s));
                 label_1419();
@@ -67586,8 +67627,9 @@ void label_2228()
                                         + u8"が激しく抵抗したため紐は切れた。"s,
                                     u8"The leash is cut as "s + name(tc)
                                         + u8" resists."s));
-                                --inv_number(ci);
-                                cell_refresh(inv_x(ci), inv_y(ci));
+                                --inv[ci].number;
+                                cell_refresh(
+                                    inv[ci].position.x, inv[ci].position.y);
                                 label_1521();
                                 goto label_2229_internal;
                             }
@@ -67688,8 +67730,8 @@ void label_2228()
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
                                 + cnvtalk(u8"Pervert!"s)));
                         animeload(8, tc);
-                        --inv_number(ci);
-                        cell_refresh(inv_x(ci), inv_y(ci));
+                        --inv[ci].number;
+                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
                         label_1521();
                     }
                     f = 1;
@@ -67705,7 +67747,7 @@ void label_2228()
         txt(lang(
             itemname(ci, 1) + u8"再生した。"s,
             u8"You play "s + itemname(ci, 1) + u8"."s));
-        music = inv_param1(ci) + 50 + 1;
+        music = inv[ci].param1 + 50 + 1;
         if (music >= 91)
         {
             music = 90;
@@ -67719,7 +67761,7 @@ void label_2228()
         label_2727();
         return;
     case 7:
-        if (inv_own_state(ci) != 3)
+        if (inv[ci].own_state != 3)
         {
             if (mdata(7) == 0 || gdata_current_map == 13
                 || gdata_current_map == 30)
@@ -67777,14 +67819,14 @@ void label_2228()
         label_2148();
         goto label_2229_internal;
     case 11:
-        if (moneybox(inv_param2(ci)) > cdata_gold(0))
+        if (moneybox(inv[ci].param2) > cdata_gold(0))
         {
             txt(lang(
                 u8"金貨が足りない…"s, u8"You count your coins and sigh..."s));
             label_1419();
             label_2743(false);
         }
-        if (inv_param1(ci) >= 1000000000)
+        if (inv[ci].param1 >= 1000000000)
         {
             txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box if ull."s));
             label_1419();
@@ -67792,9 +67834,9 @@ void label_2228()
         }
         item_separate(ci);
         snd(12);
-        cdata_gold(0) -= moneybox(inv_param2(ci));
-        inv_param1(ci) += moneybox(inv_param2(ci));
-        inv_weight(ci) += 100;
+        cdata_gold(0) -= moneybox(inv[ci].param2);
+        inv[ci].param1 += moneybox(inv[ci].param2);
+        inv[ci].weight += 100;
         goto label_2229_internal;
     case 20:
         efid = 458;
@@ -67807,7 +67849,7 @@ void label_2228()
             txt(lang(u8"それは鈍く輝いた。"s, u8"It glows dully."s));
             goto label_2229_internal;
         }
-        if (inv_own_state(ci) != 5)
+        if (inv[ci].own_state != 5)
         {
             txt(lang(
                 u8"水晶には領域の記憶が宿っていない。この場所の所有者が配置した水晶を探す必要がある。"s,
@@ -67823,8 +67865,8 @@ void label_2228()
             }
         }
         snd(118);
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         goto label_2229_internal;
     case 22:
         snd(118);
@@ -67835,8 +67877,8 @@ void label_2228()
                 u8"You can only use it in a town."s));
             goto label_2229_internal;
         }
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(lang(
             u8"突然、あなたの目の前に異次元へのゲートが現れた。"s,
             u8"Suddenly, a strange gate opens."s));
@@ -67864,9 +67906,9 @@ void label_2228()
             itemname(ci, 1) + u8"を振った。"s,
             u8"You swing "s + itemname(ci, 1) + u8"."s));
         snd(58);
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
-        fixmaterial = inv_material(ci);
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        fixmaterial = inv[ci].material;
         efid = 21;
         efp = 500;
         label_2176();
@@ -67875,8 +67917,8 @@ void label_2228()
         txt(lang(
             itemname(ci, 1) + u8"を使った。"s,
             u8"You hold "s + itemname(ci, 1) + u8" up high."s));
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         efid = 637;
         efp = 500;
         label_2176();
@@ -68002,8 +68044,8 @@ void label_2228()
                 }
             }
         }
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(lang(
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
@@ -68023,17 +68065,17 @@ void label_2228()
             u8"Watching this strange statue makes you want to throw something at it!"s));
         goto label_2229_internal;
     case 29:
-        trait(inv_param1(ci)) = 1;
-        if (inv_param1(ci) == 169)
+        trait(inv[ci].param1) = 1;
+        if (inv[ci].param1 == 169)
         {
             trait(162) = 0;
         }
-        if (inv_param1(ci) == 162)
+        if (inv[ci].param1 == 162)
         {
             trait(169) = 0;
         }
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(lang(
             u8"あなたは新たなフィートを獲得した！"s,
             u8"You gain a new feat."s));
@@ -68045,8 +68087,8 @@ void label_2228()
         txt(lang(
             itemname(ci, 1) + u8"を始動させた。"s,
             u8"You activate "s + itemname(ci, 1) + u8"."s));
-        efid = inv_param1(ci);
-        efp = inv_param2(ci);
+        efid = inv[ci].param1;
+        efp = inv[ci].param2;
         tc = cc;
         efstatus = 0;
         label_2176();
@@ -68065,8 +68107,8 @@ void label_2228()
         }
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         ++gdata_acquirable_feat_count;
         txt(lang(
             u8"「…よく…経験をつんだね…酬いてあげる…」"s,
@@ -68107,7 +68149,7 @@ void label_2228()
         dmghp(0, 99999, -20);
         goto label_2229_internal;
     case 33:
-        if (inv_subname(ci) == 0)
+        if (inv[ci].subname == 0)
         {
             txt(lang(
                 u8"モンスターボールは空っぽだ。"s, u8"This ball is empty."s));
@@ -68122,11 +68164,11 @@ void label_2228()
         txt(lang(
             itemname(ci, 1) + u8"を使用した。"s,
             u8"You activate "s + itemname(ci, 1) + u8"."s));
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         flt();
         novoidlv = 1;
-        characreate(56, inv_subname(ci), -3, 0);
+        characreate(56, inv[ci].subname, -3, 0);
         rc = 56;
         label_2659();
         goto label_2229_internal;
@@ -68380,12 +68422,12 @@ void label_2228()
         }
     }
         snd(71);
-        --inv_number(ci);
-        cell_refresh(inv_x(ci), inv_y(ci));
+        --inv[ci].number;
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(lang(
             itemname(ci, 1) + u8"をデッキに加えた。"s,
             u8"You add "s + itemname(ci, 1) + u8" to your deck."s));
-        ++card(0, inv_subname(ci));
+        ++card(0, inv[ci].subname);
         goto label_2229_internal;
     }
 label_2229_internal:
@@ -68583,7 +68625,7 @@ void label_2232()
     }
     feat(0) = tile_plant;
     feat(1) = 29;
-    feat(2) = inv_material(ci);
+    feat(2) = inv[ci].material;
     label_2234();
     if (val)
     {
@@ -68600,7 +68642,7 @@ void label_2232()
     snd(55);
     removeitem(ci, 1);
     cell_featset(
-        cdata_x(cc), cdata_y(cc), tile_plant, 29, inv_material(ci), feat(3));
+        cdata_x(cc), cdata_y(cc), tile_plant, 29, inv[ci].material, feat(3));
     skillexp(180, 0, 300);
     label_2742();
     return;
@@ -69125,7 +69167,7 @@ void label_2244()
             int stat = itemcreate(-1, 752, cdata_x(0), cdata_y(0), 0);
             if (stat != 0)
             {
-                inv_param3(ci) = cdata_impression(tc) + rnd(50);
+                inv[ci].param3 = cdata_impression(tc) + rnd(50);
             }
             txt(lang(
                 name(tc) + u8"は"s + itemname(ci, 1) + u8"を置いていった。"s,
@@ -70109,7 +70151,7 @@ int label_2248()
         }
         return 0;
     }
-    --inv_number(stat);
+    --inv[stat].number;
     txt(lang(u8"エーテル抗体を1本渡した。"s, u8"You give her a potion."s));
     snd(13);
     listmax = 0;
@@ -71271,7 +71313,7 @@ void label_2265()
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            inv_number(cnt) = 0;
+            inv[cnt].number = 0;
         }
     }
     p = 20 + cdata_shop_rank(tc) / 2;
@@ -71782,20 +71824,20 @@ void label_2265()
             }
             if (cdata_character_role(tc) == 1016)
             {
-                inv_number(ci) = 1;
-                inv_curse_state(ci) = 0;
-                if (inv_id(ci) == 480)
+                inv[ci].number = 1;
+                inv[ci].curse_state = 0;
+                if (inv[ci].id == 480)
                 {
-                    inv_count(ci) = 4;
+                    inv[ci].count = 4;
                 }
                 continue;
             }
             f = 0;
-            if (strutil::contains(filter_item(inv_id(ci)), u8"/neg/"))
+            if (strutil::contains(filter_item(inv[ci].id), u8"/neg/"))
             {
                 f = 1;
             }
-            if (strutil::contains(filter_item(inv_id(ci)), u8"/noshop/"))
+            if (strutil::contains(filter_item(inv[ci].id), u8"/noshop/"))
             {
                 if (cdata_character_role(tc) != 1018)
                 {
@@ -71804,7 +71846,7 @@ void label_2265()
             }
             if (f)
             {
-                inv_number(ci) = 0;
+                inv[ci].number = 0;
                 continue;
             }
             if (cdata_character_role(tc) == 1012)
@@ -71812,100 +71854,100 @@ void label_2265()
                 flttypemajor = 60000;
             }
             label_2266();
-            inv_number(ci) = rnd(rtval) + 1;
+            inv[ci].number = rnd(rtval) + 1;
             if (cdata_character_role(tc) == 1009)
             {
-                p = trate(inv_param1(ci));
+                p = trate(inv[ci].param1);
                 if (p <= 70)
                 {
-                    inv_number(ci) = inv_number(ci) * 200 / 100;
+                    inv[ci].number = inv[ci].number * 200 / 100;
                 }
                 if (p <= 50)
                 {
-                    inv_number(ci) = inv_number(ci) * 200 / 100;
+                    inv[ci].number = inv[ci].number * 200 / 100;
                 }
                 if (p >= 80)
                 {
-                    inv_number(ci) = inv_number(ci) / 2 + 1;
+                    inv[ci].number = inv[ci].number / 2 + 1;
                     if (rnd(2))
                     {
-                        inv_number(ci) = 0;
+                        inv[ci].number = 0;
                         continue;
                     }
                 }
                 if (p >= 100)
                 {
-                    inv_number(ci) = inv_number(ci) / 2 + 1;
+                    inv[ci].number = inv[ci].number / 2 + 1;
                     if (rnd(3))
                     {
-                        inv_number(ci) = 0;
+                        inv[ci].number = 0;
                         continue;
                     }
                 }
-                inv_number(ci) =
-                    inv_number(ci) * (100 + sdata(156, 0) * 10) / 100 + 1;
+                inv[ci].number =
+                    inv[ci].number * (100 + sdata(156, 0) * 10) / 100 + 1;
             }
-            p = refitem(inv_id(ci), 5);
-            if (inv_curse_state(ci) == -1 || inv_curse_state(ci) == -2)
+            p = refitem(inv[ci].id, 5);
+            if (inv[ci].curse_state == -1 || inv[ci].curse_state == -2)
             {
-                inv_number(ci) = 0;
+                inv[ci].number = 0;
                 continue;
             }
-            if (inv_curse_state(ci) == 1)
+            if (inv[ci].curse_state == 1)
             {
-                inv_number(ci) = 1;
+                inv[ci].number = 1;
             }
             if (p == 52000)
             {
-                if (inv_id(ci) == 516)
+                if (inv[ci].id == 516)
                 {
-                    inv_number(ci) = 0;
+                    inv[ci].number = 0;
                 }
             }
             if (p == 57000)
             {
-                if (refitem(inv_id(ci), 9) == 58500)
+                if (refitem(inv[ci].id, 9) == 58500)
                 {
                     if (rnd(5))
                     {
-                        inv_number(ci) = 0;
+                        inv[ci].number = 0;
                     }
                 }
             }
             if (cdata_character_role(tc) == 1018)
             {
-                inv_value(ci) = std::clamp(inv_value(ci), 1, 1000000) * 50;
-                if (inv_id(ci) == 729)
+                inv[ci].value = std::clamp(inv[ci].value, 1, 1000000) * 50;
+                if (inv[ci].id == 729)
                 {
-                    inv_value(ci) *= 10;
+                    inv[ci].value *= 10;
                 }
             }
             if (cdata_character_role(tc) == 1015)
             {
-                inv_value(ci) *= 2;
+                inv[ci].value *= 2;
             }
             if (cdata_character_role(tc) == 1007)
             {
                 if (gdata_belongs_to_thieves_guild != 0)
                 {
-                    inv_value(ci) *= 2;
+                    inv[ci].value *= 2;
                 }
                 else
                 {
-                    inv_value(ci) *= 3;
+                    inv[ci].value *= 3;
                 }
             }
             if (cdata_character_role(tc) == 1010)
             {
-                inv_value(ci) *= 2;
+                inv[ci].value *= 2;
             }
             if (cdata_character_role(tc) == 2003)
             {
-                inv_value(ci) = inv_value(ci) * 4 / 5;
+                inv[ci].value = inv[ci].value * 4 / 5;
             }
             if (cdata_character_role(tc) == 1020)
             {
-                inv_value(ci) = inv_value(ci) * 3 / 2;
+                inv[ci].value = inv[ci].value * 3 / 2;
             }
         }
     }
@@ -71919,8 +71961,8 @@ void label_2265()
 
 void label_2266()
 {
-    p = refitem(inv_id(ci), 5);
-    i = refitem(inv_id(ci), 8);
+    p = refitem(inv[ci].id, 5);
+    i = refitem(inv[ci].id, 8);
     rtval = 1;
     {
         int cnt = 0;
@@ -74736,7 +74778,7 @@ void label_2662()
 
 void label_2663()
 {
-    a = refitem(inv_id(ci), 5);
+    a = refitem(inv[ci].id, 5);
     if (a == 57000 || a == 52000 || a == 53000)
     {
         cdata_item_which_will_be_used(rc) = ci;
@@ -74755,22 +74797,22 @@ int label_2664()
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
             ci = invhead + rnd(invrange);
-            if (inv_number(ci) == 0)
+            if (inv[ci].number == 0)
             {
                 f = 1;
                 break;
             }
-            if (inv_body_part(ci) != 0)
+            if (inv[ci].body_part != 0)
             {
                 continue;
             }
-            if (inv_number(ci) != 0)
+            if (inv[ci].number != 0)
             {
                 if (cdata_item_which_will_be_used(rc) == ci)
                 {
                     cdata_item_which_will_be_used(rc) = 0;
                 }
-                inv_number(ci) = 0;
+                inv[ci].number = 0;
                 f = 1;
                 break;
             }
@@ -74794,10 +74836,10 @@ int label_2664()
     {
         return 0;
     }
-    inv_identification_state(ci) = 3;
-    if (inv_quality(ci) >= 4)
+    inv[ci].identification_state = 3;
+    if (inv[ci].quality >= 4)
     {
-        if (refitem(inv_id(ci), 5) < 50000)
+        if (refitem(inv[ci].id, 5) < 50000)
         {
             valn = itemname(ci);
             addnews(1, rc);
@@ -74821,9 +74863,9 @@ int label_2665()
         for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
         {
             p = rnd(invrange) + invhead;
-            if (inv_body_part(p) == 0)
+            if (inv[p].body_part == 0)
             {
-                inv_number(p) = 0;
+                inv[p].number = 0;
                 if (cdata_item_which_will_be_used(tc) == p)
                 {
                     cdata_item_which_will_be_used(tc) = 0;
@@ -74845,7 +74887,7 @@ void label_2666()
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
             ci = cnt;
-            if (inv_number(cnt) == 0 || inv_body_part(cnt) != 0)
+            if (inv[cnt].number == 0 || inv[cnt].body_part != 0)
             {
                 continue;
             }
@@ -74891,7 +74933,7 @@ void label_2667()
                 }
                 --i;
                 f = 0;
-                if (inv_value(ci) >= inv_value(i))
+                if (inv[ci].value >= inv[i].value)
                 {
                     f = 1;
                 }
@@ -74902,10 +74944,10 @@ void label_2667()
                         f = 0;
                     }
                     else if (
-                        inv_value(i)
-                        >= inv_value(
-                               cdata_body_part(rc, bodylist(cnt + 1)) % 10000
-                               - 1))
+                        inv[i].value
+                        >= inv[cdata_body_part(rc, bodylist(cnt + 1)) % 10000
+                               - 1]
+                               .value)
                     {
                         f = 0;
                     }
@@ -74942,12 +74984,12 @@ void label_2668()
                 for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     ci = invhead + rnd(invrange);
-                    if (inv_number(ci) == 0)
+                    if (inv[ci].number == 0)
                     {
                         f = 1;
                         break;
                     }
-                    if (inv_body_part(ci) != 0)
+                    if (inv[ci].body_part != 0)
                     {
                         continue;
                     }
@@ -74955,9 +74997,9 @@ void label_2668()
                     {
                         continue;
                     }
-                    if (inv_number(ci) != 0)
+                    if (inv[ci].number != 0)
                     {
-                        inv_number(ci) = 0;
+                        inv[ci].number = 0;
                         f = 1;
                         break;
                     }
@@ -74992,9 +75034,9 @@ void label_2668()
                             if (haveweapon == 0)
                             {
                                 if (refitem(
-                                        inv_id(
-                                            cdata_body_part(rc, cnt) % 10000
-                                            - 1),
+                                        inv[cdata_body_part(rc, cnt) % 10000
+                                            - 1]
+                                            .id,
                                         5)
                                     == 10000)
                                 {
@@ -75048,10 +75090,10 @@ void label_2668()
             {
                 break;
             }
-            inv_identification_state(ci) = 3;
-            if (inv_quality(ci) >= 4)
+            inv[ci].identification_state = 3;
+            if (inv[ci].quality >= 4)
             {
-                if (refitem(inv_id(ci), 5) < 50000)
+                if (refitem(inv[ci].id, 5) < 50000)
                 {
                     if (cdata_character_role(rc) == 13)
                     {
@@ -75241,9 +75283,9 @@ int label_2672()
                 int stat = itemcreate(n, 0, -1, -1, 0);
                 if (stat != 0)
                 {
-                    inv_count(ci) = rq;
+                    inv[ci].count = rq;
                     i(0) = n;
-                    i(1) = inv_id(ci);
+                    i(1) = inv[ci].id;
                     ibitmod(12, ci, 1);
                     break;
                 }
@@ -75661,9 +75703,9 @@ void label_2674()
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_own_state(cnt) == 4)
+                if (inv[cnt].own_state == 4)
                 {
-                    inv_number(cnt) = 0;
+                    inv[cnt].number = 0;
                 }
             }
         }
@@ -76864,12 +76906,12 @@ label_2688_internal:
         goto label_2689_internal;
     }
     ci = cdata_item_which_will_be_used(cc);
-    if (inv_number(ci) == 0)
+    if (inv[ci].number == 0)
     {
         cdata_item_which_will_be_used(cc) = 0;
         goto label_2689_internal;
     }
-    a = refitem(inv_id(ci), 5);
+    a = refitem(inv[ci].id, 5);
     if (cdata_relationship(cc) != 0)
     {
         cdata_item_which_will_be_used(cc) = 0;
@@ -76923,14 +76965,14 @@ label_2689_internal:
                     if (stat == 1)
                     {
                         ci = rtval(1);
-                        p = refitem(inv_id(ci), 5);
+                        p = refitem(inv[ci].id, 5);
                         if (cdata_nutrition(cc) <= 6000)
                         {
                             if (p == 57000)
                             {
-                                if (inv_own_state(ci) <= 0)
+                                if (inv[ci].own_state <= 0)
                                 {
-                                    if (inv_curse_state(ci) >= 0)
+                                    if (inv[ci].curse_state >= 0)
                                     {
                                         label_2198();
                                         return;
@@ -76939,13 +76981,13 @@ label_2689_internal:
                             }
                             if (p == 60001)
                             {
-                                if (inv_own_state(ci) <= 1)
+                                if (inv[ci].own_state <= 1)
                                 {
-                                    if (inv_param1(ci) >= -5)
+                                    if (inv[ci].param1 >= -5)
                                     {
-                                        if (inv_param3(ci) < 20)
+                                        if (inv[ci].param3 < 20)
                                         {
-                                            if (inv_id(ci) != 602)
+                                            if (inv[ci].id != 602)
                                             {
                                                 label_2199();
                                                 return;
@@ -76957,13 +76999,13 @@ label_2689_internal:
                         }
                         if (p == 68000 || p == 77000)
                         {
-                            if (inv_own_state(ci) <= 0)
+                            if (inv[ci].own_state <= 0)
                             {
                                 if (ibit(5, ci) == 0)
                                 {
                                     if (mdata(6) != 5)
                                     {
-                                        in = inv_number(ci);
+                                        in = inv[ci].number;
                                         if (gdata_mount != cc)
                                         {
                                             int stat = label_2192();
@@ -77289,18 +77331,20 @@ label_2692_internal:
                                          ++cnt)
                                     {
                                         ti = list(0, cnt);
-                                        if (inv_x(ti) >= scx
-                                            && inv_x(ti) < scx + inf_screenw
-                                            && inv_y(ti) >= scy
-                                            && inv_y(ti) < scy + inf_screenh)
+                                        if (inv[ti].position.x >= scx
+                                            && inv[ti].position.x
+                                                < scx + inf_screenw
+                                            && inv[ti].position.y >= scy
+                                            && inv[ti].position.y
+                                                < scy + inf_screenh)
                                         {
                                             f = 1;
                                             break;
                                         }
                                     }
                                 }
-                                tlocx = inv_x(ti);
-                                tlocy = inv_y(ti);
+                                tlocx = inv[ti].position.x;
+                                tlocy = inv[ti].position.y;
                                 if (f == 1)
                                 {
                                     flt();
@@ -77400,11 +77444,11 @@ label_2692_internal:
                     int stat = itemcreate(cc, p(1), -1, -1, 0);
                     if (stat == 1)
                     {
-                        if (inv_id(ci) == 577)
+                        if (inv[ci].id == 577)
                         {
                             if (rnd(5) == 0)
                             {
-                                inv_number(ci) = 0;
+                                inv[ci].number = 0;
                             }
                         }
                         else
@@ -77598,17 +77642,17 @@ void label_2693()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        a = refitem(inv_id(cnt), 5);
+                        a = refitem(inv[cnt].id, 5);
                         if (a == 77000)
                         {
-                            p = inv_value(cnt) * inv_number(cnt);
-                            sell += inv_number(cnt);
+                            p = inv[cnt].value * inv[cnt].number;
+                            sell += inv[cnt].number;
                             sell(1) += p;
-                            inv_number(cnt) = 0;
+                            inv[cnt].number = 0;
                             cdata_gold(cc) += p;
                         }
                     }
@@ -81326,12 +81370,12 @@ void label_2743(bool label_2747_flg)
             {
                 inv_getheader(0);
                 ci = rnd(invrange) + invhead;
-                if (inv_number(ci) > 0)
+                if (inv[ci].number > 0)
                 {
-                    if (refitem(inv_id(ci), 5) == 52000)
+                    if (refitem(inv[ci].id, 5) == 52000)
                     {
                         dbmode = 15;
-                        dbid = inv_id(ci);
+                        dbid = inv[ci].id;
                         label_1275();
                     }
                 }
@@ -81610,54 +81654,55 @@ label_2747:
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_x(cnt) != cdata_x(cc) || inv_y(cnt) != cdata_y(cc))
+                if (inv[cnt].position.x != cdata_x(cc)
+                    || inv[cnt].position.y != cdata_y(cc))
                 {
                     continue;
                 }
-                if (refitem(inv_id(cnt), 5) == 72000)
+                if (refitem(inv[cnt].id, 5) == 72000)
                 {
                     p = 1;
                 }
-                if (refitem(inv_id(cnt), 9) == 60001)
+                if (refitem(inv[cnt].id, 9) == 60001)
                 {
                     p = 2;
                 }
-                if (refitem(inv_id(cnt), 5) == 60002)
+                if (refitem(inv[cnt].id, 5) == 60002)
                 {
                     p(0) = 3;
                     p(1) = cnt;
                 }
-                if (inv_function(cnt) != 0 || refitem(inv_id(cnt), 11) != 0)
+                if (inv[cnt].function != 0 || refitem(inv[cnt].id, 11) != 0)
                 {
                     p = 4;
                 }
-                if (refitem(inv_id(cnt), 2) != 0)
+                if (refitem(inv[cnt].id, 2) != 0)
                 {
                     p = 5;
                 }
-                if (inv_id(cnt) == 631)
+                if (inv[cnt].id == 631)
                 {
                     key = key_godown;
                 }
-                if (inv_id(cnt) == 750)
+                if (inv[cnt].id == 750)
                 {
                     if (gdata_current_map == 7)
                     {
                         key = key_goup;
                     }
                 }
-                if (inv_id(cnt) == 751)
+                if (inv[cnt].id == 751)
                 {
                     if (gdata_current_map == 7)
                     {
                         key = key_godown;
                     }
                 }
-                if (inv_id(cnt) == 753)
+                if (inv[cnt].id == 753)
                 {
                     key = key_godown;
                 }

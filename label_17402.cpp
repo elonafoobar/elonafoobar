@@ -168,7 +168,7 @@ label_1741_internal:
         int cnt = 1320;
         for (int cnt_end = cnt + (4160); cnt < cnt_end; ++cnt)
         {
-            inv_number(cnt) = 0;
+            inv[cnt].number = 0;
         }
     }
     DIM2(mdata, 100);
@@ -257,16 +257,16 @@ label_1741_internal:
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_id(cnt) >= maxitemid - 2
-                    || inv_id(cnt) > length(ioriginalnameref))
+                if (inv[cnt].id >= maxitemid - 2
+                    || inv[cnt].id > length(ioriginalnameref))
                 {
-                    inv_number(cnt) = 0;
-                    cell_refresh(inv_x(cnt), inv_y(cnt));
+                    inv[cnt].number = 0;
+                    cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                     continue;
                 }
-                if (inv_number(cnt) > 0)
+                if (inv[cnt].number > 0)
                 {
-                    inv_own_state(cnt) = 5;
+                    inv[cnt].own_state = 5;
                 }
             }
         }
@@ -282,7 +282,7 @@ label_1741_internal:
         mdata(15) = 0;
         flt();
         itemcreate(-1, 24, 15, 17, 0);
-        inv_param1(ci) = 4;
+        inv[ci].param1 = 4;
     }
     if (adata(16, gdata_current_map) == 102)
     {
@@ -293,10 +293,10 @@ label_1741_internal:
         mdata(15) = 0;
         flt();
         itemcreate(-1, 24, 17, 14, 0);
-        inv_param1(ci) = 8;
+        inv[ci].param1 = 8;
         flt();
         itemcreate(-1, 561, 19, 10, 0);
-        inv_count(ci) = 5;
+        inv[ci].count = 5;
         flt();
         itemcreate(-1, 562, 17, 11, 0);
     }
@@ -309,7 +309,7 @@ label_1741_internal:
         mdata(15) = 0;
         flt();
         itemcreate(-1, 24, 14, 5, 0);
-        inv_param1(ci) = 9;
+        inv[ci].param1 = 9;
     }
     if (adata(16, gdata_current_map) == 31)
     {
@@ -320,7 +320,7 @@ label_1741_internal:
         mdata(15) = 0;
         flt();
         itemcreate(-1, 24, 23, 8, 0);
-        inv_param1(ci) = 11;
+        inv[ci].param1 = 11;
         flt();
         itemcreate(-1, 562, 22, 6, 0);
     }
@@ -333,7 +333,7 @@ label_1741_internal:
         mdata(15) = 0;
         flt();
         itemcreate(-1, 24, 39, 54, 0);
-        inv_param1(ci) = 15;
+        inv[ci].param1 = 15;
     }
     if (adata(16, gdata_current_map) == 104)
     {
@@ -419,35 +419,35 @@ label_1741_internal:
         mdata(10) = 10;
         flt();
         itemcreate(-1, 171, 10, 8, 0);
-        inv_param1(ci) = 1;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 1;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 13, 8, 0);
-        inv_param1(ci) = 2;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 2;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 10, 13, 0);
-        inv_param1(ci) = 5;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 5;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 13, 13, 0);
-        inv_param1(ci) = 4;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 4;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 20, 8, 0);
-        inv_param1(ci) = 3;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 3;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 23, 8, 0);
-        inv_param1(ci) = 7;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 7;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 20, 13, 0);
-        inv_param1(ci) = 6;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 6;
+        inv[ci].own_state = 1;
         flt();
         itemcreate(-1, 171, 23, 13, 0);
-        inv_own_state(ci) = 1;
+        inv[ci].own_state = 1;
         mdata(13) = 79;
         map_placeplayer();
         {
@@ -724,7 +724,7 @@ label_1741_internal:
         {
             flt();
             itemcreate(-1, 668, 12, 8, 0);
-            inv_param2(ci) = 4;
+            inv[ci].param2 = 4;
         }
         flt();
         characreate(-1, 249, 12, 6);
@@ -755,8 +755,8 @@ label_1741_internal:
         mdata(10) = 10;
         flt();
         itemcreate(-1, 171, 19, 5, 0);
-        inv_param1(ci) = 1;
-        inv_own_state(ci) = 1;
+        inv[ci].param1 = 1;
+        inv[ci].own_state = 1;
         flt();
         characreate(-1, 173, 9, 16);
         cdata_character_role(rc) = 1011;
@@ -1044,16 +1044,16 @@ label_1741_internal:
                 cdata_character_role(rc) = 3;
                 flt();
                 itemcreate(-1, 510, 6, 10, 0);
-                inv_count(ci) = 3;
+                inv[ci].count = 3;
                 flt();
                 itemcreate(-1, 547, 15, 19, 0);
-                inv_count(ci) = 4;
+                inv[ci].count = 4;
                 flt();
                 itemcreate(-1, 579, 9, 8, 0);
-                inv_count(ci) = 6;
+                inv[ci].count = 6;
                 flt();
                 itemcreate(-1, 24, 18, 19, 0);
-                inv_param1(ci) = 1;
+                inv[ci].param1 = 1;
             }
             else
             {
@@ -1063,13 +1063,13 @@ label_1741_internal:
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        inv_x(cnt) = mdata(0) / 2;
-                        inv_y(cnt) = mdata(1) / 2;
-                        cell_refresh(inv_x(cnt), inv_y(cnt));
+                        inv[cnt].position.x = mdata(0) / 2;
+                        inv[cnt].position.y = mdata(1) / 2;
+                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                     }
                 }
                 ctrl_file(17);
@@ -2357,8 +2357,8 @@ label_1741_internal:
                     flt();
                     flttypemajor = 80000;
                     itemcreate(-1, 0, -1, -1, 0);
-                    inv_own_state(ci) = 1;
-                    map(inv_x(ci), inv_y(ci), 0) = 0;
+                    inv[ci].own_state = 1;
+                    map(inv[ci].position.x, inv[ci].position.y, 0) = 0;
                 }
             }
         }
@@ -2384,7 +2384,7 @@ label_1741_internal:
                     flt();
                     flttypemajor = 80000;
                     itemcreate(-1, 0, -1, -1, 0);
-                    inv_own_state(ci) = 1;
+                    inv[ci].own_state = 1;
                 }
             }
         }
@@ -2402,7 +2402,7 @@ label_1741_internal:
                 {
                     flt();
                     itemcreate(-1, 527, -1, -1, 0);
-                    inv_own_state(ci) = 1;
+                    inv[ci].own_state = 1;
                 }
             }
         }
@@ -2424,7 +2424,7 @@ label_1741_internal:
                     flttypemajor = 80000;
                     fltselect = 8;
                     itemcreate(-1, 0, -1, -1, 0);
-                    inv_own_state(ci) = 1;
+                    inv[ci].own_state = 1;
                 }
             }
         }
@@ -2444,7 +2444,7 @@ label_1741_internal:
                     flt();
                     flttypemajor = 80000;
                     itemcreate(-1, 0, -1, -1, 0);
-                    inv_own_state(ci) = 1;
+                    inv[ci].own_state = 1;
                 }
             }
         }
