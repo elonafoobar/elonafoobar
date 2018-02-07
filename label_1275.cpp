@@ -63,7 +63,7 @@ int label_1275()
             case 5: return info->category;
             case 7: return info->dbspec7;
             case 8: return info->dbspec8;
-            case 9: return info->dbspec9;
+            case 9: return info->subcategory;
             case 10: return info->dbspec10;
             case 11: return info->dbspec11;
             case 18: return info->dbspec18;

@@ -54,7 +54,6 @@ int define(lua_State* state)
     FIELD_I(dbspec4);
     FIELD_I(dbspec7);
     FIELD_I(dbspec8);
-    FIELD_I(dbspec9);
     FIELD_I(dbspec10);
     FIELD_I(dbspec11);
     FIELD_I(dbspec18);
@@ -100,7 +99,6 @@ int define(lua_State* state)
             dbspec4,
             dbspec7,
             dbspec8,
-            dbspec9,
             dbspec10,
             dbspec11,
             dbspec18,
