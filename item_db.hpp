@@ -14,6 +14,7 @@ namespace elona
 struct item_data
 {
     int id;
+    int image;
     int value;
     int weight;
     int dice_x;

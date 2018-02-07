@@ -30,6 +30,7 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
 
+    FIELD_I(image);
     FIELD_I(value);
     FIELD_I(weight);
     FIELD_I(dice_x);
@@ -73,6 +74,7 @@ int define(lua_State* state)
         std::stoi(id), // TODO
         item_data{
             std::stoi(id),
+            image,
             value,
             weight,
             dice_x,
