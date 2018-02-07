@@ -563,13 +563,6 @@ void netload(const std::string& prm_194)
 
 
 
-void label_0002()
-{
-    return;
-}
-
-
-
 int zentohan(const std::string& prm_209, std::string& prm_210, int prm_211)
 {
     return LCMapStringA(
@@ -898,12 +891,6 @@ void label_0030()
     bdrefn(5) = lang(u8"盗賊の隠れ家"s, u8"Smuggler's Hideout"s);
     bdrefn(6) = lang(u8"灯台"s, u8"Light House"s);
     return;
-}
-
-
-
-void label_0031()
-{
 }
 
 
@@ -11173,7 +11160,6 @@ void display_msg(int prm_680, int prm_681)
     msgclear = 1;
     msgy = prm_680;
     redraw(0);
-    label_1424();
     return;
 }
 
@@ -20677,13 +20663,6 @@ void label_1423()
         firstautoturn = 0;
     }
     gmode(2);
-    return;
-}
-
-
-
-void label_1424()
-{
     return;
 }
 
@@ -32478,7 +32457,6 @@ void map_makedoor()
 label_1665_internal:
     if (cr >= roomsum)
     {
-        label_1666();
         return;
     }
     tx = 0;
@@ -32524,13 +32502,6 @@ label_1665_internal:
     }
     cr += 1;
     goto label_1665_internal;
-}
-
-
-
-void label_1666()
-{
-    return;
 }
 
 
@@ -39488,13 +39459,6 @@ void matdelmain(int prm_1033, int prm_1034)
 
 
 
-void label_1854()
-{
-    return;
-}
-
-
-
 void label_18552()
 {
     int matuse = 0;
@@ -39563,7 +39527,6 @@ label_18551_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
             {
-                label_1854();
                 listn(0, listmax) = ""s + prodcheck();
                 list(0, listmax) = 630;
                 list(1, listmax) = cnt;

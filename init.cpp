@@ -249,7 +249,6 @@ void initialize_elona()
     DIM2(deck, 1000);
 
     label_0034();
-    label_0031();
     label_0478();
 
     DIM3(dirxy, 2, 4);
@@ -421,7 +420,6 @@ void initialize_elona()
     label_0268();
     label_0140();
     label_1713();
-    label_0002();
     label_2105();
     if (cfg_music == 1 && DMINIT() == 0)
     {
