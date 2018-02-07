@@ -9,7 +9,7 @@ namespace elona
 {
 
 
-void label_2743(bool = true);
+void pc_turn(bool = true);
 
 
 int ctrl_inventory()
@@ -606,8 +606,8 @@ label_20591:
             invsubroutine = 0;
             return 0;
         }
-        label_1419();
-        label_2743(false);
+        update_screen();
+        pc_turn(false);
     }
     label_2056();
     if (invctrl == 3)
@@ -760,8 +760,8 @@ label_2060_internal:
                     u8"You can't do that while you're in a global area."s));
             }
             invsc = 0;
-            label_1419();
-            label_2743(false);
+            update_screen();
+            pc_turn(false);
         }
         invsc = 0;
         if (mdata(6) == 1)
@@ -772,8 +772,8 @@ label_2060_internal:
                 txt(lang(
                     u8"その行為は、ワールドマップにいる間はできない。"s,
                     u8"You can't do that while you're in a global area."s));
-                label_1419();
-                label_2743(false);
+                update_screen();
+                pc_turn(false);
             }
         }
         goto label_2062_internal;
@@ -1370,8 +1370,8 @@ label_2061_internal:
                             u8"You can't just take it."s),
                         lang(u8"それは拾えない。"s, u8"It's not yours."s));
                 }
-                label_1419();
-                label_2743(false);
+                update_screen();
+                pc_turn(false);
             }
             page_save();
             if (mode == 6 && inv[ci].number > 1 && invctrl != 22)
@@ -1406,7 +1406,7 @@ label_2061_internal:
                 if (in == 0 || rtval == -1)
                 {
                     screenupdate = -1;
-                    label_1419();
+                    update_screen();
                     stick(p);
                     goto label_2060_internal;
                 }
@@ -1450,7 +1450,7 @@ label_2061_internal:
                 if (rtval != 0)
                 {
                     screenupdate = -1;
-                    label_1419();
+                    update_screen();
                     goto label_20591;
                 }
                 if (invctrl == 11)
@@ -1458,7 +1458,7 @@ label_2061_internal:
                     if (calcitemvalue(ci, 0) * in > cdata[0].gold)
                     {
                         screenupdate = -1;
-                        label_1419();
+                        update_screen();
                         txt(lang(
                                 u8"あなたは財布を開いてがっかりした…"s,
                                 u8"You check your wallet and shake your head."s),
@@ -1476,7 +1476,7 @@ label_2061_internal:
                         if (calcitemvalue(ci, 1) * in > cdata[tc].gold)
                         {
                             screenupdate = -1;
-                            label_1419();
+                            update_screen();
                             txt(lang(
                                 name(tc) + u8"は財布を開いてがっかりした…"s,
                                 name(tc) + u8" checks "s + his(tc)
@@ -1521,7 +1521,7 @@ label_2061_internal:
                 }
             }
             screenupdate = -1;
-            label_1419();
+            update_screen();
             goto label_20591;
         }
         if (invctrl == 5)
@@ -1535,7 +1535,7 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             screenupdate = -1;
-            label_1419();
+            update_screen();
             savecycle();
             if (cdata[0].nutrition > 10000)
             {
@@ -1548,8 +1548,8 @@ label_2061_internal:
                     lang(
                         u8"まだ腹は減っていない。"s,
                         u8"Your stomach can't digest any more."s));
-                label_1419();
-                label_2743(false);
+                update_screen();
+                pc_turn(false);
             }
             label_2198();
             return 0;
@@ -1572,9 +1572,9 @@ label_2061_internal:
             r1 = cc;
             label_2194();
             r1 = cc;
-            label_1477();
+            refresh_character();
             screenupdate = -1;
-            label_1419();
+            update_screen();
             snd(13);
             txtnew();
             txt(lang(
@@ -1610,7 +1610,7 @@ label_2061_internal:
         if (invctrl == 7)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             savecycle();
             label_2197();
             return 0;
@@ -1618,7 +1618,7 @@ label_2061_internal:
         if (invctrl == 8)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             savecycle();
             label_2199();
             return 0;
@@ -1626,7 +1626,7 @@ label_2061_internal:
         if (invctrl == 9)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             savecycle();
             label_2200();
             return 0;
@@ -1667,15 +1667,15 @@ label_2061_internal:
                     u8"You give "s + name(tc) + u8" "s + itemname(ci, 1)
                         + u8"."s));
                 --inv[ci].number;
-                label_1521();
+                refresh_burden_state();
                 txt(lang(
                     u8"「え、これを"s + _ore(3) + u8"にくれるの"s + _ka(1) + ""s
                         + _thanks(2) + u8"」"s,
                     cnvtalk(u8"Thank you!"s)));
                 modimp(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
-                label_1419();
-                label_2743(false);
+                update_screen();
+                pc_turn(false);
             }
             f = 0;
             p = sdata(10, tc) * 500 + sdata(11, tc) * 500
@@ -1839,13 +1839,13 @@ label_2061_internal:
                     create_pcpic(tc, 1);
                 }
                 r1 = tc;
-                label_1477();
-                label_1521();
+                refresh_character();
+                refresh_burden_state();
                 if (invally == 1)
                 {
                     goto label_20591;
                 }
-                label_1419();
+                update_screen();
                 label_2742();
                 return 0;
             }
@@ -1859,7 +1859,7 @@ label_2061_internal:
         if (invctrl == 13)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             int stat = item_identify(ci, -1, efp);
             if (stat == 0)
             {
@@ -1896,14 +1896,14 @@ label_2061_internal:
         if (invctrl == 16)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             invsubroutine = 0;
             return 1;
         }
         if (invctrl == 15)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             savecycle();
             label_2212();
             return 0;
@@ -1920,7 +1920,7 @@ label_2061_internal:
         if (invctrl == 18)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             label_2227();
             return 0;
         }
@@ -1935,9 +1935,9 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             screenupdate = -1;
-            label_1419();
+            update_screen();
             savecycle();
-            label_1891();
+            offer();
             return 0;
         }
         if (invctrl == 20)
@@ -1991,8 +1991,8 @@ label_2061_internal:
             }
             label_2665();
             r1 = tc;
-            label_1477();
-            label_1521();
+            refresh_character();
+            refresh_burden_state();
             invsubroutine = 0;
             return 1;
         }
@@ -2046,7 +2046,7 @@ label_2061_internal:
                         + u8")"s);
                 }
                 inv[ci].number = 0;
-                label_1521();
+                refresh_burden_state();
                 goto label_20591;
             }
             if (invctrl(1) == 2)
@@ -2074,9 +2074,9 @@ label_2061_internal:
                     u8"You pay "s + itemname(ci) + u8"."s));
                 --inv[ci].number;
                 --gdata_left_bill;
-                label_1521();
+                refresh_burden_state();
                 screenupdate = -1;
-                label_1419();
+                update_screen();
                 goto label_20591;
             }
         }
@@ -2167,8 +2167,8 @@ label_2061_internal:
                 create_pcpic(tc, 1);
             }
             r1 = tc;
-            label_1477();
-            label_1521();
+            refresh_character();
+            refresh_burden_state();
             goto label_20591;
         }
         if (invctrl == 26)
@@ -2182,17 +2182,17 @@ label_2061_internal:
                     txt(lang(
                         u8"その場所は見えない。"s,
                         u8"You can't see the location."s));
-                    label_1419();
+                    update_screen();
                 }
-                label_2743(false);
+                pc_turn(false);
             }
             if (chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
                 txt(lang(
                     u8"そこには投げられない。"s,
                     u8"The location is blocked."s));
-                label_1419();
-                label_2743(false);
+                update_screen();
+                pc_turn(false);
             }
             label_2189();
             return 0;
@@ -2329,7 +2329,7 @@ label_2061_internal:
                     invctrl = cycle(p, i);
                     snd(100);
                     screenupdate = -1;
-                    label_1419();
+                    update_screen();
                     goto label_20591;
                 }
             }
@@ -2365,7 +2365,7 @@ label_2061_internal:
                 dropcontinue = 1;
                 snd(100);
                 screenupdate = -1;
-                label_1419();
+                update_screen();
                 goto label_20591;
             }
         }
@@ -2425,7 +2425,7 @@ label_2061_internal:
         if (invctrl == 6)
         {
             screenupdate = -1;
-            label_1419();
+            update_screen();
             menucycle = 1;
             label_2050();
             return 0;
@@ -2446,8 +2446,8 @@ label_2061_internal:
             return 0;
         }
         screenupdate = 0;
-        label_1419();
-        label_2743(false);
+        update_screen();
+        pc_turn(false);
     }
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
         || invctrl == 14 || invctrl == 15 || invctrl == 26)

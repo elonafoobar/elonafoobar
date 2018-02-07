@@ -652,7 +652,7 @@ void msg_halt()
     y_at_txtfunc = windowh - 22;
     anime_halt();
     screenupdate = -1;
-    label_1419();
+    update_screen();
     return;
 }
 

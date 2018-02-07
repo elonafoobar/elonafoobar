@@ -25,7 +25,7 @@ namespace
 {
 
 
-void label_2297_dbmode1()
+void list_races()
 {
     BASIC_RACE(u8"yerles");
     BASIC_RACE(u8"eulderna");
@@ -121,7 +121,7 @@ int access_race_info()
 {
     if (dbmode == 1)
     {
-        label_2297_dbmode1();
+        list_races();
         return 0;
     }
 
@@ -194,7 +194,7 @@ int access_race_info()
             skillinit(157, rc, 2);
             skillinit(174, rc, 3);
             s(1) = u8"HD|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -267,7 +267,7 @@ int access_race_info()
             skillinit(169, rc, 3);
             skillinit(168, rc, 3);
             s(1) = u8"HD|BD|BK|HA|HA|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -338,7 +338,7 @@ int access_race_info()
             skillinit(106, rc, 3);
             skillinit(154, rc, 40);
             s(1) = u8"HD|BD|BK|HA|HA|A_|W_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -411,7 +411,7 @@ int access_race_info()
             skillinit(168, rc, 3);
             skillinit(173, rc, 2);
             s(1) = u8"HD|BD|BK|HA|HA|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -483,7 +483,7 @@ int access_race_info()
             skillinit(152, rc, 4);
             skillinit(186, rc, 3);
             s(1) = u8"HD|BD|HA|HA|R_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -564,7 +564,7 @@ int access_race_info()
             skillinit(156, rc, 2);
             skillinit(111, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -643,7 +643,7 @@ int access_race_info()
             skillinit(167, rc, 3);
             skillinit(188, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -723,7 +723,7 @@ int access_race_info()
             skillinit(150, rc, 3);
             skillinit(174, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -810,7 +810,7 @@ int access_race_info()
             skillinit(300, rc, 3);
             skillinit(171, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -883,7 +883,7 @@ int access_race_info()
             skillinit(187, rc, 6);
             skillinit(161, rc, 4);
             s(1) = u8"HA|HA|HA|HA|N_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -955,7 +955,7 @@ int access_race_info()
             skillinit(173, rc, 2);
             skillinit(183, rc, 3);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1027,7 +1027,7 @@ int access_race_info()
             skillinit(173, rc, 2);
             skillinit(187, rc, 2);
             s(1) = u8"HD|N_|BD|BK|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1102,7 +1102,7 @@ int access_race_info()
             skillinit(179, rc, 3);
             skillinit(163, rc, 4);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1183,7 +1183,7 @@ int access_race_info()
             skillinit(156, rc, 2);
             skillinit(111, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1259,7 +1259,7 @@ int access_race_info()
             skillinit(184, rc, 3);
             skillinit(185, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|R_|A_|W_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1339,7 +1339,7 @@ int access_race_info()
             skillinit(172, rc, 2);
             skillinit(165, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1410,7 +1410,7 @@ int access_race_info()
             skillinit(106, rc, 1);
             skillinit(301, rc, 3);
             s(1) = u8"HD|N_|BD|BK|A_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1482,7 +1482,7 @@ int access_race_info()
             skillinit(154, rc, 3);
             skillinit(161, rc, 3);
             s(1) = u8"HD|N_|BD|BK|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1554,7 +1554,7 @@ int access_race_info()
             skillinit(183, rc, 3);
             skillinit(160, rc, 2);
             s(1) = u8"BD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1625,7 +1625,7 @@ int access_race_info()
             skillinit(106, rc, 1);
             skillinit(186, rc, 3);
             s(1) = u8"BK|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1698,7 +1698,7 @@ int access_race_info()
             skillinit(106, rc, 1);
             skillinit(111, rc, 5);
             s(1) = u8"BK|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1771,7 +1771,7 @@ int access_race_info()
             skillinit(150, rc, 2);
             skillinit(164, rc, 3);
             s(1) = u8"HD|BK|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1843,7 +1843,7 @@ int access_race_info()
             skillinit(159, rc, 3);
             skillinit(157, rc, 3);
             s(1) = u8"N_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1915,7 +1915,7 @@ int access_race_info()
             skillinit(177, rc, 3);
             skillinit(178, rc, 2);
             s(1) = u8"HD|N_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -1986,7 +1986,7 @@ int access_race_info()
             skillinit(106, rc, 2);
             skillinit(187, rc, 3);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2058,7 +2058,7 @@ int access_race_info()
             skillinit(154, rc, 2);
             skillinit(176, rc, 4);
             s(1) = u8"HA|R_|R_|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2137,7 +2137,7 @@ int access_race_info()
             skillinit(174, rc, 3);
             skillinit(172, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2209,7 +2209,7 @@ int access_race_info()
             skillinit(159, rc, 4);
             skillinit(183, rc, 2);
             s(1) = u8"HD|N_|BD|BK|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2285,7 +2285,7 @@ int access_race_info()
             skillinit(164, rc, 4);
             skillinit(174, rc, 2);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2357,7 +2357,7 @@ int access_race_info()
             skillinit(172, rc, 3);
             skillinit(188, rc, 2);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2429,7 +2429,7 @@ int access_race_info()
             skillinit(159, rc, 3);
             skillinit(161, rc, 3);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2501,7 +2501,7 @@ int access_race_info()
             skillinit(150, rc, 3);
             skillinit(182, rc, 3);
             s(1) = u8"N_|BD|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2572,7 +2572,7 @@ int access_race_info()
             skillinit(106, rc, 2);
             skillinit(187, rc, 2);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2645,7 +2645,7 @@ int access_race_info()
             skillinit(174, rc, 2);
             skillinit(176, rc, 3);
             s(1) = u8"BD|BK|HA|HA|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2717,7 +2717,7 @@ int access_race_info()
             skillinit(165, rc, 3);
             skillinit(188, rc, 3);
             s(1) = u8"N_|BD|HA|HA|R_|R_R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2788,7 +2788,7 @@ int access_race_info()
             skillinit(106, rc, 2);
             skillinit(186, rc, 4);
             s(1) = u8"HA|HA|R_|R_|A_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2859,7 +2859,7 @@ int access_race_info()
             skillinit(106, rc, 2);
             skillinit(157, rc, 4);
             s(1) = u8"BD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -2931,7 +2931,7 @@ int access_race_info()
             skillinit(182, rc, 3);
             skillinit(185, rc, 2);
             s(1) = u8"N_|BD|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3007,7 +3007,7 @@ int access_race_info()
             skillinit(163, rc, 2);
             skillinit(186, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3080,7 +3080,7 @@ int access_race_info()
             skillinit(183, rc, 2);
             skillinit(186, rc, 3);
             s(1) = u8"HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3153,7 +3153,7 @@ int access_race_info()
             skillinit(158, rc, 3);
             skillinit(174, rc, 2);
             s(1) = u8"HD|N_|BD|BK|HA|HA|A_|W_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3225,7 +3225,7 @@ int access_race_info()
             skillinit(164, rc, 3);
             skillinit(188, rc, 3);
             s(1) = u8"BD|HA|HA|R_|R_|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3297,7 +3297,7 @@ int access_race_info()
             skillinit(150, rc, 4);
             skillinit(188, rc, 3);
             s(1) = u8"N_|BD|HA|HA|R_|R_|A_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3374,7 +3374,7 @@ int access_race_info()
             skillinit(157, rc, 3);
             skillinit(175, rc, 3);
             s(1) = u8"N_|BD|HA|HA|R_|R_|A_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3446,7 +3446,7 @@ int access_race_info()
             skillinit(164, rc, 3);
             skillinit(174, rc, 2);
             s(1) = u8"N_|HA|HA|R_|R_|A_|L_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3518,7 +3518,7 @@ int access_race_info()
             skillinit(182, rc, 3);
             skillinit(179, rc, 3);
             s(1) = u8"N_|BD|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3590,7 +3590,7 @@ int access_race_info()
             skillinit(182, rc, 3);
             skillinit(187, rc, 2);
             s(1) = u8"N_|BD|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3662,7 +3662,7 @@ int access_race_info()
             skillinit(159, rc, 3);
             skillinit(177, rc, 3);
             s(1) = u8"HD|N_|BD|BK|A_|L_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3734,7 +3734,7 @@ int access_race_info()
             skillinit(157, rc, 3);
             skillinit(161, rc, 5);
             s(1) = u8"R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3809,7 +3809,7 @@ int access_race_info()
             skillinit(153, rc, 5);
             skillinit(163, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3882,7 +3882,7 @@ int access_race_info()
             skillinit(153, rc, 3);
             skillinit(163, rc, 3);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -3954,7 +3954,7 @@ int access_race_info()
             skillinit(175, rc, 2);
             skillinit(168, rc, 3);
             s(1) = u8"BK|HA|HA|R_|R_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4032,7 +4032,7 @@ int access_race_info()
             skillinit(168, rc, 2);
             skillinit(158, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4105,7 +4105,7 @@ int access_race_info()
             skillinit(164, rc, 2);
             skillinit(150, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4178,7 +4178,7 @@ int access_race_info()
             skillinit(187, rc, 3);
             skillinit(173, rc, 2);
             s(1) = u8"HD|N_|BD|BK|HA|L_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4251,7 +4251,7 @@ int access_race_info()
             skillinit(183, rc, 2);
             skillinit(159, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|L_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4329,7 +4329,7 @@ int access_race_info()
             skillinit(150, rc, 4);
             skillinit(160, rc, 2);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4401,7 +4401,7 @@ int access_race_info()
             skillinit(157, rc, 3);
             skillinit(161, rc, 2);
             s(1) = u8"BK|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4473,7 +4473,7 @@ int access_race_info()
             skillinit(155, rc, 3);
             skillinit(162, rc, 3);
             s(1) = u8"L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4546,7 +4546,7 @@ int access_race_info()
             skillinit(187, rc, 3);
             skillinit(186, rc, 2);
             s(1) = u8"HD|N_|BD|HA|R_|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4618,7 +4618,7 @@ int access_race_info()
             skillinit(106, rc, 5);
             skillinit(110, rc, 30);
             s(1) = u8"HD|BD|BK|HA|HA|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4690,7 +4690,7 @@ int access_race_info()
             skillinit(188, rc, 3);
             skillinit(164, rc, 5);
             s(1) = u8"N_|BD|BK|HA|HA|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4764,7 +4764,7 @@ int access_race_info()
             skillinit(158, rc, 3);
             skillinit(175, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4836,7 +4836,7 @@ int access_race_info()
             skillinit(188, rc, 3);
             skillinit(164, rc, 5);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4908,7 +4908,7 @@ int access_race_info()
             skillinit(161, rc, 3);
             skillinit(155, rc, 3);
             s(1) = u8"HD|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -4984,7 +4984,7 @@ int access_race_info()
             skillinit(186, rc, 3);
             skillinit(157, rc, 4);
             s(1) = u8"N_|HA|HA|R_|R_|A_||"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5056,7 +5056,7 @@ int access_race_info()
             skillinit(167, rc, 6);
             skillinit(152, rc, 4);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5135,7 +5135,7 @@ int access_race_info()
             skillinit(164, rc, 3);
             skillinit(154, rc, 4);
             s(1) = u8"BD|HA|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5207,7 +5207,7 @@ int access_race_info()
             skillinit(155, rc, 3);
             skillinit(156, rc, 4);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5280,7 +5280,7 @@ int access_race_info()
             skillinit(155, rc, 3);
             skillinit(181, rc, 4);
             s(1) = u8"HA|HA|HA|HA|R_|R_|R_|R_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5362,7 +5362,7 @@ int access_race_info()
             skillinit(110, rc, 4);
             skillinit(167, rc, 3);
             s(1) = u8"HD|N_|BD|BK|HA|HA|R_|R_|A_|W_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5433,7 +5433,7 @@ int access_race_info()
             skillinit(106, rc, 1);
             skillinit(154, rc, 4);
             s(1) = u8"BD|L_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5511,7 +5511,7 @@ int access_race_info()
             skillinit(167, rc, 5);
             skillinit(152, rc, 7);
             s(1) = u8"HA|HA|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5585,7 +5585,7 @@ int access_race_info()
             skillinit(173, rc, 7);
             skillinit(187, rc, 6);
             s(1) = u8"HD|BD|BK|HA|HA|R_|R_|A_|L_|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5658,7 +5658,7 @@ int access_race_info()
             skillinit(164, rc, 4);
             skillinit(187, rc, 6);
             s(1) = u8"HD|BD|BK|"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }
@@ -5732,7 +5732,7 @@ int access_race_info()
             skillinit(158, rc, 3);
             skillinit(175, rc, 3);
             s(1) = u8"HD|BD|BK|HA|HA|W_|L_|L_"s;
-            label_1531();
+            initialize_body_parts_by_string();
         }
         return 0;
     }

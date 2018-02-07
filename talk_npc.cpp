@@ -20,7 +20,7 @@ void talk_npc()
         int stat = customtalk(tc, 106);
         if (stat)
         {
-            label_0173();
+            replace_tags_in_quest_board();
         }
         if (cdata[tc].interest > 0)
         {
@@ -458,7 +458,7 @@ void talk_npc()
         if (qdata(8, rq) == 3)
         {
             val = 3;
-            label_0184();
+            set_quest_data();
             label_2679();
         }
         else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
@@ -622,7 +622,7 @@ void talk_npc()
         invfile = cdata[tc].shop_store_id;
         label_2263();
         screenupdate = -1;
-        label_1419();
+        update_screen();
         cs = 0;
         buff = "";
         talk_npc();
@@ -635,7 +635,7 @@ void talk_npc()
         label_2263();
         cc = 0;
         screenupdate = -1;
-        label_1419();
+        update_screen();
         cs = 0;
         buff = "";
         talk_npc();
@@ -788,7 +788,7 @@ void talk_npc()
     }
     if (chatval == 18)
     {
-        label_1988();
+        list_adventurers();
         buff = lang(u8"お目当ての情報は見つかった"s + _kana(), u8"Done?"s);
         talk_npc();
         return;
@@ -1145,9 +1145,9 @@ void talk_npc()
             itemname(deliver(1), 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(deliver(1), 1) + u8"."s));
         val = 3;
-        label_0184();
+        set_quest_data();
         label_2679();
-        label_1521();
+        refresh_burden_state();
         talk_npc();
         return;
     }
@@ -1166,9 +1166,9 @@ void talk_npc()
             itemname(supply, 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(supply, 1) + u8"."s));
         val = 3;
-        label_0184();
+        set_quest_data();
         label_2679();
-        label_1521();
+        refresh_burden_state();
         talk_npc();
         return;
     }
@@ -1266,7 +1266,7 @@ void talk_npc()
                 modkarma(0, -10);
             }
         }
-        label_1521();
+        refresh_burden_state();
         buff = "";
         talk_npc();
         return;
@@ -1676,7 +1676,7 @@ void talk_npc()
             }
         }
         screenupdate = -1;
-        label_1417();
+        update_entire_screen();
         buff = lang(
             u8"そう"s + _dana() + u8"これからこの家の名前は"s + mdatan(0)
                 + _da(),
@@ -1757,7 +1757,7 @@ void talk_npc()
                 cc = rc;
                 csctrl = 4;
                 snd(26);
-                label_20332();
+                show_character_sheet();
                 cc = 0;
                 label_2241();
                 buff = "";
@@ -2000,7 +2000,7 @@ void talk_npc()
     if (chatval == 55)
     {
         screenupdate = -1;
-        label_1419();
+        update_screen();
         invctrl = 0;
         label_1984();
         buff = "";

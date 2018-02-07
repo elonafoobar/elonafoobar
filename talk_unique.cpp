@@ -1162,7 +1162,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             redraw(0);
-            label_1419();
+            update_screen();
             label_1441();
             gsel(4);
             pos(0, 0);
@@ -1367,7 +1367,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             redraw(0);
-            label_1419();
+            update_screen();
             label_1441();
             gsel(4);
             pos(0, 0);
@@ -1833,7 +1833,7 @@ void talk_unique()
             invfile = cdata[tc].shop_store_id;
             label_2263();
             screenupdate = -1;
-            label_1419();
+            update_screen();
             cs = 0;
             talk_unique();
             return;
@@ -1883,7 +1883,7 @@ void talk_unique()
             snd(58);
             inv[ci].number -= calccargoupdatecost();
             gdata_current_cart_limit += calccargoupdate();
-            label_1521();
+            refresh_burden_state();
             listmax = 0;
             buff = lang(u8"ほい。"s, u8"Here you are."s);
             tc = tc * 1 + 0;
@@ -2616,7 +2616,7 @@ void talk_unique()
             label_2659();
             cbitmod(971, rc, 1);
             r1 = rc;
-            label_1477();
+            refresh_character();
             label_2256();
             return;
         }
@@ -3764,7 +3764,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
             }
-            label_1521();
+            refresh_burden_state();
         }
         if (gdata_ambitious_scientist >= 6)
         {
@@ -4808,7 +4808,7 @@ void talk_unique()
                     }
                 }
             }
-            label_1521();
+            refresh_burden_state();
             listmax = 0;
             buff = lang(u8"なかなか賢明な判断"s + _da(), u8"A wise choice."s);
             tc = tc * 1 + 0;
@@ -5183,7 +5183,7 @@ void talk_unique()
                 itemcreate(
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
                 cdata[0].god = 6;
-                label_1889();
+                switch_religion();
                 label_2256();
                 return;
             }

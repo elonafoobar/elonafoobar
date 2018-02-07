@@ -77,7 +77,7 @@ void proc_event()
         chatteleport = 1;
         return;
     case 1:
-        label_27492();
+        conquer_lesimas();
         flt();
         characreate(-1, 23, cdata[0].position.x, cdata[0].position.y);
         goto label_2755_internal;
@@ -135,7 +135,7 @@ void proc_event()
         gdata(171) = 23;
         goto label_2755_internal;
     case 12:
-        label_1419();
+        update_screen();
         s = lang(u8"ペットとの再会"s, u8"Reunion with your pet"s);
         buff = lang(
             u8"あなたは懐かしい鳴き声に気付いて、ふと歩みを止めた。なんと、船が難破した時に居なくなったあなたのペットが、嬉しそうに走ってくる！あなたのペットは…"s,
@@ -153,7 +153,7 @@ void proc_event()
         list(0, listmax) = 4;
         listn(0, listmax) = lang(u8"少女だ！"s, u8"a little girl!"s);
         ++listmax;
-        label_1896(u8"bg_re13");
+        show_random_event_window(u8"bg_re13");
         p = 3;
         if (rtval == 1)
         {
@@ -179,7 +179,7 @@ void proc_event()
         goto label_2755_internal;
     case 13:
         music = 80;
-        label_0068();
+        play_music();
         s = lang(u8"結婚"s, u8"Marriage"s);
         buff = lang(u8"長い交際の末、遂にあなたと"s + name(marry) +
                 u8"は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。"s,
@@ -190,7 +190,7 @@ void proc_event()
         listn(0, listmax) = lang(
             u8"生涯をあなたに捧げる"s, u8"Without you, life has no meaning."s);
         ++listmax;
-        label_1896(u8"bg_re14");
+        show_random_event_window(u8"bg_re14");
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
@@ -288,7 +288,7 @@ void proc_event()
         goto label_2755_internal;
     case 5:
         music = 64;
-        label_0068();
+        play_music();
         snd(51);
         flt(calcobjlv(), calcfixlv());
         flttypemajor = 54000;
@@ -414,7 +414,7 @@ void proc_event()
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
         r1 = 0;
-        label_1477();
+        refresh_character();
         autosave = 1 * (gdata_current_map != 35);
         goto label_2755_internal;
     case 20:
@@ -448,7 +448,7 @@ void proc_event()
         label_1444();
         press();
         screenupdate = -1;
-        label_1417();
+        update_entire_screen();
         goto label_2755_internal;
     case 10: label_2673(); goto label_2755_internal;
     case 19:
@@ -917,7 +917,7 @@ void proc_event()
             }
         }
         gmode(2);
-        label_1417();
+        update_entire_screen();
         tlocx = evdata1(evnum - (evnum != 0) * 1);
         tlocy = evdata2(evnum - (evnum != 0) * 1);
         range_ = 31;
@@ -927,7 +927,7 @@ void proc_event()
         anix = tlocx;
         aniy = tlocy;
         label_1426();
-        label_1419();
+        update_screen();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end; ++cnt)
@@ -1009,7 +1009,7 @@ void proc_event()
         }
         gdata_weather = 1;
         envonly = 1;
-        label_0068();
+        play_music();
         txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));
         msg_halt();
         animeid = 21;
@@ -1063,7 +1063,7 @@ void proc_event()
                 }
                 if (cnt % 7 == 0)
                 {
-                    label_1419();
+                    update_screen();
                     if (rnd(7))
                     {
                         snd(6);

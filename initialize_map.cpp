@@ -10,7 +10,7 @@ namespace elona
 {
 
 
-void label_2743(bool = true);
+void pc_turn(bool = true);
 
 
 void initialize_map()
@@ -2547,7 +2547,7 @@ label_1741_internal:
                 {
                     r1 = rc;
                     r2 = 1;
-                    label_1454();
+                    gain_level();
                 }
             }
             evadd(11);
@@ -3177,7 +3177,7 @@ label_1742_internal:
                         {
                             r1 = rc;
                             r2 = 1;
-                            label_1454();
+                            gain_level();
                         }
                     }
                 }
@@ -3577,12 +3577,12 @@ label_1744_internal:
             }
         }
     }
-    label_0068();
+    play_music();
     label_2088();
     noaggrorefresh = 0;
     if (adata(0, gdata_current_map) == 1)
     {
-        label_0200();
+        initialize_cloud_data();
         label_1748();
     }
     if (mode == 3)
@@ -3591,12 +3591,12 @@ label_1744_internal:
         if (mapsubroutine == 0)
         {
             screenupdate = -1;
-            label_1417();
+            update_entire_screen();
             txt_conv();
-            label_1419();
+            update_screen();
             if (evnum == 0)
             {
-                label_2743(false);
+                pc_turn(false);
             }
             else
             {
@@ -3616,7 +3616,7 @@ label_1744_internal:
     gdata(94) = 0;
     mode = 0;
     screenupdate = -1;
-    label_1417();
+    update_entire_screen();
     txt_conv();
     if (gdata_current_map == 7)
     {
@@ -3736,7 +3736,7 @@ label_1744_internal:
                     {
                         gdata(202) = 1;
                         ghelp = 2;
-                        label_2701();
+                        show_ex_help();
                     }
                 }
             }
@@ -3754,7 +3754,7 @@ label_1744_internal:
                     {
                         gdata(203) = 1;
                         ghelp = 3;
-                        label_2701();
+                        show_ex_help();
                     }
                 }
             }
@@ -3772,7 +3772,7 @@ label_1744_internal:
                     {
                         gdata(214) = 1;
                         ghelp = 14;
-                        label_2701();
+                        show_ex_help();
                     }
                 }
             }

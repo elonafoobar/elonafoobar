@@ -122,8 +122,8 @@ void initialize_elona()
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
     label_2714();
-    label_2715();
-    label_2716();
+    load_config2();
+    load_config();
     label_1415();
     if (cfg_fullscreen)
     {
@@ -249,7 +249,7 @@ void initialize_elona()
     DIM2(deck, 1000);
 
     set_sdataref();
-    label_0478();
+    initialize_craft_material_data();
 
     DIM3(dirxy, 2, 4);
 
@@ -396,29 +396,29 @@ void initialize_elona()
     label_2110();
     label_2111();
     label_2296();
-    label_2655();
+    initialize_character_filters();
     set_item_filters();
-    label_0202();
-    label_0030();
+    initialize_item_chip();
+    initialize_building_daga();
     label_1752();
-    label_1618();
+    initialize_cell_object_data();
     load_random_name_table();
     load_random_title_table();
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    label_1883();
+    initialize_god_name();
     set_item_info();
-    label_0041();
-    label_0026();
-    label_0029();
-    label_0262();
-    label_0258();
-    label_0246();
+    clear_trait_data();
+    initialize_rankn();
+    initialize_post_data();
+    initialize_item_material_data();
+    initialize_ego_data();
+    initialize_enchantment_data();
     label_1572();
-    label_0149();
+    initialize_picfood();
     label_1921();
-    label_0268();
-    label_0140();
+    initialize_fish_data();
+    initialize_nefia_names();
     label_1713();
     label_2105();
     if (cfg_music == 1 && DMINIT() == 0)
@@ -437,7 +437,7 @@ void initialize_elona()
             cfg_joypad = 0;
         }
     }
-    label_0066();
+    initialize_sound_file();
     load_musiclist();
     mainskill(0) = 173;
     mainskill(1) = 106;
@@ -635,7 +635,7 @@ void label_2115()
     mode = 10;
     lomiaseaster = 0;
     music = 65;
-    label_0068();
+    play_music();
     cs = 0;
     cs_bk = -1;
     keyrange = 6;
@@ -816,7 +816,7 @@ label_2116_internal:
     {
         snd(20);
         await(400);
-        label_0193();
+        finish_elona();
         return;
     }
     goto label_2116_internal;
@@ -1174,14 +1174,14 @@ label_1551:
         mes(u8"Gene from "s + geneuse);
     }
     dbmode = 1;
-    label_2298();
+    access_class_info();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
             dbidn = listn(1, cnt);
             dbmode = 2;
-            label_2298();
+            access_class_info();
             listn(0, cnt) = classname;
         }
     }
@@ -1229,9 +1229,9 @@ label_1552_internal:
         del_chara(0);
         dbidn = listn(1, cs);
         dbmode = 3;
-        label_2298();
+        access_class_info();
         dbmode = 11;
-        label_2298();
+        access_class_info();
         val = 1;
         label_1567(cnt);
         redraw(1);
@@ -1311,7 +1311,7 @@ label_1554:
     access_race_info();
     dbidn = cmclass;
     dbmode = 3;
-    label_2298();
+    access_class_info();
     cdata[rc].level = 1;
     {
         int cnt = 10;
@@ -1461,7 +1461,7 @@ void label_1557(bool label_1558_flg)
         gdata_acquirable_feat_count = 3;
         DIM2(trait, 500);
         DIM2(spact, 500);
-        label_0043();
+        gain_race_feat();
         redraw(0);
         gmode(0);
         pos(0, 0);
@@ -1674,7 +1674,7 @@ label_1563_internal:
     access_race_info();
     dbidn = cmclass;
     dbmode = 3;
-    label_2298();
+    access_class_info();
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
     cdata[rc].level = 1;
@@ -1696,7 +1696,7 @@ label_1563_internal:
     csctrl = 1;
     menucycle = 0;
     {
-        int stat = label_20332();
+        int stat = show_character_sheet();
         if (stat == 0)
         {
             nowindowanime = 1;
@@ -2088,7 +2088,7 @@ void label_2732()
         cdata[0].fame = 65000;
         gdata_main_quest_flag = 100;
         r1 = 0;
-        label_1477();
+        refresh_character();
         flt();
         itemcreate(0, 284, -1, -1, 0);
         inv[ci].number = 20;
@@ -2326,7 +2326,7 @@ void label_2732()
         }
         cbitmod(20, 0, 1);
         mode = 0;
-        label_1521();
+        refresh_burden_state();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (55); cnt < cnt_end; ++cnt)

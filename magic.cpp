@@ -683,7 +683,7 @@ int magic()
                                 + u8" hungry."s));
                     }
                     r1 = tc;
-                    label_1519();
+                    get_hungry();
                 }
                 if (efid == 613)
                 {
@@ -711,7 +711,7 @@ int magic()
                                 name(tc) + u8" "s + is(tc) + u8" weakened."s));
                         }
                         r1 = tc;
-                        label_1477();
+                        refresh_character();
                     }
                 }
                 goto label_2186_internal;
@@ -993,7 +993,7 @@ int magic()
                             cc = ccprev;
                             if (tc == 0)
                             {
-                                label_1419();
+                                update_screen();
                             }
                             break;
                         }
@@ -1335,7 +1335,7 @@ label_2181_internal:
                 name(cc) + u8" put"s + _s(cc) + u8" something into "s + name(tc)
                     + your(tc) + u8" body!"s));
         }
-        label_1617();
+        get_pregnant();
         goto label_2186_internal;
     case 626:
         txt(lang(
@@ -1827,7 +1827,7 @@ label_2181_internal:
             txt(lang(
                 u8"釣りをする場所が見当たらない。"s,
                 u8"This isn't a good place to fish."s));
-            label_1419();
+            update_screen();
             return 0;
         }
         if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 3)
@@ -1835,7 +1835,7 @@ label_2181_internal:
             txt(lang(
                 u8"水の中からは釣れない。"s,
                 u8"You can't fish while swimming."s));
-            label_1419();
+            update_screen();
             return 0;
         }
         if (cdata[0].position.x - x > 0)
@@ -2099,7 +2099,7 @@ label_2181_internal:
             obvious = 0;
         }
         r1 = 0;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1121:
         if (tc != 0)
@@ -2172,7 +2172,7 @@ label_2181_internal:
             obvious = 0;
         }
         r1 = 0;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 411:
         if (cc != 0)
@@ -2378,7 +2378,7 @@ label_2181_internal:
             animeload(10, tc);
         }
         r1 = tc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 413:
         if (tc >= 16)
@@ -2515,7 +2515,7 @@ label_2181_internal:
             cdata[tc].experience = cdata[tc].required_experience;
             r1 = tc;
             r2 = 0;
-            label_1454();
+            gain_level();
             if (synccheck(tc, -1))
             {
                 snd(60);
@@ -2542,7 +2542,7 @@ label_2181_internal:
             }
             animeload(8, tc);
         }
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1105:
     {
@@ -2593,7 +2593,7 @@ label_2181_internal:
         }
     }
         r1 = tc;
-        label_1477();
+        refresh_character();
         autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 1107:
@@ -2647,7 +2647,7 @@ label_2181_internal:
             skillexp(181, 0, 1000 + (efstatus >= 1) * 750, 6, 1000);
         }
         r1 = tc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1119:
     {
@@ -2708,7 +2708,7 @@ label_2181_internal:
         }
     }
         r1 = tc;
-        label_1477();
+        refresh_character();
         autosave = 1 * (gdata_current_map != 35);
         goto label_2186_internal;
     case 1106:
@@ -2717,7 +2717,7 @@ label_2181_internal:
         animeid = 6;
         label_1426();
         r1 = tc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1139:
         txt(lang(
@@ -2732,7 +2732,7 @@ label_2181_internal:
             txt(lang(u8"あつつ！"s, u8"It really burns!"s));
         }
         r1 = tc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1113:
         if (efstatus >= 1)
@@ -2888,7 +2888,8 @@ label_2181_internal:
         }
         animeload(10, tc);
         redraw(0);
-        label_1418();
+        update_minimap();
+        update_screen();
         goto label_2186_internal;
     case 658:
         if (cdata[tc].hp > cdata[tc].max_hp / 8)
@@ -3020,10 +3021,10 @@ label_2181_internal:
             }
         }
         r1 = tc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 441:
-        label_1997();
+        what_do_you_wish_for();
         screenupdate = -1;
         label_1416();
         goto label_2186_internal;
@@ -3299,7 +3300,7 @@ label_2181_internal:
                     name(tc) + your(tc) + u8" "s + valn + u8" glows black."s));
             }
             r1 = tc;
-            label_1477();
+            refresh_character();
             snd(117);
             animeload(14, tc);
             item_stack(tc, i, 1);
@@ -3338,7 +3339,7 @@ label_2181_internal:
             snd(38);
         }
         r1 = tc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1138:
     case 1123:
@@ -3554,7 +3555,7 @@ label_2181_internal:
             u8"What do you want to name this artifact?"s));
         val = 3;
         {
-            int stat = label_1993();
+            int stat = select_alias();
             if (stat == 0)
             {
                 obvious = 0;
@@ -3627,7 +3628,7 @@ label_2181_internal:
             inv[ci].body_part = equip;
         }
         r1 = cc;
-        label_1477();
+        refresh_character();
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
@@ -3715,7 +3716,7 @@ label_2181_internal:
             inv[ci].body_part = equip;
         }
         r1 = cc;
-        label_1477();
+        refresh_character();
         fixmaterial = 0;
         objfix = 0;
         goto label_2186_internal;
@@ -3779,7 +3780,7 @@ label_2181_internal:
                             + u8"."s));
                 }
                 r1 = cc;
-                label_1477();
+                refresh_character();
             }
             else
             {
@@ -3884,7 +3885,7 @@ label_2181_internal:
                             itemname(ci) + u8" explode"s + _s2(inv[ci].number)
                                 + u8"."s));
                         --inv[ci].number;
-                        label_1521();
+                        refresh_burden_state();
                         goto label_2186_internal;
                     }
                     txt(lang(
@@ -3954,7 +3955,7 @@ label_2181_internal:
                         + u8" recharge powers. (Total:"s + gdata_charge_power
                         + u8")"s));
                 inv[ci].number = 0;
-                label_1521();
+                refresh_burden_state();
             }
         }
         goto label_2186_internal;
@@ -4062,7 +4063,7 @@ label_2181_internal:
                         ""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
                         itemname(ci, 1) + u8" becomes heavy."s));
                 }
-                label_1521();
+                refresh_burden_state();
             }
             else
             {
@@ -4071,7 +4072,7 @@ label_2181_internal:
             }
         }
         r1 = cc;
-        label_1477();
+        refresh_character();
         goto label_2186_internal;
     case 1132:
         if (cc != 0)
@@ -4131,7 +4132,7 @@ label_2181_internal:
             txt(lang(
                 u8"それは"s + itemname(ci, 1) + u8"に変容した。"s,
                 u8"It is metamorphosed into "s + itemname(ci, 1) + u8"."s));
-            label_1521();
+            refresh_burden_state();
         }
         else
         {
@@ -4633,7 +4634,7 @@ label_2181_internal:
         }
         healhp(cc, cdata[cc].max_hp / 3);
         label_2161();
-        label_1521();
+        refresh_burden_state();
         goto label_2186_internal;
     case 464:
         animeload(10, tc);

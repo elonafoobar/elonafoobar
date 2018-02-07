@@ -9,7 +9,7 @@ namespace elona
 
 std::string calcage(int);
 
-void label_1419();
+void update_screen();
 void label_1567(int);
 
 inline int prm_409;
@@ -36,7 +36,7 @@ void label_1547(bool = true);
 void label_1550(bool = true);
 void label_1553(bool = true);
 void label_1557(bool = true);
-void label_2743(bool = true);
+void pc_turn(bool = true);
 void label_2737(bool = true);
 
 int access_character_info();
