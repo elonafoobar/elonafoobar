@@ -43,6 +43,7 @@ size_t read_binary(std::istream& in, size_t size, char* buffer)
 {
     assert(in);
 
+    std::fill_n(buffer, size, 0);
     in.read(buffer, size);
     if (in.eof())
     {
