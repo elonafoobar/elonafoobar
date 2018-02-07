@@ -19,147 +19,134 @@ namespace
 
 
 
-void gmes(
+position_t gmes(
     const std::string& text,
-    int gmesx,
-    int gmesy,
-    int gmesw,
+    int x_base,
+    int y_base,
+    int width,
     const snail::color& text_color_base,
     bool shadow)
 {
     int font_size = 14;
     font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
 
-    std::string m__;
-    std::string message = text + u8"$end";
-    int i__ = 0;
-    int xorg__ = gmesx;
+    const auto message = text + u8"$end";
+    int x = x_base;
+    int y = y_base;
+    size_t pos = 0;
     snail::color text_color = text_color_base;
-    int lim__ = gmesx + gmesw;
-    int p__ = message[i__];
-    std::string s__;
 
-    while (1)
+    while (message.find(u8"$end", pos) != pos)
     {
         bool wait_to_break_line = false;
-        if (p__ >= 0x00 && p__ <= 0x7F)
-            p__ = 1;
-        else if (p__ >= 0xc2 && p__ <= 0xdf)
-            p__ = 2;
-        else if (p__ >= 0xe0 && p__ <= 0xef)
-            p__ = 3;
-        else if (p__ >= 0xf0 && p__ <= 0xf7)
-            p__ = 4;
-        else if (p__ >= 0xf8 && p__ <= 0xfb)
-            p__ = 5;
-        else if (p__ >= 0xfc && p__ <= 0xfd)
-            p__ = 6;
+        uint8_t first = message[pos];
+        size_t byte;
+        if (first >= 0x00 && first <= 0x7F)
+            byte = 1;
+        else if (first >= 0xc2 && first <= 0xdf)
+            byte = 2;
+        else if (first >= 0xe0 && first <= 0xef)
+            byte = 3;
+        else if (first >= 0xf0 && first <= 0xf7)
+            byte = 4;
+        else if (first >= 0xf8 && first <= 0xfb)
+            byte = 5;
+        else if (first >= 0xfc && first <= 0xfd)
+            byte = 6;
         else
-            p__ = 1;
-        m__ = strmid(message, i__, p__);
-        i__ += p__;
-        if (m__ == u8"$"s)
-        {
-            s__ = strmid(message, i__, 3);
-            p__ += 3;
-            if (s__ == u8"end"s)
-            {
-                break;
-            }
-            continue;
-        }
-        else if (
-            m__ == u8"。"s || m__ == u8"、"s || m__ == u8"」"s || m__ == u8"』"s
-            || m__ == u8"！"s || m__ == u8"？"s || m__ == u8"…"s)
+            byte = 1;
+        std::string m_ = strmid(message, pos, byte);
+        pos += byte;
+        if (m_ == u8"。" || m_ == u8"、" || m_ == u8"」" || m_ == u8"』"
+            || m_ == u8"！" || m_ == u8"？" || m_ == u8"…")
         {
             wait_to_break_line = true;
         }
-        if (m__ == u8"<"s)
+        else if (m_ == u8"<")
         {
-            s__ = strmid(message, i__, instr(message, i__, u8">"s));
-            i__ += instr(message, i__, u8">"s) + 1;
-            if (s__ == u8"emp1"s)
+            const auto tag = strmid(message, pos, instr(message, pos, u8">"));
+            pos += instr(message, pos, u8">") + 1;
+            if (tag == u8"emp1")
             {
                 font(lang(cfg_font1, cfg_font2), font_size - en * 2, 4);
                 text_color = {50, 50, 255};
             }
-            if (s__ == u8"emp2"s)
+            else if (tag == u8"emp2")
             {
                 font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
                 text_color = {40, 130, 40};
             }
-            if (s__ == u8"title1"s)
+            else if (tag == u8"title1")
             {
                 font_size = 12;
                 font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
                 text_color = {100, 50, 50};
             }
-            if (s__ == u8"def"s)
+            else if (tag == u8"def")
             {
                 font_size = 14;
                 font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
                 text_color = text_color_base;
             }
-            if (s__ == u8"p"s)
+            else if (tag == u8"p")
             {
-                gmesy += 24;
-                gmesx = xorg__;
+                y += 24;
+                x = x_base;
             }
-            if (s__ == u8"br"s)
+            else if (tag == u8"br")
             {
-                gmesy += 16;
-                gmesx = xorg__;
+                y += 16;
+                x = x_base;
             }
-            if (s__ == u8"b"s)
+            else if (tag == u8"b")
             {
                 font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
             }
-            if (s__ == u8"green"s)
+            else if (tag == u8"green")
             {
                 text_color = {20, 120, 20};
             }
-            if (s__ == u8"red"s)
+            else if (tag == u8"red")
             {
                 text_color = {120, 20, 20};
             }
-            if (s__ == u8"col"s)
+            else if (tag == u8"col")
             {
                 text_color = text_color_base;
             }
             continue;
         }
-        if (m__ == u8"^"s)
+        if (m_ == u8"^")
         {
-            m__ = strmid(message, i__, 1);
-            ++i__;
+            m_ = strmid(message, pos, 1);
+            ++pos;
         }
         if (!wait_to_break_line)
         {
-            if (gmesx >= lim__)
+            if (x >= x_base + width)
             {
-                gmesx = xorg__;
-                gmesy += font_size + 2;
+                x = x_base;
+                y += font_size + 2;
             }
         }
         if (shadow)
         {
             color(180, 160, 140);
-            pos(gmesx + 1, gmesy + 1);
-            mes(m__);
+            elona::pos(x + 1, y + 1);
+            mes(m_);
         }
         color(text_color.r, text_color.g, text_color.b);
-        pos(gmesx, gmesy);
-        mes(m__);
-        gmesx += font_size / 2 * p__;
+        elona::pos(x, y);
+        mes(m_);
+        x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
-    gmesx = xorg__;
-    gmesy += font_size + 4;
+    return {x_base, y + font_size + 4};
 }
 
 
 
-}
+} // namespace
 
 
 
@@ -47544,7 +47531,7 @@ label_1965_internal:
             }
             noteget(s, p);
             pos(wx + 54, wy + 66 + cnt * 19 + 2);
-            gmes(s, wx + 40, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
+            gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
         }
     }
     redraw(1);
@@ -78889,6 +78876,7 @@ void label_2701()
             font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
             color(30, 30, 30);
             {
+                int y = ty;
                 int cnt = 0;
                 for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                 {
@@ -78898,7 +78886,9 @@ void label_2701()
                     {
                         break;
                     }
-                    gmes(s, tx, ty, 330, {30, 30, 30}, true);
+                    const auto [_, ny] =
+                        gmes(s, tx, y, 330, {30, 30, 30}, true);
+                    y = ny;
                 }
             }
             gmode(2);
@@ -79211,6 +79201,7 @@ label_2705_internal:
         color(0, 0, 0);
         p = list(0, pagesize * page_bk + cs_bk2);
         {
+            int y = wy + 60;
             int cnt = p;
             for (int cnt_end = cnt + (noteinfo(0) - p); cnt < cnt_end; ++cnt)
             {
@@ -79220,7 +79211,9 @@ label_2705_internal:
                 {
                     break;
                 }
-                gmes(s1, wx + 216, wy + 60, 510, {30, 30, 30}, false);
+                const auto [_, ny] =
+                    gmes(s1, wx + 216, y, 510, {30, 30, 30}, false);
+                y = ny;
             }
         }
     }
