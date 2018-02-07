@@ -42,7 +42,7 @@ namespace elona
 {
 
 
-int label_2654()
+int access_character_info()
 {
     if (dbid == 0)
     {
@@ -59,7 +59,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -81,7 +81,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -106,7 +106,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 1;
             cpicref += 0;
             return 0;
@@ -129,7 +129,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -204,7 +204,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 140;
             cpicref += 0;
             return 0;
@@ -234,7 +234,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -265,7 +265,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 443;
             cpicref += 0;
             return 0;
@@ -292,7 +292,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -403,7 +403,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 144;
             cpicref += 0;
             return 0;
@@ -434,7 +434,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -491,7 +491,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 15;
             cpicref += 0;
             return 0;
@@ -519,7 +519,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -577,7 +577,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 41;
             cpicref += 0;
             return 0;
@@ -605,7 +605,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -681,7 +681,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 69;
             cpicref += 0;
             return 0;
@@ -709,7 +709,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -831,7 +831,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 163;
             cpicref += 0;
             return 0;
@@ -862,7 +862,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -916,7 +916,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 142;
             cpicref += 0;
             return 0;
@@ -944,7 +944,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -1011,7 +1011,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 7;
             cpicref += 0;
             return 0;
@@ -1039,7 +1039,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -1107,7 +1107,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 415;
             cpicref += 0;
             return 0;
@@ -1135,7 +1135,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -1218,7 +1218,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 363;
             cpicref += 0;
             return 0;
@@ -1247,7 +1247,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -1330,7 +1330,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 25;
             cpicref += 0;
             return 0;
@@ -1359,7 +1359,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -1440,7 +1440,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 74;
             cpicref += 0;
             return 0;
@@ -1472,7 +1472,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -1565,7 +1565,7 @@ int label_2654()
         {
             dbidn = u8"elea";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 297;
             cpicref += 0;
             return 0;
@@ -1597,7 +1597,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -1695,7 +1695,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 347;
             cpicref += 0;
             return 0;
@@ -1722,7 +1722,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -1801,7 +1801,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 331;
             cpicref += 0;
             return 0;
@@ -1829,7 +1829,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -1863,7 +1863,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 332;
             cpicref += 0;
             return 0;
@@ -1887,7 +1887,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -1916,7 +1916,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 333;
             cpicref += 0;
             return 0;
@@ -1940,7 +1940,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -2042,7 +2042,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 334;
             cpicref += 0;
             return 0;
@@ -2070,7 +2070,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -2174,7 +2174,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 337;
             cpicref += 0;
             return 0;
@@ -2203,7 +2203,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -2237,7 +2237,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 338;
             cpicref += 0;
             return 0;
@@ -2262,7 +2262,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -2360,7 +2360,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 8;
             cpicref += 0;
             return 0;
@@ -2388,7 +2388,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -2485,7 +2485,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 109;
             cpicref += 0;
             return 0;
@@ -2512,7 +2512,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -2616,7 +2616,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 478;
             cpicref += 0;
             return 0;
@@ -2644,7 +2644,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -2762,7 +2762,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 479;
             cpicref += 0;
             return 0;
@@ -2790,7 +2790,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -2880,7 +2880,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 344;
             cpicref += 0;
             return 0;
@@ -2908,7 +2908,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -3022,7 +3022,7 @@ int label_2654()
         {
             dbidn = u8"elea";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 345;
             cpicref += 0;
             return 0;
@@ -3052,7 +3052,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -3165,7 +3165,7 @@ int label_2654()
         {
             dbidn = u8"elea";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 346;
             cpicref += 0;
             return 0;
@@ -3195,7 +3195,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -3256,7 +3256,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 99;
             cpicref += 0;
             return 0;
@@ -3281,7 +3281,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -3332,7 +3332,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 99;
             cpicref += 0;
             return 0;
@@ -3358,7 +3358,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -3455,7 +3455,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 340;
             cpicref += 0;
             return 0;
@@ -3484,7 +3484,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -3521,7 +3521,7 @@ int label_2654()
         {
             dbidn = u8"lich";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 339;
             cpicref += 0;
             return 0;
@@ -3551,7 +3551,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -3587,7 +3587,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 341;
             cpicref += 0;
             return 0;
@@ -3616,7 +3616,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -3652,7 +3652,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 343;
             cpicref += 0;
             return 0;
@@ -3681,7 +3681,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -3715,7 +3715,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 342;
             cpicref += 0;
             return 0;
@@ -3739,7 +3739,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(50, rc) = 500;
             cdata[rc].image = 342;
             cdata[rc].image += 0;
@@ -3769,7 +3769,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 393;
             cpicref += 0;
             return 0;
@@ -3794,7 +3794,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -3823,7 +3823,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 413;
             cpicref += 0;
             return 0;
@@ -3847,7 +3847,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -3876,7 +3876,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 413;
             cpicref += 0;
             return 0;
@@ -3904,7 +3904,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -3938,7 +3938,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 432;
             cpicref += 0;
             return 0;
@@ -3962,7 +3962,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -3997,7 +3997,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 433;
             cpicref += 0;
             return 0;
@@ -4021,7 +4021,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"farmer";
             dbmode = 3;
             label_2298();
@@ -4055,7 +4055,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 447;
             cpicref += 0;
             return 0;
@@ -4079,7 +4079,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -4113,7 +4113,7 @@ int label_2654()
         {
             dbidn = u8"god";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 435;
             cpicref += 0;
             return 0;
@@ -4140,7 +4140,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -4194,7 +4194,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -4217,7 +4217,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -4263,7 +4263,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -4286,7 +4286,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(63, rc) = 500;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -4324,7 +4324,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 257;
             cpicref += 4000;
             return 0;
@@ -4348,7 +4348,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -4391,7 +4391,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 257;
             cpicref += 2000;
             return 0;
@@ -4416,7 +4416,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -4460,7 +4460,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 400;
             cpicref += 0;
             return 0;
@@ -4484,7 +4484,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(63, rc) = 500;
             cdata[rc].image = 400;
             cdata[rc].image += 0;
@@ -4523,7 +4523,7 @@ int label_2654()
         {
             dbidn = u8"slime";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 400;
             cpicref += 17000;
             return 0;
@@ -4547,7 +4547,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(63, rc) = 500;
             cdata[rc].image = 400;
             cdata[rc].image += 17000;
@@ -4571,7 +4571,7 @@ int label_2654()
         {
             dbidn = u8"drake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 401;
             cpicref += 0;
             return 0;
@@ -4595,7 +4595,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"drake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 401;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -4618,7 +4618,7 @@ int label_2654()
         {
             dbidn = u8"machine";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 282;
             cpicref += 0;
             return 0;
@@ -4642,7 +4642,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 282;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -4665,7 +4665,7 @@ int label_2654()
         {
             dbidn = u8"rabbit";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -4687,7 +4687,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -4727,7 +4727,7 @@ int label_2654()
         {
             dbidn = u8"snail";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -4750,7 +4750,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"snail";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -4844,7 +4844,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 37;
             cpicref += 0;
             return 0;
@@ -4870,7 +4870,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -4965,7 +4965,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 139;
             cpicref += 0;
             return 0;
@@ -4991,7 +4991,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -5090,7 +5090,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 102;
             cpicref += 0;
             return 0;
@@ -5120,7 +5120,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -5188,7 +5188,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 179;
             cpicref += 0;
             return 0;
@@ -5218,7 +5218,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -5278,7 +5278,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 410;
             cpicref += 0;
             return 0;
@@ -5309,7 +5309,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -5367,7 +5367,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 187;
             cpicref += 0;
             return 0;
@@ -5397,7 +5397,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -5487,7 +5487,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 148;
             cpicref += 0;
             return 0;
@@ -5517,7 +5517,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"pianist";
             dbmode = 3;
             label_2298();
@@ -5563,7 +5563,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 181;
             cpicref += 0;
             return 0;
@@ -5592,7 +5592,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -5647,7 +5647,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 442;
             cpicref += 0;
             return 0;
@@ -5671,7 +5671,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -5724,7 +5724,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 473;
             cpicref += 0;
             return 0;
@@ -5748,7 +5748,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"pianist";
             dbmode = 3;
             label_2298();
@@ -5801,7 +5801,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 285;
             cpicref += 0;
             return 0;
@@ -5830,7 +5830,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -5890,7 +5890,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 183;
             cpicref += 0;
             return 0;
@@ -5921,7 +5921,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -5981,7 +5981,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 418;
             cpicref += 0;
             return 0;
@@ -6011,7 +6011,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -6071,7 +6071,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 419;
             cpicref += 0;
             return 0;
@@ -6101,7 +6101,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -6163,7 +6163,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 185;
             cpicref += 0;
             return 0;
@@ -6193,7 +6193,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -6257,7 +6257,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 189;
             cpicref += 0;
             return 0;
@@ -6287,7 +6287,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -6349,7 +6349,7 @@ int label_2654()
         {
             dbidn = u8"eulderna";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 195;
             cpicref += 0;
             return 0;
@@ -6382,7 +6382,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -6444,7 +6444,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 76;
             cpicref += 0;
             return 0;
@@ -6474,7 +6474,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -6536,7 +6536,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 78;
             cpicref += 0;
             return 0;
@@ -6566,7 +6566,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -6665,7 +6665,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 104;
             cpicref += 0;
             return 0;
@@ -6695,7 +6695,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -6793,7 +6793,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 106;
             cpicref += 0;
             return 0;
@@ -6823,7 +6823,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -6895,7 +6895,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 112;
             cpicref += 0;
             return 0;
@@ -6921,7 +6921,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -6951,7 +6951,7 @@ int label_2654()
         {
             dbidn = u8"sheep";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -6973,7 +6973,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"sheep";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -6998,7 +6998,7 @@ int label_2654()
         {
             dbidn = u8"frog";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -7020,7 +7020,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"frog";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -7087,7 +7087,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 31;
             cpicref += 0;
             return 0;
@@ -7117,7 +7117,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 31;
             if (cdata[rc].sex == 1)
             {
@@ -7149,7 +7149,7 @@ int label_2654()
         {
             dbidn = u8"kobolt";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -7171,7 +7171,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"kobolt";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -7196,7 +7196,7 @@ int label_2654()
         {
             dbidn = u8"yeek";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -7218,7 +7218,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -7240,7 +7240,7 @@ int label_2654()
         {
             dbidn = u8"yeek";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 6000;
             return 0;
         }
@@ -7262,7 +7262,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -7284,7 +7284,7 @@ int label_2654()
         {
             dbidn = u8"yeek";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 2000;
             return 0;
         }
@@ -7306,7 +7306,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -7331,7 +7331,7 @@ int label_2654()
         {
             dbidn = u8"yeek";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 8000;
             return 0;
         }
@@ -7357,7 +7357,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 8000;
             cspecialeq = 0;
             return 0;
@@ -7380,7 +7380,7 @@ int label_2654()
         {
             dbidn = u8"yeek";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -7402,7 +7402,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -7456,7 +7456,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 385;
             cpicref += 0;
             return 0;
@@ -7482,7 +7482,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -7508,7 +7508,7 @@ int label_2654()
         {
             dbidn = u8"rock";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 386;
             cpicref += 0;
             return 0;
@@ -7532,7 +7532,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"rock";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -7643,7 +7643,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 411;
             cpicref += 0;
             return 0;
@@ -7670,7 +7670,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -7728,7 +7728,7 @@ int label_2654()
         {
             dbidn = u8"yeek";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 381;
             cpicref += 0;
             return 0;
@@ -7760,7 +7760,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -7825,7 +7825,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 379;
             cpicref += 0;
             return 0;
@@ -7855,7 +7855,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 379;
             if (cdata[rc].sex == 1)
             {
@@ -7887,7 +7887,7 @@ int label_2654()
         {
             dbidn = u8"centipede";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -7909,7 +7909,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -7931,7 +7931,7 @@ int label_2654()
         {
             dbidn = u8"mushroom";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -7955,7 +7955,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -7982,7 +7982,7 @@ int label_2654()
         {
             dbidn = u8"mushroom";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 399;
             cpicref += 0;
             return 0;
@@ -8006,7 +8006,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400150;
             cdata[rc].image = 399;
             cdata[rc].image += 0;
@@ -8030,7 +8030,7 @@ int label_2654()
         {
             dbidn = u8"mushroom";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 399;
             cpicref += 8000;
             return 0;
@@ -8054,7 +8054,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5900250;
             cdata[rc].image = 399;
             cdata[rc].image += 8000;
@@ -8127,7 +8127,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 136;
             cpicref += 0;
             return 0;
@@ -8157,7 +8157,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -8236,7 +8236,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 134;
             cpicref += 0;
             return 0;
@@ -8266,7 +8266,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -8346,7 +8346,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 128;
             cpicref += 0;
             return 0;
@@ -8377,7 +8377,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -8457,7 +8457,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 127;
             cpicref += 0;
             return 0;
@@ -8488,7 +8488,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -8550,7 +8550,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 146;
             cpicref += 0;
             return 0;
@@ -8580,7 +8580,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -8637,7 +8637,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 120;
             cpicref += 0;
             return 0;
@@ -8665,7 +8665,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -8722,7 +8722,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 119;
             cpicref += 0;
             return 0;
@@ -8750,7 +8750,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -8833,7 +8833,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 117;
             cpicref += 0;
             return 0;
@@ -8862,7 +8862,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -8924,7 +8924,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 116;
             cpicref += 0;
             return 0;
@@ -8951,7 +8951,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -8979,7 +8979,7 @@ int label_2654()
         {
             dbidn = u8"orc";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -9001,7 +9001,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -9023,7 +9023,7 @@ int label_2654()
         {
             dbidn = u8"lizardman";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9045,7 +9045,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lizardman";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9070,7 +9070,7 @@ int label_2654()
         {
             dbidn = u8"minotaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9092,7 +9092,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9118,7 +9118,7 @@ int label_2654()
         {
             dbidn = u8"minotaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 4000;
             return 0;
         }
@@ -9144,7 +9144,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"priest";
             dbmode = 3;
             label_2298();
@@ -9170,7 +9170,7 @@ int label_2654()
         {
             dbidn = u8"minotaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -9192,7 +9192,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -9218,7 +9218,7 @@ int label_2654()
         {
             dbidn = u8"minotaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 8000;
             return 0;
         }
@@ -9240,7 +9240,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9274,7 +9274,7 @@ int label_2654()
         {
             dbidn = u8"minotaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 10000;
             return 0;
         }
@@ -9299,7 +9299,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9336,7 +9336,7 @@ int label_2654()
         {
             dbidn = u8"troll";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9358,7 +9358,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"troll";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(50, rc) = 50;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -9381,7 +9381,7 @@ int label_2654()
         {
             dbidn = u8"elea";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9403,7 +9403,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9433,7 +9433,7 @@ int label_2654()
         {
             dbidn = u8"elea";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 47;
             cpicref += 0;
             return 0;
@@ -9459,7 +9459,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -9489,7 +9489,7 @@ int label_2654()
         {
             dbidn = u8"asura";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9511,7 +9511,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"asura";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9541,7 +9541,7 @@ int label_2654()
         {
             dbidn = u8"asura";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 2000;
             return 0;
         }
@@ -9563,7 +9563,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"asura";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9593,7 +9593,7 @@ int label_2654()
         {
             dbidn = u8"asura";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -9615,7 +9615,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"asura";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9645,7 +9645,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 13;
             cpicref += 0;
             return 0;
@@ -9676,7 +9676,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -9706,7 +9706,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 21;
             cpicref += 0;
             return 0;
@@ -9733,7 +9733,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9768,7 +9768,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9790,7 +9790,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -9817,7 +9817,7 @@ int label_2654()
         {
             dbidn = u8"beetle";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9839,7 +9839,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"beetle";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -9864,7 +9864,7 @@ int label_2654()
         {
             dbidn = u8"orc";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9886,7 +9886,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9913,7 +9913,7 @@ int label_2654()
         {
             dbidn = u8"orc";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -9936,7 +9936,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -9967,7 +9967,7 @@ int label_2654()
         {
             dbidn = u8"zombie";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -9989,7 +9989,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10014,7 +10014,7 @@ int label_2654()
         {
             dbidn = u8"bat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -10036,7 +10036,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -10058,7 +10058,7 @@ int label_2654()
         {
             dbidn = u8"bat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -10081,7 +10081,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10107,7 +10107,7 @@ int label_2654()
         {
             dbidn = u8"bat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 4000;
             return 0;
         }
@@ -10129,7 +10129,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10162,7 +10162,7 @@ int label_2654()
         {
             dbidn = u8"ent";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -10184,7 +10184,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10220,7 +10220,7 @@ int label_2654()
         {
             dbidn = u8"ent";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -10242,7 +10242,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10275,7 +10275,7 @@ int label_2654()
         {
             dbidn = u8"lich";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -10301,7 +10301,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -10331,7 +10331,7 @@ int label_2654()
         {
             dbidn = u8"lich";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -10358,7 +10358,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -10388,7 +10388,7 @@ int label_2654()
         {
             dbidn = u8"lich";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -10414,7 +10414,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -10439,7 +10439,7 @@ int label_2654()
         {
             dbidn = u8"lich";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 404;
             cpicref += 0;
             return 0;
@@ -10466,7 +10466,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -10499,7 +10499,7 @@ int label_2654()
         {
             dbidn = u8"lich";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 404;
             cpicref += 4000;
             return 0;
@@ -10525,7 +10525,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -10556,7 +10556,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 6000;
             return 0;
         }
@@ -10578,7 +10578,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10608,7 +10608,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -10631,7 +10631,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10658,7 +10658,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 12000;
             return 0;
         }
@@ -10681,7 +10681,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10709,7 +10709,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -10732,7 +10732,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10758,7 +10758,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 4000;
             return 0;
         }
@@ -10781,7 +10781,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10807,7 +10807,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 10000;
             return 0;
         }
@@ -10830,7 +10830,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10856,7 +10856,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 9000;
             return 0;
         }
@@ -10879,7 +10879,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10906,7 +10906,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 2000;
             return 0;
         }
@@ -10929,7 +10929,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -10955,7 +10955,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 11000;
             return 0;
         }
@@ -10978,7 +10978,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11004,7 +11004,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 15000;
             return 0;
         }
@@ -11027,7 +11027,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11053,7 +11053,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 18000;
             return 0;
         }
@@ -11076,7 +11076,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11107,7 +11107,7 @@ int label_2654()
         {
             dbidn = u8"rabbit";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 204;
             cpicref += 6000;
             return 0;
@@ -11130,7 +11130,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11161,7 +11161,7 @@ int label_2654()
         {
             dbidn = u8"rabbit";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 204;
             cpicref += 3000;
             return 0;
@@ -11184,7 +11184,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11215,7 +11215,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -11240,7 +11240,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -11267,7 +11267,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 2000;
             return 0;
         }
@@ -11290,7 +11290,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
@@ -11312,7 +11312,7 @@ int label_2654()
         {
             dbidn = u8"ent";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 406;
             cpicref += 0;
             return 0;
@@ -11336,7 +11336,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11363,7 +11363,7 @@ int label_2654()
         {
             dbidn = u8"ent";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 406;
             cpicref += 16000;
             return 0;
@@ -11387,7 +11387,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11421,7 +11421,7 @@ int label_2654()
         {
             dbidn = u8"spirit";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -11445,7 +11445,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spirit";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(52, rc) = 500;
             cdata[rc].image += 5000;
             cspecialeq = 0;
@@ -11477,7 +11477,7 @@ int label_2654()
         {
             dbidn = u8"spirit";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 18000;
             return 0;
         }
@@ -11500,7 +11500,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spirit";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5900300;
             sdata(59, rc) = 500;
             cdata[rc].image += 18000;
@@ -11534,7 +11534,7 @@ int label_2654()
         {
             dbidn = u8"eye";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -11556,7 +11556,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5800250;
             sdata(54, rc) = 500;
             if (nerve != 0)
@@ -11593,7 +11593,7 @@ int label_2654()
         {
             dbidn = u8"eye";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 8000;
             return 0;
         }
@@ -11616,7 +11616,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11656,7 +11656,7 @@ int label_2654()
         {
             dbidn = u8"eye";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 407;
             cpicref += 4000;
             return 0;
@@ -11680,7 +11680,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400300;
             sdata(54, rc) = 500;
             if (nerve != 0)
@@ -11718,7 +11718,7 @@ int label_2654()
         {
             dbidn = u8"eye";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 407;
             cpicref += 3000;
             return 0;
@@ -11742,7 +11742,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11774,7 +11774,7 @@ int label_2654()
         {
             dbidn = u8"wyvern";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -11797,7 +11797,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"wyvern";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11823,7 +11823,7 @@ int label_2654()
         {
             dbidn = u8"eulderna";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 209;
             cpicref += 0;
             return 0;
@@ -11849,7 +11849,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -11875,7 +11875,7 @@ int label_2654()
         {
             dbidn = u8"wasp";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -11898,7 +11898,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"wasp";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -11920,7 +11920,7 @@ int label_2654()
         {
             dbidn = u8"wasp";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -11943,7 +11943,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"wasp";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -11971,7 +11971,7 @@ int label_2654()
         {
             dbidn = u8"giant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -11993,7 +11993,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -12039,7 +12039,7 @@ int label_2654()
         {
             dbidn = u8"giant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -12062,7 +12062,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -12093,7 +12093,7 @@ int label_2654()
         {
             dbidn = u8"imp";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -12119,7 +12119,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"imp";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -12147,7 +12147,7 @@ int label_2654()
         {
             dbidn = u8"imp";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 4000;
             return 0;
         }
@@ -12172,7 +12172,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"imp";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
@@ -12200,7 +12200,7 @@ int label_2654()
         {
             dbidn = u8"imp";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 18000;
             return 0;
         }
@@ -12225,7 +12225,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"imp";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
@@ -12253,7 +12253,7 @@ int label_2654()
         {
             dbidn = u8"hand";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -12277,7 +12277,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hand";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5300080;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -12306,7 +12306,7 @@ int label_2654()
         {
             dbidn = u8"hand";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 18000;
             return 0;
         }
@@ -12329,7 +12329,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hand";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5900180;
             cdata[rc].image += 18000;
             cspecialeq = 0;
@@ -12359,7 +12359,7 @@ int label_2654()
         {
             dbidn = u8"hand";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -12383,7 +12383,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hand";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -12419,7 +12419,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 214;
             cpicref += 0;
             return 0;
@@ -12444,7 +12444,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5600080;
             cdata[rc].image = 214;
             cdata[rc].image += 0;
@@ -12474,7 +12474,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 214;
             cpicref += 5000;
             return 0;
@@ -12500,7 +12500,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400200;
             sdata(51, rc) = 500;
             cdata[rc].image = 214;
@@ -12525,7 +12525,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 215;
             cpicref += 0;
             return 0;
@@ -12548,7 +12548,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400200;
             cdata[rc].image = 215;
             cdata[rc].image += 0;
@@ -12572,7 +12572,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 215;
             cpicref += 10000;
             return 0;
@@ -12595,7 +12595,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5900250;
             cdata[rc].image = 215;
             cdata[rc].image += 10000;
@@ -12628,7 +12628,7 @@ int label_2654()
         {
             dbidn = u8"snake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -12651,7 +12651,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"snake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -12682,7 +12682,7 @@ int label_2654()
         {
             dbidn = u8"snake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -12705,7 +12705,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"snake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -12727,7 +12727,7 @@ int label_2654()
         {
             dbidn = u8"drake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -12750,7 +12750,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"drake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(50, rc) = 500;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -12773,7 +12773,7 @@ int label_2654()
         {
             dbidn = u8"drake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -12796,7 +12796,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"drake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(51, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -12824,7 +12824,7 @@ int label_2654()
         {
             dbidn = u8"zombie";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 219;
             cpicref += 0;
             return 0;
@@ -12849,7 +12849,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 219;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -12877,7 +12877,7 @@ int label_2654()
         {
             dbidn = u8"zombie";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 219;
             cpicref += 10000;
             return 0;
@@ -12902,7 +12902,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -12934,7 +12934,7 @@ int label_2654()
         {
             dbidn = u8"zombie";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 219;
             cpicref += 5000;
             return 0;
@@ -12959,7 +12959,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -12994,7 +12994,7 @@ int label_2654()
         {
             dbidn = u8"zombie";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 219;
             cpicref += 8000;
             return 0;
@@ -13021,7 +13021,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -13053,7 +13053,7 @@ int label_2654()
         {
             dbidn = u8"zombie";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 395;
             cpicref += 0;
             return 0;
@@ -13080,7 +13080,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 395;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -13103,7 +13103,7 @@ int label_2654()
         {
             dbidn = u8"goblin";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -13125,7 +13125,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -13148,7 +13148,7 @@ int label_2654()
         {
             dbidn = u8"goblin";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -13170,7 +13170,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -13196,7 +13196,7 @@ int label_2654()
         {
             dbidn = u8"goblin";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 18000;
             return 0;
         }
@@ -13222,7 +13222,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -13248,7 +13248,7 @@ int label_2654()
         {
             dbidn = u8"goblin";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 4000;
             return 0;
         }
@@ -13271,7 +13271,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -13296,7 +13296,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 221;
             cpicref += 3000;
             return 0;
@@ -13321,7 +13321,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -13348,7 +13348,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 221;
             cpicref += 4000;
             return 0;
@@ -13373,7 +13373,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -13420,7 +13420,7 @@ int label_2654()
         {
             dbidn = u8"bear";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -13448,7 +13448,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bear";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -13470,7 +13470,7 @@ int label_2654()
         {
             dbidn = u8"bear";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -13492,7 +13492,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bear";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -13519,7 +13519,7 @@ int label_2654()
         {
             dbidn = u8"bear";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 439;
             cpicref += 0;
             return 0;
@@ -13542,7 +13542,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bear";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 439;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -13571,7 +13571,7 @@ int label_2654()
         {
             dbidn = u8"armor";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -13593,7 +13593,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -13623,7 +13623,7 @@ int label_2654()
         {
             dbidn = u8"armor";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -13645,7 +13645,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -13676,7 +13676,7 @@ int label_2654()
         {
             dbidn = u8"armor";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -13698,7 +13698,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -13728,7 +13728,7 @@ int label_2654()
         {
             dbidn = u8"armor";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -13751,7 +13751,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -13776,7 +13776,7 @@ int label_2654()
         {
             dbidn = u8"medusa";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -13798,7 +13798,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -13823,7 +13823,7 @@ int label_2654()
         {
             dbidn = u8"medusa";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -13845,7 +13845,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -13870,7 +13870,7 @@ int label_2654()
         {
             dbidn = u8"medusa";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -13892,7 +13892,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -13923,7 +13923,7 @@ int label_2654()
         {
             dbidn = u8"cupid";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -13946,7 +13946,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cupid";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -13972,7 +13972,7 @@ int label_2654()
         {
             dbidn = u8"phantom";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -13995,7 +13995,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"phantom";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -14021,7 +14021,7 @@ int label_2654()
         {
             dbidn = u8"dinosaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -14043,7 +14043,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dinosaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14068,7 +14068,7 @@ int label_2654()
         {
             dbidn = u8"harpy";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -14090,7 +14090,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"harpy";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -14113,7 +14113,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 19000;
             return 0;
         }
@@ -14136,7 +14136,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14161,7 +14161,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -14184,7 +14184,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14211,7 +14211,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -14234,7 +14234,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14260,7 +14260,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -14283,7 +14283,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14309,7 +14309,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 4000;
             return 0;
         }
@@ -14332,7 +14332,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14358,7 +14358,7 @@ int label_2654()
         {
             dbidn = u8"dragon";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 18000;
             return 0;
         }
@@ -14381,7 +14381,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14407,7 +14407,7 @@ int label_2654()
         {
             dbidn = u8"cerberus";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -14430,7 +14430,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cerberus";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -14465,7 +14465,7 @@ int label_2654()
         {
             dbidn = u8"centipede";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 396;
             cpicref += 0;
             return 0;
@@ -14488,7 +14488,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5500150;
             sdata(55, rc) = 500;
             cdata[rc].image = 396;
@@ -14522,7 +14522,7 @@ int label_2654()
         {
             dbidn = u8"centipede";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 396;
             cpicref += 3000;
             return 0;
@@ -14545,7 +14545,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5500350;
             sdata(55, rc) = 500;
             cdata[rc].image = 396;
@@ -14580,7 +14580,7 @@ int label_2654()
         {
             dbidn = u8"spider";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -14604,7 +14604,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(55, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -14646,7 +14646,7 @@ int label_2654()
         {
             dbidn = u8"spider";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 19000;
             return 0;
         }
@@ -14670,7 +14670,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5500150;
             sdata(55, rc) = 500;
             cdata[rc].image += 19000;
@@ -14713,7 +14713,7 @@ int label_2654()
         {
             dbidn = u8"spider";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -14737,7 +14737,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5800150;
             sdata(55, rc) = 500;
             cdata[rc].image += 17000;
@@ -14780,7 +14780,7 @@ int label_2654()
         {
             dbidn = u8"spider";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -14804,7 +14804,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5500200;
             sdata(55, rc) = 500;
             cdata[rc].image += 5000;
@@ -14838,7 +14838,7 @@ int label_2654()
         {
             dbidn = u8"spider";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -14862,7 +14862,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5600100;
             sdata(55, rc) = 500;
             cdata[rc].image += 16000;
@@ -14901,7 +14901,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 6000;
             return 0;
         }
@@ -14924,7 +14924,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -14961,7 +14961,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -14984,7 +14984,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -15022,7 +15022,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 15000;
             return 0;
         }
@@ -15045,7 +15045,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -15086,7 +15086,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -15109,7 +15109,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -15150,7 +15150,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -15173,7 +15173,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -15213,7 +15213,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 9000;
             return 0;
         }
@@ -15236,7 +15236,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -15277,7 +15277,7 @@ int label_2654()
         {
             dbidn = u8"golem";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 2000;
             return 0;
         }
@@ -15301,7 +15301,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -15335,7 +15335,7 @@ int label_2654()
         {
             dbidn = u8"crab";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -15357,7 +15357,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"crab";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5000150;
             sdata(50, rc) = 500;
             cdata[rc].image += 0;
@@ -15389,7 +15389,7 @@ int label_2654()
         {
             dbidn = u8"centipede";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 239;
             cpicref += 0;
             return 0;
@@ -15412,7 +15412,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5000200;
             sdata(50, rc) = 500;
             cdata[rc].image = 239;
@@ -15437,7 +15437,7 @@ int label_2654()
         {
             dbidn = u8"goblin";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 240;
             cpicref += 0;
             return 0;
@@ -15463,7 +15463,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -15490,7 +15490,7 @@ int label_2654()
         {
             dbidn = u8"skeleton";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -15512,7 +15512,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"skeleton";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -15538,7 +15538,7 @@ int label_2654()
         {
             dbidn = u8"skeleton";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -15560,7 +15560,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"skeleton";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -15611,7 +15611,7 @@ int label_2654()
         {
             dbidn = u8"eulderna";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 243;
             cpicref += 0;
             return 0;
@@ -15637,7 +15637,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400150;
             cdata[rc].image = 243;
             cdata[rc].image += 0;
@@ -15666,7 +15666,7 @@ int label_2654()
         {
             dbidn = u8"piece";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -15688,7 +15688,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -15718,7 +15718,7 @@ int label_2654()
         {
             dbidn = u8"piece";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 245;
             cpicref += 0;
             return 0;
@@ -15741,7 +15741,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -15772,7 +15772,7 @@ int label_2654()
         {
             dbidn = u8"piece";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 246;
             cpicref += 0;
             return 0;
@@ -15798,7 +15798,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -15829,7 +15829,7 @@ int label_2654()
         {
             dbidn = u8"piece";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 247;
             cpicref += 0;
             return 0;
@@ -15852,7 +15852,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -15888,7 +15888,7 @@ int label_2654()
         {
             dbidn = u8"piece";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 248;
             cpicref += 0;
             return 0;
@@ -15914,7 +15914,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -15945,7 +15945,7 @@ int label_2654()
         {
             dbidn = u8"piece";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 249;
             cpicref += 0;
             return 0;
@@ -15969,7 +15969,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -16018,7 +16018,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 159;
             cpicref += 0;
             return 0;
@@ -16047,7 +16047,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -16100,7 +16100,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 57;
             cpicref += 0;
             return 0;
@@ -16129,7 +16129,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -16182,7 +16182,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 100;
             cpicref += 0;
             return 0;
@@ -16212,7 +16212,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -16278,7 +16278,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 150;
             cpicref += 0;
             return 0;
@@ -16309,7 +16309,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -16376,7 +16376,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 31;
             cpicref += 0;
             return 0;
@@ -16406,7 +16406,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -16477,7 +16477,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 158;
             cpicref += 0;
             return 0;
@@ -16507,7 +16507,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -16573,7 +16573,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 157;
             cpicref += 0;
             return 0;
@@ -16606,7 +16606,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"priest";
             dbmode = 3;
             label_2298();
@@ -16671,7 +16671,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 250;
             cpicref += 0;
             return 0;
@@ -16698,7 +16698,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -16762,7 +16762,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 250;
             cpicref += 3000;
             return 0;
@@ -16789,7 +16789,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -16870,7 +16870,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 370;
             cpicref += 0;
             return 0;
@@ -16898,7 +16898,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -16927,7 +16927,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 373;
             cpicref += 0;
             return 0;
@@ -16951,7 +16951,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -17014,7 +17014,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 377;
             cpicref += 0;
             return 0;
@@ -17040,7 +17040,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -17104,7 +17104,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 377;
             cpicref += 4000;
             return 0;
@@ -17130,7 +17130,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -17156,7 +17156,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 251;
             cpicref += 0;
             return 0;
@@ -17179,7 +17179,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -17307,7 +17307,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -17337,7 +17337,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -17456,7 +17456,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 387;
             cpicref += 0;
             return 0;
@@ -17487,7 +17487,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 387;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -17583,7 +17583,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 387;
             cpicref += 6000;
             return 0;
@@ -17614,7 +17614,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 387;
             cdata[rc].image += 6000;
             cspecialeq = 0;
@@ -17693,7 +17693,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 368;
             cpicref += 0;
             return 0;
@@ -17720,7 +17720,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -17797,7 +17797,7 @@ int label_2654()
         {
             dbidn = u8"catgod";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 369;
             cpicref += 0;
             return 0;
@@ -17826,7 +17826,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"catgod";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -17911,7 +17911,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 367;
             cpicref += 0;
             return 0;
@@ -17940,7 +17940,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -17996,7 +17996,7 @@ int label_2654()
         {
             dbidn = u8"dog";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -18024,7 +18024,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dog";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -18094,7 +18094,7 @@ int label_2654()
         {
             dbidn = u8"dog";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 364;
             cpicref += 0;
             return 0;
@@ -18121,7 +18121,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dog";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 364;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18207,7 +18207,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 365;
             cpicref += 0;
             return 0;
@@ -18235,7 +18235,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 365;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18301,7 +18301,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 366;
             cpicref += 0;
             return 0;
@@ -18327,7 +18327,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].sex = 0;
             cdata[rc].image = 366;
             cdata[rc].image += 0;
@@ -18403,7 +18403,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 4;
             cpicref += 0;
             return 0;
@@ -18432,7 +18432,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -18472,7 +18472,7 @@ int label_2654()
         {
             dbidn = u8"rat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 6000;
             return 0;
         }
@@ -18495,7 +18495,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"rat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -18522,7 +18522,7 @@ int label_2654()
         {
             dbidn = u8"shell";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -18544,7 +18544,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"shell";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -18599,7 +18599,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 258;
             cpicref += 0;
             return 0;
@@ -18624,7 +18624,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -18677,7 +18677,7 @@ int label_2654()
         {
             dbidn = u8"catgod";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 348;
             cpicref += 0;
             return 0;
@@ -18703,7 +18703,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"catgod";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 348;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18778,7 +18778,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 105;
             cpicref += 0;
             return 0;
@@ -18808,7 +18808,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -18885,7 +18885,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 105;
             cpicref += 0;
             return 0;
@@ -18916,7 +18916,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -18994,7 +18994,7 @@ int label_2654()
         {
             dbidn = u8"catsister";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -19023,7 +19023,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"catsister";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -19081,7 +19081,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 355;
             cpicref += 0;
             return 0;
@@ -19114,7 +19114,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -19164,7 +19164,7 @@ int label_2654()
         {
             dbidn = u8"machinegod";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 349;
             cpicref += 0;
             return 0;
@@ -19194,7 +19194,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machinegod";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -19257,7 +19257,7 @@ int label_2654()
         {
             dbidn = u8"undeadgod";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 339;
             cpicref += 3000;
             return 0;
@@ -19288,7 +19288,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"undeadgod";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -19320,7 +19320,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 350;
             cpicref += 0;
             return 0;
@@ -19344,7 +19344,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -19407,7 +19407,7 @@ int label_2654()
         {
             dbidn = u8"dwarf";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 352;
             cpicref += 0;
             return 0;
@@ -19432,7 +19432,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dwarf";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -19488,7 +19488,7 @@ int label_2654()
         {
             dbidn = u8"dwarf";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 353;
             cpicref += 0;
             return 0;
@@ -19513,7 +19513,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dwarf";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -19589,7 +19589,7 @@ int label_2654()
         {
             dbidn = u8"cat";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 259;
             cpicref += 0;
             return 0;
@@ -19615,7 +19615,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 259;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -19662,7 +19662,7 @@ int label_2654()
         {
             dbidn = u8"hound";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 260;
             cpicref += 0;
             return 0;
@@ -19686,7 +19686,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 260;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -19739,7 +19739,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 208;
             cpicref += 0;
             return 0;
@@ -19768,7 +19768,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -19841,7 +19841,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 71;
             cpicref += 0;
             return 0;
@@ -19871,7 +19871,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 71;
             if (cdata[rc].sex == 1)
             {
@@ -19947,7 +19947,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 73;
             cpicref += 0;
             return 0;
@@ -19977,7 +19977,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 73;
             if (cdata[rc].sex == 1)
             {
@@ -20049,7 +20049,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 122;
             cpicref += 0;
             return 0;
@@ -20079,7 +20079,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -20187,7 +20187,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 477;
             cpicref += 1000;
             return 0;
@@ -20218,7 +20218,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -20253,7 +20253,7 @@ int label_2654()
         {
             dbidn = u8"machine";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -20275,7 +20275,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 6100100;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20303,7 +20303,7 @@ int label_2654()
         {
             dbidn = u8"machine";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -20325,7 +20325,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -20356,7 +20356,7 @@ int label_2654()
         {
             dbidn = u8"machine";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 3000;
             return 0;
         }
@@ -20378,7 +20378,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -20478,7 +20478,7 @@ int label_2654()
         {
             dbidn = u8"bike";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 470;
             cpicref += 0;
             return 0;
@@ -20505,7 +20505,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bike";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -20603,7 +20603,7 @@ int label_2654()
         {
             dbidn = u8"bike";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 471;
             cpicref += 0;
             return 0;
@@ -20630,7 +20630,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"bike";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -20661,7 +20661,7 @@ int label_2654()
         {
             dbidn = u8"machine";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 434;
             cpicref += 0;
             return 0;
@@ -20687,7 +20687,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 434;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20715,7 +20715,7 @@ int label_2654()
         {
             dbidn = u8"machine";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 198;
             cpicref += 0;
             return 0;
@@ -20738,7 +20738,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 6100150;
             cdata[rc].image = 198;
             cdata[rc].image += 0;
@@ -20768,7 +20768,7 @@ int label_2654()
         {
             dbidn = u8"eye";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 271;
             cpicref += 0;
             return 0;
@@ -20792,7 +20792,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 271;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20820,7 +20820,7 @@ int label_2654()
         {
             dbidn = u8"eye";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 271;
             cpicref += 3000;
             return 0;
@@ -20844,7 +20844,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 271;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -20872,7 +20872,7 @@ int label_2654()
         {
             dbidn = u8"wisp";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -20897,7 +20897,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"wisp";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(52, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20920,7 +20920,7 @@ int label_2654()
         {
             dbidn = u8"crab";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 273;
             cpicref += 0;
             return 0;
@@ -20943,7 +20943,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"crab";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 273;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20973,7 +20973,7 @@ int label_2654()
         {
             dbidn = u8"crab";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 273;
             cpicref += 17000;
             return 0;
@@ -20996,7 +20996,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"crab";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 273;
             cdata[rc].image += 17000;
             cspecialeq = 0;
@@ -21047,7 +21047,7 @@ int label_2654()
         {
             dbidn = u8"chicken";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -21071,7 +21071,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"chicken";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -21101,7 +21101,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 275;
             cpicref += 0;
             return 0;
@@ -21125,7 +21125,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400100;
             cdata[rc].image = 275;
             cdata[rc].image += 0;
@@ -21157,7 +21157,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 275;
             cpicref += 5000;
             return 0;
@@ -21181,7 +21181,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400150;
             cdata[rc].image = 275;
             cdata[rc].image += 5000;
@@ -21213,7 +21213,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 275;
             cpicref += 4000;
             return 0;
@@ -21237,7 +21237,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400200;
             cdata[rc].image = 275;
             cdata[rc].image += 4000;
@@ -21270,7 +21270,7 @@ int label_2654()
         {
             dbidn = u8"mandrake";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 275;
             cpicref += 3000;
             return 0;
@@ -21295,7 +21295,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5400250;
             cdata[rc].image = 275;
             cdata[rc].image += 3000;
@@ -21327,7 +21327,7 @@ int label_2654()
         {
             dbidn = u8"stalker";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 276;
             cpicref += 0;
             return 0;
@@ -21350,7 +21350,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"stalker";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -21384,7 +21384,7 @@ int label_2654()
         {
             dbidn = u8"stalker";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 276;
             cpicref += 3000;
             return 0;
@@ -21407,7 +21407,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"stalker";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -21464,7 +21464,7 @@ int label_2654()
         {
             dbidn = u8"giant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 351;
             cpicref += 0;
             return 0;
@@ -21491,7 +21491,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(50, rc) = 500;
             cdata[rc].sex = 0;
             cdata[rc].image = 351;
@@ -21552,7 +21552,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 23;
             cpicref += 0;
             return 0;
@@ -21578,7 +21578,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -21658,7 +21658,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 104;
             cpicref += 0;
             return 0;
@@ -21688,7 +21688,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -21749,7 +21749,7 @@ int label_2654()
         {
             dbidn = u8"giant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 351;
             cpicref += 0;
             return 0;
@@ -21776,7 +21776,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             sdata(50, rc) = 500;
             cdata[rc].sex = 0;
             cdata[rc].image = 351;
@@ -21803,7 +21803,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 117;
             cpicref += 0;
             return 0;
@@ -21826,7 +21826,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -21918,7 +21918,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 356;
             cpicref += 0;
             return 0;
@@ -21945,7 +21945,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -22007,7 +22007,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 358;
             cpicref += 0;
             return 0;
@@ -22033,7 +22033,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -22094,7 +22094,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 359;
             cpicref += 0;
             return 0;
@@ -22120,7 +22120,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -22204,7 +22204,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 361;
             cpicref += 0;
             return 0;
@@ -22232,7 +22232,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -22316,7 +22316,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 362;
             cpicref += 0;
             return 0;
@@ -22344,7 +22344,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -22427,7 +22427,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 383;
             cpicref += 0;
             return 0;
@@ -22455,7 +22455,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -22534,7 +22534,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 388;
             cpicref += 0;
             return 0;
@@ -22561,7 +22561,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].sex = 1;
             cdata[rc].image = 388;
             cdata[rc].image += 0;
@@ -22647,7 +22647,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 392;
             cpicref += 0;
             return 0;
@@ -22679,7 +22679,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -22760,7 +22760,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 394;
             cpicref += 0;
             return 0;
@@ -22789,7 +22789,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -22872,7 +22872,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 199;
             cpicref += 0;
             return 0;
@@ -22900,7 +22900,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -22984,7 +22984,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 403;
             cpicref += 0;
             return 0;
@@ -23013,7 +23013,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -23097,7 +23097,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 166;
             cpicref += 0;
             return 0;
@@ -23124,7 +23124,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image = 166;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -23197,7 +23197,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 166;
             cpicref += 3000;
             return 0;
@@ -23224,7 +23224,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -23300,7 +23300,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 166;
             cpicref += 4000;
             return 0;
@@ -23327,7 +23327,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -23359,7 +23359,7 @@ int label_2654()
         {
             dbidn = u8"yith";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -23384,7 +23384,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yith";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -23416,7 +23416,7 @@ int label_2654()
         {
             dbidn = u8"yith";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 277;
             cpicref += 0;
             return 0;
@@ -23443,7 +23443,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yith";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -23470,7 +23470,7 @@ int label_2654()
         {
             dbidn = u8"orc";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 278;
             cpicref += 0;
             return 0;
@@ -23494,7 +23494,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -23525,7 +23525,7 @@ int label_2654()
         {
             dbidn = u8"yith";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 430;
             cpicref += 0;
             return 0;
@@ -23552,7 +23552,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yith";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -23579,7 +23579,7 @@ int label_2654()
         {
             dbidn = u8"fairy";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -23604,7 +23604,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"fairy";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -23679,7 +23679,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 211;
             cpicref += 0;
             return 0;
@@ -23713,7 +23713,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -23757,7 +23757,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 217;
             cpicref += 0;
             return 0;
@@ -23788,7 +23788,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -23815,7 +23815,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 218;
             cpicref += 0;
             return 0;
@@ -23843,7 +23843,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -23910,7 +23910,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 236;
             cpicref += 0;
             return 0;
@@ -23946,7 +23946,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -23974,7 +23974,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 269;
             cpicref += 0;
             return 0;
@@ -24003,7 +24003,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -24030,7 +24030,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 267;
             cpicref += 0;
             return 0;
@@ -24060,7 +24060,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -24088,7 +24088,7 @@ int label_2654()
         {
             dbidn = u8"servant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 242;
             cpicref += 0;
             return 0;
@@ -24118,7 +24118,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
@@ -24196,7 +24196,7 @@ int label_2654()
         {
             dbidn = u8"horse";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 17000;
             return 0;
         }
@@ -24225,7 +24225,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -24297,7 +24297,7 @@ int label_2654()
         {
             dbidn = u8"horse";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 6000;
             return 0;
         }
@@ -24326,7 +24326,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -24402,7 +24402,7 @@ int label_2654()
         {
             dbidn = u8"horse";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 15000;
             return 0;
         }
@@ -24431,7 +24431,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -24507,7 +24507,7 @@ int label_2654()
         {
             dbidn = u8"horse";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 16000;
             return 0;
         }
@@ -24536,7 +24536,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -24611,7 +24611,7 @@ int label_2654()
         {
             dbidn = u8"horse";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 10000;
             return 0;
         }
@@ -24640,7 +24640,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
@@ -24665,7 +24665,7 @@ int label_2654()
         {
             dbidn = u8"mutant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 191;
             cpicref += 0;
             return 0;
@@ -24692,7 +24692,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mutant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -24750,7 +24750,7 @@ int label_2654()
         {
             dbidn = u8"yerles";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 263;
             cpicref += 0;
             return 0;
@@ -24776,7 +24776,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -24845,7 +24845,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 192;
             cpicref += 0;
             return 0;
@@ -24872,7 +24872,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].sex = 0;
             cdata[rc].image = 192;
             cdata[rc].image += 0;
@@ -24953,7 +24953,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 193;
             cpicref += 0;
             return 0;
@@ -24984,7 +24984,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -25034,7 +25034,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 196;
             cpicref += 0;
             return 0;
@@ -25062,7 +25062,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
@@ -25094,7 +25094,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 197;
             cpicref += 0;
             return 0;
@@ -25119,7 +25119,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -25169,7 +25169,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 196;
             cpicref += 0;
             return 0;
@@ -25194,7 +25194,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
@@ -25226,7 +25226,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 80;
             cpicref += 0;
             return 0;
@@ -25251,7 +25251,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -25301,7 +25301,7 @@ int label_2654()
         {
             dbidn = u8"norland";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 196;
             cpicref += 0;
             return 0;
@@ -25327,7 +25327,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
@@ -25408,7 +25408,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 279;
             cpicref += 0;
             return 0;
@@ -25440,7 +25440,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"claymore";
             dbmode = 3;
             label_2298();
@@ -25535,7 +25535,7 @@ int label_2654()
         {
             dbidn = u8"machinegod";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 408;
             cpicref += 0;
             return 0;
@@ -25562,7 +25562,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"machinegod";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -25650,7 +25650,7 @@ int label_2654()
         {
             dbidn = u8"mutant";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 409;
             cpicref += 0;
             return 0;
@@ -25677,7 +25677,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"mutant";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -25769,7 +25769,7 @@ int label_2654()
         {
             dbidn = u8"roran";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 412;
             cpicref += 0;
             return 0;
@@ -25796,7 +25796,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
@@ -25889,7 +25889,7 @@ int label_2654()
         {
             dbidn = u8"juere";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 416;
             cpicref += 0;
             return 0;
@@ -25917,7 +25917,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
@@ -25951,7 +25951,7 @@ int label_2654()
         {
             dbidn = u8"ghost";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 280;
             cpicref += 0;
             return 0;
@@ -25976,7 +25976,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].element_of_unarmed_attack = 5600400;
             cdata[rc].image = 280;
             cdata[rc].image += 0;
@@ -26005,7 +26005,7 @@ int label_2654()
         {
             dbidn = u8"quickling";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 19000;
             return 0;
         }
@@ -26027,7 +26027,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"quickling";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 19000;
             cspecialeq = 0;
             return 0;
@@ -26055,7 +26055,7 @@ int label_2654()
         {
             dbidn = u8"quickling";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -26081,7 +26081,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"quickling";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
@@ -26141,7 +26141,7 @@ int label_2654()
         {
             dbidn = u8"metal";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 0;
             return 0;
         }
@@ -26166,7 +26166,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"metal";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -26223,7 +26223,7 @@ int label_2654()
         {
             dbidn = u8"metal";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref += 5000;
             return 0;
         }
@@ -26248,7 +26248,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"metal";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -26275,7 +26275,7 @@ int label_2654()
         {
             dbidn = u8"dinosaur";
             dbmode = 2;
-            label_2297();
+            access_race_info();
             cpicref = 283;
             cpicref += 17000;
             return 0;
@@ -26299,7 +26299,7 @@ int label_2654()
             cdata[rc]._40 = -10000;
             dbidn = u8"dinosaur";
             dbmode = 3;
-            label_2297();
+            access_race_info();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();

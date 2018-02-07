@@ -3581,7 +3581,7 @@ namespace elona
 {
 
 
-void label_2299()
+void get_random_npc_id()
 {
     weighted_random_sampler<character_id> sampler;
 

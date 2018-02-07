@@ -9,7 +9,7 @@ namespace elona
 {
 
 
-void label_2754()
+void proc_event()
 {
     elona_vector1<int> voidboss;
     switch (evid())

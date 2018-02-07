@@ -8,7 +8,7 @@ namespace elona
 {
 
 
-int label_0042()
+int get_trait_info()
 {
     if (tid == 24)
     {

@@ -600,7 +600,7 @@ int refrace(const std::string& prm_263, int prm_264)
     dbmode = 16;
     dbidn = prm_263;
     dbspec = prm_264;
-    return label_2297();
+    return access_race_info();
 }
 
 
@@ -979,7 +979,7 @@ int refitem(int prm_279, int prm_280)
     dbmode = 16;
     dbid = prm_279;
     dbspec = prm_280;
-    return label_1275();
+    return access_item_db();
 }
 
 
@@ -7997,7 +7997,7 @@ void label_0265()
     originalvalue = inv[ci].value * 100 / mtref(1, p);
     dbid = inv[ci].id;
     dbmode = 10;
-    label_1275();
+    access_item_db();
     inv[ci].value = originalvalue;
     if (fixmaterial != 0)
     {
@@ -13313,7 +13313,7 @@ int customtalk(int cc, int talk_type)
     {
         dbid = cdata[cc].id;
         dbmode = talk_type;
-        label_2654();
+        access_character_info();
         return 1;
     }
     return 0;
@@ -15120,7 +15120,7 @@ void modcorrupt(int prm_815)
                         await();
                         tid = rnd(17) + 200;
                         traitmode = 0;
-                        int stat = label_0042();
+                        int stat = get_trait_info();
                         if (stat == 0 || traitref != 3)
                         {
                             continue;
@@ -15201,7 +15201,7 @@ void modcorrupt(int prm_815)
                             }
                         }
                         traitmode = 0;
-                        int stat = label_0042();
+                        int stat = get_trait_info();
                         if (stat == 0 || traitref != 3)
                         {
                             continue;
@@ -23970,7 +23970,7 @@ void label_1477()
                 if (trait(cnt) != 0)
                 {
                     tid = cnt;
-                    label_0042();
+                    get_trait_info();
                 }
             }
         }
@@ -24315,7 +24315,7 @@ int label_1513()
     }
     tc = cc;
     efid = 408;
-    label_2176();
+    magic();
     return 0;
 }
 
@@ -25261,7 +25261,7 @@ void label_1530()
     {
         dbmode = 4;
         dbid = cdata[rc].id;
-        label_2654();
+        access_character_info();
     }
     if (eqtwohand)
     {
@@ -26100,7 +26100,7 @@ int label_1533()
             }
         }
         dbmode = 1;
-        label_2299();
+        get_random_npc_id();
         if (dbid == 0)
         {
             if (fltselect == 2 || fixlv == 6)
@@ -26109,7 +26109,7 @@ int label_1533()
             }
             flt(objlv + 10, fixlv);
             dbmode = 1;
-            label_2299();
+            get_random_npc_id();
         }
     }
     else if (dbid == 343)
@@ -26135,7 +26135,7 @@ int label_1533()
             cmshade = 1;
             flt(objlv, fixlv);
             dbmode = 1;
-            label_2299();
+            get_random_npc_id();
         }
     }
     if (gdata_current_map == 42)
@@ -26156,7 +26156,7 @@ int label_1533()
     else
     {
         dbmode = 3;
-        label_2654();
+        access_character_info();
     }
     if (cmshade)
     {
@@ -27965,7 +27965,7 @@ void label_1577()
         {
             efid = 408;
             tc = cc;
-            label_2176();
+            magic();
             return;
         }
     }
@@ -28083,7 +28083,7 @@ void label_1579()
                         {
                             efid = 408;
                             tc = cc;
-                            label_2176();
+                            magic();
                             continue;
                         }
                     }
@@ -28423,7 +28423,7 @@ int label_1582()
             }
         }
         dbmode = 1;
-        label_0481();
+        get_random_item_id();
         if (dbid == 25)
         {
             if (fltselect == 2)
@@ -28433,7 +28433,7 @@ int label_1582()
             objlv += 10;
             fltselect = 0;
             dbmode = 1;
-            label_0481();
+            get_random_item_id();
         }
     }
     if (dbid == 25)
@@ -28445,9 +28445,9 @@ int label_1582()
     }
     itemcreatehack = dbid + 1;
     dbmode = 3;
-    label_1275();
+    access_item_db();
     dbmode = 2;
-    label_1275();
+    access_item_db();
     inv[ci].color = icolref(inv[ci].id);
     if (inv[ci].color == 1)
     {
@@ -29646,7 +29646,7 @@ void label_1588()
                         {
                             tid = 41;
                             traitmode = 0;
-                            label_0042();
+                            get_trait_info();
                             txtef(2);
                             txt(traitrefn(0));
                             trait(41) = 1;
@@ -29668,7 +29668,7 @@ void label_1588()
     {
         dbmode = 12;
         dbid = inv[ci].subname;
-        label_2654();
+        access_character_info();
     }
     {
         int cnt = 0;
@@ -35072,7 +35072,7 @@ void label_1714()
                 else
                 {
                     efid = 438;
-                    label_2176();
+                    magic();
                 }
                 tlocinitx = tlocx;
                 tlocinity = tlocy;
@@ -35997,7 +35997,7 @@ void label_1727()
     rc = 56;
     fixlv = 2;
     dbmode = 3;
-    label_2654();
+    access_character_info();
     ++dblist(val, cdata[56].id);
     if (fixlv == 6)
     {
@@ -37098,7 +37098,7 @@ void label_1737()
         }
     }
     mode = 2;
-    label_17402();
+    initialize_map();
     return;
 }
 
@@ -40581,7 +40581,7 @@ void label_1873()
             invsubroutine = 1;
             invctrl(0) = 22;
             invctrl(1) = 0;
-            label_20592();
+            ctrl_inventory();
         }
     }
     mode = 0;
@@ -42107,7 +42107,7 @@ void label_1888()
             efid = 622;
             efp = 10000;
             tc = 0;
-            label_2176();
+            magic();
             snd(63);
             mode = 0;
             await(500);
@@ -42214,11 +42214,11 @@ void label_1890()
     efid = 1120;
     efp = 100;
     tc = 0;
-    label_2176();
+    magic();
     efid = 451;
     efp = 200;
     tc = 0;
-    label_2176();
+    magic();
     cdata[0].praying_point = 0;
     cdata[0].piety_point = cdata[0].piety_point * 85 / 100;
     if (gdata_god_rank % 2 == 1)
@@ -42614,13 +42614,13 @@ void label_1892()
     efid = 1114;
     efp = 500;
     tc = 0;
-    label_2176();
+    magic();
     if (rnd(2))
     {
         efid = 622;
         efp = 250;
         tc = 0;
-        label_2176();
+        magic();
         snd(63);
     }
     if (rnd(2))
@@ -42628,7 +42628,7 @@ void label_1892()
         efid = 1106;
         efp = 100;
         tc = 0;
-        label_2176();
+        magic();
     }
     return;
 }
@@ -42883,7 +42883,7 @@ label_1894_internal:
     case 24:
         efid = 1113;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"才能の開花"s, u8"Your Potential"s);
         buff = lang(
             u8"突然あなたの才能は開花した！"s,
@@ -42912,7 +42912,7 @@ label_1894_internal:
         efid = 1117;
         efp = 100;
         tc = 0;
-        label_2176();
+        magic();
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Nice."s);
         ++listmax;
@@ -42922,7 +42922,7 @@ label_1894_internal:
         efid = 1117;
         efp = 200;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"夢の中の収穫"s, u8"Dream Harvest"s);
         buff = lang(
             u8"夢の中で、あなたはのんきにマテリアルを採取していた"s,
@@ -42966,7 +42966,7 @@ label_1894_internal:
         efid = 1118;
         efp = 100;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"不気味な夢"s, u8"Creepy Dream"s);
         buff = lang(
             u8"あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。"s,
@@ -42981,7 +42981,7 @@ label_1894_internal:
         efid = 454;
         efp = 100;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"怪物の夢"s, u8"Monster Dream"s);
         buff = lang(
             u8"あなたは怪物と戦っていた。醜い化け物に斬りかかろうとした時、怪物は悲鳴をあげた。「オレハオマエダ！オマエハオレダ！」あなたは自分の呻き声に起こされた。"s,
@@ -43055,7 +43055,7 @@ label_1894_internal:
             {
                 efid = 1114;
                 efp = 200;
-                label_2176();
+                magic();
             }
             else if (evid() == -1)
             {
@@ -43149,7 +43149,7 @@ label_1894_internal:
         efid = 1104;
         efp = 100;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"魔法使いの夢"s, u8"Wizard's Dream"s);
         buff = lang(
             u8"夢の中であなたは赤い髪の魔術師に出会った。「誰じゃ、お主は？ふむ、間違った者の夢に現れてしまったようじゃ。すまぬな。お詫びといってはなんじゃが…」魔法使いは指をくるりと回した。あなたは軽い頭痛を覚えた。"s,
@@ -43163,7 +43163,7 @@ label_1894_internal:
         efid = 1119;
         efp = 100;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"成長のきざし"s, u8"Development"s);
         buff = lang(
             u8"長年の鍛錬の成果が実ったようだ。なかなか眠りにつけず考えごとをしていたあなたは、ふと、自らの技術に関する新しいアイデアを思いついた。"s,
@@ -43225,7 +43225,7 @@ label_1894_internal:
         efid = 451;
         efp = 800;
         tc = 0;
-        label_2176();
+        magic();
         s = lang(u8"辻プリースト"s, u8"Wandering Priest"s);
         buff = lang(
             u8"突然、向かいからやって来た一人の神官が、すれ違いざまにあなたに魔法をかけた。「ノープロブレム」"s,
@@ -47596,7 +47596,7 @@ label_196901_internal:
             }
             traitmode = 0;
             tid = cnt;
-            int stat = label_0042();
+            int stat = get_trait_info();
             if (stat == 0)
             {
                 continue;
@@ -47663,7 +47663,7 @@ label_196901_internal:
             }
             tid = i;
             traitmode = 0;
-            int stat = label_0042();
+            int stat = get_trait_info();
             featrq = stat;
             s = "";
             if (list(1, cnt) < 10000)
@@ -48021,7 +48021,7 @@ label_1970_internal:
             {
                 tid = i;
                 traitmode = 0;
-                int stat = label_0042();
+                int stat = get_trait_info();
                 featrq = stat;
                 if (trait(tid) == 0)
                 {
@@ -48091,7 +48091,7 @@ label_1970_internal:
                 {
                     tid = list(0, p);
                     traitmode = 0;
-                    label_0042();
+                    get_trait_info();
                     if (traitref(2) <= trait(tid))
                     {
                         if (mode != 1)
@@ -48852,7 +48852,7 @@ label_1978_internal:
         rq = p;
         client = tc;
         efid = 619;
-        label_2176();
+        magic();
         tc = client;
         questteleport = 1;
         label_2242();
@@ -50204,7 +50204,7 @@ void label_2003()
         invsc = gdata((40 + sc)) % 10000;
         invctrl(0) = gdata((40 + sc)) / 10000;
         invctrl(1) = 0;
-        label_20592();
+        ctrl_inventory();
         return;
     }
     efid = gdata(40 + sc);
@@ -50642,7 +50642,7 @@ void label_2011()
         label_1419();
         invctrl = 10;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     txt(strinteractfail);
@@ -50796,7 +50796,7 @@ void label_2012()
         label_1419();
         invctrl = 10;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (p == 3)
@@ -52350,7 +52350,7 @@ label_2035_internal:
         s(1) = cdatan(1, cc);
         dbidn = cdatan(2, cc);
         dbmode = 2;
-        label_2297();
+        access_race_info();
         s(2) = cnven(lang(""s + racename, cdatan(2, cc)));
         dbidn = cdatan(3, cc);
         dbmode = 2;
@@ -54040,7 +54040,7 @@ label_2052_internal:
         menucycle = 0;
         invctrl = 6;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_identify)
@@ -54312,7 +54312,7 @@ void label_2054()
     {
         invctrl = 3;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (inv[ci].own_state > 0 && inv[ci].own_state < 3
@@ -54369,7 +54369,7 @@ void label_2055()
     invally = 1;
     invctrl = 10;
     snd(100);
-    label_20592();
+    ctrl_inventory();
     return;
 }
 
@@ -54561,9 +54561,9 @@ void label_2068()
     getinheritance(ci, inhlist, inhmax);
     dbid = inv[ci].id;
     dbmode = 2;
-    label_1275();
+    access_item_db();
     dbmode = 17;
-    label_1275();
+    access_item_db();
     if (inv[ci].identification_state >= 3)
     {
         buf = trimdesc(description(3), 1);
@@ -55365,7 +55365,7 @@ void label_2079()
     if (rtval == 2)
     {
         snd(20);
-        label_2723();
+        set_option();
         return;
     }
     label_1419();
@@ -55866,7 +55866,7 @@ void label_2085()
     cc = 0;
     dbidn = cdatan(2, 0);
     dbmode = 2;
-    label_2297();
+    access_race_info();
     dbidn = cdatan(3, 0);
     dbmode = 2;
     label_2298();
@@ -56070,7 +56070,7 @@ void label_2085()
             }
             dbidn = cdatan(2, cnt);
             dbmode = 2;
-            label_2297();
+            access_race_info();
             dbidn = cdatan(3, cnt);
             dbmode = 2;
             label_2298();
@@ -56802,7 +56802,7 @@ void label_2104()
     cdata[rc].ai_heal = userdata(10, cun);
     dbidn = userdatan(2, cun);
     dbmode = 3;
-    label_2297();
+    access_race_info();
     dbidn = userdatan(3, cun);
     dbmode = 3;
     label_2298();
@@ -57307,7 +57307,7 @@ void label_2112()
     }
     ctrl_file(7);
     label_2089();
-    label_1277();
+    set_item_info();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
@@ -61730,7 +61730,7 @@ int label_2168()
             int cnt = 0;
             for (int cnt_end = cnt + (rapidmagic); cnt < cnt_end; ++cnt)
             {
-                label_2176();
+                magic();
                 if (cdata[tc].state != 1)
                 {
                     int stat = label_2072();
@@ -61753,7 +61753,7 @@ int label_2168()
     }
     else
     {
-        label_2176();
+        magic();
     }
     return 1;
 }
@@ -61784,7 +61784,7 @@ int label_2169()
                     + u8"."s));
         }
     }
-    label_2176();
+    magic();
     if (potionspill || potionthrow)
     {
         potionspill = 0;
@@ -61881,7 +61881,7 @@ int label_2170()
                 if (rnd(2) == 0)
                 {
                     efid = 1113;
-                    label_2176();
+                    magic();
                     break;
                 }
             }
@@ -61892,35 +61892,35 @@ int label_2170()
                 {
                     efid = 1112;
                     efp = 100;
-                    label_2176();
+                    magic();
                     break;
                 }
                 if (p == 1)
                 {
                     efid = 1110;
                     efp = 100;
-                    label_2176();
+                    magic();
                     break;
                 }
                 if (p == 2)
                 {
                     efid = 1111;
                     efp = 100;
-                    label_2176();
+                    magic();
                     break;
                 }
                 if (p == 3)
                 {
                     efid = 1109;
                     efp = 100;
-                    label_2176();
+                    magic();
                     break;
                 }
                 if (p == 4)
                 {
                     efid = 1108;
                     efp = 100;
-                    label_2176();
+                    magic();
                     break;
                 }
             }
@@ -61986,13 +61986,13 @@ int label_2170()
             if (p > 33)
             {
                 efid = 1113;
-                label_2176();
+                magic();
                 break;
             }
             if (p > 20)
             {
                 efid = 454;
-                label_2176();
+                magic();
                 break;
             }
             if (p == 0)
@@ -62007,7 +62007,7 @@ int label_2170()
                 }
                 ++gdata_wish_count;
                 efid = 441;
-                label_2176();
+                magic();
                 break;
             }
             if (cc == 0)
@@ -62107,7 +62107,7 @@ int label_2171()
         }
         skillexp(150, cc, 25, 2);
     }
-    label_2176();
+    magic();
     if (cc == 0)
     {
         if (obvious == 1)
@@ -62202,7 +62202,7 @@ int label_2172()
     }
     if (f == 1 || inv[ci].id == 290 || cc != 0)
     {
-        label_2176();
+        magic();
         if (cc == 0)
         {
             if (obvious == 1)
@@ -62316,7 +62316,7 @@ int label_2174()
         }
     }
     {
-        int stat = label_2176();
+        int stat = magic();
         if (stat == 0)
         {
             return 0;
@@ -62832,7 +62832,7 @@ void label_2189()
                 cc = tc;
                 dbmode = 15;
                 dbid = inv[ci].id;
-                label_1275();
+                access_item_db();
                 cc = ccthrowpotion;
                 label_2742();
                 return;
@@ -63102,7 +63102,7 @@ int label_2192()
                 {
                     dbmode = 14;
                     dbid = inv[ci].id;
-                    label_1275();
+                    access_item_db();
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
                             + u8"から魔力を吸い取った。"s,
@@ -63522,7 +63522,7 @@ void label_2197()
     efid = 0;
     dbmode = 13;
     dbid = inv[ci].id;
-    label_1275();
+    access_item_db();
     if (efid == 1115)
     {
         label_1712();
@@ -63579,7 +63579,7 @@ void label_2199()
 {
     dbmode = 15;
     dbid = inv[ci].id;
-    label_1275();
+    access_item_db();
     label_2742();
     return;
 }
@@ -63590,7 +63590,7 @@ void label_2200()
 {
     dbmode = 14;
     dbid = inv[ci].id;
-    label_1275();
+    access_item_db();
     int stat = label_2172();
     if (stat == 0)
     {
@@ -63769,14 +63769,14 @@ void label_2201()
                     tc = cc;
                     efid = 1109;
                     efp = 200;
-                    label_2176();
+                    magic();
                 }
                 if (rnd(3) == 0)
                 {
                     tc = cc;
                     efid = 1110;
                     efp = 200;
-                    label_2176();
+                    magic();
                 }
                 if (rnd(3) == 0)
                 {
@@ -65021,7 +65021,7 @@ void label_2212()
         invctrl(0) = 24;
         invctrl(1) = 0;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (inv[ci].id == 616)
@@ -65029,7 +65029,7 @@ void label_2212()
         invctrl(0) = 24;
         invctrl(1) = 2;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (inv[ci].id == 600)
@@ -65142,7 +65142,7 @@ void label_2212()
         }
         mode = 6;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         invcontainer = 0;
         if (refweight == -1)
         {
@@ -65214,7 +65214,7 @@ void label_2213()
         efid = 1117;
         efp = 100 + inv[ri].param1 * 10;
         inv[ri].param1 = 0;
-        label_2176();
+        magic();
         label_2742();
         return;
     }
@@ -65439,7 +65439,7 @@ void label_2214()
         efid = 1114;
         efp = 1000;
         tc = 0;
-        label_2176();
+        magic();
         return;
     }
     if (inv[ri].param3 < 200)
@@ -65796,7 +65796,7 @@ int label_2217()
         tlocy = ammoy;
         efid = 460;
         efp = sdata(attackskill, cc) * 8 + 10;
-        label_2176();
+        magic();
     }
     attackvar = 0;
     ammoproc = -1;
@@ -66404,7 +66404,7 @@ label_22191_internal:
                             }
                             efid = 455;
                             efp = cdata[tc].damage_reaction_info / 1000;
-                            label_2176();
+                            magic();
                             break;
                         }
                     }
@@ -66668,7 +66668,7 @@ void label_2220()
                         efid = enc;
                         efp = inv[cw].enchantments[cnt].power
                             + sdata(attackskill, cc) * 10;
-                        label_2176();
+                        magic();
                     }
                     tc = tcbk;
                     continue;
@@ -67624,15 +67624,15 @@ void label_2228()
         label_2743(false);
     case 15:
         efid = 184;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 16:
         efid = 185;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 17:
         efid = 183;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 14:
         if (cc == 0)
@@ -67985,7 +67985,7 @@ void label_2228()
     case 20:
         efid = 458;
         efp = 400;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 47:
         if (gdata_current_map != 35)
@@ -68043,7 +68043,7 @@ void label_2228()
         snd(58);
         efid = 49;
         efp = 100;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 21:
         txt(lang(
@@ -68055,7 +68055,7 @@ void label_2228()
         fixmaterial = inv[ci].material;
         efid = 21;
         efp = 500;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 25:
         txt(lang(
@@ -68065,7 +68065,7 @@ void label_2228()
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         efid = 637;
         efp = 500;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 26:
         txt(lang(
@@ -68090,7 +68090,7 @@ void label_2228()
                 + cnvtalk(u8"I-I'm not doing for you! Silly!"s)));
         efid = 637;
         efp = 5000;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 43:
         txt(lang(
@@ -68235,7 +68235,7 @@ void label_2228()
         efp = inv[ci].param2;
         tc = cc;
         efstatus = 0;
-        label_2176();
+        magic();
         goto label_2229_internal;
     case 41:
         if (gdata_next_level_minus_one_kumiromis_experience_becomes_available
@@ -69232,7 +69232,7 @@ void label_2242()
         {
             if (tc >= 16)
             {
-                label_2246();
+                talk_unique();
                 return;
             }
         }
@@ -69244,7 +69244,7 @@ void label_2242()
         return;
     }
     buff = "";
-    label_2251();
+    talk_npc();
     return;
 }
 
@@ -69716,7 +69716,7 @@ void label_2244()
                 efid = 1117;
                 efp = 100;
                 tc = 0;
-                label_2176();
+                magic();
                 label_2256();
                 return;
             }
@@ -70673,7 +70673,7 @@ void label_2249()
     }
     mdata(13) = 67;
     label_0068();
-    label_2246();
+    talk_unique();
     return;
 }
 
@@ -70712,7 +70712,7 @@ void label_2252()
         buff = lang(
             u8"頼んでいた依頼は順調"s + _kana(1),
             u8"What about my contract? Is everything alright? "s);
-        label_2251();
+        talk_npc();
         return;
     }
     val = 1;
@@ -70751,7 +70751,7 @@ void label_2252()
                 u8"未完了の依頼が多すぎじゃない"s + _kana(1)
                     + u8"この仕事は、安心してまかせられない"s + _yo(),
                 u8"Hey, you've got quite a few unfinished contracts. See me again when you have fishined them."s);
-            label_2251();
+            talk_npc();
             return;
         }
         {
@@ -70785,7 +70785,7 @@ void label_2252()
                     u8"どうやらバックパックが一杯のよう"s + _da()
                         + u8"持ち物を整理してまた来て"s + _kure(),
                     u8"It seems your backpack is already full. Come see me again when you're ready."s);
-                label_2251();
+                talk_npc();
                 return;
             }
         }
@@ -70798,7 +70798,7 @@ void label_2252()
                     u8"これ以上仲間を連れて行けないよう"s + _da()
                         + u8"人数を調整してまた来て"s + _kure(),
                     u8"It seems your party is already full. Come see me again when you're ready."s);
-                label_2251();
+                talk_npc();
                 return;
             }
             {
@@ -70879,7 +70879,7 @@ void label_2252()
     {
         buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
     }
-    label_2251();
+    talk_npc();
     return;
 }
 
@@ -70981,7 +70981,7 @@ void label_2254()
         buff = lang(
             u8"訓練が必要なときは、声をかけて"s + _kure(),
             u8"Come see me again when you need more training."s);
-        label_2251();
+        talk_npc();
         return;
     }
     listmax = 0;
@@ -71053,7 +71053,7 @@ void label_2254()
             u8"訓練が必要なときは、声をかけて"s + _kure(),
             u8"Come see me again when you need more training."s);
     }
-    label_2251();
+    talk_npc();
     return;
 }
 
@@ -71094,7 +71094,7 @@ void label_2255()
     {
         calccosthire();
     }
-    label_2251();
+    talk_npc();
     return;
 }
 
@@ -71449,7 +71449,7 @@ void label_2263()
             shoptrade = 1;
         }
     }
-    label_20592();
+    ctrl_inventory();
     return;
 }
 
@@ -72342,7 +72342,7 @@ void label_2270()
             if (gdata_current_map != bkdata(0)
                 || gdata_current_dungeon_level != bkdata(1))
             {
-                label_17402();
+                initialize_map();
             }
             p = adata(28, cnt);
             if (initeco)
@@ -72401,7 +72401,7 @@ void label_2270()
     gdata(79) = 1;
     mode = 3;
     mapsubroutine = 1;
-    label_17402();
+    initialize_map();
     initeco = 0;
     msgtemp = "";
     return;
@@ -75731,7 +75731,7 @@ int label_2672()
             flt();
             dbmode = 1;
             flttypemajor = fsetdeliver(rnd(length(fsetdeliver)));
-            label_0481();
+            get_random_item_id();
             qdata(12, rq) = flttypemajor;
             qdata(7, rq) = 5;
             if (flttypemajor == 54000)
@@ -75807,7 +75807,7 @@ int label_2672()
         flt();
         dbmode = 1;
         flttypemajor = fsetsupply(rnd(length(fsetsupply)));
-        label_0481();
+        get_random_item_id();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
         qdata(5, rq) = std::clamp(rnd(cdata[0].level + 5) + 1, 1, 30);
@@ -76763,7 +76763,7 @@ void label_2687()
                             }
                             tc = 0;
                             efid = 619;
-                            label_2176();
+                            magic();
                             label_2742();
                             return;
                         }
@@ -76777,7 +76777,7 @@ void label_2687()
         tlocx = cdata[cc].position.x;
         tlocy = cdata[cc].position.y;
         efid = 644;
-        label_2176();
+        magic();
         label_2742();
         return;
     }
@@ -77673,7 +77673,7 @@ label_2692_internal:
             if (rnd(5) == 0)
             {
                 efid = 183;
-                label_2176();
+                magic();
                 label_2742();
                 return;
             }
@@ -80057,7 +80057,7 @@ void label_2733()
     if (evnum != 0)
     {
         evproc = 1;
-        label_2754();
+        proc_event();
         evproc = 0;
         --evnum;
         evlist(evnum) = 0;
@@ -80751,7 +80751,7 @@ label_2738:
                         efid = 454;
                         efp = 100;
                         tc = cc;
-                        label_2176();
+                        magic();
                     }
                 }
             }
@@ -80844,7 +80844,7 @@ label_2738:
                 efstatus = mef(8, ef);
                 dbmode = 15;
                 dbid = mef(7, ef);
-                label_1275();
+                access_item_db();
                 if (cdata[tc].state == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -81597,7 +81597,7 @@ void label_2743(bool label_2747_flg)
                     {
                         dbmode = 15;
                         dbid = inv[ci].id;
-                        label_1275();
+                        access_item_db();
                     }
                 }
             }
@@ -81609,7 +81609,7 @@ void label_2743(bool label_2747_flg)
                 if (mdata(6) != 1)
                 {
                     efid = 408;
-                    label_2176();
+                    magic();
                 }
             }
         }
@@ -81723,7 +81723,7 @@ label_2747:
             firstturn = 1;
             label_2112();
             mode = 3;
-            label_17402();
+            initialize_map();
             return;
         }
         if (getkey(snail::key::f3))
@@ -81783,7 +81783,7 @@ label_2747:
                 ctrl_file(11);
                 mode = 2;
                 levelexitby = 4;
-                label_17402();
+                initialize_map();
                 return;
             }
         }
@@ -82017,7 +82017,7 @@ label_2747:
     {
         invctrl = lastctrl;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_throw)
@@ -82036,7 +82036,7 @@ label_2747:
         {
             invctrl = 26;
             snd(100);
-            label_20592();
+            ctrl_inventory();
             return;
         }
     }
@@ -82044,7 +82044,7 @@ label_2747:
     {
         invctrl = 1;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_drop)
@@ -82063,7 +82063,7 @@ label_2747:
         {
             invctrl = 2;
             snd(100);
-            label_20592();
+            ctrl_inventory();
             return;
         }
     }
@@ -82071,21 +82071,21 @@ label_2747:
     {
         invctrl = 5;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_read)
     {
         invctrl = 7;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_drink)
     {
         invctrl = 8;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_zap)
@@ -82104,7 +82104,7 @@ label_2747:
         {
             invctrl = 9;
             snd(100);
-            label_20592();
+            ctrl_inventory();
             return;
         }
     }
@@ -82112,7 +82112,7 @@ label_2747:
     {
         invctrl = 14;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         return;
     }
     if (key == key_open)
@@ -82131,7 +82131,7 @@ label_2747:
         {
             invctrl = 15;
             snd(100);
-            label_20592();
+            ctrl_inventory();
             return;
         }
     }
@@ -82151,7 +82151,7 @@ label_2747:
         {
             invctrl = 17;
             snd(100);
-            label_20592();
+            ctrl_inventory();
             return;
         }
     }
@@ -82241,7 +82241,7 @@ label_2747:
         {
             invctrl = 19;
             snd(100);
-            label_20592();
+            ctrl_inventory();
             return;
         }
     }
@@ -83038,7 +83038,7 @@ int refchara(int prm_258, int prm_259)
     dbmode = 16;
     dbid = prm_258;
     dbspec = prm_259;
-    return label_2654();
+    return access_character_info();
 }
 
 
@@ -83048,7 +83048,7 @@ std::string refchara_str(int prm_0258, int prm_0259)
     dbmode = 16;
     dbid = prm_0258;
     dbspec = prm_0259;
-    label_2654();
+    access_character_info();
     return refstr;
 }
 

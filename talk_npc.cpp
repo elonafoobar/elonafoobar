@@ -9,7 +9,7 @@ namespace elona
 {
 
 
-void label_2251()
+void talk_npc()
 {
     int chatid = 0;
     int tcchat = 0;
@@ -602,7 +602,7 @@ void label_2251()
                                     return;
                                 }
                             }
-                            label_2251();
+                            talk_npc();
                             return;
                         }
                     }
@@ -613,7 +613,7 @@ void label_2251()
     if (chatval == 1)
     {
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 10)
@@ -625,7 +625,7 @@ void label_2251()
         label_1419();
         cs = 0;
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 11)
@@ -638,7 +638,7 @@ void label_2251()
         label_1419();
         cs = 0;
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 12)
@@ -651,7 +651,7 @@ void label_2251()
         if (cdata[0].gold < calcmealvalue())
         {
             buff = strnogold;
-            label_2251();
+            talk_npc();
             return;
         }
         if (cdata[0].nutrition >= 15000)
@@ -659,7 +659,7 @@ void label_2251()
             buff = lang(
                 u8"腹が減っているようにはみえない"s + _yo(),
                 u8"You don't seem that hungry."s);
-            label_2251();
+            talk_npc();
             return;
         }
         snd(12);
@@ -672,7 +672,7 @@ void label_2251()
             lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
         label_2162();
         chara_anorexia(0);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval >= 14 && chatval < 17)
@@ -680,7 +680,7 @@ void label_2251()
         if (cdata[0].gold < calcidentifyvalue(chatval - 14))
         {
             buff = strnogold;
-            label_2251();
+            talk_npc();
             return;
         }
         inv_getheader(0);
@@ -704,7 +704,7 @@ void label_2251()
             buff = lang(
                 u8"鑑定するアイテムはないみたい"s + _da(),
                 u8"Your items have already been identified."s);
-            label_2251();
+            talk_npc();
             return;
         }
         if (chatval == 15)
@@ -755,11 +755,11 @@ void label_2251()
                 efp = 1000;
             }
             efid = 411;
-            label_2176();
+            magic();
             if (efcancel == 1)
             {
                 buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-                label_2251();
+                talk_npc();
                 return;
             }
             if (idtresult >= 3)
@@ -777,7 +777,7 @@ void label_2251()
             cdata[0].gold -= calcidentifyvalue(chatval - 14);
         }
         snd(12);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 17)
@@ -790,7 +790,7 @@ void label_2251()
     {
         label_1988();
         buff = lang(u8"お目当ての情報は見つかった"s + _kana(), u8"Done?"s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 19)
@@ -798,7 +798,7 @@ void label_2251()
         if (cdata[0].gold < calcrestorecost())
         {
             buff = strnogold;
-            label_2251();
+            talk_npc();
             return;
         }
         snd(12);
@@ -815,17 +815,17 @@ void label_2251()
                 tc = cnt;
                 efid = 439;
                 efp = 100;
-                label_2176();
+                magic();
                 txtmore();
                 efid = 440;
                 efp = 100;
-                label_2176();
+                magic();
             }
         }
         tc = tcbk;
         label_2241();
         buff = lang(u8"治療が完了し"s + _ta(), u8"Done treatment. Take care!"s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 20)
@@ -844,15 +844,15 @@ void label_2251()
         }
         invctrl(0) = 20;
         invctrl(1) = 0;
-        int stat = label_20592();
+        int stat = ctrl_inventory();
         if (stat == 0)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            label_2251();
+            talk_npc();
             return;
         }
         buff = lang(_thanks(2), u8"Thanks!"s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 21 || chatval == 22)
@@ -891,7 +891,7 @@ void label_2251()
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
                     u8"The game is over today. Come again tommorow."s);
-                label_2251();
+                talk_npc();
                 return;
             }
             randomize(adata(24, gdata_current_map));
@@ -944,7 +944,7 @@ void label_2251()
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
                     u8"The game is over today. Come again tommorow."s);
-                label_2251();
+                talk_npc();
                 return;
             }
             arenaop(0) = 1;
@@ -968,7 +968,7 @@ void label_2251()
             buff = lang(
                 u8"用があるときは声をかけて"s + _kure(),
                 u8"Alright. Call me if you changed your mind."s);
-            label_2251();
+            talk_npc();
             return;
         }
         if (arenaop == 0)
@@ -1014,7 +1014,7 @@ void label_2251()
                 buff = lang(
                     u8"用があるときは声をかけて"s + _kure(),
                     u8"Alright. Call me if you changed your mind."s);
-                label_2251();
+                talk_npc();
                 return;
             }
             arenaimport = 1;
@@ -1071,7 +1071,7 @@ void label_2251()
             buff = lang(
                 u8"用があるときは声をかけて"s + _kure(),
                 u8"Alright. Call me if you changed your mind."s);
-            label_2251();
+            talk_npc();
             return;
         }
         DIM2(followerexist, 16);
@@ -1089,7 +1089,7 @@ void label_2251()
             buff = lang(
                 u8"用があるときは声をかけて"s + _kure(),
                 u8"Alright. Call me if you changed your mind."s);
-            label_2251();
+            talk_npc();
             return;
         }
         gdata_executing_immediate_quest_type = 2;
@@ -1113,7 +1113,7 @@ void label_2251()
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(23, gdata_current_map) +
                 u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 23)
@@ -1122,7 +1122,7 @@ void label_2251()
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(22, gdata_current_map) +
                 u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 24)
@@ -1148,7 +1148,7 @@ void label_2251()
         label_0184();
         label_2679();
         label_1521();
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 26)
@@ -1169,7 +1169,7 @@ void label_2251()
         label_0184();
         label_2679();
         label_1521();
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 30)
@@ -1196,7 +1196,7 @@ void label_2251()
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            label_2251();
+            talk_npc();
             return;
         }
         gohostile();
@@ -1268,7 +1268,7 @@ void label_2251()
         }
         label_1521();
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 33)
@@ -1283,7 +1283,7 @@ void label_2251()
                 buff = lang(
                     u8"そいつは呼び戻す必要はないよう"s + _da(),
                     u8"Huh? You don't need to do that."s);
-                label_2251();
+                talk_npc();
                 return;
             }
             listmax = 0;
@@ -1323,7 +1323,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 34)
@@ -1379,7 +1379,7 @@ void label_2251()
             return;
         }
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 36 || chatval == 57)
@@ -1440,7 +1440,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 37)
@@ -1491,7 +1491,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 38)
@@ -1501,7 +1501,7 @@ void label_2251()
             buff = lang(
                 u8"("s + name(tc) + u8"はやんわりと断った)"s,
                 u8"("s + name(tc) + u8" gently refuses your proposal. )"s);
-            label_2251();
+            talk_npc();
             return;
         }
         cbitmod(961, tc, 1);
@@ -1633,7 +1633,7 @@ void label_2251()
             return;
         }
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 45)
@@ -1682,7 +1682,7 @@ void label_2251()
                 + _da(),
             u8"Hey, I've come up a good idea! \""s + mdatan(0)
                 + u8"\", doesn't it sound so charming?"s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 46)
@@ -1692,7 +1692,7 @@ void label_2251()
             buff = lang(
                 u8"その程度の罪なら自分でなんとかしなさい。"s,
                 u8"You karma isn't that low. Come back after you have comitted more crimes!"s);
-            label_2251();
+            talk_npc();
             return;
         }
         listmax = 0;
@@ -1723,7 +1723,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 47)
@@ -1772,7 +1772,7 @@ void label_2251()
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
         tc = tcchat;
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 48)
@@ -1794,7 +1794,7 @@ void label_2251()
             cbitmod(965, tc, 0);
         }
         chatid = -1;
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 50)
@@ -1836,7 +1836,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 51)
@@ -1847,7 +1847,7 @@ void label_2251()
                 _kimi(3) + u8"の仲間になれと？あまりにも力の差がありすぎる"s
                     + _na(),
                 u8"Huh? You are no match for me."s);
-            label_2251();
+            talk_npc();
             return;
         }
         if (cdata[tc].impression >= 200 && cdata[tc].hire_count > 2)
@@ -1877,7 +1877,7 @@ void label_2251()
                     u8"これ以上仲間を連れて行けないよう"s + _da()
                         + u8"人数を調整してまた来て"s + _kure(),
                     u8"It seems your party is already full. Come see me again when you're ready."s);
-                label_2251();
+                talk_npc();
                 return;
             }
             rc = tc;
@@ -1893,7 +1893,7 @@ void label_2251()
         buff = lang(
             _kimi(3) + u8"の仲間になれと？悪い"s + _ga(3) + u8"お断り"s + _da(),
             u8"Huh? What made you think I'd want to join you? I don't even know you well."s);
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 52)
@@ -1929,7 +1929,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 53)
@@ -1964,7 +1964,7 @@ void label_2251()
             buff = lang(
                 u8"充填する必要はないみたい"s + _da(),
                 u8"Reload what? You don't have any ammo in your inventory."s);
-            label_2251();
+            talk_npc();
             return;
         }
         buff = lang(
@@ -1994,7 +1994,7 @@ void label_2251()
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 55)
@@ -2004,7 +2004,7 @@ void label_2251()
         invctrl = 0;
         label_1984();
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 56)
@@ -2022,7 +2022,7 @@ void label_2251()
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            label_2251();
+            talk_npc();
             return;
         }
         listmax = 0;
@@ -2071,7 +2071,7 @@ void label_2251()
             }
         }
         buff = "";
-        label_2251();
+        talk_npc();
         return;
     }
     if (chatval == 60)
@@ -2095,7 +2095,7 @@ void label_2251()
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            label_2251();
+            talk_npc();
             return;
         }
         snd(12);
@@ -2165,7 +2165,7 @@ void label_2251()
         if (chatval <= 0)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            label_2251();
+            talk_npc();
             return;
         }
         gdata_destination_map = adata(30, chatval);
@@ -2271,7 +2271,7 @@ void label_2251()
             }
         }
         buff = s;
-        label_2251();
+        talk_npc();
         return;
     }
     if (evid() == 11)

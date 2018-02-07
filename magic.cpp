@@ -12,7 +12,7 @@ namespace elona
 {
 
 
-int label_2176()
+int magic()
 {
     int efcibk = 0;
     int efbad = 0;
@@ -1554,7 +1554,7 @@ label_2181_internal:
         invctrl(0) = 27;
         invctrl(1) = 0;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         goto label_2186_internal;
     case 301:
         if (cc == 0)
@@ -1739,7 +1739,7 @@ label_2181_internal:
         invctrl = 16;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             if (stat == 0)
             {
                 return 0;
@@ -2032,7 +2032,7 @@ label_2181_internal:
                     {
                         tid = rnd(45);
                         traitmode = 0;
-                        int stat = label_0042();
+                        int stat = get_trait_info();
                         if (stat == 0 || traitref != 1)
                         {
                             continue;
@@ -2129,7 +2129,7 @@ label_2181_internal:
                     {
                         tid = rnd(217);
                         traitmode = 0;
-                        int stat = label_0042();
+                        int stat = get_trait_info();
                         if (stat == 0 || traitref != 1)
                         {
                             continue;
@@ -2184,7 +2184,7 @@ label_2181_internal:
         invsubroutine = 1;
         invctrl = 13;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         goto label_2186_internal;
     case 461:
         if (mdata(6) == 1)
@@ -3542,7 +3542,7 @@ label_2181_internal:
         invctrl(0) = 23;
         invctrl(1) = 0;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         if (inv[ci].quality < 4 || inv[ci].quality == 6)
         {
             txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -3581,7 +3581,7 @@ label_2181_internal:
         invctrl(1) = 7;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             f = stat;
         }
         if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
@@ -3648,7 +3648,7 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             f = stat;
         }
         if (inv[ci].quality == 5 || ibit(10, ci) == 1)
@@ -3759,7 +3759,7 @@ label_2181_internal:
         }
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             if (stat == 1)
             {
                 if (inv[ci].enhancement < efp / 100)
@@ -3815,12 +3815,12 @@ label_2181_internal:
         invctrl(1) = 3;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             if (stat == 1)
             {
                 dbid = inv[ci].id;
                 dbmode = 2;
-                label_1275();
+                access_item_db();
                 if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480
                     || inv[ci].id == 289 || inv[ci].id == 732
                     || inv[ci].id == 687 && inv[ci].param2 != 0)
@@ -3910,12 +3910,12 @@ label_2181_internal:
         invctrl(1) = 5;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             if (stat == 1)
             {
                 dbid = inv[ci].id;
                 dbmode = 2;
-                label_1275();
+                access_item_db();
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
@@ -4018,7 +4018,7 @@ label_2181_internal:
         invctrl(1) = 6;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             if (stat == 1)
             {
                 autosave = 1 * (gdata_current_map != 35);
@@ -4085,7 +4085,7 @@ label_2181_internal:
         invctrl(1) = 4;
         snd(100);
         {
-            int stat = label_20592();
+            int stat = ctrl_inventory();
             f = stat;
         }
         if (f)
@@ -4706,7 +4706,7 @@ label_2181_internal:
         invcontainer = std::clamp(efp / 10 + 10, 10, 300);
         mode = 6;
         snd(100);
-        label_20592();
+        ctrl_inventory();
         invcontainer = 0;
         ctrl_file(4, u8"shop"s + invfile + u8".s2");
         ctrl_file(3, u8"shoptmp.s2");

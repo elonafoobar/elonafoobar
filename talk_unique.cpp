@@ -34,7 +34,7 @@ namespace elona
 {
 
 
-void label_2246()
+void talk_unique()
 {
     listmax = 0;
     switch (chatval(1))
@@ -566,7 +566,7 @@ void label_2246()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 2)
@@ -587,7 +587,7 @@ void label_2246()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 3)
@@ -600,7 +600,7 @@ void label_2246()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         label_2256();
@@ -890,7 +890,7 @@ void label_2246()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 1;
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 2)
@@ -997,7 +997,7 @@ void label_2246()
                 SCENE_CUT();
             }
             gdata_tutorial_flag = 2;
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 4)
@@ -1032,7 +1032,7 @@ void label_2246()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 5;
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 5)
@@ -1196,7 +1196,7 @@ void label_2246()
             txt(lang(
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
-            label_2246();
+            talk_unique();
             return;
         }
         goto label_2247_internal;
@@ -1490,7 +1490,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 5)
@@ -1513,7 +1513,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 if (gdata_main_quest_flag >= 110)
@@ -1526,7 +1526,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 listmax = 0;
@@ -1539,7 +1539,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 3)
@@ -1568,7 +1568,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 2)
@@ -1597,7 +1597,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 1)
@@ -1626,7 +1626,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             label_2256();
@@ -1800,7 +1800,7 @@ void label_2246()
             invctrl = 1;
             snd(26);
             label_18552();
-            label_2246();
+            talk_unique();
             return;
         }
         label_2256();
@@ -1835,7 +1835,7 @@ void label_2246()
             screenupdate = -1;
             label_1419();
             cs = 0;
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 3)
@@ -1871,7 +1871,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             txtnew();
@@ -1890,7 +1890,7 @@ void label_2246()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         label_2256();
@@ -3932,7 +3932,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 1)
@@ -3970,7 +3970,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 if (gdata_mages_guild_quota > 0)
@@ -3983,7 +3983,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 listmax = 0;
@@ -4081,7 +4081,7 @@ void label_2246()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 2)
@@ -4096,7 +4096,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             gdata_mages_guild_quota2 = 0;
@@ -4170,7 +4170,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 1)
@@ -4199,7 +4199,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 if (gdata_left_bill <= 4)
@@ -4212,7 +4212,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 listmax = 0;
@@ -4310,7 +4310,7 @@ void label_2246()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 2)
@@ -4325,7 +4325,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             gdata_thieves_guild_quota2 = 0;
@@ -4399,7 +4399,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             if (chatval == 1)
@@ -4455,7 +4455,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 if (gdata_fighters_guild_quota > 0)
@@ -4474,7 +4474,7 @@ void label_2246()
                     RESPONSE(0, strmore);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2246();
+                    talk_unique();
                     return;
                 }
                 listmax = 0;
@@ -4595,7 +4595,7 @@ void label_2246()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2246();
+            talk_unique();
             return;
         }
         if (chatval == 2)
@@ -4610,7 +4610,7 @@ void label_2246()
                 RESPONSE(0, strmore);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2246();
+                talk_unique();
                 return;
             }
             gdata_fighters_guild_quota2 = 0;
@@ -4968,7 +4968,7 @@ void label_2246()
                     invsubroutine = 1;
                     invctrl(0) = 22;
                     invctrl(1) = 4;
-                    label_20592();
+                    ctrl_inventory();
                     exittempinv();
                     mode = 0;
                     listmax = 0;

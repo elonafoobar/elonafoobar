@@ -13,7 +13,7 @@ void label_2743(bool = true);
 int submenu = 0;
 
 
-void label_2723()
+void set_option()
 {
     int cfg_sound2 = 0;
     int cfg_music2 = 0;
@@ -954,7 +954,7 @@ label_2725_internal:
         {
             submenu = p + 1;
             snd(20);
-            label_2723();
+            set_option();
             return;
         }
     }
@@ -1704,7 +1704,7 @@ label_2725_internal:
         if (submenu != 0)
         {
             submenu = 0;
-            label_2723();
+            set_option();
             return;
         }
         label_2716();

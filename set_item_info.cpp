@@ -8136,7 +8136,7 @@ namespace elona
 {
 
 
-void label_1277()
+void set_item_info()
 {
     for (const auto& info : item_info_table)
     {

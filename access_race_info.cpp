@@ -117,7 +117,7 @@ namespace elona
 
 
 
-int label_2297()
+int access_race_info()
 {
     if (dbmode == 1)
     {

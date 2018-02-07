@@ -12,7 +12,7 @@ namespace elona
 void label_2743(bool = true);
 
 
-int label_20592()
+int ctrl_inventory()
 {
     int mainweapon = 0;
     int countequip = 0;

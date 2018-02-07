@@ -248,7 +248,7 @@ void initialize_elona()
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);
 
-    label_0034();
+    set_sdataref();
     label_0478();
 
     DIM3(dirxy, 2, 4);
@@ -397,7 +397,7 @@ void initialize_elona()
     label_2111();
     label_2296();
     label_2655();
-    label_1276();
+    set_item_filters();
     label_0202();
     label_0030();
     label_1752();
@@ -407,7 +407,7 @@ void initialize_elona()
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
     label_1883();
-    label_1277();
+    set_item_info();
     label_0041();
     label_0026();
     label_0029();
@@ -809,7 +809,7 @@ label_2116_internal:
     if (key == u8"e"s)
     {
         snd(20);
-        label_2723();
+        set_option();
         return;
     }
     if (key == u8"f"s)
@@ -916,12 +916,12 @@ void label_1544()
     listmax = 0;
     val = 0;
     dbmode = 1;
-    label_2297();
+    access_race_info();
     if (cfg_extrarace)
     {
         val = 1;
         dbmode = 1;
-        label_2297();
+        access_race_info();
     }
     {
         int cnt = 0;
@@ -929,7 +929,7 @@ void label_1544()
         {
             dbidn = listn(1, cnt);
             dbmode = 2;
-            label_2297();
+            access_race_info();
             listn(0, cnt) = racename;
             if (list(0, cnt) == 1)
             {
@@ -989,9 +989,9 @@ label_1546_internal:
         del_chara(0);
         dbidn = listn(1, page * pagesize + cs);
         dbmode = 3;
-        label_2297();
+        access_race_info();
         dbmode = 11;
-        label_2297();
+        access_race_info();
         val = 0;
         label_1567(cnt);
     }
@@ -1020,7 +1020,7 @@ label_1546_internal:
         cmrace(1) = listn(0, p);
         dbidn = cmrace;
         dbmode = 11;
-        label_2297();
+        access_race_info();
         label_1547();
         return;
     }
@@ -1308,7 +1308,7 @@ label_1554:
     del_chara(0);
     dbidn = cmrace;
     dbmode = 3;
-    label_2297();
+    access_race_info();
     dbidn = cmclass;
     dbmode = 3;
     label_2298();
@@ -1671,7 +1671,7 @@ label_1563_internal:
     del_chara(0);
     dbidn = cmrace;
     dbmode = 3;
-    label_2297();
+    access_race_info();
     dbidn = cmclass;
     dbmode = 3;
     label_2298();
@@ -2383,7 +2383,7 @@ void label_2732()
         label_2112();
     }
     label_2124();
-    label_17402();
+    initialize_map();
     return;
 }
 

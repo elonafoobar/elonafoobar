@@ -13,7 +13,7 @@ namespace elona
 void label_2743(bool = true);
 
 
-void label_17402()
+void initialize_map()
 {
     int maxnpcbk = 0;
     elona_vector2<int> rolebk;
