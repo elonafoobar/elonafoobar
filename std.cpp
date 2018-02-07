@@ -8,7 +8,6 @@
 
 
 #include "snail/application.hpp"
-#include "snail/input.hpp"
 
 #include "elona.hpp"
 #include "variables.hpp"
@@ -16,88 +15,6 @@
 
 namespace
 {
-
-
-
-snail::key hspkey2snailkey(int hsp_key)
-{
-    switch (hsp_key)
-    {
-    case 8: return snail::key::backspace;
-    case 12: return snail::key::none; // Maybe one of the keypad keys.
-    case 13: return snail::key::enter;
-    case 16: return snail::key::shift;
-    case 17: return snail::key::ctrl;
-    case 18: return snail::key::alt;
-    case 27: return snail::key::escape;
-    case 32: return snail::key::space;
-    case 33: return snail::key::pageup;
-    case 34: return snail::key::pagedown;
-    case 35: return snail::key::end;
-    case 36: return snail::key::home;
-    case 38: return snail::key::up;
-    case 40: return snail::key::down;
-    case 45: return snail::key::none; // Maybe one of the keypad keys.
-    case 48: return snail::key::key_0;
-    case 49: return snail::key::key_1;
-    case 50: return snail::key::key_2;
-    case 51: return snail::key::key_3;
-    case 52: return snail::key::key_4;
-    case 53: return snail::key::key_5;
-    case 54: return snail::key::key_6;
-    case 55: return snail::key::key_7;
-    case 56: return snail::key::key_8;
-    case 57: return snail::key::key_9;
-    case 65: return snail::key::key_a;
-    case 66: return snail::key::key_b;
-    case 67: return snail::key::key_c;
-    case 68: return snail::key::key_d;
-    case 69: return snail::key::key_e;
-    case 70: return snail::key::key_f;
-    case 71: return snail::key::key_g;
-    case 72: return snail::key::key_h;
-    case 73: return snail::key::key_i;
-    case 74: return snail::key::key_j;
-    case 75: return snail::key::key_k;
-    case 76: return snail::key::key_l;
-    case 77: return snail::key::key_m;
-    case 78: return snail::key::key_n;
-    case 79: return snail::key::key_o;
-    case 80: return snail::key::key_p;
-    case 81: return snail::key::key_q;
-    case 82: return snail::key::key_r;
-    case 83: return snail::key::key_s;
-    case 84: return snail::key::key_t;
-    case 85: return snail::key::key_u;
-    case 86: return snail::key::key_v;
-    case 87: return snail::key::key_w;
-    case 88: return snail::key::key_x;
-    case 89: return snail::key::key_y;
-    case 90: return snail::key::key_z;
-    case 96: return snail::key::keypad_0;
-    case 97: return snail::key::keypad_1;
-    case 98: return snail::key::keypad_2;
-    case 99: return snail::key::keypad_3;
-    case 100: return snail::key::keypad_4;
-    case 101: return snail::key::keypad_5;
-    case 102: return snail::key::keypad_6;
-    case 103: return snail::key::keypad_7;
-    case 104: return snail::key::keypad_8;
-    case 105: return snail::key::keypad_9;
-    case 112: return snail::key::f1;
-    case 113: return snail::key::f2;
-    case 114: return snail::key::f3;
-    case 115: return snail::key::f4;
-    case 116: return snail::key::f5;
-    case 117: return snail::key::f6;
-    case 118: return snail::key::f7;
-    case 119: return snail::key::f8;
-    case 120: return snail::key::f9;
-    case 122: return snail::key::f11;
-    case 123: return snail::key::f12;
-    default: assert(0);
-    }
-}
 
 
 
@@ -711,9 +628,9 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
 
 
 
-void getkey(int& out, int key)
+bool getkey(snail::key key)
 {
-    out = snail::input::instance().is_pressed(hspkey2snailkey(key));
+    return snail::input::instance().is_pressed(key);
 }
 
 

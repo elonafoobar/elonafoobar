@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 #include "macro_gdata.hpp"
+#include "snail/input.hpp"
 #include "util.hpp"
 
 #if __has_include(<filesystem>)
@@ -408,7 +409,7 @@ void gcopy(
     int src_width = 0,
     int src_height = 0);
 
-void getkey(int& out, int key);
+bool getkey(snail::key);
 
 void getstr(
     std::string& out,

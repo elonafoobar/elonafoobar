@@ -41,32 +41,37 @@ void key_check(int prm_299)
     {
         if (cfg_alert > 1)
         {
+            for (int i = 0; i < cfg_alert; ++i)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (cfg_alert); cnt < cnt_end; ++cnt)
+                await(10);
+                bool any_key_pressed = false;
+
+                if (getkey(snail::key::space) || getkey(snail::key::enter))
                 {
-                    await(10);
-                    p_at_m19 = 0;
+                    any_key_pressed = true;
+                }
+                else
+                {
+                    for (int i = 0; i < 26; ++i)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (106); cnt < cnt_end; ++cnt)
+                        if (getkey(snail::key(int(snail::key::key_a) + i)))
                         {
-                            if (cnt == 32 || cnt == 13 || cnt >= 65 && cnt <= 90
-                                || cnt >= 96 && cnt <= 105)
-                            {
-                                getkey(a_at_m19, cnt);
-                                if (a_at_m19)
-                                {
-                                    p_at_m19 = 1;
-                                    break;
-                                }
-                            }
+                            any_key_pressed = true;
+                            break;
                         }
                     }
-                    if (p_at_m19 == 0)
+                    for (int i = 0; i < 10; ++i)
                     {
-                        break;
+                        if (getkey(snail::key(int(snail::key::key_0) + i)))
+                        {
+                            any_key_pressed = true;
+                            break;
+                        }
                     }
+                }
+                if (!any_key_pressed)
+                {
+                    break;
                 }
             }
             msgalert = 0;
@@ -109,41 +114,24 @@ void key_check(int prm_299)
     }
     else
     {
-        getkey(a_at_m19, 12);
-        if (a_at_m19)
-        {
-            key = key_wait;
-            f_at_m19 = 1;
-        }
-        getkey(a_at_m19, 45);
-        if (a_at_m19)
-        {
-            key = key_get;
-            f_at_m19 = 1;
-        }
-        getkey(a_at_m19, 36);
-        if (a_at_m19)
+        if (getkey(snail::key::home))
         {
             p_at_m19 = 3;
         }
-        getkey(a_at_m19, 33);
-        if (a_at_m19)
+        if (getkey(snail::key::pageup))
         {
             p_at_m19 = 6;
         }
-        getkey(a_at_m19, 35);
-        if (a_at_m19)
+        if (getkey(snail::key::end))
         {
             p_at_m19 = 9;
         }
-        getkey(a_at_m19, 34);
-        if (a_at_m19)
+        if (getkey(snail::key::pagedown))
         {
             p_at_m19 = 12;
         }
     }
-    getkey(a_at_m19, 17);
-    if (a_at_m19)
+    if (getkey(snail::key::ctrl))
     {
         key_ctrl = 1;
     }
@@ -151,8 +139,7 @@ void key_check(int prm_299)
     {
         key_ctrl = 0;
     }
-    getkey(a_at_m19, 18);
-    if (a_at_m19)
+    if (getkey(snail::key::alt))
     {
         key_alt = 1;
     }
@@ -160,28 +147,14 @@ void key_check(int prm_299)
     {
         key_alt = 0;
     }
-    getkey(a_at_m19, 16);
-    if (a_at_m19)
+    if (getkey(snail::key::shift))
     {
         keybd_wait = 100000;
         key_shift = 1;
-        if (keywait != 0)
-        {
-            if (a_at_m19 == 0)
-            {
-                if (key_shift == 0)
-                {
-                    keywait = 0;
-                }
-            }
-        }
         if (keywait == 0)
         {
-            if (a_at_m19 == 1)
-            {
-                key = key_cancel;
-                keywait = 1;
-            }
+            key = key_cancel;
+            keywait = 1;
         }
     }
     else
@@ -439,19 +412,18 @@ void key_check(int prm_299)
         running = 0;
         keyactive_at_m19 = "";
     }
+    for (int i = 0; i < 10; ++i)
     {
-        int cnt = 48;
-        for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        if (getkey(snail::key(int(snail::key::key_0) + i)))
         {
-            getkey(p_at_m19, cnt);
-            if (p_at_m19)
+            key = u8"sc";
+            sc = i;
+            if (key_shift == 1 || key_ctrl == 1)
             {
-                p_at_m19 = (cnt - 48) % 10;
-                key = u8"sc"s;
-                sc = cnt - 48 + (key_shift == 1 || key_ctrl == 1) * 10;
-                keybd_event(cnt, 0, 2);
-                scon_at_m19 = 1;
+                sc += 10;
             }
+            keybd_event(i, 0, 2);
+            scon_at_m19 = 1;
         }
     }
     if (scon_at_m19)

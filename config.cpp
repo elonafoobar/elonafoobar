@@ -657,33 +657,27 @@ void label_2716()
             gcopy(4, 360, 6, 20, 18);
             redraw(1);
             await(30);
-            getkey(a, 40);
-            if (a)
+            if (getkey(snail::key::down))
             {
                 p = 1;
             }
-            getkey(a, 98);
-            if (a)
+            if (getkey(snail::key::keypad_2))
             {
                 p = 1;
             }
-            getkey(a, 38);
-            if (a)
+            if (getkey(snail::key::up))
             {
                 p = 0;
             }
-            getkey(a, 104);
-            if (a)
+            if (getkey(snail::key::keypad_8))
             {
                 p = 0;
             }
-            getkey(a, 13);
-            if (a)
+            if (getkey(snail::key::enter))
             {
                 break;
             }
-            getkey(a, 32);
-            if (a)
+            if (getkey(snail::key::space))
             {
                 break;
             }
