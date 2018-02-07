@@ -79,7 +79,7 @@ void label_2754()
     case 1:
         label_27492();
         flt();
-        characreate(-1, 23, cdata_x(0), cdata_y(0));
+        characreate(-1, 23, cdata[0].position.x, cdata[0].position.y);
         goto label_2755_internal;
     case 27:
         if (gdata_current_map == 35)
@@ -172,9 +172,9 @@ void label_2754()
             p = 166;
         }
         flt();
-        initlv = cdata_level(0) * 2 / 3 + 1;
+        initlv = cdata[0].level * 2 / 3 + 1;
         novoidlv = 1;
-        characreate(-1, p, cdata_x(cc), cdata_y(cc));
+        characreate(-1, p, cdata[cc].position.x, cdata[cc].position.y);
         label_2659();
         goto label_2755_internal;
     case 13:
@@ -195,14 +195,15 @@ void label_2754()
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata_level(marry) + 5), calcfixlv(3));
+                flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
                 flttypemajor = fsetchest(rnd(length(fsetchest)));
-                itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
+                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
         }
-        itemcreate(-1, 559, cdata_x(0), cdata_y(0), 0);
+        itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
-        itemcreate(-1, 55, cdata_x(0), cdata_y(0), rnd(3) + 2);
+        itemcreate(
+            -1, 55, cdata[0].position.x, cdata[0].position.y, rnd(3) + 2);
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
@@ -237,8 +238,8 @@ void label_2754()
         initlv = gdata_current_dungeon_level / 4;
         characreate(-1, c, -3, 0);
         cbitmod(976, rc, 1);
-        cdata_relationship(rc) = -3;
-        cdata_original_relationship(rc) = -3;
+        cdata[rc].relationship = -3;
+        cdata[rc].original_relationship = -3;
         tc = rc;
         adata(20, gdata_current_map) = tc;
         txtef(3);
@@ -272,7 +273,7 @@ void label_2754()
     }
         tc = rc;
         adata(20, gdata_current_map) = tc;
-        cdatan(0, rc) += u8" Lv"s + cdata_level(rc);
+        cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         txt(lang(
             u8"どうやら最深層まで辿り着いたらしい…"s,
             u8"It seems you have reached the deepest level of this dungeon."s));
@@ -291,21 +292,26 @@ void label_2754()
         snd(51);
         flt(calcobjlv(), calcfixlv());
         flttypemajor = 54000;
-        itemcreate(-1, 0, cdata_x(0), cdata_y(0), 0);
+        itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
-        itemcreate(-1, 236, cdata_x(0), cdata_y(0), 0);
+        itemcreate(-1, 236, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata_x(0), cdata_y(0), 200 + inv_number(ci) * 5);
+        itemcreate(
+            -1,
+            54,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            200 + inv[ci].number * 5);
         flt();
         itemcreate(
             -1,
             55,
-            cdata_x(0),
-            cdata_y(0),
+            cdata[0].position.x,
+            cdata[0].position.y,
             std::clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
         flt();
-        itemcreate(-1, 239, cdata_x(0), cdata_y(0), 0);
-        inv_param2(ci) = 0;
+        itemcreate(-1, 239, cdata[0].position.x, cdata[0].position.y, 0);
+        inv[ci].param2 = 0;
         txtef(2);
         txt(lang(
             u8"クエストを達成した！"s, u8"You have completed the quest!"s));
@@ -321,7 +327,7 @@ void label_2754()
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
-        cdata_fame(0) += gdata(74);
+        cdata[0].fame += gdata(74);
         if (gdata_current_map == 42)
         {
             adata(20, gdata_current_map) = 0;
@@ -369,7 +375,7 @@ void label_2754()
     }
         goto label_2755_internal;
     case 6:
-        if (cdata_level(0) > 5)
+        if (cdata[0].level > 5)
         {
             {
                 int cnt = 10;
@@ -388,7 +394,7 @@ void label_2754()
                     }
                 }
             }
-            if (cdata_karma(0) < -30)
+            if (cdata[0].karma < -30)
             {
                 modkarma(0, 10);
             }
@@ -405,7 +411,7 @@ void label_2754()
         }
         txtmore();
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
-        cdata_gold(0) -= cdata_gold(0) / 3;
+        cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
         r1 = 0;
         label_1477();
@@ -413,28 +419,28 @@ void label_2754()
         goto label_2755_internal;
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
-        cdata_character_role(evdata1(evnum - (evnum != 0) * 1)) = 0;
-        cdata_state(evdata1(evnum - (evnum != 0) * 1)) = 0;
+        cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
+        cdata[evdata1(evnum - (evnum != 0) * 1)].state = 0;
         flt();
         itemcreate(
             -1,
             55,
-            cdata_x(evdata1(evnum - (evnum != 0) * 1)),
-            cdata_y(evdata1(evnum - (evnum != 0) * 1)),
+            cdata[evdata1(evnum - (evnum != 0) * 1)].position.x,
+            cdata[evdata1(evnum - (evnum != 0) * 1)].position.y,
             4);
         gdata_pael_and_her_mom = 1001;
         tc = findchara(221);
         if (tc != 0)
         {
-            if (cdata_state(tc) == 1)
+            if (cdata[tc].state == 1)
             {
                 txtef(4);
                 txt(lang(
                     u8"パエル「おかあさんーー！！」"s,
                     cnvtalk(u8"M-mom...!!"s)));
-                cdata_relationship(tc) = -3;
-                cdata_hate(tc) = 1000;
-                cdata_enemy_id(tc) = 0;
+                cdata[tc].relationship = -3;
+                cdata[tc].hate = 1000;
+                cdata[tc].enemy_id = 0;
             }
         }
         goto label_2755_internal;
@@ -466,12 +472,12 @@ void label_2754()
                 for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
                 {
                     i = rnd(39) + 16;
-                    if (cdata_state(i) == 3)
+                    if (cdata[i].state == 3)
                     {
                         if (cbit(969, i) == 0)
                         {
-                            cdata_current_map(i) != gdata_current_map;
-                            if (cdata_relationship(i) >= 0)
+                            cdata[i].current_map != gdata_current_map;
+                            if (cdata[i].relationship >= 0)
                             {
                                 if (rnd(25) < p)
                                 {
@@ -481,14 +487,14 @@ void label_2754()
                                 {
                                     tc = i;
                                     ++p;
-                                    if (cdata_impression(tc) < 25)
+                                    if (cdata[tc].impression < 25)
                                     {
                                         if (rnd(12) == 0)
                                         {
                                             break;
                                         }
                                     }
-                                    if (cdata_impression(tc) < 0)
+                                    if (cdata[tc].impression < 0)
                                     {
                                         if (rnd(4))
                                         {
@@ -497,7 +503,7 @@ void label_2754()
                                     }
                                     continue;
                                 }
-                                if (cdata_impression(cnt) < cdata_impression(i))
+                                if (cdata[cnt].impression < cdata[i].impression)
                                 {
                                     tc = i;
                                     ++p;
@@ -514,10 +520,10 @@ void label_2754()
                     u8"It seems the guest has already left your house."s));
                 goto label_2755_internal;
             }
-            cdata_state(tc) = 1;
+            cdata[tc].state = 1;
             rc = tc;
-            cxinit = cdata_x(0);
-            cyinit = cdata_y(0);
+            cxinit = cdata[0].position.x;
+            cyinit = cdata[0].position.y;
             label_1532();
         }
         else
@@ -533,44 +539,44 @@ void label_2754()
                         if (rnd(3))
                         {
                             characreate(-1, 333, -3, 0);
-                            cdata_character_role(rc) = 2005;
+                            cdata[rc].character_role = 2005;
                             break;
                         }
                     }
                     if (rnd(10) == 0)
                     {
                         characreate(-1, 334, -3, 0);
-                        cdata_character_role(rc) = 2006;
+                        cdata[rc].character_role = 2006;
                         break;
                     }
                     if (rnd(10) == 0)
                     {
                         characreate(-1, 1, -3, 0);
-                        cdata_character_role(rc) = 2003;
-                        cdata_shop_rank(rc) =
-                            std::clamp(cdata_fame(0) / 100, 20, 100);
+                        cdata[rc].character_role = 2003;
+                        cdata[rc].shop_rank =
+                            std::clamp(cdata[0].fame / 100, 20, 100);
                         break;
                     }
                     if (rnd(4) == 0)
                     {
                         characreate(-1, 9, -3, 0);
-                        cdata_character_role(rc) = 2000;
+                        cdata[rc].character_role = 2000;
                         break;
                     }
                     if (rnd(4) == 0)
                     {
                         characreate(-1, 174, -3, 0);
-                        cdata_character_role(rc) = 2001;
+                        cdata[rc].character_role = 2001;
                         break;
                     }
                     characreate(-1, 16, -3, 0);
-                    cdata_character_role(rc) = 2002;
+                    cdata[rc].character_role = 2002;
                     break;
                 }
             }
             tc = rc;
-            cdata_relationship(tc) = 0;
-            cdata_original_relationship(tc) = 0;
+            cdata[tc].relationship = 0;
+            cdata[tc].original_relationship = 0;
             cbitmod(964, tc, 1);
         }
         cbitmod(982, tc, 1);
@@ -587,7 +593,7 @@ void label_2754()
                 {
                     c = cnt - 1;
                 }
-                if (cdata_state(c) != 1)
+                if (cdata[c].state != 1)
                 {
                     continue;
                 }
@@ -605,19 +611,23 @@ void label_2754()
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        if (inv_number(cnt) == 0)
+                        if (inv[cnt].number == 0)
                         {
                             continue;
                         }
-                        if (inv_function(cnt) != 44)
+                        if (inv[cnt].function != 44)
                         {
                             continue;
                         }
                         if (c == tc)
                         {
-                            if (inv_param1(cnt) == 2)
+                            if (inv[cnt].param1 == 2)
                             {
-                                cell_swap(c, -1, inv_x(cnt), inv_y(cnt));
+                                cell_swap(
+                                    c,
+                                    -1,
+                                    inv[cnt].position.x,
+                                    inv[cnt].position.y);
                                 i = cnt;
                                 p = cnt;
                                 break;
@@ -635,11 +645,16 @@ void label_2754()
                         {
                             continue;
                         }
-                        p(2) = dist(inv_x(cnt), inv_y(cnt), inv_x(i), inv_y(i));
+                        p(2) = dist(
+                            inv[cnt].position.x,
+                            inv[cnt].position.y,
+                            inv[i].position.x,
+                            inv[i].position.y);
                         if (p(2) < p(1))
                         {
-                            if (map(inv_x(cnt), inv_y(cnt), 1) == 0 || c == 0
-                                || c == tc)
+                            if (map(inv[cnt].position.x, inv[cnt].position.y, 1)
+                                    == 0
+                                || c == 0 || c == tc)
                             {
                                 p(0) = cnt;
                                 p(1) = p(2);
@@ -647,7 +662,7 @@ void label_2754()
                         }
                         if (c == 0)
                         {
-                            if (inv_param1(cnt) == 1)
+                            if (inv[cnt].param1 == 1)
                             {
                                 p = cnt;
                                 break;
@@ -657,13 +672,16 @@ void label_2754()
                 }
                 if (p != 0)
                 {
-                    cell_swap(c, -1, inv_x(p), inv_y(p));
+                    cell_swap(c, -1, inv[p].position.x, inv[p].position.y);
                 }
-                cdata_direction(c) =
-                    direction(cdata_x(c), cdata_y(c), cdata_x(tc), cdata_y(tc));
+                cdata[c].direction = direction(
+                    cdata[c].position.x,
+                    cdata[c].position.y,
+                    cdata[tc].position.x,
+                    cdata[tc].position.y);
                 if (c == 0)
                 {
-                    gdata(35) = cdata_direction(c);
+                    gdata(35) = cdata[c].direction;
                 }
             }
         }
@@ -675,15 +693,15 @@ void label_2754()
             int cnt = 0;
             for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
             {
-                if (cdata_state(cnt) != 1)
+                if (cdata[cnt].state != 1)
                 {
                     continue;
                 }
-                if (cdata_character_role(cnt) != 13)
+                if (cdata[cnt].character_role != 13)
                 {
-                    if (cdata_character_role(cnt) != 3)
+                    if (cdata[cnt].character_role != 3)
                     {
-                        cdata_emotion_icon(cnt) = 2010;
+                        cdata[cnt].emotion_icon = 2010;
                         txt(lang(
                             name(cnt) + u8"「目が！目がー！！」"s,
                             name(cnt) + u8" shout"s + _s(cnt) + u8" "s
@@ -699,7 +717,7 @@ void label_2754()
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
             {
-                if (cdata_state(cnt) != 1)
+                if (cdata[cnt].state != 1)
                 {
                     continue;
                 }
@@ -707,15 +725,15 @@ void label_2754()
                 {
                     continue;
                 }
-                if (cdata_character_role(cnt) != 13)
+                if (cdata[cnt].character_role != 13)
                 {
-                    if (cdata_character_role(cnt) != 3)
+                    if (cdata[cnt].character_role != 3)
                     {
-                        if (cdata_character_role(cnt) != 0
-                            || cdata_relationship(cnt) == 0
-                            || cdata_current_map(cnt) == gdata_current_map)
+                        if (cdata[cnt].character_role != 0
+                            || cdata[cnt].relationship == 0
+                            || cdata[cnt].current_map == gdata_current_map)
                         {
-                            cdata_emotion_icon(cnt) = 2006;
+                            cdata[cnt].emotion_icon = 2006;
                             int stat = customtalk(cnt, 104);
                             if (stat == 0)
                             {
@@ -758,11 +776,11 @@ void label_2754()
                 int cnt = 0;
                 for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata_state(cnt) != 1)
+                    if (cdata[cnt].state != 1)
                     {
                         continue;
                     }
-                    if (cdata_character_role(cnt) == 18)
+                    if (cdata[cnt].character_role == 18)
                     {
                         tc = cnt;
                         break;
@@ -1070,11 +1088,11 @@ void label_2754()
                 int cnt = 57;
                 for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata_state(cnt) == 1)
+                    if (cdata[cnt].state == 1)
                     {
-                        cdata_relationship(cnt) = -3;
-                        cdata_enemy_id(cnt) = 0;
-                        cdata_hate(cnt) = 250;
+                        cdata[cnt].relationship = -3;
+                        cdata[cnt].enemy_id = 0;
+                        cdata[cnt].hate = 250;
                     }
                 }
             }
@@ -1090,8 +1108,9 @@ void label_2754()
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
                     flt();
-                    initlv = cdata_level(0);
-                    characreate(-1, 215, cdata_x(0), cdata_y(0));
+                    initlv = cdata[0].level;
+                    characreate(
+                        -1, 215, cdata[0].position.x, cdata[0].position.y);
                 }
             }
         }

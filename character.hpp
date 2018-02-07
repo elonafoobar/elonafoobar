@@ -174,6 +174,12 @@ struct character_data
     }
 
 
+    character& operator[](int index)
+    {
+        return storage[index];
+    }
+
+
     std::unique_ptr<char[]> serialize(int offset = 0) const;
 
     void
@@ -198,4 +204,8 @@ void cbitmod(int type, int cc, int on);
 
 
 
-#include "macro_cdata.hpp"
+inline int cdata_body_part_index(int i)
+{
+    return i >= 100 ? i - 100 : i;
+}
+#define cdata_body_part(cc, i) cdata(cc).body_parts[cdata_body_part_index(i)]

@@ -19,15 +19,15 @@ int label_1275()
     {
         if (dbmode == 10 || dbmode == 3)
         {
-            inv_value(ci) = info->value;
-            inv_weight(ci) = info->weight;
-            inv_dice_x(ci) = info->dice_x;
-            inv_dice_y(ci) = info->dice_y;
-            inv_hit_bonus(ci) = info->hit_bonus;
-            inv_damage_bonus(ci) = info->damage_bonus;
-            inv_pv(ci) = info->pv;
-            inv_dv(ci) = info->dv;
-            inv_material(ci) = info->material;
+            inv[ci].value = info->value;
+            inv[ci].weight = info->weight;
+            inv[ci].dice_x = info->dice_x;
+            inv[ci].dice_y = info->dice_y;
+            inv[ci].hit_bonus = info->hit_bonus;
+            inv[ci].damage_bonus = info->damage_bonus;
+            inv[ci].pv = info->pv;
+            inv[ci].dv = info->dv;
+            inv[ci].material = info->material;
             if (dbmode == 10)
                 return 0;
         }
@@ -81,10 +81,10 @@ int label_1275()
     if (dbmode == 3)
     {
         // Common initialization
-        inv_id(ci) = dbid;
-        inv_number(ci) = 1;
-        inv_difficulty_of_identification(ci) = 0; // Default value
-        inv_image(ci) = info->image;
+        inv[ci].id = dbid;
+        inv[ci].number = 1;
+        inv[ci].difficulty_of_identification = 0; // Default value
+        inv[ci].image = info->image;
         fixeditemenc(0) = 0; // Default value
         reftype = info->category;
         reftypeminor = info->subcategory;
@@ -95,62 +95,62 @@ int label_1275()
     case 792:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 8;
+            inv[ci].param2 = 8;
         }
         break;
     case 791:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 57;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 61;
             fixeditemenc(3) = 200;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 790:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
+            inv[ci].function = 15;
         }
         break;
     case 789:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
+            inv[ci].function = 15;
         }
         break;
     case 788:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 108;
+            inv[ci].skill = 108;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 787:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 5;
-            inv_param3(ci) = 720;
+            inv[ci].param2 = 5;
+            inv[ci].param3 = 720;
         }
         break;
     case 786:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 4;
+            inv[ci].param2 = 4;
         }
         break;
     case 785:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         break;
     case 783:
@@ -163,32 +163,32 @@ int label_1275()
     case 781:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 101;
+            inv[ci].skill = 101;
         }
         break;
     case 778:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 777:
         if (dbmode == 3)
         {
-            inv_function(ci) = 26;
+            inv[ci].function = 26;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 240;
+            inv[ci].param3 = 240;
             fixlv = 6;
         }
         break;
     case 776:
         if (dbmode == 3)
         {
-            inv_function(ci) = 26;
+            inv[ci].function = 26;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 240;
+            inv[ci].param3 = 240;
             fixlv = 6;
         }
         break;
@@ -196,14 +196,14 @@ int label_1275()
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            inv_param2(ci) = 8;
+            inv[ci].param2 = 8;
         }
         break;
     case 772:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 32;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 32;
         }
         break;
     case 771:
@@ -231,46 +231,46 @@ int label_1275()
     case 767:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         break;
     case 761:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
+            inv[ci].skill = 183;
             fixeditemenc(0) = 60;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv_function(ci) = 17;
+            inv[ci].function = 17;
             ibitmod(5, ci, 1);
-            inv_param1(ci) = 200;
+            inv[ci].param1 = 200;
             fixlv = 6;
         }
         break;
     case 760:
         if (dbmode == 3)
         {
-            inv_function(ci) = 49;
+            inv[ci].function = 49;
             ibitmod(5, ci, 1);
-            inv_param1(ci) = rnd(20000) + 1;
+            inv[ci].param1 = rnd(20000) + 1;
             fixlv = 6;
         }
         break;
     case 759:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
         }
         break;
     case 758:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
             fixeditemenc(0) = 35;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -289,33 +289,33 @@ int label_1275()
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 756:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
         }
         break;
     case 755:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 6;
+            inv[ci].param2 = 6;
         }
         break;
     case 749:
         if (dbmode == 3)
         {
-            inv_function(ci) = 48;
+            inv[ci].function = 48;
             ibitmod(5, ci, 1);
         }
         break;
     case 748:
         if (dbmode == 3)
         {
-            inv_function(ci) = 47;
+            inv[ci].function = 47;
             ibitmod(5, ci, 1);
             ibitmod(16, ci, 1);
         }
@@ -323,8 +323,8 @@ int label_1275()
     case 747:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
-            inv_param2(ci) = rnd(4) + 1;
+            inv[ci].param1 = 1;
+            inv[ci].param2 = rnd(4) + 1;
         }
         if (dbmode == 13)
         {
@@ -335,45 +335,45 @@ int label_1275()
     case 746:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 1132;
-            inv_param2(ci) = 100;
-            inv_param3(ci) = 24;
+            inv[ci].param1 = 1132;
+            inv[ci].param2 = 100;
+            inv[ci].param3 = 24;
         }
         break;
     case 745:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 1132;
-            inv_param2(ci) = 100;
-            inv_param3(ci) = 24;
+            inv[ci].param1 = 1132;
+            inv[ci].param2 = 100;
+            inv[ci].param3 = 24;
         }
         break;
     case 744:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 1132;
-            inv_param2(ci) = 100;
-            inv_param3(ci) = 24;
+            inv[ci].param1 = 1132;
+            inv[ci].param2 = 100;
+            inv[ci].param3 = 24;
         }
         break;
     case 743:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 1132;
-            inv_param2(ci) = 100;
-            inv_param3(ci) = 24;
+            inv[ci].param1 = 1132;
+            inv[ci].param2 = 100;
+            inv[ci].param3 = 24;
         }
         break;
     case 742:
@@ -391,7 +391,7 @@ int label_1275()
     case 741:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 20050;
             fixeditemenc(1) = 550;
             fixeditemenc(2) = 70052;
@@ -402,7 +402,7 @@ int label_1275()
             fixeditemenc(7) = 720;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -417,14 +417,14 @@ int label_1275()
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 739:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 107;
+            inv[ci].skill = 107;
             fixeditemenc(0) = 80002;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70054;
@@ -439,14 +439,14 @@ int label_1275()
             fixeditemenc(11) = 350;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 738:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 6;
+            inv[ci].param2 = 6;
         }
         break;
     case 737:
@@ -470,7 +470,7 @@ int label_1275()
     case 735:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 107;
+            inv[ci].skill = 107;
             fixeditemenc(0) = 80025;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -479,13 +479,13 @@ int label_1275()
     case 733:
         if (dbmode == 3)
         {
-            inv_function(ci) = 45;
+            inv[ci].function = 45;
         }
         break;
     case 732:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -499,7 +499,7 @@ int label_1275()
     case 731:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -527,28 +527,28 @@ int label_1275()
             fixeditemenc(5) = 350;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 727:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
             fixeditemenc(0) = 54;
             fixeditemenc(1) = 1000;
             fixeditemenc(2) = 20058;
             fixeditemenc(3) = 450;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 726:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
             fixeditemenc(0) = 30183;
             fixeditemenc(1) = -450;
             fixeditemenc(2) = 52;
@@ -557,14 +557,14 @@ int label_1275()
             fixeditemenc(5) = 400;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 725:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
             fixeditemenc(0) = 70059;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 30183;
@@ -573,7 +573,7 @@ int label_1275()
             fixeditemenc(5) = 450;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -592,7 +592,7 @@ int label_1275()
             fixeditemenc(3) = 650;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -605,30 +605,30 @@ int label_1275()
             fixeditemenc(3) = 700;
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 721:
         if (dbmode == 3)
         {
-            inv_function(ci) = 43;
+            inv[ci].function = 43;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 480;
+            inv[ci].param3 = 480;
             fixlv = 6;
         }
         break;
     case 720:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 200;
+            inv[ci].param1 = 200;
         }
         break;
     case 719:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 250;
             fixeditemenc(2) = 39;
@@ -637,14 +637,14 @@ int label_1275()
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 718:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 70054;
@@ -657,35 +657,35 @@ int label_1275()
             fixeditemenc(9) = 500;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 717:
         if (dbmode == 3)
         {
-            inv_function(ci) = 42;
+            inv[ci].function = 42;
         }
         break;
     case 716:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 715:
         if (dbmode == 3)
         {
-            inv_function(ci) = 41;
+            inv[ci].function = 41;
         }
         break;
     case 714:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
             fixeditemenc(0) = 80024;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -694,7 +694,7 @@ int label_1275()
     case 713:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
             fixeditemenc(0) = 70061;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -719,7 +719,7 @@ int label_1275()
     case 710:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -751,13 +751,13 @@ int label_1275()
     case 707:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
+            inv[ci].skill = 183;
             fixeditemenc(0) = 49;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
-            inv_function(ci) = 17;
+            inv[ci].function = 17;
             ibitmod(5, ci, 1);
-            inv_param1(ci) = 180;
+            inv[ci].param1 = 180;
             fixlv = 6;
         }
         break;
@@ -781,7 +781,7 @@ int label_1275()
             fixeditemenc(5) = 100;
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -797,21 +797,21 @@ int label_1275()
     case 703:
         if (dbmode == 3)
         {
-            inv_function(ci) = 39;
+            inv[ci].function = 39;
         }
         break;
     case 702:
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            inv_param2(ci) = 4;
+            inv[ci].param2 = 4;
             fixlv = 6;
         }
         break;
     case 701:
         if (dbmode == 3)
         {
-            inv_function(ci) = 37;
+            inv[ci].function = 37;
         }
         break;
     case 700:
@@ -840,7 +840,7 @@ int label_1275()
     case 697:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -854,7 +854,7 @@ int label_1275()
     case 696:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -868,63 +868,63 @@ int label_1275()
     case 695:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 102;
+            inv[ci].skill = 102;
             fixeditemenc(0) = 44;
             fixeditemenc(1) = 750;
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 693:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
-            inv_function(ci) = 17;
-            inv_param1(ci) = 175;
+            inv[ci].skill = 183;
+            inv[ci].function = 17;
+            inv[ci].param1 = 175;
         }
         break;
     case 692:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
-            inv_function(ci) = 17;
-            inv_param1(ci) = 70;
+            inv[ci].skill = 183;
+            inv[ci].function = 17;
+            inv[ci].param1 = 70;
         }
         break;
     case 691:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
-            inv_function(ci) = 17;
-            inv_param1(ci) = 130;
+            inv[ci].skill = 183;
+            inv[ci].function = 17;
+            inv[ci].param1 = 130;
         }
         break;
     case 690:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
-            inv_function(ci) = 17;
-            inv_param1(ci) = 150;
+            inv[ci].skill = 183;
+            inv[ci].function = 17;
+            inv[ci].param1 = 150;
         }
         break;
     case 689:
         if (dbmode == 3)
         {
-            inv_function(ci) = 36;
+            inv[ci].function = 36;
         }
         break;
     case 688:
         if (dbmode == 3)
         {
-            inv_function(ci) = 35;
+            inv[ci].function = 35;
         }
         break;
     case 687:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -936,76 +936,76 @@ int label_1275()
     case 686:
         if (dbmode == 3)
         {
-            inv_function(ci) = 34;
+            inv[ci].function = 34;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 720;
+            inv[ci].param3 = 720;
             fixlv = 6;
         }
         break;
     case 685:
         if (dbmode == 3)
         {
-            inv_function(ci) = 33;
+            inv[ci].function = 33;
         }
         break;
     case 684:
         if (dbmode == 3)
         {
-            inv_function(ci) = 32;
+            inv[ci].function = 32;
             ibitmod(5, ci, 1);
         }
         break;
     case 683:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 1132;
-            inv_param2(ci) = 100;
-            inv_param3(ci) = 24;
+            inv[ci].param1 = 1132;
+            inv[ci].param2 = 100;
+            inv[ci].param3 = 24;
             fixlv = 6;
         }
         break;
     case 682:
         if (dbmode == 3)
         {
-            inv_function(ci) = 31;
+            inv[ci].function = 31;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 72;
+            inv[ci].param3 = 72;
             fixlv = 6;
         }
         break;
     case 681:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 404;
-            inv_param2(ci) = 400;
-            inv_param3(ci) = 8;
+            inv[ci].param1 = 404;
+            inv[ci].param2 = 400;
+            inv[ci].param3 = 8;
             fixlv = 6;
         }
         break;
     case 680:
         if (dbmode == 3)
         {
-            inv_function(ci) = 30;
+            inv[ci].function = 30;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param1(ci) = 446;
-            inv_param2(ci) = 300;
-            inv_param3(ci) = 12;
+            inv[ci].param1 = 446;
+            inv[ci].param2 = 300;
+            inv[ci].param3 = 12;
             fixlv = 6;
         }
         break;
     case 679:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 103;
+            inv[ci].skill = 103;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80013;
@@ -1018,14 +1018,14 @@ int label_1275()
             fixeditemenc(9) = 400;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 678:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 101;
+            inv[ci].skill = 101;
             fixeditemenc(0) = 41;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 35;
@@ -1038,14 +1038,14 @@ int label_1275()
             fixeditemenc(9) = 600;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 677:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 104;
+            inv[ci].skill = 104;
             fixeditemenc(0) = 80023;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80012;
@@ -1058,14 +1058,14 @@ int label_1275()
             fixeditemenc(9) = 150;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 676:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 105;
+            inv[ci].skill = 105;
             fixeditemenc(0) = 80000;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70050;
@@ -1082,14 +1082,14 @@ int label_1275()
             fixeditemenc(13) = 250;
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 675:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 107;
+            inv[ci].skill = 107;
             fixeditemenc(0) = 30184;
             fixeditemenc(1) = 600;
             fixeditemenc(2) = 42;
@@ -1106,14 +1106,14 @@ int label_1275()
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 674:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
             fixeditemenc(0) = 80017;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 43;
@@ -1124,14 +1124,14 @@ int label_1275()
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 673:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 108;
+            inv[ci].skill = 108;
             fixeditemenc(0) = 80014;
             fixeditemenc(1) = 200;
             fixeditemenc(2) = 80005;
@@ -1142,14 +1142,14 @@ int label_1275()
             fixeditemenc(7) = 300;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 672:
         if (dbmode == 3)
         {
-            inv_function(ci) = 29;
+            inv[ci].function = 29;
             ibitmod(5, ci, 1);
             fixlv = 6;
         }
@@ -1157,7 +1157,7 @@ int label_1275()
     case 671:
         if (dbmode == 3)
         {
-            inv_function(ci) = 28;
+            inv[ci].function = 28;
             ibitmod(5, ci, 1);
             fixlv = 6;
         }
@@ -1165,20 +1165,20 @@ int label_1275()
     case 670:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 7;
+            inv[ci].param1 = 7;
         }
         break;
     case 669:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 7;
+            inv[ci].param1 = 7;
         }
         break;
     case 668:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
-            inv_param2(ci) = rnd(4) + 1;
+            inv[ci].param1 = 1;
+            inv[ci].param2 = rnd(4) + 1;
         }
         if (dbmode == 13)
         {
@@ -1189,26 +1189,26 @@ int label_1275()
     case 667:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
         }
         break;
     case 666:
         if (dbmode == 3)
         {
-            inv_function(ci) = 27;
+            inv[ci].function = 27;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 120;
+            inv[ci].param3 = 120;
             fixlv = 6;
         }
         break;
     case 665:
         if (dbmode == 3)
         {
-            inv_function(ci) = 26;
+            inv[ci].function = 26;
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
-            inv_param3(ci) = 240;
+            inv[ci].param3 = 240;
             fixlv = 6;
         }
         break;
@@ -1231,7 +1231,7 @@ int label_1275()
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
             fixlv = 6;
         }
         break;
@@ -1248,14 +1248,14 @@ int label_1275()
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 660:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1270,14 +1270,14 @@ int label_1275()
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
             fixlv = 6;
         }
         break;
     case 654:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 160;
+            inv[ci].param1 = 160;
         }
         break;
     case 650:
@@ -1290,13 +1290,13 @@ int label_1275()
     case 648:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 643:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 130;
+            inv[ci].param1 = 130;
         }
         break;
     case 641:
@@ -1309,14 +1309,14 @@ int label_1275()
     case 640:
         if (dbmode == 3)
         {
-            inv_function(ci) = 25;
+            inv[ci].function = 25;
         }
         break;
     case 639:
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
             fixlv = 6;
         }
         break;
@@ -1339,19 +1339,19 @@ int label_1275()
     case 635:
         if (dbmode == 3)
         {
-            inv_function(ci) = 24;
+            inv[ci].function = 24;
         }
         break;
     case 634:
         if (dbmode == 3)
         {
-            inv_function(ci) = 23;
+            inv[ci].function = 23;
         }
         break;
     case 633:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
             fixeditemenc(0) = 70054;
             fixeditemenc(1) = 800;
             fixeditemenc(2) = 0;
@@ -1369,21 +1369,21 @@ int label_1275()
     case 630:
         if (dbmode == 3)
         {
-            inv_function(ci) = 21;
+            inv[ci].function = 21;
         }
         break;
     case 629:
         if (dbmode == 3)
         {
-            inv_function(ci) = 20;
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].function = 20;
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         break;
     case 628:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1411,7 +1411,7 @@ int label_1275()
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -1487,12 +1487,12 @@ int label_1275()
     case 618:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 616:
@@ -1510,33 +1510,33 @@ int label_1275()
     case 613:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 180;
+            inv[ci].param1 = 180;
         }
         break;
     case 611:
         if (dbmode == 3)
         {
-            inv_function(ci) = 8;
+            inv[ci].function = 8;
         }
         break;
     case 606:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 225;
+            inv[ci].function = 15;
+            inv[ci].param1 = 225;
         }
         break;
     case 603:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
             ibitmod(5, ci, 1);
         }
         break;
     case 602:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 100;
+            inv[ci].param2 = 100;
         }
         if (dbmode == 15)
         {
@@ -1553,19 +1553,19 @@ int label_1275()
     case 598:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6;
+            inv[ci].param1 = 6;
         }
         break;
     case 597:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6;
+            inv[ci].param1 = 6;
         }
         break;
     case 587:
         if (dbmode == 3)
         {
-            inv_function(ci) = 14;
+            inv[ci].function = 14;
         }
         if (dbmode == 15)
         {
@@ -1578,14 +1578,14 @@ int label_1275()
     case 583:
         if (dbmode == 3)
         {
-            inv_function(ci) = 13;
-            inv_param1(ci) = 100;
+            inv[ci].function = 13;
+            inv[ci].param1 = 100;
         }
         break;
     case 582:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1599,7 +1599,7 @@ int label_1275()
     case 581:
         if (dbmode == 3)
         {
-            inv_count(ci) = 6 + rnd(6) - rnd(6);
+            inv[ci].count = 6 + rnd(6) - rnd(6);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -1612,7 +1612,7 @@ int label_1275()
     case 578:
         if (dbmode == 3)
         {
-            inv_function(ci) = 11;
+            inv[ci].function = 11;
         }
         break;
     case 577:
@@ -1627,7 +1627,7 @@ int label_1275()
     case 576:
         if (dbmode == 3)
         {
-            inv_function(ci) = 10;
+            inv[ci].function = 10;
         }
         break;
     case 574:
@@ -1642,8 +1642,8 @@ int label_1275()
     case 573:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 8000;
-            inv_param3(ci) = 240;
+            inv[ci].param1 = 8000;
+            inv[ci].param3 = 240;
         }
         break;
     case 572:
@@ -1656,13 +1656,13 @@ int label_1275()
     case 571:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 5;
+            inv[ci].param2 = 5;
         }
         break;
     case 570:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -1675,7 +1675,7 @@ int label_1275()
     case 569:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1689,14 +1689,14 @@ int label_1275()
     case 568:
         if (dbmode == 3)
         {
-            inv_count(ci) = 12 + rnd(12) - rnd(12);
+            inv[ci].count = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
         }
         break;
     case 567:
         if (dbmode == 3)
         {
-            inv_count(ci) = 12 + rnd(12) - rnd(12);
+            inv[ci].count = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
         }
         break;
@@ -1712,7 +1712,7 @@ int label_1275()
     case 565:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -1725,7 +1725,7 @@ int label_1275()
     case 564:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1739,7 +1739,7 @@ int label_1275()
     case 563:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         if (dbmode == 13)
         {
@@ -1750,7 +1750,7 @@ int label_1275()
     case 562:
         if (dbmode == 3)
         {
-            inv_function(ci) = 8;
+            inv[ci].function = 8;
         }
         break;
     case 560:
@@ -1797,27 +1797,27 @@ int label_1275()
     case 555:
         if (dbmode == 3)
         {
-            inv_function(ci) = 7;
+            inv[ci].function = 7;
         }
         break;
     case 554:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 553:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 552:
@@ -1831,7 +1831,7 @@ int label_1275()
     case 551:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -1844,7 +1844,7 @@ int label_1275()
     case 550:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1867,7 +1867,7 @@ int label_1275()
     case 548:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1881,7 +1881,7 @@ int label_1275()
     case 546:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -1895,7 +1895,7 @@ int label_1275()
     case 545:
         if (dbmode == 3)
         {
-            inv_count(ci) = 7 + rnd(7) - rnd(7);
+            inv[ci].count = 7 + rnd(7) - rnd(7);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -1908,8 +1908,8 @@ int label_1275()
     case 544:
         if (dbmode == 3)
         {
-            inv_function(ci) = 6;
-            inv_param1(ci) = discsetmc();
+            inv[ci].function = 6;
+            inv[ci].param1 = discsetmc();
         }
         break;
     case 543:
@@ -1929,14 +1929,14 @@ int label_1275()
     case 526:
         if (dbmode == 3)
         {
-            inv_param1(ci) = rnd(5) + 2;
-            inv_param2(ci) = isetfruit(rnd(length(isetfruit)));
+            inv[ci].param1 = rnd(5) + 2;
+            inv[ci].param2 = isetfruit(rnd(length(isetfruit)));
         }
         break;
     case 522:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
         }
         if (dbmode == 13)
         {
@@ -1947,7 +1947,7 @@ int label_1275()
     case 521:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
         }
         if (dbmode == 13)
         {
@@ -1975,7 +1975,7 @@ int label_1275()
     case 518:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -1988,7 +1988,7 @@ int label_1275()
     case 517:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2019,7 +2019,7 @@ int label_1275()
     case 514:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
             fixeditemenc(0) = 80003;
             fixeditemenc(1) = 350;
             fixeditemenc(2) = 80004;
@@ -2032,35 +2032,35 @@ int label_1275()
             fixeditemenc(9) = 300;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 513:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
         }
         break;
     case 512:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 511:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 100 + rnd(200);
+            inv[ci].param1 = 100 + rnd(200);
         }
         if (dbmode == 13)
         {
             efid = 1128;
-            efp = inv_param1(ci);
+            efp = inv[ci].param1;
             label_2171();
             return -1;
         }
@@ -2117,7 +2117,7 @@ int label_1275()
     case 504:
         if (dbmode == 3)
         {
-            inv_function(ci) = 38;
+            inv[ci].function = 38;
         }
         break;
     case 502:
@@ -2150,93 +2150,93 @@ int label_1275()
     case 499:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
         }
         break;
     case 498:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 6;
+            inv[ci].param2 = 6;
         }
         break;
     case 497:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 5;
+            inv[ci].param2 = 5;
         }
         break;
     case 496:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 495:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 494:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 492:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 491:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 490:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 489:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 488:
         if (dbmode == 3)
         {
-            inv_function(ci) = 9;
+            inv[ci].function = 9;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 487:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 486:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 485:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2249,7 +2249,7 @@ int label_1275()
     case 484:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2263,23 +2263,23 @@ int label_1275()
     case 483:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 109;
+            inv[ci].skill = 109;
         }
         break;
     case 482:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 109;
+            inv[ci].skill = 109;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 481:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2293,7 +2293,7 @@ int label_1275()
     case 480:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2315,49 +2315,49 @@ int label_1275()
     case 478:
         if (dbmode == 3)
         {
-            inv_function(ci) = 5;
+            inv[ci].function = 5;
         }
         break;
     case 454:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 453:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 452:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 451:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 450:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 449:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 434:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2416,99 +2416,99 @@ int label_1275()
     case 428:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         break;
     case 427:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 7;
+            inv[ci].param2 = 7;
         }
         break;
     case 426:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 3;
+            inv[ci].param2 = 3;
         }
         break;
     case 425:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 6;
+            inv[ci].param2 = 6;
         }
         break;
     case 424:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 3;
+            inv[ci].param2 = 3;
         }
         break;
     case 423:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 4;
+            inv[ci].param2 = 4;
         }
         break;
     case 422:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         break;
     case 421:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 420:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 419:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 418:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 417:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 1;
+            inv[ci].param2 = 1;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 412:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2530,7 +2530,7 @@ int label_1275()
     case 410:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2544,67 +2544,67 @@ int label_1275()
     case 409:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 5;
+            inv[ci].param1 = 5;
         }
         break;
     case 408:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
         }
         break;
     case 407:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2;
+            inv[ci].param1 = 2;
         }
         break;
     case 406:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         break;
     case 405:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3;
+            inv[ci].param1 = 3;
         }
         break;
     case 404:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         break;
     case 403:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3;
+            inv[ci].param1 = 3;
         }
         break;
     case 402:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 5;
+            inv[ci].param1 = 5;
         }
         break;
     case 401:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 4;
+            inv[ci].param1 = 4;
         }
         break;
     case 400:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2;
+            inv[ci].param1 = 2;
         }
         break;
     case 399:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
         }
         break;
     case 398:
@@ -2619,7 +2619,7 @@ int label_1275()
     case 397:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2633,7 +2633,7 @@ int label_1275()
     case 396:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2656,7 +2656,7 @@ int label_1275()
     case 393:
         if (dbmode == 3)
         {
-            inv_function(ci) = 3;
+            inv[ci].function = 3;
         }
         break;
     case 392:
@@ -2671,7 +2671,7 @@ int label_1275()
     case 391:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2711,7 +2711,7 @@ int label_1275()
     case 387:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2725,7 +2725,7 @@ int label_1275()
     case 386:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2739,7 +2739,7 @@ int label_1275()
     case 385:
         if (dbmode == 3)
         {
-            inv_count(ci) = 6 + rnd(6) - rnd(6);
+            inv[ci].count = 6 + rnd(6) - rnd(6);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2761,7 +2761,7 @@ int label_1275()
     case 383:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2784,7 +2784,7 @@ int label_1275()
     case 381:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2798,7 +2798,7 @@ int label_1275()
     case 380:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2821,7 +2821,7 @@ int label_1275()
     case 378:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2835,7 +2835,7 @@ int label_1275()
     case 377:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2866,7 +2866,7 @@ int label_1275()
     case 374:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2880,7 +2880,7 @@ int label_1275()
     case 373:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2903,7 +2903,7 @@ int label_1275()
     case 371:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2926,7 +2926,7 @@ int label_1275()
     case 369:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2949,7 +2949,7 @@ int label_1275()
     case 367:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -2963,7 +2963,7 @@ int label_1275()
     case 366:
         if (dbmode == 3)
         {
-            inv_count(ci) = 7 + rnd(7) - rnd(7);
+            inv[ci].count = 7 + rnd(7) - rnd(7);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -2976,7 +2976,7 @@ int label_1275()
     case 365:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3031,14 +3031,14 @@ int label_1275()
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 359:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 104;
+            inv[ci].skill = 104;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70056;
@@ -3049,14 +3049,14 @@ int label_1275()
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 358:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 105;
+            inv[ci].skill = 105;
             fixeditemenc(0) = 80002;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 70054;
@@ -3071,7 +3071,7 @@ int label_1275()
             fixeditemenc(11) = 420;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -3096,14 +3096,14 @@ int label_1275()
             fixeditemenc(15) = 100;
             fixeditemenc(16) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 356:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 103;
+            inv[ci].skill = 103;
             fixeditemenc(0) = 38;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 20050;
@@ -3118,7 +3118,7 @@ int label_1275()
             fixeditemenc(11) = 100;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -3141,124 +3141,124 @@ int label_1275()
             fixeditemenc(13) = 100;
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 354:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 353:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 352:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 351:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 350:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 349:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 348:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 347:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 346:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 345:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 344:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
         }
         if (dbmode == 13)
         {
@@ -3269,124 +3269,124 @@ int label_1275()
     case 343:
         if (dbmode == 3)
         {
-            inv_function(ci) = 22;
+            inv[ci].function = 22;
         }
         break;
     case 342:
         if (dbmode == 3)
         {
-            inv_function(ci) = 16;
-            inv_param1(ci) = 60;
+            inv[ci].function = 16;
+            inv[ci].param1 = 60;
         }
         break;
     case 334:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 333:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 3;
+            inv[ci].param2 = 3;
         }
         break;
     case 330:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 328:
         if (dbmode == 3)
         {
-            inv_function(ci) = 17;
-            inv_param1(ci) = 150;
+            inv[ci].function = 17;
+            inv[ci].param1 = 150;
         }
         break;
     case 327:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 325:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 130;
+            inv[ci].param1 = 130;
         }
         break;
     case 322:
         if (dbmode == 3)
         {
-            inv_function(ci) = 19;
+            inv[ci].function = 19;
         }
         break;
     case 319:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         break;
     case 310:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 130;
+            inv[ci].param1 = 130;
         }
         break;
     case 309:
         if (dbmode == 3)
         {
-            inv_function(ci) = 19;
+            inv[ci].function = 19;
         }
         break;
     case 307:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 130;
+            inv[ci].param1 = 130;
         }
         break;
     case 306:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 200;
+            inv[ci].function = 15;
+            inv[ci].param1 = 200;
         }
         break;
     case 305:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 130;
+            inv[ci].param1 = 130;
         }
         break;
     case 304:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 100;
+            inv[ci].param1 = 100;
         }
         break;
     case 303:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 120;
+            inv[ci].param1 = 120;
         }
         break;
     case 299:
         if (dbmode == 3)
         {
-            inv_function(ci) = 19;
+            inv[ci].function = 19;
         }
         break;
     case 297:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 150;
+            inv[ci].param1 = 150;
         }
         break;
     case 290:
         if (dbmode == 3)
         {
-            inv_count(ci) = 1 + rnd(1) - rnd(1);
+            inv[ci].count = 1 + rnd(1) - rnd(1);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -3399,7 +3399,7 @@ int label_1275()
     case 289:
         if (dbmode == 3)
         {
-            inv_count(ci) = 1 + rnd(1) - rnd(1);
+            inv[ci].count = 1 + rnd(1) - rnd(1);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3449,7 +3449,7 @@ int label_1275()
     case 272:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3463,7 +3463,7 @@ int label_1275()
     case 271:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3477,7 +3477,7 @@ int label_1275()
     case 270:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3491,7 +3491,7 @@ int label_1275()
     case 269:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3505,7 +3505,7 @@ int label_1275()
     case 268:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3519,7 +3519,7 @@ int label_1275()
     case 267:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3533,13 +3533,13 @@ int label_1275()
     case 266:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 101;
+            inv[ci].skill = 101;
         }
         break;
     case 265:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3553,7 +3553,7 @@ int label_1275()
     case 264:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3567,7 +3567,7 @@ int label_1275()
     case 263:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3590,38 +3590,38 @@ int label_1275()
     case 261:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 6000;
-            inv_param3(ci) = 6;
+            inv[ci].param1 = 6000;
+            inv[ci].param3 = 6;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 4;
+            return cdata[0].god == 4;
         }
         break;
     case 260:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 7000;
-            inv_param3(ci) = 240;
+            inv[ci].param1 = 7000;
+            inv[ci].param3 = 240;
         }
         break;
     case 259:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 5000;
-            inv_param3(ci) = 24;
+            inv[ci].param1 = 5000;
+            inv[ci].param3 = 24;
         }
         break;
     case 258:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 3;
+            inv[ci].param2 = 3;
         }
         break;
     case 257:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3635,23 +3635,23 @@ int label_1275()
     case 256:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 80;
+            inv[ci].function = 15;
+            inv[ci].param1 = 80;
         }
         break;
     case 255:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 40;
+            inv[ci].function = 15;
+            inv[ci].param1 = 40;
         }
         break;
     case 254:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
-            inv_function(ci) = 17;
-            inv_param1(ci) = 110;
+            inv[ci].skill = 183;
+            inv[ci].function = 17;
+            inv[ci].param1 = 110;
         }
         break;
     case 253:
@@ -3666,7 +3666,7 @@ int label_1275()
     case 252:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3680,7 +3680,7 @@ int label_1275()
     case 251:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3694,7 +3694,7 @@ int label_1275()
     case 250:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3708,7 +3708,7 @@ int label_1275()
     case 249:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3722,7 +3722,7 @@ int label_1275()
     case 248:
         if (dbmode == 3)
         {
-            inv_count(ci) = 3 + rnd(3) - rnd(3);
+            inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3736,7 +3736,7 @@ int label_1275()
     case 247:
         if (dbmode == 3)
         {
-            inv_count(ci) = 2 + rnd(2) - rnd(2);
+            inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3750,7 +3750,7 @@ int label_1275()
     case 246:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -3809,120 +3809,120 @@ int label_1275()
     case 235:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 104;
+            inv[ci].skill = 104;
         }
         break;
     case 234:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 102;
+            inv[ci].skill = 102;
         }
         break;
     case 233:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 3;
+            inv[ci].param2 = 3;
         }
         break;
     case 232:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
         }
         break;
     case 231:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 230:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 108;
+            inv[ci].skill = 108;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 229:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 105;
+            inv[ci].skill = 105;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 3;
+            return cdata[0].god == 3;
         }
         break;
     case 228:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 104;
+            inv[ci].skill = 104;
         }
         break;
     case 227:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 103;
+            inv[ci].skill = 103;
         }
         break;
     case 226:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 102;
+            inv[ci].skill = 102;
         }
         break;
     case 225:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 101;
+            inv[ci].skill = 101;
         }
         break;
     case 224:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
         }
         break;
     case 223:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 60;
+            inv[ci].function = 15;
+            inv[ci].param1 = 60;
         }
         break;
     case 219:
         if (dbmode == 3)
         {
-            inv_function(ci) = 46;
+            inv[ci].function = 46;
         }
         break;
     case 213:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 104;
+            inv[ci].skill = 104;
         }
         break;
     case 212:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 105;
+            inv[ci].skill = 105;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 3;
+            return cdata[0].god == 3;
         }
         break;
     case 211:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 107;
+            inv[ci].skill = 107;
             fixeditemenc(0) = 80025;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
@@ -3931,7 +3931,7 @@ int label_1275()
     case 210:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 111;
+            inv[ci].skill = 111;
         }
         break;
     case 209:
@@ -3946,7 +3946,7 @@ int label_1275()
     case 207:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 108;
+            inv[ci].skill = 108;
             fixeditemenc(0) = 80001;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 60012;
@@ -3961,14 +3961,14 @@ int label_1275()
             fixeditemenc(11) = 300;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 206:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 101;
+            inv[ci].skill = 101;
             fixeditemenc(0) = 80000;
             fixeditemenc(1) = 200;
             fixeditemenc(2) = 70052;
@@ -3979,7 +3979,7 @@ int label_1275()
             fixeditemenc(7) = 350;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -3995,8 +3995,8 @@ int label_1275()
     case 204:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1000;
-            inv_param3(ci) = 4;
+            inv[ci].param1 = 1000;
+            inv[ci].param3 = 4;
         }
         if (dbmode == 16 && dbspec == 12)
         {
@@ -4006,7 +4006,7 @@ int label_1275()
     case 203:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4019,7 +4019,7 @@ int label_1275()
     case 202:
         if (dbmode == 3)
         {
-            inv_count(ci) = 9 + rnd(9) - rnd(9);
+            inv[ci].count = 9 + rnd(9) - rnd(9);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4032,215 +4032,215 @@ int label_1275()
     case 201:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 2;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 2;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 200:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 199:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 198:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 197:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 12;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 12;
         }
         break;
     case 196:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 8;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 8;
         }
         break;
     case 195:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 12;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 12;
         }
         break;
     case 194:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 8;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 8;
         }
         break;
     case 193:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
+            inv[ci].param1 = 2000;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 192:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 16;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 16;
         }
         break;
     case 191:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 4000;
+            inv[ci].param1 = 4000;
         }
         break;
     case 190:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
+            inv[ci].param1 = 2000;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 188:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 187:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
+            inv[ci].param1 = 2000;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 186:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 185:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 72;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 184:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 8;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 8;
         }
         break;
     case 183:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 16;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 16;
         }
         break;
     case 182:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 12;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 12;
         }
         break;
     case 181:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 16;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 16;
         }
         break;
     case 180:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 16;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 16;
         }
         break;
     case 179:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2000;
-            inv_param3(ci) = 48;
+            inv[ci].param1 = 2000;
+            inv[ci].param3 = 48;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 7;
+            return cdata[0].god == 7;
         }
         break;
     case 178:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 72;
         }
         break;
     case 177:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 3000;
-            inv_param3(ci) = 72;
+            inv[ci].param1 = 3000;
+            inv[ci].param3 = 72;
         }
         break;
     case 176:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4253,7 +4253,7 @@ int label_1275()
     case 175:
         if (dbmode == 3)
         {
-            inv_count(ci) = 10 + rnd(10) - rnd(10);
+            inv[ci].count = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4266,13 +4266,13 @@ int label_1275()
     case 174:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 110;
+            inv[ci].param1 = 110;
         }
         break;
     case 173:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 100;
+            inv[ci].param2 = 100;
         }
         if (dbmode == 15)
         {
@@ -4283,53 +4283,53 @@ int label_1275()
     case 161:
         if (dbmode == 3)
         {
-            inv_function(ci) = 1;
+            inv[ci].function = 1;
         }
         break;
     case 160:
         if (dbmode == 3)
         {
-            inv_function(ci) = 4;
+            inv[ci].function = 4;
         }
         break;
     case 155:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 100;
+            inv[ci].function = 15;
+            inv[ci].param1 = 100;
         }
         break;
     case 154:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 100;
+            inv[ci].function = 15;
+            inv[ci].param1 = 100;
         }
         break;
     case 153:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 100;
+            inv[ci].function = 15;
+            inv[ci].param1 = 100;
         }
         break;
     case 142:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 200;
+            inv[ci].function = 15;
+            inv[ci].param1 = 200;
         }
         break;
     case 127:
         if (dbmode == 3)
         {
-            inv_function(ci) = 2;
+            inv[ci].function = 2;
         }
         break;
     case 125:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4342,7 +4342,7 @@ int label_1275()
     case 123:
         if (dbmode == 3)
         {
-            inv_count(ci) = 10 + rnd(10) - rnd(10);
+            inv[ci].count = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4355,7 +4355,7 @@ int label_1275()
     case 122:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4368,7 +4368,7 @@ int label_1275()
     case 121:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4381,7 +4381,7 @@ int label_1275()
     case 120:
         if (dbmode == 3)
         {
-            inv_count(ci) = 10 + rnd(10) - rnd(10);
+            inv[ci].count = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4394,7 +4394,7 @@ int label_1275()
     case 119:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4407,7 +4407,7 @@ int label_1275()
     case 118:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4421,7 +4421,7 @@ int label_1275()
     case 116:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4435,14 +4435,14 @@ int label_1275()
     case 112:
         if (dbmode == 3)
         {
-            inv_function(ci) = 15;
-            inv_param1(ci) = 150;
+            inv[ci].function = 15;
+            inv[ci].param1 = 150;
         }
         break;
     case 109:
         if (dbmode == 3)
         {
-            inv_param2(ci) = 100;
+            inv[ci].param2 = 100;
         }
         if (dbmode == 15)
         {
@@ -4453,45 +4453,45 @@ int label_1275()
     case 102:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 101:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 92:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 88:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 183;
-            inv_function(ci) = 17;
-            inv_param1(ci) = 200;
+            inv[ci].skill = 183;
+            inv[ci].function = 17;
+            inv[ci].param1 = 200;
         }
         break;
     case 81:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 80:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 100;
+            inv[ci].param1 = 100;
         }
         break;
     case 77:
         if (dbmode == 3)
         {
-            inv_function(ci) = 44;
+            inv[ci].function = 44;
         }
         break;
     case 76:
@@ -4524,12 +4524,12 @@ int label_1275()
     case 73:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 37;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
@@ -4581,7 +4581,7 @@ int label_1275()
     case 64:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 36;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 70059;
@@ -4596,14 +4596,14 @@ int label_1275()
             fixeditemenc(11) = 200;
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 63:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 107;
+            inv[ci].skill = 107;
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
             fixeditemenc(2) = 38;
@@ -4616,52 +4616,52 @@ int label_1275()
             fixeditemenc(9) = 100;
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 62:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
         }
         break;
     case 61:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 108;
+            inv[ci].skill = 108;
         }
         break;
     case 60:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 110;
+            inv[ci].skill = 110;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 1;
+            return cdata[0].god == 1;
         }
         break;
     case 59:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 168;
+            inv[ci].skill = 168;
         }
         break;
     case 58:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 108;
+            inv[ci].skill = 108;
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 2;
+            return cdata[0].god == 2;
         }
         break;
     case 57:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 400;
             fixeditemenc(2) = 25;
@@ -4672,14 +4672,14 @@ int label_1275()
             fixeditemenc(7) = 200;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 56:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
             fixeditemenc(0) = 40;
             fixeditemenc(1) = 300;
             fixeditemenc(2) = 70058;
@@ -4690,68 +4690,68 @@ int label_1275()
             fixeditemenc(7) = 100;
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
-            inv_difficulty_of_identification(ci) = 500;
+            inv[ci].difficulty_of_identification = 500;
             fixlv = 6;
         }
         break;
     case 44:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 42:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 41:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 40:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 39:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 38:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 37:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 36:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 35:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata_god(0) == 6 || cdata_god(0) == 5;
+            return cdata[0].god == 6 || cdata[0].god == 5;
         }
         break;
     case 34:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4765,7 +4765,7 @@ int label_1275()
     case 33:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4779,7 +4779,7 @@ int label_1275()
     case 32:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4846,11 +4846,11 @@ int label_1275()
     case 25:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 2;
+            inv[ci].param1 = 2;
         }
         if (dbmode == 13)
         {
-            inv_param1(ci) = 2;
+            inv[ci].param1 = 2;
             label_2164();
             return -1;
         }
@@ -4858,7 +4858,7 @@ int label_1275()
     case 24:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 0;
+            inv[ci].param1 = 0;
         }
         if (dbmode == 13)
         {
@@ -4869,11 +4869,11 @@ int label_1275()
     case 23:
         if (dbmode == 3)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
         }
         if (dbmode == 13)
         {
-            inv_param1(ci) = 1;
+            inv[ci].param1 = 1;
             label_2164();
             return -1;
         }
@@ -4881,7 +4881,7 @@ int label_1275()
     case 22:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4895,7 +4895,7 @@ int label_1275()
     case 21:
         if (dbmode == 3)
         {
-            inv_count(ci) = 4 + rnd(4) - rnd(4);
+            inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4909,7 +4909,7 @@ int label_1275()
     case 20:
         if (dbmode == 3)
         {
-            inv_count(ci) = 5 + rnd(5) - rnd(5);
+            inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 13)
@@ -4923,7 +4923,7 @@ int label_1275()
     case 19:
         if (dbmode == 3)
         {
-            inv_count(ci) = 12 + rnd(12) - rnd(12);
+            inv[ci].count = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4936,7 +4936,7 @@ int label_1275()
     case 18:
         if (dbmode == 3)
         {
-            inv_count(ci) = 8 + rnd(8) - rnd(8);
+            inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
         if (dbmode == 14)
@@ -4993,28 +4993,28 @@ int label_1275()
     case 4:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 103;
+            inv[ci].skill = 103;
         }
         break;
     case 3:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 102;
+            inv[ci].skill = 102;
         }
         break;
     case 2:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 101;
+            inv[ci].skill = 101;
         }
         break;
     case 1:
         if (dbmode == 3)
         {
-            inv_skill(ci) = 100;
+            inv[ci].skill = 100;
         }
         break;
-    default: assert(0);
+    default: break;
     }
 
     return 0;

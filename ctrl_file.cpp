@@ -22,7 +22,7 @@ void fmode_8_7(int fmode, const fs::path& file)
     bool read = fmode == 7;
     if (fmode == 8)
     {
-        playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata_level(0) + u8" "s
+        playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata[0].level + u8" "s
             + mdatan(0);
         bsave(folder + u8"header.txt"s, playerheader);
     }
@@ -371,7 +371,7 @@ void fmode_14_15(int fmode, const fs::path& file)
     if (fmode == 14)
     {
         playerheader =
-            ""s + cdatan(0, 0) + u8"(Lv"s + cdata_level(0) + u8")の遺伝子"s;
+            ""s + cdatan(0, 0) + u8"(Lv"s + cdata[0].level + u8")の遺伝子"s;
         filepath = folder + u8"gene_header.txt"s;
         bsave(filepath, playerheader);
         fileadd(filepath);
@@ -792,7 +792,7 @@ void fmode_22_21(int fmode, const fs::path& file)
                     int cnt = 57;
                     for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
                     {
-                        if (cdata_state(cnt) == 0)
+                        if (cdata[cnt].state == 0)
                         {
                             tg = cnt;
                             break;
@@ -878,16 +878,16 @@ void fmode_22_21(int fmode, const fs::path& file)
                 zipadd(u8"c2_"s + id + u8".t"s);
                 zipadd(u8"c3_"s + id + u8".t"s);
                 zipadd(u8"c4_"s + id + u8".t"s);
-                if (cdata_id(tg) == 343)
+                if (cdata[tg].id == 343)
                 {
-                    if (fs::exists(folder + userdatan(6, cdata_cnpc_id(tg))))
+                    if (fs::exists(folder + userdatan(6, cdata[tg].cnpc_id)))
                     {
-                        if (cdata_cnpc_id(tg) != usernpcmax)
+                        if (cdata[tg].cnpc_id != usernpcmax)
                         {
                             if (instr(
                                     untaglist,
                                     0,
-                                    u8"/"s + userdatan(0, cdata_cnpc_id(tg))
+                                    u8"/"s + userdatan(0, cdata[tg].cnpc_id)
                                         + u8"/"s)
                                 == -1)
                             {
@@ -895,12 +895,12 @@ void fmode_22_21(int fmode, const fs::path& file)
                                 {
                                     bcopy(
                                         folder
-                                            + userdatan(6, cdata_cnpc_id(tg)),
+                                            + userdatan(6, cdata[tg].cnpc_id),
                                         folder + u8"_tmp_"s + gdata(86)
                                             + u8".npc"s);
                                     zipadd(u8"_tmp_"s + gdata(86) + u8".npc"s);
                                     untaglist += u8"/"s
-                                        + userdatan(0, cdata_cnpc_id(tg))
+                                        + userdatan(0, cdata[tg].cnpc_id)
                                         + u8"/"s;
                                     ++gdata(86);
                                 }
@@ -916,7 +916,7 @@ void fmode_22_21(int fmode, const fs::path& file)
                     int cnt = invhead;
                     for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
                     {
-                        inv_body_part(cnt) = 0;
+                        inv[cnt].body_part = 0;
                     }
                 }
                 {
@@ -929,33 +929,33 @@ void fmode_22_21(int fmode, const fs::path& file)
                 }
                 rc = tg;
                 label_2666();
-                cdata_item_which_will_be_used(rc) = 0;
+                cdata[rc].item_which_will_be_used = 0;
                 rowactend(rc);
                 cbitmod(967, rc, 0);
                 cbitmod(968, rc, 0);
-                cdata_hp(rc) = cdata_max_hp(rc);
-                cdata_mp(rc) = cdata_max_mp(rc);
+                cdata[rc].hp = cdata[rc].max_hp;
+                cdata[rc].mp = cdata[rc].max_mp;
                 cbitmod(960, rc, 0);
                 cbitmod(989, tc, 0);
                 if (importmode == 0)
                 {
-                    cdata_character_role(tg) = 20;
-                    cdata_gold(tg) = 0;
-                    if (cdata_relationship(tg) >= 10)
+                    cdata[tg].character_role = 20;
+                    cdata[tg].gold = 0;
+                    if (cdata[tg].relationship >= 10)
                     {
                         if (userrelation == 0)
                         {
-                            cdata_relationship(tg) = 0;
-                            cdata_original_relationship(tg) = 0;
+                            cdata[tg].relationship = 0;
+                            cdata[tg].original_relationship = 0;
                         }
                         else
                         {
-                            cdata_relationship(tg) = -3;
-                            cdata_original_relationship(tg) = -3;
+                            cdata[tg].relationship = -3;
+                            cdata[tg].original_relationship = -3;
                         }
                     }
-                    cxinit = cdata_x(tg);
-                    cyinit = cdata_y(tg);
+                    cxinit = cdata[tg].position.x;
+                    cyinit = cdata[tg].position.y;
                     label_1532();
                 }
                 if (importmode == 1)
@@ -964,8 +964,8 @@ void fmode_22_21(int fmode, const fs::path& file)
                     {
                         enemyteam = rc;
                     }
-                    cdata_relationship(rc) = -3;
-                    cdata_original_relationship(rc) = -3;
+                    cdata[rc].relationship = -3;
+                    cdata[rc].original_relationship = -3;
                     map_placearena(rc, 1);
                 }
             }

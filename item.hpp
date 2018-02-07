@@ -81,6 +81,12 @@ struct inventory
     }
 
 
+    item& operator[](int index)
+    {
+        return storage[index];
+    }
+
+
     std::unique_ptr<char[]> serialize(int offset = 0) const;
 
     void
@@ -101,7 +107,3 @@ void ibitmod(int type, int ci, int on);
 
 
 } // namespace elona
-
-
-
-#include "macro_inv.hpp"

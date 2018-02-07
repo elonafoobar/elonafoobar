@@ -190,8 +190,8 @@ void apply_buff(int cc, int id, int power)
     switch (id)
     {
     case 1:
-        cdata_pv(cc) += effect1;
-        cdata_fear(cc) = 0;
+        cdata[cc].pv += effect1;
+        cdata[cc].fear = 0;
         break;
     case 2: break;
     case 3: sdata(154, cc) += 40; break;
@@ -205,12 +205,12 @@ void apply_buff(int cc, int id, int power)
     case 7:
         sdata(10, cc) += effect1;
         sdata(12, cc) += effect1;
-        cdata_fear(cc) = 0;
-        cdata_confused(cc) = 0;
+        cdata[cc].fear = 0;
+        cdata[cc].confused = 0;
         break;
     case 8:
-        cdata_dv(cc) = cdata_dv(cc) / 2;
-        cdata_pv(cc) = cdata_pv(cc) / 2;
+        cdata[cc].dv = cdata[cc].dv / 2;
+        cdata[cc].pv = cdata[cc].pv / 2;
         break;
     case 9:
         sdata(50, cc) =
@@ -234,9 +234,9 @@ void apply_buff(int cc, int id, int power)
         break;
     case 13:
         sdata(18, cc) -= effect1;
-        if (cdata_pv(cc) > 1)
+        if (cdata[cc].pv > 1)
         {
-            cdata_pv(cc) -= cdata_pv(cc) / 5;
+            cdata[cc].pv -= cdata[cc].pv / 5;
         }
         break;
     case 14: sdata(18, cc) += effect1; break;
@@ -247,9 +247,9 @@ void apply_buff(int cc, int id, int power)
         sdata(10, cc) = sdata(10, cc) * 150 / 100 + 10;
         sdata(12, cc) = sdata(12, cc) * 150 / 100 + 10;
         sdata(154, cc) += 50;
-        cdata_pv(cc) = cdata_pv(cc) * 150 / 100 + 25;
-        cdata_dv(cc) = cdata_dv(cc) * 150 / 100 + 25;
-        cdata_hit_bonus(cc) = cdata_hit_bonus(cc) * 150 / 100 + 50;
+        cdata[cc].pv = cdata[cc].pv * 150 / 100 + 25;
+        cdata[cc].dv = cdata[cc].dv * 150 / 100 + 25;
+        cdata[cc].hit_bonus = cdata[cc].hit_bonus * 150 / 100 + 50;
         break;
     case 18: cbitmod(980, cc, 1); break;
     case 19: sdata(19, cc) += effect1; break;
@@ -261,7 +261,7 @@ void apply_buff(int cc, int id, int power)
     case 25:
     case 26:
     case 27:
-    case 28: cdata_growth_buff(cc, id - 20) = effect1; break;
+    case 28: cdata[cc].growth_buffs[id - 20] = effect1; break;
     default: assert(0);
     }
 }
@@ -368,7 +368,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
     if (prm_269 == 623)
     {
         dice1 = 1 + rs_at_m9 / 10;
-        dice2 = cdata_piety_point(prm_270) / 70 + 1 + 1;
+        dice2 = cdata[prm_270].piety_point / 70 + 1 + 1;
         bonus = 0;
         ele = 0;
         elep = 0;
@@ -377,7 +377,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
     if (prm_269 == 624)
     {
         dice1 = 1 + rs_at_m9 / 20;
-        dice2 = cdata_piety_point(prm_270) / 140 + 1 + 1;
+        dice2 = cdata[prm_270].piety_point / 140 + 1 + 1;
         bonus = 0;
         ele = 0;
         elep = 0;
@@ -789,7 +789,7 @@ int calcfixlv(int base)
 int calcfame(int cc, int base)
 {
     int ret = base * 100
-        / (100 + cdata_fame(cc) / 100 * (cdata_fame(cc) / 100) / 2500);
+        / (100 + cdata[cc].fame / 100 * (cdata[cc].fame / 100) / 2500);
     if (ret < 5)
     {
         ret = rnd(5) + 1;
@@ -801,12 +801,12 @@ int calcfame(int cc, int base)
 
 int decfame(int cc, int base)
 {
-    int ret = cdata_fame(cc) / base + 5;
+    int ret = cdata[cc].fame / base + 5;
     ret = ret + rnd(ret / 2) - rnd(ret / 2);
-    cdata_fame(cc) -= ret;
-    if (cdata_fame(cc) < 0)
+    cdata[cc].fame -= ret;
+    if (cdata[cc].fame < 0)
     {
-        cdata_fame(cc) = 0;
+        cdata[cc].fame = 0;
     }
     return ret;
 }
@@ -1161,11 +1161,11 @@ int calcweaponfix(int prm_752)
 
 std::string calcage(int prm_762)
 {
-    if (gdata_year - cdata_birth_year(prm_762) < 0)
+    if (gdata_year - cdata[prm_762].birth_year < 0)
     {
         return lang(u8"不明"s, u8"Unknown"s);
     }
-    return std::to_string(gdata_year - cdata_birth_year(prm_762));
+    return std::to_string(gdata_year - cdata[prm_762].birth_year);
 }
 
 
@@ -1189,23 +1189,23 @@ int calcattackhit(int prm_893)
     {
         tohitorg =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
-        tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata_hit_bonus(cc);
+        tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata[cc].hit_bonus;
         pierce = std::clamp(sdata(attackskill, cc) / 5, 5, 50);
-        if (cdata_equipment_type(cc) & 1)
+        if (cdata[cc].equipment_type & 1)
         {
             tohitorg = tohitorg * 100 / 130;
         }
     }
     else
     {
-        tohitorg = sdata(12, cc) / 4 + sdata(inv_skill(cw), cc) / 3
+        tohitorg = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3
             + sdata(attackskill, cc) + 50;
-        tohitfix = cdata_hit_bonus(cc) + inv_hit_bonus(cw);
+        tohitfix = cdata[cc].hit_bonus + inv[cw].hit_bonus;
         if (ammo != -1)
         {
-            tohitfix += inv_hit_bonus(ammo);
+            tohitfix += inv[ammo].hit_bonus;
         }
-        calcweaponfix(inv_id(cw));
+        calcweaponfix(inv[cw].id);
     }
     tohit = tohitorg + tohitfix;
     if (attackskill != 106)
@@ -1215,7 +1215,11 @@ int calcattackhit(int prm_893)
             if (prm_893 == 0)
             {
                 rangedist = std::clamp(
-                    dist(cdata_x(cc), cdata_y(cc), cdata_x(tc), cdata_y(tc))
+                    dist(
+                        cdata[cc].position.x,
+                        cdata[cc].position.y,
+                        cdata[tc].position.x,
+                        cdata[tc].position.y)
                         - 1,
                     0,
                     9);
@@ -1224,27 +1228,27 @@ int calcattackhit(int prm_893)
         }
         else
         {
-            if (cdata_equipment_type(cc) & 2)
+            if (cdata[cc].equipment_type & 2)
             {
                 tohit += 25;
-                if (inv_weight(cw) >= 4000)
+                if (inv[cw].weight >= 4000)
                 {
                     tohit += sdata(167, cc);
                 }
             }
-            if (cdata_equipment_type(cc) & 4)
+            if (cdata[cc].equipment_type & 4)
             {
                 if (attacknum == 1)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv_weight(cw) - 4000 + 400)
+                        tohit -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(166, cc) / 5);
                     }
                 }
-                else if (inv_weight(cw) > 1500)
+                else if (inv[cw].weight > 1500)
                 {
-                    tohit -= (inv_weight(cw) - 1500 + 100)
+                    tohit -= (inv[cw].weight - 1500 + 100)
                         / (10 + sdata(166, cc) / 5);
                 }
             }
@@ -1260,9 +1264,9 @@ int calcattackhit(int prm_893)
             {
                 if (attackrange == 0)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv_weight(cw) - 4000 + 400)
+                        tohit -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(301, cc) / 5);
                     }
                 }
@@ -1276,9 +1280,9 @@ int calcattackhit(int prm_893)
             {
                 if (attackrange == 0)
                 {
-                    if (inv_weight(cw) >= 4000)
+                    if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv_weight(cw) - 4000 + 400)
+                        tohit -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(10, cc) / 10);
                     }
                 }
@@ -1297,12 +1301,12 @@ int calcattackhit(int prm_893)
     {
         return tohit;
     }
-    evade = sdata(13, tc) / 3 + sdata(173, tc) + cdata_dv(tc) + 25;
+    evade = sdata(13, tc) / 3 + sdata(173, tc) + cdata[tc].dv + 25;
     if (prm_893 == 2)
     {
         return evade;
     }
-    if (cdata_dimmed(tc) != 0)
+    if (cdata[tc].dimmed != 0)
     {
         if (rnd(4) == 0)
         {
@@ -1311,19 +1315,19 @@ int calcattackhit(int prm_893)
         }
         evade /= 2;
     }
-    if (cdata_blind(cc) != 0)
+    if (cdata[cc].blind != 0)
     {
         tohit /= 2;
     }
-    if (cdata_blind(tc) != 0)
+    if (cdata[tc].blind != 0)
     {
         evade /= 2;
     }
-    if (cdata_sleep(tc) != 0)
+    if (cdata[tc].sleep != 0)
     {
         return 1;
     }
-    if (cdata_confused(cc) != 0 || cdata_dimmed(cc) != 0)
+    if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
     {
         if (attackrange)
         {
@@ -1367,7 +1371,7 @@ int calcattackhit(int prm_893)
         critical = 1;
         return 1;
     }
-    if (cdata_rate_of_critical_hit(cc) > rnd(200))
+    if (cdata[cc].rate_of_critical_hit > rnd(200))
     {
         critical = 1;
         return 1;
@@ -1406,7 +1410,7 @@ int calcattackdmg(int prm_894)
     if (attackskill == 106)
     {
         dmgfix =
-            sdata(10, cc) / 8 + sdata(106, cc) / 8 + cdata_damage_bonus(cc);
+            sdata(10, cc) / 8 + sdata(106, cc) / 8 + cdata[cc].damage_bonus;
         dice1 = 2;
         dice2 = sdata(106, cc) / 8 + 5;
         dmgmulti = 0.5
@@ -1417,17 +1421,17 @@ int calcattackdmg(int prm_894)
     }
     else
     {
-        dmgfix = cdata_damage_bonus(cc) + inv_damage_bonus(cw)
-            + inv_enhancement(cw) + (inv_curse_state(cw) == 1);
-        dice1 = inv_dice_x(cw);
-        dice2 = inv_dice_y(cw);
+        dmgfix = cdata[cc].damage_bonus + inv[cw].damage_bonus
+            + inv[cw].enhancement + (inv[cw].curse_state == 1);
+        dice1 = inv[cw].dice_x;
+        dice2 = inv[cw].dice_y;
         if (ammo != -1)
         {
-            dmgfix += inv_damage_bonus(ammo)
-                + inv_dice_x(ammo) * inv_dice_y(ammo) / 2;
+            dmgfix += inv[ammo].damage_bonus
+                + inv[ammo].dice_x * inv[ammo].dice_y / 2;
             dmgmulti = 0.5
                 + double(
-                      (sdata(13, cc) + sdata(inv_skill(cw), cc) / 5
+                      (sdata(13, cc) + sdata(inv[cw].skill, cc) / 5
                        + sdata(attackskill, cc) / 5 + sdata(189, cc) * 3 / 2))
                     / 40;
         }
@@ -1435,7 +1439,7 @@ int calcattackdmg(int prm_894)
         {
             dmgmulti = 0.6
                 + double(
-                      (sdata(10, cc) + sdata(inv_skill(cw), cc) / 5
+                      (sdata(10, cc) + sdata(inv[cw].skill, cc) / 5
                        + sdata(attackskill, cc) / 5 + sdata(152, cc) * 2))
                     / 45;
         }
@@ -1447,9 +1451,9 @@ int calcattackdmg(int prm_894)
             dmgmulti = dmgmulti * rangemap(rangedist) / 100;
         }
     }
-    else if (cdata_equipment_type(cc) & 2)
+    else if (cdata[cc].equipment_type & 2)
     {
-        if (inv_weight(cw) >= 4000)
+        if (inv[cw].weight >= 4000)
         {
             dmgmulti *= 1.5;
         }
@@ -1463,14 +1467,14 @@ int calcattackdmg(int prm_894)
     {
         if (trait(207))
         {
-            dmgfix += 5 + cdata_level(0) * 2 / 3;
+            dmgfix += 5 + cdata[0].level * 2 / 3;
         }
     }
     if (prm_894 == 1)
     {
         return damage;
     }
-    prot = cdata_pv(tc) + sdata(carmor(tc), tc) + sdata(12, tc) / 10;
+    prot = cdata[tc].pv + sdata(carmor(tc), tc) + sdata(12, tc) / 10;
     if (prot > 0)
     {
         prot2 = prot / 4;
@@ -1510,12 +1514,12 @@ int calcattackdmg(int prm_894)
         else if (ammo != -1)
         {
             dmgmulti = dmgmulti
-                * std::clamp((inv_weight(ammo) / 100 + 100), 100, 150) / 100;
+                * std::clamp((inv[ammo].weight / 100 + 100), 100, 150) / 100;
         }
         else
         {
             dmgmulti = dmgmulti
-                * std::clamp((inv_weight(cw) / 200 + 100), 100, 150) / 100;
+                * std::clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
@@ -1526,7 +1530,7 @@ int calcattackdmg(int prm_894)
     }
     if (attackrange == 0)
     {
-        if (cdata_rate_to_pierce(cc) > rnd(100))
+        if (cdata[cc].rate_to_pierce > rnd(100))
         {
             pierce = 100;
             if (synccheck(cc, -1))
@@ -1580,10 +1584,10 @@ int calcattackdmg(int prm_894)
             --damage;
         }
     }
-    if (cdata_decrease_physical_damage(tc) != 0)
+    if (cdata[tc].decrease_physical_damage != 0)
     {
         damage = damage * 100
-            / std::clamp((100 + cdata_decrease_physical_damage(tc)), 25, 1000);
+            / std::clamp((100 + cdata[tc].decrease_physical_damage), 25, 1000);
     }
     if (damage < 0)
     {
@@ -1596,7 +1600,7 @@ int calcattackdmg(int prm_894)
 
 int calcmedalvalue(int ci)
 {
-    switch (inv_id(ci))
+    switch (inv[ci].id)
     {
     case 430: return 5;
     case 431: return 8;
@@ -1625,77 +1629,77 @@ int calcmedalvalue(int ci)
 
 int calcitemvalue(int ci, int situation)
 {
-    int category = refitem(inv_id(ci), 5);
+    int category = refitem(inv[ci].id, 5);
     int ret = 0;
-    if (inv_identification_state(ci) == 0)
+    if (inv[ci].identification_state == 0)
     {
         if (situation == 2)
         {
-            ret = inv_value(ci) * 4 / 10;
+            ret = inv[ci].value * 4 / 10;
         }
         else
         {
-            ret = cdata_level(0) / 5
-                    * ((gdata_random_seed + ci * 31) % cdata_level(0) + 4)
+            ret = cdata[0].level / 5
+                    * ((gdata_random_seed + ci * 31) % cdata[0].level + 4)
                 + 10;
         }
     }
     else if (category >= 50000)
     {
-        ret = inv_value(ci);
+        ret = inv[ci].value;
     }
     else
     {
-        if (inv_identification_state(ci) == 1)
+        if (inv[ci].identification_state == 1)
         {
-            ret = inv_value(ci) * 2 / 10;
+            ret = inv[ci].value * 2 / 10;
         }
-        if (inv_identification_state(ci) == 2)
+        if (inv[ci].identification_state == 2)
         {
-            ret = inv_value(ci) * 5 / 10;
+            ret = inv[ci].value * 5 / 10;
         }
-        if (inv_identification_state(ci) >= 3)
+        if (inv[ci].identification_state >= 3)
         {
-            ret = inv_value(ci);
+            ret = inv[ci].value;
         }
     }
-    if (inv_identification_state(ci) >= 3)
+    if (inv[ci].identification_state >= 3)
     {
-        if (inv_curse_state(ci) == 1)
+        if (inv[ci].curse_state == 1)
         {
             ret = ret * 120 / 100;
         }
-        if (inv_curse_state(ci) == -1)
+        if (inv[ci].curse_state == -1)
         {
             ret = ret / 2;
         }
-        if (inv_curse_state(ci) == -2)
+        if (inv[ci].curse_state == -2)
         {
             ret = ret / 5;
         }
     }
     if (category == 57000)
     {
-        if (inv_param2(ci) > 0)
+        if (inv[ci].param2 > 0)
         {
-            ret = ret * inv_param2(ci) * inv_param2(ci) / 10;
+            ret = ret * inv[ci].param2 * inv[ci].param2 / 10;
         }
     }
-    if (inv_id(ci) == 333)
+    if (inv[ci].id == 333)
     {
         if (situation == 0)
         {
             ret += std::clamp(
-                cdata_fame(0) / 40 + ret * (cdata_fame(0) / 80) / 100, 0, 800);
+                cdata[0].fame / 40 + ret * (cdata[0].fame / 80) / 100, 0, 800);
         }
     }
-    if (inv_weight(ci) < 0)
+    if (inv[ci].weight < 0)
     {
         if (mode == 6)
         {
             if (category == 92000)
             {
-                ret = ret * trate(inv_param1(ci)) / 100;
+                ret = ret * trate(inv[ci].param1) / 100;
                 if (situation == 1)
                 {
                     ret = ret * 65 / 100;
@@ -1706,25 +1710,25 @@ int calcitemvalue(int ci, int situation)
     }
     if (ibit(4, ci) == 1)
     {
-        dbid = inv_id(ci);
+        dbid = inv[ci].id;
         dbmode = 2;
         label_1275();
-        if (inv_count(ci) < 0)
+        if (inv[ci].count < 0)
         {
             ret = ret / 10;
         }
         else if (category == 54000)
         {
-            ret = ret / 5 + ret * inv_count(ci) / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * inv[ci].count / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret = ret / 2 + ret * inv_count(ci) / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * inv[ci].count / (ichargelevel * 3 + 1);
         }
     }
     if (category == 72000)
     {
-        if (inv_param1(ci) == 0)
+        if (inv[ci].param1 == 0)
         {
             ret = ret / 100 + 1;
         }
@@ -1800,8 +1804,8 @@ int calcitemvalue(int ci, int situation)
 
 int calcinvestvalue(int)
 {
-    value_at_m153 = std::clamp(cdata_shop_rank(tc), 1, 200)
-            * std::clamp(cdata_shop_rank(tc), 1, 200) * 15
+    value_at_m153 = std::clamp(cdata[tc].shop_rank, 1, 200)
+            * std::clamp(cdata[tc].shop_rank, 1, 200) * 15
         + 200;
     if (value_at_m153 > 500000)
     {
@@ -1816,7 +1820,7 @@ int calcinvestvalue(int)
 int calcguiltvalue(int)
 {
     value_at_m153 =
-        (-cdata_karma(0) + -30) * (cdata_fame(0) / 2 + cdata_level(0) * 200);
+        (-cdata[0].karma + -30) * (cdata[0].fame / 2 + cdata[0].level * 200);
     return value_at_m153;
 }
 
@@ -1824,7 +1828,7 @@ int calcguiltvalue(int)
 
 int calchireadv(int prm_902)
 {
-    return 250 + cdata_level(prm_902) * cdata_level(prm_902) * 30;
+    return 250 + cdata[prm_902].level * cdata[prm_902].level * 30;
 }
 
 
@@ -1832,44 +1836,44 @@ int calchireadv(int prm_902)
 int calchirecost(int prm_903)
 {
     value_at_m153 = 0;
-    if (cdata_character_role(prm_903) == 18)
+    if (cdata[prm_903].character_role == 18)
     {
         value_at_m153 = 450;
     }
-    if (cdata_character_role(prm_903) == 7)
+    if (cdata[prm_903].character_role == 7)
     {
         value_at_m153 = 250;
     }
-    if (cdata_character_role(prm_903) == 9)
+    if (cdata[prm_903].character_role == 9)
     {
         value_at_m153 = 350;
     }
-    if (cdata_character_role(prm_903) == 12)
+    if (cdata[prm_903].character_role == 12)
     {
         value_at_m153 = 500;
     }
-    if (cdata_character_role(prm_903) == 5)
+    if (cdata[prm_903].character_role == 5)
     {
         value_at_m153 = 750;
     }
-    if (cdata_character_role(prm_903) == 8)
+    if (cdata[prm_903].character_role == 8)
     {
         value_at_m153 = 250;
     }
-    if (cdata_character_role(prm_903) == 14)
+    if (cdata[prm_903].character_role == 14)
     {
         value_at_m153 = 50;
     }
-    if (cdata_character_role(prm_903) >= 1000
-            && cdata_character_role(prm_903) < 2000
-        || cdata_character_role(prm_903) == 2003)
+    if (cdata[prm_903].character_role >= 1000
+            && cdata[prm_903].character_role < 2000
+        || cdata[prm_903].character_role == 2003)
     {
         value_at_m153 = 1000;
-        if (cdata_character_role(prm_903) == 1007)
+        if (cdata[prm_903].character_role == 1007)
         {
             value_at_m153 *= 4;
         }
-        if (cdata_character_role(prm_903) == 2003)
+        if (cdata[prm_903].character_role == 2003)
         {
             value_at_m153 = 0;
         }
@@ -1881,16 +1885,16 @@ int calchirecost(int prm_903)
 
 void generatemoney(int prm_904)
 {
-    p_at_m153 = rnd(100) + rnd((cdata_level(prm_904) * 50 + 1));
-    if (cdata_character_role(prm_904) >= 1000
-            && cdata_character_role(prm_904) < 2000
-        || cdata_character_role(prm_904) == 2003)
+    p_at_m153 = rnd(100) + rnd((cdata[prm_904].level * 50 + 1));
+    if (cdata[prm_904].character_role >= 1000
+            && cdata[prm_904].character_role < 2000
+        || cdata[prm_904].character_role == 2003)
     {
-        p_at_m153 += 2500 + cdata_shop_rank(prm_904) * 250;
+        p_at_m153 += 2500 + cdata[prm_904].shop_rank * 250;
     }
-    if (cdata_gold(prm_904) < p_at_m153 / 2)
+    if (cdata[prm_904].gold < p_at_m153 / 2)
     {
-        cdata_gold(prm_904) = p_at_m153;
+        cdata[prm_904].gold = p_at_m153;
     }
     return;
 }
@@ -1904,11 +1908,11 @@ void calccosthire()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata_character_role(cnt) == 0)
+            if (cdata[cnt].character_role == 0)
             {
                 continue;
             }
-            if (cdata_state(cnt) != 1)
+            if (cdata[cnt].state != 1)
             {
                 continue;
             }
@@ -1916,8 +1920,8 @@ void calccosthire()
         }
     }
     cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata_karma(0) / 2, 0, 50)
-                      - 7 * trait(38) - (cdata_karma(0) >= 20) * 5),
+        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
+                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
                      25,
                      200)
         / 100;
@@ -1958,8 +1962,8 @@ int calccostbuilding()
         }
     }
     cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata_karma(0) / 2, 0, 50)
-                      - 7 * trait(38) - (cdata_karma(0) >= 20) * 5),
+        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
+                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
                      25,
                      200)
         / 100;
@@ -1971,12 +1975,12 @@ int calccostbuilding()
 int calccosttax()
 {
     cost_at_m153 = 0;
-    cost_at_m153 += cdata_gold(0) / 1000;
-    cost_at_m153 += cdata_fame(0);
-    cost_at_m153 += cdata_level(0) * 200;
+    cost_at_m153 += cdata[0].gold / 1000;
+    cost_at_m153 += cdata[0].fame;
+    cost_at_m153 += cdata[0].level * 200;
     cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata_karma(0) / 2, 0, 50)
-                      - 7 * trait(38) - (cdata_karma(0) >= 20) * 5),
+        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
+                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
                      25,
                      200)
         / 100;
@@ -2004,11 +2008,11 @@ int calccostreload(int prm_905, int prm_906)
         int cnt = invhead;
         for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
         {
-            if (inv_number(cnt) == 0)
+            if (inv[cnt].number == 0)
             {
                 continue;
             }
-            if (refitem(inv_id(cnt), 5) != 25000)
+            if (refitem(inv[cnt].id, 5) != 25000)
             {
                 continue;
             }
@@ -2017,11 +2021,11 @@ int calccostreload(int prm_905, int prm_906)
                 int cnt = 0;
                 for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                 {
-                    if (inv_enchantment_id(ci_at_m153, cnt) == 0)
+                    if (inv[ci_at_m153].enchantments[cnt].id == 0)
                     {
                         break;
                     }
-                    enc_at_m153 = inv_enchantment_id(ci_at_m153, cnt);
+                    enc_at_m153 = inv[ci_at_m153].enchantments[cnt].id;
                     i_at_m153 = enc_at_m153 / 10000;
                     if (i_at_m153 != 0)
                     {
@@ -2029,14 +2033,14 @@ int calccostreload(int prm_905, int prm_906)
                         if (i_at_m153 == 9)
                         {
                             i_at_m153(0) =
-                                inv_enchantment_power(ci_at_m153, cnt) % 1000;
+                                inv[ci_at_m153].enchantments[cnt].power % 1000;
                             i_at_m153(1) =
-                                inv_enchantment_power(ci_at_m153, cnt) / 1000;
+                                inv[ci_at_m153].enchantments[cnt].power / 1000;
                             cost_at_m153 += (i_at_m153(1) - i_at_m153)
                                 * (50 + enc_at_m153 * enc_at_m153 * 10);
                             if (prm_906 == 1)
                             {
-                                inv_enchantment_power(ci_at_m153, cnt) =
+                                inv[ci_at_m153].enchantments[cnt].power =
                                     i_at_m153(1) * 1000 + i_at_m153(1);
                             }
                         }
@@ -2079,11 +2083,11 @@ int calcidentifyvalue(int prm_907)
             int cnt = invhead;
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
-                if (inv_number(cnt) == 0)
+                if (inv[cnt].number == 0)
                 {
                     continue;
                 }
-                if (inv_identification_state(cnt) < 3)
+                if (inv[cnt].identification_state < 3)
                 {
                     ++p_at_m153;
                 }
@@ -2130,11 +2134,11 @@ int calclearncost(int, int, int prm_913)
 
 int calcresurrectvalue(int prm_914)
 {
-    if (cdata_state(prm_914) != 6)
+    if (cdata[prm_914].state != 6)
     {
         return 100;
     }
-    value_at_m153 = cdata_level(prm_914) * cdata_level(prm_914) * 15;
+    value_at_m153 = cdata[prm_914].level * cdata[prm_914].level * 15;
     return value_at_m153;
 }
 
@@ -2143,7 +2147,7 @@ int calcresurrectvalue(int prm_914)
 int calcslavevalue(int prm_915)
 {
     value_at_m153 = sdata(10, prm_915) * sdata(11, prm_915)
-        + cdata_level(prm_915) * cdata_level(prm_915) + 1000;
+        + cdata[prm_915].level * cdata[prm_915].level + 1000;
     if (value_at_m153 > 50000)
     {
         value_at_m153 = 50000;
@@ -2179,15 +2183,15 @@ int calcinitgold(int prm_917)
             + 1;
     }
     lootrich_at_m155 = -1;
-    if (cdata_id(prm_917) == 183)
+    if (cdata[prm_917].id == 183)
     {
         lootrich_at_m155 = 10;
     }
-    if (cdata_id(prm_917) == 184)
+    if (cdata[prm_917].id == 184)
     {
         lootrich_at_m155 = 4;
     }
-    if (cdata_id(prm_917) == 185)
+    if (cdata[prm_917].id == 185)
     {
         lootrich_at_m155 = 2;
     }
@@ -2195,7 +2199,7 @@ int calcinitgold(int prm_917)
     {
         return lootrich_at_m155 * 500 + rnd((1000 + lootrich_at_m155 * 1000));
     }
-    return rnd(cdata_level(prm_917) * 25 + 10) + 1;
+    return rnd(cdata[prm_917].level * 25 + 10) + 1;
 }
 
 
@@ -2218,7 +2222,7 @@ int calcspellpower(int prm_918, int prm_919)
     {
         if (prm_919 >= 16)
         {
-            return cdata_level(prm_919) * 6 + 10;
+            return cdata[prm_919].level * 6 + 10;
         }
     }
     return sdata(172, prm_919) * 6 + 10;
@@ -2288,11 +2292,11 @@ int calcspellfail(int prm_920, int prm_921)
     {
         p_at_m157 = 100;
     }
-    if (cdata_equipment_type(prm_921) & 4)
+    if (cdata[prm_921].equipment_type & 4)
     {
         p_at_m157 -= 6;
     }
-    if (cdata_equipment_type(prm_921) & 1)
+    if (cdata[prm_921].equipment_type & 1)
     {
         p_at_m157 -= 12;
     }
@@ -2324,7 +2328,7 @@ int calcspellcostmp(int prm_922, int prm_923)
     else
     {
         cost_at_m158 =
-            sdataref(2, prm_922) * (50 + cdata_level(prm_923) * 3) / 100;
+            sdataref(2, prm_922) * (50 + cdata[prm_923].level * 3) / 100;
     }
     return cost_at_m158;
 }
@@ -2352,7 +2356,7 @@ int calcspellcoststock(int prm_924, int prm_925)
 
 int calcscore()
 {
-    p = cdata_level(0) * cdata_level(0)
+    p = cdata[0].level * cdata[0].level
         + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
         + gdata_kill_count;
     if (gdata_death_count > 1)
@@ -2375,15 +2379,15 @@ void calcpartyscore()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata_state(cnt) != 1)
+            if (cdata[cnt].state != 1)
             {
                 continue;
             }
-            if (cdata_impression(cnt) >= 53)
+            if (cdata[cnt].impression >= 53)
             {
-                p += cdata_level(cnt) + 5;
+                p += cdata[cnt].level + 5;
             }
-            if (cdata_impression(cnt) < 50)
+            if (cdata[cnt].impression < 50)
             {
                 p -= 20;
             }
@@ -2414,15 +2418,15 @@ void calcpartyscore2()
         int cnt = 57;
         for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
         {
-            if (cdata_state(cnt) != 1)
+            if (cdata[cnt].state != 1)
             {
                 continue;
             }
-            if (cdata_impression(cnt) >= 53)
+            if (cdata[cnt].impression >= 53)
             {
-                if (cdata_quality(cnt) >= 4)
+                if (cdata[cnt].quality >= 4)
                 {
-                    p += 20 + cdata_level(cnt) / 2;
+                    p += 20 + cdata[cnt].level / 2;
                     txt(lang(
                         cdatan(0, cnt) + u8"は満足した。"s,
                         cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));

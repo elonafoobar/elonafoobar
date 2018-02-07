@@ -26,13 +26,13 @@
     } while (0)
 
 
-#define SET_LEVEL(level) \
+#define SET_LEVEL(lv) \
     do \
     { \
-        cdata_level(rc) = initlv != 0 ? initlv : (level); \
+        cdata[rc].level = initlv != 0 ? initlv : (lv); \
         if (voidlv != 0) \
         { \
-            cdata_level(rc) = voidlv * (100 + (level)*2) / 100; \
+            cdata[rc].level = voidlv * (100 + (lv)*2) / 100; \
         } \
     } while (0)
 
@@ -65,27 +65,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 0;
+            cdata[rc].id = 0;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"バグ", u8"bug");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -113,29 +113,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 343;
+            cdata[rc].id = 343;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"user", u8"user");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 1;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 1;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -211,39 +211,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 1;
+            cdata[rc].id = 1;
             SET_LEVEL(35);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 6;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 6;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"店主", u8"shopkeeper");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 140;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 140;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 141;
+                cdata[rc].image = 141;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -272,32 +272,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 353;
+            cdata[rc].id = 353;
             SET_LEVEL(22);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"キャラバンの隊長", u8"caravan master");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 443;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 443;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -410,40 +410,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 70;
+            cdata[rc].id = 70;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"バーテンダー", u8"bartender");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 144;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 144;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 145;
+                cdata[rc].image = 145;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -498,37 +498,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 69;
+            cdata[rc].id = 69;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"情報屋", u8"informer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 15;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 15;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 16;
+                cdata[rc].image = 16;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -584,34 +584,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 73;
+            cdata[rc].id = 73;
             SET_LEVEL(40);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"アリーナマスター", u8"arena master");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 41;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 41;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -688,34 +688,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 74;
+            cdata[rc].id = 74;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"癒し手", u8"healer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 69;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 69;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -838,37 +838,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 206;
+            cdata[rc].id = 206;
             SET_LEVEL(50);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"シスター", u8"sister");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 163;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 163;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -923,37 +923,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 38;
+            cdata[rc].id = 38;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"長", u8"elder");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 142;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 142;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 143;
+                cdata[rc].image = 143;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1018,37 +1018,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 40;
+            cdata[rc].id = 40;
             SET_LEVEL(40);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"トレイナー", u8"trainer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 7;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 7;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 10;
+                cdata[rc].image = 10;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1114,37 +1114,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 333;
+            cdata[rc].id = 333;
             SET_LEVEL(69);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ギルドトレイナー", u8"guild trainer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 415;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 415;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 414;
+                cdata[rc].image = 414;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1225,38 +1225,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 76;
+            cdata[rc].id = 76;
             SET_LEVEL(40);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ガード", u8"guard");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 363;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 363;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 363;
+                cdata[rc].image = 363;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1337,38 +1337,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 77;
+            cdata[rc].id = 77;
             SET_LEVEL(40);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ガード", u8"guard");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 25;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 25;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 25;
+                cdata[rc].image = 25;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1447,41 +1447,41 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 204;
+            cdata[rc].id = 204;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act(rc, 1) = -3;
-            cdata_ai_act(rc, 2) = -2;
-            cdata_ai_act_num(rc) = 3;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[1] = -3;
+            cdata[rc].act[2] = -2;
+            cdata[rc].ai_act_num = 3;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"パルミア特殊部隊", u8"palmian elite soldier");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 74;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 74;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 75;
+                cdata[rc].image = 75;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1572,38 +1572,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 2;
+            cdata[rc].id = 2;
             SET_LEVEL(55);
-            cdata_portrait(rc) = 53;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = 53;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 414;
-            cdata_ai_act(rc, 1) = -1;
-            cdata_ai_act(rc, 2) = 433;
-            cdata_ai_act_sub(rc, 0) = 424;
-            cdata_ai_act_num(rc) = 13;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_ai_heal(rc) = 403;
+            cdata[rc].act[0] = 414;
+            cdata[rc].act[1] = -1;
+            cdata[rc].act[2] = 433;
+            cdata[rc].act[5] = 424;
+            cdata[rc].ai_act_num = 13;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].ai_heal = 403;
             cdatan(0, rc) =
                 lang(u8"偽りの預言者『ゼーム』", u8"<Zeome> the false prophet");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 297;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 297;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -1702,33 +1702,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 37;
+            cdata[rc].id = 37;
             SET_LEVEL(1);
-            cdata_portrait(rc) = 53;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 53;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"＠", u8"@");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 347;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 347;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -1808,34 +1808,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 23;
+            cdata[rc].id = 23;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 51;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 51;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"混沌の寵児『オルフェ』", u8"<Orphe> the chaos child");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 331;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 331;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -1870,30 +1870,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 26;
+            cdata[rc].id = 26;
             SET_LEVEL(6);
-            cdata_portrait(rc) = 6;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 6;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) =
                 lang(u8"『マッドサイエンティスト』", u8"<Mad scientist>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 332;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 332;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -1923,30 +1923,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 27;
+            cdata[rc].id = 27;
             SET_LEVEL(42);
-            cdata_portrait(rc) = 51;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 51;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) =
                 lang(u8"堕天使『イスカ』", u8"<Isca> the fallen angel");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 333;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 333;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -2049,34 +2049,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 28;
+            cdata[rc].id = 28;
             SET_LEVEL(78);
-            cdata_portrait(rc) = 50;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 50;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"『虚空を這いずる者』", u8"<Whom dwell in the vanity>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 334;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 334;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -2181,35 +2181,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 29;
+            cdata[rc].id = 29;
             SET_LEVEL(50);
-            cdata_portrait(rc) = 49;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 49;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"ザナンの紅の英雄『ロイター』",
                 u8"<Loyter> the crimson of Zanan");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 337;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 337;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -2244,22 +2244,22 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 140;
+            cdata[rc].id = 140;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) =
                 lang(u8"火炎竜『ヴェスダ』", u8"<Vesda> the fire dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
@@ -2267,8 +2267,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) = 338;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 338;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -2367,34 +2367,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 30;
+            cdata[rc].id = 30;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 50;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 50;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"見習い『ミシェス』", u8"<Miches> the apprentice");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 8;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 8;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -2492,33 +2492,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 31;
+            cdata[rc].id = 31;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 49;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 49;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"看板娘『シーナ』", u8"<Shena> the draw");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 109;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 109;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -2623,34 +2623,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 351;
+            cdata[rc].id = 351;
             SET_LEVEL(130);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 2;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 2;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 647;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 647;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"『豹頭の戦士』", u8"<The leopard warrior>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 478;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 478;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -2769,34 +2769,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 352;
+            cdata[rc].id = 352;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 5;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 5;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"皇女『シルヴィア』", u8"<Silvia> The princess");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 479;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 479;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -2887,34 +2887,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 32;
+            cdata[rc].id = 32;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"『ダンジョンクリーナー』", u8"<Dungeon cleaner>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 344;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 344;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -3029,36 +3029,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 33;
+            cdata[rc].id = 33;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 48;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = 48;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 416;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 416;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"風を聴く者『ラーネイレ』",
                 u8"<Larnneire> the listener of wind");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 345;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 345;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3172,36 +3172,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 34;
+            cdata[rc].id = 34;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 57;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = 57;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 447;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 447;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"異形の森の使者『ロミアス』",
                 u8"<Lomias> the messenger from Vindale");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 346;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 346;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3263,31 +3263,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 139;
+            cdata[rc].id = 139;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 56;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 56;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"パルミアの影『スラン』", u8"<Slan> the shadow of Palmia");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 99;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 99;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -3339,32 +3339,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 146;
+            cdata[rc].id = 146;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 56;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 56;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"カルーンの孤狼『カラム』",
                 u8"<Karam> the lonely wolf of Karune");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 99;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 99;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -3462,35 +3462,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 142;
+            cdata[rc].id = 142;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 55;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 55;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"歴史を学ぶ『エリステア』",
                 u8"<Erystia> the scholar of history");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 340;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 340;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -3528,35 +3528,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 141;
+            cdata[rc].id = 141;
             SET_LEVEL(28);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_sub(rc, 1) = 443;
-            cdata_ai_act_num(rc) = 24;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[5] = 410;
+            cdata[rc].act[6] = 443;
+            cdata[rc].ai_act_num = 24;
             cdatan(0, rc) = lang(
                 u8"闇の奇形『イスシズル』",
                 u8"<Issizzle> the dark abomination");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 339;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 339;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3594,34 +3594,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 143;
+            cdata[rc].id = 143;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(
                 u8"古城の主『ワイナン』",
                 u8"<Wynan> the lord of the Ancient Castle");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 341;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 341;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3659,26 +3659,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 144;
+            cdata[rc].id = 144;
             SET_LEVEL(24);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(
                 u8"赤き義眼の『クルイツゥア』",
                 u8"<Quruiza> the red-eyed Deceiver");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
@@ -3686,8 +3686,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) = 343;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 343;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3722,27 +3722,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 145;
+            cdata[rc].id = 145;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) =
                 lang(u8"鋼鉄竜『コルゴン』", u8"<Corgon> the steel dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
             sdata(50, rc) = 500;
-            cdata_image(rc) = 342;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 342;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3776,31 +3776,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 306;
+            cdata[rc].id = 306;
             SET_LEVEL(350);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 648;
-            cdata_ai_act_sub(rc, 1) = 636;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 648;
+            cdata[rc].act[6] = 636;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(u8"《風のルルウィ》", u8"<Luluwy>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 393;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 393;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -3830,30 +3830,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 331;
+            cdata[rc].id = 331;
             SET_LEVEL(350);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 657;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 657;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"《幸運のエヘカトル》", u8"<Ehekatl>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 413;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 413;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -3883,34 +3883,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 336;
+            cdata[rc].id = 336;
             SET_LEVEL(1200);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 612;
-            cdata_ai_act_sub(rc, 1) = 459;
-            cdata_ai_act_sub(rc, 2) = 620;
-            cdata_ai_act_sub(rc, 3) = 601;
-            cdata_ai_act_num(rc) = 41;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 612;
+            cdata[rc].act[6] = 459;
+            cdata[rc].act[7] = 620;
+            cdata[rc].act[8] = 601;
+            cdata[rc].ai_act_num = 41;
             cdatan(0, rc) =
                 lang(u8"《エヘカトルの中の神》", u8"<God inside Ehekatl>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 413;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 413;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -3945,30 +3945,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 338;
+            cdata[rc].id = 338;
             SET_LEVEL(350);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 657;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 657;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"《地のオパートス》", u8"<Opatos>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 432;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 432;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -4004,30 +4004,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 339;
+            cdata[rc].id = 339;
             SET_LEVEL(350);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 657;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 657;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"《収穫のクミロミ》", u8"<Kumiromi>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"farmer";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 433;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 433;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -4062,30 +4062,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 342;
+            cdata[rc].id = 342;
             SET_LEVEL(350);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 657;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 657;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"《機械のマニ》", u8"<Mani>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 447;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 447;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -4120,33 +4120,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 340;
+            cdata[rc].id = 340;
             SET_LEVEL(1200);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 612;
-            cdata_ai_act_sub(rc, 1) = 459;
-            cdata_ai_act_sub(rc, 2) = 620;
-            cdata_ai_act_sub(rc, 3) = 601;
-            cdata_ai_act_num(rc) = 41;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 612;
+            cdata[rc].act[6] = 459;
+            cdata[rc].act[7] = 620;
+            cdata[rc].act[8] = 601;
+            cdata[rc].ai_act_num = 41;
             cdatan(0, rc) = lang(u8"_test", u8"_test");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"god";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 435;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 435;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -4200,21 +4200,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 3;
+            cdata[rc].id = 3;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 3;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"プチ", u8"putit");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
@@ -4222,7 +4222,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(63, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4269,26 +4269,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 4;
+            cdata[rc].id = 4;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 3;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ベスプチ", u8"red putit");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
             sdata(63, rc) = 500;
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -4331,21 +4331,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 169;
+            cdata[rc].id = 169;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 3;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"スライム", u8"slime");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
@@ -4353,10 +4353,10 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(63, rc) = 500;
-            cdata_image(rc) = 257;
-            cdata_image(rc) += 4000;
+            cdata[rc].image = 257;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
-            cdata_damage_reaction_info(rc) = 100063;
+            cdata[rc].damage_reaction_info = 100063;
             return 0;
         }
         return 0;
@@ -4398,34 +4398,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 194;
+            cdata[rc].id = 194;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 3;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 455;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 455;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"弱酸性スライム", u8"acid slime");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 6300100;
+            cdata[rc].element_of_unarmed_attack = 6300100;
             sdata(63, rc) = 500;
-            cdata_image(rc) = 257;
-            cdata_image(rc) += 2000;
+            cdata[rc].image = 257;
+            cdata[rc].image += 2000;
             cspecialeq = 0;
-            cdata_damage_reaction_info(rc) = 200063;
+            cdata[rc].damage_reaction_info = 200063;
             return 0;
         }
         return 0;
@@ -4467,27 +4467,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 286;
+            cdata[rc].id = 286;
             SET_LEVEL(9);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"バブル", u8"bubble");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
             sdata(63, rc) = 500;
-            cdata_image(rc) = 400;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 400;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4530,27 +4530,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 285;
+            cdata[rc].id = 285;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ブルーバブル", u8"blue bubble");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"slime";
             dbmode = 3;
             label_2297();
             sdata(63, rc) = 500;
-            cdata_image(rc) = 400;
-            cdata_image(rc) += 17000;
+            cdata[rc].image = 400;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -4578,26 +4578,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 287;
+            cdata[rc].id = 287;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 20;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 20;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 613;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 613;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"塊の怪物", u8"mass monster");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"drake";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 401;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 401;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4625,26 +4625,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 327;
+            cdata[rc].id = 327;
             SET_LEVEL(52);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 20;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 20;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 638;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 638;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"キューブ", u8"cube");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 282;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 282;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4671,27 +4671,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 5;
+            cdata[rc].id = 5;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"野うさぎ", u8"rabbit");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4733,28 +4733,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 6;
+            cdata[rc].id = 6;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"かたつむり", u8"snail");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"snail";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4851,31 +4851,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 7;
+            cdata[rc].id = 7;
             SET_LEVEL(3);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"敗残兵", u8"fallen soldier");
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 37;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 37;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -4972,35 +4972,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 8;
+            cdata[rc].id = 8;
             SET_LEVEL(4);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"傭兵", u8"mercenary");
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 139;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 139;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 178;
+                cdata[rc].image = 178;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5097,39 +5097,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 9;
+            cdata[rc].id = 9;
             SET_LEVEL(2);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"乞食", u8"beggar");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 102;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 102;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 103;
+                cdata[rc].image = 103;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5195,39 +5195,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 269;
+            cdata[rc].id = 269;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"農夫", u8"farmer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 179;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 179;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 180;
+                cdata[rc].image = 180;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5285,37 +5285,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 320;
+            cdata[rc].id = 320;
             SET_LEVEL(32);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 5;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 5;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = -9996;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = -9996;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"清掃員", u8"cleaner");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 410;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 410;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5374,39 +5374,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 273;
+            cdata[rc].id = 273;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"鉱夫", u8"miner");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 187;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 187;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 188;
+                cdata[rc].image = 188;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5494,35 +5494,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 326;
+            cdata[rc].id = 326;
             SET_LEVEL(16);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 5;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 5;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"吟遊詩人", u8"bard");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"pianist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 148;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 148;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5570,38 +5570,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 270;
+            cdata[rc].id = 270;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"修道女", u8"sister");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 181;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 181;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 182;
+                cdata[rc].image = 182;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5654,29 +5654,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 349;
+            cdata[rc].id = 349;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"聖獣", u8"holy beast");
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 442;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 442;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5731,29 +5731,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 348;
+            cdata[rc].id = 348;
             SET_LEVEL(35);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"着ぐるみのバイト", u8"part time worker");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"pianist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 473;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 473;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -5808,38 +5808,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 347;
+            cdata[rc].id = 347;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_ai_heal(rc) = 404;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].ai_heal = 404;
             cdatan(0, rc) = lang(u8"ジュアの狂信者", u8"Jure fanatic");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 285;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 285;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 284;
+                cdata[rc].image = 284;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5897,40 +5897,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 271;
+            cdata[rc].id = 271;
             SET_LEVEL(8);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 50;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 50;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 635;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 635;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ならずもの", u8"rogue");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 183;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 183;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 184;
+                cdata[rc].image = 184;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -5988,39 +5988,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 335;
+            cdata[rc].id = 335;
             SET_LEVEL(8);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 5;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 5;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"娼婦", u8"prostitue");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 418;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 418;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 417;
+                cdata[rc].image = 417;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6078,39 +6078,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 337;
+            cdata[rc].id = 337;
             SET_LEVEL(3);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"囚人", u8"prisoner");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 419;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 419;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 420;
+                cdata[rc].image = 420;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6170,39 +6170,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 272;
+            cdata[rc].id = 272;
             SET_LEVEL(6);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"芸術家", u8"artist");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 185;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 185;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 186;
+                cdata[rc].image = 186;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6264,39 +6264,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 274;
+            cdata[rc].id = 274;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"貴族", u8"noble");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 189;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 189;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 190;
+                cdata[rc].image = 190;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6356,42 +6356,42 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 289;
+            cdata[rc].id = 289;
             SET_LEVEL(26);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_num(rc) = 4;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].ai_act_num = 4;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"魔術士ギルド", u8"mage guild member");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 195;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 195;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 194;
+                cdata[rc].image = 194;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6451,39 +6451,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 293;
+            cdata[rc].id = 293;
             SET_LEVEL(26);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"盗賊ギルド", u8"thief guild member");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 76;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 76;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 77;
+                cdata[rc].image = 77;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6543,39 +6543,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 295;
+            cdata[rc].id = 295;
             SET_LEVEL(26);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 90;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 90;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"戦士ギルド", u8"fighter guild member");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 78;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 78;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 79;
+                cdata[rc].image = 79;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6672,39 +6672,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 35;
+            cdata[rc].id = 35;
             SET_LEVEL(1);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"街の子供", u8"town child");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 104;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 104;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 357;
+                cdata[rc].image = 357;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6800,39 +6800,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 36;
+            cdata[rc].id = 36;
             SET_LEVEL(1);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"老人", u8"old person");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 106;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 106;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 107;
+                cdata[rc].image = 107;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6902,35 +6902,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 174;
+            cdata[rc].id = 174;
             SET_LEVEL(1);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"パンク", u8"punk");
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 112;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 112;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 27;
+                cdata[rc].image = 27;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -6957,27 +6957,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 10;
+            cdata[rc].id = 10;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"羊", u8"wild sheep");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"sheep";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7004,27 +7004,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 11;
+            cdata[rc].id = 11;
             SET_LEVEL(2);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"飛び蛙", u8"flying frog");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"frog";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7094,36 +7094,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 12;
+            cdata[rc].id = 12;
             SET_LEVEL(3);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ごろつき", u8"gangster");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 31;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 31;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 36;
+                cdata[rc].image = 36;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7155,27 +7155,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 13;
+            cdata[rc].id = 13;
             SET_LEVEL(3);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 5;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"コボルト", u8"kobold");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"kobolt";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7202,24 +7202,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 236;
+            cdata[rc].id = 236;
             SET_LEVEL(2);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 7;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"イーク", u8"yeek");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7246,24 +7246,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 238;
+            cdata[rc].id = 238;
             SET_LEVEL(6);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 7;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"イークの戦士", u8"yeek warrior");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 6000;
+            cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
         }
@@ -7290,27 +7290,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 241;
+            cdata[rc].id = 241;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 7;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -3;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"イークの射手", u8"yeek archer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 2000;
+            cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
         }
@@ -7337,28 +7337,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 240;
+            cdata[rc].id = 240;
             SET_LEVEL(9);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 7;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 410;
-            cdata_ai_act(rc, 2) = 418;
-            cdata_ai_act(rc, 3) = -3;
-            cdata_ai_act_sub(rc, 0) = 640;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 410;
+            cdata[rc].act[2] = 418;
+            cdata[rc].act[3] = -3;
+            cdata[rc].act[5] = 640;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"マスター・イーク", u8"master yeek");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 8000;
+            cdata[rc].image += 8000;
             cspecialeq = 0;
             return 0;
         }
@@ -7386,24 +7386,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 237;
+            cdata[rc].id = 237;
             SET_LEVEL(6);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 12;
-            cdata_ai_act(rc, 0) = 644;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = 644;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"カミカゼ・イーク", u8"kamikaze yeek");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -7463,31 +7463,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 244;
+            cdata[rc].id = 244;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 12;
-            cdata_ai_act(rc, 0) = 644;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = 644;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"地雷侍", u8"kamikaze samurai");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 385;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 385;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7515,29 +7515,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 245;
+            cdata[rc].id = 245;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 10;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 10;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 644;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = 644;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"爆弾岩", u8"bomb rock");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"rock";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 386;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 386;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7650,33 +7650,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 321;
+            cdata[rc].id = 321;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 644;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = 644;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ハードゲイ", u8"hard gay");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 411;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 411;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7735,37 +7735,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 242;
+            cdata[rc].id = 242;
             SET_LEVEL(14);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 7;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = -3;
-            cdata_ai_act(rc, 2) = 640;
-            cdata_ai_act(rc, 3) = 418;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_sub(rc, 1) = 645;
-            cdata_ai_act_num(rc) = 24;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_ai_heal(rc) = 402;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = -3;
+            cdata[rc].act[2] = 640;
+            cdata[rc].act[3] = 418;
+            cdata[rc].act[5] = 410;
+            cdata[rc].act[6] = 645;
+            cdata[rc].ai_act_num = 24;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].ai_heal = 402;
             cdatan(0, rc) = lang(u8"イークの首領『ルードルボ』", u8"yeek");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 381;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 381;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -7832,36 +7832,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 239;
+            cdata[rc].id = 239;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"温泉マニア", u8"citizen");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 379;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 379;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 380;
+                cdata[rc].image = 380;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7893,24 +7893,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 14;
+            cdata[rc].id = 14;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ムカデ", u8"centipede");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7937,26 +7937,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 15;
+            cdata[rc].id = 15;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act(rc, 1) = -3;
-            cdata_ai_act(rc, 2) = 649;
-            cdata_ai_act_num(rc) = 3;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[1] = -3;
+            cdata[rc].act[2] = 649;
+            cdata[rc].ai_act_num = 3;
             cdatan(0, rc) = lang(u8"きのこ", u8"mushroom");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -7989,27 +7989,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 283;
+            cdata[rc].id = 283;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act(rc, 1) = 650;
-            cdata_ai_act_num(rc) = 2;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[1] = 650;
+            cdata[rc].ai_act_num = 2;
             cdatan(0, rc) = lang(u8"胞子きのこ", u8"spore mushroom");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400150;
-            cdata_image(rc) = 399;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5400150;
+            cdata[rc].image = 399;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8037,27 +8037,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 284;
+            cdata[rc].id = 284;
             SET_LEVEL(21);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act(rc, 1) = 650;
-            cdata_ai_act_num(rc) = 2;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[1] = 650;
+            cdata[rc].ai_act_num = 2;
             cdatan(0, rc) = lang(u8"混沌きのこ", u8"chaos mushroom");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5900250;
-            cdata_image(rc) = 399;
-            cdata_image(rc) += 8000;
+            cdata[rc].element_of_unarmed_attack = 5900250;
+            cdata[rc].image = 399;
+            cdata[rc].image += 8000;
             cspecialeq = 0;
             return 0;
         }
@@ -8134,39 +8134,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 16;
+            cdata[rc].id = 16;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"市民", u8"citizen");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 136;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 136;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 137;
+                cdata[rc].image = 137;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8243,39 +8243,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 39;
+            cdata[rc].id = 39;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"市民", u8"citizen");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 134;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 134;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 135;
+                cdata[rc].image = 135;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8353,40 +8353,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 171;
+            cdata[rc].id = 171;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"サイバードームの住人", u8"citizen of cyber dome");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 128;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 128;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 129;
+                cdata[rc].image = 129;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8464,40 +8464,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 172;
+            cdata[rc].id = 172;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"サイバードームの住人", u8"citizen of cyber dome");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 127;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 127;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 131;
+                cdata[rc].image = 131;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8557,39 +8557,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 173;
+            cdata[rc].id = 173;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"セールスマン", u8"sales person");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 146;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 146;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 147;
+                cdata[rc].image = 147;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8644,37 +8644,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 71;
+            cdata[rc].id = 71;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"水夫", u8"sailor");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 120;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 120;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 121;
+                cdata[rc].image = 121;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8729,34 +8729,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 72;
+            cdata[rc].id = 72;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"船長", u8"captain");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 119;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 119;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -8840,35 +8840,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 79;
+            cdata[rc].id = 79;
             SET_LEVEL(25);
-            cdata_portrait(rc) = 54;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 54;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"パルミア王妃『スターシャ』",
                 u8"<Stersha> the queen of Palmia");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 117;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 117;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -8931,33 +8931,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 80;
+            cdata[rc].id = 80;
             SET_LEVEL(35);
-            cdata_portrait(rc) = 55;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 55;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"パルミア王『ジャビ』", u8"<Xabi> the king of Palmia");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 116;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 116;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -8985,24 +8985,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 17;
+            cdata[rc].id = 17;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 2;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"オーク", u8"orc");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -9029,27 +9029,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 281;
+            cdata[rc].id = 281;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"リザードマン", u8"lizard man");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lizardman";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9076,27 +9076,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 282;
+            cdata[rc].id = 282;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ミノタウロス", u8"minotaur");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9124,31 +9124,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 296;
+            cdata[rc].id = 296;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 420;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 415;
-            cdata_ai_act_sub(rc, 0) = 645;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 420;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 415;
+            cdata[rc].act[5] = 645;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"ミノタウロスの術士", u8"minotaur magician");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"priest";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 4000;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -9176,27 +9176,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 298;
+            cdata[rc].id = 298;
             SET_LEVEL(23);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ミノタウロスの闘士", u8"minotaur boxer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -9224,27 +9224,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 299;
+            cdata[rc].id = 299;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ミノタウロスの戦士", u8"minotaur king");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 8000;
+            cdata[rc].image += 8000;
             cspecialeq = 1;
             return 0;
         }
@@ -9280,30 +9280,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 300;
+            cdata[rc].id = 300;
             SET_LEVEL(31);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 5;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 5;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 647;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 647;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(
                 u8"ミノタウロスの王『ウンガガ』",
                 u8"<Ungaga> the minotaur king");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 10000;
+            cdata[rc].image += 10000;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -9342,25 +9342,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 251;
+            cdata[rc].id = 251;
             SET_LEVEL(14);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 2;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"トロール", u8"troll");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"troll";
             dbmode = 3;
             label_2297();
             sdata(50, rc) = 50;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9387,31 +9387,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 18;
+            cdata[rc].id = 18;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 4;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"エレアの戦士", u8"warrior of Elea");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            if (cdata_sex(rc) == 1)
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 34;
+                cdata[rc].image = 34;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9440,35 +9440,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 24;
+            cdata[rc].id = 24;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 4;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act_sub(rc, 0) = 416;
-            cdata_ai_act_sub(rc, 1) = 410;
-            cdata_ai_act_num(rc) = 22;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[5] = 416;
+            cdata[rc].act[6] = 410;
+            cdata[rc].ai_act_num = 22;
             cdatan(0, rc) = lang(u8"エレアの魔術士", u8"wizard of Elea");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"elea";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 47;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 47;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 42;
+                cdata[rc].image = 42;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9495,27 +9495,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 309;
+            cdata[rc].id = 309;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 90;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 90;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"阿修羅", u8"asura");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"asura";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -9547,27 +9547,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 310;
+            cdata[rc].id = 310;
             SET_LEVEL(26);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 90;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 90;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ミトラ", u8"mitra");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"asura";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 2000;
+            cdata[rc].image += 2000;
             cspecialeq = 1;
             return 0;
         }
@@ -9599,27 +9599,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 311;
+            cdata[rc].id = 311;
             SET_LEVEL(37);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 90;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 90;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ヴァルナ", u8"varuna");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"asura";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 1;
             return 0;
         }
@@ -9652,40 +9652,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 41;
+            cdata[rc].id = 41;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 414;
-            cdata_ai_act(rc, 1) = 415;
-            cdata_ai_act_sub(rc, 0) = 443;
-            cdata_ai_act_sub(rc, 1) = 447;
-            cdata_ai_act_sub(rc, 2) = 451;
-            cdata_ai_act_num(rc) = 32;
+            cdata[rc].act[0] = 414;
+            cdata[rc].act[1] = 415;
+            cdata[rc].act[5] = 443;
+            cdata[rc].act[6] = 447;
+            cdata[rc].act[7] = 451;
+            cdata[rc].ai_act_num = 32;
             cdatan(0, rc) = lang(u8"魔術士", u8"wizard");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 13;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 13;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 14;
+                cdata[rc].image = 14;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9713,36 +9713,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 75;
+            cdata[rc].id = 75;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"戦士", u8"warrior");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 21;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 21;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 20;
+                cdata[rc].image = 20;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9774,24 +9774,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 19;
+            cdata[rc].id = 19;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"マンドレイク", u8"mandrake");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9823,27 +9823,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 22;
+            cdata[rc].id = 22;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"かぶと虫", u8"beetle");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"beetle";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9870,27 +9870,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 20;
+            cdata[rc].id = 20;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 2;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"オークの戦士", u8"orc warrior");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -9919,28 +9919,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 25;
+            cdata[rc].id = 25;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 2;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) =
                 lang(u8"オークの隊長『ゴダ』", u8"<Goda> the captain of orc");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -9973,27 +9973,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 21;
+            cdata[rc].id = 21;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 9;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ゾンビ", u8"zombie");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -10020,24 +10020,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 42;
+            cdata[rc].id = 42;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"コウモリ", u8"bat");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bat";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -10064,21 +10064,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 43;
+            cdata[rc].id = 43;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 601;
-            cdata_ai_act_num(rc) = 2;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 601;
+            cdata[rc].ai_act_num = 2;
             cdatan(0, rc) = lang(u8"吸血コウモリ", u8"vampire bat");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bat";
             dbmode = 3;
             label_2297();
@@ -10086,7 +10086,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(56, rc) = 500;
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -10113,27 +10113,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 44;
+            cdata[rc].id = 44;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ドラゴンバット", u8"dragon bat");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bat";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 4000;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -10168,30 +10168,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 45;
+            cdata[rc].id = 45;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"火炎樹", u8"fire ent");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 5000200;
+            cdata[rc].element_of_unarmed_attack = 5000200;
             sdata(51, rc) = 50;
             sdata(50, rc) = 500;
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -10226,30 +10226,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 46;
+            cdata[rc].id = 46;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"氷結樹", u8"ice ent");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 5100200;
+            cdata[rc].element_of_unarmed_attack = 5100200;
             sdata(50, rc) = 50;
             sdata(51, rc) = 500;
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -10281,31 +10281,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 47;
+            cdata[rc].id = 47;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"リッチ", u8"lich");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -10337,32 +10337,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 48;
+            cdata[rc].id = 48;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act(rc, 4) = 450;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 15;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[4] = 450;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 15;
             cdatan(0, rc) = lang(u8"マスターリッチ", u8"master lich");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -10394,31 +10394,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 49;
+            cdata[rc].id = 49;
             SET_LEVEL(45);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"デミリッチ", u8"demi lich");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -10446,32 +10446,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 307;
+            cdata[rc].id = 307;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = -1;
-            cdata_ai_act(rc, 2) = 421;
-            cdata_ai_act(rc, 3) = 410;
-            cdata_ai_act_sub(rc, 0) = 646;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = -1;
+            cdata[rc].act[2] = 421;
+            cdata[rc].act[3] = 410;
+            cdata[rc].act[5] = 646;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"死刑執行人", u8"executioner");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 404;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 404;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -10506,31 +10506,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 308;
+            cdata[rc].id = 308;
             SET_LEVEL(35);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 421;
-            cdata_ai_act(rc, 2) = 410;
-            cdata_ai_act_sub(rc, 0) = 646;
-            cdata_ai_act_num(rc) = 13;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 421;
+            cdata[rc].act[2] = 410;
+            cdata[rc].act[5] = 646;
+            cdata[rc].ai_act_num = 13;
             cdatan(0, rc) = lang(u8"死神の使い", u8"messenger of death");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"lich";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 404;
-            cdata_image(rc) += 4000;
+            cdata[rc].image = 404;
+            cdata[rc].image += 4000;
             cspecialeq = 1;
             return 0;
         }
@@ -10562,27 +10562,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 50;
+            cdata[rc].id = 50;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"猟犬", u8"hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 6000;
+            cdata[rc].image += 6000;
             cspecialeq = 1;
             return 0;
         }
@@ -10614,21 +10614,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 51;
+            cdata[rc].id = 51;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 14;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ファイアハウンド", u8"fire hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10637,7 +10637,7 @@ int label_2654()
             label_2298();
             sdata(51, rc) = 50;
             sdata(50, rc) = 500;
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -10664,21 +10664,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 52;
+            cdata[rc].id = 52;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 15;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 603;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 603;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"アイスハウンド", u8"ice hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10687,7 +10687,7 @@ int label_2654()
             label_2298();
             sdata(50, rc) = 50;
             sdata(51, rc) = 500;
-            cdata_image(rc) += 12000;
+            cdata[rc].image += 12000;
             cspecialeq = 0;
             return 0;
         }
@@ -10715,21 +10715,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 53;
+            cdata[rc].id = 53;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 16;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 604;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 604;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ライトニングハウンド", u8"lightning hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10737,7 +10737,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(52, rc) = 500;
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -10764,21 +10764,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 54;
+            cdata[rc].id = 54;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 17;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 605;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 605;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ダークハウンド", u8"dark hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10786,7 +10786,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(53, rc) = 500;
-            cdata_image(rc) += 4000;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -10813,21 +10813,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 55;
+            cdata[rc].id = 55;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 18;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 611;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 611;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"幻惑ハウンド", u8"illusion hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10835,7 +10835,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(54, rc) = 500;
-            cdata_image(rc) += 10000;
+            cdata[rc].image += 10000;
             cspecialeq = 0;
             return 0;
         }
@@ -10862,21 +10862,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 56;
+            cdata[rc].id = 56;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 19;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 609;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 609;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"神経ハウンド", u8"nerve hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10884,7 +10884,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(58, rc) = 500;
-            cdata_image(rc) += 9000;
+            cdata[rc].image += 9000;
             cspecialeq = 0;
             return 0;
         }
@@ -10912,21 +10912,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 57;
+            cdata[rc].id = 57;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 20;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 610;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 610;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ポイズンハウンド", u8"poison hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10934,7 +10934,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(55, rc) = 500;
-            cdata_image(rc) += 2000;
+            cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
         }
@@ -10961,21 +10961,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 58;
+            cdata[rc].id = 58;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 21;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 607;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 607;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"轟音ハウンド", u8"sound hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -10983,7 +10983,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(57, rc) = 500;
-            cdata_image(rc) += 11000;
+            cdata[rc].image += 11000;
             cspecialeq = 0;
             return 0;
         }
@@ -11010,21 +11010,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 59;
+            cdata[rc].id = 59;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 22;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 608;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 608;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"地獄ハウンド", u8"nether hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -11032,7 +11032,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(56, rc) = 500;
-            cdata_image(rc) += 15000;
+            cdata[rc].image += 15000;
             cspecialeq = 0;
             return 0;
         }
@@ -11059,21 +11059,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 60;
+            cdata[rc].id = 60;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 12;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 12;
             creaturepack = 23;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 606;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 606;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"カオスハウンド", u8"chaos hound");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
@@ -11081,7 +11081,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(59, rc) = 500;
-            cdata_image(rc) += 18000;
+            cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
         }
@@ -11114,28 +11114,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 61;
+            cdata[rc].id = 61;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"巨大リス", u8"giant squirrel");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 204;
-            cdata_image(rc) += 6000;
+            cdata[rc].image = 204;
+            cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
         }
@@ -11168,28 +11168,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 62;
+            cdata[rc].id = 62;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"殺人リス", u8"killer squirrel");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 204;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 204;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -11221,27 +11221,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 63;
+            cdata[rc].id = 63;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 613;
-            cdata_ai_act_sub(rc, 0) = 447;
-            cdata_ai_act_sub(rc, 1) = 449;
-            cdata_ai_act_num(rc) = 22;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 613;
+            cdata[rc].act[5] = 447;
+            cdata[rc].act[6] = 449;
+            cdata[rc].ai_act_num = 22;
             cdatan(0, rc) = lang(u8"怨念", u8"grudge");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -11273,25 +11273,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 64;
+            cdata[rc].id = 64;
             SET_LEVEL(3);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 614;
-            cdata_ai_act_num(rc) = 2;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 614;
+            cdata[rc].ai_act_num = 2;
             cdatan(0, rc) = lang(u8"餓鬼", u8"hungry demon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 2000;
+            cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
         }
@@ -11319,29 +11319,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 312;
+            cdata[rc].id = 312;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 651;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 651;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"大食いトド", u8"hungry sea lion");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 406;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 406;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -11370,29 +11370,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 313;
+            cdata[rc].id = 313;
             SET_LEVEL(19);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 651;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 651;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"超大食いトド", u8"super hungry sea lion");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ent";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 406;
-            cdata_image(rc) += 16000;
+            cdata[rc].image = 406;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -11427,27 +11427,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 65;
+            cdata[rc].id = 65;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 421;
-            cdata_ai_act(rc, 2) = 604;
-            cdata_ai_act_num(rc) = 3;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 421;
+            cdata[rc].act[2] = 604;
+            cdata[rc].ai_act_num = 3;
             cdatan(0, rc) = lang(u8"放電雲", u8"electric cloud");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spirit";
             dbmode = 3;
             label_2297();
             sdata(52, rc) = 500;
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -11483,27 +11483,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 66;
+            cdata[rc].id = 66;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 433;
-            cdata_ai_act_num(rc) = 2;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 433;
+            cdata[rc].ai_act_num = 2;
             cdatan(0, rc) = lang(u8"混沌の塊", u8"chaos cloud");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spirit";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5900300;
+            cdata[rc].element_of_unarmed_attack = 5900300;
             sdata(59, rc) = 500;
-            cdata_image(rc) += 18000;
+            cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
         }
@@ -11540,30 +11540,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 67;
+            cdata[rc].id = 67;
             SET_LEVEL(2);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 15;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 15;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -3;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"フローティングアイ", u8"floating eye");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5800250;
+            cdata[rc].element_of_unarmed_attack = 5800250;
             sdata(54, rc) = 500;
             if (nerve != 0)
             {
                 sdata(58, rc) = 500;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -11599,34 +11599,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 315;
+            cdata[rc].id = 315;
             SET_LEVEL(14);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 15;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 15;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 632;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 632;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"カオスアイ", u8"chaos eye");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 5900400;
+            cdata[rc].element_of_unarmed_attack = 5900400;
             sdata(54, rc) = 500;
             if (nerve != 0)
             {
                 sdata(58, rc) = 500;
             }
-            cdata_image(rc) += 8000;
+            cdata[rc].image += 8000;
             cspecialeq = 0;
             return 0;
         }
@@ -11663,32 +11663,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 316;
+            cdata[rc].id = 316;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 15;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 15;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 636;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 636;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"マッドゲイズ", u8"mad gaze");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400300;
+            cdata[rc].element_of_unarmed_attack = 5400300;
             sdata(54, rc) = 500;
             if (nerve != 0)
             {
                 sdata(58, rc) = 500;
             }
-            cdata_image(rc) = 407;
-            cdata_image(rc) += 4000;
+            cdata[rc].image = 407;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -11725,35 +11725,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 314;
+            cdata[rc].id = 314;
             SET_LEVEL(29);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 15;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 15;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 652;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 652;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"デスゲイズ", u8"death gaze");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 5800450;
+            cdata[rc].element_of_unarmed_attack = 5800450;
             sdata(54, rc) = 500;
             if (nerve != 0)
             {
                 sdata(58, rc) = 500;
             }
-            cdata_image(rc) = 407;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 407;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -11780,21 +11780,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 68;
+            cdata[rc].id = 68;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ワイバーン", u8"wyvern");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"wyvern";
             dbmode = 3;
             label_2297();
@@ -11802,7 +11802,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -11830,31 +11830,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 78;
+            cdata[rc].id = 78;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 449;
-            cdata_ai_act_sub(rc, 1) = 447;
-            cdata_ai_act_sub(rc, 2) = 450;
-            cdata_ai_act_num(rc) = 31;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 449;
+            cdata[rc].act[6] = 447;
+            cdata[rc].act[7] = 450;
+            cdata[rc].ai_act_num = 31;
             cdatan(0, rc) = lang(u8"パペット", u8"puppet");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 209;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 209;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -11881,25 +11881,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 81;
+            cdata[rc].id = 81;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 615;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 615;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ワスプ", u8"wasp");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"wasp";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -11926,25 +11926,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 82;
+            cdata[rc].id = 82;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 616;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 616;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"レッドワスプ", u8"red wasp");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"wasp";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -11977,27 +11977,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 83;
+            cdata[rc].id = 83;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 85;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 85;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"サイクロプス", u8"cyclops");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -12045,28 +12045,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 84;
+            cdata[rc].id = 84;
             SET_LEVEL(40);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 85;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 85;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"タイタン", u8"titan");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -12099,28 +12099,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 85;
+            cdata[rc].id = 85;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = -1;
-            cdata_ai_act(rc, 2) = 414;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_sub(rc, 1) = 450;
-            cdata_ai_act_num(rc) = 23;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = -1;
+            cdata[rc].act[2] = 414;
+            cdata[rc].act[5] = 410;
+            cdata[rc].act[6] = 450;
+            cdata[rc].ai_act_num = 23;
             cdatan(0, rc) = lang(u8"インプ", u8"imp");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"imp";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -12153,27 +12153,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 86;
+            cdata[rc].id = 86;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 415;
-            cdata_ai_act(rc, 2) = 414;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 13;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 415;
+            cdata[rc].act[2] = 414;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 13;
             cdatan(0, rc) = lang(u8"冥界の使い", u8"nether imp");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"imp";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 4000;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -12206,27 +12206,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 87;
+            cdata[rc].id = 87;
             SET_LEVEL(27);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 417;
-            cdata_ai_act(rc, 2) = 414;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 13;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 417;
+            cdata[rc].act[2] = 414;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 13;
             cdatan(0, rc) = lang(u8"カオスインプ", u8"chaos imp");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"imp";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 18000;
+            cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
         }
@@ -12259,27 +12259,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 88;
+            cdata[rc].id = 88;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 25;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 25;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 620;
-            cdata_ai_act_sub(rc, 1) = 613;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 620;
+            cdata[rc].act[6] = 613;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(u8"亡者の手", u8"hand of the dead");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hand";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5300080;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5300080;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -12312,26 +12312,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 89;
+            cdata[rc].id = 89;
             SET_LEVEL(11);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 25;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 25;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 620;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 620;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"混沌の手", u8"hand of the chaos");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hand";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5900180;
-            cdata_image(rc) += 18000;
+            cdata[rc].element_of_unarmed_attack = 5900180;
+            cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
         }
@@ -12365,29 +12365,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 90;
+            cdata[rc].id = 90;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 25;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 25;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = 620;
-            cdata_ai_act_sub(rc, 1) = 449;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = 620;
+            cdata[rc].act[6] = 449;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(u8"殺人鬼の手", u8"hand of the murderer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hand";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 1;
             return 0;
         }
@@ -12426,28 +12426,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 91;
+            cdata[rc].id = 91;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 617;
-            cdata_ai_act(rc, 2) = 613;
-            cdata_ai_act_num(rc) = 3;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 617;
+            cdata[rc].act[2] = 613;
+            cdata[rc].ai_act_num = 3;
             cdatan(0, rc) = lang(u8"亡霊", u8"ghost");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5600080;
-            cdata_image(rc) = 214;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5600080;
+            cdata[rc].image = 214;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -12481,30 +12481,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 92;
+            cdata[rc].id = 92;
             SET_LEVEL(13);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 618;
-            cdata_ai_act(rc, 1) = 618;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 603;
-            cdata_ai_act_num(rc) = 4;
+            cdata[rc].act[0] = 618;
+            cdata[rc].act[1] = 618;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 603;
+            cdata[rc].ai_act_num = 4;
             cdatan(0, rc) = lang(u8"ニンフ", u8"nymph");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400200;
+            cdata[rc].element_of_unarmed_attack = 5400200;
             sdata(51, rc) = 500;
-            cdata_image(rc) = 214;
-            cdata_image(rc) += 5000;
+            cdata[rc].image = 214;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -12532,26 +12532,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 93;
+            cdata[rc].id = 93;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 20;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 20;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -3;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"人食い花", u8"man eater flower");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400200;
-            cdata_image(rc) = 215;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5400200;
+            cdata[rc].image = 215;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -12579,26 +12579,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 94;
+            cdata[rc].id = 94;
             SET_LEVEL(19);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 20;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 20;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -3;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"カオスフラワー", u8"chaos flower");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5900250;
-            cdata_image(rc) = 215;
-            cdata_image(rc) += 10000;
+            cdata[rc].element_of_unarmed_attack = 5900250;
+            cdata[rc].image = 215;
+            cdata[rc].image += 10000;
             cspecialeq = 0;
             return 0;
         }
@@ -12634,25 +12634,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 95;
+            cdata[rc].id = 95;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 615;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 615;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"コブラ", u8"cobra");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"snake";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -12688,25 +12688,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 96;
+            cdata[rc].id = 96;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 615;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 615;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"キングコブラ", u8"king cobra");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"snake";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -12733,26 +12733,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 97;
+            cdata[rc].id = 97;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ファイアドレイク", u8"fire drake");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"drake";
             dbmode = 3;
             label_2297();
             sdata(50, rc) = 500;
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -12779,26 +12779,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 98;
+            cdata[rc].id = 98;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 603;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 603;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"アイスドレイク", u8"ice drake");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"drake";
             dbmode = 3;
             label_2297();
             sdata(51, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -12831,27 +12831,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 99;
+            cdata[rc].id = 99;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 13;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 617;
-            cdata_ai_act_sub(rc, 1) = 613;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 617;
+            cdata[rc].act[6] = 613;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(u8"レッサーマミー", u8"lesser mummy");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 219;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 219;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -12884,30 +12884,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 100;
+            cdata[rc].id = 100;
             SET_LEVEL(14);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 13;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 617;
-            cdata_ai_act_sub(rc, 1) = 613;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 617;
+            cdata[rc].act[6] = 613;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(u8"マミー", u8"mummy");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 219;
-            cdata_image(rc) += 10000;
+            cdata[rc].image = 219;
+            cdata[rc].image += 10000;
             cspecialeq = 0;
             return 0;
         }
@@ -12941,30 +12941,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 101;
+            cdata[rc].id = 101;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 13;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 617;
-            cdata_ai_act_sub(rc, 1) = 613;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 617;
+            cdata[rc].act[6] = 613;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(u8"グレイターマミー", u8"greater mummy");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 219;
-            cdata_image(rc) += 5000;
+            cdata[rc].image = 219;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -13001,32 +13001,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 257;
+            cdata[rc].id = 257;
             SET_LEVEL(28);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 13;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 646;
-            cdata_ai_act_sub(rc, 1) = 613;
-            cdata_ai_act_num(rc) = 21;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 646;
+            cdata[rc].act[6] = 613;
+            cdata[rc].ai_act_num = 21;
             cdatan(0, rc) = lang(
                 u8"ピラミッドの主『ツェン』",
                 u8"<Tuwen> the master of the pyramid");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 219;
-            cdata_image(rc) += 8000;
+            cdata[rc].image = 219;
+            cdata[rc].image += 8000;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -13060,29 +13060,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 254;
+            cdata[rc].id = 254;
             SET_LEVEL(19);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 13;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = -1;
-            cdata_ai_act(rc, 2) = 638;
-            cdata_ai_act(rc, 3) = 449;
-            cdata_ai_act_sub(rc, 0) = 645;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = -1;
+            cdata[rc].act[2] = 638;
+            cdata[rc].act[3] = 449;
+            cdata[rc].act[5] = 645;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"古代の棺", u8"ancient coffin");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 395;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 395;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -13109,24 +13109,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 102;
+            cdata[rc].id = 102;
             SET_LEVEL(2);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 1;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ゴブリン", u8"goblin");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -13154,27 +13154,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 103;
+            cdata[rc].id = 103;
             SET_LEVEL(6);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 1;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ゴブリンの戦士", u8"goblin warrior");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -13202,31 +13202,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 104;
+            cdata[rc].id = 104;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 85;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 85;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 1;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 420;
-            cdata_ai_act_sub(rc, 0) = 425;
-            cdata_ai_act_sub(rc, 1) = 447;
-            cdata_ai_act_num(rc) = 22;
-            cdata_ai_heal(rc) = 400;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 420;
+            cdata[rc].act[5] = 425;
+            cdata[rc].act[6] = 447;
+            cdata[rc].ai_act_num = 22;
+            cdata[rc].ai_heal = 400;
             cdatan(0, rc) = lang(u8"ゴブリンシャーマン", u8"goblin shaman");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 18000;
+            cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
         }
@@ -13254,28 +13254,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 105;
+            cdata[rc].id = 105;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 1;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act_num(rc) = 2;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].ai_act_num = 2;
             cdatan(0, rc) = lang(u8"ゴブリンの魔法使い", u8"goblin wizard");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 4000;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -13303,22 +13303,22 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 106;
+            cdata[rc].id = 106;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 420;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 12;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 420;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 12;
             cdatan(0, rc) = lang(u8"赤の洗礼者", u8"red baptist");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
@@ -13326,8 +13326,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) = 221;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 221;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -13355,22 +13355,22 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 107;
+            cdata[rc].id = 107;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 419;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 12;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 419;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 12;
             cdatan(0, rc) = lang(u8"青の洗礼者", u8"blue baptist");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
@@ -13378,8 +13378,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(51, rc) = 500;
-            cdata_image(rc) = 221;
-            cdata_image(rc) += 4000;
+            cdata[rc].image = 221;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -13426,30 +13426,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 108;
+            cdata[rc].id = 108;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 11;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ブラウンベア", u8"brown bear");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bear";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -13476,24 +13476,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 109;
+            cdata[rc].id = 109;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 11;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"グリズリー", u8"grizzly");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bear";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -13526,25 +13526,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 344;
+            cdata[rc].id = 344;
             SET_LEVEL(28);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 11;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"マンモス", u8"Mammoth");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bear";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 439;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 439;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -13577,27 +13577,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 110;
+            cdata[rc].id = 110;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"リビングアーマー", u8"living armor");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -13629,27 +13629,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 111;
+            cdata[rc].id = 111;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"鉄塊", u8"steel mass");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -13682,27 +13682,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 112;
+            cdata[rc].id = 112;
             SET_LEVEL(35);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ゴールデンアーマー", u8"golden armor");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -13734,28 +13734,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 113;
+            cdata[rc].id = 113;
             SET_LEVEL(45);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 613;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 613;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"デスアーマー", u8"death armor");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"armor";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -13782,27 +13782,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 114;
+            cdata[rc].id = 114;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"メデューサ", u8"medusa");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -13829,27 +13829,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 115;
+            cdata[rc].id = 115;
             SET_LEVEL(33);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"エウリュアレ", u8"euryale");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -13876,27 +13876,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 116;
+            cdata[rc].id = 116;
             SET_LEVEL(44);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ステンノ", u8"stheno");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -13929,28 +13929,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 117;
+            cdata[rc].id = 117;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 443;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 443;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"恋のキューピット", u8"cupid of love");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cupid";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -13978,28 +13978,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 118;
+            cdata[rc].id = 118;
             SET_LEVEL(9);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 447;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 447;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"レッサーファントム", u8"lesser phantom");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"phantom";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14027,27 +14027,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 248;
+            cdata[rc].id = 248;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ティラノサウルス", u8"Tyrannosaurus");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dinosaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14074,24 +14074,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 119;
+            cdata[rc].id = 119;
             SET_LEVEL(13);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ハーピー", u8"harpy");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"harpy";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14119,28 +14119,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 120;
+            cdata[rc].id = 120;
             SET_LEVEL(32);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 612;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 612;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"グリーンドラゴン", u8"green dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 19000;
+            cdata[rc].image += 19000;
             cspecialeq = 0;
             return 0;
         }
@@ -14167,21 +14167,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 121;
+            cdata[rc].id = 121;
             SET_LEVEL(40);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"レッドドラゴン", u8"red dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
@@ -14189,7 +14189,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -14217,21 +14217,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 122;
+            cdata[rc].id = 122;
             SET_LEVEL(40);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 603;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 603;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ホワイトドラゴン", u8"white dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
@@ -14239,7 +14239,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(51, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14266,21 +14266,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 123;
+            cdata[rc].id = 123;
             SET_LEVEL(40);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 604;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 604;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"エレキドラゴン", u8"elec dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
@@ -14288,7 +14288,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(52, rc) = 500;
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -14315,21 +14315,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 124;
+            cdata[rc].id = 124;
             SET_LEVEL(45);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 608;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 608;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"冥界ドラゴン", u8"nether dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
@@ -14337,7 +14337,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(56, rc) = 500;
-            cdata_image(rc) += 4000;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -14364,21 +14364,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 125;
+            cdata[rc].id = 125;
             SET_LEVEL(50);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 606;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 606;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"カオスドラゴン", u8"chaos dragon");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
             dbmode = 3;
             label_2297();
@@ -14386,7 +14386,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(59, rc) = 500;
-            cdata_image(rc) += 18000;
+            cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
         }
@@ -14413,21 +14413,21 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 126;
+            cdata[rc].id = 126;
             SET_LEVEL(23);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ケルベロス", u8"cerberus");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cerberus";
             dbmode = 3;
             label_2297();
@@ -14435,7 +14435,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14472,27 +14472,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 255;
+            cdata[rc].id = 255;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"サソリ", u8"scorpion");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5500150;
+            cdata[rc].element_of_unarmed_attack = 5500150;
             sdata(55, rc) = 500;
-            cdata_image(rc) = 396;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 396;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14529,27 +14529,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 256;
+            cdata[rc].id = 256;
             SET_LEVEL(24);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ダイオウサソリ", u8"king scorpion");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5500350;
+            cdata[rc].element_of_unarmed_attack = 5500350;
             sdata(55, rc) = 500;
-            cdata_image(rc) = 396;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 396;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -14586,27 +14586,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 127;
+            cdata[rc].id = 127;
             SET_LEVEL(3);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 6;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 436;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 436;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"まだら蜘蛛", u8"spider");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
             label_2297();
             sdata(55, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -14652,28 +14652,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 128;
+            cdata[rc].id = 128;
             SET_LEVEL(11);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 6;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 436;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 436;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ブラックウィドウ", u8"black widow");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5500150;
+            cdata[rc].element_of_unarmed_attack = 5500150;
             sdata(55, rc) = 500;
-            cdata_image(rc) += 19000;
+            cdata[rc].image += 19000;
             cspecialeq = 0;
             return 0;
         }
@@ -14719,28 +14719,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 129;
+            cdata[rc].id = 129;
             SET_LEVEL(21);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 6;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 436;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 436;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"パラライザー", u8"paralyzer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5800150;
+            cdata[rc].element_of_unarmed_attack = 5800150;
             sdata(55, rc) = 500;
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -14786,28 +14786,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 130;
+            cdata[rc].id = 130;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 6;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 436;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 436;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"タランチュラ", u8"tarantula");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5500200;
+            cdata[rc].element_of_unarmed_attack = 5500200;
             sdata(55, rc) = 500;
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -14844,28 +14844,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 131;
+            cdata[rc].id = 131;
             SET_LEVEL(28);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 6;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 436;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 436;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"吸血蜘蛛", u8"blood spider");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"spider";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5600100;
+            cdata[rc].element_of_unarmed_attack = 5600100;
             sdata(55, rc) = 500;
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -14907,25 +14907,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 132;
+            cdata[rc].id = 132;
             SET_LEVEL(13);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ウッドゴーレム", u8"wooden golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 6000;
+            cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
         }
@@ -14967,25 +14967,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 133;
+            cdata[rc].id = 133;
             SET_LEVEL(19);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ストーンゴーレム", u8"stone golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15028,28 +15028,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 134;
+            cdata[rc].id = 134;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"スティールゴーレム", u8"steel golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 15000;
+            cdata[rc].image += 15000;
             cspecialeq = 0;
             return 0;
         }
@@ -15092,28 +15092,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 135;
+            cdata[rc].id = 135;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ゴールドゴーレム", u8"golden golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -15156,28 +15156,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 136;
+            cdata[rc].id = 136;
             SET_LEVEL(35);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ミスリルゴーレム", u8"mithril golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -15219,28 +15219,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 137;
+            cdata[rc].id = 137;
             SET_LEVEL(40);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"スカイゴーレム", u8"sky golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 9000;
+            cdata[rc].image += 9000;
             cspecialeq = 0;
             return 0;
         }
@@ -15283,29 +15283,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 138;
+            cdata[rc].id = 138;
             SET_LEVEL(50);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"アダマンタイトゴーレム", u8"adamantium golem");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"golem";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 2000;
+            cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
         }
@@ -15341,26 +15341,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 147;
+            cdata[rc].id = 147;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"火蟹", u8"fire crab");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"crab";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5000150;
+            cdata[rc].element_of_unarmed_attack = 5000150;
             sdata(50, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15396,27 +15396,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 148;
+            cdata[rc].id = 148;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"火炎ムカデ", u8"fire centipede");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5000200;
+            cdata[rc].element_of_unarmed_attack = 5000200;
             sdata(50, rc) = 500;
-            cdata_image(rc) = 239;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 239;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15444,23 +15444,23 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 149;
+            cdata[rc].id = 149;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 85;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 85;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 642;
-            cdata_ai_act_sub(rc, 1) = 450;
-            cdata_ai_act_num(rc) = 21;
-            cdata_ai_heal(rc) = 400;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 642;
+            cdata[rc].act[6] = 450;
+            cdata[rc].ai_act_num = 21;
+            cdata[rc].ai_heal = 400;
             cdatan(0, rc) = lang(u8"炎の信仰者", u8"cultist of fire");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
             dbmode = 3;
             label_2297();
@@ -15468,8 +15468,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(50, rc) = 500;
-            cdata_image(rc) = 240;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 240;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15496,27 +15496,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 150;
+            cdata[rc].id = 150;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 9;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"骸骨戦士", u8"skeleton warrior");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"skeleton";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15544,27 +15544,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 151;
+            cdata[rc].id = 151;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 9;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"骸骨狂戦士", u8"skeleton berserker");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"skeleton";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 3000;
+            cdata[rc].image += 3000;
             cspecialeq = 1;
             return 0;
         }
@@ -15618,29 +15618,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 152;
+            cdata[rc].id = 152;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 9;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 613;
-            cdata_ai_act_num(rc) = 2;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 613;
+            cdata[rc].ai_act_num = 2;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"闇の宣教師", u8"missionary of darkness");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400150;
-            cdata_image(rc) = 243;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5400150;
+            cdata[rc].image = 243;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15672,27 +15672,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 153;
+            cdata[rc].id = 153;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"＜ポーン＞", u8"<Pawn>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15725,28 +15725,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 154;
+            cdata[rc].id = 154;
             SET_LEVEL(16);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"＜ルーク＞", u8"<Rook>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 245;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 245;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15779,31 +15779,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 155;
+            cdata[rc].id = 155;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_sub(rc, 1) = 447;
-            cdata_ai_act_num(rc) = 22;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[5] = 410;
+            cdata[rc].act[6] = 447;
+            cdata[rc].ai_act_num = 22;
             cdatan(0, rc) = lang(u8"＜ビショップ＞", u8"<Bishop>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 246;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 246;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15836,28 +15836,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 156;
+            cdata[rc].id = 156;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"＜ナイト＞", u8"<Knight>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 247;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 247;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -15895,31 +15895,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 157;
+            cdata[rc].id = 157;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 415;
-            cdata_ai_act(rc, 2) = 414;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_num(rc) = 13;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 415;
+            cdata[rc].act[2] = 414;
+            cdata[rc].act[5] = 410;
+            cdata[rc].ai_act_num = 13;
             cdatan(0, rc) = lang(u8"＜クィーン＞", u8"<Queen>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 248;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 248;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -15952,29 +15952,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 158;
+            cdata[rc].id = 158;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 641;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 641;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"＜キング＞", u8"<King>");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"piece";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 249;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 249;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16025,38 +16025,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 159;
+            cdata[rc].id = 159;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 8;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"傭兵戦士", u8"mercenary warrior");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 159;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 159;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 159;
+                cdata[rc].image = 159;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16107,38 +16107,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 160;
+            cdata[rc].id = 160;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 8;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"傭兵射手", u8"mercenary archer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 57;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 57;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 57;
+                cdata[rc].image = 57;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16189,39 +16189,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 161;
+            cdata[rc].id = 161;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 8;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act_num(rc) = 2;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].ai_act_num = 2;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"傭兵魔術士", u8"mercenary wizard");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 100;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 100;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 100;
+                cdata[rc].image = 100;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16285,40 +16285,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 302;
+            cdata[rc].id = 302;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 4;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 4;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 647;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 647;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"盗賊団の頭領", u8"rogue boss");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 150;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 150;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 150;
+                cdata[rc].image = 150;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -16383,39 +16383,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 303;
+            cdata[rc].id = 303;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"盗賊団の用心棒", u8"rogue warrior");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 31;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 31;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 31;
+                cdata[rc].image = 31;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -16484,39 +16484,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 304;
+            cdata[rc].id = 304;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -2;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -2;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"盗賊団の殺し屋", u8"rogue archer");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 158;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 158;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 158;
+                cdata[rc].image = 158;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16580,42 +16580,42 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 305;
+            cdata[rc].id = 305;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 420;
-            cdata_ai_act_sub(rc, 1) = 414;
-            cdata_ai_act_sub(rc, 2) = 447;
-            cdata_ai_act_num(rc) = 31;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 420;
+            cdata[rc].act[6] = 414;
+            cdata[rc].act[7] = 447;
+            cdata[rc].ai_act_num = 31;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"盗賊団の術士", u8"rogue wizard");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"priest";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 157;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 157;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 157;
+                cdata[rc].image = 157;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16678,32 +16678,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 162;
+            cdata[rc].id = 162;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"イェルス機械兵", u8"Yerles machine infantry");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 250;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 250;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -16769,32 +16769,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 234;
+            cdata[rc].id = 234;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"イェルスエリート機械兵", u8"Yerles elite machine infantry");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 250;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 250;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -16877,34 +16877,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 231;
+            cdata[rc].id = 231;
             SET_LEVEL(45);
-            cdata_portrait(rc) = 33;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 33;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"辺境の勇士『ギルバート大佐』", u8"<Gilbert> the carnel");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 370;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 370;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -16934,29 +16934,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 232;
+            cdata[rc].id = 232;
             SET_LEVEL(17);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 4;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 4;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -2;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -2;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) =
                 lang(u8"イェルス自走砲", u8"yerles self-propelled gun");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 373;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 373;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -17021,31 +17021,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 233;
+            cdata[rc].id = 233;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 95;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 95;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ジューア歩兵", u8"juere infantry");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 377;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 377;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -17111,31 +17111,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 235;
+            cdata[rc].id = 235;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ジューア剣闘士", u8"juere swordman");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 377;
-            cdata_image(rc) += 4000;
+            cdata[rc].image = 377;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -17163,28 +17163,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 163;
+            cdata[rc].id = 163;
             SET_LEVEL(9);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 25;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 25;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ロックスロアー", u8"rock thrower");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 251;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 251;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -17313,32 +17313,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 164;
+            cdata[rc].id = 164;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"猫", u8"cat");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -17463,33 +17463,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 246;
+            cdata[rc].id = 246;
             SET_LEVEL(3);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"シルバーキャット", u8"silver cat");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 387;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 387;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -17590,33 +17590,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 332;
+            cdata[rc].id = 332;
             SET_LEVEL(9);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"迷子の子猫", u8"stray cat");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 387;
-            cdata_image(rc) += 6000;
+            cdata[rc].image = 387;
+            cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
         }
@@ -17700,32 +17700,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 229;
+            cdata[rc].id = 229;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 10;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ライオン", u8"lion");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 368;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 368;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -17804,34 +17804,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 230;
+            cdata[rc].id = 230;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 639;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 639;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"猫使い『ケシー』", u8"<Cacy> the cat tamer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"catgod";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 369;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 369;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -17918,34 +17918,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 228;
+            cdata[rc].id = 228;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 436;
-            cdata_ai_act_sub(rc, 1) = 638;
-            cdata_ai_act_num(rc) = 21;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 436;
+            cdata[rc].act[6] = 638;
+            cdata[rc].ai_act_num = 21;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"カーバンクル", u8"carbuncle");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 367;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 367;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -18002,30 +18002,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 165;
+            cdata[rc].id = 165;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 10;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"犬", u8"dog");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dog";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -18101,29 +18101,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 225;
+            cdata[rc].id = 225;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"子犬の『ポピー』", u8"<Poppy> the little dog");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dog";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 364;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 364;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -18214,30 +18214,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 226;
+            cdata[rc].id = 226;
             SET_LEVEL(4);
-            cdata_portrait(rc) = 16;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 16;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"犬好きの少女『リリアン』", u8"<Rilian> the dog lover");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 365;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 365;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -18308,29 +18308,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 227;
+            cdata[rc].id = 227;
             SET_LEVEL(5);
-            cdata_portrait(rc) = 16;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 16;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"猫嫌いの『タム』", u8"<Tam> the cat hater");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 366;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 366;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -18410,38 +18410,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 166;
+            cdata[rc].id = 166;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"少女", u8"little girl");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 4;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 4;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 4;
+                cdata[rc].image = 4;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -18478,25 +18478,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 167;
+            cdata[rc].id = 167;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ネズミ", u8"rat");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"rat";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 6000;
+            cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
         }
@@ -18528,27 +18528,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 168;
+            cdata[rc].id = 168;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"やどかり", u8"hermit crab");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"shell";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -18606,30 +18606,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 170;
+            cdata[rc].id = 170;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"大道芸人", u8"public performer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 258;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 258;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -18684,28 +18684,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 175;
+            cdata[rc].id = 175;
             SET_LEVEL(80);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"猫の女王『フリージア』", u8"<Frisia> the cat queen");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"catgod";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 348;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 348;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -18720,13 +18720,13 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「" + _onii(cdata_sex(0)) + u8"ちゃんー」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん！」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃ〜ん」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃんっ」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん？」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"〜ちゃん」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん♪」");
+                txt(u8"「" + _onii(cdata[0].sex) + u8"ちゃんー」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん！」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃ〜ん」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃんっ」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん？」",
+                    u8"「" + _onii(cdata[0].sex) + u8"〜ちゃん」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん♪」");
                 return 1;
             }
         }
@@ -18746,10 +18746,10 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえり、" + _onii(cdata_sex(0)) + u8"ちゃん！」",
-                    u8"「おかえりなさーい、" + _onii(cdata_sex(0))
+                txt(u8"「おかえり、" + _onii(cdata[0].sex) + u8"ちゃん！」",
+                    u8"「おかえりなさーい、" + _onii(cdata[0].sex)
                         + u8"ちゃん♪」",
-                    u8"「待ってたよ、" + _onii(cdata_sex(0)) + u8"ちゃん」");
+                    u8"「待ってたよ、" + _onii(cdata[0].sex) + u8"ちゃん」");
                 return 1;
             }
         }
@@ -18785,35 +18785,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 176;
+            cdata[rc].id = 176;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"妹", u8"younger sister");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 105;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 105;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -18827,13 +18827,13 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「" + _onii(cdata_sex(0)) + u8"ちゃんー」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん！」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃ〜ん」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃんっ」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん？」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"〜ちゃん」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん♪」");
+                txt(u8"「" + _onii(cdata[0].sex) + u8"ちゃんー」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん！」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃ〜ん」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃんっ」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん？」",
+                    u8"「" + _onii(cdata[0].sex) + u8"〜ちゃん」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん♪」");
                 return 1;
             }
         }
@@ -18853,10 +18853,10 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえり、" + _onii(cdata_sex(0)) + u8"ちゃん！」",
-                    u8"「おかえりなさーい、" + _onii(cdata_sex(0))
+                txt(u8"「おかえり、" + _onii(cdata[0].sex) + u8"ちゃん！」",
+                    u8"「おかえりなさーい、" + _onii(cdata[0].sex)
                         + u8"ちゃん♪」",
-                    u8"「待ってたよ、" + _onii(cdata_sex(0)) + u8"ちゃん」");
+                    u8"「待ってたよ、" + _onii(cdata[0].sex) + u8"ちゃん」");
                 return 1;
             }
         }
@@ -18892,36 +18892,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 249;
+            cdata[rc].id = 249;
             SET_LEVEL(50);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 100;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 100;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 643;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 643;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"妹", u8"younger sister");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 105;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 105;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -18935,13 +18935,13 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「" + _onii(cdata_sex(0)) + u8"ちゃんー」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん！」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃ〜ん」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃんっ」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん？」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"〜ちゃん」",
-                    u8"「" + _onii(cdata_sex(0)) + u8"ちゃん♪」");
+                txt(u8"「" + _onii(cdata[0].sex) + u8"ちゃんー」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん！」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃ〜ん」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃんっ」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん？」",
+                    u8"「" + _onii(cdata[0].sex) + u8"〜ちゃん」",
+                    u8"「" + _onii(cdata[0].sex) + u8"ちゃん♪」");
                 return 1;
             }
         }
@@ -18961,10 +18961,10 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえりにゃ、" + _onii(cdata_sex(0)) + u8"ちゃん！」",
-                    u8"「おかえりなさいにゃー、" + _onii(cdata_sex(0))
+                txt(u8"「おかえりにゃ、" + _onii(cdata[0].sex) + u8"ちゃん！」",
+                    u8"「おかえりなさいにゃー、" + _onii(cdata[0].sex)
                         + u8"ちゃん♪」",
-                    u8"「待ってたにゃ、" + _onii(cdata_sex(0)) + u8"ちゃん」");
+                    u8"「待ってたにゃ、" + _onii(cdata[0].sex) + u8"ちゃん」");
                 return 1;
             }
         }
@@ -19000,34 +19000,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 210;
+            cdata[rc].id = 210;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"妹猫", u8"younger cat sister");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"catsister";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19088,38 +19088,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 211;
+            cdata[rc].id = 211;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = -9998;
-            cdata_ai_act_sub(rc, 1) = 449;
-            cdata_ai_act_sub(rc, 2) = 447;
-            cdata_ai_act_num(rc) = 31;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_ai_heal(rc) = 404;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = -9998;
+            cdata[rc].act[6] = 449;
+            cdata[rc].act[7] = 447;
+            cdata[rc].ai_act_num = 31;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].ai_heal = 404;
             cdatan(0, rc) = lang(u8"嬢", u8"young lady");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 355;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 355;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19171,35 +19171,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 177;
+            cdata[rc].id = 177;
             SET_LEVEL(80);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 4;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 4;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -2;
-            cdata_ai_act(rc, 1) = -1;
-            cdata_ai_act(rc, 2) = -1;
-            cdata_ai_act_sub(rc, 0) = 647;
-            cdata_ai_act_num(rc) = 13;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -2;
+            cdata[rc].act[1] = -1;
+            cdata[rc].act[2] = -1;
+            cdata[rc].act[5] = 647;
+            cdata[rc].ai_act_num = 13;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"ゼイレン究極破壊兵器『ウティマ』",
                 u8"<Utima> the destroyer of Xeren");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machinegod";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 349;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 349;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -19264,37 +19264,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 178;
+            cdata[rc].id = 178;
             SET_LEVEL(80);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 414;
-            cdata_ai_act(rc, 2) = 419;
-            cdata_ai_act(rc, 3) = 422;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_sub(rc, 1) = 443;
-            cdata_ai_act_num(rc) = 24;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 414;
+            cdata[rc].act[2] = 419;
+            cdata[rc].act[3] = 422;
+            cdata[rc].act[5] = 410;
+            cdata[rc].act[6] = 443;
+            cdata[rc].ai_act_num = 24;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"不浄なる者『アズラシズル』", u8"<Azzrssil> the impure");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"undeadgod";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 339;
-            cdata_image(rc) += 3000;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 339;
+            cdata[rc].image += 3000;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -19327,29 +19327,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 179;
+            cdata[rc].id = 179;
             SET_LEVEL(35);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(
                 u8"ペットアリーナの主催者『ニノ』", u8"master of pet arena");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 350;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 350;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19414,31 +19414,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 208;
+            cdata[rc].id = 208;
             SET_LEVEL(45);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"伝説の職人『ガロク』", u8"<Garokk> the legendary smith");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dwarf";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 352;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 352;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -19495,31 +19495,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 209;
+            cdata[rc].id = 209;
             SET_LEVEL(45);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"伝説の職人『ミラル』", u8"<Miral> the legendary smith");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dwarf";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 353;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 353;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -19596,28 +19596,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 180;
+            cdata[rc].id = 180;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ツインテール", u8"twintail");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"cat";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 259;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 259;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19669,26 +19669,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 181;
+            cdata[rc].id = 181;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"銀狼", u8"silver wolf");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"hound";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 260;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 260;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19746,34 +19746,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 182;
+            cdata[rc].id = 182;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 405;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = 405;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"白衣のナース", u8"nurse");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 208;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 208;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19848,36 +19848,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 183;
+            cdata[rc].id = 183;
             SET_LEVEL(15);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"大富豪", u8"rich person");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 71;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 71;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 70;
+                cdata[rc].image = 70;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -19954,36 +19954,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 184;
+            cdata[rc].id = 184;
             SET_LEVEL(9);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"貴族の子供", u8"noble child");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 73;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 73;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 72;
+                cdata[rc].image = 72;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20056,39 +20056,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 185;
+            cdata[rc].id = 185;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"観光客", u8"tourist");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 122;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 122;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 129;
+                cdata[rc].image = 129;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20194,40 +20194,40 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 350;
+            cdata[rc].id = 350;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"祭りの観光客", u8"festival tourist");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 477;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 477;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 476;
+                cdata[rc].image = 476;
             }
-            cdata_image(rc) += 1000;
+            cdata[rc].image += 1000;
             cspecialeq = 0;
             return 0;
         }
@@ -20259,25 +20259,25 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 186;
+            cdata[rc].id = 186;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ブレイド", u8"blade");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 6100100;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 6100100;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20309,28 +20309,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 187;
+            cdata[rc].id = 187;
             SET_LEVEL(13);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ブレイドβ", u8"blade alpha");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 6100120;
-            cdata_image(rc) += 17000;
+            cdata[rc].element_of_unarmed_attack = 6100120;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -20362,28 +20362,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 188;
+            cdata[rc].id = 188;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ブレイドΩ", u8"blade omega");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 6100150;
-            cdata_image(rc) += 3000;
+            cdata[rc].element_of_unarmed_attack = 6100150;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -20485,32 +20485,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 345;
+            cdata[rc].id = 345;
             SET_LEVEL(22);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"『カネダのバイク』", u8"<Kaneda Bike>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bike";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 470;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 470;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -20610,32 +20610,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 346;
+            cdata[rc].id = 346;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"カブ", u8"cub");
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"bike";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 471;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 471;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20668,28 +20668,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 341;
+            cdata[rc].id = 341;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 15;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 15;
             creaturepack = 0;
             cbitmod(988, rc, 1);
-            cdata_ai_act(rc, 0) = 659;
-            cdata_ai_act(rc, 1) = -4;
-            cdata_ai_act_sub(rc, 0) = 466;
-            cdata_ai_act_num(rc) = 12;
+            cdata[rc].act[0] = 659;
+            cdata[rc].act[1] = -4;
+            cdata[rc].act[5] = 466;
+            cdata[rc].ai_act_num = 12;
             cdatan(0, rc) = lang(u8"地雷犬", u8"mine dog");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 434;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 434;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20722,28 +20722,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 258;
+            cdata[rc].id = 258;
             SET_LEVEL(25);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"鉄の処女", u8"iron maiden");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machine";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 6100150;
-            cdata_image(rc) = 198;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 6100150;
+            cdata[rc].image = 198;
+            cdata[rc].image += 0;
             cspecialeq = 0;
-            cdata_damage_reaction_info(rc) = 250061;
+            cdata[rc].damage_reaction_info = 250061;
             return 0;
         }
         return 0;
@@ -20775,26 +20775,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 189;
+            cdata[rc].id = 189;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 632;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 632;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"異形の目", u8"deformed eye");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 271;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 271;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20827,26 +20827,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 190;
+            cdata[rc].id = 190;
             SET_LEVEL(19);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 632;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 632;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"不浄なる瞳", u8"impure eye");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"eye";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 271;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 271;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -20878,28 +20878,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 191;
+            cdata[rc].id = 191;
             SET_LEVEL(14);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 421;
-            cdata_ai_act(rc, 2) = 604;
-            cdata_ai_act_sub(rc, 0) = 633;
-            cdata_ai_act_num(rc) = 13;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 421;
+            cdata[rc].act[2] = 604;
+            cdata[rc].act[5] = 633;
+            cdata[rc].ai_act_num = 13;
             cdatan(0, rc) = lang(u8"ウィスプ", u8"wisp");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"wisp";
             dbmode = 3;
             label_2297();
             sdata(52, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -20927,27 +20927,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 192;
+            cdata[rc].id = 192;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ハリねずみ", u8"hedgehog");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"crab";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 273;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 273;
+            cdata[rc].image += 0;
             cspecialeq = 0;
-            cdata_damage_reaction_info(rc) = 200061;
+            cdata[rc].damage_reaction_info = 200061;
             return 0;
         }
         return 0;
@@ -20980,27 +20980,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 193;
+            cdata[rc].id = 193;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"輝くハリねずみ", u8"shining hedgehog");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"crab";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 273;
-            cdata_image(rc) += 17000;
+            cdata[rc].image = 273;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
-            cdata_damage_reaction_info(rc) = 500062;
+            cdata[rc].damage_reaction_info = 500062;
             return 0;
         }
         return 0;
@@ -21053,26 +21053,26 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 195;
+            cdata[rc].id = 195;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"鶏", u8"chicken");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"chicken";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -21108,27 +21108,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 196;
+            cdata[rc].id = 196;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = -9999;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = -9999;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"パンプキン", u8"pumpkin");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400100;
-            cdata_image(rc) = 275;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5400100;
+            cdata[rc].image = 275;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -21164,27 +21164,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 201;
+            cdata[rc].id = 201;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = -9999;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = -9999;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"パピー", u8"puppy");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400150;
-            cdata_image(rc) = 275;
-            cdata_image(rc) += 5000;
+            cdata[rc].element_of_unarmed_attack = 5400150;
+            cdata[rc].image = 275;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -21220,27 +21220,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 197;
+            cdata[rc].id = 197;
             SET_LEVEL(18);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = -9998;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = -9998;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"南瓜の怪物", u8"greater pumpkin");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400200;
-            cdata_image(rc) = 275;
-            cdata_image(rc) += 4000;
+            cdata[rc].element_of_unarmed_attack = 5400200;
+            cdata[rc].image = 275;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -21277,28 +21277,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 198;
+            cdata[rc].id = 198;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act_sub(rc, 0) = -9997;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[5] = -9997;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) =
                 lang(u8"ハロウィンナイトメア", u8"halloween nightmare");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5400250;
-            cdata_image(rc) = 275;
-            cdata_image(rc) += 3000;
+            cdata[rc].element_of_unarmed_attack = 5400250;
+            cdata[rc].image = 275;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -21334,28 +21334,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 199;
+            cdata[rc].id = 199;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"闇子", u8"stalker");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"stalker";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 276;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 276;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -21391,28 +21391,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 200;
+            cdata[rc].id = 200;
             SET_LEVEL(26);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"闇の老師", u8"shadow stalker");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"stalker";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 276;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 276;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -21471,31 +21471,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 202;
+            cdata[rc].id = 202;
             SET_LEVEL(80);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 65;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 65;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"火の巨人『エボン』", u8"<Ebon> the fire giant");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
             label_2297();
             sdata(50, rc) = 500;
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 351;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 351;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -21559,32 +21559,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 203;
+            cdata[rc].id = 203;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 0;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 0;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"見世物屋の『モイアー』", u8"<Moyer> the crooked");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 23;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 23;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -21598,8 +21598,8 @@ int label_2654()
             txtef(9);
             if (jp)
             {
-                txt(u8"「" + _syujin(cdata_sex(0)) + u8"〜」",
-                    _syujin(cdata_sex(0)) + u8"〜",
+                txt(u8"「" + _syujin(cdata[0].sex) + u8"〜」",
+                    _syujin(cdata[0].sex) + u8"〜",
                     u8"「用事はありませんか♪」",
                     u8"メイドの熱い視線を感じる…");
                 return 1;
@@ -21629,7 +21629,7 @@ int label_2654()
                 txtmore();
                 txtef(9);
                 txt(u8"「ダメぇ！」",
-                    u8"「" + _syujin(cdata_sex(0)) + u8"ー！」");
+                    u8"「" + _syujin(cdata[0].sex) + u8"ー！」");
                 return 1;
             }
         }
@@ -21639,7 +21639,7 @@ int label_2654()
             {
                 txtmore();
                 txtef(9);
-                txt(u8"「おかえりなさいませ、" + _syujin(cdata_sex(0))
+                txt(u8"「おかえりなさいませ、" + _syujin(cdata[0].sex)
                         + u8"〜」",
                     u8"「おかえりなさいまし〜」");
                 return 1;
@@ -21665,39 +21665,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 205;
+            cdata[rc].id = 205;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"メイド", u8"maid");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 104;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].image = 104;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 105;
+                cdata[rc].image = 105;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -21756,31 +21756,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 207;
+            cdata[rc].id = 207;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 65;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 65;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 602;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 602;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"火の巨人『エボン』", u8"<Ebon> the fire giant");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"giant";
             dbmode = 3;
             label_2297();
             sdata(50, rc) = 500;
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 351;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 351;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -21810,29 +21810,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 212;
+            cdata[rc].id = 212;
             SET_LEVEL(1);
-            cdata_portrait(rc) = 54;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 54;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"実験台", u8"<Stersha> the queen of Palmia");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 117;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 117;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -21925,37 +21925,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 213;
+            cdata[rc].id = 213;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 4;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 4;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"無邪気な少女『グウェン』", u8"<Gwen> the innocent");
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 356;
-            if (cdata_sex(rc) == 1)
+            cdata[rc].sex = 1;
+            cdata[rc].image = 356;
+            if (cdata[rc].sex == 1)
             {
-                cdata_image(rc) = 356;
+                cdata[rc].image = 356;
             }
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22014,32 +22014,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 221;
+            cdata[rc].id = 221;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 15;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 15;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"ひとりぼっちの『パエル』", u8"Lonely <Pael>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 358;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 358;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22101,32 +22101,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 222;
+            cdata[rc].id = 222;
             SET_LEVEL(15);
-            cdata_portrait(rc) = 13;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 13;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"パエルの母『リリィ』", u8"Pael's mom <Lily>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 359;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 359;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22211,34 +22211,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 223;
+            cdata[rc].id = 223;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 14;
-            cdata_ai_calm(rc) = 2;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 14;
+            cdata[rc].ai_calm = 2;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"女たらしの『ラファエロ』", u8"<Raphael> the womanizer");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 361;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 361;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22323,34 +22323,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 224;
+            cdata[rc].id = 224;
             SET_LEVEL(7);
-            cdata_portrait(rc) = 18;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 18;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"見習い騎士『アインク』", u8"<Ainc> the novice knight");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 362;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 362;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22434,34 +22434,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 243;
+            cdata[rc].id = 243;
             SET_LEVEL(15);
-            cdata_portrait(rc) = 36;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 36;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"負傷兵『アーノルド』", u8"<Arnord> the injured soldier");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 383;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 383;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22541,30 +22541,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 247;
+            cdata[rc].id = 247;
             SET_LEVEL(4);
-            cdata_portrait(rc) = 34;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 34;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"猫かぶり『ミーア』", u8"<Mia> the cat freak");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 388;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 388;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22654,38 +22654,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 252;
+            cdata[rc].id = 252;
             SET_LEVEL(45);
-            cdata_portrait(rc) = 5;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 5;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 417;
-            cdata_ai_act(rc, 1) = 434;
-            cdata_ai_act(rc, 2) = 415;
-            cdata_ai_act(rc, 3) = 454;
-            cdata_ai_act_num(rc) = 4;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = 417;
+            cdata[rc].act[1] = 434;
+            cdata[rc].act[2] = 415;
+            cdata[rc].act[3] = 454;
+            cdata[rc].ai_act_num = 4;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"悩める魔術士『レントン』",
                 u8"<Renton> the suffering wizard");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 392;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 392;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22767,35 +22767,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 253;
+            cdata[rc].id = 253;
             SET_LEVEL(25);
-            cdata_portrait(rc) = 1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = 1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 635;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 635;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"稀代の泥棒『マークス』", u8"<Marks> the great thief");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 394;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 394;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22879,34 +22879,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 259;
+            cdata[rc].id = 259;
             SET_LEVEL(20);
-            cdata_portrait(rc) = 15;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = 15;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 635;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 635;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"爆弾魔『ノエル』", u8"<Noel> the bomber");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 199;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 199;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -22991,35 +22991,35 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 301;
+            cdata[rc].id = 301;
             SET_LEVEL(38);
-            cdata_portrait(rc) = 39;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 39;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"パルミア少将『コネリー』",
                 u8"<Conery> Palmian major general");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 403;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 403;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -23104,29 +23104,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 214;
+            cdata[rc].id = 214;
             SET_LEVEL(2);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 635;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 635;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"見習い盗賊", u8"thief");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) = 166;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 166;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -23204,32 +23204,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 215;
+            cdata[rc].id = 215;
             SET_LEVEL(5);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 635;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 635;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"強盗", u8"robber");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 166;
-            cdata_image(rc) += 3000;
+            cdata[rc].image = 166;
+            cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
         }
@@ -23307,32 +23307,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 217;
+            cdata[rc].id = 217;
             SET_LEVEL(35);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 25;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 25;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 635;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 635;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"マスターシーフ", u8"master thief");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 166;
-            cdata_image(rc) += 4000;
+            cdata[rc].image = 166;
+            cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
         }
@@ -23365,23 +23365,23 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 216;
+            cdata[rc].id = 216;
             SET_LEVEL(50);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 601;
-            cdata_ai_act(rc, 2) = 636;
-            cdata_ai_act_num(rc) = 3;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 601;
+            cdata[rc].act[2] = 636;
+            cdata[rc].ai_act_num = 3;
             cdatan(0, rc) =
                 lang(u8"イスの偉大なる種族", u8"great race of Yith");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yith";
             dbmode = 3;
             label_2297();
@@ -23389,7 +23389,7 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(54, rc) = 500;
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -23423,24 +23423,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 218;
+            cdata[rc].id = 218;
             SET_LEVEL(45);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 0;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 0;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -3;
-            cdata_ai_act(rc, 1) = -3;
-            cdata_ai_act(rc, 2) = 410;
-            cdata_ai_act(rc, 3) = 636;
-            cdata_ai_act_sub(rc, 0) = 424;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = -3;
+            cdata[rc].act[1] = -3;
+            cdata[rc].act[2] = 410;
+            cdata[rc].act[3] = 636;
+            cdata[rc].act[5] = 424;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"シュブ＝ニグラス", u8"Shub-Niggurath");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yith";
             dbmode = 3;
             label_2297();
@@ -23448,8 +23448,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(54, rc) = 500;
-            cdata_image(rc) = 277;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 277;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -23477,29 +23477,29 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 219;
+            cdata[rc].id = 219;
             SET_LEVEL(38);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 613;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 613;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"ガグ", u8"gagu");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"orc";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 278;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 278;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -23532,24 +23532,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 220;
+            cdata[rc].id = 220;
             SET_LEVEL(65);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 417;
-            cdata_ai_act(rc, 1) = 434;
-            cdata_ai_act(rc, 2) = 415;
-            cdata_ai_act(rc, 3) = 454;
-            cdata_ai_act_sub(rc, 0) = 636;
-            cdata_ai_act_num(rc) = 14;
+            cdata[rc].act[0] = 417;
+            cdata[rc].act[1] = 434;
+            cdata[rc].act[2] = 415;
+            cdata[rc].act[3] = 454;
+            cdata[rc].act[5] = 636;
+            cdata[rc].ai_act_num = 14;
             cdatan(0, rc) = lang(u8"螺旋の王", u8"spiral king");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yith";
             dbmode = 3;
             label_2297();
@@ -23557,8 +23557,8 @@ int label_2654()
             dbmode = 3;
             label_2298();
             sdata(54, rc) = 500;
-            cdata_image(rc) = 430;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 430;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -23585,27 +23585,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 250;
+            cdata[rc].id = 250;
             SET_LEVEL(13);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 60;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 40;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 60;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 40;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 423;
-            cdata_ai_act_sub(rc, 0) = 410;
-            cdata_ai_act_sub(rc, 1) = 635;
-            cdata_ai_act_num(rc) = 22;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 423;
+            cdata[rc].act[5] = 410;
+            cdata[rc].act[6] = 635;
+            cdata[rc].ai_act_num = 22;
             cdatan(0, rc) = lang(u8"妖精", u8"fairy");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"fairy";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -23686,39 +23686,39 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 260;
+            cdata[rc].id = 260;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 75;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 30;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 75;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 30;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 414;
-            cdata_ai_act_sub(rc, 1) = 601;
-            cdata_ai_act_sub(rc, 2) = 636;
-            cdata_ai_act_num(rc) = 31;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 414;
+            cdata[rc].act[6] = 601;
+            cdata[rc].act[7] = 636;
+            cdata[rc].ai_act_num = 31;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"黒猫", u8"black cat");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 211;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 211;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -23764,36 +23764,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 261;
+            cdata[rc].id = 261;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 20;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 20;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -2;
-            cdata_ai_act_sub(rc, 0) = 443;
-            cdata_ai_act_sub(rc, 1) = 447;
-            cdata_ai_act_sub(rc, 2) = 415;
-            cdata_ai_act_num(rc) = 31;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -2;
+            cdata[rc].act[5] = 443;
+            cdata[rc].act[6] = 447;
+            cdata[rc].act[7] = 415;
+            cdata[rc].ai_act_num = 31;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"妖精さん", u8"cute fairy");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 217;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 217;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -23822,33 +23822,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 262;
+            cdata[rc].id = 262;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 40;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 3;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 40;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 3;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 647;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 647;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"アンドロイド", u8"android");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 218;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 218;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -23917,42 +23917,42 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 263;
+            cdata[rc].id = 263;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 8;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 8;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = -1;
-            cdata_ai_act(rc, 2) = 648;
-            cdata_ai_act(rc, 3) = -2;
-            cdata_ai_act_sub(rc, 0) = 446;
-            cdata_ai_act_sub(rc, 1) = 647;
-            cdata_ai_act_sub(rc, 2) = 447;
-            cdata_ai_act_num(rc) = 34;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = -1;
+            cdata[rc].act[2] = 648;
+            cdata[rc].act[3] = -2;
+            cdata[rc].act[5] = 446;
+            cdata[rc].act[6] = 647;
+            cdata[rc].act[7] = 447;
+            cdata[rc].ai_act_num = 34;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"黒天使", u8"black angel");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 236;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 236;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -23981,34 +23981,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 264;
+            cdata[rc].id = 264;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 65;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 65;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 414;
-            cdata_ai_act(rc, 1) = 415;
-            cdata_ai_act(rc, 2) = 418;
-            cdata_ai_act_num(rc) = 3;
+            cdata[rc].act[0] = 414;
+            cdata[rc].act[1] = 415;
+            cdata[rc].act[2] = 418;
+            cdata[rc].ai_act_num = 3;
             cdatan(0, rc) = lang(u8"追放者", u8"exile");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 269;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 269;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -24037,36 +24037,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 265;
+            cdata[rc].id = 265;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 8;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 8;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 648;
-            cdata_ai_act_sub(rc, 1) = 444;
-            cdata_ai_act_num(rc) = 21;
-            cdata_ai_heal(rc) = 401;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 648;
+            cdata[rc].act[6] = 444;
+            cdata[rc].ai_act_num = 21;
+            cdata[rc].ai_heal = 401;
             cdatan(0, rc) = lang(u8"黄金の騎士", u8"golden knight");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 267;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 267;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -24095,36 +24095,36 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 266;
+            cdata[rc].id = 266;
             SET_LEVEL(8);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 8;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 8;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 442;
-            cdata_ai_act_sub(rc, 1) = 444;
-            cdata_ai_act_num(rc) = 21;
-            cdata_ai_heal(rc) = 404;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 442;
+            cdata[rc].act[6] = 444;
+            cdata[rc].ai_act_num = 21;
+            cdata[rc].ai_heal = 404;
             cdatan(0, rc) = lang(u8"防衛者", u8"defender");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"servant";
             dbmode = 3;
             label_2297();
             dbidn = u8"warmage";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 242;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 242;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -24202,31 +24202,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 267;
+            cdata[rc].id = 267;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"駄馬", u8"lame horse");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 17000;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }
@@ -24303,34 +24303,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 276;
+            cdata[rc].id = 276;
             SET_LEVEL(4);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"野生馬", u8"wild horse");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 6000;
+            cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
         }
@@ -24408,34 +24408,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 275;
+            cdata[rc].id = 275;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ノイエル馬", u8"Noyel horse");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 15000;
+            cdata[rc].image += 15000;
             cspecialeq = 0;
             return 0;
         }
@@ -24513,34 +24513,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 268;
+            cdata[rc].id = 268;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ヨウィン馬", u8"Yowyn horse");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 16000;
+            cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
         }
@@ -24617,34 +24617,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 277;
+            cdata[rc].id = 277;
             SET_LEVEL(20);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"サラブレッド", u8"wild horse");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -1;
-            cdata_original_relationship(rc) = -1;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -1;
+            cdata[rc].original_relationship = -1;
+            cdata[rc]._40 = -10000;
             dbidn = u8"horse";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 10000;
+            cdata[rc].image += 10000;
             cspecialeq = 0;
             return 0;
         }
@@ -24672,32 +24672,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 278;
+            cdata[rc].id = 278;
             SET_LEVEL(6);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"ミュータント", u8"mutant");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mutant";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) = 191;
-            cdata_image(rc) += 0;
+            cdata[rc].image = 191;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -24757,32 +24757,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 279;
+            cdata[rc].id = 279;
             SET_LEVEL(15);
-            cdata_portrait(rc) = 17;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 17;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"生化学者『イコール』", u8"<Icolle> the biologist");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 263;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 263;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -24852,30 +24852,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 280;
+            cdata[rc].id = 280;
             SET_LEVEL(10);
-            cdata_portrait(rc) = 30;
-            cdata_ai_calm(rc) = 5;
-            cdata_ai_move(rc) = 70;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 30;
+            cdata[rc].ai_calm = 5;
+            cdata[rc].ai_move = 70;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"掃除屋『バルザック』", u8"<Balzak> the janiator");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 192;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 192;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -24960,37 +24960,37 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 288;
+            cdata[rc].id = 288;
             SET_LEVEL(55);
-            cdata_portrait(rc) = 13;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 65;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 13;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 65;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 414;
-            cdata_ai_act(rc, 1) = 415;
-            cdata_ai_act(rc, 2) = 418;
-            cdata_ai_act_num(rc) = 3;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = 414;
+            cdata[rc].act[1] = 415;
+            cdata[rc].act[2] = 418;
+            cdata[rc].ai_act_num = 3;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"魔術士ギルドマスター『レヴラス』",
                 u8"<Revlus> the mage guildmaster");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 193;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 193;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25041,34 +25041,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 290;
+            cdata[rc].id = 290;
             SET_LEVEL(38);
-            cdata_portrait(rc) = 5;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 65;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 5;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 65;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = 414;
-            cdata_ai_act(rc, 1) = 415;
-            cdata_ai_act(rc, 2) = 418;
-            cdata_ai_act_num(rc) = 3;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = 414;
+            cdata[rc].act[1] = 415;
+            cdata[rc].act[2] = 418;
+            cdata[rc].ai_act_num = 3;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"魔術士ギルドの番人『レクサス』",
                 u8"<Lexus> the guild watchman");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"wizard";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 196;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 196;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25101,31 +25101,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 292;
+            cdata[rc].id = 292;
             SET_LEVEL(55);
-            cdata_portrait(rc) = 6;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 65;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 6;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 65;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(
                 u8"盗賊ギルドマスター『シン』",
                 u8"<Sin> the thief guildmaster");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 197;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 197;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25176,31 +25176,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 294;
+            cdata[rc].id = 294;
             SET_LEVEL(38);
-            cdata_portrait(rc) = 5;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 65;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 5;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 65;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"盗賊ギルドの番人『アビス』", u8"<Abyss> the thief watchman");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"thief";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 196;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 196;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25233,31 +25233,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 291;
+            cdata[rc].id = 291;
             SET_LEVEL(55);
-            cdata_portrait(rc) = 17;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 90;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 17;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 90;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(
                 u8"戦士ギルドマスター『フレイ』",
                 u8"<Fray> the fighter guildmaster");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 80;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 80;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25308,32 +25308,32 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 297;
+            cdata[rc].id = 297;
             SET_LEVEL(38);
-            cdata_portrait(rc) = 5;
-            cdata_ai_calm(rc) = 3;
-            cdata_ai_move(rc) = 90;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = 5;
+            cdata[rc].ai_calm = 3;
+            cdata[rc].ai_move = 90;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(
                 u8"戦士ギルドの番人『ドリア』",
                 u8"<Doria> the fighter watchman");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"norland";
             dbmode = 3;
             label_2297();
             dbidn = u8"warrior";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 196;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 196;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25415,38 +25415,38 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 317;
+            cdata[rc].id = 317;
             SET_LEVEL(28);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 80;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 10;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 80;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 10;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 648;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 648;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"銀眼の斬殺者", u8"silver eyed witch");
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
             cbitmod(977, rc, 1);
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"claymore";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 279;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 279;
+            cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
         }
@@ -25542,33 +25542,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 318;
+            cdata[rc].id = 318;
             SET_LEVEL(30);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 25;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 25;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"『ビッグダディ』", u8"<Big daddy>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"machinegod";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 408;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 408;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 1;
             return 0;
@@ -25657,33 +25657,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 319;
+            cdata[rc].id = 319;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 5;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 5;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"『リトルシスター』", u8"<Little sister>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"mutant";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 409;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 409;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25776,33 +25776,33 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 322;
+            cdata[rc].id = 322;
             SET_LEVEL(15);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"『謎の科学者』", u8"<Strange scientist>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"roran";
             dbmode = 3;
             label_2297();
             dbidn = u8"gunner";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 1;
-            cdata_image(rc) = 412;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 1;
+            cdata[rc].image = 412;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25896,34 +25896,34 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 334;
+            cdata[rc].id = 334;
             SET_LEVEL(7);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) =
                 lang(u8"『謎のプロデューサー』", u8"<Mysterious Producer>");
-            cdata_relationship(rc) = 0;
-            cdata_original_relationship(rc) = 0;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = 0;
+            cdata[rc].original_relationship = 0;
+            cdata[rc]._40 = -10000;
             dbidn = u8"juere";
             dbmode = 3;
             label_2297();
             dbidn = u8"tourist";
             dbmode = 3;
             label_2298();
-            cdata_sex(rc) = 0;
-            cdata_image(rc) = 416;
-            cdata_image(rc) += 0;
+            cdata[rc].sex = 0;
+            cdata[rc].image = 416;
+            cdata[rc].image += 0;
             fixlv = 6;
             cspecialeq = 0;
             return 0;
@@ -25958,28 +25958,28 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 323;
+            cdata[rc].id = 323;
             SET_LEVEL(12);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = 617;
-            cdata_ai_act(rc, 2) = 613;
-            cdata_ai_act_num(rc) = 3;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = 617;
+            cdata[rc].act[2] = 613;
+            cdata[rc].ai_act_num = 3;
             cdatan(0, rc) = lang(u8"シェイド", u8"shade");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
             dbmode = 3;
             label_2297();
-            cdata_element_of_unarmed_attack(rc) = 5600400;
-            cdata_image(rc) = 280;
-            cdata_image(rc) += 0;
+            cdata[rc].element_of_unarmed_attack = 5600400;
+            cdata[rc].image = 280;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -26011,24 +26011,24 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 324;
+            cdata[rc].id = 324;
             SET_LEVEL(10);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 2;
-            cdata_ai_act_sub_freq(rc) = 0;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 2;
+            cdata[rc].ai_act_sub_freq = 0;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_num(rc) = 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].ai_act_num = 1;
             cdatan(0, rc) = lang(u8"クイックリング", u8"quickling");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"quickling";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 19000;
+            cdata[rc].image += 19000;
             cspecialeq = 0;
             return 0;
         }
@@ -26061,31 +26061,31 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 325;
+            cdata[rc].id = 325;
             SET_LEVEL(17);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 50;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 2;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 50;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 2;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act(rc, 1) = -3;
-            cdata_ai_act(rc, 2) = -3;
-            cdata_ai_act_sub(rc, 0) = 648;
-            cdata_ai_act_num(rc) = 13;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[1] = -3;
+            cdata[rc].act[2] = -3;
+            cdata[rc].act[5] = 648;
+            cdata[rc].ai_act_num = 13;
             cdatan(0, rc) =
                 lang(u8"クイックリングの弓使い", u8"quickling archer");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"quickling";
             dbmode = 3;
             label_2297();
             dbidn = u8"archer";
             dbmode = 3;
             label_2298();
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -26147,27 +26147,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 328;
+            cdata[rc].id = 328;
             SET_LEVEL(3);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 4;
-            cdata_ai_act_sub_freq(rc) = 1;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 4;
+            cdata[rc].ai_act_sub_freq = 1;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 653;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 653;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"シルバーベル", u8"silver bell");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"metal";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 0;
+            cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
         }
@@ -26229,27 +26229,27 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 329;
+            cdata[rc].id = 329;
             SET_LEVEL(1);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 30;
-            cdata_ai_dist(rc) = 3;
-            cdata_ai_act_sub_freq(rc) = 1;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 30;
+            cdata[rc].ai_dist = 3;
+            cdata[rc].ai_act_sub_freq = 1;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 653;
-            cdata_ai_act_num(rc) = 11;
-            cdata_can_talk(rc) += 1;
-            cdata_can_talk(rc) += 1;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 653;
+            cdata[rc].ai_act_num = 11;
+            cdata[rc].can_talk += 1;
+            cdata[rc].can_talk += 1;
             cdatan(0, rc) = lang(u8"ゴールドベル", u8"gold bell");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"metal";
             dbmode = 3;
             label_2297();
-            cdata_image(rc) += 5000;
+            cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
         }
@@ -26282,30 +26282,30 @@ int label_2654()
         }
         if (dbmode == 3)
         {
-            cdata_id(rc) = 330;
+            cdata[rc].id = 330;
             SET_LEVEL(19);
-            cdata_portrait(rc) = -1;
-            cdata_ai_calm(rc) = 1;
-            cdata_ai_move(rc) = 100;
-            cdata_ai_dist(rc) = 1;
-            cdata_ai_act_sub_freq(rc) = 7;
+            cdata[rc].portrait = -1;
+            cdata[rc].ai_calm = 1;
+            cdata[rc].ai_move = 100;
+            cdata[rc].ai_dist = 1;
+            cdata[rc].ai_act_sub_freq = 7;
             creaturepack = 0;
-            cdata_ai_act(rc, 0) = -1;
-            cdata_ai_act_sub(rc, 0) = 654;
-            cdata_ai_act_num(rc) = 11;
+            cdata[rc].act[0] = -1;
+            cdata[rc].act[5] = 654;
+            cdata[rc].ai_act_num = 11;
             cdatan(0, rc) = lang(u8"エイリアン", u8"alien");
-            cdata_relationship(rc) = -3;
-            cdata_original_relationship(rc) = -3;
-            cdata_40(rc) = -10000;
+            cdata[rc].relationship = -3;
+            cdata[rc].original_relationship = -3;
+            cdata[rc]._40 = -10000;
             dbidn = u8"dinosaur";
             dbmode = 3;
             label_2297();
             dbidn = u8"predator";
             dbmode = 3;
             label_2298();
-            cdata_element_of_unarmed_attack(rc) = 6300250;
-            cdata_image(rc) = 283;
-            cdata_image(rc) += 17000;
+            cdata[rc].element_of_unarmed_attack = 6300250;
+            cdata[rc].image = 283;
+            cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
         }

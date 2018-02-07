@@ -2495,9 +2495,9 @@ foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
 
 std::string _yoro(int prm_377)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よろしくお願いします"s;
             _tone_at_m34(1) = u8"どうぞ、よろしくです"s;
@@ -2518,9 +2518,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よろしく頼むぜ"s;
             _tone_at_m34(1) = u8"よろしくな"s;
@@ -2541,9 +2541,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よろしくね"s;
             _tone_at_m34(1) = u8"よろしくお願いするよ"s;
@@ -2564,9 +2564,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よろしく…"s;
             _tone_at_m34(1) = u8"今後とも、よろしく…"s;
@@ -2587,9 +2587,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よろしく頼もう"s;
             _tone_at_m34(1) = u8"よろしく頼むぞよ"s;
@@ -2610,9 +2610,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よしなに"s;
             _tone_at_m34(1) = u8"よろしく頼むでござる"s;
@@ -2633,9 +2633,9 @@ std::string _yoro(int prm_377)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_377);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よろしくッス"s;
             _tone_at_m34(1) = "";
@@ -2663,9 +2663,9 @@ std::string _yoro(int prm_377)
 
 std::string _dozo(int prm_378)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"はい、どうぞ"s;
             _tone_at_m34(1) = u8"お待ちどうさまです"s;
@@ -2686,9 +2686,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ほらよ"s;
             _tone_at_m34(1) = u8"ほれ"s;
@@ -2709,9 +2709,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"はい、お待ち"s;
             _tone_at_m34(1) = u8"さあ、どうぞ"s;
@@ -2732,9 +2732,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ほら…"s;
             _tone_at_m34(1) = u8"待たせたな…"s;
@@ -2755,9 +2755,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ほうれ"s;
             _tone_at_m34(1) = u8"ほれ、受け取りたまえ"s;
@@ -2778,9 +2778,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"お待たせ申した"s;
             _tone_at_m34(1) = u8"待たせたでござる"s;
@@ -2801,9 +2801,9 @@ std::string _dozo(int prm_378)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_378);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"お待たせッス"s;
             _tone_at_m34(1) = "";
@@ -2831,9 +2831,9 @@ std::string _dozo(int prm_378)
 
 std::string _thanks(int prm_379)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"感謝します"s;
             _tone_at_m34(1) = u8"ありがとうございます"s;
@@ -2854,9 +2854,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ありがとよ"s;
             _tone_at_m34(1) = u8"ありがたい"s;
@@ -2877,9 +2877,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ありがとう"s;
             _tone_at_m34(1) = u8"感謝するよ"s;
@@ -2900,9 +2900,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"礼を言う…"s;
             _tone_at_m34(1) = u8"感謝する…"s;
@@ -2923,9 +2923,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"礼を申すぞ"s;
             _tone_at_m34(1) = u8"感謝してつかわす"s;
@@ -2946,9 +2946,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かたじけない"s;
             _tone_at_m34(1) = u8"恩に着る"s;
@@ -2969,9 +2969,9 @@ std::string _thanks(int prm_379)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_379);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"アザーッス"s;
             _tone_at_m34(1) = "";
@@ -2999,9 +2999,9 @@ std::string _thanks(int prm_379)
 
 std::string _rob(int prm_380)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"悪いことは言わない。おやめなさい"s;
             _tone_at_m34(1) = u8"止めてください。きっと後悔しますよ"s;
@@ -3023,9 +3023,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"なんだ、貴様賊だったのか"s;
             _tone_at_m34(1) = u8"馬鹿な奴だ。後になって謝っても遅いぞ"s;
@@ -3046,9 +3046,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) =
                 u8"おい、傭兵さんたち、このごろつきを追い払ってくれ"s;
@@ -3071,9 +3071,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"甘く見られたものだ…"s;
             _tone_at_m34(1) = u8"この護衛の数が見えないのか…"s;
@@ -3094,9 +3094,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"なんたる無礼者か"s;
             _tone_at_m34(1) = u8"ほほほ、こやつめ"s;
@@ -3117,9 +3117,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"何をするでござるか"s;
             _tone_at_m34(1) = "";
@@ -3140,9 +3140,9 @@ std::string _rob(int prm_380)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_380);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"見損なったッス"s;
             _tone_at_m34(1) = "";
@@ -3170,9 +3170,9 @@ std::string _rob(int prm_380)
 
 std::string _ka(int prm_381)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ですか"s;
             _tone_at_m34(1) = "";
@@ -3193,9 +3193,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かよ"s;
             _tone_at_m34(1) = u8"か"s;
@@ -3216,9 +3216,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かい"s;
             _tone_at_m34(1) = u8"なの"s;
@@ -3239,9 +3239,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"か…"s;
             _tone_at_m34(1) = u8"かよ…"s;
@@ -3262,9 +3262,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"であるか"s;
@@ -3285,9 +3285,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござるか"s;
             _tone_at_m34(1) = "";
@@ -3308,9 +3308,9 @@ std::string _ka(int prm_381)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_381);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスか"s;
             _tone_at_m34(1) = "";
@@ -3338,9 +3338,9 @@ std::string _ka(int prm_381)
 
 std::string _da(int prm_382)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"です"s;
             _tone_at_m34(1) = u8"ですね"s;
@@ -3361,9 +3361,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だぜ"s;
             _tone_at_m34(1) = u8"だ"s;
@@ -3384,9 +3384,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だよ"s;
             _tone_at_m34(1) = "";
@@ -3407,9 +3407,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だ…"s;
             _tone_at_m34(1) = u8"さ…"s;
@@ -3430,9 +3430,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"じゃ"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
@@ -3453,9 +3453,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござる"s;
             _tone_at_m34(1) = u8"でござるよ"s;
@@ -3476,9 +3476,9 @@ std::string _da(int prm_382)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_382);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッス"s;
             _tone_at_m34(1) = "";
@@ -3506,9 +3506,9 @@ std::string _da(int prm_382)
 
 std::string _nda(int prm_383)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のです"s;
             _tone_at_m34(1) = u8"んです"s;
@@ -3529,9 +3529,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = "";
             _tone_at_m34(1) = u8"んだ"s;
@@ -3552,9 +3552,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"んだよ"s;
             _tone_at_m34(1) = u8"んだ"s;
@@ -3575,9 +3575,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"んだ…"s;
@@ -3598,9 +3598,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のじゃ"s;
             _tone_at_m34(1) = u8"のだぞよ"s;
@@ -3621,9 +3621,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のでござる"s;
             _tone_at_m34(1) = "";
@@ -3644,9 +3644,9 @@ std::string _nda(int prm_383)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_383);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"んだッス"s;
             _tone_at_m34(1) = "";
@@ -3674,9 +3674,9 @@ std::string _nda(int prm_383)
 
 std::string _noka(int prm_384)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のですか"s;
             _tone_at_m34(1) = u8"んですか"s;
@@ -3697,9 +3697,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のか"s;
             _tone_at_m34(1) = u8"のだな"s;
@@ -3720,9 +3720,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のかい"s;
             _tone_at_m34(1) = u8"の"s;
@@ -3743,9 +3743,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のか…"s;
             _tone_at_m34(1) = "";
@@ -3766,9 +3766,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のかのう"s;
             _tone_at_m34(1) = u8"のだな"s;
@@ -3789,9 +3789,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のでござるか"s;
             _tone_at_m34(1) = "";
@@ -3812,9 +3812,9 @@ std::string _noka(int prm_384)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_384);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"のッスか"s;
             _tone_at_m34(1) = "";
@@ -3842,9 +3842,9 @@ std::string _noka(int prm_384)
 
 std::string _kana(int prm_385)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でしょうか"s;
             _tone_at_m34(1) = u8"ですか"s;
@@ -3865,9 +3865,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"か"s;
             _tone_at_m34(1) = u8"かい"s;
@@ -3888,9 +3888,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かな"s;
             _tone_at_m34(1) = u8"かなぁ"s;
@@ -3911,9 +3911,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かな…"s;
             _tone_at_m34(1) = u8"か…"s;
@@ -3934,9 +3934,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"かのう"s;
             _tone_at_m34(1) = u8"かの"s;
@@ -3957,9 +3957,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござるか"s;
             _tone_at_m34(1) = "";
@@ -3980,9 +3980,9 @@ std::string _kana(int prm_385)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_385);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスか"s;
             _tone_at_m34(1) = "";
@@ -4010,9 +4010,9 @@ std::string _kana(int prm_385)
 
 std::string _kimi(int prm_386)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"貴方"s;
             _tone_at_m34(1) = "";
@@ -4033,9 +4033,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"お前"s;
             _tone_at_m34(1) = "";
@@ -4056,9 +4056,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"君"s;
             _tone_at_m34(1) = "";
@@ -4079,9 +4079,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"君"s;
             _tone_at_m34(1) = "";
@@ -4102,9 +4102,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"お主"s;
             _tone_at_m34(1) = "";
@@ -4125,9 +4125,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"そこもと"s;
             _tone_at_m34(1) = "";
@@ -4148,9 +4148,9 @@ std::string _kimi(int prm_386)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_386);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"アンタ"s;
             _tone_at_m34(1) = "";
@@ -4178,9 +4178,9 @@ std::string _kimi(int prm_386)
 
 std::string _ru(int prm_387)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ます"s;
             _tone_at_m34(1) = u8"ますよ"s;
@@ -4201,9 +4201,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"るぜ"s;
             _tone_at_m34(1) = u8"るぞ"s;
@@ -4224,9 +4224,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"るよ"s;
             _tone_at_m34(1) = u8"るね"s;
@@ -4247,9 +4247,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"る…"s;
             _tone_at_m34(1) = u8"るが…"s;
@@ -4270,9 +4270,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"るぞよ"s;
             _tone_at_m34(1) = u8"るぞ"s;
@@ -4293,9 +4293,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"るでござる"s;
             _tone_at_m34(1) = u8"るでござるよ"s;
@@ -4316,9 +4316,9 @@ std::string _ru(int prm_387)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_387);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"るッス"s;
             _tone_at_m34(1) = "";
@@ -4346,9 +4346,9 @@ std::string _ru(int prm_387)
 
 std::string _tanomu(int prm_388)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"お願いします"s;
             _tone_at_m34(1) = u8"頼みます"s;
@@ -4369,9 +4369,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頼む"s;
             _tone_at_m34(1) = u8"頼むな"s;
@@ -4392,9 +4392,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頼むね"s;
             _tone_at_m34(1) = u8"頼むよ"s;
@@ -4415,9 +4415,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頼む…"s;
             _tone_at_m34(1) = u8"頼むぞ…"s;
@@ -4438,9 +4438,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頼むぞよ"s;
             _tone_at_m34(1) = "";
@@ -4461,9 +4461,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頼み申す"s;
             _tone_at_m34(1) = u8"頼むでござる"s;
@@ -4484,9 +4484,9 @@ std::string _tanomu(int prm_388)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_388);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頼むッス"s;
             _tone_at_m34(1) = "";
@@ -4514,9 +4514,9 @@ std::string _tanomu(int prm_388)
 
 std::string _ore(int prm_389)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"私"s;
             _tone_at_m34(1) = "";
@@ -4537,9 +4537,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"俺"s;
             _tone_at_m34(1) = "";
@@ -4560,9 +4560,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"僕"s;
             _tone_at_m34(1) = "";
@@ -4583,9 +4583,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"自分"s;
             _tone_at_m34(1) = "";
@@ -4606,9 +4606,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"麻呂"s;
             _tone_at_m34(1) = "";
@@ -4629,9 +4629,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"拙者"s;
             _tone_at_m34(1) = "";
@@ -4652,9 +4652,9 @@ std::string _ore(int prm_389)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_389);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"あっし"s;
             _tone_at_m34(1) = "";
@@ -4682,9 +4682,9 @@ std::string _ore(int prm_389)
 
 std::string _ga(int prm_390)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ですが"s;
             _tone_at_m34(1) = u8"ですけど"s;
@@ -4705,9 +4705,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"が"s;
             _tone_at_m34(1) = u8"がな"s;
@@ -4728,9 +4728,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"けど"s;
             _tone_at_m34(1) = u8"が"s;
@@ -4751,9 +4751,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"が…"s;
             _tone_at_m34(1) = u8"けど…"s;
@@ -4774,9 +4774,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"であるが"s;
             _tone_at_m34(1) = "";
@@ -4797,9 +4797,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござるが"s;
             _tone_at_m34(1) = "";
@@ -4820,9 +4820,9 @@ std::string _ga(int prm_390)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_390);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスけど"s;
             _tone_at_m34(1) = u8"ッスが"s;
@@ -4850,9 +4850,9 @@ std::string _ga(int prm_390)
 
 std::string _dana(int prm_391)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ですね"s;
             _tone_at_m34(1) = "";
@@ -4873,9 +4873,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だな"s;
             _tone_at_m34(1) = "";
@@ -4896,9 +4896,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だね"s;
             _tone_at_m34(1) = "";
@@ -4919,9 +4919,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だな…"s;
             _tone_at_m34(1) = "";
@@ -4942,9 +4942,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"であるな"s;
             _tone_at_m34(1) = "";
@@ -4965,9 +4965,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござるな"s;
             _tone_at_m34(1) = "";
@@ -4988,9 +4988,9 @@ std::string _dana(int prm_391)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_391);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = "";
@@ -5018,9 +5018,9 @@ std::string _dana(int prm_391)
 
 std::string _kure(int prm_392)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ください"s;
             _tone_at_m34(1) = u8"くださいよ"s;
@@ -5041,9 +5041,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"くれ"s;
             _tone_at_m34(1) = u8"くれよ"s;
@@ -5064,9 +5064,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"よ"s;
@@ -5087,9 +5087,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"くれ…"s;
             _tone_at_m34(1) = u8"…"s;
@@ -5110,9 +5110,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"つかわせ"s;
             _tone_at_m34(1) = u8"たもれ"s;
@@ -5133,9 +5133,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"頂きたいでござる"s;
             _tone_at_m34(1) = "";
@@ -5156,9 +5156,9 @@ std::string _kure(int prm_392)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_392);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"くれッス"s;
             _tone_at_m34(1) = "";
@@ -5186,9 +5186,9 @@ std::string _kure(int prm_392)
 
 std::string _daro(int prm_393)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でしょう"s;
             _tone_at_m34(1) = "";
@@ -5209,9 +5209,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だろ"s;
             _tone_at_m34(1) = "";
@@ -5232,9 +5232,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だろうね"s;
             _tone_at_m34(1) = "";
@@ -5255,9 +5255,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"だろ…"s;
             _tone_at_m34(1) = "";
@@ -5278,9 +5278,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"であろう"s;
             _tone_at_m34(1) = "";
@@ -5301,9 +5301,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござろうな"s;
             _tone_at_m34(1) = "";
@@ -5324,9 +5324,9 @@ std::string _daro(int prm_393)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_393);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = "";
@@ -5354,9 +5354,9 @@ std::string _daro(int prm_393)
 
 std::string _yo(int prm_394)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ですよ"s;
             _tone_at_m34(1) = u8"です"s;
@@ -5377,9 +5377,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ぜ"s;
             _tone_at_m34(1) = u8"ぞ"s;
@@ -5400,9 +5400,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"よ"s;
             _tone_at_m34(1) = u8"ぞ"s;
@@ -5423,9 +5423,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"ぞ…"s;
@@ -5446,9 +5446,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"であろう"s;
             _tone_at_m34(1) = u8"でおじゃる"s;
@@ -5469,9 +5469,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござろう"s;
             _tone_at_m34(1) = "";
@@ -5492,9 +5492,9 @@ std::string _yo(int prm_394)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_394);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスよ"s;
             _tone_at_m34(1) = u8"ッス"s;
@@ -5522,9 +5522,9 @@ std::string _yo(int prm_394)
 
 std::string _aru(int prm_395)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"あります"s;
             _tone_at_m34(1) = u8"ありますね"s;
@@ -5545,9 +5545,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ある"s;
             _tone_at_m34(1) = u8"あるな"s;
@@ -5568,9 +5568,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"あるね"s;
             _tone_at_m34(1) = u8"あるよ"s;
@@ -5591,9 +5591,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ある…"s;
             _tone_at_m34(1) = u8"あるぞ…"s;
@@ -5614,9 +5614,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"あろう"s;
             _tone_at_m34(1) = u8"おじゃる"s;
@@ -5637,9 +5637,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"あるでござる"s;
             _tone_at_m34(1) = u8"あるでござるな"s;
@@ -5660,9 +5660,9 @@ std::string _aru(int prm_395)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_395);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"あるッスよ"s;
             _tone_at_m34(1) = u8"あるッス"s;
@@ -5690,9 +5690,9 @@ std::string _aru(int prm_395)
 
 std::string _u(int prm_396)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"います"s;
             _tone_at_m34(1) = u8"いますよ"s;
@@ -5713,9 +5713,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"うぜ"s;
             _tone_at_m34(1) = u8"うぞ"s;
@@ -5736,9 +5736,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"うよ"s;
             _tone_at_m34(1) = u8"う"s;
@@ -5759,9 +5759,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"う…"s;
             _tone_at_m34(1) = u8"うぞ…"s;
@@ -5782,9 +5782,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"うぞよ"s;
             _tone_at_m34(1) = u8"うぞ"s;
@@ -5805,9 +5805,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"うでござる"s;
             _tone_at_m34(1) = u8"うでござるよ"s;
@@ -5828,9 +5828,9 @@ std::string _u(int prm_396)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_396);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"うッスよ"s;
             _tone_at_m34(1) = u8"うッス"s;
@@ -5858,9 +5858,9 @@ std::string _u(int prm_396)
 
 std::string _na(int prm_397)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ですね"s;
             _tone_at_m34(1) = u8"です"s;
@@ -5881,9 +5881,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ぜ"s;
             _tone_at_m34(1) = u8"な"s;
@@ -5904,9 +5904,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ね"s;
             _tone_at_m34(1) = u8"なぁ"s;
@@ -5927,9 +5927,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"…"s;
             _tone_at_m34(1) = u8"な…"s;
@@ -5950,9 +5950,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でおじゃるな"s;
             _tone_at_m34(1) = u8"のう"s;
@@ -5973,9 +5973,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"でござるな"s;
             _tone_at_m34(1) = "";
@@ -5996,9 +5996,9 @@ std::string _na(int prm_397)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_397);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ッスね"s;
             _tone_at_m34(1) = u8"ッス"s;
@@ -6026,9 +6026,9 @@ std::string _na(int prm_397)
 
 std::string _ta(int prm_398)
 {
-    if (cdata_talk_type(tc) == 0)
+    if (cdata[tc].talk_type == 0)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"ました"s;
             _tone_at_m34(1) = u8"ましたね"s;
@@ -6049,9 +6049,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata_talk_type(tc) == 1)
+    if (cdata[tc].talk_type == 1)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"た"s;
             _tone_at_m34(1) = u8"たな"s;
@@ -6072,9 +6072,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata_talk_type(tc) == 2)
+    if (cdata[tc].talk_type == 2)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"たね"s;
             _tone_at_m34(1) = u8"たよ"s;
@@ -6095,9 +6095,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata_talk_type(tc) == 3)
+    if (cdata[tc].talk_type == 3)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"た…"s;
             _tone_at_m34(1) = u8"たぞ…"s;
@@ -6118,9 +6118,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata_talk_type(tc) == 4)
+    if (cdata[tc].talk_type == 4)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"たぞよ"s;
             _tone_at_m34(1) = u8"たぞな"s;
@@ -6141,9 +6141,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata_talk_type(tc) == 5)
+    if (cdata[tc].talk_type == 5)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"たでござる"s;
             _tone_at_m34(1) = "";
@@ -6164,9 +6164,9 @@ std::string _ta(int prm_398)
             _tone_at_m34 = _tone_at_m34(rnd(p_at_m34)) + _mark(prm_398);
         }
     }
-    if (cdata_talk_type(tc) == 6)
+    if (cdata[tc].talk_type == 6)
     {
-        if (cdata_sex(tc) == 0)
+        if (cdata[tc].sex == 0)
         {
             _tone_at_m34(0) = u8"たッスよ"s;
             _tone_at_m34(1) = u8"たッス"s;
@@ -6384,7 +6384,7 @@ void label_0176()
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
-            if (cdata_character_role(tc) == 18)
+            if (cdata[tc].character_role == 18)
             {
                 if (gdata_number_of_waiting_guests > 0)
                 {
@@ -6393,7 +6393,7 @@ void label_0176()
                     break;
                 }
             }
-            if (cdata_interest(tc) <= 0)
+            if (cdata[tc].interest <= 0)
             {
                 p = instr(buff, 0, u8"%BORED,"s + lang(u8"JP"s, u8"EN"s));
                 break;
@@ -6404,24 +6404,24 @@ void label_0176()
                     buff, 0, u8"%ALLY_DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata_id(tc) == 335)
+            if (cdata[tc].id == 335)
             {
                 p = instr(buff, 0, u8"%BITCH,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata_character_role(tc) == 1015)
+            if (cdata[tc].character_role == 1015)
             {
                 p = instr(buff, 0, u8"%MOYER,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata_character_role(tc) == 17)
+            if (cdata[tc].character_role == 17)
             {
                 p = instr(buff, 0, u8"%SLAVEKEEPER,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata_character_role(tc) >= 1000
-                    && cdata_character_role(tc) < 2000
-                || cdata_character_role(tc) == 2003)
+            if (cdata[tc].character_role >= 1000
+                    && cdata[tc].character_role < 2000
+                || cdata[tc].character_role == 2003)
             {
                 if (rnd(3))
                 {
@@ -6430,7 +6430,7 @@ void label_0176()
                     break;
                 }
             }
-            if (cdata_impression(tc) >= 100)
+            if (cdata[tc].impression >= 100)
             {
                 if (rnd(3) == 0)
                 {
@@ -6459,7 +6459,7 @@ void label_0176()
                 p = instr(
                     buff,
                     0,
-                    u8"%PERSONALITY,"s + cdata_personality(tc) + u8","s
+                    u8"%PERSONALITY,"s + cdata[tc].personality + u8","s
                         + lang(u8"JP"s, u8"EN"s));
                 break;
             }

@@ -1314,7 +1314,7 @@ label_1554:
     dbidn = cmclass;
     dbmode = 3;
     label_2298();
-    cdata_level(rc) = 1;
+    cdata[rc].level = 1;
     {
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -1657,7 +1657,7 @@ label_1561_internal:
         }
     }
     label_1566();
-    cmportrait = cdata_portrait(rc);
+    cmportrait = cdata[rc].portrait;
 label_1562_internal:
     snd(94);
 label_1563_internal:
@@ -1679,7 +1679,7 @@ label_1563_internal:
     label_2298();
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
-    cdata_level(rc) = 1;
+    cdata[rc].level = 1;
     {
         int cnt = 10;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -1692,7 +1692,7 @@ label_1563_internal:
     }
     label_1535();
     label_1536();
-    cdata_portrait(rc) = cmportrait;
+    cdata[rc].portrait = cmportrait;
     create_pcpic(0, 1);
     mode = 1;
     csctrl = 1;
@@ -1788,7 +1788,7 @@ label_1565_internal:
     }
     snd(101);
     cdatan(0, rc) = cmname;
-    cdata_gold(0) = 400 + rnd(200);
+    cdata[0].gold = 400 + rnd(200);
     if (geneuse != ""s)
     {
         label_2091();
@@ -2081,93 +2081,93 @@ void label_2732()
         gdata_home_scale = 0;
         gdata_number_of_waiting_guests = 2;
         gdata_charge_power = 1000;
-        cdata_god(0) = 2;
-        cdata_piety_point(0) = 1000;
-        cdata_praying_point(0) = 1000;
+        cdata[0].god = 2;
+        cdata[0].piety_point = 1000;
+        cdata[0].praying_point = 1000;
         gdata_pael_and_her_mom = 1000;
-        cdata_gold(0) += 1000000;
-        cdata_platinum_coin(0) = 30;
-        cdata_fame(0) = 65000;
+        cdata[0].gold += 1000000;
+        cdata[0].platinum_coin = 30;
+        cdata[0].fame = 65000;
         gdata_main_quest_flag = 100;
         r1 = 0;
         label_1477();
         flt();
         itemcreate(0, 284, -1, -1, 0);
-        inv_number(ci) = 20;
-        inv_curse_state(ci) = 1;
+        inv[ci].number = 20;
+        inv[ci].curse_state = 1;
         flt();
         itemcreate(0, 127, -1, -1, 0);
-        inv_number(ci) = 20;
-        inv_curse_state(ci) = 1;
+        inv[ci].number = 20;
+        inv[ci].curse_state = 1;
         flt();
         itemcreate(0, 617, -1, -1, 0);
-        inv_number(ci) = 20;
+        inv[ci].number = 20;
         flt();
         itemcreate(0, 671, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 749, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 748, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 601, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 342, -1, -1, 0);
-        inv_number(ci) = 12;
+        inv[ci].number = 12;
         flt();
         itemcreate(0, 343, -1, -1, 0);
-        inv_number(ci) = 50;
+        inv[ci].number = 50;
         flt();
         itemcreate(0, 519, -1, -1, 0);
-        inv_number(ci) = 50;
-        inv_color(ci) = 4;
+        inv[ci].number = 50;
+        inv[ci].color = 4;
         flt();
         itemcreate(0, 622, -1, -1, 0);
-        inv_number(ci) = 50000;
+        inv[ci].number = 50000;
         flt();
         itemcreate(0, 603, -1, -1, 0);
-        inv_number(ci) = 5;
+        inv[ci].number = 5;
         flt();
         itemcreate(0, 620, -1, -1, 0);
-        inv_number(ci) = 5;
+        inv[ci].number = 5;
         flt();
         itemcreate(0, 736, -1, -1, 0);
-        inv_number(ci) = 5;
+        inv[ci].number = 5;
         flt();
         itemcreate(0, 566, -1, -1, 0);
-        inv_number(ci) = 5;
+        inv[ci].number = 5;
         flt();
         itemcreate(0, 516, -1, -1, 0);
-        inv_number(ci) = 5;
-        inv_curse_state(ci) = 1;
+        inv[ci].number = 5;
+        inv[ci].curse_state = 1;
         flt();
         itemcreate(0, 262, -1, -1, 0);
-        inv_number(ci) = 5;
+        inv[ci].number = 5;
         flt();
         itemcreate(0, 632, -1, -1, 0);
-        inv_number(ci) = 10;
-        inv_curse_state(ci) = -1;
+        inv[ci].number = 10;
+        inv[ci].curse_state = -1;
         flt();
         itemcreate(0, 632, -1, -1, 0);
-        inv_number(ci) = 10;
-        inv_curse_state(ci) = 0;
+        inv[ci].number = 10;
+        inv[ci].curse_state = 0;
         flt();
         itemcreate(0, 204, -1, -1, 0);
-        inv_subname(ci) = 330;
-        inv_number(ci) = 10;
+        inv[ci].subname = 330;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 636, -1, -1, 0);
-        inv_number(ci) = 3;
-        inv_curse_state(ci) = 0;
+        inv[ci].number = 3;
+        inv[ci].curse_state = 0;
         flt();
         itemcreate(0, 342, -1, -1, 0);
-        inv_count(ci) = 100;
+        inv[ci].count = 100;
         flt();
         itemcreate(0, 350, -1, -1, 0);
-        inv_number(ci) = 20;
+        inv[ci].number = 20;
         flt();
         itemcreate(0, 707, -1, -1, 0);
         flt();
@@ -2204,10 +2204,10 @@ void label_2732()
         itemcreate(0, 784, -1, -1, 0);
         flt();
         itemcreate(0, 785, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 786, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 787, -1, -1, 0);
         flt();
@@ -2222,7 +2222,7 @@ void label_2732()
         itemcreate(0, 792, -1, -1, 0);
         flt();
         itemcreate(0, 260, -1, -1, 0);
-        inv_number(ci) = 100;
+        inv[ci].number = 100;
         gdata(41) = 140789;
         gdata(42) = 140790;
         {
@@ -2238,40 +2238,40 @@ void label_2732()
         itemcreate(0, 783, -1, -1, 0);
         flt();
         itemcreate(0, 783, -1, -1, 0);
-        inv_subname(ci) = 1187;
+        inv[ci].subname = 1187;
         flt();
         itemcreate(0, 783, -1, -1, 0);
-        inv_subname(ci) = 955;
+        inv[ci].subname = 955;
         itemcreate(0, 672, -1, -1, 0);
-        inv_param1(ci) = 164;
+        inv[ci].param1 = 164;
         flt();
         itemcreate(0, 566, -1, -1, 0);
-        inv_number(ci) = 10;
-        inv_curse_state(ci) = 1;
+        inv[ci].number = 10;
+        inv[ci].curse_state = 1;
         flt();
         itemcreate(0, 566, -1, -1, 0);
-        inv_number(ci) = 10;
-        inv_curse_state(ci) = -1;
+        inv[ci].number = 10;
+        inv[ci].curse_state = -1;
         flt();
         itemcreate(0, 566, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 55, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 385, -1, -1, 0);
-        inv_number(ci) = 10;
+        inv[ci].number = 10;
         flt();
         itemcreate(0, 672, -1, -1, 0);
-        inv_number(ci) = 10;
-        inv_param1(ci) = 169;
+        inv[ci].number = 10;
+        inv[ci].param1 = 169;
         flt();
         itemcreate(0, 672, -1, -1, 0);
-        inv_number(ci) = 10;
-        inv_param1(ci) = 162;
+        inv[ci].number = 10;
+        inv[ci].param1 = 162;
         flt();
         itemcreate(0, 771, -1, -1, 0);
-        inv_number(ci) = 100;
+        inv[ci].number = 100;
         flt();
         itemcreate(0, 761, -1, -1, 0);
         flt();
@@ -2289,8 +2289,8 @@ void label_2732()
             int stat = itemcreate(0, 752, -1, -1, 0);
             if (stat != 0)
             {
-                inv_param3(ci) = 240;
-                inv_number(ci) = 50;
+                inv[ci].param3 = 240;
+                inv[ci].number = 50;
             }
         }
         flt();
@@ -2298,8 +2298,8 @@ void label_2732()
             int stat = itemcreate(0, 755, -1, -1, 0);
             if (stat != 0)
             {
-                inv_param3(ci) = 240;
-                inv_number(ci) = 50;
+                inv[ci].param3 = 240;
+                inv[ci].number = 50;
             }
         }
         flt();
@@ -2307,8 +2307,8 @@ void label_2732()
             int stat = itemcreate(0, 756, -1, -1, 0);
             if (stat != 0)
             {
-                inv_param3(ci) = 240;
-                inv_number(ci) = 50;
+                inv[ci].param3 = 240;
+                inv[ci].number = 50;
             }
         }
         {

@@ -71,16 +71,16 @@ void cell_draw()
         flick_at_m85 = -15;
     }
     repw(2) = repw(1);
-    reph(2) = cdata_y(0) + (syfix < 0);
+    reph(2) = cdata[0].position.y + (syfix < 0);
     reph(3) = reph(2) + 1;
-    if (cdata_y(0) == mdata(1) - 2)
+    if (cdata[0].position.y == mdata(1) - 2)
     {
         if (syfix < 0)
         {
             --reph(3);
         }
     }
-    if (cdata_y(0) == mdata(1) - 1)
+    if (cdata[0].position.y == mdata(1) - 1)
     {
         if (syfix > 0)
         {
@@ -136,13 +136,14 @@ void cell_draw()
                     {
                         if (x_at_m85 == repw(2))
                         {
-                            px_at_m85 = (cdata_x(0) - scx) * inf_tiles
+                            px_at_m85 = (cdata[0].position.x - scx) * inf_tiles
                                 + inf_screenx - 48;
                             if (scxbk == scx)
                             {
                                 px_at_m85 -= sxfix;
                             }
-                            py_at_m85 = (cdata_y(0) + 1 - scy) * inf_tiles
+                            py_at_m85 =
+                                (cdata[0].position.y + 1 - scy) * inf_tiles
                                 + inf_screeny;
                             if (scybk == scy)
                             {
@@ -158,16 +159,21 @@ void cell_draw()
                     {
                         if (x_at_m85 == repw(2))
                         {
-                            if (cdata_state(0) == 1)
+                            if (cdata[0].state == 1)
                             {
-                                ground_at_m85 = map(cdata_x(0), cdata_y(0), 0);
-                                px_at_m85 = (cdata_x(0) - scx) * inf_tiles
+                                ground_at_m85 =
+                                    map(cdata[0].position.x,
+                                        cdata[0].position.y,
+                                        0);
+                                px_at_m85 =
+                                    (cdata[0].position.x - scx) * inf_tiles
                                     + inf_screenx;
                                 if (scxbk == scx)
                                 {
                                     px_at_m85 -= sxfix;
                                 }
-                                py_at_m85 = (cdata_y(0) - scy) * inf_tiles
+                                py_at_m85 =
+                                    (cdata[0].position.y - scy) * inf_tiles
                                     + inf_screeny;
                                 if (scybk == scy)
                                 {
@@ -180,13 +186,13 @@ void cell_draw()
                                 gcopy(3, 800, 112, 144, 96);
                                 if (py_at_m85 < windowh - inf_verh - 24)
                                 {
-                                    if (cdata_continuous_action_id(0) == 7)
+                                    if (cdata[0].continuous_action_id == 7)
                                     {
                                         ani_at_m85 = 0;
                                     }
                                     else
                                     {
-                                        ani_at_m85 = cdata_turn(0) % 4 * 32;
+                                        ani_at_m85 = cdata[0].turn % 4 * 32;
                                     }
                                     if (mdata(6) == 1)
                                     {
@@ -199,7 +205,7 @@ void cell_draw()
                                         grotate(
                                             10,
                                             ani_at_m85,
-                                            cdata_direction(0) * 48,
+                                            cdata[0].direction * 48,
                                             0,
                                             16,
                                             24);
@@ -212,7 +218,7 @@ void cell_draw()
                                         grotate(
                                             10,
                                             ani_at_m85,
-                                            cdata_direction(0) * 48 + 28,
+                                            cdata[0].direction * 48 + 28,
                                             0,
                                             24,
                                             16);
@@ -221,7 +227,7 @@ void cell_draw()
                                         grotate(
                                             10,
                                             ani_at_m85,
-                                            cdata_direction(0) * 48,
+                                            cdata[0].direction * 48,
                                             0,
                                             24,
                                             24);
@@ -251,7 +257,7 @@ void cell_draw()
                                         grotate(
                                             10,
                                             ani_at_m85,
-                                            cdata_direction(0) * 48,
+                                            cdata[0].direction * 48,
                                             0,
                                             24,
                                             40);
@@ -259,12 +265,12 @@ void cell_draw()
                                     gmode(2);
                                     color(0, 0, 0);
                                 }
-                                if (cdata_furious(0) != 0)
+                                if (cdata[0].furious != 0)
                                 {
                                     pos(px_at_m85, py_at_m85 - 24);
                                     gcopy(3, 32, 608, 16, 16);
                                 }
-                                if (cdata_emotion_icon(0) != 0)
+                                if (cdata[0].emotion_icon != 0)
                                 {
                                     draw_emo(0, px_at_m85 + 4, py_at_m85 - 32);
                                 }
@@ -566,10 +572,12 @@ void cell_draw()
                                     {
                                         continue;
                                     }
-                                    p_at_m85 = inv_image(
-                                        flooritem_at_m85(cnt2_at_m85));
-                                    i_at_m85 = inv_color(
-                                        flooritem_at_m85(cnt2_at_m85));
+                                    p_at_m85 =
+                                        inv[flooritem_at_m85(cnt2_at_m85)]
+                                            .image;
+                                    i_at_m85 =
+                                        inv[flooritem_at_m85(cnt2_at_m85)]
+                                            .color;
                                     gsel(1);
                                     color(0);
                                     boxf(
@@ -934,7 +942,7 @@ void cell_draw()
                             {
                                 if (cbit(7, 0) == 0)
                                 {
-                                    if (cdata_wet(c_at_m85) == 0)
+                                    if (cdata[c_at_m85].wet == 0)
                                     {
                                         c_at_m85 = 0;
                                     }
@@ -955,7 +963,7 @@ void cell_draw()
                                         grotate(
                                             10 + c_at_m85,
                                             ani_at_m85,
-                                            cdata_direction(c_at_m85) * 48,
+                                            cdata[c_at_m85].direction * 48,
                                             0,
                                             16,
                                             24);
@@ -968,7 +976,7 @@ void cell_draw()
                                         grotate(
                                             10 + c_at_m85,
                                             ani_at_m85,
-                                            cdata_direction(c_at_m85) * 48 + 28,
+                                            cdata[c_at_m85].direction * 48 + 28,
                                             0,
                                             24,
                                             16);
@@ -977,7 +985,7 @@ void cell_draw()
                                         grotate(
                                             10 + c_at_m85,
                                             ani_at_m85,
-                                            cdata_direction(c_at_m85) * 48,
+                                            cdata[c_at_m85].direction * 48,
                                             0,
                                             24,
                                             24);
@@ -993,19 +1001,19 @@ void cell_draw()
                                         grotate(
                                             10 + c_at_m85,
                                             ani_at_m85,
-                                            cdata_direction(c_at_m85) * 48,
+                                            cdata[c_at_m85].direction * 48,
                                             0,
                                             24,
                                             40);
                                     }
                                     gmode(2);
                                     color(0, 0, 0);
-                                    if (cdata_furious(c_at_m85) != 0)
+                                    if (cdata[c_at_m85].furious != 0)
                                     {
                                         pos(dx_at_m85 + 12, dy_at_m85 - 28);
                                         gcopy(3, 32, 608, 16, 16);
                                     }
-                                    if (cdata_emotion_icon(c_at_m85) != 0)
+                                    if (cdata[c_at_m85].emotion_icon != 0)
                                     {
                                         draw_emo(
                                             c_at_m85,
@@ -1015,8 +1023,8 @@ void cell_draw()
                                 }
                                 else
                                 {
-                                    col_at_m85 = cdata_image(c_at_m85) / 1000;
-                                    p_at_m85 = cdata_image(c_at_m85) % 1000;
+                                    col_at_m85 = cdata[c_at_m85].image / 1000;
+                                    p_at_m85 = cdata[c_at_m85].image % 1000;
                                     if (cbit(985, c_at_m85))
                                     {
                                         gmode(2, 48, 96, 80);
@@ -1068,7 +1076,7 @@ void cell_draw()
                                             0,
                                             24,
                                             chipc(3, p_at_m85) / 2);
-                                        if (cdata_emotion_icon(c_at_m85) != 0)
+                                        if (cdata[c_at_m85].emotion_icon != 0)
                                         {
                                             draw_emo(
                                                 c_at_m85,
@@ -1128,14 +1136,14 @@ void cell_draw()
                                                 chipc(2, p_at_m85),
                                                 chipc(3, p_at_m85));
                                         }
-                                        if (cdata_furious(c_at_m85) != 0)
+                                        if (cdata[c_at_m85].furious != 0)
                                         {
                                             pos(dx_at_m85 + 12,
                                                 dy_at_m85 - chipc(4, p_at_m85)
                                                     - 12);
                                             gcopy(3, 32, 608, 16, 16);
                                         }
-                                        if (cdata_emotion_icon(c_at_m85) != 0)
+                                        if (cdata[c_at_m85].emotion_icon != 0)
                                         {
                                             draw_emo(
                                                 c_at_m85,
@@ -1154,8 +1162,8 @@ void cell_draw()
                                 if (cbit(966, c_at_m85) == 1
                                     || gdata(94) == c_at_m85)
                                 {
-                                    h_at_m85 = cdata_hp(c_at_m85) * 30
-                                        / cdata_max_hp(c_at_m85);
+                                    h_at_m85 = cdata[c_at_m85].hp * 30
+                                        / cdata[c_at_m85].max_hp;
                                     if (h_at_m85 > 30)
                                     {
                                         h_at_m85 = 30;
@@ -1198,8 +1206,8 @@ void cell_draw()
                                 light_at_m85 -= (6
                                                  - std::clamp(
                                                        dist(
-                                                           cdata_x(0),
-                                                           cdata_y(0),
+                                                           cdata[0].position.x,
+                                                           cdata[0].position.y,
                                                            x_at_m85,
                                                            y_at_m85),
                                                        0,
@@ -1317,11 +1325,11 @@ void cell_draw()
             for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
                 gmode(5, -1, -1, 7 + cnt * 2);
-                x_at_m85 = (cloud(0, cnt) - cdata_x(0) * 48 + sxfix) * 100
-                        / (40 + cnt * 5)
+                x_at_m85 = (cloud(0, cnt) - cdata[0].position.x * 48 + sxfix)
+                        * 100 / (40 + cnt * 5)
                     + scrturn * 100 / (50 + cnt * 20);
-                y_at_m85 = (cloud(1, cnt) - cdata_y(0) * 48 + syfix) * 100
-                    / (40 + cnt * 5);
+                y_at_m85 = (cloud(1, cnt) - cdata[0].position.y * 48 + syfix)
+                    * 100 / (40 + cnt * 5);
                 x_at_m85 = x_at_m85 % (windoww + cloud(4, cnt)) - cloud(4, cnt);
                 y_at_m85 =
                     y_at_m85 % (inf_very + cloud(5, cnt)) - cloud(5, cnt);
