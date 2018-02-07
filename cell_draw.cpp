@@ -1162,34 +1162,36 @@ void cell_draw()
                                 if (cbit(966, c_at_m85) == 1
                                     || gdata(94) == c_at_m85)
                                 {
-                                    h_at_m85 = cdata[c_at_m85].hp * 30
-                                        / cdata[c_at_m85].max_hp;
-                                    if (h_at_m85 > 30)
+                                    h_at_m85 = std::min(
+                                        cdata[c_at_m85].hp * 30
+                                            / cdata[c_at_m85].max_hp,
+                                        30);
+                                    if (h_at_m85 > 0)
                                     {
-                                        h_at_m85 = 30;
-                                    }
-                                    if (c_at_m85 < 16)
-                                    {
-                                        if (mdata(6) != 1)
+                                        if (c_at_m85 < 16)
+                                        {
+                                            if (mdata(6) != 1)
+                                            {
+                                                pos(dx_at_m85 + 9,
+                                                    dy_at_m85 + 32);
+                                                gcopy(
+                                                    3,
+                                                    480 - h_at_m85,
+                                                    517,
+                                                    h_at_m85,
+                                                    3);
+                                            }
+                                        }
+                                        else
                                         {
                                             pos(dx_at_m85 + 9, dy_at_m85 + 32);
                                             gcopy(
                                                 3,
                                                 480 - h_at_m85,
-                                                517,
+                                                513,
                                                 h_at_m85,
                                                 3);
                                         }
-                                    }
-                                    else
-                                    {
-                                        pos(dx_at_m85 + 9, dy_at_m85 + 32);
-                                        gcopy(
-                                            3,
-                                            480 - h_at_m85,
-                                            513,
-                                            h_at_m85,
-                                            3);
                                     }
                                 }
                             }
