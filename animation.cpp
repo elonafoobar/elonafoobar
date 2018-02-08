@@ -204,6 +204,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
 {
     snd(34);
     gsel(7);
+    pos(0, 0);
     picload(fs::u8path(u8"./graphic/anime5.bmp"));
     pos(0, 96);
     gfini(480, 48);
