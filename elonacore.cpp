@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "main.hpp"
+#include "race.hpp"
 #include "snail/color.hpp"
 #include "variables.hpp"
 
