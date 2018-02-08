@@ -228,13 +228,8 @@ namespace elona
 
 void load_config()
 {
-    int cfg_scancel = 0;
-    int cfg_showskillmod = 0;
     // FIXME std::string{value} => value
     std::unique_ptr<config_base> config_list[] = {
-        std::make_unique<config_integer>(
-            u8"key_sCancel.",
-            [&](auto value) { cfg_scancel = value; }),
         std::make_unique<config_integer>(
             u8"alert_wait.",
             [&](auto value) { cfg_alert = value; }),
@@ -325,9 +320,6 @@ void load_config()
         std::make_unique<config_integer>(
             u8"exAnime.",
             [&](auto value) { cfg_exanime = value; }),
-        std::make_unique<config_integer>(
-            u8"showSkillMod.",
-            [&](auto value) { cfg_showskillmod = value; }),
         std::make_unique<config_integer>(
             u8"hide_autoIdentify.",
             [&](auto value) { cfg_hideautoidentify = value; }),
