@@ -9,10 +9,6 @@ OBJECTS := $(foreach i, $(SOURCES), $(BIN_DIR)/$(basename $(i)).o)
 PROGRAM := ./runtime/elonafoobar
 
 
-ifdef SYNTAX_ONLY
-endif
-
-
 FORMAT := clang-format
 FIND := find
 XARGS := xargs
