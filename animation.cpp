@@ -12,29 +12,21 @@ namespace
 {
 
 
-int anidx = 0;
-int anidy = 0;
 elona_vector1<int> ax;
 elona_vector1<int> ay;
 elona_vector1<int> ax2;
 elona_vector1<int> ay2;
-int acnt2 = 0;
-int aniw = 0;
-int anih = 0;
-elona_vector1<int> anip;
-int af = 0;
 
 
 
-void play_animation_8(int anicol, int anisound)
+void play_animation_8(int anicol)
 {
     if (synccheck(cc, -1) == 0)
-    {
         return;
-    }
+
     prepare_item_image(10, anicol);
-    anidx = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
-    anidy = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
+    int anidx = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
+    int anidy = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -47,28 +39,25 @@ void play_animation_8(int anicol, int anisound)
     gmode(2);
     gsel(0);
     snd(66);
+
+    for (int i = 0; i < 12; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
-        {
-            redraw(0);
-            pos(anidx - inf_tiles / 2, anidy - inf_tiles / 2);
-            gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
-            pos(anidx + inf_tiles / 2, anidy + 16);
-            grotate(1, 0, 960, 5 * cnt, cnt + 40, cnt + 40);
-            redraw(1);
-            await(cfg_animewait);
-        }
+        redraw(0);
+        pos(anidx - inf_tiles / 2, anidy - inf_tiles / 2);
+        gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
+        pos(anidx + inf_tiles / 2, anidy + 16);
+        grotate(1, 0, 960, 5 * i, i + 40, i + 40);
+        redraw(1);
+        await(cfg_animewait);
     }
 }
 
 
-void play_animation_6_5_7_11(int anicol, int anisound)
+void play_animation_6_5_7_11(int anicol)
 {
     if (synccheck(tc, -1) == 0)
-    {
         return;
-    }
+
     if (animeid == 6)
     {
         prepare_item_image(8, anicol);
@@ -96,51 +85,44 @@ void play_animation_6_5_7_11(int anicol, int anisound)
         inf_tiles * 2);
     gmode(2);
     gsel(0);
+
+    for (int i = 0; i < 15; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        ax2(i) = rnd(inf_tiles);
+        ay2(i) = rnd(inf_tiles) - 8;
+        ap(i) = (rnd(4) + 1) * -1;
+        if (animeid == 6)
         {
-            ax2(cnt) = rnd(inf_tiles);
-            ay2(cnt) = rnd(inf_tiles) - 8;
-            ap(cnt) = (rnd(4) + 1) * -1;
-            if (animeid == 6)
-            {
-                ap(cnt) *= -1;
-            }
+            ap(i) *= -1;
         }
     }
+
+    for (int i = 0; i < 10; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        if (animeid == 11)
         {
-            if (animeid == 11)
-            {
-                await(5);
-            }
-            else
-            {
-                await(cfg_animewait);
-            }
-            acnt2 = cnt * 2;
-            redraw(0);
-            pos(ax - inf_tiles / 2, ay - inf_tiles / 2);
-            gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
-                {
-                    pos(ax + ax2(cnt), ay + ay2(cnt) + acnt2 / ap(cnt));
-                    grotate(
-                        1,
-                        0,
-                        960,
-                        acnt2 * ap(cnt),
-                        inf_tiles - acnt2 * 2,
-                        inf_tiles - acnt2 * 2);
-                }
-            }
-            redraw(1);
+            await(5);
         }
+        else
+        {
+            await(cfg_animewait);
+        }
+        int acnt2 = i * 2;
+        redraw(0);
+        pos(ax - inf_tiles / 2, ay - inf_tiles / 2);
+        gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
+        for (int j = 0; j < 15; ++j)
+        {
+            pos(ax + ax2(j), ay + ay2(j) + acnt2 / ap(j));
+            grotate(
+                1,
+                0,
+                960,
+                acnt2 * ap(j),
+                inf_tiles - acnt2 * 2,
+                inf_tiles - acnt2 * 2);
+        }
+        redraw(1);
     }
 }
 
@@ -172,8 +154,8 @@ void play_animation_3(int anicol, int anisound)
                 int cnt = 0;
                 for (int cnt_end = cnt + (maxbreath); cnt < cnt_end; ++cnt)
                 {
-                    anidx = breathlist(0, cnt);
-                    anidy = breathlist(1, cnt);
+                    int anidx = breathlist(0, cnt);
+                    int anidy = breathlist(1, cnt);
                     if (fov_los(
                             cdata[cc].position.x,
                             cdata[cc].position.y,
@@ -226,10 +208,8 @@ void play_animation_17_2(int anicol, int anisound)
     pos(0, 96);
     gfini(480, 48);
     gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-    aniw = 360;
-    anih = 360;
-    anidx = (anix - scx) * inf_tiles + inf_screenx + 24;
-    anidy = (aniy - scy) * inf_tiles + inf_screeny + 24;
+    int anidx = (anix - scx) * inf_tiles + inf_screenx + 24;
+    int anidy = (aniy - scy) * inf_tiles + inf_screeny + 24;
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -241,7 +221,8 @@ void play_animation_17_2(int anicol, int anisound)
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            anip = cnt;
+            int anip = cnt;
+            int anip1 = 0;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (aniref * 2 + 1); cnt < cnt_end; ++cnt)
@@ -264,12 +245,12 @@ void play_animation_17_2(int anicol, int anisound)
                             {
                                 continue;
                             }
-                            anip(1) = dist(anix, aniy, anidx, anidy);
-                            if (anip(1) > aniref)
+                            anip1 = dist(anix, aniy, anidx, anidy);
+                            if (anip1 > aniref)
                             {
                                 continue;
                             }
-                            anip(1) = 48 - (anip - 4) * (anip - 4) * 2;
+                            anip1 = 48 - (anip - 4) * (anip - 4) * 2;
                             if (animeid == 2)
                             {
                                 if (fov_los(anix, aniy, anidx, anidy) == 0)
@@ -325,8 +306,8 @@ void play_animation_0(int anicol, int anisound)
 {
     prepare_item_image(3, anicol);
     snd(37);
-    anidx = cdata[cc].position.x;
-    anidy = cdata[cc].position.y;
+    int anidx = cdata[cc].position.x;
+    int anidy = cdata[cc].position.y;
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime6.bmp"));
     pos(0, 0);
@@ -433,7 +414,7 @@ void play_animation_0(int anicol, int anisound)
 
 
 
-void play_animation_15(int anicol, int anisound)
+void play_animation_15(int anicol)
 {
     if (synccheck(cc, -1) == 0)
     {
@@ -580,12 +561,12 @@ void play_animation_ranged_attack(int anicol, int anisound)
 
 
 
-void play_animation_9(int anicol, int anisound)
+void play_animation_9(int anicol)
 {
     snd(2);
     prepare_item_image(17, 0);
-    anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-    anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
+    int anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
+    int anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -609,52 +590,22 @@ void play_animation_9(int anicol, int anisound)
 
 
 
-void play_animation_12(int anicol, int anisound)
+void play_animation_12(int anicol)
 {
-    ap = 0;
-    if (attackskill == 108)
+    int anix1;
+    int aniy1;
+    switch (attackskill)
     {
-        ap = 2;
-    }
-    if (attackskill == 109)
-    {
-        ap = 2;
-    }
-    if (attackskill == 110)
-    {
-        ap = 2;
-    }
-    if (attackskill == 111)
-    {
-        ap = 2;
-    }
-    if (attackskill == 100)
-    {
-        ap = 1;
-    }
-    if (attackskill == 104)
-    {
-        ap = 1;
-    }
-    if (attackskill == 105)
-    {
-        ap = 0;
-    }
-    if (attackskill == 101)
-    {
-        ap = 1;
-    }
-    if (attackskill == 103)
-    {
-        ap = 0;
-    }
-    if (attackskill == 102)
-    {
-        ap = 1;
-    }
-    if (attackskill == 107)
-    {
-        ap = 1;
+    case 100:
+    case 101:
+    case 102:
+    case 104:
+    case 107: ap = 1; break;
+    case 108:
+    case 109:
+    case 110:
+    case 111: ap = 2; break;
+    default: ap = 0; break;
     }
     aniref = aniref / 4 + 1;
     if (aniref > 20)
@@ -663,11 +614,11 @@ void play_animation_12(int anicol, int anisound)
     }
     if (cbit(983, tc))
     {
-        anix(1) = 1104;
+        anix1 = 1104;
     }
     else
     {
-        anix(1) = 720;
+        anix1 = 720;
     }
     if (ap == 0)
     {
@@ -681,10 +632,10 @@ void play_animation_12(int anicol, int anisound)
             sy(cnt) = rnd(8);
         }
     }
-    anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-    anix = anidx + rnd(12) - rnd(12);
-    anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
-    aniy = anidy - 16 + rnd(12) - rnd(12);
+    int anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
+    int anix = anidx + rnd(12) - rnd(12);
+    int anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
+    int aniy = anidy - 16 + rnd(12) - rnd(12);
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -717,7 +668,7 @@ void play_animation_12(int anicol, int anisound)
                             + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2
                             + (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
                         anidy + sy(cnt) + cnt2 * cnt2 / 3);
-                    grotate(1, anix(1), 0, 0.4 * cnt, 6, 6);
+                    grotate(1, anix1, 0, 0.4 * cnt, 6, 6);
                 }
             }
             if (ap == 0)
@@ -753,7 +704,7 @@ void play_animation_12(int anicol, int anisound)
 }
 
 
-void play_animation_20(int anicol, int anisound)
+void play_animation_20(int anicol)
 {
     snd(107);
     if (synccheck(anic, -1) == 0)
@@ -767,8 +718,8 @@ void play_animation_20(int anicol, int anisound)
     pos(0, 0);
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
-    anidx = (cdata[anic].position.x - scx) * inf_tiles + inf_screenx - 24;
-    anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
+    int anidx = (cdata[anic].position.x - scx) * inf_tiles + inf_screenx - 24;
+    int anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -794,7 +745,7 @@ void play_animation_20(int anicol, int anisound)
 }
 
 
-void play_animation_19(int anicol, int anisound)
+void play_animation_19(int anicol)
 {
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime12.bmp"));
@@ -854,7 +805,7 @@ void play_animation_19(int anicol, int anisound)
             pos(0, 0);
             gmode(0);
             gcopy(4, 0, 0, windoww, windowh);
-            af = 0;
+            int af = 0;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
@@ -865,7 +816,8 @@ void play_animation_19(int anicol, int anisound)
                     }
                     af = 1;
                     cnt2 = cnt;
-                    anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
+                    int anidy =
+                        ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                     gmode(2, 96, 96);
                     pos(ax(cnt), anidy);
                     gcopy(
@@ -883,7 +835,7 @@ void play_animation_19(int anicol, int anisound)
                             gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
                         }
                     }
-                    anidx = std::clamp(
+                    int anidx = std::clamp(
                         anidy / 55 + 1,
                         0,
                         7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
@@ -938,7 +890,7 @@ void play_animation_19(int anicol, int anisound)
 }
 
 
-void play_animation_22(int anicol, int anisound)
+void play_animation_22(int anicol)
 {
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime17.bmp"));
@@ -973,7 +925,7 @@ void play_animation_22(int anicol, int anisound)
             }
             gmode(0);
             gcopy(4, 0, 0, windoww, windowh);
-            af = 0;
+            int af = 0;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
@@ -983,7 +935,8 @@ void play_animation_22(int anicol, int anisound)
                         continue;
                     }
                     af = 1;
-                    anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
+                    int anidy =
+                        ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                     gmode(2, 96, 96);
                     if (ap(cnt) < 9)
                     {
@@ -1032,7 +985,7 @@ void play_animation_22(int anicol, int anisound)
 }
 
 
-void play_animation_21(int anicol, int anisound)
+void play_animation_21(int anicol)
 {
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime16.bmp"));
@@ -1060,7 +1013,7 @@ void play_animation_21(int anicol, int anisound)
             pos(5 - rnd(10), 5 - rnd(10));
             gmode(0);
             gcopy(4, 0, 0, windoww, windowh);
-            af = 0;
+            int af = 0;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
@@ -1071,7 +1024,8 @@ void play_animation_21(int anicol, int anisound)
                     }
                     af = 1;
                     cnt2 = cnt;
-                    anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
+                    int anidy =
+                        ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                     gmode(2, 96, 96);
                     if (ap(cnt) < 10)
                     {
@@ -1118,7 +1072,8 @@ void play_animation_21(int anicol, int anisound)
 }
 
 
-void play_animation_14_16(int anicol, int anisound)
+
+void play_animation_14_16(int anicol)
 {
     aniref = 4;
     ax = (sx - scx) * inf_tiles + inf_screenx;
@@ -1215,30 +1170,30 @@ void play_animation()
 
     switch (animeid)
     {
-    case 8: play_animation_8(anicol, anisound); break;
+    case 8: play_animation_8(anicol); break;
     case 6:
     case 5:
     case 7:
-    case 11: play_animation_6_5_7_11(anicol, anisound); break;
+    case 11: play_animation_6_5_7_11(anicol); break;
     case 3: play_animation_3(anicol, anisound); break;
     case 17:
     case 2: play_animation_17_2(anicol, anisound); break;
     case 0: play_animation_0(anicol, anisound); break;
-    case 15: play_animation_15(anicol, anisound); break;
+    case 15: play_animation_15(anicol); break;
     case 111:
     case 110:
     case 108:
     case 109:
     case 1:
     case 18: play_animation_ranged_attack(anicol, anisound); break;
-    case 9: play_animation_9(anicol, anisound); break;
-    case 12: play_animation_12(anicol, anisound); break;
-    case 20: play_animation_20(anicol, anisound); break;
-    case 19: play_animation_19(anicol, anisound); break;
-    case 22: play_animation_22(anicol, anisound); break;
-    case 21: play_animation_21(anicol, anisound); break;
+    case 9: play_animation_9(anicol); break;
+    case 12: play_animation_12(anicol); break;
+    case 20: play_animation_20(anicol); break;
+    case 19: play_animation_19(anicol); break;
+    case 22: play_animation_22(anicol); break;
+    case 21: play_animation_21(anicol); break;
     case 14:
-    case 16: play_animation_14_16(anicol, anisound); break;
+    case 16: play_animation_14_16(anicol); break;
     default: break;
     }
 

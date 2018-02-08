@@ -1178,7 +1178,6 @@ void label_1421();
 void label_1422();
 void label_1423();
 void label_1425();
-void play_animation();
 void label_1428();
 void label_1429();
 void label_1433();
