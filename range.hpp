@@ -88,6 +88,15 @@ auto for_each(const R& range, F func)
 
 
 
+template <typename R, typename F>
+auto for_each(R&& range, F func)
+{
+    using std::begin, std::end;
+    return std::for_each(begin(range), end(range), func);
+}
+
+
+
 template <typename R, typename T>
 auto find(const R& range, const T& value)
 {

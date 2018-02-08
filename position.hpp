@@ -10,6 +10,14 @@ struct position_t
 {
     int x = 0;
     int y = 0;
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(x);
+        ar(y);
+    }
 };
 
 
