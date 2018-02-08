@@ -3,6 +3,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -80800,6 +80801,14 @@ label_2747:
     }
     if (getkey(snail::key::f12))
     {
+        if (debug::voldemort)
+        {
+            for (int i = 400; i < 467; ++i)
+            {
+                skillgain(0, i, 100, 10000);
+            }
+            goto label_2747;
+        }
         label_2134();
         return;
     }

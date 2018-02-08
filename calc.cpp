@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "character.hpp"
+#include "debug.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -2232,6 +2233,11 @@ int calcspellpower(int prm_918, int prm_919)
 
 int calcspellfail(int prm_920, int prm_921)
 {
+    if (debug::voldemort)
+    {
+        return 100;
+    }
+
     int i_at_m157 = 0;
     int f_at_m157 = 0;
     int p_at_m157 = 0;
@@ -2311,6 +2317,11 @@ int calcspellfail(int prm_920, int prm_921)
 
 int calcspellcostmp(int prm_922, int prm_923)
 {
+    if (debug::voldemort)
+    {
+        return 1;
+    }
+
     int cost_at_m158 = 0;
     if (prm_923 == 0)
     {
