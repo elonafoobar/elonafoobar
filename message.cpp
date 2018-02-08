@@ -540,6 +540,7 @@ void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
 
 void msg_write(std::string& prm_307)
 {
+    int msglen_ = jp ? msglen / 1.5 : msglen;
     int mp_at_txtfunc = 0;
     int mark_at_txtfunc = 0;
     {
@@ -562,7 +563,7 @@ void msg_write(std::string& prm_307)
                     + strmid(prm_307,
                              (mp_at_txtfunc + 2 + (mark_at_txtfunc != 0)),
                              9999);
-                pos((msglen + mp_at_txtfunc) * inf_mesfont / 2 + inf_msgx + 7
+                pos((msglen_ + mp_at_txtfunc) * inf_mesfont / 2 + inf_msgx + 7
                         + en * 3,
                     (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
                 gmode(2);
@@ -573,7 +574,7 @@ void msg_write(std::string& prm_307)
         }
     }
     color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
-    pos(msglen * inf_mesfont / 2 + inf_msgx + 6,
+    pos(msglen_ * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
     font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
     mes(prm_307);
@@ -844,6 +845,8 @@ void txt_conv()
         msgdup = 0;
     }
 
+    int inf_maxmsglen_ = inf_maxmsglen * 1.5;
+
     if (jp)
     {
         if (msgtemp(0).find(u8"「") != std::string::npos)
@@ -864,11 +867,11 @@ void txt_conv()
         while (1)
         {
             len = std::size(msgtemp(0));
-            if (msglen + 4 > inf_maxmsglen && !std::empty(msgtemp(0)))
+            if (msglen + 4 > inf_maxmsglen_ && !std::empty(msgtemp(0)))
             {
                 msg_newline();
             }
-            if (msglen + len > inf_maxmsglen)
+            if (msglen + len > inf_maxmsglen_)
             {
                 int p2 = 0;
                 while (1)
@@ -888,9 +891,9 @@ void txt_conv()
                         p2 += 6;
                     else
                         p2 += 1;
-                    if (p2 + msglen > inf_maxmsglen)
+                    if (p2 + msglen > inf_maxmsglen_)
                     {
-                        if (p2 + msglen > inf_maxmsglen + 2)
+                        if (p2 + msglen > inf_maxmsglen_ + 2)
                         {
                             break;
                         }
