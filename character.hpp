@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include "position.hpp"
+#include "range.hpp"
 
 
 namespace elona
@@ -14,6 +15,15 @@ struct buff_t
     int id = 0;
     int power = 0;
     int turns = 0;
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(id);
+        ar(power);
+        ar(turns);
+    }
 };
 
 
@@ -159,6 +169,143 @@ struct character
 
     void clear();
     void clear_flags();
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(state);
+        ar(position);
+        ar(next_position);
+        ar(time_to_revive);
+        ar(vision_flag);
+        ar(image);
+        ar(sex);
+        ar(relationship);
+        ar(turn_cost);
+        ar(current_speed);
+        ar(item_which_will_be_used);
+        ar(portrait);
+        ar(interest);
+        ar(time_interest_revive);
+        ar(personality);
+        ar(impression);
+        ar(talk_type);
+        ar(height);
+        ar(weight);
+        ar(birth_year);
+        ar(nutrition);
+        ar(can_talk);
+        ar(quality);
+        ar(turn);
+        ar(id);
+        ar(vision_distance);
+        ar(enemy_id);
+        ar(gold);
+        ar(platinum_coin);
+        ar(equipment_type);
+        ar(melee_attack_type);
+        ar(fame);
+        ar(experience);
+        ar(required_experience);
+        ar(speed_percentage);
+        ar(level);
+        ar(speed_percentage_in_next_turn);
+        ar(skill_bonus);
+        ar(total_skill_bonus);
+        ar(inventory_weight);
+        ar(max_inventory_weight);
+        ar(inventory_weight_type);
+        ar(max_level);
+        ar(karma);
+        ar(hp);
+        ar(max_hp);
+        ar(sp);
+        ar(max_sp);
+        ar(mp);
+        ar(max_mp);
+        ar(heal_value_per_nether_attack);
+        ar(god);
+        ar(piety_point);
+        ar(praying_point);
+        ar(sum_of_equipment_weight);
+        ar(special_attack_type);
+        ar(rate_to_pierce);
+        ar(rate_of_critical_hit);
+        ar(speed_correction_value);
+        ar(original_relationship);
+        ar(pv);
+        ar(dv);
+        ar(hit_bonus);
+        ar(damage_bonus);
+        ar(pv_correction_value);
+        ar(dv_correction_value);
+        ar(damage_reaction_info);
+        ar(emotion_icon);
+        ar(current_map);
+        ar(current_dungeon_level);
+        ar(related_quest_id);
+        ar(direction);
+        ar(period_of_contract);
+        ar(hire_count);
+        ar(insanity);
+        ar(curse_power);
+        ar(extra_attack);
+        ar(extra_shot);
+        ar(decrease_physical_damage);
+        ar(nullify_damage);
+        ar(cut_counterattack);
+        ar(anorexia_count);
+        ar(continuous_action_id);
+        ar(continuous_action_turn);
+        ar(continuous_action_item);
+        ar(stops_continuous_action_if_damaged);
+        ar(quality_of_performance);
+        ar(tip_gold);
+        ar(character_role);
+        ar(shop_rank);
+        ar(continuous_action_target);
+        ar(shop_store_id);
+        ar(time_to_restore);
+        ar(cnpc_id);
+        ar(initial_position);
+        ar(hate);
+        ar(ai_calm);
+        ar(ai_move);
+        ar(ai_dist);
+        ar(ai_act_sub_freq);
+        ar(ai_heal);
+        ar(ai_act_num);
+        ar(element_of_unarmed_attack);
+        ar(poisoned);
+        ar(sleep);
+        ar(paralyzed);
+        ar(blind);
+        ar(confused);
+        ar(fear);
+        ar(dimmed);
+        ar(drunk);
+        ar(bleeding);
+        ar(wet);
+        ar(insane);
+        ar(sick);
+        ar(gravity);
+        ar(choked);
+        ar(furious);
+        range::for_each(
+            growth_buffs, [&](auto&& growth_buff) { ar(growth_buff); });
+        range::for_each(body_parts, [&](auto&& body_part) { ar(body_part); });
+        range::for_each(act, [&](auto&& a) { ar(a); });
+        range::for_each(buffs, [&](auto&& buff) { ar(buff); });
+        range::for_each(attr_adjs, [&](auto&& attr_adj) { ar(attr_adj); });
+        range::for_each(flags, [&](auto&& flag) { ar(flag); });
+        ar(_40);
+        ar(_158);
+        ar(_156);
+        ar(_203);
+        ar(_205);
+        ar(_206);
+    }
 };
 
 
@@ -178,12 +325,6 @@ struct character_data
     {
         return storage[index];
     }
-
-
-    std::unique_ptr<char[]> serialize(int offset = 0) const;
-
-    void
-    deserialize(std::unique_ptr<char[]> raw_data, int size, int offset = 0);
 
 
 private:
