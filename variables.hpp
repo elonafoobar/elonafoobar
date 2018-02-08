@@ -561,7 +561,6 @@ inline int scx;
 inline int scxbk;
 inline int scy;
 inline int scybk;
-inline int selcur;
 inline int sexvalue;
 inline int shade;
 inline int shoptrade;

@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "character.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -1041,68 +1042,7 @@ label_2061_internal:
             }
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
             p(1) = inv[p].image % 1000;
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
-            if (p(1) == 528)
-            {
-                gmode(2);
-                pos(0, 960);
-                gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                pos(0, 1008);
-                gzoom(
-                    22,
-                    20,
-                    5,
-                    chipc(0, inv[p].color) + 8,
-                    chipc(1, inv[p].color) + 4
-                        + (chipc(3, inv[p].color) > inf_tiles) * 8,
-                    chipc(2, inv[p].color) - 16,
-                    chipc(3, inv[p].color) - 8
-                        - (chipc(3, inv[p].color) > inf_tiles) * 10,
-                    1);
-                pos(6, 974);
-                gcopy(1, 0, 1008, 22, 20);
-                gsel(selcur);
-            }
-            else if (p(1) == 531)
-            {
-                pos(8, 1058 - chipc(3, inv[p].color));
-                gcopy(
-                    5,
-                    chipc(0, inv[p].color) + 8,
-                    chipc(1, inv[p].color) + 2,
-                    chipc(2, inv[p].color) - 16,
-                    chipc(3, inv[p].color) - 8);
-                gmode(4, -1, -1, 150);
-                color(0, 0, 0);
-                pos(0, 960 + (chipc(3, inv[p].color) == inf_tiles) * 48);
-                gcopy(
-                    1,
-                    144,
-                    768 + (chipc(3, inv[p].color) > inf_tiles) * 48,
-                    inf_tiles,
-                    chipc(3, inv[p].color)
-                        + (chipc(3, inv[p].color) > inf_tiles) * 48);
-                gmode(2);
-                gsel(selcur);
-            }
-            else
-            {
-                pos(0, 960);
-                gcopy(
-                    1,
-                    chipi(0, p(1)),
-                    chipi(1, p(1)),
-                    chipi(2, p(1)),
-                    chipi(3, p(1)));
-                gfini(chipi(2, p(1)), chipi(3, p(1)));
-                gfdec2(
-                    c_col(0, inv[p].color),
-                    c_col(1, inv[p].color),
-                    c_col(2, inv[p].color));
-                gsel(selcur);
-            }
+            prepare_item_image(p(1), inv[p].color);
             pos(wx + 37, wy + 69 + cnt * 19);
             gmode(2, chipi(2, p(1)), chipi(3, p(1)));
             grotate(

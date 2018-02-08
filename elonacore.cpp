@@ -3,6 +3,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "ctrl_file.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
@@ -9396,7 +9397,7 @@ void chara_preparepic(int prm_618, int prm_619)
         chipc(3, prm_618));
     gfini(chipc(2, prm_618), chipc(3, prm_618));
     gfdec2(c_col(0, p_at_m83), c_col(1, p_at_m83), c_col(2, p_at_m83));
-    gsel(selcur);
+    gsel(0);
     return;
 }
 
@@ -14260,25 +14261,11 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     update_screen();
     if (prm_810 == 0)
     {
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 16), chipi(3, 16) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 16), chipi(1, 16), chipi(2, 16), chipi(3, 16));
-        gfini(chipi(2, 16), chipi(3, 16));
-        gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-        gsel(selcur);
+        prepare_item_image(16, 0);
     }
     if (prm_810 == 1)
     {
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 18), chipi(3, 18) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 18), chipi(1, 18), chipi(2, 18), chipi(3, 18));
-        gfini(chipi(2, 18), chipi(3, 18));
-        gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-        gsel(selcur);
+        prepare_item_image(18, 0);
     }
     dx_at_m133 = (cdata[prm_809].position.x - scx) * inf_tiles + inf_screenx;
     dy_at_m133(0) = (cdata[prm_809].position.y - scy) * inf_tiles + inf_screeny;
@@ -19274,7 +19261,6 @@ label_1402_internal:
 
 void label_1415()
 {
-    selcur = 0;
     inf_clockarrowx = inf_clockx + 62;
     inf_clockarrowy = inf_clocky + 48;
     inf_barh = 16;
@@ -20276,14 +20262,7 @@ void label_1426()
         {
             goto label_1427_internal;
         }
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 10), chipi(3, 10) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 10), chipi(1, 10), chipi(2, 10), chipi(3, 10));
-        gfini(chipi(2, 10), chipi(3, 10));
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        gsel(selcur);
+        prepare_item_image(10, anicol);
         anidx = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
         anidy = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
         gsel(4);
@@ -20322,38 +20301,17 @@ void label_1426()
         }
         if (animeid == 6)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 8), chipi(3, 8) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 8), chipi(1, 8), chipi(2, 8), chipi(3, 8));
-            gfini(chipi(2, 8), chipi(3, 8));
-            gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-            gsel(selcur);
+            prepare_item_image(8, anicol);
             snd(38);
         }
         if (animeid == 5 || animeid == 11)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 7), chipi(3, 7) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 7), chipi(1, 7), chipi(2, 7), chipi(3, 7));
-            gfini(chipi(2, 7), chipi(3, 7));
-            gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-            gsel(selcur);
+            prepare_item_image(7, anicol);
             snd(33);
         }
         if (animeid == 7)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 9), chipi(3, 9) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 9), chipi(1, 9), chipi(2, 9), chipi(3, 9));
-            gfini(chipi(2, 9), chipi(3, 9));
-            gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-            gsel(selcur);
+            prepare_item_image(9, anicol);
         }
         ax = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
         ay = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
@@ -20416,14 +20374,7 @@ void label_1426()
         }
         goto label_1427_internal;
     case 3:
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 5), chipi(3, 5) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 5), chipi(1, 5), chipi(2, 5), chipi(3, 5));
-        gfini(chipi(2, 5), chipi(3, 5));
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        gsel(selcur);
+        prepare_item_image(5, anicol);
         snd(35);
         gsel(7);
         picload(fs::u8path(u8"./graphic/anime7.bmp"));
@@ -20596,14 +20547,7 @@ void label_1426()
         }
         goto label_1427_internal;
     case 0:
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 3), chipi(3, 3) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 3), chipi(1, 3), chipi(2, 3), chipi(3, 3));
-        gfini(chipi(2, 3), chipi(3, 3));
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        gsel(selcur);
+        prepare_item_image(3, anicol);
         snd(37);
         anidx = cdata[cc].position.x;
         anidy = cdata[cc].position.y;
@@ -20715,64 +20659,7 @@ void label_1426()
         {
             goto label_1427_internal;
         }
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, aniref), chipi(3, aniref) + 960);
-        if (aniref == 528)
-        {
-            gmode(2);
-            pos(0, 960);
-            gcopy(1, 0, 768, inf_tiles, inf_tiles);
-            pos(0, 1008);
-            gzoom(
-                22,
-                20,
-                5,
-                chipc(0, aniref(1)) + 8,
-                chipc(1, aniref(1)) + 4 + (chipc(3, aniref(1)) > inf_tiles) * 8,
-                chipc(2, aniref(1)) - 16,
-                chipc(3, aniref(1)) - 8
-                    - (chipc(3, aniref(1)) > inf_tiles) * 10,
-                1);
-            pos(6, 974);
-            gcopy(1, 0, 1008, 22, 20);
-            gsel(selcur);
-        }
-        else if (aniref == 531)
-        {
-            pos(8, 1058 - chipc(3, aniref(1)));
-            gcopy(
-                5,
-                chipc(0, aniref(1)) + 8,
-                chipc(1, aniref(1)) + 2,
-                chipc(2, aniref(1)) - 16,
-                chipc(3, aniref(1)) - 8);
-            gmode(4, -1, -1, 150);
-            color(0, 0, 0);
-            pos(0, 960 + (chipc(3, aniref(1)) == inf_tiles) * 48);
-            gcopy(
-                1,
-                144,
-                768 + (chipc(3, aniref(1)) > inf_tiles) * 48,
-                inf_tiles,
-                chipc(3, aniref(1)) + (chipc(3, aniref(1)) > inf_tiles) * 48);
-            gmode(2);
-            gsel(selcur);
-        }
-        else
-        {
-            pos(0, 960);
-            gcopy(
-                1,
-                chipi(0, aniref),
-                chipi(1, aniref),
-                chipi(2, aniref),
-                chipi(3, aniref));
-            gfini(chipi(2, aniref), chipi(3, aniref));
-            gfdec2(
-                c_col(0, aniref(1)), c_col(1, aniref(1)), c_col(2, aniref(1)));
-            gsel(selcur);
-        }
+        prepare_item_image(aniref, aniref(1));
         ax = (cdata[cc].position.x - scx) * inf_tiles;
         ay = (cdata[cc].position.y - scy) * inf_tiles;
         ap = dist(cdata[cc].position.x, cdata[cc].position.y, anix, aniy) / 2
@@ -20827,48 +20714,20 @@ void label_1426()
         {
             goto label_1427_internal;
         }
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 6), chipi(3, 6) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 6), chipi(1, 6), chipi(2, 6), chipi(3, 6));
-        gfini(chipi(2, 6), chipi(3, 6));
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        gsel(selcur);
+        prepare_item_image(6, anicol);
         if (animeid == 18)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 23), chipi(3, 23) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 23), chipi(1, 23), chipi(2, 23), chipi(3, 23));
-            gfini(chipi(2, 23), chipi(3, 23));
-            gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-            gsel(selcur);
+            prepare_item_image(23, 0);
             snd(29);
         }
         if (animeid == 108)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 1), chipi(3, 1) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 1), chipi(1, 1), chipi(2, 1), chipi(3, 1));
-            gfini(chipi(2, 1), chipi(3, 1));
-            gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-            gsel(selcur);
+            prepare_item_image(1, anicol);
             snd(29);
         }
         if (animeid == 109)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 1), chipi(3, 1) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 1), chipi(1, 1), chipi(2, 1), chipi(3, 1));
-            gfini(chipi(2, 1), chipi(3, 1));
-            gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-            gsel(selcur);
+            prepare_item_image(2, anicol);
             snd(29);
         }
         if (animeid == 110)
@@ -20876,105 +20735,19 @@ void label_1426()
             ap = refitem(inv[aniref].id, 9);
             if (ap == 24021)
             {
-                gsel(1);
-                color(0);
-                boxf(0, 960, chipi(2, 13), chipi(3, 13) + 960);
-                pos(0, 960);
-                gcopy(
-                    1, chipi(0, 13), chipi(1, 13), chipi(2, 13), chipi(3, 13));
-                gfini(chipi(2, 13), chipi(3, 13));
-                gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-                gsel(selcur);
+                prepare_item_image(13, anicol);
                 snd(42);
             }
             if (ap == 24020)
             {
-                gsel(1);
-                color(0);
-                boxf(0, 960, chipi(2, 2), chipi(3, 2) + 960);
-                pos(0, 960);
-                gcopy(1, chipi(0, 2), chipi(1, 2), chipi(2, 2), chipi(3, 2));
-                gfini(chipi(2, 2), chipi(3, 2));
-                gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-                gsel(selcur);
+                prepare_item_image(2, anicol);
                 snd(30);
             }
         }
         if (animeid == 111)
         {
-            gsel(1);
-            color(0);
-            boxf(
-                0,
-                960,
-                chipi(2, inv[aniref].image % 1000),
-                chipi(3, inv[aniref].image % 1000) + 960);
-            if (inv[aniref].image % 1000 == 528)
-            {
-                gmode(2);
-                pos(0, 960);
-                gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                pos(0, 1008);
-                gzoom(
-                    22,
-                    20,
-                    5,
-                    chipc(0, inv[aniref].image / 1000) + 8,
-                    chipc(1, inv[aniref].image / 1000) + 4
-                        + (chipc(3, inv[aniref].image / 1000) > inf_tiles) * 8,
-                    chipc(2, inv[aniref].image / 1000) - 16,
-                    chipc(3, inv[aniref].image / 1000) - 8
-                        - (chipc(3, inv[aniref].image / 1000) > inf_tiles) * 10,
-                    1);
-                pos(6, 974);
-                gcopy(1, 0, 1008, 22, 20);
-                gsel(selcur);
-            }
-            else if (inv[aniref].image % 1000 == 531)
-            {
-                pos(8, 1058 - chipc(3, inv[aniref].image / 1000));
-                gcopy(
-                    5,
-                    chipc(0, inv[aniref].image / 1000) + 8,
-                    chipc(1, inv[aniref].image / 1000) + 2,
-                    chipc(2, inv[aniref].image / 1000) - 16,
-                    chipc(3, inv[aniref].image / 1000) - 8);
-                gmode(4, -1, -1, 150);
-                color(0, 0, 0);
-                pos(0,
-                    960
-                        + (chipc(3, inv[aniref].image / 1000) == inf_tiles)
-                            * 48);
-                gcopy(
-                    1,
-                    144,
-                    768 + (chipc(3, inv[aniref].image / 1000) > inf_tiles) * 48,
-                    inf_tiles,
-                    chipc(3, inv[aniref].image / 1000)
-                        + (chipc(3, inv[aniref].image / 1000) > inf_tiles)
-                            * 48);
-                gmode(2);
-                gsel(selcur);
-            }
-            else
-            {
-                pos(0, 960);
-                gcopy(
-                    1,
-                    chipi(0, inv[aniref].image % 1000),
-                    chipi(1, inv[aniref].image % 1000),
-                    chipi(2, inv[aniref].image % 1000),
-                    chipi(3, inv[aniref].image % 1000));
-                gfini(
-                    chipi(2, inv[aniref].image % 1000),
-                    chipi(3, inv[aniref].image % 1000));
-                gfdec2(
-                    c_col(0, inv[aniref].image / 1000),
-                    c_col(1, inv[aniref].image / 1000),
-                    c_col(2, inv[aniref].image / 1000));
-                gsel(selcur);
-                snd(31);
-            }
+            prepare_item_image(
+                inv[aniref].image % 1000, inv[aniref].image / 1000);
         }
         if (animeid == 1)
         {
@@ -21030,14 +20803,7 @@ void label_1426()
         goto label_1427_internal;
     case 9:
         snd(2);
-        gsel(1);
-        color(0);
-        boxf(0, 960, chipi(2, 17), chipi(3, 17) + 960);
-        pos(0, 960);
-        gcopy(1, chipi(0, 17), chipi(1, 17), chipi(2, 17), chipi(3, 17));
-        gfini(chipi(2, 17), chipi(3, 17));
-        gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-        gsel(selcur);
+        prepare_item_image(17, 0);
         anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
         anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
         gsel(4);
@@ -21121,14 +20887,7 @@ void label_1426()
         }
         if (ap == 0)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 17), chipi(3, 17) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 17), chipi(1, 17), chipi(2, 17), chipi(3, 17));
-            gfini(chipi(2, 17), chipi(3, 17));
-            gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-            gsel(selcur);
+            prepare_item_image(17, 0);
         }
         {
             int cnt = 0;
@@ -21580,22 +21339,7 @@ void label_1426()
         ay = (sy - scy) * inf_tiles + inf_screeny;
         if (animeid == 14)
         {
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 17), chipi(3, 17) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 17), chipi(1, 17), chipi(2, 17), chipi(3, 17));
-            gfini(chipi(2, 17), chipi(3, 17));
-            gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-            gsel(selcur);
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 17), chipi(3, 17) + 960);
-            pos(0, 960);
-            gcopy(1, chipi(0, 17), chipi(1, 17), chipi(2, 17), chipi(3, 17));
-            gfini(chipi(2, 17), chipi(3, 17));
-            gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-            gsel(selcur);
+            prepare_item_image(17, 0);
         }
         {
             int cnt = 0;
@@ -34682,68 +34426,7 @@ void label_1714()
                     continue;
                 }
                 p(1) = inv[p].image % 1000;
-                gsel(1);
-                color(0);
-                boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
-                if (p(1) == 528)
-                {
-                    gmode(2);
-                    pos(0, 960);
-                    gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                    pos(0, 1008);
-                    gzoom(
-                        22,
-                        20,
-                        5,
-                        chipc(0, inv[p].color) + 8,
-                        chipc(1, inv[p].color) + 4
-                            + (chipc(3, inv[p].color) > inf_tiles) * 8,
-                        chipc(2, inv[p].color) - 16,
-                        chipc(3, inv[p].color) - 8
-                            - (chipc(3, inv[p].color) > inf_tiles) * 10,
-                        1);
-                    pos(6, 974);
-                    gcopy(1, 0, 1008, 22, 20);
-                    gsel(selcur);
-                }
-                else if (p(1) == 531)
-                {
-                    pos(8, 1058 - chipc(3, inv[p].color));
-                    gcopy(
-                        5,
-                        chipc(0, inv[p].color) + 8,
-                        chipc(1, inv[p].color) + 2,
-                        chipc(2, inv[p].color) - 16,
-                        chipc(3, inv[p].color) - 8);
-                    gmode(4, -1, -1, 150);
-                    color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, inv[p].color) == inf_tiles) * 48);
-                    gcopy(
-                        1,
-                        144,
-                        768 + (chipc(3, inv[p].color) > inf_tiles) * 48,
-                        inf_tiles,
-                        chipc(3, inv[p].color)
-                            + (chipc(3, inv[p].color) > inf_tiles) * 48);
-                    gmode(2);
-                    gsel(selcur);
-                }
-                else
-                {
-                    pos(0, 960);
-                    gcopy(
-                        1,
-                        chipi(0, p(1)),
-                        chipi(1, p(1)),
-                        chipi(2, p(1)),
-                        chipi(3, p(1)));
-                    gfini(chipi(2, p(1)), chipi(3, p(1)));
-                    gfdec2(
-                        c_col(0, inv[p].color),
-                        c_col(1, inv[p].color),
-                        c_col(2, inv[p].color));
-                    gsel(selcur);
-                }
+                prepare_item_image(p(1), inv[p].color);
                 pos(wx + 37, cnt * 16 + wy + 138);
                 gmode(2, chipi(2, p(1)), chipi(3, p(1)));
                 grotate(
@@ -39175,62 +38858,7 @@ label_1857_internal:
             }
             s = ioriginalnameref(i);
             p(1) = ipicref(i);
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
-            if (p(1) == 528)
-            {
-                gmode(2);
-                pos(0, 960);
-                gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                pos(0, 1008);
-                gzoom(
-                    22,
-                    20,
-                    5,
-                    chipc(0, 0) + 8,
-                    chipc(1, 0) + 4 + (chipc(3, 0) > inf_tiles) * 8,
-                    chipc(2, 0) - 16,
-                    chipc(3, 0) - 8 - (chipc(3, 0) > inf_tiles) * 10,
-                    1);
-                pos(6, 974);
-                gcopy(1, 0, 1008, 22, 20);
-                gsel(selcur);
-            }
-            else if (p(1) == 531)
-            {
-                pos(8, 1058 - chipc(3, 0));
-                gcopy(
-                    5,
-                    chipc(0, 0) + 8,
-                    chipc(1, 0) + 2,
-                    chipc(2, 0) - 16,
-                    chipc(3, 0) - 8);
-                gmode(4, -1, -1, 150);
-                color(0, 0, 0);
-                pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
-                gcopy(
-                    1,
-                    144,
-                    768 + (chipc(3, 0) > inf_tiles) * 48,
-                    inf_tiles,
-                    chipc(3, 0) + (chipc(3, 0) > inf_tiles) * 48);
-                gmode(2);
-                gsel(selcur);
-            }
-            else
-            {
-                pos(0, 960);
-                gcopy(
-                    1,
-                    chipi(0, p(1)),
-                    chipi(1, p(1)),
-                    chipi(2, p(1)),
-                    chipi(3, p(1)));
-                gfini(chipi(2, p(1)), chipi(3, p(1)));
-                gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-                gsel(selcur);
-            }
+            prepare_item_image(p(1), 0);
             s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
             if (elona::stoi(listn(0, p)) == -1)
@@ -39450,62 +39078,7 @@ label_1861_internal:
             pos(wx + 308, wy + 66 + cnt * 19 + 2);
             mes(s);
             p(1) = matref(2, i);
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
-            if (p(1) == 528)
-            {
-                gmode(2);
-                pos(0, 960);
-                gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                pos(0, 1008);
-                gzoom(
-                    22,
-                    20,
-                    5,
-                    chipc(0, 0) + 8,
-                    chipc(1, 0) + 4 + (chipc(3, 0) > inf_tiles) * 8,
-                    chipc(2, 0) - 16,
-                    chipc(3, 0) - 8 - (chipc(3, 0) > inf_tiles) * 10,
-                    1);
-                pos(6, 974);
-                gcopy(1, 0, 1008, 22, 20);
-                gsel(selcur);
-            }
-            else if (p(1) == 531)
-            {
-                pos(8, 1058 - chipc(3, 0));
-                gcopy(
-                    5,
-                    chipc(0, 0) + 8,
-                    chipc(1, 0) + 2,
-                    chipc(2, 0) - 16,
-                    chipc(3, 0) - 8);
-                gmode(4, -1, -1, 150);
-                color(0, 0, 0);
-                pos(0, 960 + (chipc(3, 0) == inf_tiles) * 48);
-                gcopy(
-                    1,
-                    144,
-                    768 + (chipc(3, 0) > inf_tiles) * 48,
-                    inf_tiles,
-                    chipc(3, 0) + (chipc(3, 0) > inf_tiles) * 48);
-                gmode(2);
-                gsel(selcur);
-            }
-            else
-            {
-                pos(0, 960);
-                gcopy(
-                    1,
-                    chipi(0, p(1)),
-                    chipi(1, p(1)),
-                    chipi(2, p(1)),
-                    chipi(3, p(1)));
-                gfini(chipi(2, p(1)), chipi(3, p(1)));
-                gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-                gsel(selcur);
-            }
+            prepare_item_image(p(1), 0);
             pos(wx + 47, wy + 69 + cnt * 19 + 2);
             gmode(2, inf_tiles, inf_tiles);
             grotate(1, 0, 960, 0, chipi(2, p(1)), chipi(3, p(1)));
@@ -44398,14 +43971,7 @@ label_1925_internal:
     mes(s);
     keyrange = 0;
     gmode(2);
-    gsel(1);
-    color(0);
-    boxf(0, 960, chipi(2, 550), chipi(3, 550) + 960);
-    pos(0, 960);
-    gcopy(1, chipi(0, 550), chipi(1, 550), chipi(2, 550), chipi(3, 550));
-    gfini(chipi(2, 550), chipi(3, 550));
-    gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-    gsel(selcur);
+    prepare_item_image(550, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -44597,68 +44163,7 @@ label_1928_internal:
             }
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
             p(1) = inv[p].image % 1000;
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, p(1)), chipi(3, p(1)) + 960);
-            if (p(1) == 528)
-            {
-                gmode(2);
-                pos(0, 960);
-                gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                pos(0, 1008);
-                gzoom(
-                    22,
-                    20,
-                    5,
-                    chipc(0, inv[p].color) + 8,
-                    chipc(1, inv[p].color) + 4
-                        + (chipc(3, inv[p].color) > inf_tiles) * 8,
-                    chipc(2, inv[p].color) - 16,
-                    chipc(3, inv[p].color) - 8
-                        - (chipc(3, inv[p].color) > inf_tiles) * 10,
-                    1);
-                pos(6, 974);
-                gcopy(1, 0, 1008, 22, 20);
-                gsel(selcur);
-            }
-            else if (p(1) == 531)
-            {
-                pos(8, 1058 - chipc(3, inv[p].color));
-                gcopy(
-                    5,
-                    chipc(0, inv[p].color) + 8,
-                    chipc(1, inv[p].color) + 2,
-                    chipc(2, inv[p].color) - 16,
-                    chipc(3, inv[p].color) - 8);
-                gmode(4, -1, -1, 150);
-                color(0, 0, 0);
-                pos(0, 960 + (chipc(3, inv[p].color) == inf_tiles) * 48);
-                gcopy(
-                    1,
-                    144,
-                    768 + (chipc(3, inv[p].color) > inf_tiles) * 48,
-                    inf_tiles,
-                    chipc(3, inv[p].color)
-                        + (chipc(3, inv[p].color) > inf_tiles) * 48);
-                gmode(2);
-                gsel(selcur);
-            }
-            else
-            {
-                pos(0, 960);
-                gcopy(
-                    1,
-                    chipi(0, p(1)),
-                    chipi(1, p(1)),
-                    chipi(2, p(1)),
-                    chipi(3, p(1)));
-                gfini(chipi(2, p(1)), chipi(3, p(1)));
-                gfdec2(
-                    c_col(0, inv[p].color),
-                    c_col(1, inv[p].color),
-                    c_col(2, inv[p].color));
-                gsel(selcur);
-            }
+            prepare_item_image(p(1), inv[p].color);
             pos(wx + 37, wy + 69 + cnt * 19);
             gmode(2, chipi(2, p(1)), chipi(3, p(1)));
             grotate(
@@ -48709,15 +48214,7 @@ label_1986_internal:
                 break;
             }
             i = list(0, p);
-            gsel(1);
-            color(0);
-            boxf(0, 960, chipi(2, 429), chipi(3, 429) + 960);
-            pos(0, 960);
-            gcopy(
-                1, chipi(0, 429), chipi(1, 429), chipi(2, 429), chipi(3, 429));
-            gfini(chipi(2, 429), chipi(3, 429));
-            gfdec2(c_col(0, 0), c_col(1, 0), c_col(2, 0));
-            gsel(selcur);
+            prepare_item_image(429, 0);
             pos(wx + 38, wy + 73 + cnt * 19);
             gmode(2, inf_tiles, inf_tiles);
             grotate(1, 0, 960, 0, inf_tiles, inf_tiles);
@@ -53420,68 +52917,7 @@ label_2052_internal:
                 s(0) = itemname(p(1));
                 s(1) = cnvweight(inv[p(1)].weight);
                 p(2) = inv[p(1)].image;
-                gsel(1);
-                color(0);
-                boxf(0, 960, chipi(2, p(2)), chipi(3, p(2)) + 960);
-                if (p(2) == 528)
-                {
-                    gmode(2);
-                    pos(0, 960);
-                    gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                    pos(0, 1008);
-                    gzoom(
-                        22,
-                        20,
-                        5,
-                        chipc(0, inv[p(1)].color) + 8,
-                        chipc(1, inv[p(1)].color) + 4
-                            + (chipc(3, inv[p(1)].color) > inf_tiles) * 8,
-                        chipc(2, inv[p(1)].color) - 16,
-                        chipc(3, inv[p(1)].color) - 8
-                            - (chipc(3, inv[p(1)].color) > inf_tiles) * 10,
-                        1);
-                    pos(6, 974);
-                    gcopy(1, 0, 1008, 22, 20);
-                    gsel(selcur);
-                }
-                else if (p(2) == 531)
-                {
-                    pos(8, 1058 - chipc(3, inv[p(1)].color));
-                    gcopy(
-                        5,
-                        chipc(0, inv[p(1)].color) + 8,
-                        chipc(1, inv[p(1)].color) + 2,
-                        chipc(2, inv[p(1)].color) - 16,
-                        chipc(3, inv[p(1)].color) - 8);
-                    gmode(4, -1, -1, 150);
-                    color(0, 0, 0);
-                    pos(0, 960 + (chipc(3, inv[p(1)].color) == inf_tiles) * 48);
-                    gcopy(
-                        1,
-                        144,
-                        768 + (chipc(3, inv[p(1)].color) > inf_tiles) * 48,
-                        inf_tiles,
-                        chipc(3, inv[p(1)].color)
-                            + (chipc(3, inv[p(1)].color) > inf_tiles) * 48);
-                    gmode(2);
-                    gsel(selcur);
-                }
-                else
-                {
-                    pos(0, 960);
-                    gcopy(
-                        1,
-                        chipi(0, p(2)),
-                        chipi(1, p(2)),
-                        chipi(2, p(2)),
-                        chipi(3, p(2)));
-                    gfini(chipi(2, p(2)), chipi(3, p(2)));
-                    gfdec2(
-                        c_col(0, inv[p(1)].color),
-                        c_col(1, inv[p(1)].color),
-                        c_col(2, inv[p(1)].color));
-                    gsel(selcur);
-                }
+                prepare_item_image(p(2), inv[p(1)].color);
                 pos(wx + 126, wy + 70 + cnt * 19);
                 gmode(2, inf_tiles, inf_tiles);
                 grotate(1, 0, 960, 0, chipi(2, p(2)), chipi(3, p(2)));
