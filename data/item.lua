@@ -28,6 +28,12 @@ define(792, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "プチトロ",
+  original_name_en = "putitoro",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(791, {
   image            = 697,
@@ -59,6 +65,12 @@ define(791, {
   subcategory      = 10001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "《ドラゴンころし》",
+  original_name_en = "<Dragon Slayer>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(790, {
   image            = 555,
@@ -90,6 +102,12 @@ define(790, {
   subcategory      = 59500,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "テスト用フライパン",
+  original_name_en = "frying pan for testing",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(789, {
   image            = 554,
@@ -121,6 +139,12 @@ define(789, {
   subcategory      = 59500,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "テスト用ナベ",
+  original_name_en = "pot for testing",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(788, {
   image            = 402,
@@ -152,6 +176,12 @@ define(788, {
   subcategory      = 24001,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "スカルボウ",
+  original_name_jp = "骨弓",
+  original_name_en = "skull bow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(787, {
   image            = 552,
@@ -183,6 +213,12 @@ define(787, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ふかふかパン",
+  original_name_en = "puff puff bread",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(786, {
   image            = 551,
@@ -214,6 +250,12 @@ define(786, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "砂糖",
+  original_name_en = "sugar",
+  originalnameref2 = "sack",
+  has_random_name  = false,
 })
 define(785, {
   image            = 553,
@@ -245,6 +287,12 @@ define(785, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "塩",
+  original_name_en = "salt",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(784, {
   image            = 549,
@@ -276,6 +324,12 @@ define(784, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レシピホルダー",
+  original_name_en = "recipe holder",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(783, {
   image            = 550,
@@ -307,6 +361,12 @@ define(783, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レシピ",
+  original_name_en = "recipe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(782, {
   image            = 360,
@@ -338,6 +398,12 @@ define(782, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "皿",
+  original_name_en = "dish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(781, {
   image            = 546,
@@ -369,6 +435,12 @@ define(781, {
   subcategory      = 10003,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "包丁",
+  original_name_jp = "包丁",
+  original_name_en = "kitchen knife",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(780, {
   image            = 545,
@@ -400,6 +472,12 @@ define(780, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "毛皮の敷物",
+  original_name_en = "fur carpet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(779, {
   image            = 544,
@@ -431,6 +509,12 @@ define(779, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鹿の剥製",
+  original_name_en = "deer head",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(778, {
   image            = 543,
@@ -462,6 +546,12 @@ define(778, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "高級ソファー",
+  original_name_en = "luxury sofa",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(777, {
   image            = 682,
@@ -493,6 +583,12 @@ define(777, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マニ像",
+  original_name_en = "Mani",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(776, {
   image            = 681,
@@ -524,6 +620,12 @@ define(776, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クミロミ像",
+  original_name_en = "Kumiromi",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(775, {
   image            = 542,
@@ -555,6 +657,12 @@ define(775, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "特製肉まんじゅう",
+  original_name_en = "special steamed meat bun",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(774, {
   image            = 683,
@@ -586,6 +694,12 @@ define(774, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "高級キャビネット",
+  original_name_en = "luxury cabinet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(773, {
   image            = 541,
@@ -617,6 +731,12 @@ define(773, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "おっきな本棚",
+  original_name_en = "large bookshelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(772, {
   image            = 540,
@@ -648,6 +768,12 @@ define(772, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "トマト",
+  original_name_en = "tomato",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(771, {
   image            = 679,
@@ -679,6 +805,12 @@ define(771, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ブルーカプセルドラッグ",
+  original_name_en = "blue capsule drag",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(770, {
   image            = 678,
@@ -710,6 +842,12 @@ define(770, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ラムネ",
+  original_name_en = "soda",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(769, {
   image            = 677,
@@ -741,6 +879,12 @@ define(769, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ミニチュアツリー",
+  original_name_en = "miniature tree",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(768, {
   image            = 676,
@@ -772,6 +916,12 @@ define(768, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "正月飾り",
+  original_name_en = "new year's decoration",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(767, {
   image            = 675,
@@ -803,6 +953,12 @@ define(767, {
   subcategory      = 60004,
   rarity           = 25000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ジュアの抱き枕",
+  original_name_en = "Jure's body pillow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(766, {
   image            = 684,
@@ -834,6 +990,12 @@ define(766, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "青い屋根の屋台",
+  original_name_en = "blue stall",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(765, {
   image            = 685,
@@ -865,6 +1027,12 @@ define(765, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "赤い屋根の屋台",
+  original_name_en = "red stall",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(764, {
   image            = 674,
@@ -896,6 +1064,12 @@ define(764, {
   subcategory      = 99999,
   rarity           = 25000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カウンター",
+  original_name_en = "counter",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(763, {
   image            = 673,
@@ -927,6 +1101,12 @@ define(763, {
   subcategory      = 99999,
   rarity           = 40000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "台座",
+  original_name_en = "pedestal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(762, {
   image            = 672,
@@ -958,6 +1138,12 @@ define(762, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 100,
+  light            = 16,
+  katakana_name    = "",
+  original_name_jp = "聖夜祭の花冠",
+  original_name_en = "festival wreath",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(761, {
   image            = 76,
@@ -989,6 +1175,12 @@ define(761, {
   subcategory      = 60005,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "《グールドのピアノ》",
+  original_name_en = "<Gould's Piano>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(760, {
   image            = 629,
@@ -1020,6 +1212,12 @@ define(760, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 0,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ガロクの槌",
+  original_name_en = "Garok's hammer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(759, {
   image            = 671,
@@ -1051,6 +1249,12 @@ define(759, {
   subcategory      = 10002,
   rarity           = 2000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "ライトセーバー",
+  original_name_jp = "ライトセーバー",
+  original_name_en = "lightsabre",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(758, {
   image            = 419,
@@ -1082,6 +1286,12 @@ define(758, {
   subcategory      = 24020,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《マウザーC96カスタム》",
+  original_name_en = "<Mauser C96 Custom>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(757, {
   image            = 480,
@@ -1113,6 +1323,12 @@ define(757, {
   subcategory      = 12001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《五本角の兜》",
+  original_name_en = "<Five Horned Helm>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(756, {
   image            = 670,
@@ -1144,6 +1360,12 @@ define(756, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "もち",
+  original_name_en = "mochi",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(755, {
   image            = 669,
@@ -1175,6 +1397,12 @@ define(755, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鏡もち",
+  original_name_en = "kagami mochi",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(754, {
   image            = 668,
@@ -1206,6 +1434,12 @@ define(754, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "だるま",
+  original_name_en = "daruma",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(753, {
   image            = 667,
@@ -1237,6 +1471,12 @@ define(753, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "こたつ",
+  original_name_en = "kotatsu",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(752, {
   image            = 666,
@@ -1268,6 +1508,12 @@ define(752, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "お年玉",
+  original_name_en = "new year's gift",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(751, {
   image            = 664,
@@ -1299,6 +1545,12 @@ define(751, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "降り階段",
+  original_name_en = "downstairs",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(750, {
   image            = 665,
@@ -1330,6 +1582,12 @@ define(750, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "昇り階段",
+  original_name_en = "upstairs",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(749, {
   image            = 686,
@@ -1361,6 +1619,12 @@ define(749, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "創造主の像",
+  original_name_en = "Creator",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(748, {
   image            = 662,
@@ -1392,6 +1656,12 @@ define(748, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "召喚石",
+  original_name_en = "summoning crystal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(747, {
   image            = 333,
@@ -1423,6 +1693,12 @@ define(747, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ボコノンの書",
+  original_name_en = "Bokonon",
+  originalnameref2 = "book",
+  has_random_name  = false,
 })
 define(746, {
   image            = 657,
@@ -1454,6 +1730,12 @@ define(746, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "調教鞭",
+  original_name_en = "tamer's whip",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(745, {
   image            = 657,
@@ -1485,6 +1767,12 @@ define(745, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "こころ",
+  original_name_en = "heart",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(744, {
   image            = 657,
@@ -1516,6 +1804,12 @@ define(744, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "シュレディンガーの猫",
+  original_name_en = "Schrodinger's cat ",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(743, {
   image            = 657,
@@ -1547,6 +1841,12 @@ define(743, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カルネアデスの板",
+  original_name_en = "Carneades",
+  originalnameref2 = "plank",
+  has_random_name  = false,
 })
 define(742, {
   image            = 308,
@@ -1578,6 +1878,12 @@ define(742, {
   subcategory      = 99999,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "すくつ探索許可証",
+  original_name_en = "the void explorer",
+  originalnameref2 = "license",
+  has_random_name  = false,
 })
 define(741, {
   image            = 501,
@@ -1609,6 +1915,12 @@ define(741, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《飛竜刀》",
+  original_name_en = "<Hiryu-To>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(740, {
   image            = 488,
@@ -1640,6 +1952,12 @@ define(740, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《謎の貝》",
+  original_name_en = "<Unknown Shell>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(739, {
   image            = 425,
@@ -1671,6 +1989,12 @@ define(739, {
   subcategory      = 10011,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《フリージアの尻尾》",
+  original_name_en = "<Frisia's Tail>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(738, {
   image            = 539,
@@ -1702,6 +2026,12 @@ define(738, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フォーチュンクッキー",
+  original_name_en = "fortune cookie",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(737, {
   image            = 470,
@@ -1733,6 +2063,12 @@ define(737, {
   subcategory      = 99999,
   rarity           = 2000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "名前の巻物",
+  original_name_en = "name",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(736, {
   image            = 354,
@@ -1764,6 +2100,12 @@ define(736, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "耐熱コーティング液",
+  original_name_en = "fireproof liquid",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(735, {
   image            = 421,
@@ -1795,6 +2137,12 @@ define(735, {
   subcategory      = 10011,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "サイズ",
+  original_name_jp = "大鎌",
+  original_name_en = "scythe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(734, {
   image            = 220,
@@ -1826,6 +2174,12 @@ define(734, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "小さな宝くじ箱",
+  original_name_en = "small gamble chest",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(733, {
   image            = 563,
@@ -1857,6 +2211,12 @@ define(733, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サンドバッグ",
+  original_name_en = "sand bag",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(732, {
   image            = 429,
@@ -1888,6 +2248,12 @@ define(732, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "収穫の魔法書",
+  original_name_en = "harvest",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(731, {
   image            = 429,
@@ -1919,6 +2285,12 @@ define(731, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "四次元ポケットの魔法書",
+  original_name_en = "4 dimensional pocket",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(730, {
   image            = 538,
@@ -1950,6 +2322,12 @@ define(730, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "友情の証",
+  original_name_en = "friendship",
+  originalnameref2 = "token",
+  has_random_name  = false,
 })
 define(729, {
   image            = 391,
@@ -1981,6 +2359,12 @@ define(729, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "おみやげ",
+  original_name_en = "gift",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(728, {
   image            = 474,
@@ -2012,6 +2396,12 @@ define(728, {
   subcategory      = 19001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《紅凛》",
+  original_name_en = "<Crimson Plate>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(727, {
   image            = 453,
@@ -2043,6 +2433,12 @@ define(727, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《棘の盾》",
+  original_name_en = "<Shield ofThorn>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(726, {
   image            = 393,
@@ -2074,6 +2470,12 @@ define(726, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《アル・ウード》",
+  original_name_en = "<Al'ud>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(725, {
   image            = 76,
@@ -2105,6 +2507,12 @@ define(725, {
   subcategory      = 24030,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《キルキルピアノ》",
+  original_name_en = "<Kill Kill Piano>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(724, {
   image            = 538,
@@ -2136,6 +2544,12 @@ define(724, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "音楽チケット",
+  original_name_en = "music ticket",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(723, {
   image            = 486,
@@ -2167,6 +2581,12 @@ define(723, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ツインエッジ》",
+  original_name_en = "<Twin Edge>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(722, {
   image            = 486,
@@ -2198,6 +2618,12 @@ define(722, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《アルバレスト》",
+  original_name_en = "<Arbalest>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(721, {
   image            = 687,
@@ -2229,6 +2655,12 @@ define(721, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "エヘカトル像",
+  original_name_en = "Ehekatl",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(720, {
   image            = 649,
@@ -2260,6 +2692,12 @@ define(720, {
   subcategory      = 60004,
   rarity           = 2000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "幸せのベッド",
+  original_name_en = "happy bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(719, {
   image            = 698,
@@ -2291,6 +2729,12 @@ define(719, {
   subcategory      = 10001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《クレイモア》",
+  original_name_en = "<Claymore>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(718, {
   image            = 630,
@@ -2322,6 +2766,12 @@ define(718, {
   subcategory      = 24030,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《シーナのパンティー》",
+  original_name_en = "<Shena's Panty>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(717, {
   image            = 657,
@@ -2353,6 +2803,12 @@ define(717, {
   subcategory      = 99999,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ロミアスの秘密の経験",
+  original_name_en = "Lomias",
+  originalnameref2 = "secret experience",
+  has_random_name  = false,
 })
 define(716, {
   image            = 424,
@@ -2384,6 +2840,12 @@ define(716, {
   subcategory      = 24030,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《バニラロック》",
+  original_name_en = "<Vanilla Rock>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(715, {
   image            = 657,
@@ -2415,6 +2877,12 @@ define(715, {
   subcategory      = 99999,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クミロミの秘密の経験",
+  original_name_en = "Kumiromi",
+  originalnameref2 = "secret experience",
+  has_random_name  = false,
 })
 define(714, {
   image            = 537,
@@ -2446,6 +2914,12 @@ define(714, {
   subcategory      = 24030,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "グレネード",
+  original_name_jp = "手榴弾",
+  original_name_en = "grenade",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(713, {
   image            = 536,
@@ -2477,6 +2951,12 @@ define(713, {
   subcategory      = 24030,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "スター",
+  original_name_jp = "手裏剣",
+  original_name_en = "shuriken",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(712, {
   image            = 308,
@@ -2508,6 +2988,12 @@ define(712, {
   subcategory      = 53100,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ダンジョンの権利書",
+  original_name_en = "dungeon",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(711, {
   image            = 354,
@@ -2539,6 +3025,12 @@ define(711, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "進化のポーション",
+  original_name_en = "evolution",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(710, {
   image            = 429,
@@ -2570,6 +3062,12 @@ define(710, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "契約の魔法書",
+  original_name_en = "contingency",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(709, {
   image            = 470,
@@ -2601,6 +3099,12 @@ define(709, {
   subcategory      = 99999,
   rarity           = 3000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "契約の巻物",
+  original_name_en = "contingency",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(708, {
   image            = 429,
@@ -2632,6 +3136,12 @@ define(708, {
   subcategory      = 99999,
   rarity           = 3000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "復活の書",
+  original_name_en = "resurrection",
+  originalnameref2 = "book",
+  has_random_name  = true,
 })
 define(707, {
   image            = 699,
@@ -2663,6 +3173,12 @@ define(707, {
   subcategory      = 60005,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ストラディバリウス》",
+  original_name_en = "<Stradivarius>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(706, {
   image            = 354,
@@ -2694,6 +3210,12 @@ define(706, {
   subcategory      = 99999,
   rarity           = 4000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "下落のポーション",
+  original_name_en = "descent",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(705, {
   image            = 486,
@@ -2725,6 +3247,12 @@ define(705, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《乞食のペンダント》",
+  original_name_en = "<Begger's Pendant>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(704, {
   image            = 535,
@@ -2756,6 +3284,12 @@ define(704, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ゲロゲロ",
+  original_name_en = "vomit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(703, {
   image            = 534,
@@ -2787,6 +3321,12 @@ define(703, {
   subcategory      = 99999,
   rarity           = 75000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ホイッスル",
+  original_name_en = "whistle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(702, {
   image            = 301,
@@ -2818,6 +3358,12 @@ define(702, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "うさぎのしっぽ",
+  original_name_en = "rabbit's tail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(701, {
   image            = 533,
@@ -2849,6 +3395,12 @@ define(701, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "デッキ",
+  original_name_en = "deck",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(700, {
   image            = 532,
@@ -2880,6 +3432,12 @@ define(700, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "タウンブック",
+  original_name_en = "town book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(699, {
   image            = 658,
@@ -2911,6 +3469,12 @@ define(699, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "リトル捕獲玉",
+  original_name_en = "little ball",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(698, {
   image            = 365,
@@ -2942,6 +3506,12 @@ define(698, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "食塩水",
+  original_name_en = "salt solution",
+  originalnameref2 = "potion",
+  has_random_name  = false,
 })
 define(697, {
   image            = 429,
@@ -2973,6 +3543,12 @@ define(697, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔力の集積の魔法書",
+  original_name_en = "magic laser",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(696, {
   image            = 429,
@@ -3004,6 +3580,12 @@ define(696, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔力の嵐の魔法書",
+  original_name_en = "magic ball",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(695, {
   image            = 399,
@@ -3035,6 +3617,12 @@ define(695, {
   subcategory      = 10010,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《破壊の斧》",
+  original_name_en = "<Axe of Destruction>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(694, {
   image            = 659,
@@ -3066,6 +3654,12 @@ define(694, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "間仕切り",
+  original_name_en = "eastern partition",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(693, {
   image            = 395,
@@ -3097,6 +3691,12 @@ define(693, {
   subcategory      = 60005,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ハープ",
+  original_name_en = "harp",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(692, {
   image            = 394,
@@ -3128,6 +3728,12 @@ define(692, {
   subcategory      = 60005,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ハーモニカ",
+  original_name_en = "harmonica",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(691, {
   image            = 393,
@@ -3159,6 +3765,12 @@ define(691, {
   subcategory      = 60005,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "リュート",
+  original_name_en = "lute",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(690, {
   image            = 392,
@@ -3190,6 +3802,12 @@ define(690, {
   subcategory      = 60005,
   rarity           = 350000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "パンフルート",
+  original_name_en = "pan flute",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(689, {
   image            = 688,
@@ -3221,6 +3839,12 @@ define(689, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ギロチン",
+  original_name_en = "guillotine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(688, {
   image            = 689,
@@ -3252,6 +3876,12 @@ define(688, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アイアンメイデン",
+  original_name_en = "iron maiden",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(687, {
   image            = 429,
@@ -3283,6 +3913,12 @@ define(687, {
   subcategory      = 99999,
   rarity           = 5000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "古書物",
+  original_name_en = "ancient book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(686, {
   image            = 690,
@@ -3314,6 +3950,12 @@ define(686, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ジュア像",
+  original_name_en = "Jure",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(685, {
   image            = 658,
@@ -3345,6 +3987,12 @@ define(685, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "モンスターボール",
+  original_name_en = "monster ball",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(684, {
   image            = 691,
@@ -3376,6 +4024,12 @@ define(684, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "遺伝子複合機",
+  original_name_en = "gene machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(683, {
   image            = 657,
@@ -3407,6 +4061,12 @@ define(683, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マニの再構築の宝玉",
+  original_name_en = "Mani",
+  originalnameref2 = "gem stone",
+  has_random_name  = false,
 })
 define(682, {
   image            = 657,
@@ -3438,6 +4098,12 @@ define(682, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クミロミの活性化の宝玉",
+  original_name_en = "rejuvenation",
+  originalnameref2 = "Kumiromi's gem stone",
+  has_random_name  = false,
 })
 define(681, {
   image            = 657,
@@ -3469,6 +4135,12 @@ define(681, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ジュアの聖なる雨の宝玉",
+  original_name_en = "holy rain",
+  originalnameref2 = "Juere's gem stone",
+  has_random_name  = false,
 })
 define(680, {
   image            = 657,
@@ -3500,6 +4172,12 @@ define(680, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ルルウィの神速の宝玉",
+  original_name_en = "god speed",
+  originalnameref2 = "Lulwy's gem stone",
+  has_random_name  = false,
 })
 define(679, {
   image            = 504,
@@ -3531,6 +4209,12 @@ define(679, {
   subcategory      = 10005,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《大地の大槌》",
+  original_name_en = "Gaia Hammer>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(678, {
   image            = 400,
@@ -3562,6 +4246,12 @@ define(678, {
   subcategory      = 10003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ラッキーダガー》",
+  original_name_en = "<Lucky Dagger>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(677, {
   image            = 415,
@@ -3593,6 +4283,12 @@ define(677, {
   subcategory      = 10007,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ホーリーランス》",
+  original_name_en = "<Holy Rance>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(676, {
   image            = 425,
@@ -3624,6 +4320,12 @@ define(676, {
   subcategory      = 10006,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《エレメンタルスタッフ》",
+  original_name_en = "<Elemental Staff)",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(675, {
   image            = 421,
@@ -3655,6 +4357,12 @@ define(675, {
   subcategory      = 10011,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《クミロミサイズ》",
+  original_name_en = "<Kumiromi Sythe>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(674, {
   image            = 514,
@@ -3686,6 +4394,12 @@ define(674, {
   subcategory      = 24020,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ウィンチェスター・プレミアム》",
+  original_name_en = "<Winchester Premium>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(673, {
   image            = 404,
@@ -3717,6 +4431,12 @@ define(673, {
   subcategory      = 24001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ウィンドボウ》",
+  original_name_en = "<Wind Bow>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(672, {
   image            = 656,
@@ -3748,6 +4468,12 @@ define(672, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "秘宝",
+  original_name_en = "secret treasure",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(671, {
   image            = 632,
@@ -3779,6 +4505,12 @@ define(671, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "原子爆弾『Cat's Cradle』",
+  original_name_en = "nuclear bomb",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(670, {
   image            = 132,
@@ -3810,6 +4542,12 @@ define(670, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "お絵かきセット(荷車)",
+  original_name_en = "canvas",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(669, {
   image            = 92,
@@ -3841,6 +4579,12 @@ define(669, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "絵画(荷車)",
+  original_name_en = "art",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(668, {
   image            = 333,
@@ -3872,6 +4616,12 @@ define(668, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レイチェルの絵本",
+  original_name_en = "book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(667, {
   image            = 391,
@@ -3903,6 +4653,12 @@ define(667, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "妹が愛を込めて作ったお弁当",
+  original_name_en = "sister's love fueled lunch",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(666, {
   image            = 692,
@@ -3934,6 +4690,12 @@ define(666, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ルルウィ像",
+  original_name_en = "Lulwy",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(665, {
   image            = 680,
@@ -3965,6 +4727,12 @@ define(665, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "オパートス像",
+  original_name_en = "Opartos",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(664, {
   image            = 489,
@@ -3996,6 +4764,12 @@ define(664, {
   subcategory      = 32001,
   rarity           = 30000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "スピードリング",
+  original_name_jp = "スピードの指輪",
+  original_name_en = "speed ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(663, {
   image            = 654,
@@ -4027,6 +4801,12 @@ define(663, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "モンスターハート",
+  original_name_en = "monster heart",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(662, {
   image            = 189,
@@ -4058,6 +4838,12 @@ define(662, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マジックフルーツ",
+  original_name_en = "magic fruit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(661, {
   image            = 459,
@@ -4089,6 +4875,12 @@ define(661, {
   subcategory      = 18002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ダル=イ=サリオン》",
+  original_name_en = "<Dal-i-thalion>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(660, {
   image            = 429,
@@ -4120,6 +4912,12 @@ define(660, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "暗黒の矢の魔法書",
+  original_name_en = "darkness arrow",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(659, {
   image            = 653,
@@ -4151,6 +4949,12 @@ define(659, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "パーティション",
+  original_name_en = "partition",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(658, {
   image            = 652,
@@ -4182,6 +4986,12 @@ define(658, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 19,
+  katakana_name    = "",
+  original_name_jp = "提灯",
+  original_name_en = "chochin",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(657, {
   image            = 651,
@@ -4213,6 +5023,12 @@ define(657, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 17,
+  katakana_name    = "",
+  original_name_jp = "東洋の窓",
+  original_name_en = "eastern window",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(656, {
   image            = 650,
@@ -4244,6 +5060,12 @@ define(656, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 13,
+  katakana_name    = "",
+  original_name_jp = "灯篭",
+  original_name_en = "eastern lamp",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(655, {
   image            = 168,
@@ -4275,6 +5097,12 @@ define(655, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "英雄チーズ",
+  original_name_en = "hero cheese",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(654, {
   image            = 649,
@@ -4306,6 +5134,12 @@ define(654, {
   subcategory      = 60004,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ダブルベッド",
+  original_name_en = "double bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(653, {
   image            = 648,
@@ -4337,6 +5171,12 @@ define(653, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "廃品",
+  original_name_en = "junk",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(652, {
   image            = 647,
@@ -4368,6 +5208,12 @@ define(652, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "シンク",
+  original_name_en = "sink",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(651, {
   image            = 646,
@@ -4399,6 +5245,12 @@ define(651, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "名工食器棚",
+  original_name_en = "craft cupboard",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(650, {
   image            = 645,
@@ -4430,6 +5282,12 @@ define(650, {
   subcategory      = 60001,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "トイレ",
+  original_name_en = "toilet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(649, {
   image            = 644,
@@ -4461,6 +5319,12 @@ define(649, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フェンス付き花壇",
+  original_name_en = "flowerbed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(648, {
   image            = 643,
@@ -4492,6 +5356,12 @@ define(648, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ソファー",
+  original_name_en = "sofa",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(647, {
   image            = 642,
@@ -4523,6 +5393,12 @@ define(647, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "黒板",
+  original_name_en = "black board",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(646, {
   image            = 641,
@@ -4554,6 +5430,12 @@ define(646, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "メニューボード",
+  original_name_en = "menu board",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(645, {
   image            = 640,
@@ -4585,6 +5467,12 @@ define(645, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "王様箪笥",
+  original_name_en = "king drawer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(644, {
   image            = 639,
@@ -4616,6 +5504,12 @@ define(644, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 17,
+  katakana_name    = "",
+  original_name_jp = "カーテン付きの窓",
+  original_name_en = "decorated window",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(643, {
   image            = 638,
@@ -4647,6 +5541,12 @@ define(643, {
   subcategory      = 60004,
   rarity           = 200000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "布団",
+  original_name_en = "eastern bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(642, {
   image            = 637,
@@ -4678,6 +5578,12 @@ define(642, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "米俵",
+  original_name_en = "rice barrel",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(641, {
   image            = 636,
@@ -4709,6 +5615,12 @@ define(641, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クーラーボックス",
+  original_name_en = "cooler box",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(640, {
   image            = 635,
@@ -4740,6 +5652,12 @@ define(640, {
   subcategory      = 99999,
   rarity           = 40000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ユニコーンの角",
+  original_name_en = "unicorn horn",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(639, {
   image            = 172,
@@ -4771,6 +5689,12 @@ define(639, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "幸運のリンゴ",
+  original_name_en = "happy apple",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(638, {
   image            = 470,
@@ -4802,6 +5726,12 @@ define(638, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "脱出の巻物",
+  original_name_en = "escape",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(637, {
   image            = 633,
@@ -4833,6 +5763,12 @@ define(637, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "スケルトンキー",
+  original_name_en = "skeleton key",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(636, {
   image            = 634,
@@ -4864,6 +5800,12 @@ define(636, {
   subcategory      = 99999,
   rarity           = 2000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ロックピック",
+  original_name_en = "lockpick",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(635, {
   image            = 632,
@@ -4895,6 +5837,12 @@ define(635, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "地雷",
+  original_name_en = "mine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(634, {
   image            = 631,
@@ -4926,6 +5874,12 @@ define(634, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "紐",
+  original_name_en = "leash",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(633, {
   image            = 630,
@@ -4957,6 +5911,12 @@ define(633, {
   subcategory      = 24030,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "パンツ",
+  original_name_jp = "ギャルのパンティー",
+  original_name_en = "panty",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(632, {
   image            = 470,
@@ -4988,6 +5948,12 @@ define(632, {
   subcategory      = 99999,
   rarity           = 25000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "羽の生えた巻物",
+  original_name_en = "flying scroll",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(631, {
   image            = 566,
@@ -5019,6 +5985,12 @@ define(631, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 18,
+  katakana_name    = "",
+  original_name_jp = "ムーンゲート",
+  original_name_en = "moon gate",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(630, {
   image            = 629,
@@ -5050,6 +6022,12 @@ define(630, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "素材槌",
+  original_name_en = "material kit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(629, {
   image            = 628,
@@ -5081,6 +6059,12 @@ define(629, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "変装セット",
+  original_name_en = "disguise set",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(628, {
   image            = 429,
@@ -5112,6 +6096,12 @@ define(628, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "インコグニートの魔法書",
+  original_name_en = "incognito",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(627, {
   image            = 480,
@@ -5143,6 +6133,12 @@ define(627, {
   subcategory      = 12001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《賢者の兜》",
+  original_name_en = "<Sage's Helm>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(626, {
   image            = 354,
@@ -5174,6 +6170,12 @@ define(626, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ヘルメスの血",
+  original_name_en = "hermes blood",
+  originalnameref2 = "bottle",
+  has_random_name  = true,
 })
 define(625, {
   image            = 627,
@@ -5205,6 +6207,12 @@ define(625, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鳥居",
+  original_name_en = "shrine gate",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(624, {
   image            = 429,
@@ -5236,6 +6244,12 @@ define(624, {
   subcategory      = 99999,
   rarity           = 5000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "お嬢様の日記",
+  original_name_en = "girl's diary",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(623, {
   image            = 429,
@@ -5267,6 +6281,12 @@ define(623, {
   subcategory      = 99999,
   rarity           = 1000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "妹の秘密の日記",
+  original_name_en = "cat sister's diary",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(622, {
   image            = 165,
@@ -5298,6 +6318,12 @@ define(622, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "小さなメダル",
+  original_name_en = "small medal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(621, {
   image            = 252,
@@ -5329,6 +6355,12 @@ define(621, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "宝の地図",
+  original_name_en = "treasure map",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(620, {
   image            = 354,
@@ -5360,6 +6392,12 @@ define(620, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "媚薬",
+  original_name_en = "love potion",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(619, {
   image            = 310,
@@ -5391,6 +6429,12 @@ define(619, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "",
+  original_name_en = "",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(618, {
   image            = 310,
@@ -5422,6 +6466,12 @@ define(618, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "",
+  original_name_en = "",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(617, {
   image            = 569,
@@ -5453,6 +6503,12 @@ define(617, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "",
+  original_name_en = "bait",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(616, {
   image            = 384,
@@ -5484,6 +6540,12 @@ define(616, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "徴税士の納税箱",
+  original_name_en = "tax master's tax box",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(615, {
   image            = 383,
@@ -5515,6 +6577,12 @@ define(615, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "請求書",
+  original_name_en = "bill",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(614, {
   image            = 568,
@@ -5546,6 +6614,12 @@ define(614, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フラワーアーチ",
+  original_name_en = "flower arch",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(613, {
   image            = 569,
@@ -5577,6 +6651,12 @@ define(613, {
   subcategory      = 60004,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "王様ベッド",
+  original_name_en = "king's bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(612, {
   image            = 382,
@@ -5608,6 +6688,12 @@ define(612, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 17,
+  katakana_name    = "",
+  original_name_jp = "アットホームな窓",
+  original_name_en = "nice window",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(611, {
   image            = 107,
@@ -5639,6 +6725,12 @@ define(611, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ハウスボード",
+  original_name_en = "house board",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(610, {
   image            = 380,
@@ -5670,6 +6762,12 @@ define(610, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "三角木",
+  original_name_en = "triangle plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(609, {
   image            = 379,
@@ -5701,6 +6799,12 @@ define(609, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 17,
+  katakana_name    = "",
+  original_name_jp = "窓",
+  original_name_en = "window",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(608, {
   image            = 378,
@@ -5732,6 +6836,12 @@ define(608, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 17,
+  katakana_name    = "",
+  original_name_jp = "格子窓",
+  original_name_en = "square window",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(607, {
   image            = 377,
@@ -5763,6 +6873,12 @@ define(607, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "巨大サボテン",
+  original_name_en = "giant cactus",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(606, {
   image            = 376,
@@ -5794,6 +6910,12 @@ define(606, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "バーベキューセット",
+  original_name_en = "barbecue set",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(605, {
   image            = 375,
@@ -5825,6 +6947,12 @@ define(605, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "パキラ",
+  original_name_en = "money tree",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(604, {
   image            = 374,
@@ -5856,6 +6984,12 @@ define(604, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "目に優しい植物",
+  original_name_en = "green plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(603, {
   image            = 373,
@@ -5887,6 +7021,12 @@ define(603, {
   subcategory      = 99999,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ボスチェア",
+  original_name_en = "president's chair",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(602, {
   image            = 372,
@@ -5918,6 +7058,12 @@ define(602, {
   subcategory      = 60001,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "聖なる井戸",
+  original_name_en = "holy well",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(601, {
   image            = 371,
@@ -5949,6 +7095,12 @@ define(601, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "空き瓶",
+  original_name_en = "empty bottle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(600, {
   image            = 370,
@@ -5980,6 +7132,12 @@ define(600, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "巨人の足枷",
+  original_name_en = "giant's shackle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(599, {
   image            = 570,
@@ -6011,6 +7169,12 @@ define(599, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 16,
+  katakana_name    = "",
+  original_name_jp = "クリスマスツリー",
+  original_name_en = "christmas tree",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(598, {
   image            = 134,
@@ -6042,6 +7206,12 @@ define(598, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "スノーマン(荷車)",
+  original_name_en = "snow man",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(597, {
   image            = 570,
@@ -6073,6 +7243,12 @@ define(597, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 16,
+  katakana_name    = "",
+  original_name_jp = "直送クリスマスツリー(荷車)",
+  original_name_en = "christmas tree",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(596, {
   image            = 369,
@@ -6104,6 +7280,12 @@ define(596, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ステンドグラス",
+  original_name_en = "stained glass window",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(595, {
   image            = 571,
@@ -6135,6 +7317,12 @@ define(595, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "扇形の柱",
+  original_name_en = "pillar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(594, {
   image            = 572,
@@ -6166,6 +7354,12 @@ define(594, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 15,
+  katakana_name    = "",
+  original_name_jp = "聖なる十字架",
+  original_name_en = "holy cross",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(593, {
   image            = 573,
@@ -6197,6 +7391,12 @@ define(593, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 15,
+  katakana_name    = "",
+  original_name_jp = "雪をかぶったモダンな街灯",
+  original_name_en = "modern lamp",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(592, {
   image            = 368,
@@ -6228,6 +7428,12 @@ define(592, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "雪をかぶったタル",
+  original_name_en = "snow barrel",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(591, {
   image            = 366,
@@ -6259,6 +7465,12 @@ define(591, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ミニ雪だるま",
+  original_name_en = "mini snow man",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(590, {
   image            = 367,
@@ -6290,6 +7502,12 @@ define(590, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "雪かかし",
+  original_name_en = "snow scarecrow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(589, {
   image            = 574,
@@ -6321,6 +7539,12 @@ define(589, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "モミの木",
+  original_name_en = "fir",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(588, {
   image            = 575,
@@ -6352,6 +7576,12 @@ define(588, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "葉の散った木",
+  original_name_en = "naked",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(587, {
   image            = 365,
@@ -6383,6 +7613,12 @@ define(587, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "雪",
+  original_name_en = "snow",
+  originalnameref2 = "handful",
+  has_random_name  = false,
 })
 define(586, {
   image            = 576,
@@ -6414,6 +7650,12 @@ define(586, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 14,
+  katakana_name    = "",
+  original_name_jp = "モダンな街灯",
+  original_name_en = "modern lamp",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(585, {
   image            = 364,
@@ -6445,6 +7687,12 @@ define(585, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 3,
+  katakana_name    = "",
+  original_name_jp = "奇抜なランプ",
+  original_name_en = "fancy lamp",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(584, {
   image            = 353,
@@ -6476,6 +7724,12 @@ define(584, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 12,
+  katakana_name    = "",
+  original_name_jp = "キャンドル",
+  original_name_en = "candle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(583, {
   image            = 352,
@@ -6507,6 +7761,12 @@ define(583, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 1,
+  katakana_name    = "",
+  original_name_jp = "松明",
+  original_name_en = "torch",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(582, {
   image            = 429,
@@ -6538,6 +7798,12 @@ define(582, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "扉生成の魔法書",
+  original_name_en = "make door",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(581, {
   image            = 471,
@@ -6569,6 +7835,12 @@ define(581, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "扉生成の杖",
+  original_name_en = "make door",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(580, {
   image            = 236,
@@ -6600,6 +7872,12 @@ define(580, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "普通の棚",
+  original_name_en = "modern rack",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(579, {
   image            = 577,
@@ -6631,6 +7909,12 @@ define(579, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "冷蔵庫",
+  original_name_en = "freezer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(578, {
   image            = 348,
@@ -6662,6 +7946,12 @@ define(578, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "貯金箱",
+  original_name_en = "kitty bank",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(577, {
   image            = 223,
@@ -6693,6 +7983,12 @@ define(577, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "火炎瓶",
+  original_name_en = "molotov",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(576, {
   image            = 516,
@@ -6724,6 +8020,12 @@ define(576, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ムービーディスク",
+  original_name_en = "playback disc",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(575, {
   image            = 340,
@@ -6755,6 +8057,12 @@ define(575, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フン",
+  original_name_en = "shit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(574, {
   image            = 339,
@@ -6786,6 +8094,12 @@ define(574, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "乳",
+  original_name_en = "milk",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(573, {
   image            = 338,
@@ -6817,6 +8131,12 @@ define(573, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "卵",
+  original_name_en = "egg",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(572, {
   image            = 308,
@@ -6848,6 +8168,12 @@ define(572, {
   subcategory      = 53100,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "牧場の権利書",
+  original_name_en = "ranch",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(571, {
   image            = 337,
@@ -6879,6 +8205,12 @@ define(571, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "干し肉",
+  original_name_en = "jerky",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(570, {
   image            = 471,
@@ -6910,6 +8242,12 @@ define(570, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "炎の壁の杖",
+  original_name_en = "fire wall",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(569, {
   image            = 429,
@@ -6941,6 +8279,12 @@ define(569, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "炎の壁の魔法書",
+  original_name_en = "fire wall",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(568, {
   image            = 335,
@@ -6972,6 +8316,12 @@ define(568, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "耐冷ブランケット",
+  original_name_en = "coldproof blanket",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(567, {
   image            = 335,
@@ -7003,6 +8353,12 @@ define(567, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "耐火ブランケット",
+  original_name_en = "fireproof blanket",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(566, {
   image            = 354,
@@ -7034,6 +8390,12 @@ define(566, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "耐酸性コーティング液",
+  original_name_en = "acidproof liquid",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(565, {
   image            = 471,
@@ -7065,6 +8427,12 @@ define(565, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "酸の滴る杖",
+  original_name_en = "acid ground",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(564, {
   image            = 429,
@@ -7096,6 +8464,12 @@ define(564, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "酸の海の魔法書",
+  original_name_en = "acid ground",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(563, {
   image            = 334,
@@ -7127,6 +8501,12 @@ define(563, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "学習書",
+  original_name_en = "textbook",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(562, {
   image            = 332,
@@ -7158,6 +8538,12 @@ define(562, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レジスター",
+  original_name_en = "register",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(561, {
   image            = 197,
@@ -7189,6 +8575,12 @@ define(561, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "店の金庫",
+  original_name_en = "shop strongbox",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(560, {
   image            = 331,
@@ -7220,6 +8612,12 @@ define(560, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "主の納入箱",
+  original_name_en = "master's delivery chest",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(559, {
   image            = 354,
@@ -7251,6 +8649,12 @@ define(559, {
   subcategory      = 99999,
   rarity           = 30000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "エーテル抗体のポーション",
+  original_name_en = "cure corruption",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(558, {
   image            = 489,
@@ -7282,6 +8686,12 @@ define(558, {
   subcategory      = 32001,
   rarity           = 25000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "オーロラリング",
+  original_name_jp = "オーロラリング",
+  original_name_en = "aurora ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(557, {
   image            = 422,
@@ -7313,6 +8723,12 @@ define(557, {
   subcategory      = 20001,
   rarity           = 10000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヴィンデールクローク",
+  original_name_jp = "ヴィンデールクローク",
+  original_name_en = "vindale cloak",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(556, {
   image            = 460,
@@ -7344,6 +8760,12 @@ define(556, {
   subcategory      = 18002,
   rarity           = 25000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "セブンリーグブーツ",
+  original_name_jp = "セブンリーグブーツ",
+  original_name_en = "seven league boots",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(555, {
   image            = 330,
@@ -7375,6 +8797,12 @@ define(555, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "シェルター",
+  original_name_en = "shelter",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(554, {
   image            = 323,
@@ -7406,6 +8834,12 @@ define(554, {
   subcategory      = 58500,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔法の木の種",
+  original_name_en = "magical seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(553, {
   image            = 323,
@@ -7437,6 +8871,12 @@ define(553, {
   subcategory      = 58500,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "宝石の種",
+  original_name_en = "gem seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(552, {
   image            = 326,
@@ -7468,6 +8908,12 @@ define(552, {
   subcategory      = 20001,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "フェザー",
+  original_name_jp = "羽",
+  original_name_en = "feather",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(551, {
   image            = 471,
@@ -7499,6 +8945,12 @@ define(551, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "癒しの手の杖",
+  original_name_en = "healing hands",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(550, {
   image            = 429,
@@ -7530,6 +8982,12 @@ define(550, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "癒しの手の魔法書",
+  original_name_en = "healing hands",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(549, {
   image            = 470,
@@ -7561,6 +9019,12 @@ define(549, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "治癒の雨の巻物",
+  original_name_en = "healing rain",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(548, {
   image            = 429,
@@ -7592,6 +9056,12 @@ define(548, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "治癒の雨の魔法書",
+  original_name_en = "healing rain",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(547, {
   image            = 325,
@@ -7623,6 +9093,12 @@ define(547, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "給料箱",
+  original_name_en = "salary chest",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(546, {
   image            = 429,
@@ -7654,6 +9130,12 @@ define(546, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "壁生成の魔法書",
+  original_name_en = "wall creation",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(545, {
   image            = 471,
@@ -7685,6 +9167,12 @@ define(545, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "壁生成の杖",
+  original_name_en = "wall creation",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(544, {
   image            = 516,
@@ -7716,6 +9204,12 @@ define(544, {
   subcategory      = 99999,
   rarity           = 1500000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ディスク",
+  original_name_en = "disc",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(543, {
   image            = 308,
@@ -7747,6 +9241,12 @@ define(543, {
   subcategory      = 53100,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "倉庫の権利書",
+  original_name_en = "storage house",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(542, {
   image            = 308,
@@ -7778,6 +9278,12 @@ define(542, {
   subcategory      = 53100,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "畑の権利書",
+  original_name_en = "farm",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(541, {
   image            = 134,
@@ -7809,6 +9315,12 @@ define(541, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "雪だるま",
+  original_name_en = "snow man",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(540, {
   image            = 130,
@@ -7840,6 +9352,12 @@ define(540, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "黒水晶",
+  original_name_en = "black crystal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(539, {
   image            = 578,
@@ -7871,6 +9389,12 @@ define(539, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "猫の像",
+  original_name_en = "cat",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(538, {
   image            = 131,
@@ -7902,6 +9426,12 @@ define(538, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "絵画《ひまわり》",
+  original_name_en = "sunflower",
+  originalnameref2 = "painting",
+  has_random_name  = false,
 })
 define(537, {
   image            = 92,
@@ -7933,6 +9463,12 @@ define(537, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "絵画《風景》",
+  original_name_en = "landscape",
+  originalnameref2 = "painting",
+  has_random_name  = false,
 })
 define(536, {
   image            = 81,
@@ -7964,6 +9500,12 @@ define(536, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "絵画《マダム》",
+  original_name_en = "madam",
+  originalnameref2 = "painting",
+  has_random_name  = false,
 })
 define(535, {
   image            = 83,
@@ -7995,6 +9537,12 @@ define(535, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "巨大なテーブル",
+  original_name_en = "big table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(534, {
   image            = 582,
@@ -8026,6 +9574,12 @@ define(534, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "巨大な観葉植物",
+  original_name_en = "giant foliage plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(533, {
   image            = 581,
@@ -8057,6 +9611,12 @@ define(533, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 6,
+  katakana_name    = "",
+  original_name_jp = "かまど",
+  original_name_en = "stove",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(532, {
   image            = 584,
@@ -8088,6 +9648,12 @@ define(532, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 6,
+  katakana_name    = "",
+  original_name_jp = "暖炉",
+  original_name_en = "fireplace",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(531, {
   image            = 583,
@@ -8119,6 +9685,12 @@ define(531, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 6,
+  katakana_name    = "",
+  original_name_jp = "溶鉱炉",
+  original_name_en = "furnance",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(530, {
   image            = 587,
@@ -8150,6 +9722,12 @@ define(530, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "トネリコの木",
+  original_name_en = "ash",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(529, {
   image            = 588,
@@ -8181,6 +9759,12 @@ define(529, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ヤシの木",
+  original_name_en = "palm",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(528, {
   image            = 589,
@@ -8212,6 +9796,12 @@ define(528, {
   subcategory      = 99999,
   rarity           = 1500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ケヤキの木",
+  original_name_en = "zelkova",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(527, {
   image            = 590,
@@ -8243,6 +9833,12 @@ define(527, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "枯れ木",
+  original_name_en = "dead tree",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(526, {
   image            = 591,
@@ -8274,6 +9870,12 @@ define(526, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "果実の木",
+  original_name_en = "fruits",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(525, {
   image            = 592,
@@ -8305,6 +9907,12 @@ define(525, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "果実のない木",
+  original_name_en = "fruitless",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(524, {
   image            = 593,
@@ -8336,6 +9944,12 @@ define(524, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "スギの木",
+  original_name_en = "cedar",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(523, {
   image            = 527,
@@ -8367,6 +9981,12 @@ define(523, {
   subcategory      = 99999,
   rarity           = 3000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ブナの木",
+  original_name_en = "beech",
+  originalnameref2 = "tree",
+  has_random_name  = false,
 })
 define(522, {
   image            = 308,
@@ -8398,6 +10018,12 @@ define(522, {
   subcategory      = 53100,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "店の権利書",
+  original_name_en = "shop",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(521, {
   image            = 308,
@@ -8429,6 +10055,12 @@ define(521, {
   subcategory      = 53100,
   rarity           = 1000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "博物館の権利書",
+  original_name_en = "museum",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(520, {
   image            = 522,
@@ -8460,6 +10092,12 @@ define(520, {
   subcategory      = 20001,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ウィング",
+  original_name_jp = "翼",
+  original_name_en = "wing",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(519, {
   image            = 354,
@@ -8491,6 +10129,12 @@ define(519, {
   subcategory      = 99999,
   rarity           = 2000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "染料",
+  original_name_en = "dye",
+  originalnameref2 = "bottle",
+  has_random_name  = true,
 })
 define(518, {
   image            = 471,
@@ -8522,6 +10166,12 @@ define(518, {
   subcategory      = 99999,
   rarity           = 450000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "錬金術の杖",
+  original_name_en = "alchemy",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(517, {
   image            = 471,
@@ -8553,6 +10203,12 @@ define(517, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "変化の杖",
+  original_name_en = "change creature",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(516, {
   image            = 354,
@@ -8584,6 +10240,12 @@ define(516, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "水",
+  original_name_en = "water",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(515, {
   image            = 470,
@@ -8615,6 +10277,12 @@ define(515, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "充填の巻物",
+  original_name_en = "recharge",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(514, {
   image            = 520,
@@ -8646,6 +10314,12 @@ define(514, {
   subcategory      = 24021,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《レールガン》",
+  original_name_en = "<Rail Gun>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(513, {
   image            = 521,
@@ -8677,6 +10351,12 @@ define(513, {
   subcategory      = 25030,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "エネルギーセル",
+  original_name_jp = "光子弾",
+  original_name_en = "energy cell",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(512, {
   image            = 520,
@@ -8708,6 +10388,12 @@ define(512, {
   subcategory      = 24021,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "レーザーガン",
+  original_name_jp = "光子銃",
+  original_name_en = "laser gun",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(511, {
   image            = 308,
@@ -8739,6 +10425,12 @@ define(511, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "遺産相続の権利書",
+  original_name_en = "heirship",
+  originalnameref2 = "deed",
+  has_random_name  = false,
 })
 define(510, {
   image            = 253,
@@ -8770,6 +10462,12 @@ define(510, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "形見のカバン",
+  original_name_en = "heir trunk",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(509, {
   image            = 470,
@@ -8801,6 +10499,12 @@ define(509, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "*防具強化*の巻物",
+  original_name_en = "greater enchant armor",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(508, {
   image            = 470,
@@ -8832,6 +10536,12 @@ define(508, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "防具強化の巻物",
+  original_name_en = "enchant armor",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(507, {
   image            = 470,
@@ -8863,6 +10573,12 @@ define(507, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "*武器強化*の巻物",
+  original_name_en = "greater enchant weapon",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(506, {
   image            = 470,
@@ -8894,6 +10610,12 @@ define(506, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "武器強化の巻物",
+  original_name_en = "enchant weapon",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(505, {
   image            = 429,
@@ -8925,6 +10647,12 @@ define(505, {
   subcategory      = 99999,
   rarity           = 25000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "妹の日記",
+  original_name_en = "little sister's diary",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(504, {
   image            = 528,
@@ -8956,6 +10684,12 @@ define(504, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カード",
+  original_name_en = "card",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(503, {
   image            = 531,
@@ -8987,6 +10721,12 @@ define(503, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "はく製",
+  original_name_en = "figurine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(502, {
   image            = 470,
@@ -9018,6 +10758,12 @@ define(502, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "*素材変化*の巻物",
+  original_name_en = "superior material",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(501, {
   image            = 470,
@@ -9049,6 +10795,12 @@ define(501, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "素材変化の巻物",
+  original_name_en = "change material",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(500, {
   image            = 470,
@@ -9080,6 +10832,12 @@ define(500, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "劣悪素材の巻物",
+  original_name_en = "inferior material",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(499, {
   image            = 519,
@@ -9111,6 +10869,12 @@ define(499, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サイバースナック",
+  original_name_en = "cyber snack",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(498, {
   image            = 518,
@@ -9142,6 +10906,12 @@ define(498, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フライドポテト",
+  original_name_en = "fried potato",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(497, {
   image            = 517,
@@ -9173,6 +10943,12 @@ define(497, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ポップコーン",
+  original_name_en = "pop corn",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(496, {
   image            = 514,
@@ -9204,6 +10980,12 @@ define(496, {
   subcategory      = 24020,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ショットガン",
+  original_name_jp = "散弾銃",
+  original_name_en = "shot gun",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(495, {
   image            = 516,
@@ -9235,6 +11017,12 @@ define(495, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "ブランクディスク",
+  original_name_en = "blank disc",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(494, {
   image            = 515,
@@ -9266,6 +11054,12 @@ define(494, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "チップ",
+  original_name_en = "chip",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(493, {
   image            = 513,
@@ -9297,6 +11091,12 @@ define(493, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "トラッシュカン",
+  original_name_en = "trash can",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(492, {
   image            = 512,
@@ -9328,6 +11128,12 @@ define(492, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ストレージ",
+  original_name_en = "storage",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(491, {
   image            = 511,
@@ -9359,6 +11165,12 @@ define(491, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サーバー",
+  original_name_en = "server",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(490, {
   image            = 510,
@@ -9390,6 +11202,12 @@ define(490, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レンジ",
+  original_name_en = "microwave oven",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(489, {
   image            = 509,
@@ -9421,6 +11239,12 @@ define(489, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カメラ",
+  original_name_en = "camera",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(488, {
   image            = 506,
@@ -9452,6 +11276,12 @@ define(488, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "トレーニングマシーン",
+  original_name_en = "training machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(487, {
   image            = 508,
@@ -9483,6 +11313,12 @@ define(487, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "コンピューター",
+  original_name_en = "computer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(486, {
   image            = 507,
@@ -9514,6 +11350,12 @@ define(486, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "電子機械",
+  original_name_en = "machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(485, {
   image            = 471,
@@ -9545,6 +11387,12 @@ define(485, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "蜘蛛の巣の杖",
+  original_name_en = "web",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(484, {
   image            = 429,
@@ -9576,6 +11424,12 @@ define(484, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "蜘蛛の巣の魔法書",
+  original_name_en = "web",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(483, {
   image            = 412,
@@ -9607,6 +11461,12 @@ define(483, {
   subcategory      = 25002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ボルト",
+  original_name_jp = "クロスボウの矢束",
+  original_name_en = "bolt",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(482, {
   image            = 498,
@@ -9638,6 +11498,12 @@ define(482, {
   subcategory      = 24003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "クロスボウ",
+  original_name_jp = "機械弓",
+  original_name_en = "crossbow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(481, {
   image            = 429,
@@ -9669,6 +11535,12 @@ define(481, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "支配の魔法書",
+  original_name_en = "domination",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(480, {
   image            = 471,
@@ -9700,6 +11572,12 @@ define(480, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "支配の杖",
+  original_name_en = "domination",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(479, {
   image            = 470,
@@ -9731,6 +11609,12 @@ define(479, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "援軍の巻物",
+  original_name_en = "ally",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(478, {
   image            = 493,
@@ -9762,6 +11646,12 @@ define(478, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "聴診器",
+  original_name_en = "stethoscope",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(477, {
   image            = 489,
@@ -9793,6 +11683,12 @@ define(477, {
   subcategory      = 32001,
   rarity           = 700000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "エンゲージリング",
+  original_name_jp = "結婚指輪",
+  original_name_en = "engagement ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(476, {
   image            = 490,
@@ -9824,6 +11720,12 @@ define(476, {
   subcategory      = 32001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "リング",
+  original_name_jp = "指輪",
+  original_name_en = "ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(475, {
   image            = 491,
@@ -9855,6 +11757,12 @@ define(475, {
   subcategory      = 32001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ガードリング",
+  original_name_jp = "指当て",
+  original_name_en = "armored ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(474, {
   image            = 492,
@@ -9886,6 +11794,12 @@ define(474, {
   subcategory      = 32001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ハイリング",
+  original_name_jp = "合金指輪",
+  original_name_en = "composite ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(473, {
   image            = 483,
@@ -9917,6 +11831,12 @@ define(473, {
   subcategory      = 34001,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ウェディングネックレス",
+  original_name_jp = "結婚首輪",
+  original_name_en = "engagement amulet",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(472, {
   image            = 484,
@@ -9948,6 +11868,12 @@ define(472, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ポリシュドネックレス",
+  original_name_jp = "細工首輪",
+  original_name_en = "bejeweled amulet",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(471, {
   image            = 485,
@@ -9979,6 +11905,12 @@ define(471, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "チャーム",
+  original_name_jp = "お守り",
+  original_name_en = "charm",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(470, {
   image            = 486,
@@ -10010,6 +11942,12 @@ define(470, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ネックガード",
+  original_name_jp = "首当て",
+  original_name_en = "neck guard",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(469, {
   image            = 487,
@@ -10041,6 +11979,12 @@ define(469, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "タリスマン",
+  original_name_jp = "護符",
+  original_name_en = "talisman",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(468, {
   image            = 488,
@@ -10072,6 +12016,12 @@ define(468, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ペリドット",
+  original_name_jp = "ペリドット",
+  original_name_en = "peridot",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(467, {
   image            = 482,
@@ -10103,6 +12053,12 @@ define(467, {
   subcategory      = 12001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ハイヘルム",
+  original_name_jp = "合金兜",
+  original_name_en = "composite helm",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(466, {
   image            = 479,
@@ -10134,6 +12090,12 @@ define(466, {
   subcategory      = 12001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘルム",
+  original_name_jp = "兜",
+  original_name_en = "helm",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(465, {
   image            = 480,
@@ -10165,6 +12127,12 @@ define(465, {
   subcategory      = 12001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "バーガネット",
+  original_name_jp = "騎士兜",
+  original_name_en = "knight helm",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(464, {
   image            = 481,
@@ -10196,6 +12164,12 @@ define(464, {
   subcategory      = 12001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘビーヘルム",
+  original_name_jp = "重兜",
+  original_name_en = "heavy helm",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(463, {
   image            = 413,
@@ -10227,6 +12201,12 @@ define(463, {
   subcategory      = 12002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ハット",
+  original_name_jp = "羽帽子",
+  original_name_en = "feather hat",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(462, {
   image            = 476,
@@ -10258,6 +12238,12 @@ define(462, {
   subcategory      = 20001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "クローク",
+  original_name_jp = "外套",
+  original_name_en = "cloak",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(461, {
   image            = 475,
@@ -10289,6 +12275,12 @@ define(461, {
   subcategory      = 20001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "コーテッドクローク",
+  original_name_jp = "防護外套",
+  original_name_en = "armored cloak",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(460, {
   image            = 474,
@@ -10320,6 +12312,12 @@ define(460, {
   subcategory      = 19001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘビーガードル",
+  original_name_jp = "重層腰当",
+  original_name_en = "plate girdle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(459, {
   image            = 474,
@@ -10351,6 +12349,12 @@ define(459, {
   subcategory      = 19001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "コンポジットガードル",
+  original_name_jp = "合成腰当",
+  original_name_en = "composite girdle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(458, {
   image            = 461,
@@ -10382,6 +12386,12 @@ define(458, {
   subcategory      = 18001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "アーマードブーツ",
+  original_name_jp = "装甲靴",
+  original_name_en = "armored boots",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(457, {
   image            = 459,
@@ -10413,6 +12423,12 @@ define(457, {
   subcategory      = 18002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "タイトブーツ",
+  original_name_jp = "厚靴",
+  original_name_en = "tight boots",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(456, {
   image            = 473,
@@ -10444,6 +12460,12 @@ define(456, {
   subcategory      = 18002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ブーツ",
+  original_name_jp = "靴",
+  original_name_en = "boots",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(455, {
   image            = 473,
@@ -10475,6 +12497,12 @@ define(455, {
   subcategory      = 18002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "サンダル",
+  original_name_jp = "履物",
+  original_name_en = "shoes",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(454, {
   image            = 458,
@@ -10506,6 +12534,12 @@ define(454, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘビーシールド",
+  original_name_jp = "重層盾",
+  original_name_en = "tower shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(453, {
   image            = 457,
@@ -10537,6 +12571,12 @@ define(453, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "タワーシールド",
+  original_name_jp = "長盾",
+  original_name_en = "kite shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(452, {
   image            = 456,
@@ -10568,6 +12608,12 @@ define(452, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "コンポジットシールド",
+  original_name_jp = "合成盾",
+  original_name_en = "large shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(451, {
   image            = 455,
@@ -10599,6 +12645,12 @@ define(451, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "シールド",
+  original_name_jp = "盾",
+  original_name_en = "shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(450, {
   image            = 454,
@@ -10630,6 +12682,12 @@ define(450, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ラウンドシールド",
+  original_name_jp = "丸型盾",
+  original_name_en = "round shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(449, {
   image            = 453,
@@ -10661,6 +12719,12 @@ define(449, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "バックラー",
+  original_name_jp = "小盾",
+  original_name_en = "small shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(448, {
   image            = 452,
@@ -10692,6 +12756,12 @@ define(448, {
   subcategory      = 22001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ガントレット",
+  original_name_jp = "合成篭手",
+  original_name_en = "composite gauntlets",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(447, {
   image            = 451,
@@ -10723,6 +12793,12 @@ define(447, {
   subcategory      = 22003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ライトグローブ",
+  original_name_jp = "軽手袋",
+  original_name_en = "light gloves",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(446, {
   image            = 414,
@@ -10754,6 +12830,12 @@ define(446, {
   subcategory      = 22001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘビーガントレット",
+  original_name_jp = "重層篭手",
+  original_name_en = "plate gauntlets",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(445, {
   image            = 448,
@@ -10785,6 +12867,12 @@ define(445, {
   subcategory      = 22003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "グローブ",
+  original_name_jp = "手袋",
+  original_name_en = "gloves",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(444, {
   image            = 447,
@@ -10816,6 +12904,12 @@ define(444, {
   subcategory      = 16003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "コーテッドアーマ",
+  original_name_jp = "防弾服",
+  original_name_en = "bulletproof jacket",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(443, {
   image            = 446,
@@ -10847,6 +12941,12 @@ define(443, {
   subcategory      = 16003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ブレストプレート",
+  original_name_jp = "胴衣",
+  original_name_en = "breast plate",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(442, {
   image            = 445,
@@ -10878,6 +12978,12 @@ define(442, {
   subcategory      = 16003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "コート",
+  original_name_jp = "防護服",
+  original_name_en = "coat",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(441, {
   image            = 444,
@@ -10909,6 +13015,12 @@ define(441, {
   subcategory      = 16003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ライトアーマ",
+  original_name_jp = "軽鎧",
+  original_name_en = "light mail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(440, {
   image            = 443,
@@ -10940,6 +13052,12 @@ define(440, {
   subcategory      = 16003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ローブ",
+  original_name_jp = "法王衣",
+  original_name_en = "pope robe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(439, {
   image            = 442,
@@ -10971,6 +13089,12 @@ define(439, {
   subcategory      = 16001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "スプリントメイル",
+  original_name_jp = "綴り鎧",
+  original_name_en = "chain mail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(438, {
   image            = 441,
@@ -11002,6 +13126,12 @@ define(438, {
   subcategory      = 16001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ブリガンダイン",
+  original_name_jp = "合成鎧",
+  original_name_en = "composite mail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(437, {
   image            = 440,
@@ -11033,6 +13163,12 @@ define(437, {
   subcategory      = 16001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ラメラーメイル",
+  original_name_jp = "輪鎧",
+  original_name_en = "ring mail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(436, {
   image            = 410,
@@ -11064,6 +13200,12 @@ define(436, {
   subcategory      = 16001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "プレートメイル",
+  original_name_jp = "重層鎧",
+  original_name_en = "plate mail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(435, {
   image            = 409,
@@ -11095,6 +13237,12 @@ define(435, {
   subcategory      = 16001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘビーメイル",
+  original_name_jp = "厚鎧",
+  original_name_en = "banded mail",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(434, {
   image            = 429,
@@ -11126,6 +13274,12 @@ define(434, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "自己変容の魔法書",
+  original_name_en = "mutation",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(433, {
   image            = 354,
@@ -11157,6 +13311,12 @@ define(433, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "変異治療のポーション",
+  original_name_en = "cure mutation",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(432, {
   image            = 354,
@@ -11188,6 +13348,12 @@ define(432, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "突然変異のポーション",
+  original_name_en = "mutation",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(431, {
   image            = 470,
@@ -11219,6 +13385,12 @@ define(431, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "信仰の巻物",
+  original_name_en = "faith",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(430, {
   image            = 470,
@@ -11250,6 +13422,12 @@ define(430, {
   subcategory      = 99999,
   rarity           = 80000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "成長の巻物",
+  original_name_en = "growth",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(429, {
   image            = 354,
@@ -11281,6 +13459,12 @@ define(429, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "失耐性のポーション",
+  original_name_en = "weaken resistance",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(428, {
   image            = 324,
@@ -11312,6 +13496,12 @@ define(428, {
   subcategory      = 60004,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "寝袋",
+  original_name_en = "sleeping bag",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(427, {
   image            = 170,
@@ -11343,6 +13533,12 @@ define(427, {
   subcategory      = 58005,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ストマフィリア",
+  original_name_en = "stomafillia",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(426, {
   image            = 170,
@@ -11374,6 +13570,12 @@ define(426, {
   subcategory      = 58005,
   rarity           = 80000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アルローニア",
+  original_name_en = "alraunia",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(425, {
   image            = 170,
@@ -11405,6 +13607,12 @@ define(425, {
   subcategory      = 58005,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "キュラリア",
+  original_name_en = "curaria",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(424, {
   image            = 170,
@@ -11436,6 +13644,12 @@ define(424, {
   subcategory      = 58005,
   rarity           = 80000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "スペンスウィード",
+  original_name_en = "spenseweed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(423, {
   image            = 170,
@@ -11467,6 +13681,12 @@ define(423, {
   subcategory      = 58005,
   rarity           = 80000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マレイロン",
+  original_name_en = "mareilon",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(422, {
   image            = 170,
@@ -11498,6 +13718,12 @@ define(422, {
   subcategory      = 58005,
   rarity           = 80000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "モージア",
+  original_name_en = "morgia",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(421, {
   image            = 323,
@@ -11529,6 +13755,12 @@ define(421, {
   subcategory      = 58500,
   rarity           = 20000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アーティファクトの種",
+  original_name_en = "artifact seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(420, {
   image            = 323,
@@ -11560,6 +13792,12 @@ define(420, {
   subcategory      = 58500,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "謎の種",
+  original_name_en = "unknown seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(419, {
   image            = 323,
@@ -11591,6 +13829,12 @@ define(419, {
   subcategory      = 58500,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ハーブの種",
+  original_name_en = "herb seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(418, {
   image            = 323,
@@ -11622,6 +13866,12 @@ define(418, {
   subcategory      = 58500,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "果物の種",
+  original_name_en = "fruit seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(417, {
   image            = 323,
@@ -11653,6 +13903,12 @@ define(417, {
   subcategory      = 58500,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "野菜の種",
+  original_name_en = "vegetable seed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(416, {
   image            = 322,
@@ -11684,6 +13940,12 @@ define(416, {
   subcategory      = 99999,
   rarity           = 25000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ガシャポンの玉(レア)",
+  original_name_en = "rare treasure ball",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(415, {
   image            = 322,
@@ -11715,6 +13977,12 @@ define(415, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ガシャポンの玉",
+  original_name_en = "treasure ball",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(414, {
   image            = 321,
@@ -11746,6 +14014,12 @@ define(414, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "青のガシャポン",
+  original_name_en = "blue treasure machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(413, {
   image            = 320,
@@ -11777,6 +14051,12 @@ define(413, {
   subcategory      = 99999,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "赤のガシャポン",
+  original_name_en = "red treasure machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(412, {
   image            = 471,
@@ -11808,6 +14088,12 @@ define(412, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "解呪の杖",
+  original_name_en = "uncurse",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(411, {
   image            = 470,
@@ -11839,6 +14125,12 @@ define(411, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "物質感知の巻物",
+  original_name_en = "detect objects",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(410, {
   image            = 429,
@@ -11870,6 +14162,12 @@ define(410, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "物質感知の魔法書",
+  original_name_en = "detect objects",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(409, {
   image            = 251,
@@ -11901,6 +14199,12 @@ define(409, {
   subcategory      = 99999,
   rarity           = 1500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "浮き輪(荷車)",
+  original_name_en = "inner tube",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(408, {
   image            = 68,
@@ -11932,6 +14236,12 @@ define(408, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "貴族の玩具(荷車)",
+  original_name_en = "noble toy",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(407, {
   image            = 208,
@@ -11963,6 +14273,12 @@ define(407, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "銘酒セット(荷車)",
+  original_name_en = "whisky",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(406, {
   image            = 316,
@@ -11994,6 +14310,12 @@ define(406, {
   subcategory      = 99999,
   rarity           = 2000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ツナ(荷車)",
+  original_name_en = "tuna fish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(405, {
   image            = 161,
@@ -12025,6 +14347,12 @@ define(405, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "墓(荷車)",
+  original_name_en = "grave",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(404, {
   image            = 312,
@@ -12056,6 +14384,12 @@ define(404, {
   subcategory      = 99999,
   rarity           = 1500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マンボー(荷車)",
+  original_name_en = "manboo",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(403, {
   image            = 269,
@@ -12087,6 +14421,12 @@ define(403, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "棺桶(荷車)",
+  original_name_en = "coffin",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(402, {
   image            = 202,
@@ -12118,6 +14458,12 @@ define(402, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ロープ(荷車)",
+  original_name_en = "rope",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(401, {
   image            = 292,
@@ -12149,6 +14495,12 @@ define(401, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "装飾ピアノ(荷車)",
+  original_name_en = "piano",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(400, {
   image            = 72,
@@ -12180,6 +14532,12 @@ define(400, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "匠のタル(荷車)",
+  original_name_en = "barrel",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(399, {
   image            = 67,
@@ -12211,6 +14569,12 @@ define(399, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "特産ぬいぐるみ(荷車)",
+  original_name_en = "rag doll",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(398, {
   image            = 470,
@@ -12242,6 +14606,12 @@ define(398, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "知恵の巻物",
+  original_name_en = "knowledge",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(397, {
   image            = 429,
@@ -12273,6 +14643,12 @@ define(397, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "知者の加護の魔法書",
+  original_name_en = "knowledge",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(396, {
   image            = 429,
@@ -12304,6 +14680,12 @@ define(396, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ナイトメアの魔法書",
+  original_name_en = "nightmare",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(395, {
   image            = 470,
@@ -12335,6 +14717,12 @@ define(395, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マテリアル生成の巻物",
+  original_name_en = "gain material",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(394, {
   image            = 438,
@@ -12366,6 +14754,12 @@ define(394, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "素材箱",
+  original_name_en = "material box",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(393, {
   image            = 319,
@@ -12397,6 +14791,12 @@ define(393, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "宝石加工ツール",
+  original_name_en = "gem cutter",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(392, {
   image            = 223,
@@ -12428,6 +14828,12 @@ define(392, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "硫酸",
+  original_name_en = "sulfuric",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(391, {
   image            = 471,
@@ -12459,6 +14865,12 @@ define(391, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔力の杖",
+  original_name_en = "mana",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(390, {
   image            = 470,
@@ -12490,6 +14902,12 @@ define(390, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔力の巻物",
+  original_name_en = "mana",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(389, {
   image            = 470,
@@ -12521,6 +14939,12 @@ define(389, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "全浄化の巻物",
+  original_name_en = "holy rain",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(388, {
   image            = 470,
@@ -12552,6 +14976,12 @@ define(388, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "清浄なる光の巻物",
+  original_name_en = "holy light",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(387, {
   image            = 429,
@@ -12583,6 +15013,12 @@ define(387, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "全浄化の魔法書",
+  original_name_en = "holy rain",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(386, {
   image            = 429,
@@ -12614,6 +15050,12 @@ define(386, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "清浄なる光の魔法書",
+  original_name_en = "holy light",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(385, {
   image            = 471,
@@ -12645,6 +15087,12 @@ define(385, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "浄化の杖",
+  original_name_en = "holy light",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(384, {
   image            = 470,
@@ -12676,6 +15124,12 @@ define(384, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ホーリーヴェイルの巻物",
+  original_name_en = "holy veil",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(383, {
   image            = 429,
@@ -12707,6 +15161,12 @@ define(383, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ホーリーヴェイルの魔法書",
+  original_name_en = "holy veil",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(382, {
   image            = 354,
@@ -12738,6 +15198,12 @@ define(382, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "脆弱のポーション",
+  original_name_en = "weakness",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(381, {
   image            = 429,
@@ -12769,6 +15235,12 @@ define(381, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "元素の傷跡の魔法書",
+  original_name_en = "elemental scar",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(380, {
   image            = 429,
@@ -12800,6 +15272,12 @@ define(380, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "脆弱の霧の魔法書",
+  original_name_en = "weakness",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(379, {
   image            = 354,
@@ -12831,6 +15309,12 @@ define(379, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "英雄気分のポーション",
+  original_name_en = "hero",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(378, {
   image            = 429,
@@ -12862,6 +15346,12 @@ define(378, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "英雄の魔法書",
+  original_name_en = "hero",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(377, {
   image            = 471,
@@ -12893,6 +15383,12 @@ define(377, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "加速の杖",
+  original_name_en = "speed",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(376, {
   image            = 354,
@@ -12924,6 +15420,12 @@ define(376, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鈍足のポーション",
+  original_name_en = "slow",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(375, {
   image            = 354,
@@ -12955,6 +15457,12 @@ define(375, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "加速のポーション",
+  original_name_en = "speed",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(374, {
   image            = 429,
@@ -12986,6 +15494,12 @@ define(374, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鈍足の魔法書",
+  original_name_en = "slow",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(373, {
   image            = 429,
@@ -13017,6 +15531,12 @@ define(373, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "加速の魔法書",
+  original_name_en = "speed",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(372, {
   image            = 354,
@@ -13048,6 +15568,12 @@ define(372, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "元素耐性のポーション",
+  original_name_en = "resistance",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(371, {
   image            = 429,
@@ -13079,6 +15605,12 @@ define(371, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "元素保護の魔法書",
+  original_name_en = "resistance",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(370, {
   image            = 354,
@@ -13110,6 +15642,12 @@ define(370, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "トロールの血",
+  original_name_en = "troll blood",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(369, {
   image            = 429,
@@ -13141,6 +15679,12 @@ define(369, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "リジェネレーションの魔法書",
+  original_name_en = "regeneration",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(368, {
   image            = 354,
@@ -13172,6 +15716,12 @@ define(368, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "沈黙のポーション",
+  original_name_en = "silence",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(367, {
   image            = 429,
@@ -13203,6 +15753,12 @@ define(367, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "沈黙の霧の魔法書",
+  original_name_en = "silence",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(366, {
   image            = 471,
@@ -13234,6 +15790,12 @@ define(366, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "沈黙の杖",
+  original_name_en = "silence",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(365, {
   image            = 429,
@@ -13265,6 +15827,12 @@ define(365, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "聖なる盾の魔法書",
+  original_name_en = "holy shield",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(364, {
   image            = 354,
@@ -13296,6 +15864,12 @@ define(364, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "防衛者のポーション",
+  original_name_en = "defender",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(363, {
   image            = 470,
@@ -13327,6 +15901,12 @@ define(363, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "*解呪*の巻物",
+  original_name_en = "vanish curse",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(362, {
   image            = 470,
@@ -13358,6 +15938,12 @@ define(362, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "*鑑定*の巻物",
+  original_name_en = "greater identify",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(361, {
   image            = 253,
@@ -13389,6 +15975,12 @@ define(361, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "商人のカバン",
+  original_name_en = "shopkeeper's trunk",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(360, {
   image            = 407,
@@ -13420,6 +16012,12 @@ define(360, {
   subcategory      = 32001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《パルミア・プライド》",
+  original_name_en = "<Palmia Pride>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(359, {
   image            = 426,
@@ -13451,6 +16049,12 @@ define(359, {
   subcategory      = 10007,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ランキス》",
+  original_name_en = "<Rankis>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(358, {
   image            = 425,
@@ -13482,6 +16086,12 @@ define(358, {
   subcategory      = 10006,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《狂気の杖》",
+  original_name_en = "<Staff of Insanity>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(357, {
   image            = 407,
@@ -13513,6 +16123,12 @@ define(357, {
   subcategory      = 32001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《鋼鉄竜の指輪》",
+  original_name_en = "<Ring of Steel Dragon>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(356, {
   image            = 427,
@@ -13544,6 +16160,12 @@ define(356, {
   subcategory      = 10004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ブラッドムーン》",
+  original_name_en = "<Blood Moon>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(355, {
   image            = 414,
@@ -13575,6 +16197,12 @@ define(355, {
   subcategory      = 22003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《火炎竜ヴェスダの篭手》",
+  original_name_en = "<Gloves of Vesda>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(354, {
   image            = 318,
@@ -13606,6 +16234,12 @@ define(354, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サンドボーラー",
+  original_name_en = "sandborer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(353, {
   image            = 317,
@@ -13637,6 +16271,12 @@ define(353, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カトラスフィッシュ",
+  original_name_en = "cutlassfish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(352, {
   image            = 316,
@@ -13668,6 +16308,12 @@ define(352, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ツナ",
+  original_name_en = "tuna",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(351, {
   image            = 315,
@@ -13699,6 +16345,12 @@ define(351, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "グローブフィッシュ",
+  original_name_en = "globefish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(350, {
   image            = 314,
@@ -13730,6 +16382,12 @@ define(350, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サーモン",
+  original_name_en = "salmon",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(349, {
   image            = 313,
@@ -13761,6 +16419,12 @@ define(349, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "シーブリーム",
+  original_name_en = "seabream",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(348, {
   image            = 312,
@@ -13792,6 +16456,12 @@ define(348, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マンボー",
+  original_name_en = "manboo",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(347, {
   image            = 311,
@@ -13823,6 +16493,12 @@ define(347, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フラットフィッシュ",
+  original_name_en = "flatfish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(346, {
   image            = 310,
@@ -13854,6 +16530,12 @@ define(346, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サーディン",
+  original_name_en = "sardine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(345, {
   image            = 309,
@@ -13885,6 +16567,12 @@ define(345, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ムーンフィッシュ",
+  original_name_en = "moonfish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(344, {
   image            = 308,
@@ -13916,6 +16604,12 @@ define(344, {
   subcategory      = 53100,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "権利書",
+  original_name_en = "deed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(343, {
   image            = 307,
@@ -13947,6 +16641,12 @@ define(343, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "懐かしいルーン",
+  original_name_en = "rune",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(342, {
   image            = 306,
@@ -13978,6 +16678,12 @@ define(342, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "釣竿",
+  original_name_en = "fishing pole",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(341, {
   image            = 305,
@@ -14009,6 +16715,12 @@ define(341, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "骨片",
+  original_name_en = "bone",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(340, {
   image            = 304,
@@ -14040,6 +16752,12 @@ define(340, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "心臓",
+  original_name_en = "heart",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(339, {
   image            = 303,
@@ -14071,6 +16789,12 @@ define(339, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "瞳",
+  original_name_en = "eye",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(338, {
   image            = 302,
@@ -14102,6 +16826,12 @@ define(338, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "体液",
+  original_name_en = "blood",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(337, {
   image            = 301,
@@ -14133,6 +16863,12 @@ define(337, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "皮",
+  original_name_en = "skin",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(336, {
   image            = 300,
@@ -14164,6 +16900,12 @@ define(336, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "金の像",
+  original_name_en = "golden statue",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(335, {
   image            = 299,
@@ -14195,6 +16937,12 @@ define(335, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 3,
+  katakana_name    = "",
+  original_name_jp = "金の飾台",
+  original_name_en = "golden pedestal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(334, {
   image            = 579,
@@ -14226,6 +16974,12 @@ define(334, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "王座",
+  original_name_en = "throne",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(333, {
   image            = 297,
@@ -14257,6 +17011,12 @@ define(333, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "旅糧(荷車)",
+  original_name_en = "traveler's food",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(332, {
   image            = 296,
@@ -14288,6 +17048,12 @@ define(332, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "テーブル",
+  original_name_en = "table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(331, {
   image            = 295,
@@ -14319,6 +17085,12 @@ define(331, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ドレス",
+  original_name_en = "dress",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(330, {
   image            = 294,
@@ -14350,6 +17122,12 @@ define(330, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "切り株",
+  original_name_en = "stump",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(329, {
   image            = 293,
@@ -14381,6 +17159,12 @@ define(329, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "十字架",
+  original_name_en = "cross",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(328, {
   image            = 292,
@@ -14412,6 +17196,12 @@ define(328, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "アップライトピアノ",
+  original_name_en = "upright piano",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(327, {
   image            = 291,
@@ -14443,6 +17233,12 @@ define(327, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "長椅子",
+  original_name_en = "wide chair",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(326, {
   image            = 290,
@@ -14474,6 +17270,12 @@ define(326, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "シンプルな棚",
+  original_name_en = "simple rack",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(325, {
   image            = 289,
@@ -14505,6 +17307,12 @@ define(325, {
   subcategory      = 60004,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ふかふかのベッド",
+  original_name_en = "comfortable bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(324, {
   image            = 288,
@@ -14536,6 +17344,12 @@ define(324, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "神聖な祭壇",
+  original_name_en = "sacred altar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(323, {
   image            = 586,
@@ -14567,6 +17381,12 @@ define(323, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "大きい食器棚",
+  original_name_en = "big cupboard",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(322, {
   image            = 286,
@@ -14598,6 +17418,12 @@ define(322, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "シンプルな鏡台",
+  original_name_en = "simple dresser",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(321, {
   image            = 285,
@@ -14629,6 +17455,12 @@ define(321, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "小奇麗な棚",
+  original_name_en = "neat rack",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(320, {
   image            = 284,
@@ -14660,6 +17492,12 @@ define(320, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "でこぼこした机",
+  original_name_en = "cheap table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(319, {
   image            = 283,
@@ -14691,6 +17529,12 @@ define(319, {
   subcategory      = 60004,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "簡易ベッド",
+  original_name_en = "cheap bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(318, {
   image            = 282,
@@ -14722,6 +17566,12 @@ define(318, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "古い本棚",
+  original_name_en = "old bookshelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(317, {
   image            = 281,
@@ -14753,6 +17603,12 @@ define(317, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "古い棚",
+  original_name_en = "old shelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(316, {
   image            = 280,
@@ -14784,6 +17640,12 @@ define(316, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "特大の観葉植物",
+  original_name_en = "big foliage plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(315, {
   image            = 279,
@@ -14815,6 +17677,12 @@ define(315, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ダーツ",
+  original_name_en = "darts board",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(314, {
   image            = 278,
@@ -14846,6 +17714,12 @@ define(314, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "スロットマシーン",
+  original_name_en = "slot machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(313, {
   image            = 277,
@@ -14877,6 +17751,12 @@ define(313, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カジノテーブル",
+  original_name_en = "casino table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(312, {
   image            = 276,
@@ -14908,6 +17788,12 @@ define(312, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "パチスロマシーン",
+  original_name_en = "pachisuro machine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(311, {
   image            = 275,
@@ -14939,6 +17825,12 @@ define(311, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "風呂",
+  original_name_en = "bathtub",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(310, {
   image            = 274,
@@ -14970,6 +17862,12 @@ define(310, {
   subcategory      = 60004,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "清潔なベッド",
+  original_name_en = "clean bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(309, {
   image            = 273,
@@ -15001,6 +17899,12 @@ define(309, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "鏡台",
+  original_name_en = "dresser",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(308, {
   image            = 272,
@@ -15032,6 +17936,12 @@ define(308, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "簡易棚",
+  original_name_en = "cheap rack",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(307, {
   image            = 271,
@@ -15063,6 +17973,12 @@ define(307, {
   subcategory      = 60004,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "落ち着くベッド",
+  original_name_en = "soft bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(306, {
   image            = 270,
@@ -15094,6 +18010,12 @@ define(306, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フードプロセッサー",
+  original_name_en = "food processor",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(305, {
   image            = 269,
@@ -15125,6 +18047,12 @@ define(305, {
   subcategory      = 60004,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "棺桶",
+  original_name_en = "coffin",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(304, {
   image            = 268,
@@ -15156,6 +18084,12 @@ define(304, {
   subcategory      = 60004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "粗末なベッド",
+  original_name_en = "plain bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(303, {
   image            = 267,
@@ -15187,6 +18121,12 @@ define(303, {
   subcategory      = 60004,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "巨大なベッド",
+  original_name_en = "giant bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(302, {
   image            = 266,
@@ -15218,6 +18158,12 @@ define(302, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "衣類箪笥",
+  original_name_en = "clothes",
+  originalnameref2 = "chest",
+  has_random_name  = false,
 })
 define(301, {
   image            = 265,
@@ -15249,6 +18195,12 @@ define(301, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "大きな花束",
+  original_name_en = "large bouquet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(300, {
   image            = 264,
@@ -15280,6 +18232,12 @@ define(300, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "高収納バーテーブル",
+  original_name_en = "neat bar table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(299, {
   image            = 263,
@@ -15311,6 +18269,12 @@ define(299, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 8,
+  katakana_name    = "",
+  original_name_jp = "高級ミラー",
+  original_name_en = "high grade dresser",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(298, {
   image            = 262,
@@ -15342,6 +18306,12 @@ define(298, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "高価な花瓶",
+  original_name_en = "vase",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(297, {
   image            = 261,
@@ -15373,6 +18343,12 @@ define(297, {
   subcategory      = 60004,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "高級ベッド",
+  original_name_en = "luxury bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(296, {
   image            = 260,
@@ -15404,6 +18380,12 @@ define(296, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "お酒のキャビネット",
+  original_name_en = "cabinet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(295, {
   image            = 259,
@@ -15435,6 +18417,12 @@ define(295, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ぼろい机",
+  original_name_en = "ragged table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(294, {
   image            = 258,
@@ -15466,6 +18454,12 @@ define(294, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "タオル",
+  original_name_en = "towel",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(293, {
   image            = 257,
@@ -15497,6 +18491,12 @@ define(293, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "装飾品の棚",
+  original_name_en = "accessaries",
+  originalnameref2 = "rack",
+  has_random_name  = false,
 })
 define(292, {
   image            = 256,
@@ -15528,6 +18528,12 @@ define(292, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "日用品の棚",
+  original_name_en = "good",
+  originalnameref2 = "rack",
+  has_random_name  = false,
 })
 define(291, {
   image            = 255,
@@ -15559,6 +18565,12 @@ define(291, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "整備された武具",
+  original_name_en = "well kept armor",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(290, {
   image            = 471,
@@ -15590,6 +18602,12 @@ define(290, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "願いの杖",
+  original_name_en = "wishing",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(289, {
   image            = 429,
@@ -15621,6 +18639,12 @@ define(289, {
   subcategory      = 99999,
   rarity           = 20000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "願いの魔法書",
+  original_name_en = "wishing",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(288, {
   image            = 470,
@@ -15652,6 +18676,12 @@ define(288, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "呪縛の巻物",
+  original_name_en = "curse",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(287, {
   image            = 354,
@@ -15683,6 +18713,12 @@ define(287, {
   subcategory      = 99999,
   rarity           = 80000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "潜在能力のポーション",
+  original_name_en = "potential",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(286, {
   image            = 354,
@@ -15714,6 +18750,12 @@ define(286, {
   subcategory      = 52001,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "精神復活のポーション",
+  original_name_en = "restore spirit",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(285, {
   image            = 354,
@@ -15745,6 +18787,12 @@ define(285, {
   subcategory      = 52001,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "肉体復活のポーション",
+  original_name_en = "restore body",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(284, {
   image            = 254,
@@ -15776,6 +18824,12 @@ define(284, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "財布(落し物)",
+  original_name_en = "wallet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(283, {
   image            = 253,
@@ -15807,6 +18861,12 @@ define(283, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カバン(落し物)",
+  original_name_en = "suitcase",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(282, {
   image            = 252,
@@ -15838,6 +18898,12 @@ define(282, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "意味深な地図",
+  original_name_en = "mysterious map",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(281, {
   image            = 251,
@@ -15869,6 +18935,12 @@ define(281, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "浮き輪",
+  original_name_en = "inner tube",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(280, {
   image            = 250,
@@ -15900,6 +18972,12 @@ define(280, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "落ち着くテーブル",
+  original_name_en = "comfortable table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(279, {
   image            = 249,
@@ -15931,6 +19009,12 @@ define(279, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "水桶",
+  original_name_en = "water tub",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(278, {
   image            = 585,
@@ -15962,6 +19046,12 @@ define(278, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 5,
+  katakana_name    = "",
+  original_name_jp = "街灯",
+  original_name_en = "street lamp",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(277, {
   image            = 82,
@@ -15993,6 +19083,12 @@ define(277, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "折れた柱",
+  original_name_en = "broken pillar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(276, {
   image            = 524,
@@ -16024,6 +19120,12 @@ define(276, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "長い柱",
+  original_name_en = "long pillar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(275, {
   image            = 248,
@@ -16055,6 +19157,12 @@ define(275, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ほうき",
+  original_name_en = "broom",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(274, {
   image            = 232,
@@ -16086,6 +19194,12 @@ define(274, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "かかし",
+  original_name_en = "scarecrow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(273, {
   image            = 231,
@@ -16117,6 +19231,12 @@ define(273, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "薪",
+  original_name_en = "fire wood",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(272, {
   image            = 429,
@@ -16148,6 +19268,12 @@ define(272, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "混沌の渦の魔法書",
+  original_name_en = "chaos ball",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(271, {
   image            = 429,
@@ -16179,6 +19305,12 @@ define(271, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "轟音の波動の魔法書",
+  original_name_en = "sound ball",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(270, {
   image            = 429,
@@ -16210,6 +19342,12 @@ define(270, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ファイアボールの魔法書",
+  original_name_en = "fire ball",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(269, {
   image            = 429,
@@ -16241,6 +19379,12 @@ define(269, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アイスボールの魔法書",
+  original_name_en = "ice ball",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(268, {
   image            = 429,
@@ -16272,6 +19416,12 @@ define(268, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "幻影の光線の魔法書",
+  original_name_en = "illusion beam",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(267, {
   image            = 429,
@@ -16303,6 +19453,12 @@ define(267, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "暗黒の光線の魔法書",
+  original_name_en = "darkness beam",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(266, {
   image            = 432,
@@ -16334,6 +19490,12 @@ define(266, {
   subcategory      = 10003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ニンジャソード",
+  original_name_jp = "忍刀",
+  original_name_en = "wakizashi",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(265, {
   image            = 429,
@@ -16365,6 +19527,12 @@ define(265, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "麻痺の矢の魔法書",
+  original_name_en = "nerve eye",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(264, {
   image            = 429,
@@ -16396,6 +19564,12 @@ define(264, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "混沌の瞳の魔法書",
+  original_name_en = "chaos eye",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(263, {
   image            = 429,
@@ -16427,6 +19601,12 @@ define(263, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "地獄の吐息の魔法書",
+  original_name_en = "nether eye",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(262, {
   image            = 354,
@@ -16458,6 +19638,12 @@ define(262, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "毒薬",
+  original_name_en = "poison",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(261, {
   image            = 201,
@@ -16489,6 +19675,12 @@ define(261, {
   subcategory      = 99999,
   rarity           = 5000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "はじけ魚",
+  original_name_en = "bomb fish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(260, {
   image            = 233,
@@ -16520,6 +19712,12 @@ define(260, {
   subcategory      = 57001,
   rarity           = 5000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "小麦粉",
+  original_name_en = "flour",
+  originalnameref2 = "sack",
+  has_random_name  = false,
 })
 define(259, {
   image            = 233,
@@ -16551,6 +19749,12 @@ define(259, {
   subcategory      = 57002,
   rarity           = 5000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "生麺",
+  original_name_en = "raw noodle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(258, {
   image            = 117,
@@ -16582,6 +19786,12 @@ define(258, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "スティックパン",
+  original_name_en = "stick bread",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(257, {
   image            = 429,
@@ -16613,6 +19823,12 @@ define(257, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔法の矢の魔法書",
+  original_name_en = "magic arrow",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(256, {
   image            = 226,
@@ -16644,6 +19860,12 @@ define(256, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "携帯調理道具",
+  original_name_en = "portable cooking tool",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(255, {
   image            = 349,
@@ -16675,6 +19897,12 @@ define(255, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 1,
+  katakana_name    = "",
+  original_name_jp = "焚き火",
+  original_name_en = "campfire",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(254, {
   image            = 224,
@@ -16706,6 +19934,12 @@ define(254, {
   subcategory      = 60005,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ホーン",
+  original_name_en = "horn",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(253, {
   image            = 223,
@@ -16737,6 +19971,12 @@ define(253, {
   subcategory      = 52002,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ビア",
+  original_name_en = "beer",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(252, {
   image            = 429,
@@ -16768,6 +20008,12 @@ define(252, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ジュアの癒しの魔法書",
+  original_name_en = "cure <Jure>",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(251, {
   image            = 429,
@@ -16799,6 +20045,12 @@ define(251, {
   subcategory      = 99999,
   rarity           = 700000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "エリスの癒しの魔法書",
+  original_name_en = "cure <Eris>",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(250, {
   image            = 429,
@@ -16830,6 +20082,12 @@ define(250, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "致命傷治癒の魔法書",
+  original_name_en = "cure critical wound",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(249, {
   image            = 429,
@@ -16861,6 +20119,12 @@ define(249, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "軽傷治癒の魔法書",
+  original_name_en = "cure minor wound",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(248, {
   image            = 429,
@@ -16892,6 +20156,12 @@ define(248, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "帰還の魔法書",
+  original_name_en = "return",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(247, {
   image            = 429,
@@ -16923,6 +20193,12 @@ define(247, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "神託の魔法書",
+  original_name_en = "oracle",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(246, {
   image            = 429,
@@ -16954,6 +20230,12 @@ define(246, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔法の地図の魔法書",
+  original_name_en = "magic mapping",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(245, {
   image            = 470,
@@ -16985,6 +20267,12 @@ define(245, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ショートテレポートの巻物",
+  original_name_en = "minor teleportation",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(244, {
   image            = 470,
@@ -17016,6 +20304,12 @@ define(244, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "不思議な巻物",
+  original_name_en = "wonder",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(243, {
   image            = 470,
@@ -17047,6 +20341,12 @@ define(243, {
   subcategory      = 99999,
   rarity           = 25000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "能力獲得の巻物",
+  original_name_en = "gain attribute",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(242, {
   image            = 470,
@@ -17078,6 +20378,12 @@ define(242, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔法の地図",
+  original_name_en = "magical map",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(241, {
   image            = 197,
@@ -17109,6 +20415,12 @@ define(241, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "金庫",
+  original_name_en = "safe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(240, {
   image            = 220,
@@ -17140,6 +20452,12 @@ define(240, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "宝箱",
+  original_name_en = "chest",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(239, {
   image            = 220,
@@ -17171,6 +20489,12 @@ define(239, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "宝石で飾られた宝箱",
+  original_name_en = "bejeweled chest",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(238, {
   image            = 221,
@@ -17202,6 +20526,12 @@ define(238, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フィギア『伝説の剣』",
+  original_name_en = "sword",
+  originalnameref2 = "figurine",
+  has_random_name  = false,
 })
 define(237, {
   image            = 222,
@@ -17233,6 +20563,12 @@ define(237, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "フィギア『狂戦士』",
+  original_name_en = "warrior",
+  originalnameref2 = "figurine",
+  has_random_name  = false,
 })
 define(236, {
   image            = 470,
@@ -17264,6 +20600,12 @@ define(236, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "帰還の巻物",
+  original_name_en = "return",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(235, {
   image            = 426,
@@ -17295,6 +20637,12 @@ define(235, {
   subcategory      = 10008,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ハルバード",
+  original_name_jp = "鉾槍",
+  original_name_en = "halberd",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(234, {
   image            = 399,
@@ -17326,6 +20674,12 @@ define(234, {
   subcategory      = 10010,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "バルディッシュ",
+  original_name_jp = "大斧",
+  original_name_en = "bardish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(233, {
   image            = 233,
@@ -17357,6 +20711,12 @@ define(233, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "兵糧",
+  original_name_en = "ration",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(232, {
   image            = 503,
@@ -17388,6 +20748,12 @@ define(232, {
   subcategory      = 10001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "クレイモア",
+  original_name_jp = "大剣",
+  original_name_en = "claymore",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(231, {
   image            = 547,
@@ -17419,6 +20785,12 @@ define(231, {
   subcategory      = 24020,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "マシンガン",
+  original_name_jp = "機関銃",
+  original_name_en = "machine gun",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(230, {
   image            = 404,
@@ -17450,6 +20822,12 @@ define(230, {
   subcategory      = 24001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ショートボウ",
+  original_name_jp = "短弓",
+  original_name_en = "short bow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(229, {
   image            = 505,
@@ -17481,6 +20859,12 @@ define(229, {
   subcategory      = 10006,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ロッド",
+  original_name_jp = "長棒",
+  original_name_en = "long staff",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(228, {
   image            = 494,
@@ -17512,6 +20896,12 @@ define(228, {
   subcategory      = 10007,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "トライデント",
+  original_name_jp = "三叉槍",
+  original_name_en = "trident",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(227, {
   image            = 504,
@@ -17543,6 +20933,12 @@ define(227, {
   subcategory      = 10005,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ハンマー",
+  original_name_jp = "大槌",
+  original_name_en = "hammer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(226, {
   image            = 500,
@@ -17574,6 +20970,12 @@ define(226, {
   subcategory      = 10010,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "バトルアクス",
+  original_name_jp = "戦斧",
+  original_name_en = "battle axe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(225, {
   image            = 502,
@@ -17605,6 +21007,12 @@ define(225, {
   subcategory      = 10003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "カットラス",
+  original_name_jp = "海賊刀",
+  original_name_en = "scimitar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(224, {
   image            = 431,
@@ -17636,6 +21044,12 @@ define(224, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "カタナ",
+  original_name_jp = "刀",
+  original_name_en = "katana",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(223, {
   image            = 198,
@@ -17667,6 +21081,12 @@ define(223, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鍋",
+  original_name_en = "pot",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(222, {
   image            = 199,
@@ -17698,6 +21118,12 @@ define(222, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "動物の骨",
+  original_name_en = "animal bone",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(221, {
   image            = 200,
@@ -17729,6 +21155,12 @@ define(221, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "藁",
+  original_name_en = "straw",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(220, {
   image            = 201,
@@ -17760,6 +21192,12 @@ define(220, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魚の死骸",
+  original_name_en = "dead fish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(219, {
   image            = 202,
@@ -17791,6 +21229,12 @@ define(219, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "頑丈なロープ",
+  original_name_en = "tight rope",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(218, {
   image            = 203,
@@ -17822,6 +21266,12 @@ define(218, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鉢",
+  original_name_en = "bowl",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(217, {
   image            = 206,
@@ -17853,6 +21303,12 @@ define(217, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "空っぽの鉢",
+  original_name_en = "empty bowl",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(216, {
   image            = 207,
@@ -17884,6 +21340,12 @@ define(216, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "バスケット",
+  original_name_en = "basket",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(215, {
   image            = 208,
@@ -17915,6 +21377,12 @@ define(215, {
   subcategory      = 64100,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "たくさんの空のビン",
+  original_name_en = "empty bottles",
+  originalnameref2 = "lot",
+  has_random_name  = false,
 })
 define(214, {
   image            = 209,
@@ -17946,6 +21414,12 @@ define(214, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鉱石の欠片",
+  original_name_en = "ore piece",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(213, {
   image            = 401,
@@ -17977,6 +21451,12 @@ define(213, {
   subcategory      = 10007,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "スピア",
+  original_name_jp = "長槍",
+  original_name_en = "spear",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(212, {
   image            = 425,
@@ -18008,6 +21488,12 @@ define(212, {
   subcategory      = 10006,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "スタッフ",
+  original_name_jp = "杖",
+  original_name_en = "staff",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(211, {
   image            = 421,
@@ -18039,6 +21525,12 @@ define(211, {
   subcategory      = 10011,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "シックル",
+  original_name_jp = "鎌",
+  original_name_en = "sickle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(210, {
   image            = 424,
@@ -18070,6 +21562,12 @@ define(210, {
   subcategory      = 24030,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ストーン",
+  original_name_jp = "小石",
+  original_name_en = "stone",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(209, {
   image            = 470,
@@ -18101,6 +21599,12 @@ define(209, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "解呪の巻物",
+  original_name_en = "uncurse",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(208, {
   image            = 33,
@@ -18132,6 +21636,12 @@ define(208, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "途方も価値のない錆びた偽物の金塊",
+  original_name_en = "worthless fake gold bar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(207, {
   image            = 404,
@@ -18163,6 +21673,12 @@ define(207, {
   subcategory      = 24001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《異形の森の弓》",
+  original_name_en = "<Bow of Vinderre>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(206, {
   image            = 400,
@@ -18194,6 +21710,12 @@ define(206, {
   subcategory      = 10003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《エーテルダガー》",
+  original_name_en = "<Ether Dagger>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(205, {
   image            = 210,
@@ -18225,6 +21747,12 @@ define(205, {
   subcategory      = 52002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ウィスキー",
+  original_name_en = "whisky",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(204, {
   image            = 196,
@@ -18256,6 +21784,12 @@ define(204, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "死体",
+  original_name_en = "corpse",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(203, {
   image            = 471,
@@ -18287,6 +21821,12 @@ define(203, {
   subcategory      = 99999,
   rarity           = 800000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "癒しの杖",
+  original_name_en = "cure",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(202, {
   image            = 471,
@@ -18318,6 +21858,12 @@ define(202, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "千里眼の杖",
+  original_name_en = "magic mapping",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(201, {
   image            = 193,
@@ -18349,6 +21895,12 @@ define(201, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レッチョ",
+  original_name_en = "leccho",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(200, {
   image            = 192,
@@ -18380,6 +21932,12 @@ define(200, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ウリ",
+  original_name_en = "melon",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(199, {
   image            = 191,
@@ -18411,6 +21969,12 @@ define(199, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カボチ",
+  original_name_en = "cbocchi",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(198, {
   image            = 164,
@@ -18442,6 +22006,12 @@ define(198, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "グリーンピース",
+  original_name_en = "green pea",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(197, {
   image            = 189,
@@ -18473,6 +22043,12 @@ define(197, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レモン",
+  original_name_en = "lemon",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(196, {
   image            = 188,
@@ -18504,6 +22080,12 @@ define(196, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "夏ミカン",
+  original_name_en = "tangerine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(195, {
   image            = 187,
@@ -18535,6 +22117,12 @@ define(195, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クッチェ",
+  original_name_en = "qucche",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(194, {
   image            = 186,
@@ -18566,6 +22154,12 @@ define(194, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "万色フルーツ",
+  original_name_en = "rainbow fruit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(193, {
   image            = 185,
@@ -18597,6 +22191,12 @@ define(193, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "薬草",
+  original_name_en = "healthy leaf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(192, {
   image            = 184,
@@ -18628,6 +22228,12 @@ define(192, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "苺",
+  original_name_en = "strawberry",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(191, {
   image            = 183,
@@ -18659,6 +22265,12 @@ define(191, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アピの実",
+  original_name_en = "api nut",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(190, {
   image            = 182,
@@ -18690,6 +22302,12 @@ define(190, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "イーモ",
+  original_name_en = "imo",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(189, {
   image            = 181,
@@ -18721,6 +22339,12 @@ define(189, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "食器の山",
+  original_name_en = "dish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(188, {
   image            = 180,
@@ -18752,6 +22376,12 @@ define(188, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "レタス",
+  original_name_en = "lettuce",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(187, {
   image            = 179,
@@ -18783,6 +22413,12 @@ define(187, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "さつまいも",
+  original_name_en = "sweet potato",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(186, {
   image            = 178,
@@ -18814,6 +22450,12 @@ define(186, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "大根",
+  original_name_en = "radish",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(185, {
   image            = 177,
@@ -18845,6 +22487,12 @@ define(185, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "キャロット",
+  original_name_en = "carrot",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(184, {
   image            = 176,
@@ -18876,6 +22524,12 @@ define(184, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "グアバ",
+  original_name_en = "guava",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(183, {
   image            = 175,
@@ -18907,6 +22561,12 @@ define(183, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "さくらんぼ",
+  original_name_en = "cherry",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(182, {
   image            = 174,
@@ -18938,6 +22598,12 @@ define(182, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "キウイ",
+  original_name_en = "kiwi",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(181, {
   image            = 173,
@@ -18969,6 +22635,12 @@ define(181, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ブドウ",
+  original_name_en = "grape",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(180, {
   image            = 172,
@@ -19000,6 +22672,12 @@ define(180, {
   subcategory      = 57004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "リンゴ",
+  original_name_en = "apple",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(179, {
   image            = 171,
@@ -19031,6 +22709,12 @@ define(179, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "山菜",
+  original_name_en = "edible wild plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(178, {
   image            = 170,
@@ -19062,6 +22746,12 @@ define(178, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アロエ",
+  original_name_en = "aloe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(177, {
   image            = 169,
@@ -19093,6 +22783,12 @@ define(177, {
   subcategory      = 57003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クワパナ",
+  original_name_en = "quwapana",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(176, {
   image            = 471,
@@ -19124,6 +22820,12 @@ define(176, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鈍足の杖",
+  original_name_en = "slow",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(175, {
   image            = 471,
@@ -19155,6 +22857,12 @@ define(175, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "稲妻の軌跡の杖",
+  original_name_en = "lightning bolt",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(174, {
   image            = 166,
@@ -19186,6 +22894,12 @@ define(174, {
   subcategory      = 60004,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "二段ベッド",
+  original_name_en = "bunk bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(173, {
   image            = 355,
@@ -19217,6 +22931,12 @@ define(173, {
   subcategory      = 60001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "噴水",
+  original_name_en = "fountain",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(172, {
   image            = 163,
@@ -19248,6 +22968,12 @@ define(172, {
   subcategory      = 60002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 13,
+  katakana_name    = "",
+  original_name_jp = "儀式用の祭壇",
+  original_name_en = "ceremony altar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(171, {
   image            = 163,
@@ -19279,6 +23005,12 @@ define(171, {
   subcategory      = 60002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 13,
+  katakana_name    = "",
+  original_name_jp = "祭壇",
+  original_name_en = "altar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(170, {
   image            = 162,
@@ -19310,6 +23042,12 @@ define(170, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "古めかしい墓",
+  original_name_en = "old grave",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(169, {
   image            = 161,
@@ -19341,6 +23079,12 @@ define(169, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "古墳",
+  original_name_en = "ancient tomb",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(168, {
   image            = 160,
@@ -19372,6 +23116,12 @@ define(168, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "荘厳な墓",
+  original_name_en = "solemn tomb",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(167, {
   image            = 159,
@@ -19403,6 +23153,12 @@ define(167, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "新品の墓",
+  original_name_en = "brand new grave",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(166, {
   image            = 158,
@@ -19434,6 +23190,12 @@ define(166, {
   subcategory      = 64000,
   rarity           = 50000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "花で飾られた墓",
+  original_name_en = "ornamented with flowers",
+  originalnameref2 = "grave",
+  has_random_name  = false,
 })
 define(165, {
   image            = 157,
@@ -19465,6 +23227,12 @@ define(165, {
   subcategory      = 64000,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "崩れた墓",
+  original_name_en = "crumbled grave",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(164, {
   image            = 156,
@@ -19496,6 +23264,12 @@ define(164, {
   subcategory      = 64000,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "風化した墓",
+  original_name_en = "collapsed grave",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(163, {
   image            = 155,
@@ -19527,6 +23301,12 @@ define(163, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "絹の生地",
+  original_name_en = "silk cloth",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(162, {
   image            = 154,
@@ -19558,6 +23338,12 @@ define(162, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "散らばった衣類",
+  original_name_en = "messy cloth",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(161, {
   image            = 153,
@@ -19589,6 +23375,12 @@ define(161, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "大工道具",
+  original_name_en = "carpenter's tool",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(160, {
   image            = 152,
@@ -19620,6 +23412,12 @@ define(160, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "裁縫セット",
+  original_name_en = "sewing kit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(159, {
   image            = 151,
@@ -19651,6 +23449,12 @@ define(159, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "単なる棚",
+  original_name_en = "simple shelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(158, {
   image            = 150,
@@ -19682,6 +23486,12 @@ define(158, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 3,
+  katakana_name    = "",
+  original_name_jp = "絢爛な燭台",
+  original_name_en = "gorgeous candlestick",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(157, {
   image            = 149,
@@ -19713,6 +23523,12 @@ define(157, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "上品なテーブル",
+  original_name_en = "elegant table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(156, {
   image            = 148,
@@ -19744,6 +23560,12 @@ define(156, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "狭い食卓",
+  original_name_en = "narrow dining table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(155, {
   image            = 147,
@@ -19775,6 +23597,12 @@ define(155, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "コンロ付き調理台",
+  original_name_en = "kitchen oven",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(154, {
   image            = 146,
@@ -19806,6 +23634,12 @@ define(154, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "流し台",
+  original_name_en = "sink",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(153, {
   image            = 145,
@@ -19837,6 +23671,12 @@ define(153, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "調理台",
+  original_name_en = "kitchen",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(152, {
   image            = 144,
@@ -19868,6 +23708,12 @@ define(152, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "飲みきれないほどの酒",
+  original_name_en = "alcohols",
+  originalnameref2 = "lot",
+  has_random_name  = false,
 })
 define(151, {
   image            = 143,
@@ -19899,6 +23745,12 @@ define(151, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "名工本棚",
+  original_name_en = "craft book shelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(150, {
   image            = 142,
@@ -19930,6 +23782,12 @@ define(150, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "名工箪笥",
+  original_name_en = "craft rack",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(149, {
   image            = 141,
@@ -19961,6 +23819,12 @@ define(149, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "本の山",
+  original_name_en = "books",
+  originalnameref2 = "lot",
+  has_random_name  = false,
 })
 define(148, {
   image            = 140,
@@ -19992,6 +23856,12 @@ define(148, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "散らかった本",
+  original_name_en = "disorderly book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(147, {
   image            = 139,
@@ -20023,6 +23893,12 @@ define(147, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鎧の像",
+  original_name_en = "armor",
+  originalnameref2 = "statue",
+  has_random_name  = false,
 })
 define(146, {
   image            = 138,
@@ -20054,6 +23930,12 @@ define(146, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "飾られた鎧",
+  original_name_en = "decorated armor",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(145, {
   image            = 137,
@@ -20085,6 +23967,12 @@ define(145, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "飾られた服",
+  original_name_en = "decorated cloth",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(144, {
   image            = 136,
@@ -20116,6 +24004,12 @@ define(144, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "武器の束",
+  original_name_en = "weapons",
+  originalnameref2 = "bundle",
+  has_random_name  = false,
 })
 define(143, {
   image            = 135,
@@ -20147,6 +24041,12 @@ define(143, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "たくさんの弓",
+  original_name_en = "bows",
+  originalnameref2 = "bundle",
+  has_random_name  = false,
 })
 define(142, {
   image            = 523,
@@ -20178,6 +24078,12 @@ define(142, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "調理機",
+  original_name_en = "food maker",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(141, {
   image            = 133,
@@ -20209,6 +24115,12 @@ define(141, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "地図",
+  original_name_en = "map",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(140, {
   image            = 132,
@@ -20240,6 +24152,12 @@ define(140, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "絵描き道具",
+  original_name_en = "canvas",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(139, {
   image            = 526,
@@ -20271,6 +24189,12 @@ define(139, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "花で飾られた柱",
+  original_name_en = "statue ornamented with flowers",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(138, {
   image            = 525,
@@ -20302,6 +24226,12 @@ define(138, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "植物で飾られた柱",
+  original_name_en = "statue ornamented with plants",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(137, {
   image            = 129,
@@ -20333,6 +24263,12 @@ define(137, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "カーネーションの花",
+  original_name_en = "carnation",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(136, {
   image            = 128,
@@ -20364,6 +24300,12 @@ define(136, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "猫じゃらし",
+  original_name_en = "foxtail grass",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(135, {
   image            = 127,
@@ -20395,6 +24337,12 @@ define(135, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アネモネの花",
+  original_name_en = "anemos",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(134, {
   image            = 126,
@@ -20426,6 +24374,12 @@ define(134, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ネリネの花",
+  original_name_en = "nerine",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(133, {
   image            = 125,
@@ -20457,6 +24411,12 @@ define(133, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ガザニアの花",
+  original_name_en = "gazania",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(132, {
   image            = 124,
@@ -20488,6 +24448,12 @@ define(132, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サルビアの花",
+  original_name_en = "sage",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(131, {
   image            = 123,
@@ -20519,6 +24485,12 @@ define(131, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "大きい観葉植物",
+  original_name_en = "large foliage plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(130, {
   image            = 122,
@@ -20550,6 +24522,12 @@ define(130, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "木香薔薇",
+  original_name_en = "rose",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(129, {
   image            = 121,
@@ -20581,6 +24559,12 @@ define(129, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "小さい観葉植物",
+  original_name_en = "small foliage plant",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(128, {
   image            = 120,
@@ -20612,6 +24596,12 @@ define(128, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "魔法陣",
+  original_name_en = "pentagram",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(127, {
   image            = 119,
@@ -20643,6 +24633,12 @@ define(127, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "錬金術の道具",
+  original_name_en = "alchemy kit",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(126, {
   image            = 118,
@@ -20674,6 +24670,12 @@ define(126, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ビーカー",
+  original_name_en = "beaker",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(125, {
   image            = 471,
@@ -20705,6 +24707,12 @@ define(125, {
   subcategory      = 99999,
   rarity           = 250000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "生命の杖",
+  original_name_en = "heal",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(124, {
   image            = 116,
@@ -20736,6 +24744,12 @@ define(124, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "パンの陳列棚",
+  original_name_en = "breads",
+  originalnameref2 = "show case",
+  has_random_name  = false,
 })
 define(123, {
   image            = 471,
@@ -20767,6 +24781,12 @@ define(123, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "炎の衝撃の杖",
+  original_name_en = "fire bolt",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(122, {
   image            = 471,
@@ -20798,6 +24818,12 @@ define(122, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "氷の視線の杖",
+  original_name_en = "ice bolt",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(121, {
   image            = 471,
@@ -20829,6 +24855,12 @@ define(121, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "サモンモンスターの杖",
+  original_name_en = "summon monsters",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(120, {
   image            = 471,
@@ -20860,6 +24892,12 @@ define(120, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "マジックミサイルの杖",
+  original_name_en = "magic missile",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(119, {
   image            = 471,
@@ -20891,6 +24929,12 @@ define(119, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "軽傷治療の杖",
+  original_name_en = "cure minor wound",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(118, {
   image            = 429,
@@ -20922,6 +24966,12 @@ define(118, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "モンスター召喚の魔法書",
+  original_name_en = "summon monsters",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(117, {
   image            = 109,
@@ -20953,6 +25003,12 @@ define(117, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "空のバスケット",
+  original_name_en = "empty basket",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(116, {
   image            = 429,
@@ -20984,6 +25040,12 @@ define(116, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ショートテレポートの魔法書",
+  original_name_en = "minor teleportation",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(115, {
   image            = 381,
@@ -21015,6 +25077,12 @@ define(115, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "掲示板",
+  original_name_en = "board",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(114, {
   image            = 106,
@@ -21046,6 +25114,12 @@ define(114, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "道標",
+  original_name_en = "crossroad sign",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(113, {
   image            = 105,
@@ -21077,6 +25151,12 @@ define(113, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "標識",
+  original_name_en = "sign",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(112, {
   image            = 104,
@@ -21108,6 +25188,12 @@ define(112, {
   subcategory      = 99999,
   rarity           = 150000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "オーブン",
+  original_name_en = "oven",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(111, {
   image            = 103,
@@ -21139,6 +25225,12 @@ define(111, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 2,
+  katakana_name    = "",
+  original_name_jp = "溶解炉",
+  original_name_en = "furnace",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(110, {
   image            = 102,
@@ -21170,6 +25262,12 @@ define(110, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "いろんな洋服",
+  original_name_en = "clothes",
+  originalnameref2 = "variety",
+  has_random_name  = false,
 })
 define(109, {
   image            = 101,
@@ -21201,6 +25299,12 @@ define(109, {
   subcategory      = 60001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "井戸",
+  original_name_en = "well",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(108, {
   image            = 100,
@@ -21232,6 +25336,12 @@ define(108, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "いろんな雑貨",
+  original_name_en = "goods",
+  originalnameref2 = "variety",
+  has_random_name  = false,
 })
 define(107, {
   image            = 99,
@@ -21263,6 +25373,12 @@ define(107, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "いろんな道具",
+  original_name_en = "tools",
+  originalnameref2 = "variety",
+  has_random_name  = false,
 })
 define(106, {
   image            = 98,
@@ -21294,6 +25410,12 @@ define(106, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "収納棚",
+  original_name_en = "closet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(105, {
   image            = 97,
@@ -21325,6 +25447,12 @@ define(105, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "本たてつきの棚",
+  original_name_en = "neat shelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(104, {
   image            = 96,
@@ -21356,6 +25484,12 @@ define(104, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "物置",
+  original_name_en = "barn",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(103, {
   image            = 95,
@@ -21387,6 +25521,12 @@ define(103, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "食器棚",
+  original_name_en = "cupboard",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(102, {
   image            = 94,
@@ -21418,6 +25558,12 @@ define(102, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "安物の椅子",
+  original_name_en = "cheap chair",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(101, {
   image            = 93,
@@ -21449,6 +25595,12 @@ define(101, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "四角い椅子",
+  original_name_en = "square chair",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(100, {
   image            = 580,
@@ -21480,6 +25632,12 @@ define(100, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ポーションの棚",
+  original_name_en = "potions",
+  originalnameref2 = "rack",
+  has_random_name  = false,
 })
 define(99, {
   image            = 91,
@@ -21511,6 +25669,12 @@ define(99, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "勉強机",
+  original_name_en = "academic table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(98, {
   image            = 90,
@@ -21542,6 +25706,12 @@ define(98, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "開いているつぼ",
+  original_name_en = "open pot",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(97, {
   image            = 89,
@@ -21573,6 +25743,12 @@ define(97, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "密封されたつぼ",
+  original_name_en = "closed pot",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(96, {
   image            = 88,
@@ -21604,6 +25780,12 @@ define(96, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "金床",
+  original_name_en = "anvil",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(95, {
   image            = 87,
@@ -21635,6 +25817,12 @@ define(95, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "飾り物の鎧",
+  original_name_en = "decorative armor",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(94, {
   image            = 86,
@@ -21666,6 +25854,12 @@ define(94, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 4,
+  katakana_name    = "",
+  original_name_jp = "ランタン",
+  original_name_en = "lantern",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(93, {
   image            = 85,
@@ -21697,6 +25891,12 @@ define(93, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "つるはし",
+  original_name_en = "pick",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(92, {
   image            = 84,
@@ -21728,6 +25928,12 @@ define(92, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "お洒落な椅子",
+  original_name_en = "modern chair",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(91, {
   image            = 72,
@@ -21759,6 +25965,12 @@ define(91, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "タル",
+  original_name_en = "barrel",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(90, {
   image            = 80,
@@ -21790,6 +26002,12 @@ define(90, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "バーテーブルβ",
+  original_name_en = "bar table beta",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(89, {
   image            = 78,
@@ -21821,6 +26039,12 @@ define(89, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "バーテーブルα",
+  original_name_en = "bar table alpha",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(88, {
   image            = 76,
@@ -21852,6 +26076,12 @@ define(88, {
   subcategory      = 60005,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 10,
+  katakana_name    = "",
+  original_name_jp = "グランドピアノ",
+  original_name_en = "grand piano",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(87, {
   image            = 75,
@@ -21883,6 +26113,12 @@ define(87, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "色とりどりの装飾品",
+  original_name_en = "accessories",
+  originalnameref2 = "lot",
+  has_random_name  = false,
 })
 define(86, {
   image            = 74,
@@ -21914,6 +26150,12 @@ define(86, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "たくさんの雑貨",
+  original_name_en = "goods",
+  originalnameref2 = "lot",
+  has_random_name  = false,
 })
 define(85, {
   image            = 73,
@@ -21945,6 +26187,12 @@ define(85, {
   subcategory      = 99999,
   rarity           = 300000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "様々な鎧",
+  original_name_en = "armor",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(84, {
   image            = 70,
@@ -21976,6 +26224,12 @@ define(84, {
   subcategory      = 99999,
   rarity           = 200000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ダイニングテーブル",
+  original_name_en = "dining table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(83, {
   image            = 69,
@@ -22007,6 +26261,12 @@ define(83, {
   subcategory      = 99999,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "モダンテーブル",
+  original_name_en = "modern table",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(82, {
   image            = 68,
@@ -22038,6 +26298,12 @@ define(82, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "玩具",
+  original_name_en = "toy",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(81, {
   image            = 67,
@@ -22069,6 +26335,12 @@ define(81, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ぬいぐるみ",
+  original_name_en = "rag doll",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(80, {
   image            = 66,
@@ -22100,6 +26372,12 @@ define(80, {
   subcategory      = 60004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "安物ベッド",
+  original_name_en = "boring bed",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(79, {
   image            = 234,
@@ -22131,6 +26409,12 @@ define(79, {
   subcategory      = 99999,
   rarity           = 100000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "高級箪笥",
+  original_name_en = "luxury drawer",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(78, {
   image            = 235,
@@ -22162,6 +26446,12 @@ define(78, {
   subcategory      = 99999,
   rarity           = 600000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "普通の本棚",
+  original_name_en = "bookshelf",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(77, {
   image            = 237,
@@ -22193,6 +26483,12 @@ define(77, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "丸椅子",
+  original_name_en = "round chair",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(76, {
   image            = 354,
@@ -22224,6 +26520,12 @@ define(76, {
   subcategory      = 52001,
   rarity           = 150000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "聖なる癒し手ジュアのポーション",
+  original_name_en = "healer <Jure>",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(75, {
   image            = 354,
@@ -22255,6 +26557,12 @@ define(75, {
   subcategory      = 52001,
   rarity           = 250000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "白き癒し手エリスのポーション",
+  original_name_en = "healer <Eris>",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(74, {
   image            = 354,
@@ -22286,6 +26594,12 @@ define(74, {
   subcategory      = 52001,
   rarity           = 500000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "癒し手オディナのポーション",
+  original_name_en = "healer <Odina>",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(73, {
   image            = 405,
@@ -22317,6 +26631,12 @@ define(73, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ラグナロク》",
+  original_name_en = "<Ragnarok>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(72, {
   image            = 354,
@@ -22348,6 +26668,12 @@ define(72, {
   subcategory      = 52001,
   rarity           = 600000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "癒し手のポーション",
+  original_name_en = "healer",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(71, {
   image            = 354,
@@ -22379,6 +26705,12 @@ define(71, {
   subcategory      = 52001,
   rarity           = 700000,
   coefficient      = 50,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "体力回復のポーション",
+  original_name_en = "healing",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(70, {
   image            = 354,
@@ -22410,6 +26742,12 @@ define(70, {
   subcategory      = 52001,
   rarity           = 1000000,
   coefficient      = 50,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "致命傷治癒のポーション",
+  original_name_en = "cure critical wound",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(69, {
   image            = 354,
@@ -22441,6 +26779,12 @@ define(69, {
   subcategory      = 52001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "重傷治癒のポーション",
+  original_name_en = "cure major wound",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(68, {
   image            = 354,
@@ -22472,6 +26816,12 @@ define(68, {
   subcategory      = 52001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "軽傷治癒のポーション",
+  original_name_en = "cure minor wound",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(67, {
   image            = 398,
@@ -22503,6 +26853,12 @@ define(67, {
   subcategory      = 34001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ネックレス",
+  original_name_jp = "装飾首輪",
+  original_name_en = "decorative amulet",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(66, {
   image            = 423,
@@ -22534,6 +26890,12 @@ define(66, {
   subcategory      = 19001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ガードル",
+  original_name_jp = "腰当",
+  original_name_en = "girdle",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(65, {
   image            = 422,
@@ -22565,6 +26927,12 @@ define(65, {
   subcategory      = 20001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "マント",
+  original_name_jp = "軽外套",
+  original_name_en = "light cloak",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(64, {
   image            = 405,
@@ -22596,6 +26964,12 @@ define(64, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《モーンブレイド》",
+  original_name_en = "<Mournblade>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(63, {
   image            = 421,
@@ -22627,6 +27001,12 @@ define(63, {
   subcategory      = 10011,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《虚無の大鎌》",
+  original_name_en = "<Scythe of Void>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(62, {
   image            = 420,
@@ -22658,6 +27038,12 @@ define(62, {
   subcategory      = 25020,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "バレット",
+  original_name_jp = "弾丸",
+  original_name_en = "bullet",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(61, {
   image            = 412,
@@ -22689,6 +27075,12 @@ define(61, {
   subcategory      = 25001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "アロー",
+  original_name_jp = "矢束",
+  original_name_en = "arrow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(60, {
   image            = 419,
@@ -22720,6 +27112,12 @@ define(60, {
   subcategory      = 24020,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "リボルバー",
+  original_name_jp = "拳銃",
+  original_name_en = "pistol",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(59, {
   image            = 411,
@@ -22751,6 +27149,12 @@ define(59, {
   subcategory      = 14003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "カイトシールド",
+  original_name_jp = "騎士盾",
+  original_name_en = "knight shield",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(58, {
   image            = 404,
@@ -22782,6 +27186,12 @@ define(58, {
   subcategory      = 24001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ロングボウ",
+  original_name_jp = "長弓",
+  original_name_en = "long bow",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(57, {
   image            = 501,
@@ -22813,6 +27223,12 @@ define(57, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《斬鉄剣》",
+  original_name_en = "<Zantetsu>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(56, {
   image            = 405,
@@ -22844,6 +27260,12 @@ define(56, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "《ディアボロス》",
+  original_name_en = "<Diablo>",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(55, {
   image            = 437,
@@ -22875,6 +27297,12 @@ define(55, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "プラチナ硬貨",
+  original_name_en = "platinum coin",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(54, {
   image            = 433,
@@ -22906,6 +27334,12 @@ define(54, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "金貨",
+  original_name_en = "gold piece",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(53, {
   image            = 247,
@@ -22937,6 +27371,12 @@ define(53, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "石碑",
+  original_name_en = "tombstone",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(52, {
   image            = 246,
@@ -22968,6 +27408,12 @@ define(52, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "骸",
+  original_name_en = "skeleton",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(51, {
   image            = 245,
@@ -22999,6 +27445,12 @@ define(51, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "骨",
+  original_name_en = "bone fragment",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(50, {
   image            = 244,
@@ -23030,6 +27482,12 @@ define(50, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "折れた刃",
+  original_name_en = "broken sword",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(49, {
   image            = 243,
@@ -23061,6 +27519,12 @@ define(49, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "旗",
+  original_name_en = "flag",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(48, {
   image            = 242,
@@ -23092,6 +27556,12 @@ define(48, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 2,
+  katakana_name    = "",
+  original_name_jp = "かがり台",
+  original_name_en = "bonfire",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(47, {
   image            = 204,
@@ -23123,6 +27593,12 @@ define(47, {
   subcategory      = 64100,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "洗物",
+  original_name_en = "washing",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(46, {
   image            = 241,
@@ -23154,6 +27630,12 @@ define(46, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "割れたつぼ",
+  original_name_en = "broken vase",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(45, {
   image            = 240,
@@ -23185,6 +27667,12 @@ define(45, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クズ",
+  original_name_en = "garbage",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(44, {
   image            = 238,
@@ -23216,6 +27704,12 @@ define(44, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クズ石",
+  original_name_en = "junk stone",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(43, {
   image            = 239,
@@ -23247,6 +27741,12 @@ define(43, {
   subcategory      = 64000,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "木片",
+  original_name_en = "wood piece",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(42, {
   image            = 213,
@@ -23278,6 +27778,12 @@ define(42, {
   subcategory      = 77001,
   rarity           = 250000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "ダイヤモンドの原石",
+  original_name_en = "diamond",
+  originalnameref2 = "raw ore",
+  has_random_name  = false,
 })
 define(41, {
   image            = 213,
@@ -23309,6 +27815,12 @@ define(41, {
   subcategory      = 77001,
   rarity           = 400000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "エメラルドの原石",
+  original_name_en = "emerald",
+  originalnameref2 = "raw ore",
+  has_random_name  = false,
 })
 define(40, {
   image            = 212,
@@ -23340,6 +27852,12 @@ define(40, {
   subcategory      = 77001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ミカ",
+  original_name_en = "mika",
+  originalnameref2 = "raw ore",
+  has_random_name  = false,
 })
 define(39, {
   image            = 212,
@@ -23371,6 +27889,12 @@ define(39, {
   subcategory      = 77001,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "ルビナスの原石",
+  original_name_en = "rubynus",
+  originalnameref2 = "raw ore",
+  has_random_name  = false,
 })
 define(38, {
   image            = 33,
@@ -23402,6 +27926,12 @@ define(38, {
   subcategory      = 99999,
   rarity           = 500000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "金塊",
+  original_name_en = "gold bar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(37, {
   image            = 211,
@@ -23433,6 +27963,12 @@ define(37, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 7,
+  katakana_name    = "",
+  original_name_jp = "太陽の結晶",
+  original_name_en = "sun crystal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(36, {
   image            = 211,
@@ -23464,6 +28000,12 @@ define(36, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "魔力の結晶",
+  original_name_en = "mana crystal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(35, {
   image            = 211,
@@ -23495,6 +28037,12 @@ define(35, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "大地の結晶",
+  original_name_en = "earth crystal",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(34, {
   image            = 429,
@@ -23526,6 +28074,12 @@ define(34, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ライトニングボルトの魔法書",
+  original_name_en = "lightning bolt",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(33, {
   image            = 429,
@@ -23557,6 +28111,12 @@ define(33, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "ファイアボルトの魔法書",
+  original_name_en = "fire bolt",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(32, {
   image            = 429,
@@ -23588,6 +28148,12 @@ define(32, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "アイスボルトの魔法書",
+  original_name_en = "ice bolt",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(31, {
   image            = 354,
@@ -23619,6 +28185,12 @@ define(31, {
   subcategory      = 52002,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "クリムエール",
+  original_name_en = "crim ale",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(30, {
   image            = 354,
@@ -23650,6 +28222,12 @@ define(30, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "睡眠薬",
+  original_name_en = "sleeping drug",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(29, {
   image            = 354,
@@ -23681,6 +28259,12 @@ define(29, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "麻痺のポーション",
+  original_name_en = "paralysis",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(28, {
   image            = 354,
@@ -23712,6 +28296,12 @@ define(28, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "混乱のポーション",
+  original_name_en = "confusion",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(27, {
   image            = 354,
@@ -23743,6 +28333,12 @@ define(27, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "盲目のポーション",
+  original_name_en = "blindness",
+  originalnameref2 = "potion",
+  has_random_name  = true,
 })
 define(26, {
   image            = 354,
@@ -23774,6 +28370,12 @@ define(26, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "汚水",
+  original_name_en = "dirty water",
+  originalnameref2 = "bottle",
+  has_random_name  = false,
 })
 define(25, {
   image            = 333,
@@ -23805,6 +28407,12 @@ define(25, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "バグの本",
+  original_name_en = "bugged book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(24, {
   image            = 333,
@@ -23836,6 +28444,12 @@ define(24, {
   subcategory      = 99999,
   rarity           = 2000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "本",
+  original_name_en = "book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(23, {
   image            = 333,
@@ -23867,6 +28481,12 @@ define(23, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "本",
+  original_name_en = "book",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(22, {
   image            = 429,
@@ -23898,6 +28518,12 @@ define(22, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "解呪の魔法書",
+  original_name_en = "uncurse",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(21, {
   image            = 429,
@@ -23929,6 +28555,12 @@ define(21, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鑑定の魔法書",
+  original_name_en = "identify",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(20, {
   image            = 429,
@@ -23960,6 +28592,12 @@ define(20, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "テレポートの魔法書",
+  original_name_en = "teleportation",
+  originalnameref2 = "spellbook",
+  has_random_name  = true,
 })
 define(19, {
   image            = 471,
@@ -23991,6 +28629,12 @@ define(19, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "テレポートの杖",
+  original_name_en = "teleportation",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(18, {
   image            = 471,
@@ -24022,6 +28666,12 @@ define(18, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鑑定の杖",
+  original_name_en = "identify",
+  originalnameref2 = "rod",
+  has_random_name  = true,
 })
 define(17, {
   image            = 470,
@@ -24053,6 +28703,12 @@ define(17, {
   subcategory      = 99999,
   rarity           = 70000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "インコグニートの巻物",
+  original_name_en = "incognito",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(16, {
   image            = 470,
@@ -24084,6 +28740,12 @@ define(16, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "テレポートの巻物",
+  original_name_en = "teleportation",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(15, {
   image            = 470,
@@ -24115,6 +28777,12 @@ define(15, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "神託の巻物",
+  original_name_en = "oracle",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(14, {
   image            = 470,
@@ -24146,6 +28814,12 @@ define(14, {
   subcategory      = 99999,
   rarity           = 1000000,
   coefficient      = 0,
+  light            = 0,
+  katakana_name    = "",
+  original_name_jp = "鑑定の巻物",
+  original_name_en = "identify",
+  originalnameref2 = "scroll",
+  has_random_name  = true,
 })
 define(13, {
   image            = 407,
@@ -24177,6 +28851,12 @@ define(13, {
   subcategory      = 32001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "デコレートリング",
+  original_name_jp = "装飾の指輪",
+  original_name_en = "decorative ring",
+  originalnameref2 = "",
+  has_random_name  = true,
 })
 define(12, {
   image            = 460,
@@ -24208,6 +28888,12 @@ define(12, {
   subcategory      = 18001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "コンポジットブーツ",
+  original_name_jp = "合成靴",
+  original_name_en = "composite boots",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(11, {
   image            = 418,
@@ -24239,6 +28925,12 @@ define(11, {
   subcategory      = 18001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ヘビーブーツ",
+  original_name_jp = "重靴",
+  original_name_en = "heavy boots",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(10, {
   image            = 450,
@@ -24270,6 +28962,12 @@ define(10, {
   subcategory      = 22001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ライトガントレット",
+  original_name_jp = "厚篭手",
+  original_name_en = "thick gauntlets",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(9, {
   image            = 449,
@@ -24301,6 +28999,12 @@ define(9, {
   subcategory      = 22003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "シニアグローブ",
+  original_name_jp = "細工篭手",
+  original_name_en = "decorated gloves",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(8, {
   image            = 408,
@@ -24332,6 +29036,12 @@ define(8, {
   subcategory      = 16003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ローブ",
+  original_name_jp = "法衣",
+  original_name_en = "robe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(7, {
   image            = 396,
@@ -24363,6 +29073,12 @@ define(7, {
   subcategory      = 16001,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "メイル",
+  original_name_jp = "鎧",
+  original_name_en = "breastplate",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(6, {
   image            = 478,
@@ -24394,6 +29110,12 @@ define(6, {
   subcategory      = 12002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "フェアリーハット",
+  original_name_jp = "フェアリーハット",
+  original_name_en = "fairy hat",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(5, {
   image            = 477,
@@ -24425,6 +29147,12 @@ define(5, {
   subcategory      = 12002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "マジックハット",
+  original_name_jp = "魔法帽",
+  original_name_en = "magic hat",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(4, {
   image            = 427,
@@ -24456,6 +29184,12 @@ define(4, {
   subcategory      = 10004,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "クラブ",
+  original_name_jp = "棍棒",
+  original_name_en = "club",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(3, {
   image            = 499,
@@ -24487,6 +29221,12 @@ define(3, {
   subcategory      = 10009,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ハンドアクス",
+  original_name_jp = "手斧",
+  original_name_en = "hand axe",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(2, {
   image            = 400,
@@ -24518,6 +29258,12 @@ define(2, {
   subcategory      = 10003,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ダガー",
+  original_name_jp = "短剣",
+  original_name_en = "dagger",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(1, {
   image            = 405,
@@ -24549,6 +29295,12 @@ define(1, {
   subcategory      = 10002,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 0,
+  katakana_name    = "ロングソード",
+  original_name_jp = "長剣",
+  original_name_en = "long sword",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 define(0, {
   image            = 33,
@@ -24580,6 +29332,12 @@ define(0, {
   subcategory      = 99999999,
   rarity           = 1000000,
   coefficient      = 100,
+  light            = 9,
+  katakana_name    = "",
+  original_name_jp = "黄金",
+  original_name_en = "gold bar",
+  originalnameref2 = "",
+  has_random_name  = false,
 })
 
 -- vim: et sw=2 sts=2

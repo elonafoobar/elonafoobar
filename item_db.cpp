@@ -29,6 +29,9 @@ int define(lua_State* state)
 #define FIELD_S(name) \
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
+#define FIELD_B(name) \
+    lua_getfield(state, 2, #name); \
+    bool name = lua_toboolean(state, -1);
 
     FIELD_I(image);
     FIELD_I(value);
@@ -61,6 +64,13 @@ int define(lua_State* state)
     FIELD_I(subcategory);
     FIELD_I(rarity);
     FIELD_I(coefficient);
+
+    FIELD_I(light);
+    FIELD_S(katakana_name);
+    FIELD_S(original_name_jp);
+    FIELD_S(original_name_en);
+    FIELD_S(originalnameref2);
+    FIELD_B(has_random_name);
 
 #undef FIELD_I
 #undef FIELD_S
@@ -102,6 +112,12 @@ int define(lua_State* state)
             subcategory,
             rarity,
             coefficient,
+            light,
+            katakana_name,
+            original_name_jp,
+            original_name_en,
+            originalnameref2,
+            has_random_name,
         });
 
     return 0;

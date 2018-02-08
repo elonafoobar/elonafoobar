@@ -40,6 +40,12 @@ struct item_data
     int subcategory;
     int rarity;
     int coefficient;
+    int light;
+    std::string katakana_name;
+    std::string original_name_jp;
+    std::string original_name_en;
+    std::string originalnameref2;
+    bool has_random_name;
 };
 
 
