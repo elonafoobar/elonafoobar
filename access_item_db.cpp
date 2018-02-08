@@ -13,7 +13,6 @@ namespace elona
 
 int access_item_db(int dbmode)
 {
-    std::string infilterref;
     const auto info = the_item_db[dbid];
     if (info)
     {
@@ -34,7 +33,6 @@ int access_item_db(int dbmode)
         else if (dbmode == 2)
         {
             ichargelevel = info->chargelevel;
-            infilterref = info->infilterref;
             reftype = info->category;
             return 0;
         }

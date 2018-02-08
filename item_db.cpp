@@ -42,7 +42,6 @@ int define(lua_State* state)
     FIELD_I(material);
     FIELD_I(chargelevel);
 
-    FIELD_S(infilterref);
     FIELD_S(description_jp_0);
     FIELD_S(description_jp_1);
     FIELD_S(description_jp_2);
@@ -85,7 +84,6 @@ int define(lua_State* state)
             material,
             chargelevel,
 
-            infilterref,
             {
                 description_jp_0,
                 description_jp_1,

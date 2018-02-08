@@ -25,7 +25,6 @@ struct item_data
     int dv;
     int material;
     int chargelevel;
-    std::string infilterref;
     std::array<std::string, 4> description_jp;
     std::string description_en;
     int dbspec2;
