@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -903,69 +904,7 @@ void cell_draw()
                         }
                         if (mef(1, p2_) > 10000)
                         {
-                            gsel(1);
-                            color(0);
-                            boxf(0, 960, chipi(2, p_), chipi(3, p_) + 960);
-                            if (p_ == 528)
-                            {
-                                gmode(2);
-                                pos(0, 960);
-                                gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                                pos(0, 1008);
-                                gzoom(
-                                    22,
-                                    20,
-                                    5,
-                                    chipc(0, p_(1)) + 8,
-                                    chipc(1, p_(1)) + 4
-                                        + (chipc(3, p_(1)) > inf_tiles) * 8,
-                                    chipc(2, p_(1)) - 16,
-                                    chipc(3, p_(1)) - 8
-                                        - (chipc(3, p_(1)) > inf_tiles) * 10,
-                                    1);
-                                pos(6, 974);
-                                gcopy(1, 0, 1008, 22, 20);
-                                gsel(selcur);
-                            }
-                            else if (p_ == 531)
-                            {
-                                pos(8, 1058 - chipc(3, p_(1)));
-                                gcopy(
-                                    5,
-                                    chipc(0, p_(1)) + 8,
-                                    chipc(1, p_(1)) + 2,
-                                    chipc(2, p_(1)) - 16,
-                                    chipc(3, p_(1)) - 8);
-                                gmode(4, -1, -1, 150);
-                                color(0, 0, 0);
-                                pos(0,
-                                    960 + (chipc(3, p_(1)) == inf_tiles) * 48);
-                                gcopy(
-                                    1,
-                                    144,
-                                    768 + (chipc(3, p_(1)) > inf_tiles) * 48,
-                                    inf_tiles,
-                                    chipc(3, p_(1))
-                                        + (chipc(3, p_(1)) > inf_tiles) * 48);
-                                gmode(2);
-                                gsel(selcur);
-                            }
-                            else
-                            {
-                                pos(0, 960);
-                                gcopy(
-                                    1,
-                                    chipi(0, p_),
-                                    chipi(1, p_),
-                                    chipi(2, p_),
-                                    chipi(3, p_));
-                                gfini(chipi(2, p_), chipi(3, p_));
-                                gfdec2(
-                                    c_col(0, p_(1)),
-                                    c_col(1, p_(1)),
-                                    c_col(2, p_(1)));
-                                gsel(selcur);
-                            }
+                            prepare_item_image(p_, p_(1));
                             gcopy(1, 0, 960, inf_tiles, inf_tiles);
                         }
                         else
@@ -1005,69 +944,7 @@ void cell_draw()
                                 }
                                 p_ = inv[flooritem_(cnt2_)].image;
                                 i_ = inv[flooritem_(cnt2_)].color;
-                                gsel(1);
-                                color(0);
-                                boxf(0, 960, chipi(2, p_), chipi(3, p_) + 960);
-                                if (p_ == 528)
-                                {
-                                    gmode(2);
-                                    pos(0, 960);
-                                    gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                                    pos(0, 1008);
-                                    gzoom(
-                                        22,
-                                        20,
-                                        5,
-                                        chipc(0, i_) + 8,
-                                        chipc(1, i_) + 4
-                                            + (chipc(3, i_) > inf_tiles) * 8,
-                                        chipc(2, i_) - 16,
-                                        chipc(3, i_) - 8
-                                            - (chipc(3, i_) > inf_tiles) * 10,
-                                        1);
-                                    pos(6, 974);
-                                    gcopy(1, 0, 1008, 22, 20);
-                                    gsel(selcur);
-                                }
-                                else if (p_ == 531)
-                                {
-                                    pos(8, 1058 - chipc(3, i_));
-                                    gcopy(
-                                        5,
-                                        chipc(0, i_) + 8,
-                                        chipc(1, i_) + 2,
-                                        chipc(2, i_) - 16,
-                                        chipc(3, i_) - 8);
-                                    gmode(4, -1, -1, 150);
-                                    color(0, 0, 0);
-                                    pos(0,
-                                        960 + (chipc(3, i_) == inf_tiles) * 48);
-                                    gcopy(
-                                        1,
-                                        144,
-                                        768 + (chipc(3, i_) > inf_tiles) * 48,
-                                        inf_tiles,
-                                        chipc(3, i_)
-                                            + (chipc(3, i_) > inf_tiles) * 48);
-                                    gmode(2);
-                                    gsel(selcur);
-                                }
-                                else
-                                {
-                                    pos(0, 960);
-                                    gcopy(
-                                        1,
-                                        chipi(0, p_),
-                                        chipi(1, p_),
-                                        chipi(2, p_),
-                                        chipi(3, p_));
-                                    gfini(chipi(2, p_), chipi(3, p_));
-                                    gfdec2(
-                                        c_col(0, i_),
-                                        c_col(1, i_),
-                                        c_col(2, i_));
-                                    gsel(selcur);
-                                }
+                                prepare_item_image(p_, i_);
                                 if (mdata(6) == 1)
                                 {
                                     gmode(2, chipi(2, p_), chipi(3, p_));
@@ -1162,64 +1039,7 @@ void cell_draw()
                         i_ = wpeek(map(x_, y_, 5), 2);
                         p_ = wpeek(map(x_, y_, 5), 0);
                     label_0380_internal:
-                        gsel(1);
-                        color(0);
-                        boxf(0, 960, chipi(2, p_), chipi(3, p_) + 960);
-                        if (p_ == 528)
-                        {
-                            gmode(2);
-                            pos(0, 960);
-                            gcopy(1, 0, 768, inf_tiles, inf_tiles);
-                            pos(0, 1008);
-                            gzoom(
-                                22,
-                                20,
-                                5,
-                                chipc(0, i_) + 8,
-                                chipc(1, i_) + 4
-                                    + (chipc(3, i_) > inf_tiles) * 8,
-                                chipc(2, i_) - 16,
-                                chipc(3, i_) - 8
-                                    - (chipc(3, i_) > inf_tiles) * 10,
-                                1);
-                            pos(6, 974);
-                            gcopy(1, 0, 1008, 22, 20);
-                            gsel(selcur);
-                        }
-                        else if (p_ == 531)
-                        {
-                            pos(8, 1058 - chipc(3, i_));
-                            gcopy(
-                                5,
-                                chipc(0, i_) + 8,
-                                chipc(1, i_) + 2,
-                                chipc(2, i_) - 16,
-                                chipc(3, i_) - 8);
-                            gmode(4, -1, -1, 150);
-                            color(0, 0, 0);
-                            pos(0, 960 + (chipc(3, i_) == inf_tiles) * 48);
-                            gcopy(
-                                1,
-                                144,
-                                768 + (chipc(3, i_) > inf_tiles) * 48,
-                                inf_tiles,
-                                chipc(3, i_) + (chipc(3, i_) > inf_tiles) * 48);
-                            gmode(2);
-                            gsel(selcur);
-                        }
-                        else
-                        {
-                            pos(0, 960);
-                            gcopy(
-                                1,
-                                chipi(0, p_),
-                                chipi(1, p_),
-                                chipi(2, p_),
-                                chipi(3, p_));
-                            gfini(chipi(2, p_), chipi(3, p_));
-                            gfdec2(c_col(0, i_), c_col(1, i_), c_col(2, i_));
-                            gsel(selcur);
-                        }
+                        prepare_item_image(p_, i_);
                         if (mdata(6) == 1)
                         {
                             gmode(2, chipi(2, p_), chipi(3, p_));
@@ -1400,7 +1220,7 @@ void cell_draw()
                                     c_col(0, col_),
                                     c_col(1, col_),
                                     c_col(2, col_));
-                                gsel(selcur);
+                                gsel(0);
                                 if (mdata(6) == 1)
                                 {
                                     gmode(6, 32, 16, 85);
