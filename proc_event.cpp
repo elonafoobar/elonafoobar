@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "animation.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
@@ -104,8 +105,7 @@ void proc_event()
             u8"…ぅっぅぅ…っぅぅっぅううううみみゃぁ！！！"s,
             u8"memememw...MEMEMEM...MEWWWWWW!"s));
         msg_halt();
-        animeid = 21;
-        label_1426();
+        play_animation(21);
         flt();
         characreate(
             -1,
@@ -923,10 +923,9 @@ void proc_event()
         range_ = 31;
         ele = 59;
         aniref = range_;
-        animeid = 17;
         anix = tlocx;
         aniy = tlocy;
-        label_1426();
+        play_animation(17);
         update_screen();
         {
             int cnt = 0;
@@ -1012,8 +1011,7 @@ void proc_event()
         play_music();
         txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));
         msg_halt();
-        animeid = 21;
-        label_1426();
+        play_animation(21);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)

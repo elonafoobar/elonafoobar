@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "animation.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -333,10 +334,8 @@ int inf_hpx = 0;
 int inf_hpy = 0;
 int inf_mpx = 0;
 int inf_mpy = 0;
-elona_vector1<int> ap;
 int screendrawhack = 0;
 int racount = 0;
-int anic = 0;
 int scposval = 0;
 elona_vector2<int> fovlist;
 int s_p = 0;
@@ -16859,9 +16858,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         name(prm_853) + u8"は回復した。"s,
                         name(prm_853) + u8" "s + is(prm_853) + u8" healed."s));
                     cdata[prm_853].hp = cdata[prm_853].max_hp / 2;
-                    animeid = 19;
                     animode = 100 + prm_853;
-                    label_1426();
+                    play_animation(19);
                     snd(120);
                     break;
                 }
@@ -20215,1190 +20213,6 @@ void label_1425()
     pos(msgx + 18, msgy + 4);
     mes(s);
     gmode(2);
-    return;
-}
-
-
-
-void label_1426()
-{
-    int anicol = 0;
-    int anisound = 0;
-    int anidx = 0;
-    int anidy = 0;
-    elona_vector1<int> ax;
-    elona_vector1<int> ay;
-    elona_vector1<int> ax2;
-    elona_vector1<int> ay2;
-    int acnt2 = 0;
-    int aniw = 0;
-    int anih = 0;
-    elona_vector1<int> anip;
-    int af = 0;
-    if (mode == 9)
-    {
-        return;
-    }
-    if (cfg_animewait == 0)
-    {
-        return;
-    }
-    if (animeid != 21)
-    {
-        update_screen();
-    }
-    redraw(0);
-    gmode(2, inf_tiles, inf_tiles);
-    anicol = 0;
-    anisound = 0;
-    if (animeid < 4)
-    {
-        anicol = eleinfo(ele, 0);
-        anisound = eleinfo(ele, 1);
-    }
-    switch (animeid)
-    {
-    case 8:
-        if (synccheck(cc, -1) == 0)
-        {
-            goto label_1427_internal;
-        }
-        prepare_item_image(10, anicol);
-        anidx = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
-        anidy = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(
-            0,
-            anidx - inf_tiles / 2,
-            anidy - inf_tiles / 2,
-            inf_tiles * 2,
-            inf_tiles * 2);
-        gmode(2);
-        gsel(0);
-        snd(66);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
-            {
-                redraw(0);
-                pos(anidx - inf_tiles / 2, anidy - inf_tiles / 2);
-                gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
-                pos(anidx + inf_tiles / 2, anidy + 16);
-                grotate(1, 0, 960, 5 * cnt, cnt + 40, cnt + 40);
-                redraw(1);
-                await(cfg_animewait);
-            }
-        }
-        goto label_1427_internal;
-    case 6:
-    case 5:
-    case 7:
-    case 11:
-        if (synccheck(tc, -1) == 0)
-        {
-            goto label_1427_internal;
-        }
-        if (animeid == 6)
-        {
-            prepare_item_image(8, anicol);
-            snd(38);
-        }
-        if (animeid == 5 || animeid == 11)
-        {
-            prepare_item_image(7, anicol);
-            snd(33);
-        }
-        if (animeid == 7)
-        {
-            prepare_item_image(9, anicol);
-        }
-        ax = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-        ay = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(
-            0,
-            ax - inf_tiles / 2,
-            ay - inf_tiles / 2,
-            inf_tiles * 2,
-            inf_tiles * 2);
-        gmode(2);
-        gsel(0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
-            {
-                ax2(cnt) = rnd(inf_tiles);
-                ay2(cnt) = rnd(inf_tiles) - 8;
-                ap(cnt) = (rnd(4) + 1) * -1;
-                if (animeid == 6)
-                {
-                    ap(cnt) *= -1;
-                }
-            }
-        }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-            {
-                if (animeid == 11)
-                {
-                    await(5);
-                }
-                else
-                {
-                    await(cfg_animewait);
-                }
-                acnt2 = cnt * 2;
-                redraw(0);
-                pos(ax - inf_tiles / 2, ay - inf_tiles / 2);
-                gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
-                    {
-                        pos(ax + ax2(cnt), ay + ay2(cnt) + acnt2 / ap(cnt));
-                        grotate(
-                            1,
-                            0,
-                            960,
-                            acnt2 * ap(cnt),
-                            inf_tiles - acnt2 * 2,
-                            inf_tiles - acnt2 * 2);
-                    }
-                }
-                redraw(1);
-            }
-        }
-        goto label_1427_internal;
-    case 3:
-        prepare_item_image(5, anicol);
-        snd(35);
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime7.bmp"));
-        pos(0, 0);
-        gfini(480, 48);
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        gsel(4);
-        pos(0, 0);
-        gmode(0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gsel(0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
-            {
-                cnt2 = cnt;
-                redraw(0);
-                pos(0, 0);
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (maxbreath); cnt < cnt_end; ++cnt)
-                    {
-                        anidx = breathlist(0, cnt);
-                        anidy = breathlist(1, cnt);
-                        if (fov_los(
-                                cdata[cc].position.x,
-                                cdata[cc].position.y,
-                                anidx,
-                                anidy)
-                            == 0)
-                        {
-                            continue;
-                        }
-                        if ((anidx - scx) * inf_tiles + inf_screenx
-                                + inf_tiles / 2
-                            < windoww)
-                        {
-                            if ((anidy - scy) * inf_tiles + inf_screeny + 16
-                                < inf_screenh * inf_tiles + inf_screeny
-                                    - inf_tiles / 2)
-                            {
-                                pos((anidx - scx) * inf_tiles + inf_screenx
-                                        + inf_tiles / 2,
-                                    (anidy - scy) * inf_tiles + inf_screeny
-                                        + 16);
-                                gmode(2, inf_tiles, inf_tiles);
-                                grotate(
-                                    7,
-                                    cnt2 * 48,
-                                    0,
-                                    std::atan2(
-                                        tlocx - cdata[cc].position.x,
-                                        cdata[cc].position.y - tlocy),
-                                    inf_tiles,
-                                    inf_tiles);
-                            }
-                        }
-                    }
-                }
-                await(cfg_animewait);
-                redraw(1);
-            }
-        }
-        if (anisound)
-        {
-            snd(anisound, 0, 1);
-        }
-        goto label_1427_internal;
-    case 17:
-    case 2:
-        snd(34);
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime5.bmp"));
-        pos(0, 96);
-        gfini(480, 48);
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        aniw = 360;
-        anih = 360;
-        anidx = (anix - scx) * inf_tiles + inf_screenx + 24;
-        anidy = (aniy - scy) * inf_tiles + inf_screeny + 24;
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gmode(2);
-        gsel(0);
-        color(0, 0, 0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-            {
-                anip = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (aniref * 2 + 1); cnt < cnt_end;
-                         ++cnt)
-                    {
-                        anidy = aniy - aniref + cnt;
-                        sy = anidy - scy;
-                        if (sy < 0 || sy >= inf_screenh)
-                        {
-                            continue;
-                        }
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (aniref * 2 + 1);
-                                 cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                anidx = anix - aniref + cnt;
-                                sx = anidx - scx;
-                                if (sx < 0 || sx >= inf_screenw)
-                                {
-                                    continue;
-                                }
-                                anip(1) = dist(anix, aniy, anidx, anidy);
-                                if (anip(1) > aniref)
-                                {
-                                    continue;
-                                }
-                                anip(1) = 48 - (anip - 4) * (anip - 4) * 2;
-                                if (animeid == 2)
-                                {
-                                    if (fov_los(anix, aniy, anidx, anidy) == 0)
-                                    {
-                                        continue;
-                                    }
-                                }
-                                if (sx * inf_tiles + inf_screenx < windoww)
-                                {
-                                    if (sy * inf_tiles + inf_screeny
-                                        < inf_screenh * inf_tiles + inf_screeny
-                                            - inf_tiles / 2)
-                                    {
-                                        pos(sx * inf_tiles + inf_screenx,
-                                            sy * inf_tiles + inf_screeny);
-                                        gmode(2, 48, 48);
-                                        gcopy(7, anip * 48, 96, 48, 48);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                anidx = (anix - scx) * inf_tiles + inf_screenx + 24;
-                anidy = (aniy - scy) * inf_tiles + inf_screeny + 24;
-                if (anidx < windoww)
-                {
-                    if (anidy
-                        < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
-                    {
-                        pos(anidx, anidy);
-                        gmode(4, 96, 96, 250 - cnt * cnt * 2);
-                        grotate(7, cnt * 96, 0, 0, 96, 96);
-                    }
-                }
-                redraw(1);
-                redraw(0);
-                gmode(0);
-                pos(0, 0);
-                gcopy(4, 0, 0, windoww, windowh);
-                await(cfg_animewait);
-            }
-        }
-        if (anisound)
-        {
-            snd(anisound, 0, 1);
-        }
-        goto label_1427_internal;
-    case 0:
-        prepare_item_image(3, anicol);
-        snd(37);
-        anidx = cdata[cc].position.x;
-        anidy = cdata[cc].position.y;
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime6.bmp"));
-        pos(0, 0);
-        gfini(480, 48);
-        gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gsel(0);
-        ap(20) = -1;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
-            {
-                if (ap(20) == -1)
-                {
-                    int stat = route_info(anidx, anidy, cnt);
-                    if (stat == -1)
-                    {
-                        ap(cnt) = -1;
-                        continue;
-                    }
-                    else if (stat == 0)
-                    {
-                        ap(cnt) = -2;
-                        ap(20) = 4;
-                        continue;
-                    }
-                    if (dist(
-                            anidx,
-                            anidy,
-                            cdata[cc].position.x,
-                            cdata[cc].position.y)
-                        > sdataref(3, efid) % 1000 + 1)
-                    {
-                        ap(cnt) = -2;
-                        ap(20) = 4;
-                        continue;
-                    }
-                    ax(cnt) =
-                        (anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2;
-                    ay(cnt) = (anidy - scy) * inf_tiles + inf_screeny + 8;
-                    ap(cnt) = 0;
-                }
-                else
-                {
-                    --ap(20);
-                    if (ap(20) == 0)
-                    {
-                        break;
-                    }
-                }
-                redraw(0);
-                pos(0, 0);
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                cnt2 = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (cnt2 + 1); cnt < cnt_end; ++cnt)
-                    {
-                        if (ap(cnt) == -1)
-                        {
-                            continue;
-                        }
-                        if (ap(cnt) == -2)
-                        {
-                            break;
-                        }
-                        if (ap(cnt) < 5)
-                        {
-                            if (ax(cnt) < windoww)
-                            {
-                                if (ay(cnt) < inf_screenh * inf_tiles
-                                        + inf_screeny - inf_tiles / 2)
-                                {
-                                    pos(ax(cnt), ay(cnt));
-                                    gmode(2, inf_tiles, inf_tiles);
-                                    grotate(
-                                        7,
-                                        ap(cnt) * 48,
-                                        0,
-                                        std::atan2(
-                                            tlocx - cdata[cc].position.x,
-                                            cdata[cc].position.y - tlocy),
-                                        48,
-                                        48);
-                                }
-                            }
-                        }
-                        ++ap(cnt);
-                    }
-                }
-                await(cfg_animewait + 15);
-                redraw(1);
-            }
-        }
-        if (anisound)
-        {
-            snd(anisound, 0, 1);
-        }
-        goto label_1427_internal;
-    case 15:
-        if (synccheck(cc, -1) == 0)
-        {
-            goto label_1427_internal;
-        }
-        prepare_item_image(aniref, aniref(1));
-        ax = (cdata[cc].position.x - scx) * inf_tiles;
-        ay = (cdata[cc].position.y - scy) * inf_tiles;
-        ap = dist(cdata[cc].position.x, cdata[cc].position.y, anix, aniy) / 2
-            + 1;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (ap); cnt < cnt_end; ++cnt)
-            {
-                ax -= (cdata[cc].position.x - anix) * inf_tiles / ap;
-                ay -= (cdata[cc].position.y - aniy) * inf_tiles / ap;
-                gsel(4);
-                gmode(0);
-                pos(0, 0);
-                gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles);
-                gmode(2);
-                gsel(0);
-                gmode(2, inf_tiles, inf_tiles);
-                if (ax + inf_tiles / 2 < windoww)
-                {
-                    if (ay
-                        < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
-                    {
-                        pos(ax + inf_tiles / 2, ay);
-                        grotate(
-                            1,
-                            0,
-                            960,
-                            std::atan2(
-                                anix - cdata[cc].position.x,
-                                cdata[cc].position.y - aniy),
-                            inf_tiles,
-                            inf_tiles);
-                    }
-                }
-                redraw(1);
-                redraw(0);
-                gmode(0);
-                pos(ax, ay - inf_tiles / 2);
-                gcopy(4, 0, 0, inf_tiles, inf_tiles);
-                gmode(2);
-                await(cfg_animewait);
-            }
-        }
-        goto label_1427_internal;
-    case 111:
-    case 110:
-    case 108:
-    case 109:
-    case 1:
-    case 18:
-        if (synccheck(cc, -1) == 0)
-        {
-            goto label_1427_internal;
-        }
-        prepare_item_image(6, anicol);
-        if (animeid == 18)
-        {
-            prepare_item_image(23, 0);
-            snd(29);
-        }
-        if (animeid == 108)
-        {
-            prepare_item_image(1, anicol);
-            snd(29);
-        }
-        if (animeid == 109)
-        {
-            prepare_item_image(2, anicol);
-            snd(29);
-        }
-        if (animeid == 110)
-        {
-            ap = refitem(inv[aniref].id, 9);
-            if (ap == 24021)
-            {
-                prepare_item_image(13, anicol);
-                snd(42);
-            }
-            if (ap == 24020)
-            {
-                prepare_item_image(2, anicol);
-                snd(30);
-            }
-        }
-        if (animeid == 111)
-        {
-            prepare_item_image(
-                inv[aniref].image % 1000, inv[aniref].image / 1000);
-        }
-        if (animeid == 1)
-        {
-            snd(36);
-        }
-        ax = (cdata[cc].position.x - scx) * inf_tiles;
-        ay = (cdata[cc].position.y - scy) * inf_tiles - 12;
-        ap = dist(
-                 cdata[cc].position.x,
-                 cdata[cc].position.y,
-                 cdata[tc].position.x,
-                 cdata[tc].position.y)
-                / 2
-            + 1;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (ap); cnt < cnt_end; ++cnt)
-            {
-                ax -= (cdata[cc].position.x - cdata[tc].position.x) * inf_tiles
-                    / ap;
-                ay -= (cdata[cc].position.y - cdata[tc].position.y) * inf_tiles
-                    / ap;
-                gsel(4);
-                gmode(0);
-                pos(0, 0);
-                gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles);
-                gmode(2);
-                gsel(0);
-                gmode(2, inf_tiles, inf_tiles);
-                pos(ax + inf_tiles / 2, ay);
-                grotate(
-                    1,
-                    0,
-                    960,
-                    std::atan2(
-                        cdata[tc].position.x - cdata[cc].position.x,
-                        cdata[cc].position.y - cdata[tc].position.y),
-                    inf_tiles,
-                    inf_tiles);
-                redraw(1);
-                redraw(0);
-                gmode(0);
-                pos(ax, ay - inf_tiles / 2);
-                gcopy(4, 0, 0, inf_tiles, inf_tiles);
-                gmode(2);
-                await(cfg_animewait);
-            }
-        }
-        if (anisound)
-        {
-            snd(anisound, 0, 1);
-        }
-        goto label_1427_internal;
-    case 9:
-        snd(2);
-        prepare_item_image(17, 0);
-        anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-        anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, anidx - 16, anidy - 16, 64, 64);
-        gmode(2);
-        gsel(0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
-            {
-                redraw(0);
-                pos(anidx - 16, anidy - 16);
-                gcopy(4, 0, 0, 64, 64);
-                pos(anidx + 16, anidy + 16);
-                grotate(1, 0, 960, 0.5 * cnt - 0.8, cnt * 8 + 18, cnt * 8 + 18);
-                redraw(1);
-                await(cfg_animewait);
-            }
-        }
-        goto label_1427_internal;
-    case 12:
-        ap = 0;
-        if (attackskill == 108)
-        {
-            ap = 2;
-        }
-        if (attackskill == 109)
-        {
-            ap = 2;
-        }
-        if (attackskill == 110)
-        {
-            ap = 2;
-        }
-        if (attackskill == 111)
-        {
-            ap = 2;
-        }
-        if (attackskill == 100)
-        {
-            ap = 1;
-        }
-        if (attackskill == 104)
-        {
-            ap = 1;
-        }
-        if (attackskill == 105)
-        {
-            ap = 0;
-        }
-        if (attackskill == 101)
-        {
-            ap = 1;
-        }
-        if (attackskill == 103)
-        {
-            ap = 0;
-        }
-        if (attackskill == 102)
-        {
-            ap = 1;
-        }
-        if (attackskill == 107)
-        {
-            ap = 1;
-        }
-        aniref = aniref / 4 + 1;
-        if (aniref > 20)
-        {
-            aniref = 20;
-        }
-        if (cbit(983, tc))
-        {
-            anix(1) = 1104;
-        }
-        else
-        {
-            anix(1) = 720;
-        }
-        if (ap == 0)
-        {
-            prepare_item_image(17, 0);
-        }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
-            {
-                sx(cnt) = rnd(24) - 12;
-                sy(cnt) = rnd(8);
-            }
-        }
-        anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-        anix = anidx + rnd(12) - rnd(12);
-        anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
-        aniy = anidy - 16 + rnd(12) - rnd(12);
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, anidx - 24, anidy - 48, 96, 144);
-        if (critical)
-        {
-            gsel(7);
-            picload(fs::u8path(u8"./graphic/anime28.bmp"));
-        }
-        gmode(2);
-        gsel(0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (4 + (critical != 0)); cnt < cnt_end;
-                 ++cnt)
-            {
-                redraw(0);
-                gmode(2);
-                cnt2 = cnt * 2;
-                gmode(2, inf_tiles, inf_tiles);
-                if (critical)
-                {
-                    pos(anidx - 24, anidy - 32);
-                    gcopy(7, cnt * 96, 0, 96, 96);
-                }
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
-                    {
-                        pos(anidx + 24 + sx(cnt)
-                                + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1)
-                                    * cnt2
-                                + (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
-                            anidy + sy(cnt) + cnt2 * cnt2 / 3);
-                        grotate(1, anix(1), 0, 0.4 * cnt, 6, 6);
-                    }
-                }
-                if (ap == 0)
-                {
-                    pos(anidx + sx + 24, anidy + sy + 10);
-                    grotate(
-                        1,
-                        0,
-                        960,
-                        0.5 * cnt - 0.8,
-                        cnt * 10 + aniref,
-                        cnt * 10 + aniref);
-                }
-                if (ap == 1)
-                {
-                    pos(anidx, anidy);
-                    gcopy(3, 1008 + cnt * 48, 432, 48, 48);
-                }
-                if (ap == 2)
-                {
-                    pos(anidx, anidy);
-                    gcopy(3, 816 + cnt * 48, 432, 48, 48);
-                }
-                redraw(1);
-                redraw(0);
-                gmode(0);
-                pos(anidx - 24, anidy - 48);
-                gcopy(4, 0, 0, 96, 144);
-                gmode(2);
-                await(cfg_animewait);
-            }
-        }
-        goto label_1427_internal;
-    case 20:
-        snd(107);
-        if (synccheck(anic, -1) == 0)
-        {
-            goto label_1427_internal;
-        }
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime13.bmp"));
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gsel(0);
-        anidx = (cdata[anic].position.x - scx) * inf_tiles + inf_screenx - 24;
-        anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-            {
-                redraw(0);
-                pos(0, 0);
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                cnt2 = cnt;
-                gmode(2);
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (anidy / 96 + 2); cnt < cnt_end;
-                         ++cnt)
-                    {
-                        pos(anidx, anidy - cnt * 96);
-                        gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
-                    }
-                }
-                await(cfg_animewait + 25);
-                redraw(1);
-            }
-        }
-        goto label_1427_internal;
-    case 19:
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime12.bmp"));
-        gsel(4);
-        pos(0, 0);
-        gmode(0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gsel(0);
-        am = 0;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
-            {
-                if (cdata[cnt].state != 1)
-                {
-                    continue;
-                }
-                if (animode == 0)
-                {
-                    if (cnt == cc)
-                    {
-                        continue;
-                    }
-                }
-                if (animode >= 100)
-                {
-                    if (cnt != animode - 100)
-                    {
-                        continue;
-                    }
-                }
-                ax(am) = (cdata[cnt].position.x - scx) * inf_tiles + inf_screenx
-                    - 24;
-                if (am != 0)
-                {
-                    ax(am) += 4 - rnd(8);
-                }
-                ay(am) = (cdata[cnt].position.y - scy) * inf_tiles + inf_screeny
-                    + 32;
-                if (ay(am) < 0
-                    || ay(am) > inf_screenh * inf_tiles + inf_screeny)
-                {
-                    continue;
-                }
-                if (ax(am) < -20 || ax(am) > windoww + 20)
-                {
-                    continue;
-                }
-                ap(am) = 20 + (am != 0) * rnd(5);
-                ++am;
-            }
-        }
-        {
-            int cnt = 0;
-            for (;; ++cnt)
-            {
-                redraw(0);
-                pos(0, 0);
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                af = 0;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
-                    {
-                        if (ap(cnt) <= 0)
-                        {
-                            continue;
-                        }
-                        af = 1;
-                        cnt2 = cnt;
-                        anidy =
-                            ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
-                        gmode(2, 96, 96);
-                        pos(ax(cnt), anidy);
-                        gcopy(
-                            7,
-                            std::clamp((8 - ap(cnt)), 0, 8) * 96
-                                + 96 * (ap(cnt) < 15),
-                            0,
-                            96,
-                            96);
-                        if (ap(cnt) <= 14)
-                        {
-                            if (ap(cnt) >= 6)
-                            {
-                                pos(ax(cnt), anidy + 16);
-                                gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
-                            }
-                        }
-                        anidx = std::clamp(
-                            anidy / 55 + 1,
-                            0,
-                            7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
-                        {
-                            int cnt = 1;
-                            for (int cnt_end = cnt + (anidx); cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                pos(ax(cnt2), anidy - cnt * 55);
-                                gcopy(7, 96 * (ap(cnt2) < 15), 0, 96, 55);
-                                if (cnt == anidx)
-                                {
-                                    pos(ax(cnt2), anidy - cnt * 55 - 40);
-                                    gcopy(7, 288, 0, 96, 40);
-                                }
-                            }
-                        }
-                        if (ap(cnt) >= 20)
-                        {
-                            ap(cnt) -= rnd(2);
-                        }
-                        else
-                        {
-                            --ap(cnt);
-                        }
-                    }
-                }
-                if (cnt % 2 == 0)
-                {
-                    if (cnt < 30)
-                    {
-                        if (cnt / 3 < am)
-                        {
-                            if (animode == 0)
-                            {
-                                snd(37);
-                            }
-                            if (animode >= 100)
-                            {
-                                snd(33);
-                            }
-                        }
-                    }
-                }
-                if (af == 0)
-                {
-                    break;
-                }
-                await(cfg_animewait + 25);
-                redraw(1);
-            }
-        }
-        goto label_1427_internal;
-    case 22:
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime17.bmp"));
-        gsel(4);
-        pos(0, 0);
-        gmode(0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gsel(0);
-        am = 0;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (75); cnt < cnt_end; ++cnt)
-            {
-                ax(am) = 240 + rnd(windoww);
-                ay(am) = -96;
-                ap(am) = rnd(8);
-                ++am;
-            }
-        }
-        {
-            int cnt = 0;
-            for (;; ++cnt)
-            {
-                redraw(0);
-                if (cnt < 4)
-                {
-                    pos(0, 0);
-                }
-                else
-                {
-                    pos(5 - rnd(10), 5 - rnd(10));
-                }
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                af = 0;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
-                    {
-                        if (ap(cnt) >= 16)
-                        {
-                            continue;
-                        }
-                        af = 1;
-                        anidy =
-                            ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
-                        gmode(2, 96, 96);
-                        if (ap(cnt) < 9)
-                        {
-                            ax(cnt) -= 16 + cnt % (windoww / 30);
-                            ay(cnt) += 24 + cnt % (windowh / 10);
-                        }
-                        if (ap(cnt) >= 10)
-                        {
-                            pos(ax(cnt) - 48, ay(cnt));
-                            gcopy(7, (ap(cnt) - 10) * 192, 96, 192, 96);
-                        }
-                        if (ap(cnt) < 16)
-                        {
-                            pos(ax(cnt), ay(cnt));
-                            gcopy(
-                                7,
-                                std::clamp((ap(cnt) - 8), 0, 8) * 96,
-                                0,
-                                96,
-                                96);
-                        }
-                        ++ap(cnt);
-                    }
-                }
-                if (cnt % 2 == 0)
-                {
-                    if (cnt < 8)
-                    {
-                        if (cnt / 3 < am)
-                        {
-                            snd(108);
-                        }
-                    }
-                }
-                if (af == 0)
-                {
-                    break;
-                }
-                await(cfg_animewait + 40);
-                redraw(1);
-            }
-        }
-        await(cfg_animewait);
-        redraw(0);
-        pos(0, 0);
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
-        gmode(2);
-        redraw(1);
-        goto label_1427_internal;
-    case 21:
-        gsel(7);
-        picload(fs::u8path(u8"./graphic/anime16.bmp"));
-        gsel(4);
-        pos(0, 0);
-        gmode(0);
-        gcopy(0, 0, 0, windoww, windowh);
-        gsel(0);
-        am = 0;
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
-            {
-                ax(am) = rnd(windoww);
-                ay(am) = rnd(inf_screenh * inf_tiles) - 96 - 24;
-                ap(am) = 0 - rnd(3);
-                ++am;
-            }
-        }
-        {
-            int cnt = 0;
-            for (;; ++cnt)
-            {
-                redraw(0);
-                pos(5 - rnd(10), 5 - rnd(10));
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                af = 0;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
-                    {
-                        if (ap(cnt) >= 10)
-                        {
-                            continue;
-                        }
-                        af = 1;
-                        cnt2 = cnt;
-                        anidy =
-                            ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
-                        gmode(2, 96, 96);
-                        if (ap(cnt) < 10)
-                        {
-                            pos(ax(cnt), ay(cnt));
-                            gcopy(7, ap(cnt) * 96, 96, 96, 96);
-                            pos(ax(cnt), ay(cnt) - 96);
-                            gcopy(7, ap(cnt) * 96, 0, 96, 96);
-                        }
-                        if (ap(cnt) < 0)
-                        {
-                            ap(cnt) += rnd(2);
-                        }
-                        else
-                        {
-                            ++ap(cnt);
-                        }
-                    }
-                }
-                if (cnt % 2 == 0)
-                {
-                    if (cnt < 8)
-                    {
-                        if (cnt / 3 < am)
-                        {
-                            snd(108);
-                        }
-                    }
-                }
-                if (af == 0)
-                {
-                    break;
-                }
-                await(cfg_animewait + 40);
-                redraw(1);
-            }
-        }
-        await(cfg_animewait);
-        redraw(0);
-        pos(0, 0);
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh);
-        gmode(2);
-        redraw(1);
-        goto label_1427_internal;
-    case 14:
-    case 16:
-        aniref = 4;
-        ax = (sx - scx) * inf_tiles + inf_screenx;
-        ay = (sy - scy) * inf_tiles + inf_screeny;
-        if (animeid == 14)
-        {
-            prepare_item_image(17, 0);
-        }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
-            {
-                sx(cnt) = rnd(24) - 12;
-                sy(cnt) = rnd(8);
-            }
-        }
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, ax - 16, ay - 16, 64, 64);
-        gmode(2);
-        gsel(0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
-            {
-                redraw(0);
-                gmode(2);
-                cnt2 = cnt * 2;
-                gmode(2, inf_tiles, inf_tiles);
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
-                    {
-                        pos(ax + 24 + sx(cnt)
-                                + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1)
-                                    * cnt2
-                                + (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
-                            ay + sy(cnt) + cnt2 * cnt2 / 3);
-                        grotate(1, 864, 0, 0.4 * cnt, 24, 24);
-                    }
-                }
-                pos(ax + sx + 24, ay + sy + 10);
-                grotate(
-                    1,
-                    0,
-                    960,
-                    0.5 * cnt - 0.8,
-                    cnt * 10 + aniref * 3,
-                    cnt * 10 + aniref * 3);
-                redraw(1);
-                redraw(0);
-                gmode(0);
-                pos(ax - 16, ay - 16);
-                pos(ax - 16, ay - 16);
-                gcopy(4, 0, 0, 64, 64);
-                gmode(2);
-                await(cfg_animewait);
-            }
-        }
-        goto label_1427_internal;
-    }
-label_1427_internal:
-    gmode(2);
-    anicol = 0;
     return;
 }
 
@@ -41235,9 +40049,8 @@ void switch_religion()
     }
     else
     {
-        animeid = 19;
         animode = 100;
-        label_1426();
+        play_animation(19);
         snd(51);
         txtef(5);
         txt(lang(
@@ -41303,9 +40116,8 @@ void pray()
         label_2742();
         return;
     }
-    animeid = 19;
     animode = 100;
-    label_1426();
+    play_animation(19);
     snd(120);
     efid = 1120;
     efp = 100;
@@ -41565,8 +40377,7 @@ void offer()
             + u8" on the altar and mutter the name of "s + godname(cdata[0].god)
             + u8"."s));
     snd(121);
-    animeid = 7;
-    label_1426();
+    play_animation(7);
     int stat = item_find(60002);
     if (stat != -1)
     {
@@ -41621,9 +40432,8 @@ void offer()
         {
             modpiety(i * 5);
             cdata[0].praying_point += i * 30;
-            animeid = 19;
             animode = 100;
-            label_1426();
+            play_animation(19);
             snd(120);
             if (inv[ti].param1 != 0)
             {
@@ -57767,10 +56577,9 @@ label_21451_internal:
                     txtef(9);
                     txt(lang(u8" *チュドーン！* "s, u8"*kabooom*"s));
                     aniref = 0;
-                    animeid = 2;
                     anix = movx;
                     aniy = movy;
-                    label_1426();
+                    play_animation(2);
                     cell_featset(movx, movy, 0);
                     dmghp(cc, 100 + rnd(200), -1);
                 }
@@ -58144,12 +56953,11 @@ void label_2146()
                                                 inv[ci].position.y);
                                             ccbk = cc;
                                             cc = tc;
-                                            animeid = 15;
                                             aniref(0) = inv[ci].image;
                                             aniref(1) = inv[ci].color;
                                             anix = inv[ci].position.x;
                                             aniy = inv[ci].position.y;
-                                            label_1426();
+                                            play_animation(15);
                                             cc = ccbk;
                                             ++inv[ci].number;
                                             cell_refresh(
@@ -59962,9 +58770,8 @@ void label_2159()
             x = refx;
             y = refy;
             snd(45);
-            animeid = 14;
             aniref = 5;
-            label_1426();
+            play_animation(14);
             txt(lang(
                 u8"壁を掘り終えた。"s, u8"You finished digging the wall."s));
             if (gdata_tutorial_flag == 2 && gdata_current_map == 7)
@@ -60656,8 +59463,7 @@ int label_2168()
             txt(lang(
                 name(cc) + u8"は詠唱に失敗した。"s,
                 name(cc) + u8" fail"s + _s(cc) + u8" to cast a spell."s));
-            animeid = 8;
-            label_1426();
+            play_animation(8);
         }
         efsource = 0;
         return 1;
@@ -61604,12 +60410,11 @@ void label_2189()
             }
         }
     }
-    animeid = 15;
     aniref(0) = inv[ci].image;
     aniref(1) = inv[ci].color;
     anix = tlocx;
     aniy = tlocy;
-    label_1426();
+    play_animation(15);
     ti = inv_getfreeid(-1);
     removeitem(ci, 1);
     if (inv[ci].id == 685)
@@ -61627,10 +60432,9 @@ void label_2189()
     {
         refresh_burden_state();
     }
-    animeid = 14;
     x = tlocx;
     y = tlocy;
-    label_1426();
+    play_animation(14);
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
@@ -62683,8 +61487,7 @@ void label_2201()
                     name(cc) + u8"は壷を割った。"s,
                     name(cc) + u8" shatter"s + _s(cc) + u8" the pot."s));
                 snd(45);
-                animeid = 14;
-                label_1426();
+                play_animation(14);
             }
             label_2742();
             return;
@@ -64894,9 +63697,8 @@ label_22191_internal:
     }
     if (attackrange == 1)
     {
-        animeid = attackskill;
         aniref = cw;
-        label_1426();
+        play_animation(attackskill);
     }
     if (attacknum > 1 || cc != 0)
     {
@@ -64912,9 +63714,8 @@ label_22191_internal:
         {
             if (cfg_attackanime)
             {
-                animeid = 12;
                 aniref = dmg * 100 / cdata[tc].max_hp;
-                label_1426();
+                play_animation(12);
             }
         }
         if (critical)
@@ -67366,9 +66167,8 @@ void label_2228()
                 + u8"の遺伝子を受けついだ！"s,
             ""s + cdatan(0, rc) + u8" has inherited "s + cdatan(0, tc)
                 + u8"'s gene!"s));
-        animeid = 20;
         anic = rc;
-        label_1426();
+        play_animation(20);
         {
             int stat = label_2231();
             if (stat != -1)
@@ -68335,12 +67135,11 @@ void label_2244()
                         snd(91);
                         ccbk = cc;
                         cc = tc;
-                        animeid = 15;
                         aniref(0) = 223;
                         aniref(1) = 0;
                         anix = tlocx;
                         aniy = tlocy;
-                        label_1426();
+                        play_animation(15);
                         cc = ccbk;
                         addmef(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
                         mapitem_fire(tlocx, tlocy);
@@ -76972,8 +75771,7 @@ void label_2693()
                                     {
                                         map(x, y, 0) = tile_tunnel;
                                         snd(45);
-                                        animeid = 14;
-                                        label_1426();
+                                        play_animation(14);
                                         spillfrag(x, y, 2);
                                         if (synccheck(cc, -1))
                                         {
