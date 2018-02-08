@@ -3,6 +3,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "variables.hpp"
 
 
@@ -153,7 +154,7 @@ label_20591:
                     {
                         if (invctrl == 7)
                         {
-                            if (refitem(inv[cnt].id, 9) != 53100
+                            if (the_item_db[inv[cnt].id]->subcategory != 53100
                                 && inv[cnt].id != 621)
                             {
                                 continue;
@@ -181,7 +182,7 @@ label_20591:
                         }
                     }
                     item_checkknown(cnt);
-                    reftype = refitem(inv[cnt].id, 5);
+                    reftype = the_item_db[inv[cnt].id]->category;
                     if (inv[cnt].own_state == 5)
                     {
                         if (ibit(16, cnt) == 0 || invctrl != 14)
@@ -226,21 +227,21 @@ label_20591:
                     }
                     if (invctrl == 7)
                     {
-                        if (refitem(inv[cnt].id, 2) == 0)
+                        if (the_item_db[inv[cnt].id]->is_readable == 0)
                         {
                             continue;
                         }
                     }
                     if (invctrl == 8)
                     {
-                        if (refitem(inv[cnt].id, 4) == 0)
+                        if (the_item_db[inv[cnt].id]->is_drinkable == 0)
                         {
                             continue;
                         }
                     }
                     if (invctrl == 9)
                     {
-                        if (refitem(inv[cnt].id, 3) == 0)
+                        if (the_item_db[inv[cnt].id]->is_zappable == 0)
                         {
                             continue;
                         }
@@ -299,7 +300,7 @@ label_20591:
                     if (invctrl == 14)
                     {
                         if (inv[cnt].function == 0
-                            && refitem(inv[cnt].id, 11) == 0
+                            && the_item_db[inv[cnt].id]->is_usable == 0
                             && ibit(10, cnt) == 0)
                         {
                             continue;
@@ -346,7 +347,10 @@ label_20591:
                     }
                     if (invctrl == 19)
                     {
-                        if (refitem(inv[cnt].id, 12) == 0)
+                        dbid = inv[cnt].id;
+                        dbspec = 12;
+                        int is_offerable = access_item_db(16);
+                        if (is_offerable == 0)
                         {
                             continue;
                         }
@@ -1157,7 +1161,7 @@ label_2061_internal:
             {
                 if (inv_sum(-1) > mdata(18))
                 {
-                    if (refitem(inv[ci].id, 5) != 60000)
+                    if (the_item_db[inv[ci].id]->category != 60000)
                     {
                         txt(lang(
                             u8"これ以上は置けない。"s,
@@ -1598,7 +1602,7 @@ label_2061_internal:
                 snd(27);
                 goto label_2060_internal;
             }
-            reftype = refitem(inv[ci].id, 5);
+            reftype = the_item_db[inv[ci].id]->category;
             if (inv[ci].id == 729)
             {
                 txt(lang(
@@ -1693,7 +1697,7 @@ label_2061_internal:
                 if (reftype == 52000)
                 {
                     f = 1;
-                    if (refitem(inv[ci].id, 9) == 52002)
+                    if (the_item_db[inv[ci].id]->subcategory == 52002)
                     {
                         if (cdata[tc].drunk)
                         {
@@ -2030,7 +2034,7 @@ label_2061_internal:
                 goto label_2060_internal;
             }
             f = 0;
-            if (refitem(inv[ci].id, 5) == 77000)
+            if (the_item_db[inv[ci].id]->category == 77000)
             {
                 f = 2;
             }

@@ -2,6 +2,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "variables.hpp"
 
 
@@ -479,7 +480,7 @@ void talk_npc()
                     }
                     if (qdata(3, rq) == 1003)
                     {
-                        if (refitem(inv[cnt].id, 5) == 57000)
+                        if (the_item_db[inv[cnt].id]->category == 57000)
                         {
                             if (inv[cnt].param1 / 1000 == qdata(12, rq))
                             {

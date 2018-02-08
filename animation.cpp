@@ -3,6 +3,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -491,7 +492,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
     }
     if (animeid == 110)
     {
-        ap = refitem(inv[aniref].id, 9);
+        ap = the_item_db[inv[aniref].id]->subcategory;
         if (ap == 24021)
         {
             prepare_item_image(13, anicol);

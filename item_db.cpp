@@ -29,6 +29,9 @@ int define(lua_State* state)
 #define FIELD_S(name) \
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
+#define FIELD_B(name) \
+    lua_getfield(state, 2, #name); \
+    bool name = lua_toboolean(state, -1);
 
     FIELD_I(image);
     FIELD_I(value);
@@ -42,29 +45,32 @@ int define(lua_State* state)
     FIELD_I(material);
     FIELD_I(chargelevel);
 
-    FIELD_S(infilterref);
     FIELD_S(description_jp_0);
     FIELD_S(description_jp_1);
     FIELD_S(description_jp_2);
     FIELD_S(description_jp_3);
     FIELD_S(description_en);
 
-    FIELD_I(dbspec2);
-    FIELD_I(dbspec3);
-    FIELD_I(dbspec4);
-    FIELD_I(dbspec7);
-    FIELD_I(dbspec8);
-    FIELD_I(dbspec10);
-    FIELD_I(dbspec11);
-    FIELD_I(dbspec18);
-    FIELD_I(dbspec19);
-    FIELD_I(dbspec20);
+    FIELD_I(is_readable);
+    FIELD_I(is_zappable);
+    FIELD_I(is_drinkable);
+    FIELD_I(is_cargo);
+    FIELD_I(is_usable);
+    FIELD_I(appearance);
+    FIELD_I(expiration_date);
     FIELD_I(level);
     FIELD_I(fltselect);
     FIELD_I(category);
     FIELD_I(subcategory);
     FIELD_I(rarity);
     FIELD_I(coefficient);
+
+    FIELD_I(light);
+    FIELD_S(katakana_name);
+    FIELD_S(original_name_jp);
+    FIELD_S(original_name_en);
+    FIELD_S(originalnameref2);
+    FIELD_B(has_random_name);
 
 #undef FIELD_I
 #undef FIELD_S
@@ -85,7 +91,6 @@ int define(lua_State* state)
             material,
             chargelevel,
 
-            infilterref,
             {
                 description_jp_0,
                 description_jp_1,
@@ -94,22 +99,25 @@ int define(lua_State* state)
             },
             description_en,
 
-            dbspec2,
-            dbspec3,
-            dbspec4,
-            dbspec7,
-            dbspec8,
-            dbspec10,
-            dbspec11,
-            dbspec18,
-            dbspec19,
-            dbspec20,
+            is_readable,
+            is_zappable,
+            is_drinkable,
+            is_cargo,
+            is_usable,
+            appearance,
+            expiration_date,
             level,
             fltselect,
             category,
             subcategory,
             rarity,
             coefficient,
+            light,
+            katakana_name,
+            original_name_jp,
+            original_name_en,
+            originalnameref2,
+            has_random_name,
         });
 
     return 0;

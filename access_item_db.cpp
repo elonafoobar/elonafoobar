@@ -11,9 +11,8 @@ namespace elona
 {
 
 
-int access_item_db()
+int access_item_db(int dbmode)
 {
-    std::string infilterref;
     const auto info = the_item_db[dbid];
     if (info)
     {
@@ -34,7 +33,6 @@ int access_item_db()
         else if (dbmode == 2)
         {
             ichargelevel = info->chargelevel;
-            infilterref = info->infilterref;
             reftype = info->category;
             return 0;
         }
@@ -52,25 +50,6 @@ int access_item_db()
                 description(3) = info->description_en;
             }
             return 0;
-        }
-        else if (dbmode == 16)
-        {
-            switch (dbspec)
-            {
-            case 2: return info->dbspec2;
-            case 3: return info->dbspec3;
-            case 4: return info->dbspec4;
-            case 5: return info->category;
-            case 7: return info->dbspec7;
-            case 8: return info->dbspec8;
-            case 9: return info->subcategory;
-            case 10: return info->dbspec10;
-            case 11: return info->dbspec11;
-            case 18: return info->dbspec18;
-            case 19: return info->dbspec19;
-            case 20: return info->dbspec20;
-            default: break;
-            }
         }
     }
     else

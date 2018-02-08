@@ -3,6 +3,7 @@
 #include <type_traits>
 #include "character.hpp"
 #include "elona.hpp"
+#include "item_db.hpp"
 #include "main.hpp"
 #include "variables.hpp"
 
@@ -229,7 +230,7 @@ int item_find(int prm_476, int prm_477, int prm_478)
                     }
                     if (prm_477 == 0)
                     {
-                        if (refitem(inv[cnt].id, 5) == prm_476)
+                        if (the_item_db[inv[cnt].id]->category == prm_476)
                         {
                             p_at_m52 = cnt;
                         }
@@ -247,7 +248,7 @@ int item_find(int prm_476, int prm_477, int prm_478)
                     }
                     if (prm_477 == 2)
                     {
-                        if (refitem(inv[cnt].id, 9) == prm_476)
+                        if (the_item_db[inv[cnt].id]->subcategory == prm_476)
                         {
                             p_at_m52 = cnt;
                         }
@@ -418,7 +419,7 @@ int itemfind(int prm_487, int prm_488, int prm_489)
                 {
                     continue;
                 }
-                if (refitem(inv[cnt].id, 9) == prm_488)
+                if (the_item_db[inv[cnt].id]->subcategory == prm_488)
                 {
                     f_at_m54 = cnt;
                     break;
@@ -923,7 +924,7 @@ int item_identify(int prm_512, int prm_513, int prm_514)
     }
     if (idlv_at_m60 >= 2)
     {
-        if (refitem(inv[prm_512].id, 5) >= 50000)
+        if (the_item_db[inv[prm_512].id]->category >= 50000)
         {
             idlv_at_m60 = 3;
         }
@@ -1207,7 +1208,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         num2_at_m63 = prm_519;
     }
-    a_at_m63 = refitem(inv[prm_518].id, 5);
+    a_at_m63 = the_item_db[inv[prm_518].id]->category;
     if (jp)
     {
         if (num2_at_m63 > 1)
@@ -1842,7 +1843,7 @@ int item_stack(int prm_525, int prm_526, int prm_527)
     p_at_m65 = 0;
     if (inv[prm_526].quality == 6)
     {
-        if (refitem(inv[prm_526].id, 5) < 50000)
+        if (the_item_db[inv[prm_526].id]->category < 50000)
         {
             return p_at_m65;
         }

@@ -25,25 +25,27 @@ struct item_data
     int dv;
     int material;
     int chargelevel;
-    std::string infilterref;
     std::array<std::string, 4> description_jp;
     std::string description_en;
-    int dbspec2;
-    int dbspec3;
-    int dbspec4;
-    int dbspec7;
-    int dbspec8;
-    int dbspec10;
-    int dbspec11;
-    int dbspec18;
-    int dbspec19;
-    int dbspec20;
+    int is_readable;
+    int is_zappable;
+    int is_drinkable;
+    int is_cargo;
+    int is_usable;
+    int appearance;
+    int expiration_date;
     int level;
     int fltselect;
     int category;
     int subcategory;
     int rarity;
     int coefficient;
+    int light;
+    std::string katakana_name;
+    std::string original_name_jp;
+    std::string original_name_en;
+    std::string originalnameref2;
+    bool has_random_name;
 };
 
 
