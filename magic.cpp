@@ -84,7 +84,7 @@ int magic()
                 else if (the_buff_db[p].type == buff_data::type_t::hex)
                 {
                     animeid = 6;
-                    label_1426();
+                    play_animation();
                 }
                 if (efid == 625 || efid == 446)
                 {
@@ -162,7 +162,7 @@ int magic()
             {
             case 10:
                 animeid = 18;
-                label_1426();
+                play_animation();
                 label_2218();
                 goto label_2186_internal;
             case 1:
@@ -175,7 +175,7 @@ int magic()
                 }
             }
                 animeid = 0;
-                label_1426();
+                play_animation();
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 {
@@ -286,7 +286,7 @@ int magic()
                     animeid = 2;
                     anix = tlocx;
                     aniy = tlocy;
-                    label_1426();
+                    play_animation();
                 }
                 {
                     int cnt = 0;
@@ -339,7 +339,7 @@ int magic()
                                     if (f == 1)
                                     {
                                         animeid = 11;
-                                        label_1426();
+                                        play_animation();
                                         if (synccheck(tc, -1))
                                         {
                                             txt(lang(
@@ -368,7 +368,7 @@ int magic()
                                     if (f == 1)
                                     {
                                         animeid = 11;
-                                        label_1426();
+                                        play_animation();
                                         txt(lang(
                                             name(tc)
                                                 + u8"の狂気は消え去った。"s,
@@ -505,7 +505,7 @@ int magic()
                 goto label_2186_internal;
             case 2:
                 animeid = 1;
-                label_1426();
+                play_animation();
                 dmg = role(dice1, dice2, bonus);
                 if (synccheck(tc, -1))
                 {
@@ -574,7 +574,7 @@ int magic()
                 }
                 sickifcursed(efstatus, tc, 3);
                 animeid = 5;
-                label_1426();
+                play_animation();
                 goto label_2186_internal;
             case 6:
                 if (cdata[cc].special_attack_type != 0)
@@ -1027,7 +1027,7 @@ int magic()
                 dy = cdata[cc].position.y;
                 breath_list();
                 animeid = 3;
-                label_1426();
+                play_animation();
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (maxbreath); cnt < cnt_end; ++cnt)
@@ -1936,7 +1936,7 @@ label_2181_internal:
             u8"A golden aura wraps "s + name(tc) + u8"!"s));
         label_2188();
         animeid = 5;
-        label_1426();
+        play_animation();
         goto label_2186_internal;
     case 1117:
         if (tc >= 16)
@@ -2246,7 +2246,7 @@ label_2181_internal:
         txt(lang(u8"「ありがとう！」"s, cnvtalk(u8"Thanks!"s)));
         animeid = 19;
         animode = 100 + rc;
-        label_1426();
+        play_animation();
         snd(120);
         cdata[rc].emotion_icon = 317;
         if (cc == 0)
@@ -2640,7 +2640,7 @@ label_2181_internal:
             }
             animeid = 19;
             animode = 100 + tc;
-            label_1426();
+            play_animation();
             snd(120);
             cdata[0].praying_point += 500;
             modpiety(75);
@@ -2715,7 +2715,7 @@ label_2181_internal:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
         animeid = 6;
-        label_1426();
+        play_animation();
         r1 = tc;
         refresh_character();
         goto label_2186_internal;
@@ -2753,7 +2753,7 @@ label_2181_internal:
                     + u8" potential of every attribute expands."s));
             animeid = 19;
             animode = 100 + tc;
-            label_1426();
+            play_animation();
             snd(61);
         }
         else
@@ -3130,7 +3130,7 @@ label_2181_internal:
                 name(tc) + u8"のマナが回復した。"s,
                 name(tc) + your(tc) + u8" mana is restored."s));
             animeid = 5;
-            label_1426();
+            play_animation();
         }
         goto label_2186_internal;
     case 624:
@@ -3141,7 +3141,7 @@ label_2181_internal:
                 name(tc) + u8"は周囲からマナを吸い取った。"s,
                 name(tc) + u8" absorb"s + _s(tc) + u8" mana from the air."s));
             animeid = 5;
-            label_1426();
+            play_animation();
         }
         goto label_2186_internal;
     case 1108:
@@ -4255,7 +4255,7 @@ label_2181_internal:
                     continue;
                 }
                 animeid = 9;
-                label_1426();
+                play_animation();
                 label_2218();
             }
         }
@@ -4317,7 +4317,7 @@ label_2181_internal:
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
         animeid = 19;
         animode = 0;
-        label_1426();
+        play_animation();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
@@ -4345,7 +4345,7 @@ label_2181_internal:
             u8"隕石が落ちてきた！"s,
             u8"Innumerable meteorites fall all over the area!"s));
         animeid = 22;
-        label_1426();
+        play_animation();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)

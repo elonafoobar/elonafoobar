@@ -105,7 +105,7 @@ void proc_event()
             u8"memememw...MEMEMEM...MEWWWWWW!"s));
         msg_halt();
         animeid = 21;
-        label_1426();
+        play_animation();
         flt();
         characreate(
             -1,
@@ -926,7 +926,7 @@ void proc_event()
         animeid = 17;
         anix = tlocx;
         aniy = tlocy;
-        label_1426();
+        play_animation();
         update_screen();
         {
             int cnt = 0;
@@ -1013,7 +1013,7 @@ void proc_event()
         txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));
         msg_halt();
         animeid = 21;
-        label_1426();
+        play_animation();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
