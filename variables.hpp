@@ -796,7 +796,7 @@ int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int = 0, int = 0);
 int key_direction();
 int get_trait_info();
-int access_item_db();
+int access_item_db(int);
 int get_required_craft_materials();
 int voting_box();
 int try_to_cast_spell();

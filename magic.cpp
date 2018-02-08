@@ -3805,8 +3805,7 @@ label_2181_internal:
             if (stat == 1)
             {
                 dbid = inv[ci].id;
-                dbmode = 2;
-                access_item_db();
+                access_item_db(2);
                 if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480
                     || inv[ci].id == 289 || inv[ci].id == 732
                     || inv[ci].id == 687 && inv[ci].param2 != 0)
@@ -3900,8 +3899,7 @@ label_2181_internal:
             if (stat == 1)
             {
                 dbid = inv[ci].id;
-                dbmode = 2;
-                access_item_db();
+                access_item_db(2);
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)

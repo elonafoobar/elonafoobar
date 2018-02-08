@@ -975,10 +975,9 @@ void gain_race_feat()
 
 int refitem(int prm_279, int prm_280)
 {
-    dbmode = 16;
     dbid = prm_279;
     dbspec = prm_280;
-    return access_item_db();
+    return access_item_db(16);
 }
 
 
@@ -7537,8 +7536,7 @@ void label_0265()
     }
     originalvalue = inv[ci].value * 100 / mtref(1, p);
     dbid = inv[ci].id;
-    dbmode = 10;
-    access_item_db();
+    access_item_db(10);
     inv[ci].value = originalvalue;
     if (fixmaterial != 0)
     {
@@ -26525,10 +26523,8 @@ int label_1582()
         }
     }
     itemcreatehack = dbid + 1;
-    dbmode = 3;
-    access_item_db();
-    dbmode = 2;
-    access_item_db();
+    access_item_db(3);
+    access_item_db(2);
     inv[ci].color = icolref(inv[ci].id);
     if (inv[ci].color == 1)
     {
@@ -52328,10 +52324,8 @@ void label_2068()
     reftype = refitem(inv[ci].id, 5);
     getinheritance(ci, inhlist, inhmax);
     dbid = inv[ci].id;
-    dbmode = 2;
-    access_item_db();
-    dbmode = 17;
-    access_item_db();
+    access_item_db(2);
+    access_item_db(17);
     if (inv[ci].identification_state >= 3)
     {
         buf = trimdesc(description(3), 1);
@@ -60589,9 +60583,8 @@ void label_2189()
                 ccthrowpotion = cc;
                 potionthrow = 100;
                 cc = tc;
-                dbmode = 15;
                 dbid = inv[ci].id;
-                access_item_db();
+                access_item_db(15);
                 cc = ccthrowpotion;
                 label_2742();
                 return;
@@ -60859,9 +60852,8 @@ int label_2192()
             {
                 if (inv[ci].count > 0)
                 {
-                    dbmode = 14;
                     dbid = inv[ci].id;
-                    access_item_db();
+                    access_item_db(14);
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
                             + u8"から魔力を吸い取った。"s,
@@ -61279,9 +61271,8 @@ void label_2197()
         }
     }
     efid = 0;
-    dbmode = 13;
     dbid = inv[ci].id;
-    access_item_db();
+    access_item_db(13);
     if (efid == 1115)
     {
         label_1712();
@@ -61336,9 +61327,8 @@ void label_2198()
 
 void label_2199()
 {
-    dbmode = 15;
     dbid = inv[ci].id;
-    access_item_db();
+    access_item_db(15);
     label_2742();
     return;
 }
@@ -61347,9 +61337,8 @@ void label_2199()
 
 void label_2200()
 {
-    dbmode = 14;
     dbid = inv[ci].id;
-    access_item_db();
+    access_item_db(14);
     int stat = label_2172();
     if (stat == 0)
     {
@@ -78595,9 +78584,8 @@ label_2738:
                 }
                 potionspill = 1;
                 efstatus = mef(8, ef);
-                dbmode = 15;
                 dbid = mef(7, ef);
-                access_item_db();
+                access_item_db(15);
                 if (cdata[tc].state == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -79348,9 +79336,8 @@ void pc_turn(bool label_2747_flg)
                 {
                     if (refitem(inv[ci].id, 5) == 52000)
                     {
-                        dbmode = 15;
                         dbid = inv[ci].id;
-                        access_item_db();
+                        access_item_db(15);
                     }
                 }
             }

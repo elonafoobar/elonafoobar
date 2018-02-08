@@ -1712,8 +1712,7 @@ int calcitemvalue(int ci, int situation)
     if (ibit(4, ci) == 1)
     {
         dbid = inv[ci].id;
-        dbmode = 2;
-        access_item_db();
+        access_item_db(2);
         if (inv[ci].count < 0)
         {
             ret = ret / 10;
