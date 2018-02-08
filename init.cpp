@@ -6,6 +6,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "main.hpp"
+#include "race.hpp"
 #include "range.hpp"
 #include "variables.hpp"
 
@@ -914,22 +915,17 @@ void label_1544()
         mes(u8"Gene from "s + geneuse);
     }
     listmax = 0;
-    val = 0;
-    dbmode = 1;
-    access_race_info();
+    get_race_list(false);
     if (cfg_extrarace)
     {
-        val = 1;
-        dbmode = 1;
-        access_race_info();
+        get_race_list(true);
     }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
             dbidn = listn(1, cnt);
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             listn(0, cnt) = racename;
             if (list(0, cnt) == 1)
             {
@@ -988,10 +984,8 @@ label_1546_internal:
         pos(wx + 200, wy + 66);
         del_chara(0);
         dbidn = listn(1, page * pagesize + cs);
-        dbmode = 3;
-        access_race_info();
-        dbmode = 11;
-        access_race_info();
+        access_race_info(3);
+        access_race_info(11);
         val = 0;
         label_1567(cnt);
     }
@@ -1019,8 +1013,7 @@ label_1546_internal:
         cmrace(0) = listn(1, p);
         cmrace(1) = listn(0, p);
         dbidn = cmrace;
-        dbmode = 11;
-        access_race_info();
+        access_race_info(11);
         label_1547();
         return;
     }
@@ -1307,8 +1300,7 @@ label_1554:
     }
     del_chara(0);
     dbidn = cmrace;
-    dbmode = 3;
-    access_race_info();
+    access_race_info(3);
     dbidn = cmclass;
     dbmode = 3;
     access_class_info();
@@ -1670,8 +1662,7 @@ label_1563_internal:
     label_1425();
     del_chara(0);
     dbidn = cmrace;
-    dbmode = 3;
-    access_race_info();
+    access_race_info(3);
     dbidn = cmclass;
     dbmode = 3;
     access_class_info();

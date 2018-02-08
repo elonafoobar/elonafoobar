@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "main.hpp"
+#include "race.hpp"
 #include "snail/color.hpp"
 #include "variables.hpp"
 
@@ -597,10 +598,9 @@ int refclass(int prm_261, int prm_262)
 
 int refrace(const std::string& prm_263, int prm_264)
 {
-    dbmode = 16;
     dbidn = prm_263;
     dbspec = prm_264;
-    return access_race_info();
+    return access_race_info(16);
 }
 
 
@@ -52331,8 +52331,7 @@ label_2035_internal:
         s(0) = cdatan(0, cc);
         s(1) = cdatan(1, cc);
         dbidn = cdatan(2, cc);
-        dbmode = 2;
-        access_race_info();
+        access_race_info(2);
         s(2) = cnven(lang(""s + racename, cdatan(2, cc)));
         dbidn = cdatan(3, cc);
         dbmode = 2;
@@ -55847,8 +55846,7 @@ void label_2085()
 {
     cc = 0;
     dbidn = cdatan(2, 0);
-    dbmode = 2;
-    access_race_info();
+    access_race_info(2);
     dbidn = cdatan(3, 0);
     dbmode = 2;
     access_class_info();
@@ -56051,8 +56049,7 @@ void label_2085()
                 continue;
             }
             dbidn = cdatan(2, cnt);
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             dbidn = cdatan(3, cnt);
             dbmode = 2;
             access_class_info();
@@ -56783,8 +56780,7 @@ void label_2104()
     }
     cdata[rc].ai_heal = userdata(10, cun);
     dbidn = userdatan(2, cun);
-    dbmode = 3;
-    access_race_info();
+    access_race_info(3);
     dbidn = userdatan(3, cun);
     dbmode = 3;
     access_class_info();
