@@ -1,6 +1,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "variables.hpp"
 
 
@@ -4797,7 +4798,7 @@ void talk_unique()
                 {
                     if (inv[cnt].number > 0)
                     {
-                        if (refitem(inv[cnt].id, 10) == 1)
+                        if (the_item_db[inv[cnt].id]->is_cargo == 1)
                         {
                             txtmore();
                             txt(lang(

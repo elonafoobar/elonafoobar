@@ -48,16 +48,13 @@ int define(lua_State* state)
     FIELD_S(description_jp_3);
     FIELD_S(description_en);
 
-    FIELD_I(dbspec2);
-    FIELD_I(dbspec3);
-    FIELD_I(dbspec4);
-    FIELD_I(dbspec7);
-    FIELD_I(dbspec8);
-    FIELD_I(dbspec10);
-    FIELD_I(dbspec11);
-    FIELD_I(dbspec18);
-    FIELD_I(dbspec19);
-    FIELD_I(dbspec20);
+    FIELD_I(is_readable);
+    FIELD_I(is_zappable);
+    FIELD_I(is_drinkable);
+    FIELD_I(is_cargo);
+    FIELD_I(is_usable);
+    FIELD_I(appearance);
+    FIELD_I(expiration_date);
     FIELD_I(level);
     FIELD_I(fltselect);
     FIELD_I(category);
@@ -92,16 +89,13 @@ int define(lua_State* state)
             },
             description_en,
 
-            dbspec2,
-            dbspec3,
-            dbspec4,
-            dbspec7,
-            dbspec8,
-            dbspec10,
-            dbspec11,
-            dbspec18,
-            dbspec19,
-            dbspec20,
+            is_readable,
+            is_zappable,
+            is_drinkable,
+            is_cargo,
+            is_usable,
+            appearance,
+            expiration_date,
             level,
             fltselect,
             category,

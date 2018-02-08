@@ -3,6 +3,7 @@
 #include "debug.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "variables.hpp"
 
 
@@ -1630,7 +1631,7 @@ int calcmedalvalue(int ci)
 
 int calcitemvalue(int ci, int situation)
 {
-    int category = refitem(inv[ci].id, 5);
+    int category = the_item_db[inv[ci].id]->category;
     int ret = 0;
     if (inv[ci].identification_state == 0)
     {
@@ -2012,7 +2013,7 @@ int calccostreload(int prm_905, int prm_906)
             {
                 continue;
             }
-            if (refitem(inv[cnt].id, 5) != 25000)
+            if (the_item_db[inv[cnt].id]->category != 25000)
             {
                 continue;
             }

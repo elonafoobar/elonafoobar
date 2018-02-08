@@ -6,6 +6,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "variables.hpp"
 
 
@@ -3831,7 +3832,7 @@ label_2181_internal:
                 {
                     f = 0;
                 }
-                if (refitem(inv[ci].id, 5) == 54000)
+                if (the_item_db[inv[ci].id]->category == 54000)
                 {
                     if (rnd(4) == 0)
                     {
@@ -3849,7 +3850,7 @@ label_2181_internal:
                     {
                         p = ichargelevel - inv[ci].count + 1;
                     }
-                    if (refitem(inv[ci].id, 5) == 54000)
+                    if (the_item_db[inv[ci].id]->category == 54000)
                     {
                         p = 1;
                     }
@@ -4083,7 +4084,7 @@ label_2181_internal:
         {
             autosave = 1 * (gdata_current_map != 35);
             animeload(8, cc);
-            fltbk = refitem(inv[ci].id, 5);
+            fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
             inv[ci].number = 0;
             {
@@ -4576,7 +4577,7 @@ label_2181_internal:
                     {
                         continue;
                     }
-                    if (refitem(inv[cnt].id, 5) != 57000)
+                    if (the_item_db[inv[cnt].id]->category != 57000)
                     {
                         continue;
                     }

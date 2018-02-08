@@ -10,6 +10,7 @@
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "main.hpp"
 #include "race.hpp"
 #include "snail/color.hpp"
@@ -973,19 +974,10 @@ void gain_race_feat()
 
 
 
-int refitem(int prm_279, int prm_280)
-{
-    dbid = prm_279;
-    dbspec = prm_280;
-    return access_item_db(16);
-}
-
-
-
 int iequiploc(int prm_281)
 {
     int p_at_m13 = 0;
-    p_at_m13 = refitem(inv[prm_281].id, 5);
+    p_at_m13 = the_item_db[inv[prm_281].id]->category;
     if (p_at_m13 == 12000)
     {
         return 1;
@@ -3512,7 +3504,7 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
 
 void set_pcc_depending_on_equipments(int cc, int ci)
 {
-    int item_appearance = refitem(inv[ci].id, 18);
+    int item_appearance = the_item_db[inv[ci].id]->appearance;
     if (item_appearance == 0)
     {
         item_appearance = 1;
@@ -7521,7 +7513,7 @@ void label_0265()
     int originalvalue = 0;
     inv[ci].color = 0;
     p = inv[ci].material;
-    reftype = refitem(inv[ci].id, 5);
+    reftype = the_item_db[inv[ci].id]->category;
     fixlv = inv[ci].quality;
     {
         int cnt = 0;
@@ -8204,7 +8196,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
 
 int cargocheck()
 {
-    if (refitem(inv[ci].id, 10) == 0)
+    if (the_item_db[inv[ci].id]->is_cargo == 0)
     {
         return 1;
     }
@@ -15737,7 +15729,7 @@ void item_acid(int prm_838, int prm_839)
     {
         return;
     }
-    if (refitem(inv[ci_at_m138].id, 5) >= 50000)
+    if (the_item_db[inv[ci_at_m138].id]->category >= 50000)
     {
         return;
     }
@@ -15825,7 +15817,7 @@ int item_fire(int prm_840, int prm_841)
             {
                 if (ibit(5, ci_at_m138) == 0)
                 {
-                    a_at_m138 = refitem(inv[ci_at_m138].id, 5);
+                    a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
                     if (a_at_m138 == 57000)
                     {
                         if (inv[ci_at_m138].param2 == 0)
@@ -16106,7 +16098,7 @@ int item_cold(int prm_844, int prm_845)
             txtmore();
             if (ibit(5, ci_at_m138) == 0)
             {
-                a_at_m138 = refitem(inv[ci_at_m138].id, 5);
+                a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
                 if (prm_844 == -1)
                 {
                     s_at_m138 = "";
@@ -24567,7 +24559,7 @@ int convertartifact(int prm_930, int prm_931)
     int f_at_m163 = 0;
     int tc_at_m163 = 0;
     std::string n_at_m163;
-    if (refitem(inv[prm_930].id, 5) >= 50000)
+    if (the_item_db[inv[prm_930].id]->category >= 50000)
     {
         return prm_930;
     }
@@ -24623,8 +24615,8 @@ int convertartifact(int prm_930, int prm_931)
     }
     n_at_m163 = ""s + itemname(prm_930);
 label_1569_internal:
-    flt(refitem(inv[prm_930].id, 7), 4);
-    flttypeminor = refitem(inv[prm_930].id, 9);
+    flt(the_item_db[inv[prm_930].id]->level, 4);
+    flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
     inv[prm_930].number = 0;
     itemcreate(
         inv_getowner(prm_930),
@@ -24995,7 +24987,7 @@ void label_1573()
                 {
                     continue;
                 }
-                if (refitem(inv[ci].id, 10) == 1)
+                if (the_item_db[inv[ci].id]->is_cargo == 1)
                 {
                     if (mdata(6) != 1 && mdata(6) != 5 && mdata(6) != 3
                         && mdata(6) != 4 && mdata(6) != 6 && mdata(6) != 2)
@@ -25203,7 +25195,7 @@ void label_1573()
             {
                 if (ibit(8, ci) == 0)
                 {
-                    if (refitem(inv[ci].id, 5) < 50000)
+                    if (the_item_db[inv[ci].id]->category < 50000)
                     {
                         if (inv[ci].quality >= 3)
                         {
@@ -25213,7 +25205,7 @@ void label_1573()
                                 txt(name(catitem) + u8"は"s + itemname(ci)
                                     + u8"をぺろぺろと舐めた。"s);
                                 ibitmod(8, ci, 1);
-                                reftype = refitem(inv[ci].id, 5);
+                                reftype = the_item_db[inv[ci].id]->category;
                                 encadd(
                                     ci,
                                     randomenc(randomenclv(rnd(4))),
@@ -25994,7 +25986,8 @@ void label_1576()
                                     {
                                         if (cdata[0].god == 7)
                                         {
-                                            i = refitem(inv[cnt].id, 9);
+                                            i = the_item_db[inv[cnt].id]
+                                                    ->subcategory;
                                             if (rnd(3) == 0)
                                             {
                                                 txtmore();
@@ -26277,7 +26270,7 @@ void label_1580()
             {
                 continue;
             }
-            if (refitem(inv[cnt].id, 5) >= 50000)
+            if (the_item_db[inv[cnt].id]->category >= 50000)
             {
                 continue;
             }
@@ -26335,7 +26328,7 @@ void label_1581()
         if (rnd(13) == 0)
         {
             inv[ci].curse_state = -1;
-            if (refitem(inv[ci].id, 5) < 50000)
+            if (the_item_db[inv[ci].id]->category < 50000)
             {
                 if (rnd(4) == 0)
                 {
@@ -27006,7 +26999,7 @@ void label_1588()
         }
     }
     nutrition = 2500;
-    if (refitem(inv[ci].id, 10) == 1)
+    if (the_item_db[inv[ci].id]->is_cargo == 1)
     {
         nutrition += 2500;
     }
@@ -28995,7 +28988,7 @@ void map_reload(const std::string& prm_935)
             {
                 if (inv[cnt].own_state == 1)
                 {
-                    if (refitem(inv[cnt].id, 5) == 57000)
+                    if (the_item_db[inv[cnt].id]->category == 57000)
                     {
                         inv[cnt].number = 0;
                         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
@@ -32972,7 +32965,7 @@ void label_1714()
             ++p(2);
             if (inv[cnt].number != 0)
             {
-                if (refitem(inv[cnt].id, 5) != 60000)
+                if (the_item_db[inv[cnt].id]->category != 60000)
                 {
                     ++p;
                 }
@@ -33761,7 +33754,7 @@ void label_1725()
             {
                 continue;
             }
-            a = refitem(inv[cnt].id, 5);
+            a = the_item_db[inv[cnt].id]->category;
             if (a == 60000)
             {
                 continue;
@@ -33806,7 +33799,7 @@ void label_1725()
             val = val * in;
             if (rnd(4) == 0)
             {
-                list(0, listmax) = refitem(inv[ci].id, 7);
+                list(0, listmax) = the_item_db[inv[ci].id]->level;
                 list(1, listmax) = inv[ci].quality;
                 listn(0, listmax) = std::to_string(a);
                 listn(1, listmax) = std::to_string(val);
@@ -34121,7 +34114,7 @@ void label_1728()
 
 void label_1729()
 {
-    a = refitem(inv[val].id, 5);
+    a = the_item_db[inv[val].id]->category;
     if (a == 60000)
     {
         gdata(77) += std::clamp(inv[val].value / 50, 50, 500);
@@ -41843,7 +41836,8 @@ int blendcheckmat(int prm_1044)
                                 }
                                 continue;
                             }
-                            if (refitem(inv[cnt].id, 5) == id_at_m181)
+                            if (the_item_db[inv[cnt].id]->category
+                                == id_at_m181)
                             {
                                 f_at_m181 = 1;
                                 break;
@@ -41940,7 +41934,7 @@ int blendmatnum(int prm_1045, int prm_1046)
                         }
                         continue;
                     }
-                    if (refitem(inv[cnt].id, 5) == prm_1045)
+                    if (the_item_db[inv[cnt].id]->category == prm_1045)
                     {
                         m_at_m182 += inv[cnt].number;
                         continue;
@@ -42005,7 +41999,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                             continue;
                         }
                     }
-                    reftype_at_m183 = refitem(inv[cnt].id, 5);
+                    reftype_at_m183 = the_item_db[inv[cnt].id]->category;
                     if (rpdata(40 + prm_1048, rpid))
                     {
                         int stat = blendcheckext(cnt, prm_1048);
@@ -42353,7 +42347,7 @@ void window_recipe_(
                 val(0) = inv[prm_1050].enchantments[cnt2_at_m184].id;
                 val(1) = inv[prm_1050].enchantments[cnt2_at_m184].power;
                 val(2) = 0;
-                val(3) = refitem(inv[prm_1050].id, 5);
+                val(3) = the_item_db[inv[prm_1050].id]->category;
                 label_0247();
                 color(0, 0, 100);
                 if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
@@ -47769,8 +47763,8 @@ label_1998_internal:
                     txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
                     txtmore();
                 }
-                if (refitem(inv[ci].id, 5) == 52000
-                    || refitem(inv[ci].id, 5) == 53000)
+                if (the_item_db[inv[ci].id]->category == 52000
+                    || the_item_db[inv[ci].id]->category == 53000)
                 {
                     inv[ci].number = 3 + rnd(2);
                     if (inv[ci].id == 559)
@@ -51434,7 +51428,7 @@ void label_2048()
         mes(s(1));
     }
     attackrange = 0;
-    if (refitem(inv[cw].id, 5) == 24000)
+    if (the_item_db[inv[cw].id]->category == 24000)
     {
         attackrange = 1;
     }
@@ -52321,7 +52315,7 @@ void label_2068()
     listmax = 0;
     p = 0;
     s = "";
-    reftype = refitem(inv[ci].id, 5);
+    reftype = the_item_db[inv[ci].id]->category;
     getinheritance(ci, inhlist, inhmax);
     dbid = inv[ci].id;
     access_item_db(2);
@@ -54274,7 +54268,8 @@ void label_2092()
             {
                 lomiaseaster = 1;
             }
-            if (inv[cnt].id == 511 || refitem(inv[cnt].id, 9) == 53100)
+            if (inv[cnt].id == 511
+                || the_item_db[inv[cnt].id]->subcategory == 53100)
             {
                 continue;
             }
@@ -54290,7 +54285,7 @@ void label_2092()
             {
                 continue;
             }
-            if (refitem(inv[cnt].id, 5) == 25000)
+            if (the_item_db[inv[cnt].id]->category == 25000)
             {
                 inv[cnt].count = -1;
             }
@@ -57994,7 +57989,7 @@ void label_2151()
     {
         ci = cdata[0].continuous_action_item;
         if (inv[ci].param1 == 0 || inv[ci].number == 0
-            || refitem(inv[ci].id, 9) != 60004)
+            || the_item_db[inv[ci].id]->subcategory != 60004)
         {
             f = 1;
         }
@@ -58152,7 +58147,7 @@ void label_2153()
                 {
                     continue;
                 }
-                if (refitem(inv[cnt].id, 5) == 91000)
+                if (the_item_db[inv[cnt].id]->category == 91000)
                 {
                     f = 1;
                     ci = cnt;
@@ -60503,7 +60498,7 @@ void label_2189()
         label_2742();
         return;
     }
-    if (refitem(inv[ci].id, 5) == 52000 || inv[ci].id == 772)
+    if (the_item_db[inv[ci].id]->category == 52000 || inv[ci].id == 772)
     {
         if (inv[ci].id != 601)
         {
@@ -60776,7 +60771,7 @@ int label_2192()
                 }
             }
         }
-        if (refitem(inv[ci].id, 5) == 57000)
+        if (the_item_db[inv[ci].id]->category == 57000)
         {
             if (inv[ci].own_state == 4)
             {
@@ -60848,7 +60843,7 @@ int label_2192()
     {
         if (trait(215) != 0)
         {
-            if (refitem(inv[ci].id, 5) == 56000)
+            if (the_item_db[inv[ci].id]->category == 56000)
             {
                 if (inv[ci].count > 0)
                 {
@@ -60872,7 +60867,7 @@ int label_2192()
         }
         if (trait(216) != 0)
         {
-            if (refitem(inv[ci].id, 5) == 52000)
+            if (the_item_db[inv[ci].id]->category == 52000)
             {
                 if (inv[ci].id != 262 && inv[ci].id != 559)
                 {
@@ -60919,7 +60914,7 @@ int label_2192()
     inv[ci].number = inumbk;
     if (mode == 6)
     {
-        if (refitem(inv[ti].id, 5) == 57000)
+        if (the_item_db[inv[ti].id]->category == 57000)
         {
             if (invctrl == 11 || invctrl == 22)
             {
@@ -60935,7 +60930,7 @@ int label_2192()
                 {
                     inv[ti].param3 = gdata_hour + gdata_day * 24
                         + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-                        + refitem(inv[ti].id, 19);
+                        + the_item_db[inv[ti].id]->expiration_date;
                     if (inv[ti].param2 != 0)
                     {
                         inv[ti].param3 += 72;
@@ -60963,7 +60958,7 @@ int label_2192()
             snd(12);
             cdata[0].gold -= sellgold;
             cdata[tc].gold += sellgold;
-            if (refitem(inv[ti].id, 5) == 92000)
+            if (the_item_db[inv[ti].id]->category == 92000)
             {
                 inv[ti].param2 = calcitemvalue(ti, 0);
             }
@@ -64703,7 +64698,7 @@ void label_2224()
 
 void dipcursed(int prm_1078, int)
 {
-    if (refitem(inv[prm_1078].id, 5) == 57000)
+    if (the_item_db[inv[prm_1078].id]->category == 57000)
     {
         if (inv[prm_1078].material == 35)
         {
@@ -64723,7 +64718,7 @@ void dipcursed(int prm_1078, int)
             return;
         }
     }
-    if (refitem(inv[prm_1078].id, 5) < 50000)
+    if (the_item_db[inv[prm_1078].id]->category < 50000)
     {
         --inv[prm_1078].enhancement;
         txt(lang(
@@ -64766,9 +64761,9 @@ void label_2227()
         return;
     }
     snd(17);
-    if (refitem(inv[cidip].id, 5) == 52000)
+    if (the_item_db[inv[cidip].id]->category == 52000)
     {
-        if (refitem(inv[ci].id, 9) == 60001)
+        if (the_item_db[inv[ci].id]->subcategory == 60001)
         {
             item_separate(ci);
             item_num(cidip, -1);
@@ -64854,7 +64849,7 @@ void label_2227()
     }
     if (inv[cidip].id == 262)
     {
-        if (refitem(inv[ci].id, 5) == 57000)
+        if (the_item_db[inv[ci].id]->category == 57000)
         {
             item_num(cidip, -1);
             item_separate(ci);
@@ -64873,7 +64868,7 @@ void label_2227()
     }
     if (inv[cidip].id == 620)
     {
-        if (refitem(inv[ci].id, 5) == 57000)
+        if (the_item_db[inv[ci].id]->category == 57000)
         {
             item_num(cidip, -1);
             item_separate(ci);
@@ -65056,18 +65051,18 @@ void label_2228()
         item_separate(ci);
         --inv[ci].count;
     }
-    if (refitem(inv[ci].id, 9) == 58500)
+    if (the_item_db[inv[ci].id]->subcategory == 58500)
     {
         label_2232();
         return;
     }
-    if (refitem(inv[ci].id, 9) == 59500)
+    if (the_item_db[inv[ci].id]->subcategory == 59500)
     {
         blendtool = ci;
         label_1922();
         return;
     }
-    if (refitem(inv[ci].id, 9) == 60004)
+    if (the_item_db[inv[ci].id]->subcategory == 60004)
     {
         if (gdata_continuous_active_hours < 15)
         {
@@ -65126,7 +65121,7 @@ void label_2228()
                     u8"But you sense something weird."s));
             }
             txt(lang(u8"それは…"s, u8"It..."s));
-            reftype = refitem(inv[ci].id, 5);
+            reftype = the_item_db[inv[ci].id]->category;
             listmax = 0;
             {
                 int cnt = 0;
@@ -69789,7 +69784,7 @@ void label_2265()
                 inv[ci].number =
                     inv[ci].number * (100 + sdata(156, 0) * 10) / 100 + 1;
             }
-            p = refitem(inv[ci].id, 5);
+            p = the_item_db[inv[ci].id]->category;
             if (inv[ci].curse_state == -1 || inv[ci].curse_state == -2)
             {
                 inv[ci].number = 0;
@@ -69808,7 +69803,7 @@ void label_2265()
             }
             if (p == 57000)
             {
-                if (refitem(inv[ci].id, 9) == 58500)
+                if (the_item_db[inv[ci].id]->subcategory == 58500)
                 {
                     if (rnd(5))
                     {
@@ -69863,8 +69858,8 @@ void label_2265()
 
 void label_2266()
 {
-    p = refitem(inv[ci].id, 5);
-    i = refitem(inv[ci].id, 8);
+    p = the_item_db[inv[ci].id]->category;
+    i = the_item_db[inv[ci].id]->rarity / 1000;
     rtval = 1;
     {
         int cnt = 0;
@@ -72680,7 +72675,7 @@ void label_2662()
 
 void label_2663()
 {
-    a = refitem(inv[ci].id, 5);
+    a = the_item_db[inv[ci].id]->category;
     if (a == 57000 || a == 52000 || a == 53000)
     {
         cdata[rc].item_which_will_be_used = ci;
@@ -72741,7 +72736,7 @@ int label_2664()
     inv[ci].identification_state = 3;
     if (inv[ci].quality >= 4)
     {
-        if (refitem(inv[ci].id, 5) < 50000)
+        if (the_item_db[inv[ci].id]->category < 50000)
         {
             valn = itemname(ci);
             addnews(1, rc);
@@ -72935,11 +72930,11 @@ void label_2668()
                         {
                             if (haveweapon == 0)
                             {
-                                if (refitem(
-                                        inv[cdata_body_part(rc, cnt) % 10000
-                                            - 1]
-                                            .id,
-                                        5)
+                                if (the_item_db[inv[cdata_body_part(rc, cnt)
+                                                        % 10000
+                                                    - 1]
+                                                    .id]
+                                        ->category
                                     == 10000)
                                 {
                                     haveweapon = 1;
@@ -72995,7 +72990,7 @@ void label_2668()
             inv[ci].identification_state = 3;
             if (inv[ci].quality >= 4)
             {
-                if (refitem(inv[ci].id, 5) < 50000)
+                if (the_item_db[inv[ci].id]->category < 50000)
                 {
                     if (cdata[rc].character_role == 13)
                     {
@@ -74829,7 +74824,7 @@ label_2688_internal:
         cdata[cc].item_which_will_be_used = 0;
         goto label_2689_internal;
     }
-    a = refitem(inv[ci].id, 5);
+    a = the_item_db[inv[ci].id]->category;
     if (cdata[cc].relationship != 0)
     {
         cdata[cc].item_which_will_be_used = 0;
@@ -74888,7 +74883,7 @@ label_2689_internal:
                     if (stat == 1)
                     {
                         ci = rtval(1);
-                        p = refitem(inv[ci].id, 5);
+                        p = the_item_db[inv[ci].id]->category;
                         if (cdata[cc].nutrition <= 6000)
                         {
                             if (p == 57000)
@@ -75596,7 +75591,7 @@ void label_2693()
                         {
                             continue;
                         }
-                        a = refitem(inv[cnt].id, 5);
+                        a = the_item_db[inv[cnt].id]->category;
                         if (a == 77000)
                         {
                             p = inv[cnt].value * inv[cnt].number;
@@ -79334,7 +79329,7 @@ void pc_turn(bool label_2747_flg)
                 ci = rnd(invrange) + invhead;
                 if (inv[ci].number > 0)
                 {
-                    if (refitem(inv[ci].id, 5) == 52000)
+                    if (the_item_db[inv[ci].id]->category == 52000)
                     {
                         dbid = inv[ci].id;
                         access_item_db(15);
@@ -79632,24 +79627,25 @@ label_2747:
                 {
                     continue;
                 }
-                if (refitem(inv[cnt].id, 5) == 72000)
+                if (the_item_db[inv[cnt].id]->category == 72000)
                 {
                     p = 1;
                 }
-                if (refitem(inv[cnt].id, 9) == 60001)
+                if (the_item_db[inv[cnt].id]->subcategory == 60001)
                 {
                     p = 2;
                 }
-                if (refitem(inv[cnt].id, 5) == 60002)
+                if (the_item_db[inv[cnt].id]->category == 60002)
                 {
                     p(0) = 3;
                     p(1) = cnt;
                 }
-                if (inv[cnt].function != 0 || refitem(inv[cnt].id, 11) != 0)
+                if (inv[cnt].function != 0
+                    || the_item_db[inv[cnt].id]->is_usable != 0)
                 {
                     p = 4;
                 }
-                if (refitem(inv[cnt].id, 2) != 0)
+                if (the_item_db[inv[cnt].id]->is_readable != 0)
                 {
                     p = 5;
                 }

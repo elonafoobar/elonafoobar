@@ -902,7 +902,6 @@ int randomencp(int = 0);
 int randskill();
 int refchara(int = 0, int = 0);
 int refclass(int = 0, int = 0);
-int refitem(int = 0, int = 0);
 int refrace(const std::string&, int = 0);
 int relationbetween(int = 0, int = 0);
 int relocate_chara(int = 0, int = 0, int = 0);
