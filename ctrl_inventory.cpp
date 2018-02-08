@@ -1836,7 +1836,7 @@ label_2061_internal:
                 label_2666();
                 if (tc < 16)
                 {
-                    create_pcpic(tc, 1);
+                    create_pcpic(tc, true);
                 }
                 r1 = tc;
                 refresh_character();
@@ -2164,7 +2164,7 @@ label_2061_internal:
             label_2666();
             if (tc < 16)
             {
-                create_pcpic(tc, 1);
+                create_pcpic(tc, true);
             }
             r1 = tc;
             refresh_character();

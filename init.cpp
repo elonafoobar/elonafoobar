@@ -1682,7 +1682,7 @@ label_1563_internal:
     label_1535();
     label_1536();
     cdata[rc].portrait = cmportrait;
-    create_pcpic(0, 1);
+    create_pcpic(0, true);
     mode = 1;
     csctrl = 1;
     menucycle = 0;
@@ -2326,7 +2326,7 @@ void label_2732()
             }
         }
         label_2660();
-        create_pcpic(0, 1);
+        create_pcpic(0, true);
         cdatan(1, 0) = random_title();
         cdatan(0, 0) = randomname();
         mode = 2;

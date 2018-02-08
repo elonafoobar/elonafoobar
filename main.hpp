@@ -12,7 +12,6 @@ std::string calcage(int);
 void update_screen();
 void label_1567(int);
 
-inline int prm_409;
 inline int prm_518;
 inline int prm_818;
 inline int prm_820;

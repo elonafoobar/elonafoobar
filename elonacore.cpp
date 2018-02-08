@@ -205,8 +205,6 @@ std::string strbracketright;
 std::string strplat;
 int plat = 0;
 std::string nquestdate;
-int i_at_m38 = 0;
-int body_at_m38 = 0;
 elona_vector1<std::string> tname;
 elona_vector2<int> cardplayer_at_cardcontrol;
 int cardplayermax_at_cardcontrol = 0;
@@ -3481,614 +3479,156 @@ void finish_elona()
 
 
 
-void create_pcpic(int prm_409, int prm_410)
+void load_pcc_part(int cc, int body_part, const char* body_part_str)
 {
-    elona::prm_409 = prm_409;
-    buffer(10 + prm_409, 384, 198);
+    const auto filepath = fs::u8path(
+        "./graphic/pcc_"s + body_part_str + (pcc(body_part, cc) % 1000)
+        + u8".bmp");
+    if (!fs::exists(filepath))
+        return;
+
+    pos(128, 0);
+    picload(filepath, 1);
     color(0, 0, 0);
-    boxf();
-    if (pcc(15, prm_409) == 0)
-    {
-        pcc(15, prm_409) = cdata[prm_409].sex + 1;
-        pcc(14, prm_409) = cdata[prm_409].sex + 7;
-        pcc(1, prm_409) = 2 + rnd(21) * 1000;
-        pcc(9, prm_409) = 1 + rnd(21) * 1000;
-        pcc(7, prm_409) = 1 + rnd(21) * 1000;
-        pcc(16, prm_409) = 1;
-    }
-    if (prm_410 == 1)
-    {
-        pcc(4, prm_409) = 0;
-        pcc(2, prm_409) = 0;
-        pcc(6, prm_409) = 0;
-        pcc(3, prm_409) = 0;
-        pcc(8, prm_409) = 0;
-        pcc(5, prm_409) = 0;
-        for (int i = 0; i < 30; ++i)
-        {
-            if (cdata_body_part(prm_409, i) % 10000 != 0)
-            {
-                i_at_m38 = cdata_body_part(prm_409, i) % 10000 - 1;
-                body_at_m38 = iequiploc(i_at_m38);
-                set_pcc_depending_on_equipments();
-            }
-        }
-    }
-    pcc(10, prm_409) = pcc(1, prm_409) / 1000 * 1000 + pcc(10, prm_409) % 1000;
-    pcc(14, prm_409) = pcc(15, prm_409) / 1000 * 1000 + pcc(14, prm_409) % 1000;
-    if (prm_410 != 0)
-    {
-        if (pcc(24, prm_409) == 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_mantle_"s)
-                    + pcc(4, prm_409) % 1000 + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_mantle_"s)
-                        + pcc(4, prm_409) % 1000 + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(4, prm_409) / 1000),
-                    c_col(1, pcc(4, prm_409) / 1000),
-                    c_col(2, pcc(4, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_hairbk_"s) + pcc(1, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_hairbk_"s) + pcc(1, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(1, prm_409) / 1000),
-            c_col(1, pcc(1, prm_409) / 1000),
-            c_col(2, pcc(1, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (prm_409 == 0 && gdata_mount != 0 && pcc(16, prm_409) != 0)
-    {
-        if (fs::exists(
-                fs::u8path(u8"./graphic/pcc_ridebk_"s) + pcc(16, prm_409) % 1000
-                + u8".bmp"s))
-        {
-            pos(128, 0);
-            picload(
-                fs::u8path(u8"./graphic/pcc_ridebk_"s) + pcc(16, prm_409) % 1000
-                    + u8".bmp"s,
-                1);
-            color(0, 0, 0);
-            boxf(256, 0, 384, 198);
-            gmode(4, -1, -1, 256);
-            color(43, 133, 133);
-            pget(128, 0);
-            pos(256, 0);
-            gcopy(10 + prm_409, 128, 0, 128, 198);
-            pos(256, 0);
-            gfini(128, 198);
-            gfdec2(
-                c_col(0, pcc(16, prm_409) / 1000),
-                c_col(1, pcc(16, prm_409) / 1000),
-                c_col(2, pcc(16, prm_409) / 1000));
-            gmode(2);
-            color(0, 0, 0);
-            pos(0, 0);
-            gcopy(10 + prm_409, 256, 0, 128, 198);
-        }
-    }
-    else
-    {
-        if (fs::exists(
-                fs::u8path(u8"./graphic/pcc_body_"s) + pcc(15, prm_409) % 1000
-                + u8".bmp"s))
-        {
-            pos(128, 0);
-            picload(
-                fs::u8path(u8"./graphic/pcc_body_"s) + pcc(15, prm_409) % 1000
-                    + u8".bmp"s,
-                1);
-            color(0, 0, 0);
-            boxf(256, 0, 384, 198);
-            gmode(4, -1, -1, 256);
-            color(43, 133, 133);
-            pget(128, 0);
-            pos(256, 0);
-            gcopy(10 + prm_409, 128, 0, 128, 198);
-            pos(256, 0);
-            gfini(128, 198);
-            gfdec2(
-                c_col(0, pcc(15, prm_409) / 1000),
-                c_col(1, pcc(15, prm_409) / 1000),
-                c_col(2, pcc(15, prm_409) / 1000));
-            gmode(2);
-            color(0, 0, 0);
-            pos(0, 0);
-            gcopy(10 + prm_409, 256, 0, 128, 198);
-        }
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_eye_"s) + pcc(14, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_eye_"s) + pcc(14, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(14, prm_409) / 1000),
-            c_col(1, pcc(14, prm_409) / 1000),
-            c_col(2, pcc(14, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (prm_409 != 0 || gdata_mount == 0 || pcc(16, prm_409) == 0)
-    {
-        if (fs::exists(
-                fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
-                + u8".bmp"s))
-        {
-            pos(128, 0);
-            picload(
-                fs::u8path(u8"./graphic/pcc_pants_"s) + pcc(7, prm_409) % 1000
-                    + u8".bmp"s,
-                1);
-            color(0, 0, 0);
-            boxf(256, 0, 384, 198);
-            gmode(4, -1, -1, 256);
-            color(43, 133, 133);
-            pget(128, 0);
-            pos(256, 0);
-            gcopy(10 + prm_409, 128, 0, 128, 198);
-            pos(256, 0);
-            gfini(128, 198);
-            gfdec2(
-                c_col(0, pcc(7, prm_409) / 1000),
-                c_col(1, pcc(7, prm_409) / 1000),
-                c_col(2, pcc(7, prm_409) / 1000));
-            gmode(2);
-            color(0, 0, 0);
-            pos(0, 0);
-            gcopy(10 + prm_409, 256, 0, 128, 198);
-        }
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_cloth_"s) + pcc(9, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_cloth_"s) + pcc(9, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(9, prm_409) / 1000),
-            c_col(1, pcc(9, prm_409) / 1000),
-            c_col(2, pcc(9, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (prm_410 != 0)
-    {
-        if (pcc(20, prm_409) == 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_chest_"s)
-                    + pcc(2, prm_409) % 1000 + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_chest_"s)
-                        + pcc(2, prm_409) % 1000 + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(2, prm_409) / 1000),
-                    c_col(1, pcc(2, prm_409) / 1000),
-                    c_col(2, pcc(2, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-        if ((prm_409 != 0 || gdata_mount == 0 || pcc(16, prm_409) == 0)
-            && pcc(21, prm_409) == 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
-                    + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_leg_"s) + pcc(3, prm_409) % 1000
-                        + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(3, prm_409) / 1000),
-                    c_col(1, pcc(3, prm_409) / 1000),
-                    c_col(2, pcc(3, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-        if (pcc(22, prm_409) == 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_belt_"s)
-                    + pcc(5, prm_409) % 1000 + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_belt_"s)
-                        + pcc(5, prm_409) % 1000 + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(5, prm_409) / 1000),
-                    c_col(1, pcc(5, prm_409) / 1000),
-                    c_col(2, pcc(5, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-        if (pcc(23, prm_409) == 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_glove_"s)
-                    + pcc(8, prm_409) % 1000 + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_glove_"s)
-                        + pcc(8, prm_409) % 1000 + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(8, prm_409) / 1000),
-                    c_col(1, pcc(8, prm_409) / 1000),
-                    c_col(2, pcc(8, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-    }
-    if (prm_409 == 0)
-    {
-        if (gdata_mount != 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_ride_"s)
-                    + pcc(16, prm_409) % 1000 + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_ride_"s)
-                        + pcc(16, prm_409) % 1000 + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(16, prm_409) / 1000),
-                    c_col(1, pcc(16, prm_409) / 1000),
-                    c_col(2, pcc(16, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-    }
-    if (prm_410 != 0)
-    {
-        if (pcc(24, prm_409) == 0)
-        {
-            if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_mantlebk_"s)
-                    + pcc(4, prm_409) % 1000 + u8".bmp"s))
-            {
-                pos(128, 0);
-                picload(
-                    fs::u8path(u8"./graphic/pcc_mantlebk_"s)
-                        + pcc(4, prm_409) % 1000 + u8".bmp"s,
-                    1);
-                color(0, 0, 0);
-                boxf(256, 0, 384, 198);
-                gmode(4, -1, -1, 256);
-                color(43, 133, 133);
-                pget(128, 0);
-                pos(256, 0);
-                gcopy(10 + prm_409, 128, 0, 128, 198);
-                pos(256, 0);
-                gfini(128, 198);
-                gfdec2(
-                    c_col(0, pcc(4, prm_409) / 1000),
-                    c_col(1, pcc(4, prm_409) / 1000),
-                    c_col(2, pcc(4, prm_409) / 1000));
-                gmode(2);
-                color(0, 0, 0);
-                pos(0, 0);
-                gcopy(10 + prm_409, 256, 0, 128, 198);
-            }
-        }
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_hair_"s) + pcc(1, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_hair_"s) + pcc(1, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(1, prm_409) / 1000),
-            c_col(1, pcc(1, prm_409) / 1000),
-            c_col(2, pcc(1, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_subhair_"s) + pcc(10, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_subhair_"s) + pcc(10, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(10, prm_409) / 1000),
-            c_col(1, pcc(10, prm_409) / 1000),
-            c_col(2, pcc(10, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(11, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(11, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(11, prm_409) / 1000),
-            c_col(1, pcc(11, prm_409) / 1000),
-            c_col(2, pcc(11, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(12, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(12, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(12, prm_409) / 1000),
-            c_col(1, pcc(12, prm_409) / 1000),
-            c_col(2, pcc(12, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    if (fs::exists(
-            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(13, prm_409) % 1000
-            + u8".bmp"s))
-    {
-        pos(128, 0);
-        picload(
-            fs::u8path(u8"./graphic/pcc_etc_"s) + pcc(13, prm_409) % 1000
-                + u8".bmp"s,
-            1);
-        color(0, 0, 0);
-        boxf(256, 0, 384, 198);
-        gmode(4, -1, -1, 256);
-        color(43, 133, 133);
-        pget(128, 0);
-        pos(256, 0);
-        gcopy(10 + prm_409, 128, 0, 128, 198);
-        pos(256, 0);
-        gfini(128, 198);
-        gfdec2(
-            c_col(0, pcc(13, prm_409) / 1000),
-            c_col(1, pcc(13, prm_409) / 1000),
-            c_col(2, pcc(13, prm_409) / 1000));
-        gmode(2);
-        color(0, 0, 0);
-        pos(0, 0);
-        gcopy(10 + prm_409, 256, 0, 128, 198);
-    }
-    gsel(0);
-    return;
+    boxf(256, 0, 384, 198);
+    gmode(4, -1, -1, 256);
+    color(43, 133, 133);
+    pget(128, 0);
+    pos(256, 0);
+    gcopy(10 + cc, 128, 0, 128, 198);
+    pos(256, 0);
+    gfini(128, 198);
+    gfdec2(
+        c_col(0, pcc(body_part, cc) / 1000),
+        c_col(1, pcc(body_part, cc) / 1000),
+        c_col(2, pcc(body_part, cc) / 1000));
+    gmode(2);
+    color(0, 0, 0);
+    pos(0, 0);
+    gcopy(10 + cc, 256, 0, 128, 198);
 }
 
 
 
-void set_pcc_depending_on_equipments()
+void set_pcc_depending_on_equipments(int cc, int ci)
 {
-    int p_at_m38 = 0;
-    p_at_m38 = refitem(inv[i_at_m38].id, 18);
-    if (p_at_m38 == 0)
+    int item_appearance = refitem(inv[ci].id, 18);
+    if (item_appearance == 0)
     {
-        p_at_m38 = 1;
+        item_appearance = 1;
     }
-    if (body_at_m38 == 1)
+    switch (iequiploc(ci))
     {
-        return;
+    case 3: pcc(4, cc) = item_appearance + inv[ci].color * 1000; break;
+    case 4: pcc(2, cc) = item_appearance + inv[ci].color * 1000; break;
+    case 7: pcc(8, cc) = item_appearance + inv[ci].color * 1000; break;
+    case 8: pcc(5, cc) = item_appearance + inv[ci].color * 1000; break;
+    case 9: pcc(3, cc) = item_appearance + inv[ci].color * 1000; break;
+    default: break;
     }
-    if (body_at_m38 == 3)
+}
+
+
+
+void create_pcpic(int cc, bool prm_410)
+{
+    buffer(10 + cc, 384, 198);
+    color(0, 0, 0);
+    boxf();
+
+    if (pcc(15, cc) == 0)
     {
-        pcc(4, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
-        return;
+        pcc(15, cc) = cdata[cc].sex + 1;
+        pcc(14, cc) = cdata[cc].sex + 7;
+        pcc(1, cc) = 2 + rnd(21) * 1000;
+        pcc(9, cc) = 1 + rnd(21) * 1000;
+        pcc(7, cc) = 1 + rnd(21) * 1000;
+        pcc(16, cc) = 1;
     }
-    if (body_at_m38 == 4)
+
+    if (prm_410)
     {
-        pcc(2, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
-        return;
+        pcc(4, cc) = 0;
+        pcc(2, cc) = 0;
+        pcc(6, cc) = 0;
+        pcc(3, cc) = 0;
+        pcc(8, cc) = 0;
+        pcc(5, cc) = 0;
+        for (int i = 0; i < 30; ++i)
+        {
+            if (cdata_body_part(cc, i) % 10000 != 0)
+            {
+                set_pcc_depending_on_equipments(
+                    cc, cdata_body_part(cc, i) % 10000 - 1);
+            }
+        }
     }
-    if (body_at_m38 == 9)
+
+    pcc(10, cc) = pcc(1, cc) / 1000 * 1000 + pcc(10, cc) % 1000;
+    pcc(14, cc) = pcc(15, cc) / 1000 * 1000 + pcc(14, cc) % 1000;
+    if (prm_410)
     {
-        pcc(3, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
-        return;
+        if (pcc(24, cc) == 0)
+        {
+            load_pcc_part(cc, 4, u8"mantle_");
+        }
     }
-    if (body_at_m38 == 7)
+    load_pcc_part(cc, 1, u8"hairbk_");
+    if (cc == 0 && gdata_mount != 0 && pcc(16, cc) != 0)
     {
-        pcc(8, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
-        return;
+        load_pcc_part(cc, 16, u8"ridebk_");
     }
-    if (body_at_m38 == 8)
+    else
     {
-        pcc(5, prm_409) = p_at_m38 + inv[i_at_m38].color * 1000;
-        return;
+        load_pcc_part(cc, 15, u8"body_");
     }
-    return;
+    load_pcc_part(cc, 14, u8"eye_");
+    if (cc != 0 || gdata_mount == 0 || pcc(16, cc) == 0)
+    {
+        load_pcc_part(cc, 7, u8"pants_");
+    }
+    load_pcc_part(cc, 9, u8"cloth_");
+    if (prm_410)
+    {
+        if (pcc(20, cc) == 0)
+        {
+            load_pcc_part(cc, 2, u8"chest_");
+        }
+        if ((cc != 0 || gdata_mount == 0 || pcc(16, cc) == 0)
+            && pcc(21, cc) == 0)
+        {
+            load_pcc_part(cc, 3, u8"leg_");
+        }
+        if (pcc(22, cc) == 0)
+        {
+            load_pcc_part(cc, 5, u8"belt_");
+        }
+        if (pcc(23, cc) == 0)
+        {
+            load_pcc_part(cc, 8, u8"glove_");
+        }
+    }
+    if (cc == 0)
+    {
+        if (gdata_mount != 0)
+        {
+            load_pcc_part(cc, 16, u8"ride_");
+        }
+    }
+    if (prm_410)
+    {
+        if (pcc(24, cc) == 0)
+        {
+            load_pcc_part(cc, 4, u8"mantlebk_");
+        }
+    }
+    load_pcc_part(cc, 1, u8"hair_");
+    load_pcc_part(cc, 10, u8"subhair_");
+    load_pcc_part(cc, 11, u8"etc_");
+    load_pcc_part(cc, 12, u8"etc_");
+    load_pcc_part(cc, 13, u8"etc_");
+
+    gsel(0);
 }
 
 
@@ -13755,7 +13295,7 @@ void ride_begin(int prm_772)
     cbitmod(975, prm_772, 1);
     map(cdata[prm_772].position.x, cdata[prm_772].position.y, 1) = 0;
     gdata_mount = prm_772;
-    create_pcpic(0, 1);
+    create_pcpic(0, true);
     rowactend(gdata_mount);
     refreshspeed(gdata_mount);
     txt(""s + cdata[prm_772].current_speed + u8") "s);
@@ -13782,7 +13322,7 @@ void ride_end()
     rowactend(gdata_mount);
     p_at_m121 = gdata_mount;
     gdata_mount = 0;
-    create_pcpic(0, 1);
+    create_pcpic(0, true);
     refreshspeed(p_at_m121);
     return;
 }
@@ -27007,7 +26547,7 @@ void label_1573()
             }
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-        create_pcpic(0, 1);
+        create_pcpic(0, true);
         return;
     }
     else
@@ -27016,7 +26556,7 @@ void label_1573()
         {
             if (cbit(967, rc) == 1)
             {
-                create_pcpic(rc, 1);
+                create_pcpic(rc, true);
             }
         }
         if (cdata[rc].relationship == 10)
@@ -45693,7 +45233,7 @@ label_1936_internal:
     item_stack(0, ci);
     if (inv[ci].body_part != 0)
     {
-        create_pcpic(0, 1);
+        create_pcpic(0, true);
     }
     if (inv_getowner(ci) == -1)
     {
@@ -53030,7 +52570,7 @@ void label_2038()
 
 int label_2039()
 {
-    create_pcpic(cc, 0);
+    create_pcpic(cc, false);
     page = 0;
     pagesize = 19;
     cs = 0;
@@ -53266,7 +52806,7 @@ label_2041_internal:
     {
         if (key == key_enter)
         {
-            create_pcpic(cc, 1);
+            create_pcpic(cc, true);
             return 1;
         }
         if (key == key_pageup || key == key_pagedown)
@@ -53360,10 +52900,10 @@ label_2041_internal:
             p = 1;
         }
     }
-    create_pcpic(cc, 0);
+    create_pcpic(cc, false);
     if (key == key_cancel)
     {
-        create_pcpic(cc, 1);
+        create_pcpic(cc, true);
         return 0;
     }
     if (mode == 1)
@@ -53380,7 +52920,7 @@ label_2041_internal:
 
 int label_2044()
 {
-    create_pcpic(cc, 1);
+    create_pcpic(cc, true);
     snd(26);
     page = 0;
     pagesize = 18;
@@ -53510,14 +53050,14 @@ label_2045_internal:
             {
                 pcc(20 + cs - 1, cc) = 0;
             }
-            create_pcpic(cc, 1);
+            create_pcpic(cc, true);
             snd(5);
         }
     }
     if (cs == 0 && key == key_enter || key == key_cancel)
     {
         snd(20);
-        create_pcpic(cc, 1);
+        create_pcpic(cc, true);
         return 1;
     }
     goto label_2045_internal;
@@ -54123,7 +53663,7 @@ label_2052_internal:
     if (key == key_cancel)
     {
         menucycle = 0;
-        create_pcpic(cc, 1);
+        create_pcpic(cc, true);
         update_screen();
         pc_turn(false);
     }
@@ -57292,7 +56832,7 @@ void label_2112()
         {
             if (cbit(967, cnt) == 1 || cnt == 0)
             {
-                create_pcpic(cnt, 1);
+                create_pcpic(cnt, true);
             }
         }
     }
@@ -67145,7 +66685,7 @@ void label_2227()
         }
         if (inv[ci].body_part != 0)
         {
-            create_pcpic(cc, 1);
+            create_pcpic(cc, true);
         }
         label_2742();
         return;
