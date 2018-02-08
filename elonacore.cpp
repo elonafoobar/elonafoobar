@@ -16858,9 +16858,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         name(prm_853) + u8"は回復した。"s,
                         name(prm_853) + u8" "s + is(prm_853) + u8" healed."s));
                     cdata[prm_853].hp = cdata[prm_853].max_hp / 2;
-                    animeid = 19;
                     animode = 100 + prm_853;
-                    play_animation();
+                    play_animation(19);
                     snd(120);
                     break;
                 }
@@ -40050,9 +40049,8 @@ void switch_religion()
     }
     else
     {
-        animeid = 19;
         animode = 100;
-        play_animation();
+        play_animation(19);
         snd(51);
         txtef(5);
         txt(lang(
@@ -40118,9 +40116,8 @@ void pray()
         label_2742();
         return;
     }
-    animeid = 19;
     animode = 100;
-    play_animation();
+    play_animation(19);
     snd(120);
     efid = 1120;
     efp = 100;
@@ -40380,8 +40377,7 @@ void offer()
             + u8" on the altar and mutter the name of "s + godname(cdata[0].god)
             + u8"."s));
     snd(121);
-    animeid = 7;
-    play_animation();
+    play_animation(7);
     int stat = item_find(60002);
     if (stat != -1)
     {
@@ -40436,9 +40432,8 @@ void offer()
         {
             modpiety(i * 5);
             cdata[0].praying_point += i * 30;
-            animeid = 19;
             animode = 100;
-            play_animation();
+            play_animation(19);
             snd(120);
             if (inv[ti].param1 != 0)
             {
@@ -56582,10 +56577,9 @@ label_21451_internal:
                     txtef(9);
                     txt(lang(u8" *チュドーン！* "s, u8"*kabooom*"s));
                     aniref = 0;
-                    animeid = 2;
                     anix = movx;
                     aniy = movy;
-                    play_animation();
+                    play_animation(2);
                     cell_featset(movx, movy, 0);
                     dmghp(cc, 100 + rnd(200), -1);
                 }
@@ -56959,12 +56953,11 @@ void label_2146()
                                                 inv[ci].position.y);
                                             ccbk = cc;
                                             cc = tc;
-                                            animeid = 15;
                                             aniref(0) = inv[ci].image;
                                             aniref(1) = inv[ci].color;
                                             anix = inv[ci].position.x;
                                             aniy = inv[ci].position.y;
-                                            play_animation();
+                                            play_animation(15);
                                             cc = ccbk;
                                             ++inv[ci].number;
                                             cell_refresh(
@@ -58777,9 +58770,8 @@ void label_2159()
             x = refx;
             y = refy;
             snd(45);
-            animeid = 14;
             aniref = 5;
-            play_animation();
+            play_animation(14);
             txt(lang(
                 u8"壁を掘り終えた。"s, u8"You finished digging the wall."s));
             if (gdata_tutorial_flag == 2 && gdata_current_map == 7)
@@ -59471,8 +59463,7 @@ int label_2168()
             txt(lang(
                 name(cc) + u8"は詠唱に失敗した。"s,
                 name(cc) + u8" fail"s + _s(cc) + u8" to cast a spell."s));
-            animeid = 8;
-            play_animation();
+            play_animation(8);
         }
         efsource = 0;
         return 1;
@@ -60419,12 +60410,11 @@ void label_2189()
             }
         }
     }
-    animeid = 15;
     aniref(0) = inv[ci].image;
     aniref(1) = inv[ci].color;
     anix = tlocx;
     aniy = tlocy;
-    play_animation();
+    play_animation(15);
     ti = inv_getfreeid(-1);
     removeitem(ci, 1);
     if (inv[ci].id == 685)
@@ -60442,10 +60432,9 @@ void label_2189()
     {
         refresh_burden_state();
     }
-    animeid = 14;
     x = tlocx;
     y = tlocy;
-    play_animation();
+    play_animation(14);
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
@@ -61498,8 +61487,7 @@ void label_2201()
                     name(cc) + u8"は壷を割った。"s,
                     name(cc) + u8" shatter"s + _s(cc) + u8" the pot."s));
                 snd(45);
-                animeid = 14;
-                play_animation();
+                play_animation(14);
             }
             label_2742();
             return;
@@ -63709,9 +63697,8 @@ label_22191_internal:
     }
     if (attackrange == 1)
     {
-        animeid = attackskill;
         aniref = cw;
-        play_animation();
+        play_animation(attackskill);
     }
     if (attacknum > 1 || cc != 0)
     {
@@ -63727,9 +63714,8 @@ label_22191_internal:
         {
             if (cfg_attackanime)
             {
-                animeid = 12;
                 aniref = dmg * 100 / cdata[tc].max_hp;
-                play_animation();
+                play_animation(12);
             }
         }
         if (critical)
@@ -66181,9 +66167,8 @@ void label_2228()
                 + u8"の遺伝子を受けついだ！"s,
             ""s + cdatan(0, rc) + u8" has inherited "s + cdatan(0, tc)
                 + u8"'s gene!"s));
-        animeid = 20;
         anic = rc;
-        play_animation();
+        play_animation(20);
         {
             int stat = label_2231();
             if (stat != -1)
@@ -67150,12 +67135,11 @@ void label_2244()
                         snd(91);
                         ccbk = cc;
                         cc = tc;
-                        animeid = 15;
                         aniref(0) = 223;
                         aniref(1) = 0;
                         anix = tlocx;
                         aniy = tlocy;
-                        play_animation();
+                        play_animation(15);
                         cc = ccbk;
                         addmef(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
                         mapitem_fire(tlocx, tlocy);
@@ -75787,8 +75771,7 @@ void label_2693()
                                     {
                                         map(x, y, 0) = tile_tunnel;
                                         snd(45);
-                                        animeid = 14;
-                                        play_animation();
+                                        play_animation(14);
                                         spillfrag(x, y, 2);
                                         if (synccheck(cc, -1))
                                         {

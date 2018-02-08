@@ -271,7 +271,6 @@ inline int allyctrl;
 inline int am;
 inline int ammo;
 inline int ammoproc;
-inline int animeid;
 inline int animode;
 inline int aniy;
 inline int area;

@@ -53,7 +53,7 @@ void play_animation_8(int anicol)
 }
 
 
-void play_animation_6_5_7_11(int anicol)
+void play_animation_6_5_7_11(int animeid, int anicol)
 {
     if (synccheck(tc, -1) == 0)
         return;
@@ -200,7 +200,7 @@ void play_animation_3(int anicol, int anisound)
 }
 
 
-void play_animation_17_2(int anicol, int anisound)
+void play_animation_17_2(int animeid, int anicol, int anisound)
 {
     snd(34);
     gsel(7);
@@ -466,7 +466,7 @@ void play_animation_15(int anicol)
 
 
 
-void play_animation_ranged_attack(int anicol, int anisound)
+void play_animation_ranged_attack(int animeid, int anicol, int anisound)
 {
     if (synccheck(cc, -1) == 0)
     {
@@ -1073,7 +1073,7 @@ void play_animation_21(int anicol)
 
 
 
-void play_animation_14_16(int anicol)
+void play_animation_14_16(int animeid, int anicol)
 {
     aniref = 4;
     ax = (sx - scx) * inf_tiles + inf_screenx;
@@ -1145,7 +1145,7 @@ namespace elona
 
 
 
-void play_animation()
+void play_animation(int animeid)
 {
     if (mode == 9)
         return;
@@ -1174,10 +1174,10 @@ void play_animation()
     case 6:
     case 5:
     case 7:
-    case 11: play_animation_6_5_7_11(anicol); break;
+    case 11: play_animation_6_5_7_11(animeid, anicol); break;
     case 3: play_animation_3(anicol, anisound); break;
     case 17:
-    case 2: play_animation_17_2(anicol, anisound); break;
+    case 2: play_animation_17_2(animeid, anicol, anisound); break;
     case 0: play_animation_0(anicol, anisound); break;
     case 15: play_animation_15(anicol); break;
     case 111:
@@ -1185,7 +1185,7 @@ void play_animation()
     case 108:
     case 109:
     case 1:
-    case 18: play_animation_ranged_attack(anicol, anisound); break;
+    case 18: play_animation_ranged_attack(animeid, anicol, anisound); break;
     case 9: play_animation_9(anicol); break;
     case 12: play_animation_12(anicol); break;
     case 20: play_animation_20(anicol); break;
@@ -1193,7 +1193,7 @@ void play_animation()
     case 22: play_animation_22(anicol); break;
     case 21: play_animation_21(anicol); break;
     case 14:
-    case 16: play_animation_14_16(anicol); break;
+    case 16: play_animation_14_16(animeid, anicol); break;
     default: break;
     }
 
