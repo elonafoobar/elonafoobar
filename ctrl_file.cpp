@@ -4,6 +4,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
+#include "putit.hpp"
 #include "variables.hpp"
 
 
@@ -76,15 +77,21 @@ void fmode_8_7(int fmode, const fs::path& file)
         {
             if (!read)
             {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(cdata, hgz, fsize);
-                zClose(hgz);
+                std::ofstream out{filepath};
+                putit::binary_oarchive ar{out};
+                for (int cc = 0; cc < 57; ++cc)
+                {
+                    ar.save(cdata[cc]);
+                }
             }
-            if (read)
+            else
             {
-                zOpen(hgz, filepath, 0);
-                zRead(cdata, hgz, fsize);
-                zClose(hgz);
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int cc = 0; cc < 57; ++cc)
+                {
+                    ar.load(cdata[cc]);
+                }
             }
         }
         if (i == 2)
@@ -121,15 +128,21 @@ void fmode_8_7(int fmode, const fs::path& file)
         {
             if (!read)
             {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(inv, hgz, fsize);
-                zClose(hgz);
+                std::ofstream out{filepath};
+                putit::binary_oarchive ar{out};
+                for (int ci = 0; ci < 1320; ++ci)
+                {
+                    ar.save(inv[ci]);
+                }
             }
             if (read)
             {
-                zOpen(hgz, filepath, 0);
-                zRead(inv, hgz, fsize);
-                zClose(hgz);
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int ci = 0; ci < 1320; ++ci)
+                {
+                    ar.load(inv[ci]);
+                }
             }
         }
         if (i == 5)
@@ -389,7 +402,31 @@ void fmode_14_15(int fmode, const fs::path& file)
             if (cnt == 1)
             {
                 filepath += u8"g_cdata.s1"s;
-                fsize = 114000;
+                if (read)
+                {
+                    if (!fs::exists(filepath))
+                        continue;
+                }
+                if (!read)
+                {
+                    fileadd(filepath);
+                    std::ofstream out{filepath};
+                    putit::binary_oarchive ar{out};
+                    for (int cc = 0; cc < 57; ++cc)
+                    {
+                        ar.save(cdata[cc]);
+                    }
+                }
+                else
+                {
+                    std::ifstream in{filepath};
+                    putit::binary_iarchive ar{in};
+                    for (int cc = 0; cc < 57; ++cc)
+                    {
+                        ar.load(cdata[cc]);
+                    }
+                }
+                continue;
             }
             if (cnt == 2)
             {
@@ -404,7 +441,31 @@ void fmode_14_15(int fmode, const fs::path& file)
             if (cnt == 4)
             {
                 filepath += u8"g_inv.s1"s;
-                fsize = 369600;
+                if (read)
+                {
+                    if (!fs::exists(filepath))
+                        continue;
+                }
+                if (!read)
+                {
+                    fileadd(filepath);
+                    std::ofstream out{filepath};
+                    putit::binary_oarchive ar{out};
+                    for (int ci = 0; ci < 1320; ++ci)
+                    {
+                        ar.save(inv[ci]);
+                    }
+                }
+                else
+                {
+                    std::ifstream in{filepath};
+                    putit::binary_iarchive ar{in};
+                    for (int ci = 0; ci < 1320; ++ci)
+                    {
+                        ar.load(inv[ci]);
+                    }
+                }
+                continue;
             }
             if (cnt == 5)
             {
@@ -442,17 +503,6 @@ void fmode_14_15(int fmode, const fs::path& file)
             {
                 zOpen(hgz, filepath, 0);
             }
-            if (cnt == 1)
-            {
-                if (!read)
-                {
-                    zWrite(cdata, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(cdata, hgz, fsize);
-                }
-            }
             if (cnt == 2)
             {
                 if (!read)
@@ -473,17 +523,6 @@ void fmode_14_15(int fmode, const fs::path& file)
                 if (read)
                 {
                     zRead(spell, hgz, fsize);
-                }
-            }
-            if (cnt == 4)
-            {
-                if (!read)
-                {
-                    zWrite(inv, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(inv, hgz, fsize);
                 }
             }
             if (cnt == 5)
@@ -566,7 +605,26 @@ void fmode_2_1(int fmode, const fs::path& file)
             if (cnt == 2)
             {
                 filepath += u8"cdata_"s + mid + u8".s2"s;
-                fsize = 376000;
+                if (!read)
+                {
+                    fileadd(filepath);
+                    std::ofstream out{filepath};
+                    putit::binary_oarchive ar{out};
+                    for (int cc = 57; cc < 245; ++cc)
+                    {
+                        ar.save(cdata[cc]);
+                    }
+                }
+                else
+                {
+                    std::ifstream in{filepath};
+                    putit::binary_iarchive ar{in};
+                    for (int cc = 57; cc < 245; ++cc)
+                    {
+                        ar.load(cdata[cc]);
+                    }
+                }
+                continue;
             }
             if (cnt == 3)
             {
@@ -622,17 +680,6 @@ void fmode_2_1(int fmode, const fs::path& file)
                 if (read)
                 {
                     zRead(map, hgz, fsize);
-                }
-            }
-            if (cnt == 2)
-            {
-                if (!read)
-                {
-                    zWrite(cdata, hgz, fsize, 57);
-                }
-                if (read)
-                {
-                    zRead(cdata, hgz, fsize, 57);
                 }
             }
             if (cnt == 3)
@@ -695,7 +742,25 @@ void fmode_20_19(int fmode, const fs::path& file)
             if (cnt == 2)
             {
                 filepath += u8"m3_"s + id + u8".t"s;
-                fsize = 1164800;
+                if (!read)
+                {
+                    std::ofstream out{filepath};
+                    putit::binary_oarchive ar{out};
+                    for (int ci = 1320; ci < 5480; ++ci)
+                    {
+                        ar.save(inv[ci]);
+                    }
+                }
+                if (read)
+                {
+                    std::ifstream in{filepath};
+                    putit::binary_iarchive ar{in};
+                    for (int ci = 1320; ci < 5480; ++ci)
+                    {
+                        ar.load(inv[ci]);
+                    }
+                }
+                continue;
             }
             if (!read)
             {
@@ -725,17 +790,6 @@ void fmode_20_19(int fmode, const fs::path& file)
                 if (read)
                 {
                     zRead(map, hgz, fsize);
-                }
-            }
-            if (cnt == 2)
-            {
-                if (!read)
-                {
-                    zWrite(inv, hgz, fsize, 1320);
-                }
-                if (read)
-                {
-                    zRead(inv, hgz, fsize, 1320);
                 }
             }
             zClose(hgz);
@@ -813,7 +867,19 @@ void fmode_22_21(int fmode, const fs::path& file)
                     if (cnt == 0)
                     {
                         filepath += u8"c1_"s + id + u8".t"s;
-                        fsize = 2000;
+                        if (!read)
+                        {
+                            std::ofstream out{filepath};
+                            putit::binary_oarchive ar{out};
+                            ar.save(cdata[tg]);
+                        }
+                        else
+                        {
+                            std::ifstream in{filepath};
+                            putit::binary_iarchive ar{in};
+                            ar.load(cdata[tg]);
+                        }
+                        continue;
                     }
                     if (cnt == 1)
                     {
@@ -824,7 +890,27 @@ void fmode_22_21(int fmode, const fs::path& file)
                     {
                         filepath += u8"c3_"s + id + u8".t"s;
                         inv_getheader(tg);
-                        fsize = 280 * invrange;
+                        if (!read)
+                        {
+                            std::ofstream out{filepath};
+                            putit::binary_oarchive ar{out};
+                            for (int ci = invhead; ci < invhead + invrange;
+                                 ++ci)
+                            {
+                                ar.save(inv[ci]);
+                            }
+                        }
+                        else
+                        {
+                            std::ifstream in{filepath};
+                            putit::binary_iarchive ar{in};
+                            for (int ci = invhead; ci < invhead + invrange;
+                                 ++ci)
+                            {
+                                ar.load(inv[ci]);
+                            }
+                        }
+                        continue;
                     }
                     if (!read)
                     {
@@ -833,17 +919,6 @@ void fmode_22_21(int fmode, const fs::path& file)
                     if (read)
                     {
                         zOpen(hgz, filepath, 0);
-                    }
-                    if (cnt == 0)
-                    {
-                        if (!read)
-                        {
-                            zWrite(cdata, hgz, fsize, tg);
-                        }
-                        if (read)
-                        {
-                            zRead(cdata, hgz, fsize, tg);
-                        }
                     }
                     if (cnt == 1)
                     {
@@ -854,17 +929,6 @@ void fmode_22_21(int fmode, const fs::path& file)
                         if (read)
                         {
                             zRead(sdata, hgz, fsize, tg);
-                        }
-                    }
-                    if (cnt == 2)
-                    {
-                        if (!read)
-                        {
-                            zWrite(inv, hgz, fsize, invhead);
-                        }
-                        if (read)
-                        {
-                            zRead(inv, hgz, fsize, invhead);
                         }
                     }
                     zClose(hgz);
@@ -1088,16 +1152,22 @@ void fmode_4_3(int fmode, const fs::path& file)
     const auto path = fs::u8path(u8"./tmp") / file;
     if (fmode == 4)
     {
-        zOpen(hgz, path, 1, 3);
         fileadd(path);
-        zWrite(inv, hgz, 1164800, 1320);
-        zClose(hgz);
+        std::ofstream out{path};
+        putit::binary_oarchive ar{out};
+        for (int ci = 1320; ci < 5480; ++ci)
+        {
+            ar.save(inv[ci]);
+        }
     }
     else
     {
-        zOpen(hgz, path, 0);
-        zRead(inv, hgz, 1164800, 1320);
-        zClose(hgz);
+        std::ifstream in{path};
+        putit::binary_iarchive ar{in};
+        for (int ci = 1320; ci < 5480; ++ci)
+        {
+            ar.load(inv[ci]);
+        }
     }
 }
 
@@ -1139,7 +1209,26 @@ void fmode_18_17(int fmode, const fs::path& file)
             if (cnt == 0)
             {
                 filepath += u8"cdata_"s + mid + u8".s2"s;
-                fsize = 376000;
+                if (!read)
+                {
+                    fileadd(filepath);
+                    std::ofstream out{filepath};
+                    putit::binary_oarchive ar{out};
+                    for (int cc = 57; cc < 245; ++cc)
+                    {
+                        ar.save(cdata[cc]);
+                    }
+                }
+                else
+                {
+                    std::ifstream in{filepath};
+                    putit::binary_iarchive ar{in};
+                    for (int cc = 57; cc < 245; ++cc)
+                    {
+                        ar.load(cdata[cc]);
+                    }
+                }
+                continue;
             }
             if (cnt == 1)
             {
@@ -1154,17 +1243,6 @@ void fmode_18_17(int fmode, const fs::path& file)
             if (read)
             {
                 zOpen(hgz, filepath, 0);
-            }
-            if (cnt == 0)
-            {
-                if (!read)
-                {
-                    zWrite(cdata, hgz, fsize, 57);
-                }
-                if (read)
-                {
-                    zRead(cdata, hgz, fsize, 57);
-                }
             }
             if (cnt == 1)
             {

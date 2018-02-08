@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include "position.hpp"
+#include "range.hpp"
 
 
 namespace elona
@@ -18,6 +19,14 @@ struct enc_t
     bool operator==(const enc_t& other) const noexcept
     {
         return id == other.id && power == other.power;
+    }
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(id);
+        ar(power);
     }
 };
 
@@ -66,6 +75,45 @@ struct item
     void clear();
 
     bool almost_euqals(const item& other, bool ignore_position);
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(number);
+        ar(value);
+        ar(image);
+        ar(id);
+        ar(quality);
+        ar(position);
+        ar(weight);
+        ar(identification_state);
+        ar(count);
+        ar(dice_x);
+        ar(dice_y);
+        ar(damage_bonus);
+        ar(hit_bonus);
+        ar(dv);
+        ar(pv);
+        ar(skill);
+        ar(curse_state);
+        ar(body_part);
+        ar(function);
+        ar(enhancement);
+        ar(own_state);
+        ar(color);
+        ar(subname);
+        ar(material);
+        ar(param1);
+        ar(param2);
+        ar(param3);
+        ar(param4);
+        ar(difficulty_of_identification);
+        ar(turn);
+        ar(flags);
+        range::for_each(
+            enchantments, [&](auto&& enchantment) { ar(enchantment); });
+    }
 };
 
 
@@ -85,12 +133,6 @@ struct inventory
     {
         return storage[index];
     }
-
-
-    std::unique_ptr<char[]> serialize(int offset = 0) const;
-
-    void
-    deserialize(std::unique_ptr<char[]> raw_data, int size, int offset = 0);
 
 
 private:
