@@ -58,8 +58,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -80,8 +79,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -105,8 +103,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 1;
             cpicref += 0;
             return 0;
@@ -128,8 +125,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -203,8 +199,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 140;
             cpicref += 0;
             return 0;
@@ -233,8 +228,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -264,8 +258,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 443;
             cpicref += 0;
             return 0;
@@ -291,8 +284,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -402,8 +394,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 144;
             cpicref += 0;
             return 0;
@@ -433,8 +424,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -490,8 +480,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 15;
             cpicref += 0;
             return 0;
@@ -518,8 +507,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -576,8 +564,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 41;
             cpicref += 0;
             return 0;
@@ -604,8 +591,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -680,8 +666,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 69;
             cpicref += 0;
             return 0;
@@ -708,8 +693,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -830,8 +814,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 163;
             cpicref += 0;
             return 0;
@@ -861,8 +844,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -915,8 +897,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 142;
             cpicref += 0;
             return 0;
@@ -943,8 +924,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -1010,8 +990,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 7;
             cpicref += 0;
             return 0;
@@ -1038,8 +1017,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -1106,8 +1084,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 415;
             cpicref += 0;
             return 0;
@@ -1134,8 +1111,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -1217,8 +1193,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 363;
             cpicref += 0;
             return 0;
@@ -1246,8 +1221,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -1329,8 +1303,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 25;
             cpicref += 0;
             return 0;
@@ -1358,8 +1331,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -1439,8 +1411,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 74;
             cpicref += 0;
             return 0;
@@ -1471,8 +1442,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -1564,8 +1534,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"elea";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 297;
             cpicref += 0;
             return 0;
@@ -1596,8 +1565,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -1694,8 +1662,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 347;
             cpicref += 0;
             return 0;
@@ -1721,8 +1688,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -1800,8 +1766,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 331;
             cpicref += 0;
             return 0;
@@ -1828,8 +1793,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -1862,8 +1826,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 332;
             cpicref += 0;
             return 0;
@@ -1886,8 +1849,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -1915,8 +1877,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 333;
             cpicref += 0;
             return 0;
@@ -1939,8 +1900,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -2041,8 +2001,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 334;
             cpicref += 0;
             return 0;
@@ -2069,8 +2028,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -2173,8 +2131,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 337;
             cpicref += 0;
             return 0;
@@ -2202,8 +2159,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -2236,8 +2192,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 338;
             cpicref += 0;
             return 0;
@@ -2261,8 +2216,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -2359,8 +2313,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 8;
             cpicref += 0;
             return 0;
@@ -2387,8 +2340,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -2484,8 +2436,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 109;
             cpicref += 0;
             return 0;
@@ -2511,8 +2462,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -2615,8 +2565,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 478;
             cpicref += 0;
             return 0;
@@ -2643,8 +2592,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -2761,8 +2709,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 479;
             cpicref += 0;
             return 0;
@@ -2789,8 +2736,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -2879,8 +2825,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 344;
             cpicref += 0;
             return 0;
@@ -2907,8 +2852,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -3021,8 +2965,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"elea";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 345;
             cpicref += 0;
             return 0;
@@ -3051,8 +2994,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -3164,8 +3106,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"elea";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 346;
             cpicref += 0;
             return 0;
@@ -3194,8 +3135,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -3255,8 +3195,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 99;
             cpicref += 0;
             return 0;
@@ -3280,8 +3219,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -3331,8 +3269,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 99;
             cpicref += 0;
             return 0;
@@ -3357,8 +3294,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -3454,8 +3390,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 340;
             cpicref += 0;
             return 0;
@@ -3483,8 +3418,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -3520,8 +3454,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lich";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 339;
             cpicref += 0;
             return 0;
@@ -3550,8 +3483,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -3586,8 +3518,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 341;
             cpicref += 0;
             return 0;
@@ -3615,8 +3546,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -3651,8 +3581,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 343;
             cpicref += 0;
             return 0;
@@ -3680,8 +3609,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -3714,8 +3642,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 342;
             cpicref += 0;
             return 0;
@@ -3738,8 +3665,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(50, rc) = 500;
             cdata[rc].image = 342;
             cdata[rc].image += 0;
@@ -3768,8 +3694,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 393;
             cpicref += 0;
             return 0;
@@ -3793,8 +3718,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -3822,8 +3746,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 413;
             cpicref += 0;
             return 0;
@@ -3846,8 +3769,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -3875,8 +3797,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 413;
             cpicref += 0;
             return 0;
@@ -3903,8 +3824,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -3937,8 +3857,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 432;
             cpicref += 0;
             return 0;
@@ -3961,8 +3880,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -3996,8 +3914,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 433;
             cpicref += 0;
             return 0;
@@ -4020,8 +3937,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"farmer";
             dbmode = 3;
             access_class_info();
@@ -4054,8 +3970,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 447;
             cpicref += 0;
             return 0;
@@ -4078,8 +3993,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -4112,8 +4026,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"god";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 435;
             cpicref += 0;
             return 0;
@@ -4139,8 +4052,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"god";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -4193,8 +4105,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -4216,8 +4127,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -4262,8 +4172,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -4285,8 +4194,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(63, rc) = 500;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -4323,8 +4231,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 257;
             cpicref += 4000;
             return 0;
@@ -4347,8 +4254,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -4390,8 +4296,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 257;
             cpicref += 2000;
             return 0;
@@ -4415,8 +4320,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -4459,8 +4363,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 400;
             cpicref += 0;
             return 0;
@@ -4483,8 +4386,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(63, rc) = 500;
             cdata[rc].image = 400;
             cdata[rc].image += 0;
@@ -4522,8 +4424,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"slime";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 400;
             cpicref += 17000;
             return 0;
@@ -4546,8 +4447,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"slime";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(63, rc) = 500;
             cdata[rc].image = 400;
             cdata[rc].image += 17000;
@@ -4570,8 +4470,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"drake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 401;
             cpicref += 0;
             return 0;
@@ -4594,8 +4493,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"drake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 401;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -4617,8 +4515,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machine";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 282;
             cpicref += 0;
             return 0;
@@ -4641,8 +4538,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 282;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -4664,8 +4560,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"rabbit";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -4686,8 +4581,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -4726,8 +4620,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"snail";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -4749,8 +4642,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"snail";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -4843,8 +4735,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 37;
             cpicref += 0;
             return 0;
@@ -4869,8 +4760,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -4964,8 +4854,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 139;
             cpicref += 0;
             return 0;
@@ -4990,8 +4879,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -5089,8 +4977,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 102;
             cpicref += 0;
             return 0;
@@ -5119,8 +5006,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -5187,8 +5073,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 179;
             cpicref += 0;
             return 0;
@@ -5217,8 +5102,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -5277,8 +5161,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 410;
             cpicref += 0;
             return 0;
@@ -5308,8 +5191,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -5366,8 +5248,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 187;
             cpicref += 0;
             return 0;
@@ -5396,8 +5277,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -5486,8 +5366,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 148;
             cpicref += 0;
             return 0;
@@ -5516,8 +5395,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"pianist";
             dbmode = 3;
             access_class_info();
@@ -5562,8 +5440,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 181;
             cpicref += 0;
             return 0;
@@ -5591,8 +5468,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -5646,8 +5522,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 442;
             cpicref += 0;
             return 0;
@@ -5670,8 +5545,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -5723,8 +5597,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 473;
             cpicref += 0;
             return 0;
@@ -5747,8 +5620,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"pianist";
             dbmode = 3;
             access_class_info();
@@ -5800,8 +5672,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 285;
             cpicref += 0;
             return 0;
@@ -5829,8 +5700,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -5889,8 +5759,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 183;
             cpicref += 0;
             return 0;
@@ -5920,8 +5789,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -5980,8 +5848,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 418;
             cpicref += 0;
             return 0;
@@ -6010,8 +5877,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -6070,8 +5936,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 419;
             cpicref += 0;
             return 0;
@@ -6100,8 +5965,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -6162,8 +6026,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 185;
             cpicref += 0;
             return 0;
@@ -6192,8 +6055,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -6256,8 +6118,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 189;
             cpicref += 0;
             return 0;
@@ -6286,8 +6147,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -6348,8 +6208,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eulderna";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 195;
             cpicref += 0;
             return 0;
@@ -6381,8 +6240,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -6443,8 +6301,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 76;
             cpicref += 0;
             return 0;
@@ -6473,8 +6330,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -6535,8 +6391,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 78;
             cpicref += 0;
             return 0;
@@ -6565,8 +6420,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -6664,8 +6518,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 104;
             cpicref += 0;
             return 0;
@@ -6694,8 +6547,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -6792,8 +6644,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 106;
             cpicref += 0;
             return 0;
@@ -6822,8 +6673,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -6894,8 +6744,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 112;
             cpicref += 0;
             return 0;
@@ -6920,8 +6769,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -6950,8 +6798,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"sheep";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -6972,8 +6819,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"sheep";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -6997,8 +6843,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"frog";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -7019,8 +6864,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"frog";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -7086,8 +6930,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 31;
             cpicref += 0;
             return 0;
@@ -7116,8 +6959,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 31;
             if (cdata[rc].sex == 1)
             {
@@ -7148,8 +6990,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"kobolt";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -7170,8 +7011,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"kobolt";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -7195,8 +7035,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yeek";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -7217,8 +7056,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -7239,8 +7077,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yeek";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 6000;
             return 0;
         }
@@ -7261,8 +7098,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -7283,8 +7119,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yeek";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 2000;
             return 0;
         }
@@ -7305,8 +7140,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -7330,8 +7164,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yeek";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 8000;
             return 0;
         }
@@ -7356,8 +7189,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 8000;
             cspecialeq = 0;
             return 0;
@@ -7379,8 +7211,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yeek";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -7401,8 +7232,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -7455,8 +7285,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 385;
             cpicref += 0;
             return 0;
@@ -7481,8 +7310,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -7507,8 +7335,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"rock";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 386;
             cpicref += 0;
             return 0;
@@ -7531,8 +7358,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"rock";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -7642,8 +7468,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 411;
             cpicref += 0;
             return 0;
@@ -7669,8 +7494,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -7727,8 +7551,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yeek";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 381;
             cpicref += 0;
             return 0;
@@ -7759,8 +7582,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yeek";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -7824,8 +7646,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 379;
             cpicref += 0;
             return 0;
@@ -7854,8 +7675,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 379;
             if (cdata[rc].sex == 1)
             {
@@ -7886,8 +7706,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"centipede";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -7908,8 +7727,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -7930,8 +7748,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mushroom";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -7954,8 +7771,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -7981,8 +7797,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mushroom";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 399;
             cpicref += 0;
             return 0;
@@ -8005,8 +7820,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400150;
             cdata[rc].image = 399;
             cdata[rc].image += 0;
@@ -8029,8 +7843,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mushroom";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 399;
             cpicref += 8000;
             return 0;
@@ -8053,8 +7866,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mushroom";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5900250;
             cdata[rc].image = 399;
             cdata[rc].image += 8000;
@@ -8126,8 +7938,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 136;
             cpicref += 0;
             return 0;
@@ -8156,8 +7967,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -8235,8 +8045,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 134;
             cpicref += 0;
             return 0;
@@ -8265,8 +8074,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -8345,8 +8153,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 128;
             cpicref += 0;
             return 0;
@@ -8376,8 +8183,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -8456,8 +8262,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 127;
             cpicref += 0;
             return 0;
@@ -8487,8 +8292,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -8549,8 +8353,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 146;
             cpicref += 0;
             return 0;
@@ -8579,8 +8382,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -8636,8 +8438,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 120;
             cpicref += 0;
             return 0;
@@ -8664,8 +8465,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -8721,8 +8521,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 119;
             cpicref += 0;
             return 0;
@@ -8749,8 +8548,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -8832,8 +8630,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 117;
             cpicref += 0;
             return 0;
@@ -8861,8 +8658,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -8923,8 +8719,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 116;
             cpicref += 0;
             return 0;
@@ -8950,8 +8745,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -8978,8 +8772,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"orc";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -9000,8 +8793,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -9022,8 +8814,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lizardman";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9044,8 +8835,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lizardman";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9069,8 +8859,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"minotaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9091,8 +8880,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9117,8 +8905,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"minotaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 4000;
             return 0;
         }
@@ -9143,8 +8930,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"priest";
             dbmode = 3;
             access_class_info();
@@ -9169,8 +8955,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"minotaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -9191,8 +8976,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -9217,8 +9001,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"minotaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 8000;
             return 0;
         }
@@ -9239,8 +9022,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9273,8 +9055,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"minotaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 10000;
             return 0;
         }
@@ -9298,8 +9079,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"minotaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9335,8 +9115,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"troll";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9357,8 +9136,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"troll";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(50, rc) = 50;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -9380,8 +9158,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"elea";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9402,8 +9179,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9432,8 +9208,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"elea";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 47;
             cpicref += 0;
             return 0;
@@ -9458,8 +9233,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"elea";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -9488,8 +9262,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"asura";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9510,8 +9283,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"asura";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9540,8 +9312,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"asura";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 2000;
             return 0;
         }
@@ -9562,8 +9333,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"asura";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9592,8 +9362,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"asura";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -9614,8 +9383,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"asura";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9644,8 +9412,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 13;
             cpicref += 0;
             return 0;
@@ -9675,8 +9442,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -9705,8 +9471,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 21;
             cpicref += 0;
             return 0;
@@ -9732,8 +9497,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9767,8 +9531,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9789,8 +9552,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -9816,8 +9578,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"beetle";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9838,8 +9599,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"beetle";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -9863,8 +9623,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"orc";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9885,8 +9644,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9912,8 +9670,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"orc";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -9935,8 +9692,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -9966,8 +9722,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"zombie";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -9988,8 +9743,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10013,8 +9767,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -10035,8 +9788,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"bat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -10057,8 +9809,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -10080,8 +9831,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"bat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10106,8 +9856,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 4000;
             return 0;
         }
@@ -10128,8 +9877,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"bat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10161,8 +9909,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ent";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -10183,8 +9930,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10219,8 +9965,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ent";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -10241,8 +9986,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10274,8 +10018,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lich";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -10300,8 +10043,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -10330,8 +10072,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lich";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -10357,8 +10098,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -10387,8 +10127,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lich";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -10413,8 +10152,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -10438,8 +10176,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lich";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 404;
             cpicref += 0;
             return 0;
@@ -10465,8 +10202,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -10498,8 +10234,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"lich";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 404;
             cpicref += 4000;
             return 0;
@@ -10524,8 +10259,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"lich";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -10555,8 +10289,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 6000;
             return 0;
         }
@@ -10577,8 +10310,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10607,8 +10339,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -10630,8 +10361,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10657,8 +10387,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 12000;
             return 0;
         }
@@ -10680,8 +10409,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10708,8 +10436,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -10731,8 +10458,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10757,8 +10483,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 4000;
             return 0;
         }
@@ -10780,8 +10505,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10806,8 +10530,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 10000;
             return 0;
         }
@@ -10829,8 +10552,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10855,8 +10577,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 9000;
             return 0;
         }
@@ -10878,8 +10599,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10905,8 +10625,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 2000;
             return 0;
         }
@@ -10928,8 +10647,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -10954,8 +10672,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 11000;
             return 0;
         }
@@ -10977,8 +10694,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11003,8 +10719,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 15000;
             return 0;
         }
@@ -11026,8 +10741,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11052,8 +10766,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 18000;
             return 0;
         }
@@ -11075,8 +10788,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11106,8 +10818,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"rabbit";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 204;
             cpicref += 6000;
             return 0;
@@ -11129,8 +10840,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11160,8 +10870,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"rabbit";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 204;
             cpicref += 3000;
             return 0;
@@ -11183,8 +10892,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"rabbit";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11214,8 +10922,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -11239,8 +10946,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -11266,8 +10972,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 2000;
             return 0;
         }
@@ -11289,8 +10994,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
@@ -11311,8 +11015,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ent";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 406;
             cpicref += 0;
             return 0;
@@ -11335,8 +11038,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11362,8 +11064,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ent";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 406;
             cpicref += 16000;
             return 0;
@@ -11386,8 +11087,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ent";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11420,8 +11120,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spirit";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -11444,8 +11143,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spirit";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(52, rc) = 500;
             cdata[rc].image += 5000;
             cspecialeq = 0;
@@ -11476,8 +11174,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spirit";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 18000;
             return 0;
         }
@@ -11499,8 +11196,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spirit";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5900300;
             sdata(59, rc) = 500;
             cdata[rc].image += 18000;
@@ -11533,8 +11229,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eye";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -11555,8 +11250,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5800250;
             sdata(54, rc) = 500;
             if (nerve != 0)
@@ -11592,8 +11286,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eye";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 8000;
             return 0;
         }
@@ -11615,8 +11308,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11655,8 +11347,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eye";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 407;
             cpicref += 4000;
             return 0;
@@ -11679,8 +11370,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400300;
             sdata(54, rc) = 500;
             if (nerve != 0)
@@ -11717,8 +11407,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eye";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 407;
             cpicref += 3000;
             return 0;
@@ -11741,8 +11430,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11773,8 +11461,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"wyvern";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -11796,8 +11483,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"wyvern";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11822,8 +11508,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eulderna";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 209;
             cpicref += 0;
             return 0;
@@ -11848,8 +11533,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -11874,8 +11558,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"wasp";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -11897,8 +11580,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"wasp";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -11919,8 +11601,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"wasp";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -11942,8 +11623,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"wasp";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -11970,8 +11650,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"giant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -11992,8 +11671,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -12038,8 +11716,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"giant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -12061,8 +11738,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -12092,8 +11768,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"imp";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -12118,8 +11793,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"imp";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -12146,8 +11820,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"imp";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 4000;
             return 0;
         }
@@ -12171,8 +11844,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"imp";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
@@ -12199,8 +11871,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"imp";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 18000;
             return 0;
         }
@@ -12224,8 +11895,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"imp";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
@@ -12252,8 +11922,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hand";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -12276,8 +11945,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hand";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5300080;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -12305,8 +11973,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hand";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 18000;
             return 0;
         }
@@ -12328,8 +11995,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hand";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5900180;
             cdata[rc].image += 18000;
             cspecialeq = 0;
@@ -12358,8 +12024,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hand";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -12382,8 +12047,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"hand";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -12418,8 +12082,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 214;
             cpicref += 0;
             return 0;
@@ -12443,8 +12106,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5600080;
             cdata[rc].image = 214;
             cdata[rc].image += 0;
@@ -12473,8 +12135,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 214;
             cpicref += 5000;
             return 0;
@@ -12499,8 +12160,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400200;
             sdata(51, rc) = 500;
             cdata[rc].image = 214;
@@ -12524,8 +12184,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 215;
             cpicref += 0;
             return 0;
@@ -12547,8 +12206,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400200;
             cdata[rc].image = 215;
             cdata[rc].image += 0;
@@ -12571,8 +12229,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 215;
             cpicref += 10000;
             return 0;
@@ -12594,8 +12251,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5900250;
             cdata[rc].image = 215;
             cdata[rc].image += 10000;
@@ -12627,8 +12283,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"snake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -12650,8 +12305,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"snake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -12681,8 +12335,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"snake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -12704,8 +12357,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"snake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -12726,8 +12378,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"drake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -12749,8 +12400,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"drake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(50, rc) = 500;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -12772,8 +12422,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"drake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -12795,8 +12444,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"drake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(51, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -12823,8 +12471,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"zombie";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 219;
             cpicref += 0;
             return 0;
@@ -12848,8 +12495,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 219;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -12876,8 +12522,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"zombie";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 219;
             cpicref += 10000;
             return 0;
@@ -12901,8 +12546,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -12933,8 +12577,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"zombie";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 219;
             cpicref += 5000;
             return 0;
@@ -12958,8 +12601,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -12993,8 +12635,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"zombie";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 219;
             cpicref += 8000;
             return 0;
@@ -13020,8 +12661,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -13052,8 +12692,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"zombie";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 395;
             cpicref += 0;
             return 0;
@@ -13079,8 +12718,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"zombie";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 395;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -13102,8 +12740,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"goblin";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -13124,8 +12761,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -13147,8 +12783,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"goblin";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -13169,8 +12804,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -13195,8 +12829,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"goblin";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 18000;
             return 0;
         }
@@ -13221,8 +12854,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -13247,8 +12879,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"goblin";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 4000;
             return 0;
         }
@@ -13270,8 +12901,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -13295,8 +12925,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 221;
             cpicref += 3000;
             return 0;
@@ -13320,8 +12949,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -13347,8 +12975,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 221;
             cpicref += 4000;
             return 0;
@@ -13372,8 +12999,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -13419,8 +13045,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bear";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -13447,8 +13072,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"bear";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -13469,8 +13093,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bear";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -13491,8 +13114,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"bear";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -13518,8 +13140,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bear";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 439;
             cpicref += 0;
             return 0;
@@ -13541,8 +13162,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"bear";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 439;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -13570,8 +13190,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"armor";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -13592,8 +13211,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -13622,8 +13240,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"armor";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -13644,8 +13261,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -13675,8 +13291,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"armor";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -13697,8 +13312,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -13727,8 +13341,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"armor";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -13750,8 +13363,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"armor";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -13775,8 +13387,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"medusa";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -13797,8 +13408,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -13822,8 +13432,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"medusa";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -13844,8 +13453,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -13869,8 +13477,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"medusa";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -13891,8 +13498,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"medusa";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -13922,8 +13528,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cupid";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -13945,8 +13550,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"cupid";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -13971,8 +13575,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"phantom";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -13994,8 +13597,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"phantom";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -14020,8 +13622,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dinosaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -14042,8 +13643,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dinosaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14067,8 +13667,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"harpy";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -14089,8 +13688,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"harpy";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -14112,8 +13710,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 19000;
             return 0;
         }
@@ -14135,8 +13732,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14160,8 +13756,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -14183,8 +13778,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14210,8 +13804,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -14233,8 +13826,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14259,8 +13851,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -14282,8 +13873,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14308,8 +13898,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 4000;
             return 0;
         }
@@ -14331,8 +13920,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14357,8 +13945,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dragon";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 18000;
             return 0;
         }
@@ -14380,8 +13967,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dragon";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14406,8 +13992,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cerberus";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -14429,8 +14014,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"cerberus";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -14464,8 +14048,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"centipede";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 396;
             cpicref += 0;
             return 0;
@@ -14487,8 +14070,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5500150;
             sdata(55, rc) = 500;
             cdata[rc].image = 396;
@@ -14521,8 +14103,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"centipede";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 396;
             cpicref += 3000;
             return 0;
@@ -14544,8 +14125,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5500350;
             sdata(55, rc) = 500;
             cdata[rc].image = 396;
@@ -14579,8 +14159,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spider";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -14603,8 +14182,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(55, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -14645,8 +14223,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spider";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 19000;
             return 0;
         }
@@ -14669,8 +14246,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5500150;
             sdata(55, rc) = 500;
             cdata[rc].image += 19000;
@@ -14712,8 +14288,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spider";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -14736,8 +14311,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5800150;
             sdata(55, rc) = 500;
             cdata[rc].image += 17000;
@@ -14779,8 +14353,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spider";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -14803,8 +14376,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5500200;
             sdata(55, rc) = 500;
             cdata[rc].image += 5000;
@@ -14837,8 +14409,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"spider";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -14861,8 +14432,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"spider";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5600100;
             sdata(55, rc) = 500;
             cdata[rc].image += 16000;
@@ -14900,8 +14470,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 6000;
             return 0;
         }
@@ -14923,8 +14492,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -14960,8 +14528,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -14983,8 +14550,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -15021,8 +14587,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 15000;
             return 0;
         }
@@ -15044,8 +14609,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -15085,8 +14649,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -15108,8 +14671,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -15149,8 +14711,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -15172,8 +14733,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -15212,8 +14772,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 9000;
             return 0;
         }
@@ -15235,8 +14794,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -15276,8 +14834,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"golem";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 2000;
             return 0;
         }
@@ -15300,8 +14857,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"golem";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -15334,8 +14890,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"crab";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -15356,8 +14911,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"crab";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5000150;
             sdata(50, rc) = 500;
             cdata[rc].image += 0;
@@ -15388,8 +14942,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"centipede";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 239;
             cpicref += 0;
             return 0;
@@ -15411,8 +14964,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"centipede";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5000200;
             sdata(50, rc) = 500;
             cdata[rc].image = 239;
@@ -15436,8 +14988,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"goblin";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 240;
             cpicref += 0;
             return 0;
@@ -15462,8 +15013,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"goblin";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -15489,8 +15039,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"skeleton";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -15511,8 +15060,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"skeleton";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -15537,8 +15085,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"skeleton";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -15559,8 +15106,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"skeleton";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -15610,8 +15156,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eulderna";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 243;
             cpicref += 0;
             return 0;
@@ -15636,8 +15181,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eulderna";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400150;
             cdata[rc].image = 243;
             cdata[rc].image += 0;
@@ -15665,8 +15209,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"piece";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -15687,8 +15230,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -15717,8 +15259,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"piece";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 245;
             cpicref += 0;
             return 0;
@@ -15740,8 +15281,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -15771,8 +15311,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"piece";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 246;
             cpicref += 0;
             return 0;
@@ -15797,8 +15336,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -15828,8 +15366,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"piece";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 247;
             cpicref += 0;
             return 0;
@@ -15851,8 +15388,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -15887,8 +15423,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"piece";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 248;
             cpicref += 0;
             return 0;
@@ -15913,8 +15448,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -15944,8 +15478,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"piece";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 249;
             cpicref += 0;
             return 0;
@@ -15968,8 +15501,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"piece";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -16017,8 +15549,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 159;
             cpicref += 0;
             return 0;
@@ -16046,8 +15577,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -16099,8 +15629,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 57;
             cpicref += 0;
             return 0;
@@ -16128,8 +15657,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -16181,8 +15709,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 100;
             cpicref += 0;
             return 0;
@@ -16211,8 +15738,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -16277,8 +15803,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 150;
             cpicref += 0;
             return 0;
@@ -16308,8 +15833,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -16375,8 +15899,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 31;
             cpicref += 0;
             return 0;
@@ -16405,8 +15928,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -16476,8 +15998,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 158;
             cpicref += 0;
             return 0;
@@ -16506,8 +16027,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -16572,8 +16092,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 157;
             cpicref += 0;
             return 0;
@@ -16605,8 +16124,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"priest";
             dbmode = 3;
             access_class_info();
@@ -16670,8 +16188,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 250;
             cpicref += 0;
             return 0;
@@ -16697,8 +16214,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -16761,8 +16277,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 250;
             cpicref += 3000;
             return 0;
@@ -16788,8 +16303,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -16869,8 +16383,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 370;
             cpicref += 0;
             return 0;
@@ -16897,8 +16410,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -16926,8 +16438,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 373;
             cpicref += 0;
             return 0;
@@ -16950,8 +16461,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -17013,8 +16523,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 377;
             cpicref += 0;
             return 0;
@@ -17039,8 +16548,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -17103,8 +16611,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 377;
             cpicref += 4000;
             return 0;
@@ -17129,8 +16636,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -17155,8 +16661,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 251;
             cpicref += 0;
             return 0;
@@ -17178,8 +16683,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -17306,8 +16810,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -17336,8 +16839,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -17455,8 +16957,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 387;
             cpicref += 0;
             return 0;
@@ -17486,8 +16987,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 387;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -17582,8 +17082,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 387;
             cpicref += 6000;
             return 0;
@@ -17613,8 +17112,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 387;
             cdata[rc].image += 6000;
             cspecialeq = 0;
@@ -17692,8 +17190,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 368;
             cpicref += 0;
             return 0;
@@ -17719,8 +17216,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -17796,8 +17292,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"catgod";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 369;
             cpicref += 0;
             return 0;
@@ -17825,8 +17320,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"catgod";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -17910,8 +17404,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 367;
             cpicref += 0;
             return 0;
@@ -17939,8 +17432,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -17995,8 +17487,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dog";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -18023,8 +17514,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dog";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -18093,8 +17583,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dog";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 364;
             cpicref += 0;
             return 0;
@@ -18120,8 +17609,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"dog";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 364;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18206,8 +17694,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 365;
             cpicref += 0;
             return 0;
@@ -18234,8 +17721,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 365;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18300,8 +17786,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 366;
             cpicref += 0;
             return 0;
@@ -18326,8 +17811,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].sex = 0;
             cdata[rc].image = 366;
             cdata[rc].image += 0;
@@ -18402,8 +17886,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 4;
             cpicref += 0;
             return 0;
@@ -18431,8 +17914,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -18471,8 +17953,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"rat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 6000;
             return 0;
         }
@@ -18494,8 +17975,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"rat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -18521,8 +18001,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"shell";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -18543,8 +18022,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"shell";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -18598,8 +18076,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 258;
             cpicref += 0;
             return 0;
@@ -18623,8 +18100,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -18676,8 +18152,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"catgod";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 348;
             cpicref += 0;
             return 0;
@@ -18702,8 +18177,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"catgod";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 348;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18777,8 +18251,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 105;
             cpicref += 0;
             return 0;
@@ -18807,8 +18280,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -18884,8 +18356,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 105;
             cpicref += 0;
             return 0;
@@ -18915,8 +18386,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -18993,8 +18463,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"catsister";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -19022,8 +18491,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"catsister";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -19080,8 +18548,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 355;
             cpicref += 0;
             return 0;
@@ -19113,8 +18580,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -19163,8 +18629,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machinegod";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 349;
             cpicref += 0;
             return 0;
@@ -19193,8 +18658,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machinegod";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -19256,8 +18720,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"undeadgod";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 339;
             cpicref += 3000;
             return 0;
@@ -19287,8 +18750,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"undeadgod";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -19319,8 +18781,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 350;
             cpicref += 0;
             return 0;
@@ -19343,8 +18804,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -19406,8 +18866,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dwarf";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 352;
             cpicref += 0;
             return 0;
@@ -19431,8 +18890,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"dwarf";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -19487,8 +18945,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dwarf";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 353;
             cpicref += 0;
             return 0;
@@ -19512,8 +18969,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"dwarf";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -19588,8 +19044,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"cat";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 259;
             cpicref += 0;
             return 0;
@@ -19614,8 +19069,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"cat";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 259;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -19661,8 +19115,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"hound";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 260;
             cpicref += 0;
             return 0;
@@ -19685,8 +19138,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"hound";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 260;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -19738,8 +19190,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 208;
             cpicref += 0;
             return 0;
@@ -19767,8 +19218,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -19840,8 +19290,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 71;
             cpicref += 0;
             return 0;
@@ -19870,8 +19319,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 71;
             if (cdata[rc].sex == 1)
             {
@@ -19946,8 +19394,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 73;
             cpicref += 0;
             return 0;
@@ -19976,8 +19423,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 73;
             if (cdata[rc].sex == 1)
             {
@@ -20048,8 +19494,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 122;
             cpicref += 0;
             return 0;
@@ -20078,8 +19523,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -20186,8 +19630,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 477;
             cpicref += 1000;
             return 0;
@@ -20217,8 +19660,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -20252,8 +19694,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machine";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -20274,8 +19715,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 6100100;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20302,8 +19742,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machine";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -20324,8 +19763,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -20355,8 +19793,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machine";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 3000;
             return 0;
         }
@@ -20377,8 +19814,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -20477,8 +19913,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bike";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 470;
             cpicref += 0;
             return 0;
@@ -20504,8 +19939,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"bike";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -20602,8 +20036,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"bike";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 471;
             cpicref += 0;
             return 0;
@@ -20629,8 +20062,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"bike";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -20660,8 +20092,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machine";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 434;
             cpicref += 0;
             return 0;
@@ -20686,8 +20117,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 434;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20714,8 +20144,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machine";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 198;
             cpicref += 0;
             return 0;
@@ -20737,8 +20166,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"machine";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 6100150;
             cdata[rc].image = 198;
             cdata[rc].image += 0;
@@ -20767,8 +20195,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eye";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 271;
             cpicref += 0;
             return 0;
@@ -20791,8 +20218,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 271;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20819,8 +20245,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"eye";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 271;
             cpicref += 3000;
             return 0;
@@ -20843,8 +20268,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"eye";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 271;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -20871,8 +20295,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"wisp";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -20896,8 +20319,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"wisp";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(52, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20919,8 +20341,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"crab";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 273;
             cpicref += 0;
             return 0;
@@ -20942,8 +20363,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"crab";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 273;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20972,8 +20392,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"crab";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 273;
             cpicref += 17000;
             return 0;
@@ -20995,8 +20414,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"crab";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 273;
             cdata[rc].image += 17000;
             cspecialeq = 0;
@@ -21046,8 +20464,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"chicken";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -21070,8 +20487,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"chicken";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -21100,8 +20516,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 275;
             cpicref += 0;
             return 0;
@@ -21124,8 +20539,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400100;
             cdata[rc].image = 275;
             cdata[rc].image += 0;
@@ -21156,8 +20570,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 275;
             cpicref += 5000;
             return 0;
@@ -21180,8 +20593,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400150;
             cdata[rc].image = 275;
             cdata[rc].image += 5000;
@@ -21212,8 +20624,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 275;
             cpicref += 4000;
             return 0;
@@ -21236,8 +20647,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400200;
             cdata[rc].image = 275;
             cdata[rc].image += 4000;
@@ -21269,8 +20679,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mandrake";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 275;
             cpicref += 3000;
             return 0;
@@ -21294,8 +20703,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mandrake";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5400250;
             cdata[rc].image = 275;
             cdata[rc].image += 3000;
@@ -21326,8 +20734,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"stalker";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 276;
             cpicref += 0;
             return 0;
@@ -21349,8 +20756,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"stalker";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -21383,8 +20789,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"stalker";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 276;
             cpicref += 3000;
             return 0;
@@ -21406,8 +20811,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"stalker";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -21463,8 +20867,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"giant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 351;
             cpicref += 0;
             return 0;
@@ -21490,8 +20893,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(50, rc) = 500;
             cdata[rc].sex = 0;
             cdata[rc].image = 351;
@@ -21551,8 +20953,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 23;
             cpicref += 0;
             return 0;
@@ -21577,8 +20978,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -21657,8 +21057,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 104;
             cpicref += 0;
             return 0;
@@ -21687,8 +21086,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -21748,8 +21146,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"giant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 351;
             cpicref += 0;
             return 0;
@@ -21775,8 +21172,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"giant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             sdata(50, rc) = 500;
             cdata[rc].sex = 0;
             cdata[rc].image = 351;
@@ -21802,8 +21198,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 117;
             cpicref += 0;
             return 0;
@@ -21825,8 +21220,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -21917,8 +21311,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 356;
             cpicref += 0;
             return 0;
@@ -21944,8 +21337,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -22006,8 +21398,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 358;
             cpicref += 0;
             return 0;
@@ -22032,8 +21423,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -22093,8 +21483,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 359;
             cpicref += 0;
             return 0;
@@ -22119,8 +21508,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -22203,8 +21591,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 361;
             cpicref += 0;
             return 0;
@@ -22231,8 +21618,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -22315,8 +21701,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 362;
             cpicref += 0;
             return 0;
@@ -22343,8 +21728,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -22426,8 +21810,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 383;
             cpicref += 0;
             return 0;
@@ -22454,8 +21837,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -22533,8 +21915,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 388;
             cpicref += 0;
             return 0;
@@ -22560,8 +21941,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].sex = 1;
             cdata[rc].image = 388;
             cdata[rc].image += 0;
@@ -22646,8 +22026,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 392;
             cpicref += 0;
             return 0;
@@ -22678,8 +22057,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -22759,8 +22137,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 394;
             cpicref += 0;
             return 0;
@@ -22788,8 +22165,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -22871,8 +22247,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 199;
             cpicref += 0;
             return 0;
@@ -22899,8 +22274,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -22983,8 +22357,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 403;
             cpicref += 0;
             return 0;
@@ -23012,8 +22385,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -23096,8 +22468,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 166;
             cpicref += 0;
             return 0;
@@ -23123,8 +22494,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image = 166;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -23196,8 +22566,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 166;
             cpicref += 3000;
             return 0;
@@ -23223,8 +22592,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -23299,8 +22667,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 166;
             cpicref += 4000;
             return 0;
@@ -23326,8 +22693,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -23358,8 +22724,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yith";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -23383,8 +22748,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yith";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -23415,8 +22779,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yith";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 277;
             cpicref += 0;
             return 0;
@@ -23442,8 +22805,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yith";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -23469,8 +22831,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"orc";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 278;
             cpicref += 0;
             return 0;
@@ -23493,8 +22854,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"orc";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -23524,8 +22884,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yith";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 430;
             cpicref += 0;
             return 0;
@@ -23551,8 +22910,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"yith";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -23578,8 +22936,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"fairy";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -23603,8 +22960,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"fairy";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -23678,8 +23034,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 211;
             cpicref += 0;
             return 0;
@@ -23712,8 +23067,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -23756,8 +23110,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 217;
             cpicref += 0;
             return 0;
@@ -23787,8 +23140,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -23814,8 +23166,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 218;
             cpicref += 0;
             return 0;
@@ -23842,8 +23193,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -23909,8 +23259,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 236;
             cpicref += 0;
             return 0;
@@ -23945,8 +23294,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -23973,8 +23321,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 269;
             cpicref += 0;
             return 0;
@@ -24002,8 +23349,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -24029,8 +23375,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 267;
             cpicref += 0;
             return 0;
@@ -24059,8 +23404,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -24087,8 +23431,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"servant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 242;
             cpicref += 0;
             return 0;
@@ -24117,8 +23460,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"servant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warmage";
             dbmode = 3;
             access_class_info();
@@ -24195,8 +23537,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"horse";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 17000;
             return 0;
         }
@@ -24224,8 +23565,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -24296,8 +23636,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"horse";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 6000;
             return 0;
         }
@@ -24325,8 +23664,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -24401,8 +23739,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"horse";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 15000;
             return 0;
         }
@@ -24430,8 +23767,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -24506,8 +23842,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"horse";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 16000;
             return 0;
         }
@@ -24535,8 +23870,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -24610,8 +23944,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"horse";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 10000;
             return 0;
         }
@@ -24639,8 +23972,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             dbidn = u8"horse";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();
@@ -24664,8 +23996,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mutant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 191;
             cpicref += 0;
             return 0;
@@ -24691,8 +24022,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"mutant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -24749,8 +24079,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"yerles";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 263;
             cpicref += 0;
             return 0;
@@ -24775,8 +24104,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"yerles";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -24844,8 +24172,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 192;
             cpicref += 0;
             return 0;
@@ -24871,8 +24198,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].sex = 0;
             cdata[rc].image = 192;
             cdata[rc].image += 0;
@@ -24952,8 +24278,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 193;
             cpicref += 0;
             return 0;
@@ -24983,8 +24308,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -25033,8 +24357,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 196;
             cpicref += 0;
             return 0;
@@ -25061,8 +24384,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"wizard";
             dbmode = 3;
             access_class_info();
@@ -25093,8 +24415,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 197;
             cpicref += 0;
             return 0;
@@ -25118,8 +24439,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -25168,8 +24488,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 196;
             cpicref += 0;
             return 0;
@@ -25193,8 +24512,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"thief";
             dbmode = 3;
             access_class_info();
@@ -25225,8 +24543,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 80;
             cpicref += 0;
             return 0;
@@ -25250,8 +24567,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -25300,8 +24616,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"norland";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 196;
             cpicref += 0;
             return 0;
@@ -25326,8 +24641,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"norland";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"warrior";
             dbmode = 3;
             access_class_info();
@@ -25407,8 +24721,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 279;
             cpicref += 0;
             return 0;
@@ -25439,8 +24752,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"claymore";
             dbmode = 3;
             access_class_info();
@@ -25534,8 +24846,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"machinegod";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 408;
             cpicref += 0;
             return 0;
@@ -25561,8 +24872,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"machinegod";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -25649,8 +24959,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"mutant";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 409;
             cpicref += 0;
             return 0;
@@ -25676,8 +24985,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"mutant";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -25768,8 +25076,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"roran";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 412;
             cpicref += 0;
             return 0;
@@ -25795,8 +25102,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"roran";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"gunner";
             dbmode = 3;
             access_class_info();
@@ -25888,8 +25194,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"juere";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 416;
             cpicref += 0;
             return 0;
@@ -25916,8 +25221,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             dbidn = u8"juere";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"tourist";
             dbmode = 3;
             access_class_info();
@@ -25950,8 +25254,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"ghost";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 280;
             cpicref += 0;
             return 0;
@@ -25975,8 +25278,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"ghost";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].element_of_unarmed_attack = 5600400;
             cdata[rc].image = 280;
             cdata[rc].image += 0;
@@ -26004,8 +25306,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"quickling";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 19000;
             return 0;
         }
@@ -26026,8 +25327,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"quickling";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 19000;
             cspecialeq = 0;
             return 0;
@@ -26054,8 +25354,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"quickling";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -26080,8 +25379,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"quickling";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"archer";
             dbmode = 3;
             access_class_info();
@@ -26140,8 +25438,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"metal";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 0;
             return 0;
         }
@@ -26165,8 +25462,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"metal";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -26222,8 +25518,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"metal";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref += 5000;
             return 0;
         }
@@ -26247,8 +25542,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"metal";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -26274,8 +25568,7 @@ int access_character_info()
         if (dbmode == 2)
         {
             dbidn = u8"dinosaur";
-            dbmode = 2;
-            access_race_info();
+            access_race_info(2);
             cpicref = 283;
             cpicref += 17000;
             return 0;
@@ -26298,8 +25591,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             dbidn = u8"dinosaur";
-            dbmode = 3;
-            access_race_info();
+            access_race_info(3);
             dbidn = u8"predator";
             dbmode = 3;
             access_class_info();

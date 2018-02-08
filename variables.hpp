@@ -865,7 +865,6 @@ int label_2217();
 int label_2230();
 int label_2231();
 int label_2248();
-int access_race_info();
 int access_class_info();
 int label_2659();
 int label_2664();

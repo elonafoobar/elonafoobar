@@ -5,126 +5,110 @@
 
 
 
-#define RACE(is_extra_race, name) \
-    do \
-    { \
-        if (val == (is_extra_race) ? 1 : 0) \
-        { \
-            listn(1, listmax) = (name); \
-            list(0, listmax) = (is_extra_race) ? 1 : 0; \
-            ++listmax; \
-        } \
-    } while (0)
-
-#define EXTRA_RACE(name) RACE(true, name)
-#define BASIC_RACE(name) RACE(false, name)
-
-
-
-namespace
-{
-
-
-void list_races()
-{
-    BASIC_RACE(u8"yerles");
-    BASIC_RACE(u8"eulderna");
-    BASIC_RACE(u8"fairy");
-    BASIC_RACE(u8"dwarf");
-    BASIC_RACE(u8"juere");
-    BASIC_RACE(u8"elea");
-    BASIC_RACE(u8"snail");
-    BASIC_RACE(u8"lich");
-    BASIC_RACE(u8"goblin");
-    BASIC_RACE(u8"golem");
-    BASIC_RACE(u8"mutant");
-
-    EXTRA_RACE(u8"kobolt");
-    EXTRA_RACE(u8"orc");
-    EXTRA_RACE(u8"troll");
-    EXTRA_RACE(u8"lizardman");
-    EXTRA_RACE(u8"minotaur");
-    EXTRA_RACE(u8"norland");
-    EXTRA_RACE(u8"asura");
-    EXTRA_RACE(u8"slime");
-    EXTRA_RACE(u8"wolf");
-    EXTRA_RACE(u8"zombie");
-    EXTRA_RACE(u8"rabbit");
-    EXTRA_RACE(u8"sheep");
-    EXTRA_RACE(u8"frog");
-    EXTRA_RACE(u8"centipede");
-    EXTRA_RACE(u8"mandrake");
-    EXTRA_RACE(u8"beetle");
-    EXTRA_RACE(u8"mushroom");
-    EXTRA_RACE(u8"bat");
-    EXTRA_RACE(u8"ent");
-    EXTRA_RACE(u8"hound");
-    EXTRA_RACE(u8"ghost");
-    EXTRA_RACE(u8"spirit");
-    EXTRA_RACE(u8"eye");
-    EXTRA_RACE(u8"wyvern");
-    EXTRA_RACE(u8"wasp");
-    EXTRA_RACE(u8"giant");
-    EXTRA_RACE(u8"imp");
-    EXTRA_RACE(u8"hand");
-    EXTRA_RACE(u8"snake");
-    EXTRA_RACE(u8"drake");
-    EXTRA_RACE(u8"bear");
-    EXTRA_RACE(u8"armor");
-    EXTRA_RACE(u8"medusa");
-    EXTRA_RACE(u8"cupid");
-    EXTRA_RACE(u8"phantom");
-    EXTRA_RACE(u8"harpy");
-    EXTRA_RACE(u8"dragon");
-    EXTRA_RACE(u8"dinosaur");
-    EXTRA_RACE(u8"cerberus");
-    EXTRA_RACE(u8"spider");
-    EXTRA_RACE(u8"rock");
-    EXTRA_RACE(u8"crab");
-    EXTRA_RACE(u8"skeleton");
-    EXTRA_RACE(u8"piece");
-    EXTRA_RACE(u8"cat");
-    EXTRA_RACE(u8"dog");
-    EXTRA_RACE(u8"roran");
-    EXTRA_RACE(u8"rat");
-    EXTRA_RACE(u8"shell");
-    EXTRA_RACE(u8"catgod");
-    EXTRA_RACE(u8"machinegod");
-    EXTRA_RACE(u8"undeadgod");
-    EXTRA_RACE(u8"machine");
-    EXTRA_RACE(u8"wisp");
-    EXTRA_RACE(u8"chicken");
-    EXTRA_RACE(u8"stalker");
-    EXTRA_RACE(u8"catsister");
-    EXTRA_RACE(u8"yeek");
-    EXTRA_RACE(u8"yith");
-    EXTRA_RACE(u8"servant");
-    EXTRA_RACE(u8"horse");
-    EXTRA_RACE(u8"god");
-    EXTRA_RACE(u8"quickling");
-    EXTRA_RACE(u8"metal");
-    EXTRA_RACE(u8"bike");
-}
-
-
-
-} // namespace
-
-
-
 namespace elona
 {
 
 
 
-int access_race_info()
-{
-    if (dbmode == 1)
-    {
-        list_races();
-        return 0;
-    }
+#define RACE(name) \
+    do \
+    { \
+        listn(1, listmax) = (name); \
+        list(0, listmax) = int(is_extra_race); \
+        ++listmax; \
+    } while (0)
 
+
+void get_race_list(bool is_extra_race)
+{
+    if (is_extra_race)
+    {
+        RACE(u8"kobolt");
+        RACE(u8"orc");
+        RACE(u8"troll");
+        RACE(u8"lizardman");
+        RACE(u8"minotaur");
+        RACE(u8"norland");
+        RACE(u8"asura");
+        RACE(u8"slime");
+        RACE(u8"wolf");
+        RACE(u8"zombie");
+        RACE(u8"rabbit");
+        RACE(u8"sheep");
+        RACE(u8"frog");
+        RACE(u8"centipede");
+        RACE(u8"mandrake");
+        RACE(u8"beetle");
+        RACE(u8"mushroom");
+        RACE(u8"bat");
+        RACE(u8"ent");
+        RACE(u8"hound");
+        RACE(u8"ghost");
+        RACE(u8"spirit");
+        RACE(u8"eye");
+        RACE(u8"wyvern");
+        RACE(u8"wasp");
+        RACE(u8"giant");
+        RACE(u8"imp");
+        RACE(u8"hand");
+        RACE(u8"snake");
+        RACE(u8"drake");
+        RACE(u8"bear");
+        RACE(u8"armor");
+        RACE(u8"medusa");
+        RACE(u8"cupid");
+        RACE(u8"phantom");
+        RACE(u8"harpy");
+        RACE(u8"dragon");
+        RACE(u8"dinosaur");
+        RACE(u8"cerberus");
+        RACE(u8"spider");
+        RACE(u8"rock");
+        RACE(u8"crab");
+        RACE(u8"skeleton");
+        RACE(u8"piece");
+        RACE(u8"cat");
+        RACE(u8"dog");
+        RACE(u8"roran");
+        RACE(u8"rat");
+        RACE(u8"shell");
+        RACE(u8"catgod");
+        RACE(u8"machinegod");
+        RACE(u8"undeadgod");
+        RACE(u8"machine");
+        RACE(u8"wisp");
+        RACE(u8"chicken");
+        RACE(u8"stalker");
+        RACE(u8"catsister");
+        RACE(u8"yeek");
+        RACE(u8"yith");
+        RACE(u8"servant");
+        RACE(u8"horse");
+        RACE(u8"god");
+        RACE(u8"quickling");
+        RACE(u8"metal");
+        RACE(u8"bike");
+    }
+    else
+    {
+        RACE(u8"yerles");
+        RACE(u8"eulderna");
+        RACE(u8"fairy");
+        RACE(u8"dwarf");
+        RACE(u8"juere");
+        RACE(u8"elea");
+        RACE(u8"snail");
+        RACE(u8"lich");
+        RACE(u8"goblin");
+        RACE(u8"golem");
+        RACE(u8"mutant");
+    }
+}
+
+
+
+int access_race_info(int dbmode)
+{
     if (dbidn == u8"kobolt"s)
     {
         if (dbmode == 16)
