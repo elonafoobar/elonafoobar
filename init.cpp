@@ -1163,7 +1163,12 @@ void label_1550(bool label_1551_flg)
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
-    access_class_info(1);
+    listmax = 0;
+    for (const auto& id : get_available_classes())
+    {
+        listn(1, listmax) = id;
+        ++listmax;
+    }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)

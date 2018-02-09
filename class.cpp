@@ -8,34 +8,25 @@ namespace elona
 {
 
 
+std::vector<std::string> get_available_classes()
+{
+    return {
+        u8"warrior",
+        u8"thief",
+        u8"wizard",
+        u8"farmer",
+        u8"archer",
+        u8"warmage",
+        u8"tourist",
+        u8"pianist",
+        u8"priest",
+        u8"claymore",
+    };
+}
+
+
 int access_class_info(int dbmode, const std::string& dbidn)
 {
-    if (dbmode == 1)
-    {
-        listmax = 0;
-        listn(1, listmax) = u8"warrior"s;
-        ++listmax;
-        listn(1, listmax) = u8"thief"s;
-        ++listmax;
-        listn(1, listmax) = u8"wizard"s;
-        ++listmax;
-        listn(1, listmax) = u8"farmer"s;
-        ++listmax;
-        listn(1, listmax) = u8"archer"s;
-        ++listmax;
-        listn(1, listmax) = u8"warmage"s;
-        ++listmax;
-        listn(1, listmax) = u8"tourist"s;
-        ++listmax;
-        listn(1, listmax) = u8"pianist"s;
-        ++listmax;
-        listn(1, listmax) = u8"priest"s;
-        ++listmax;
-        listn(1, listmax) = u8"claymore"s;
-        ++listmax;
-        return 0;
-    }
-
     if (dbidn == ""s)
     {
         classname = u8"なし"s;
