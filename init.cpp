@@ -1057,7 +1057,6 @@ void label_1547(bool label_1548_flg)
     {
         snd(102);
     }
-label_1548:
     redraw(0);
     cs = 0;
     cs_bk = -1;
@@ -1143,7 +1142,6 @@ void label_1550(bool label_1551_flg)
     {
         snd(20);
     }
-label_1551:
     redraw(0);
     cs = 0;
     cs_bk = -1;
@@ -1484,7 +1482,6 @@ void label_1557(bool label_1558_flg)
             label_1553(false);
         }
     }
-label_1558:
     redraw(0);
     pagemax = 0;
     page = 0;
