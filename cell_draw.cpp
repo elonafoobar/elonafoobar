@@ -298,6 +298,78 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
 
 
 
+struct cloud
+{
+    cloud(int x0, int y0, int x, int y, int width, int height)
+        : x0(x0)
+        , y0(y0)
+        , x(x)
+        , y(y)
+        , width(width)
+        , height(height)
+    {
+    }
+
+    int x0;
+    int y0;
+    int x;
+    int y;
+    int width;
+    int height;
+};
+
+std::vector<cloud> clouds;
+
+
+void initialize_cloud_data()
+{
+    for (int i = 0; i < 12; ++i)
+    {
+        int x0 = rnd(100) + i * 200 + 100000;
+        int y0 = rnd(100) + i / 5 * 200 + 100000;
+        if (rnd(2) == 0)
+        {
+            clouds.emplace_back(x0, y0, 288, 1040, 208, 160);
+        }
+        else
+        {
+            clouds.emplace_back(x0, y0, 0, 976, 288, 224);
+        }
+    }
+}
+
+
+
+void render_cloud()
+{
+    static int dummy = ((void)initialize_cloud_data(), 0);
+    (void)dummy;
+
+    for (int i = 0; i < std::size(clouds); ++i)
+    {
+        gmode(5, -1, -1, 7 + i * 2);
+        int x = (clouds[i].x0 - cdata[0].position.x * inf_tiles + sxfix) * 100
+                / (40 + i * 5)
+            + scrturn * 100 / (50 + i * 20);
+        int y = (clouds[i].y0 - cdata[0].position.y * inf_tiles + syfix) * 100
+            / (40 + i * 5);
+        x = x % (windoww + clouds[i].width) - clouds[i].width;
+        y = y % (inf_very + clouds[i].height) - clouds[i].height;
+        int height = clouds[i].height;
+        if (y + height > inf_very)
+        {
+            height = inf_very - y;
+        }
+        if (y < inf_very)
+        {
+            pos(x, y);
+            gcopy(2, clouds[i].x, clouds[i].y, clouds[i].width, height);
+        }
+    }
+}
+
+
+
 } // namespace
 
 
@@ -1257,28 +1329,7 @@ void cell_draw()
 
     if (mdata(6) == 1)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
-        {
-            gmode(5, -1, -1, 7 + cnt * 2);
-            x_ = (cloud(0, cnt) - cdata[0].position.x * 48 + sxfix) * 100
-                    / (40 + cnt * 5)
-                + scrturn * 100 / (50 + cnt * 20);
-            y_ = (cloud(1, cnt) - cdata[0].position.y * 48 + syfix) * 100
-                / (40 + cnt * 5);
-            x_ = x_ % (windoww + cloud(4, cnt)) - cloud(4, cnt);
-            y_ = y_ % (inf_very + cloud(5, cnt)) - cloud(5, cnt);
-            h_ = cloud(5, cnt);
-            if (y_ + cloud(5, cnt) >= inf_very)
-            {
-                h_ = inf_very - y_;
-            }
-            if (y_ < inf_very)
-            {
-                pos(x_, y_);
-                gcopy(2, cloud(2, cnt), cloud(3, cnt), cloud(4, cnt), h_);
-            }
-        }
+        render_cloud();
     }
 
     if (cfg_shadow != 0)
