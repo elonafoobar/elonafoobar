@@ -336,8 +336,8 @@ inline character_data cdata;
 
 
 
-int cbit(int type, int cc);
-void cbitmod(int type, int cc, int on);
+int cbit(size_t type, int cc);
+void cbitmod(size_t type, int cc, int on);
 
 
 

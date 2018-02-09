@@ -33,7 +33,7 @@ constexpr bool false_v = false;
 
 
 template <typename T>
-void allocate_and_clear_vector(std::vector<T>& v, int size)
+void allocate_and_clear_vector(std::vector<T>& v, size_t size)
 {
     v.resize(size);
     std::fill(std::begin(v), std::end(v), T{});
@@ -50,7 +50,7 @@ struct elona_vector1
     }
 
 
-    T& operator()(int i)
+    T& operator()(size_t i)
     {
         if (i >= std::size(storage))
         {
@@ -111,7 +111,7 @@ struct elona_vector1
     }
 
 
-    void allocate_and_clear(int size)
+    void allocate_and_clear(size_t size)
     {
         allocate_and_clear_vector(storage, size);
     }
@@ -133,12 +133,12 @@ private:
 template <typename T>
 struct elona_vector2
 {
-    T& operator()(int i, int j)
+    T& operator()(size_t i, size_t j)
     {
         if (j >= std::size(storage))
         {
             storage.resize(j + 1);
-            for (int j_ = 0; j_ < j + 1; ++j_)
+            for (size_t j_ = 0; j_ < j + 1; ++j_)
             {
                 if (!storage.at(j_))
                 {
@@ -166,7 +166,7 @@ struct elona_vector2
     }
 
 
-    void clear(int j)
+    void clear(size_t j)
     {
         if (j >= std::size(storage))
             return;
@@ -175,7 +175,7 @@ struct elona_vector2
     }
 
 
-    void clear(int j, int i_begin, int i_length)
+    void clear(size_t j, size_t i_begin, size_t i_length)
     {
         if (j >= std::size(storage))
             return;
@@ -189,10 +189,10 @@ struct elona_vector2
 
 
     // FIXME: DRY!
-    void allocate_and_clear(int i_size, int j_size)
+    void allocate_and_clear(size_t i_size, size_t j_size)
     {
         storage.resize(j_size);
-        for (int j = 0; j < j_size; ++j)
+        for (size_t j = 0; j < j_size; ++j)
         {
             if (!storage.at(j))
             {
@@ -224,12 +224,12 @@ private:
 template <typename T>
 struct elona_vector3
 {
-    T& operator()(int i, int j, int k)
+    T& operator()(size_t i, size_t j, size_t k)
     {
         if (k >= std::size(storage))
         {
             storage.resize(k + 1);
-            for (int k_ = 0; k_ < k + 1; ++k_)
+            for (size_t k_ = 0; k_ < k + 1; ++k_)
             {
                 if (!storage.at(k_))
                 {
@@ -241,7 +241,7 @@ struct elona_vector3
         if (j >= std::size(*storage.at(k)))
         {
             storage.at(k)->resize(j + 1);
-            for (int j_ = 0; j_ < j + 1; ++j_)
+            for (size_t j_ = 0; j_ < j + 1; ++j_)
             {
                 if (!(*storage.at(k))[j_])
                 {
@@ -259,10 +259,10 @@ struct elona_vector3
 
 
     // FIXME: DRY!
-    void allocate_and_clear(int i_size, int j_size, int k_size)
+    void allocate_and_clear(size_t i_size, size_t j_size, size_t k_size)
     {
         storage.resize(k_size);
-        for (int k = 0; k < k_size; ++k)
+        for (size_t k = 0; k < k_size; ++k)
         {
             if (!storage.at(k))
             {
@@ -270,7 +270,7 @@ struct elona_vector3
                     std::vector<std::unique_ptr<std::vector<T>>>>();
             }
             storage.at(k)->resize(j_size);
-            for (int j = 0; j < j_size; ++j)
+            for (size_t j = 0; j < j_size; ++j)
             {
                 if (!(*storage.at(k))[j])
                 {

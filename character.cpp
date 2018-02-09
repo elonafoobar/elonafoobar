@@ -44,7 +44,7 @@ character_data::character_data()
 
 
 
-int cbit(int type, int cc)
+int cbit(size_t type, int cc)
 {
     assert(type < sizeof(int) * 8 * 50);
     return cdata(cc).flags[type / 32] & (1 << (type % 32)) ? 1 : 0;
@@ -52,7 +52,7 @@ int cbit(int type, int cc)
 
 
 
-void cbitmod(int type, int cc, int on)
+void cbitmod(size_t type, int cc, int on)
 {
     assert(type < sizeof(int) * 8 * 50);
     if (on)

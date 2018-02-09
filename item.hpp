@@ -144,8 +144,8 @@ inline inventory inv;
 
 
 
-int ibit(int type, int ci);
-void ibitmod(int type, int ci, int on);
+int ibit(size_t type, int ci);
+void ibitmod(size_t type, int ci, int on);
 
 
 } // namespace elona

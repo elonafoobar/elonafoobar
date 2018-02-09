@@ -62,7 +62,7 @@ inventory::inventory()
 
 
 
-int ibit(int type, int ci)
+int ibit(size_t type, int ci)
 {
     assert(type < sizeof(item::flags) * 8);
     return inv(ci).flags & (1 << type) ? 1 : 0;
@@ -70,7 +70,7 @@ int ibit(int type, int ci)
 
 
 
-void ibitmod(int type, int ci, int on)
+void ibitmod(size_t type, int ci, int on)
 {
     assert(type < sizeof(item::flags) * 8);
     if (on)
@@ -371,7 +371,7 @@ int itemusingfind(int prm_485, int prm_486)
                 {
                     if (cdata[cnt].continuous_action_item == prm_485)
                     {
-                        if (prm_486 == 0 || prm_486 == 1 && cnt != 0)
+                        if (prm_486 == 0 || (prm_486 == 1 && cnt != 0))
                         {
                             f_at_m54 = cnt;
                             break;
@@ -1188,7 +1188,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     elona::prm_518 = prm_518;
     itemnamehack = inv[prm_518].id + 1;
     if (inv[prm_518].id >= maxitemid - 2
-        || inv[prm_518].id > length(ioriginalnameref))
+        || size_t(inv[prm_518].id) > length(ioriginalnameref))
     {
         itemnamehack = 0;
         return lang(

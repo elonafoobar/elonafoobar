@@ -258,7 +258,7 @@ label_1741_internal:
             for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
             {
                 if (inv[cnt].id >= maxitemid - 2
-                    || inv[cnt].id > length(ioriginalnameref))
+                    || size_t(inv[cnt].id) > length(ioriginalnameref))
                 {
                     inv[cnt].number = 0;
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
