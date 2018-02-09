@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include "optional_ref.hpp"
 
 
 namespace elona
@@ -10,6 +11,9 @@ namespace elona
 struct trait_data
 {
     int id;
+    int traitref0;
+    int traitref1;
+    int traitref2;
 };
 
 
@@ -19,7 +23,7 @@ class trait_db
 public:
     trait_db();
 
-    const trait_data& operator[](int id) const;
+    optional_ref<trait_data> operator[](int id) const;
 
 
 private:
