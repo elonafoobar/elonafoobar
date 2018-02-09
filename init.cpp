@@ -37,7 +37,7 @@ void main_loop()
 redo:
     try
     {
-        label_2733();
+        turn_begin();
     }
     catch (elona_turn_sequence&)
     {
@@ -421,7 +421,7 @@ void initialize_elona()
     initialize_fish_data();
     initialize_nefia_names();
     label_1713();
-    label_2105();
+    load_cnpc_data();
     if (cfg_music == 1 && DMINIT() == 0)
     {
         cfg_music = 2;

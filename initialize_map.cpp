@@ -3052,12 +3052,12 @@ label_1742_internal:
             {
                 cxinit = cdata[0].position.x;
                 cyinit = cdata[0].position.y;
-                label_1532();
+                place_character();
             }
             else
             {
                 cxinit = -1;
-                label_1532();
+                place_character();
                 cdata[rc].hp = cdata[rc].max_hp;
                 cdata[rc].mp = cdata[rc].max_mp;
             }
@@ -3284,7 +3284,7 @@ label_1744_internal:
     }
     if (gdata_current_map == 35)
     {
-        label_2105();
+        load_cnpc_data();
     }
     label_1745();
     gdata_other_character_count = 0;
@@ -3600,7 +3600,7 @@ label_1744_internal:
             }
             else
             {
-                label_2733();
+                turn_begin();
                 return;
             }
         }
@@ -3875,7 +3875,7 @@ label_1744_internal:
                     + u8" minitues."s));
         }
     }
-    label_2733();
+    turn_begin();
     return;
 }
 

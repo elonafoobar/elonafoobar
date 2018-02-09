@@ -524,7 +524,7 @@ void proc_event()
             rc = tc;
             cxinit = cdata[0].position.x;
             cyinit = cdata[0].position.y;
-            label_1532();
+            place_character();
         }
         else
         {

@@ -1754,7 +1754,7 @@ label_2181_internal:
             dmgsp(
                 0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
         }
-        label_1587();
+        cook();
         goto label_2186_internal;
     case 185:
         if (sdata(185, 0) == 0)
@@ -2228,7 +2228,7 @@ label_2181_internal:
         label_1538();
         cxinit = cdata[cc].position.x;
         cyinit = cdata[cc].position.y;
-        label_1532();
+        place_character();
         cdata[rc].current_map = 0;
         txtef(5);
         txt(cnven(cdatan(0, rc))
