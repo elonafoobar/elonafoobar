@@ -925,8 +925,7 @@ void label_1544()
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
-            dbidn = listn(1, cnt);
-            access_race_info(2);
+            access_race_info(2, listn(1, cnt));
             listn(0, cnt) = racename;
             if (list(0, cnt) == 1)
             {
@@ -984,9 +983,8 @@ label_1546_internal:
         color(0, 0, 0);
         pos(wx + 200, wy + 66);
         del_chara(0);
-        dbidn = listn(1, page * pagesize + cs);
-        access_race_info(3);
-        access_race_info(11);
+        access_race_info(3, listn(1, page * pagesize + cs));
+        access_race_info(11, listn(1, page * pagesize + cs));
         val = 0;
         label_1567(cnt);
     }
@@ -1013,8 +1011,7 @@ label_1546_internal:
     {
         cmrace(0) = listn(1, p);
         cmrace(1) = listn(0, p);
-        dbidn = cmrace;
-        access_race_info(11);
+        access_race_info(11, cmrace);
         label_1547();
         return;
     }
@@ -1298,8 +1295,7 @@ label_1554:
         mes(u8"Gene from "s + geneuse);
     }
     del_chara(0);
-    dbidn = cmrace;
-    access_race_info(3);
+    access_race_info(3, cmrace);
     dbidn = cmclass;
     dbmode = 3;
     access_class_info();
@@ -1658,8 +1654,7 @@ label_1563_internal:
         u8"Hit the enter key to reroll your personal history."s);
     label_1425();
     del_chara(0);
-    dbidn = cmrace;
-    access_race_info(3);
+    access_race_info(3, cmrace);
     dbidn = cmclass;
     dbmode = 3;
     access_class_info();

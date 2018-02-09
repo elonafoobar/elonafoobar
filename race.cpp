@@ -210,7 +210,7 @@ void get_race_list(bool is_extra_race)
 
 
 
-int access_race_info(int dbmode)
+int access_race_info(int dbmode, const std::string& dbidn)
 {
     auto info = the_race_db[dbidn];
     if (!info)

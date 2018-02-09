@@ -43,7 +43,7 @@ inline race_db the_race_db;
 
 
 void get_race_list(bool is_extra_race);
-int access_race_info(int dbmode);
+int access_race_info(int dbmode, const std::string& dbidn);
 
 
 } // namespace elona
