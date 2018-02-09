@@ -48306,8 +48306,8 @@ label_2009_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(
                 1,
-                (the_ability_db[list(0, p)].related_basic_attribute)
-                    - 10 * inf_tiles,
+                (the_ability_db[list(0, p)].related_basic_attribute - 10)
+                    * inf_tiles,
                 672,
                 0,
                 inf_tiles,
