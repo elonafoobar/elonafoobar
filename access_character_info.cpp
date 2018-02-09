@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "character.hpp"
+#include "class.hpp"
 #include "elona.hpp"
 #include "race.hpp"
 #include "variables.hpp"
@@ -79,9 +80,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"slime");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -123,9 +122,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 1;
             cdata[rc].image += 0;
@@ -224,9 +221,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 140;
             if (cdata[rc].sex == 1)
             {
@@ -278,9 +273,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 443;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -416,9 +409,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 144;
             if (cdata[rc].sex == 1)
             {
@@ -497,9 +488,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 15;
             if (cdata[rc].sex == 1)
             {
@@ -579,9 +568,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 41;
             cdata[rc].image += 0;
@@ -679,9 +666,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 69;
             cdata[rc].image += 0;
@@ -828,9 +813,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 1;
             cdata[rc].image = 163;
             cdata[rc].image += 0;
@@ -906,9 +889,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 142;
             if (cdata[rc].sex == 1)
             {
@@ -997,9 +978,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 7;
             if (cdata[rc].sex == 1)
             {
@@ -1089,9 +1068,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 415;
             if (cdata[rc].sex == 1)
             {
@@ -1197,9 +1174,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image = 363;
             if (cdata[rc].sex == 1)
             {
@@ -1305,9 +1280,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image = 25;
             if (cdata[rc].sex == 1)
             {
@@ -1414,9 +1387,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 74;
             if (cdata[rc].sex == 1)
             {
@@ -1535,9 +1506,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"elea");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 0;
             cdata[rc].image = 297;
             cdata[rc].image += 0;
@@ -1656,9 +1625,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].sex = 0;
             cdata[rc].image = 347;
             cdata[rc].image += 0;
@@ -1759,9 +1726,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 331;
             cdata[rc].image += 0;
@@ -1813,9 +1778,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 0;
             cdata[rc].image = 332;
             cdata[rc].image += 0;
@@ -1862,9 +1825,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].sex = 1;
             cdata[rc].image = 333;
             cdata[rc].image += 0;
@@ -1988,9 +1949,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 334;
             cdata[rc].image += 0;
@@ -2117,9 +2076,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 337;
             cdata[rc].image += 0;
@@ -2172,9 +2129,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(50, rc) = 500;
             cdata[rc].image = 338;
             cdata[rc].image += 0;
@@ -2294,9 +2249,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].sex = 1;
             cdata[rc].image = 8;
             cdata[rc].image += 0;
@@ -2414,9 +2367,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 109;
             cdata[rc].image += 0;
@@ -2542,9 +2493,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"cat");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 478;
             cdata[rc].image += 0;
@@ -2684,9 +2633,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].sex = 1;
             cdata[rc].image = 479;
             cdata[rc].image += 0;
@@ -2798,9 +2745,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 344;
             cdata[rc].image += 0;
@@ -2938,9 +2883,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"elea");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 1;
             cdata[rc].image = 345;
             cdata[rc].image += 0;
@@ -3077,9 +3020,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"elea");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].sex = 0;
             cdata[rc].image = 346;
             cdata[rc].image += 0;
@@ -3159,9 +3100,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 99;
             cdata[rc].image += 0;
@@ -3232,9 +3171,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 99;
             cdata[rc].image += 0;
@@ -3354,9 +3291,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 1;
             cdata[rc].image = 340;
             cdata[rc].image += 0;
@@ -3417,9 +3352,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lich");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 339;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -3478,9 +3411,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 341;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -3539,9 +3470,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             sdata(50, rc) = 500;
             cdata[rc].image = 343;
             cdata[rc].image += 0;
@@ -3644,9 +3573,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].sex = 1;
             cdata[rc].image = 393;
             cdata[rc].image += 0;
@@ -3693,9 +3620,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 1;
             cdata[rc].image = 413;
             cdata[rc].image += 0;
@@ -3746,9 +3671,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 1;
             cdata[rc].image = 413;
             cdata[rc].image += 0;
@@ -3800,9 +3723,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 432;
             cdata[rc].image += 0;
@@ -3855,9 +3776,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"farmer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"farmer");
             cdata[rc].sex = 0;
             cdata[rc].image = 433;
             cdata[rc].image += 0;
@@ -3909,9 +3828,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 447;
             cdata[rc].image += 0;
@@ -3966,9 +3883,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"god");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 0;
             cdata[rc].image = 435;
             cdata[rc].image += 0;
@@ -4039,9 +3954,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"slime");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             sdata(63, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -4162,9 +4075,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"slime");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(63, rc) = 500;
             cdata[rc].image = 257;
             cdata[rc].image += 4000;
@@ -4226,9 +4137,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"slime");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 6300100;
             sdata(63, rc) = 500;
             cdata[rc].image = 257;
@@ -4477,9 +4386,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"rabbit");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -4536,9 +4443,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"snail");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -4652,9 +4557,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 37;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -4769,9 +4672,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 139;
             if (cdata[rc].sex == 1)
             {
@@ -4894,9 +4795,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 102;
             if (cdata[rc].sex == 1)
             {
@@ -4988,9 +4887,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 179;
             if (cdata[rc].sex == 1)
             {
@@ -5075,9 +4972,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 410;
             cdata[rc].image += 0;
@@ -5159,9 +5054,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 187;
             if (cdata[rc].sex == 1)
             {
@@ -5275,9 +5168,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"pianist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"pianist");
             cdata[rc].image = 148;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -5346,9 +5237,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 181;
             if (cdata[rc].sex == 1)
             {
@@ -5421,9 +5310,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 442;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -5494,9 +5381,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"pianist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"pianist");
             cdata[rc].image = 473;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -5572,9 +5457,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 285;
             if (cdata[rc].sex == 1)
             {
@@ -5659,9 +5542,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 183;
             if (cdata[rc].sex == 1)
             {
@@ -5745,9 +5626,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 418;
             if (cdata[rc].sex == 1)
             {
@@ -5831,9 +5710,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 419;
             if (cdata[rc].sex == 1)
             {
@@ -5919,9 +5796,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 185;
             if (cdata[rc].sex == 1)
             {
@@ -6009,9 +5884,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 189;
             if (cdata[rc].sex == 1)
             {
@@ -6100,9 +5973,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"eulderna");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 195;
             if (cdata[rc].sex == 1)
             {
@@ -6188,9 +6059,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 76;
             if (cdata[rc].sex == 1)
             {
@@ -6276,9 +6145,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 78;
             if (cdata[rc].sex == 1)
             {
@@ -6401,9 +6268,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 104;
             if (cdata[rc].sex == 1)
             {
@@ -6525,9 +6390,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 106;
             if (cdata[rc].sex == 1)
             {
@@ -6619,9 +6482,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 112;
             if (cdata[rc].sex == 1)
             {
@@ -6667,9 +6528,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"sheep");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -6710,9 +6569,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"frog");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -6853,9 +6710,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"kobolt");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -6976,9 +6831,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yeek");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
@@ -7140,9 +6993,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 385;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -7186,9 +7037,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"rock");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 386;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -7320,9 +7169,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].sex = 0;
             cdata[rc].image = 411;
             cdata[rc].image += 0;
@@ -7406,9 +7253,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yeek");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 381;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -7779,9 +7624,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 136;
             if (cdata[rc].sex == 1)
             {
@@ -7884,9 +7727,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 134;
             if (cdata[rc].sex == 1)
             {
@@ -7991,9 +7832,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 128;
             if (cdata[rc].sex == 1)
             {
@@ -8098,9 +7937,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 127;
             if (cdata[rc].sex == 1)
             {
@@ -8186,9 +8023,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 146;
             if (cdata[rc].sex == 1)
             {
@@ -8267,9 +8102,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 120;
             if (cdata[rc].sex == 1)
             {
@@ -8348,9 +8181,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 119;
             cdata[rc].image += 0;
@@ -8456,9 +8287,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 117;
             cdata[rc].image += 0;
@@ -8541,9 +8370,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 116;
             cdata[rc].image += 0;
@@ -8627,9 +8454,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lizardman");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -8670,9 +8495,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"minotaur");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -8718,9 +8541,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"minotaur");
-            dbidn = u8"priest";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"priest");
             cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
@@ -8762,9 +8583,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"minotaur");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 3000;
             cspecialeq = 0;
             return 0;
@@ -8806,9 +8625,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"minotaur");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 8000;
             cspecialeq = 1;
             return 0;
@@ -8861,9 +8678,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"minotaur");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 10000;
             fixlv = 6;
             cspecialeq = 1;
@@ -8957,9 +8772,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"elea");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             if (cdata[rc].sex == 1)
             {
                 cdata[rc].image = 34;
@@ -9009,9 +8822,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"elea");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 47;
             if (cdata[rc].sex == 1)
             {
@@ -9057,9 +8868,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"asura");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 1;
             return 0;
@@ -9105,9 +8914,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"asura");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 2000;
             cspecialeq = 1;
             return 0;
@@ -9153,9 +8960,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"asura");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 3000;
             cspecialeq = 1;
             return 0;
@@ -9210,9 +9015,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 13;
             if (cdata[rc].sex == 1)
             {
@@ -9263,9 +9066,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 21;
             if (cdata[rc].sex == 1)
             {
@@ -9361,9 +9162,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"beetle");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -9404,9 +9203,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"orc");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -9450,9 +9247,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"orc");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 3000;
             fixlv = 6;
             cspecialeq = 0;
@@ -9499,9 +9294,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"zombie");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -9583,9 +9376,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"bat");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(56, rc) = 500;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -9627,9 +9418,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"bat");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
@@ -9678,9 +9467,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"ent");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 5000200;
             sdata(51, rc) = 50;
             sdata(50, rc) = 500;
@@ -9732,9 +9519,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"ent");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 5100200;
             sdata(50, rc) = 50;
             sdata(51, rc) = 500;
@@ -9787,9 +9572,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lich");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -9840,9 +9623,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lich");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -9892,9 +9673,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lich");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -9940,9 +9719,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lich");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 404;
             cdata[rc].image += 0;
             cspecialeq = 1;
@@ -9995,9 +9772,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"lich");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 404;
             cdata[rc].image += 4000;
             cspecialeq = 1;
@@ -10044,9 +9819,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 6000;
             cspecialeq = 1;
             return 0;
@@ -10093,9 +9866,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(51, rc) = 50;
             sdata(50, rc) = 500;
             cdata[rc].image += 3000;
@@ -10139,9 +9910,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(50, rc) = 50;
             sdata(51, rc) = 500;
             cdata[rc].image += 12000;
@@ -10186,9 +9955,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(52, rc) = 500;
             cdata[rc].image += 5000;
             cspecialeq = 0;
@@ -10231,9 +9998,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(53, rc) = 500;
             cdata[rc].image += 4000;
             cspecialeq = 0;
@@ -10276,9 +10041,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(54, rc) = 500;
             cdata[rc].image += 10000;
             cspecialeq = 0;
@@ -10321,9 +10084,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(58, rc) = 500;
             cdata[rc].image += 9000;
             cspecialeq = 0;
@@ -10367,9 +10128,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(55, rc) = 500;
             cdata[rc].image += 2000;
             cspecialeq = 0;
@@ -10412,9 +10171,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(57, rc) = 500;
             cdata[rc].image += 11000;
             cspecialeq = 0;
@@ -10457,9 +10214,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(56, rc) = 500;
             cdata[rc].image += 15000;
             cspecialeq = 0;
@@ -10502,9 +10257,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hound");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(59, rc) = 500;
             cdata[rc].image += 18000;
             cspecialeq = 0;
@@ -10552,9 +10305,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"rabbit");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 204;
             cdata[rc].image += 6000;
             cspecialeq = 0;
@@ -10602,9 +10353,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"rabbit");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 204;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -10742,9 +10491,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"ent");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 406;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -10789,9 +10536,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"ent");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 406;
             cdata[rc].image += 16000;
             cspecialeq = 0;
@@ -11002,9 +10747,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"eye");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 5900400;
             sdata(54, rc) = 500;
             if (nerve != 0)
@@ -11120,9 +10863,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"eye");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 5800450;
             sdata(54, rc) = 500;
             if (nerve != 0)
@@ -11171,9 +10912,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"wyvern");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(50, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -11219,9 +10958,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"eulderna");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 209;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -11351,9 +11088,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"giant");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -11416,9 +11151,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"giant");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -11713,9 +11446,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"hand");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 16000;
             cspecialeq = 1;
             return 0;
@@ -12192,9 +11923,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"zombie");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 219;
             cdata[rc].image += 10000;
             cspecialeq = 0;
@@ -12245,9 +11974,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"zombie");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 219;
             cdata[rc].image += 5000;
             cspecialeq = 0;
@@ -12303,9 +12030,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"zombie");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 219;
             cdata[rc].image += 8000;
             fixlv = 6;
@@ -12440,9 +12165,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"goblin");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -12488,9 +12211,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"goblin");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].image += 18000;
             cspecialeq = 0;
             return 0;
@@ -12533,9 +12254,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"goblin");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image += 4000;
             cspecialeq = 0;
             return 0;
@@ -12579,9 +12298,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"ghost");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             sdata(50, rc) = 500;
             cdata[rc].image = 221;
             cdata[rc].image += 3000;
@@ -12627,9 +12344,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"ghost");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             sdata(51, rc) = 500;
             cdata[rc].image = 221;
             cdata[rc].image += 4000;
@@ -12831,9 +12546,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"armor");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -12879,9 +12592,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"armor");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -12928,9 +12639,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"armor");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -12977,9 +12686,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"armor");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -13020,9 +12727,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"medusa");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -13063,9 +12768,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"medusa");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -13106,9 +12809,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"medusa");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -13156,9 +12857,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"cupid");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -13201,9 +12900,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"phantom");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -13245,9 +12942,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dinosaur");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -13330,9 +13025,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 19000;
             cspecialeq = 0;
             return 0;
@@ -13374,9 +13067,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(50, rc) = 500;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -13420,9 +13111,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(51, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -13465,9 +13154,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(52, rc) = 500;
             cdata[rc].image += 5000;
             cspecialeq = 0;
@@ -13510,9 +13197,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(56, rc) = 500;
             cdata[rc].image += 4000;
             cspecialeq = 0;
@@ -13555,9 +13240,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dragon");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(59, rc) = 500;
             cdata[rc].image += 18000;
             cspecialeq = 0;
@@ -13600,9 +13283,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"cerberus");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(50, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -14175,9 +13856,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"golem");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 15000;
             cspecialeq = 0;
             return 0;
@@ -14235,9 +13914,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"golem");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -14295,9 +13972,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"golem");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 17000;
             cspecialeq = 0;
             return 0;
@@ -14354,9 +14029,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"golem");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 9000;
             cspecialeq = 0;
             return 0;
@@ -14415,9 +14088,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"golem");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 2000;
             cspecialeq = 0;
             return 0;
@@ -14565,9 +14236,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"goblin");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             sdata(50, rc) = 500;
             cdata[rc].image = 240;
             cdata[rc].image += 0;
@@ -14610,9 +14279,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"skeleton");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -14654,9 +14321,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"skeleton");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 3000;
             cspecialeq = 1;
             return 0;
@@ -14774,9 +14439,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"piece");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -14823,9 +14486,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"piece");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 245;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -14876,9 +14537,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"piece");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 246;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -14926,9 +14585,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"piece");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 247;
             cdata[rc].image += 0;
             cspecialeq = 1;
@@ -14984,9 +14641,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"piece");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 248;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -15035,9 +14690,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"piece");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 249;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -15109,9 +14762,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 159;
             if (cdata[rc].sex == 1)
             {
@@ -15187,9 +14838,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image = 57;
             if (cdata[rc].sex == 1)
             {
@@ -15266,9 +14915,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 100;
             if (cdata[rc].sex == 1)
             {
@@ -15359,9 +15006,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 150;
             if (cdata[rc].sex == 1)
             {
@@ -15452,9 +15097,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 31;
             if (cdata[rc].sex == 1)
             {
@@ -15549,9 +15192,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 158;
             if (cdata[rc].sex == 1)
             {
@@ -15644,9 +15285,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"priest";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"priest");
             cdata[rc].image = 157;
             if (cdata[rc].sex == 1)
             {
@@ -15732,9 +15371,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 250;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -15819,9 +15456,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 250;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -15924,9 +15559,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 370;
             cdata[rc].image += 0;
@@ -15973,9 +15606,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 373;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -16058,9 +15689,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 377;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -16144,9 +15773,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 377;
             cdata[rc].image += 4000;
             cspecialeq = 0;
@@ -16189,9 +15816,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 251;
             cdata[rc].image += 0;
             cspecialeq = 1;
@@ -16714,9 +16339,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"cat");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 368;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -16816,9 +16439,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"catgod");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 369;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -16926,9 +16547,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"cat");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 367;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -17398,9 +17017,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 4;
             if (cdata[rc].sex == 1)
             {
@@ -17502,9 +17119,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"shell");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -17578,9 +17193,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 258;
             cdata[rc].image += 0;
             cspecialeq = 1;
@@ -17754,9 +17367,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 105;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -17858,9 +17469,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 105;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -17961,9 +17570,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"catsister");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -18048,9 +17655,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].image = 355;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -18124,9 +17729,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"machinegod");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 349;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -18214,9 +17817,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"undeadgod");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 0;
             cdata[rc].image = 339;
             cdata[rc].image += 3000;
@@ -18266,9 +17867,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 350;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -18350,9 +17949,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dwarf");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 352;
             cdata[rc].image += 0;
@@ -18427,9 +18024,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dwarf");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 353;
             cdata[rc].image += 0;
@@ -18670,9 +18265,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 208;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -18969,9 +18562,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 122;
             if (cdata[rc].sex == 1)
             {
@@ -19104,9 +18695,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 477;
             if (cdata[rc].sex == 1)
             {
@@ -19203,9 +18792,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"machine");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 6100120;
             cdata[rc].image += 17000;
             cspecialeq = 0;
@@ -19252,9 +18839,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"machine");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 6100150;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -19375,9 +18960,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"bike");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 470;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -19496,9 +19079,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"bike");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 471;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20164,9 +19745,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"stalker");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 276;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -20217,9 +19796,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"stalker");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image = 276;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -20380,9 +19957,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 23;
             cdata[rc].image += 0;
@@ -20486,9 +20061,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].image = 104;
             if (cdata[rc].sex == 1)
             {
@@ -20616,9 +20189,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 117;
             cdata[rc].image += 0;
@@ -20731,9 +20302,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 1;
             cdata[rc].image = 356;
             if (cdata[rc].sex == 1)
@@ -20815,9 +20384,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].sex = 1;
             cdata[rc].image = 358;
             cdata[rc].image += 0;
@@ -20898,9 +20465,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 359;
             cdata[rc].image += 0;
@@ -21006,9 +20571,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 361;
             cdata[rc].image += 0;
@@ -21114,9 +20677,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 362;
             cdata[rc].image += 0;
@@ -21221,9 +20782,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 383;
             cdata[rc].image += 0;
@@ -21437,9 +20996,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 0;
             cdata[rc].image = 392;
             cdata[rc].image += 0;
@@ -21543,9 +21100,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].sex = 0;
             cdata[rc].image = 394;
             cdata[rc].image += 0;
@@ -21650,9 +21205,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].sex = 1;
             cdata[rc].image = 199;
             cdata[rc].image += 0;
@@ -21759,9 +21312,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 403;
             cdata[rc].image += 0;
@@ -21962,9 +21513,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 166;
             cdata[rc].image += 3000;
             cspecialeq = 0;
@@ -22061,9 +21610,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 166;
             cdata[rc].image += 4000;
             cspecialeq = 0;
@@ -22114,9 +21661,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yith");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(54, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -22169,9 +21714,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yith");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             sdata(54, rc) = 500;
             cdata[rc].image = 277;
             cdata[rc].image += 0;
@@ -22216,9 +21759,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"orc");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 278;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -22270,9 +21811,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yith");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             sdata(54, rc) = 500;
             cdata[rc].image = 430;
             cdata[rc].image += 0;
@@ -22423,9 +21962,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].image = 211;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -22494,9 +22031,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image = 217;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -22545,9 +22080,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].image = 218;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -22644,9 +22177,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].sex = 1;
             cdata[rc].image = 236;
             cdata[rc].image += 0;
@@ -22697,9 +22228,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].image = 269;
             cdata[rc].image += 0;
             fixlv = 6;
@@ -22750,9 +22279,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 267;
             cdata[rc].image += 0;
@@ -22804,9 +22331,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"servant");
-            dbidn = u8"warmage";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warmage");
             cdata[rc].sex = 0;
             cdata[rc].image = 242;
             cdata[rc].image += 0;
@@ -23004,9 +22529,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"horse");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 6000;
             cspecialeq = 0;
             return 0;
@@ -23105,9 +22628,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"horse");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 15000;
             cspecialeq = 0;
             return 0;
@@ -23206,9 +22727,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"horse");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 16000;
             cspecialeq = 0;
             return 0;
@@ -23306,9 +22825,7 @@ int access_character_info()
             cdata[rc].original_relationship = -1;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"horse");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].image += 10000;
             cspecialeq = 0;
             return 0;
@@ -23354,9 +22871,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"mutant");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].image = 191;
             cdata[rc].image += 0;
             cspecialeq = 0;
@@ -23434,9 +22949,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"yerles");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 263;
             cdata[rc].image += 0;
@@ -23634,9 +23147,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 0;
             cdata[rc].image = 193;
             cdata[rc].image += 0;
@@ -23708,9 +23219,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"wizard";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"wizard");
             cdata[rc].sex = 0;
             cdata[rc].image = 196;
             cdata[rc].image += 0;
@@ -23761,9 +23270,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].sex = 0;
             cdata[rc].image = 197;
             cdata[rc].image += 0;
@@ -23832,9 +23339,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"thief";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"thief");
             cdata[rc].sex = 0;
             cdata[rc].image = 196;
             cdata[rc].image += 0;
@@ -23885,9 +23390,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 1;
             cdata[rc].image = 80;
             cdata[rc].image += 0;
@@ -23957,9 +23460,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"norland");
-            dbidn = u8"warrior";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"warrior");
             cdata[rc].sex = 0;
             cdata[rc].image = 196;
             cdata[rc].image += 0;
@@ -24066,9 +23567,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"claymore";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"claymore");
             cdata[rc].sex = 1;
             cdata[rc].image = 279;
             cdata[rc].image += 0;
@@ -24184,9 +23683,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"machinegod");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 0;
             cdata[rc].image = 408;
             cdata[rc].image += 0;
@@ -24295,9 +23792,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"mutant");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].sex = 1;
             cdata[rc].image = 409;
             cdata[rc].image += 0;
@@ -24410,9 +23905,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"roran");
-            dbidn = u8"gunner";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"gunner");
             cdata[rc].sex = 1;
             cdata[rc].image = 412;
             cdata[rc].image += 0;
@@ -24527,9 +24020,7 @@ int access_character_info()
             cdata[rc].original_relationship = 0;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"juere");
-            dbidn = u8"tourist";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"tourist");
             cdata[rc].sex = 0;
             cdata[rc].image = 416;
             cdata[rc].image += 0;
@@ -24679,9 +24170,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"quickling");
-            dbidn = u8"archer";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"archer");
             cdata[rc].image += 5000;
             cspecialeq = 0;
             return 0;
@@ -24885,9 +24374,7 @@ int access_character_info()
             cdata[rc].original_relationship = -3;
             cdata[rc]._40 = -10000;
             access_race_info(3, u8"dinosaur");
-            dbidn = u8"predator";
-            dbmode = 3;
-            access_class_info();
+            access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 6300250;
             cdata[rc].image = 283;
             cdata[rc].image += 17000;

@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "character.hpp"
+#include "class.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -1162,15 +1163,17 @@ void label_1550(bool label_1551_flg)
         pos(20, windowh - 36);
         mes(u8"Gene from "s + geneuse);
     }
-    dbmode = 1;
-    access_class_info();
+    listmax = 0;
+    for (const auto& id : get_available_classes())
+    {
+        listn(1, listmax) = id;
+        ++listmax;
+    }
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
-            dbidn = listn(1, cnt);
-            dbmode = 2;
-            access_class_info();
+            access_class_info(2, listn(1, cnt));
             listn(0, cnt) = classname;
         }
     }
@@ -1216,11 +1219,8 @@ label_1552_internal:
         color(0, 0, 0);
         pos(wx + 200, wy + 66);
         del_chara(0);
-        dbidn = listn(1, cs);
-        dbmode = 3;
-        access_class_info();
-        dbmode = 11;
-        access_class_info();
+        access_class_info(3, listn(1, cs));
+        access_class_info(11, listn(1, cs));
         val = 1;
         label_1567(cnt);
         redraw(1);
@@ -1296,9 +1296,7 @@ label_1554:
     }
     del_chara(0);
     access_race_info(3, cmrace);
-    dbidn = cmclass;
-    dbmode = 3;
-    access_class_info();
+    access_class_info(3, cmclass);
     cdata[rc].level = 1;
     {
         int cnt = 10;
@@ -1655,9 +1653,7 @@ label_1563_internal:
     label_1425();
     del_chara(0);
     access_race_info(3, cmrace);
-    dbidn = cmclass;
-    dbmode = 3;
-    access_class_info();
+    access_class_info(3, cmclass);
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
     cdata[rc].level = 1;
