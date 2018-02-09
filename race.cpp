@@ -3,6 +3,7 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "variables.hpp"
 
 
@@ -31,11 +32,6 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
 
-    FIELD_S(name_en);
-    FIELD_S(name_jp);
-    FIELD_S(description_en);
-    FIELD_S(description_jp);
-
     FIELD_I(male_image);
     FIELD_I(female_image);
     FIELD_I(breed_power);
@@ -47,10 +43,6 @@ int define(lua_State* state)
         id,
         race_data{
             id,
-            name_en,
-            name_jp,
-            description_en,
-            description_jp,
             male_image,
             female_image,
             breed_power,
@@ -199,12 +191,12 @@ int access_race_info(int dbmode, const std::string& dbidn)
     switch (dbmode)
     {
     case 2:
-        racename = lang(info->name_jp, info->name_en);
+        racename = i18n::_(u8"race", dbidn, u8"name");
         cpicref = info->male_image;
         return 0;
     case 3: break;
     case 11:
-        buff = lang(info->description_jp, info->description_en);
+        buff = i18n::_(u8"race", dbidn, u8"description");
         ref1 = info->male_image;
         ref2 = info->female_image;
         return 0;

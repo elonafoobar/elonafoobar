@@ -11,10 +11,6 @@ namespace elona
 struct race_data
 {
     std::string id;
-    std::string name_en;
-    std::string name_jp;
-    std::string description_en;
-    std::string description_jp;
     int male_image;
     int female_image;
     int breed_power;
