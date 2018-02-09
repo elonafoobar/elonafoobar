@@ -17,9 +17,7 @@ struct race_data
     std::string description_jp;
     int male_image;
     int female_image;
-    int dbspec7;
     int dbspec9;
-    int dbmode9;
 };
 
 
