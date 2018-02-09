@@ -596,14 +596,6 @@ int refclass(int prm_261, int prm_262)
 
 
 
-int refrace(const std::string& prm_263, int prm_264)
-{
-    dbspec = prm_264;
-    return access_race_info(16, prm_263);
-}
-
-
-
 std::string ranktitle(int prm_265)
 {
     int p_at_m6 = 0;
@@ -34254,7 +34246,7 @@ int cbreeder(int prm_984)
     std::string s_at_m173;
     int p_at_m173 = 0;
     s_at_m173 = refchara_str(cdata[prm_984].id, 8);
-    p_at_m173 = refrace(cdatan(2, prm_984), 9);
+    p_at_m173 = the_race_db[cdatan(2, prm_984)]->breed_power;
     p_at_m173 = p_at_m173 * 100 / (100 + cdata[prm_984].level * 5);
     return p_at_m173;
 }

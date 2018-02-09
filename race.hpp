@@ -17,7 +17,7 @@ struct race_data
     std::string description_jp;
     int male_image;
     int female_image;
-    int dbspec9;
+    int breed_power;
 };
 
 

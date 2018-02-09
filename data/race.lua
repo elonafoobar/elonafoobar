@@ -1,5 +1,5 @@
 define('kobolt', {
-  dbspec9        = 250,
+  breed_power    = 250,
   name_en        = "Kobolt",
   name_jp        = "コボルト",
   description_en = "",
@@ -8,7 +8,7 @@ define('kobolt', {
   female_image   = 171,
 })
 define('orc', {
-  dbspec9        = 300,
+  breed_power    = 300,
   name_en        = "Orc",
   name_jp        = "オーク",
   description_en = "",
@@ -17,7 +17,7 @@ define('orc', {
   female_image   = 165,
 })
 define('troll', {
-  dbspec9        = 250,
+  breed_power    = 250,
   name_en        = "Troll",
   name_jp        = "トロール",
   description_en = "",
@@ -26,7 +26,7 @@ define('troll', {
   female_image   = 391,
 })
 define('lizardman', {
-  dbspec9        = 300,
+  breed_power    = 300,
   name_en        = "Lizardman",
   name_jp        = "リザードマン",
   description_en = "",
@@ -35,7 +35,7 @@ define('lizardman', {
   female_image   = 397,
 })
 define('minotaur', {
-  dbspec9        = 300,
+  breed_power    = 300,
   name_en        = "Minotaur",
   name_jp        = "ミノタウロス",
   description_en = "",
@@ -44,7 +44,7 @@ define('minotaur', {
   female_image   = 398,
 })
 define('yerles', {
-  dbspec9        = 220,
+  breed_power    = 220,
   name_en        = "Yerles",
   name_jp        = "イェルス",
   description_jp =
@@ -55,7 +55,7 @@ define('yerles', {
   female_image   = 2,
 })
 define('norland', {
-  dbspec9        = 220,
+  breed_power    = 220,
   name_en        = "Norland",
   name_jp        = "ノーランド",
   description_en = "",
@@ -64,7 +64,7 @@ define('norland', {
   female_image   = 2,
 })
 define('eulderna', {
-  dbspec9        = 180,
+  breed_power    = 180,
   name_en        = "Eulderna",
   name_jp        = "エウダーナ",
   description_jp =
@@ -75,7 +75,7 @@ define('eulderna', {
   female_image   = 6,
 })
 define('fairy', {
-  dbspec9        = 180,
+  breed_power    = 180,
   name_en        = "Fairy",
   name_jp        = "妖精",
   description_jp =
@@ -86,7 +86,7 @@ define('fairy', {
   female_image   = 390,
 })
 define('asura', {
-  dbspec9        = 100,
+  breed_power    = 100,
   name_en        = "Asura",
   name_jp        = "阿修羅",
   description_en = "",
@@ -95,7 +95,7 @@ define('asura', {
   female_image   = 405,
 })
 define('slime', {
-  dbspec9        = 700,
+  breed_power    = 700,
   name_en        = "Slime",
   name_jp        = "スライム",
   description_en = "",
@@ -104,7 +104,7 @@ define('slime', {
   female_image   = 168,
 })
 define('wolf', {
-  dbspec9        = 800,
+  breed_power    = 800,
   name_en        = "Wolf",
   name_jp        = "狼",
   description_en = "",
@@ -113,7 +113,7 @@ define('wolf', {
   female_image   = 254,
 })
 define('dwarf', {
-  dbspec9        = 150,
+  breed_power    = 150,
   name_en        = "Dwarf",
   name_jp        = "丘の民",
   description_jp =
@@ -124,7 +124,7 @@ define('dwarf', {
   female_image   = 66,
 })
 define('juere', {
-  dbspec9        = 210,
+  breed_power    = 210,
   name_en        = "Juere",
   name_jp        = "ジューア",
   description_jp =
@@ -135,7 +135,7 @@ define('juere', {
   female_image   = 10,
 })
 define('zombie', {
-  dbspec9        = 100,
+  breed_power    = 100,
   name_en        = "Zombie",
   name_jp        = "ゾンビ",
   description_en = "",
@@ -144,7 +144,7 @@ define('zombie', {
   female_image   = 167,
 })
 define('elea', {
-  dbspec9        = 120,
+  breed_power    = 120,
   name_en        = "Elea",
   name_jp        = "エレア",
   description_jp =
@@ -155,7 +155,7 @@ define('elea', {
   female_image   = 4,
 })
 define('rabbit', {
-  dbspec9        = 800,
+  breed_power    = 800,
   name_en        = "Rabbit",
   name_jp        = "ウサギ",
   description_en = "",
@@ -164,7 +164,7 @@ define('rabbit', {
   female_image   = 169,
 })
 define('sheep', {
-  dbspec9        = 1000,
+  breed_power    = 1000,
   name_en        = "Sheep",
   name_jp        = "羊",
   description_en = "",
@@ -173,7 +173,7 @@ define('sheep', {
   female_image   = 170,
 })
 define('frog', {
-  dbspec9        = 600,
+  breed_power    = 600,
   name_en        = "Frog",
   name_jp        = "蛙",
   description_en = "",
@@ -182,7 +182,7 @@ define('frog', {
   female_image   = 172,
 })
 define('centipede', {
-  dbspec9        = 400,
+  breed_power    = 400,
   name_en        = "Centipede",
   name_jp        = "ムカデ",
   description_en = "",
@@ -191,7 +191,7 @@ define('centipede', {
   female_image   = 173,
 })
 define('snail', {
-  dbspec9        = 500,
+  breed_power    = 500,
   name_en        = "Snail",
   name_jp        = "かたつむり",
   description_jp =
@@ -202,7 +202,7 @@ define('snail', {
     female_image = 174,
 })
 define('mandrake', {
-  dbspec9        = 80,
+  breed_power    = 80,
   name_en        = "Mandrake",
   name_jp        = "マンドレイク",
   description_en = "",
@@ -211,7 +211,7 @@ define('mandrake', {
   female_image   = 175,
 })
 define('beetle', {
-  dbspec9        = 750,
+  breed_power    = 750,
   name_en        = "Beetle",
   name_jp        = "昆虫",
   description_en = "",
@@ -220,7 +220,7 @@ define('beetle', {
   female_image   = 176,
 })
 define('mushroom', {
-  dbspec9        = 440,
+  breed_power    = 440,
   name_en        = "Mushroom",
   name_jp        = "きのこ",
   description_en = "",
@@ -229,7 +229,7 @@ define('mushroom', {
   female_image   = 177,
 })
 define('bat', {
-  dbspec9        = 350,
+  breed_power    = 350,
   name_en        = "Bat",
   name_jp        = "コウモリ",
   description_en = "",
@@ -238,7 +238,7 @@ define('bat', {
   female_image   = 200,
 })
 define('ent', {
-  dbspec9        = 35,
+  breed_power    = 35,
   name_en        = "Ent",
   name_jp        = "エント",
   description_en = "",
@@ -247,7 +247,7 @@ define('ent', {
   female_image   = 201,
 })
 define('lich', {
-  dbspec9        = 25,
+  breed_power    = 25,
   name_en        = "Lich",
   name_jp        = "リッチ",
   description_jp =
@@ -258,7 +258,7 @@ define('lich', {
     female_image = 202,
 })
 define('hound', {
-  dbspec9        = 540,
+  breed_power    = 540,
   name_en        = "Hound",
   name_jp        = "猟犬",
   description_en = "",
@@ -267,7 +267,7 @@ define('hound', {
   female_image   = 203,
 })
 define('ghost', {
-  dbspec9        = 30,
+  breed_power    = 30,
   name_en        = "Ghost",
   name_jp        = "幽霊",
   description_en = "",
@@ -276,7 +276,7 @@ define('ghost', {
   female_image   = 205,
 })
 define('spirit', {
-  dbspec9        = 25,
+  breed_power    = 25,
   name_en        = "Spirit",
   name_jp        = "精霊",
   description_en = "",
@@ -285,7 +285,7 @@ define('spirit', {
   female_image   = 206,
 })
 define('eye', {
-  dbspec9        = 50,
+  breed_power    = 50,
   name_en        = "Eye",
   name_jp        = "目",
   description_en = "",
@@ -294,7 +294,7 @@ define('eye', {
   female_image   = 207,
 })
 define('wyvern', {
-  dbspec9        = 100,
+  breed_power    = 100,
   name_en        = "Wyvern",
   name_jp        = "ワイバーン",
   description_en = "",
@@ -303,7 +303,7 @@ define('wyvern', {
   female_image   = 235,
 })
 define('wasp', {
-  dbspec9        = 580,
+  breed_power    = 580,
   name_en        = "Wasp",
   name_jp        = "ワスプ",
   description_en = "",
@@ -312,7 +312,7 @@ define('wasp', {
   female_image   = 210,
 })
 define('giant', {
-  dbspec9        = 60,
+  breed_power    = 60,
   name_en        = "Giant",
   name_jp        = "巨人",
   description_en = "",
@@ -321,7 +321,7 @@ define('giant', {
   female_image   = 232,
 })
 define('imp', {
-  dbspec9        = 240,
+  breed_power    = 240,
   name_en        = "Imp",
   name_jp        = "インプ",
   description_en = "",
@@ -330,7 +330,7 @@ define('imp', {
   female_image   = 212,
 })
 define('hand', {
-  dbspec9        = 160,
+  breed_power    = 160,
   name_en        = "Hand",
   name_jp        = "手",
   description_en = "",
@@ -339,7 +339,7 @@ define('hand', {
   female_image   = 213,
 })
 define('snake', {
-  dbspec9        = 430,
+  breed_power    = 430,
   name_en        = "Snake",
   name_jp        = "蛇",
   description_en = "",
@@ -348,7 +348,7 @@ define('snake', {
   female_image   = 216,
 })
 define('drake', {
-  dbspec9        = 120,
+  breed_power    = 120,
   name_en        = "Drake",
   name_jp        = "ドレイク",
   description_en = "",
@@ -357,7 +357,7 @@ define('drake', {
   female_image   = 233,
 })
 define('goblin', {
-  dbspec9        = 290,
+  breed_power    = 290,
   name_en        = "Goblin",
   name_jp        = "ゴブリン",
   description_jp =
@@ -368,7 +368,7 @@ define('goblin', {
     female_image = 220,
 })
 define('bear', {
-  dbspec9        = 350,
+  breed_power    = 350,
   name_en        = "Bear",
   name_jp        = "熊",
   description_en = "",
@@ -377,7 +377,7 @@ define('bear', {
   female_image   = 222,
 })
 define('armor', {
-  dbspec9        = 40,
+  breed_power    = 40,
   name_en        = "Armor",
   name_jp        = "鎧",
   description_en = "",
@@ -386,7 +386,7 @@ define('armor', {
   female_image   = 223,
 })
 define('medusa', {
-  dbspec9        = 180,
+  breed_power    = 180,
   name_en        = "Medusa",
   name_jp        = "メデューサ",
   description_en = "",
@@ -395,7 +395,7 @@ define('medusa', {
   female_image   = 224,
 })
 define('cupid', {
-  dbspec9        = 350,
+  breed_power    = 350,
   name_en        = "Cupid",
   name_jp        = "キューピット",
   description_en = "",
@@ -404,7 +404,7 @@ define('cupid', {
   female_image   = 225,
 })
 define('phantom', {
-  dbspec9        = 35,
+  breed_power    = 35,
   name_en        = "Phantom",
   name_jp        = "ファントム",
   description_en = "",
@@ -413,7 +413,7 @@ define('phantom', {
   female_image   = 226,
 })
 define('harpy', {
-  dbspec9        = 420,
+  breed_power    = 420,
   name_en        = "Harpy",
   name_jp        = "ハーピー",
   description_en = "",
@@ -422,7 +422,7 @@ define('harpy', {
   female_image   = 227,
 })
 define('dragon', {
-  dbspec9        = 20,
+  breed_power    = 20,
   name_en        = "Dragon",
   name_jp        = "ドラゴン",
   description_en = "",
@@ -431,7 +431,7 @@ define('dragon', {
   female_image   = 228,
 })
 define('dinosaur', {
-  dbspec9        = 100,
+  breed_power    = 100,
   name_en        = "Dinosaur",
   name_jp        = "恐竜",
   description_en = "",
@@ -440,7 +440,7 @@ define('dinosaur', {
   female_image   = 389,
 })
 define('cerberus', {
-  dbspec9        = 80,
+  breed_power    = 80,
   name_en        = "Cerberus",
   name_jp        = "ケルベロス",
   description_en = "",
@@ -449,7 +449,7 @@ define('cerberus', {
   female_image   = 229,
 })
 define('spider', {
-  dbspec9        = 560,
+  breed_power    = 560,
   name_en        = "Spider",
   name_jp        = "蜘蛛",
   description_en = "",
@@ -458,7 +458,7 @@ define('spider', {
   female_image   = 230,
 })
 define('golem', {
-  dbspec9        = 40,
+  breed_power    = 40,
   name_en        = "Golem",
   name_jp        = "ゴーレム",
   description_jp =
@@ -469,7 +469,7 @@ define('golem', {
     female_image = 231,
 })
 define('rock', {
-  dbspec9        = 200,
+  breed_power    = 200,
   name_en        = "Rock",
   name_jp        = "岩",
   description_en = "",
@@ -478,7 +478,7 @@ define('rock', {
   female_image   = 386,
 })
 define('crab', {
-  dbspec9        = 420,
+  breed_power    = 420,
   name_en        = "Crab",
   name_jp        = "蟹",
   description_en = "",
@@ -487,7 +487,7 @@ define('crab', {
   female_image   = 237,
 })
 define('skeleton', {
-  dbspec9        = 30,
+  breed_power    = 30,
   name_en        = "Skeleton",
   name_jp        = "骸骨",
   description_en = "",
@@ -496,7 +496,7 @@ define('skeleton', {
   female_image   = 241,
 })
 define('piece', {
-  dbspec9        = 25,
+  breed_power    = 25,
   name_en        = "Piece",
   name_jp        = "駒",
   description_en = "",
@@ -505,7 +505,7 @@ define('piece', {
   female_image   = 244,
 })
 define('cat', {
-  dbspec9        = 950,
+  breed_power    = 950,
   name_en        = "Cat",
   name_jp        = "猫",
   description_en = "",
@@ -514,7 +514,7 @@ define('cat', {
   female_image   = 253,
 })
 define('dog', {
-  dbspec9        = 920,
+  breed_power    = 920,
   name_en        = "Dog",
   name_jp        = "犬",
   description_en = "",
@@ -523,7 +523,7 @@ define('dog', {
   female_image   = 254,
 })
 define('roran', {
-  dbspec9        = 220,
+  breed_power    = 220,
   name_en        = "Roran",
   name_jp        = "ローラン",
   description_en = "",
@@ -532,7 +532,7 @@ define('roran', {
   female_image   = 4,
 })
 define('rat', {
-  dbspec9        = 1100,
+  breed_power    = 1100,
   name_en        = "Rat",
   name_jp        = "ねずみ",
   description_en = "",
@@ -541,7 +541,7 @@ define('rat', {
   female_image   = 255,
 })
 define('shell', {
-  dbspec9        = 450,
+  breed_power    = 450,
   name_en        = "Shell",
   name_jp        = "やどかり",
   description_en = "",
@@ -550,7 +550,7 @@ define('shell', {
   female_image   = 256,
 })
 define('catgod', {
-  dbspec9        = 5,
+  breed_power    = 5,
   name_en        = "Catgod",
   name_jp        = "猫の神",
   description_en = "",
@@ -559,7 +559,7 @@ define('catgod', {
   female_image   = 199,
 })
 define('machinegod', {
-  dbspec9        = 5,
+  breed_power    = 5,
   name_en        = "Machinegod",
   name_jp        = "機械の神",
   description_en = "",
@@ -568,7 +568,7 @@ define('machinegod', {
   female_image   = 349,
 })
 define('undeadgod', {
-  dbspec9        = 5,
+  breed_power    = 5,
   name_en        = "Undeadgod",
   name_jp        = "死霊の神",
   description_en = "",
@@ -577,7 +577,7 @@ define('undeadgod', {
   female_image   = 350,
 })
 define('machine', {
-  dbspec9        = 15,
+  breed_power    = 15,
   name_en        = "Machine",
   name_jp        = "機械",
   description_en = "",
@@ -586,7 +586,7 @@ define('machine', {
   female_image   = 270,
 })
 define('wisp', {
-  dbspec9        = 25,
+  breed_power    = 25,
   name_en        = "Wisp",
   name_jp        = "ウィスプ",
   description_en = "",
@@ -595,7 +595,7 @@ define('wisp', {
   female_image   = 272,
 })
 define('chicken', {
-  dbspec9        = 1000,
+  breed_power    = 1000,
   name_en        = "Chicken",
   name_jp        = "鶏",
   description_en = "",
@@ -604,7 +604,7 @@ define('chicken', {
   female_image   = 274,
 })
 define('stalker', {
-  dbspec9        = 25,
+  breed_power    = 25,
   name_en        = "Stalker",
   name_jp        = "ストーカー",
   description_en = "",
@@ -613,7 +613,7 @@ define('stalker', {
   female_image   = 276,
 })
 define('catsister', {
-  dbspec9        = 5,
+  breed_power    = 5,
   name_en        = "Catsister",
   name_jp        = "妹猫",
   description_en = "",
@@ -622,7 +622,7 @@ define('catsister', {
   female_image   = 354,
 })
 define('mutant', {
-  dbspec9        = 50,
+  breed_power    = 50,
   name_en        = "Mutant",
   name_jp        = "カオスシェイプ",
   description_jp =
@@ -633,7 +633,7 @@ define('mutant', {
     female_image = 4,
 })
 define('yeek', {
-  dbspec9        = 500,
+  breed_power    = 500,
   name_en        = "Yeek",
   name_jp        = "イーク",
   description_en = "",
@@ -642,7 +642,7 @@ define('yeek', {
   female_image   = 378,
 })
 define('yith', {
-  dbspec9        = 25,
+  breed_power    = 25,
   name_en        = "Yith",
   name_jp        = "イス",
   description_en = "",
@@ -651,7 +651,7 @@ define('yith', {
   female_image   = 429,
 })
 define('servant', {
-  dbspec9        = 5,
+  breed_power    = 5,
   name_en        = "Servant",
   name_jp        = "神の化身",
   description_en = "",
@@ -660,7 +660,7 @@ define('servant', {
   female_image   = 2,
 })
 define('horse', {
-  dbspec9        = 1000,
+  breed_power    = 1000,
   name_en        = "Horse",
   name_jp        = "馬",
   description_en = "",
@@ -669,7 +669,7 @@ define('horse', {
   female_image   = 262,
 })
 define('god', {
-  dbspec9        = 1,
+  breed_power    = 1,
   name_en        = "God",
   name_jp        = "神",
   description_en = "",
@@ -678,7 +678,7 @@ define('god', {
   female_image   = 393,
 })
 define('quickling', {
-  dbspec9        = 1,
+  breed_power    = 1,
   name_en        = "Quickling",
   name_jp        = "クイックリング",
   description_en = "",
@@ -687,7 +687,7 @@ define('quickling', {
   female_image   = 281,
 })
 define('metal', {
-  dbspec9        = 1,
+  breed_power    = 1,
   name_en        = "Metal",
   name_jp        = "メタル",
   description_en = "",
@@ -696,7 +696,7 @@ define('metal', {
   female_image   = 252,
 })
 define('bike', {
-  dbspec9        = 15,
+  breed_power    = 15,
   name_en        = "Bike",
   name_jp        = "バイク",
   description_en = "",

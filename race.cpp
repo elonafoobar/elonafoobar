@@ -38,7 +38,7 @@ int define(lua_State* state)
 
     FIELD_I(male_image);
     FIELD_I(female_image);
-    FIELD_I(dbspec9);
+    FIELD_I(breed_power);
 
 #undef FIELD_I
 #undef FIELD_S
@@ -53,7 +53,7 @@ int define(lua_State* state)
             description_jp,
             male_image,
             female_image,
-            dbspec9,
+            breed_power,
         });
 
     return 0;
@@ -190,16 +190,6 @@ void get_race_list(bool is_extra_race)
 
 
 
-#define DBMODE16(s, ret) \
-    do \
-    { \
-        if (dbspec == s) \
-            return ret; \
-    } while (0)
-
-
-
-
 int access_race_info(int dbmode, const std::string& dbidn)
 {
     auto info = the_race_db[dbidn];
@@ -218,15 +208,8 @@ int access_race_info(int dbmode, const std::string& dbidn)
         ref1 = info->male_image;
         ref2 = info->female_image;
         return 0;
-    case 16:
-        switch (dbspec)
-        {
-        case 9: return info->dbspec9;
-        default: assert(0);
-        }
     default: assert(0);
     }
-
 
     if (false)
     {
