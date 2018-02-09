@@ -1541,7 +1541,6 @@ void label_2702();
 void label_2703();
 void label_2707();
 void label_2710();
-void set_config();
 void label_2714();
 void load_config2();
 void load_config();
