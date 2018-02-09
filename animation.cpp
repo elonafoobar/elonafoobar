@@ -416,7 +416,7 @@ void play_animation_0(int anicol, int anisound)
 
 
 
-void play_animation_15(int anicol)
+void play_animation_15()
 {
     if (synccheck(cc, -1) == 0)
     {
@@ -563,7 +563,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
 
 
 
-void play_animation_9(int anicol)
+void play_animation_9()
 {
     snd(2);
     prepare_item_image(17, 0);
@@ -592,10 +592,9 @@ void play_animation_9(int anicol)
 
 
 
-void play_animation_12(int anicol)
+void play_animation_12()
 {
     int anix1;
-    int aniy1;
     switch (attackskill)
     {
     case 100:
@@ -635,9 +634,7 @@ void play_animation_12(int anicol)
         }
     }
     int anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-    int anix = anidx + rnd(12) - rnd(12);
     int anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
-    int aniy = anidy - 16 + rnd(12) - rnd(12);
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -706,7 +703,7 @@ void play_animation_12(int anicol)
 }
 
 
-void play_animation_20(int anicol)
+void play_animation_20()
 {
     snd(107);
     if (synccheck(anic, -1) == 0)
@@ -747,7 +744,7 @@ void play_animation_20(int anicol)
 }
 
 
-void play_animation_19(int anicol)
+void play_animation_19()
 {
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime12.bmp"));
@@ -892,7 +889,7 @@ void play_animation_19(int anicol)
 }
 
 
-void play_animation_22(int anicol)
+void play_animation_22()
 {
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime17.bmp"));
@@ -937,8 +934,6 @@ void play_animation_22(int anicol)
                         continue;
                     }
                     af = 1;
-                    int anidy =
-                        ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                     gmode(2, 96, 96);
                     if (ap(cnt) < 9)
                     {
@@ -987,7 +982,7 @@ void play_animation_22(int anicol)
 }
 
 
-void play_animation_21(int anicol)
+void play_animation_21()
 {
     gsel(7);
     picload(fs::u8path(u8"./graphic/anime16.bmp"));
@@ -1026,8 +1021,6 @@ void play_animation_21(int anicol)
                     }
                     af = 1;
                     cnt2 = cnt;
-                    int anidy =
-                        ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
                     gmode(2, 96, 96);
                     if (ap(cnt) < 10)
                     {
@@ -1075,7 +1068,7 @@ void play_animation_21(int anicol)
 
 
 
-void play_animation_14_16(int animeid, int anicol)
+void play_animation_14_16(int animeid)
 {
     aniref = 4;
     ax = (sx - scx) * inf_tiles + inf_screenx;
@@ -1181,21 +1174,21 @@ void play_animation(int animeid)
     case 17:
     case 2: play_animation_17_2(animeid, anicol, anisound); break;
     case 0: play_animation_0(anicol, anisound); break;
-    case 15: play_animation_15(anicol); break;
+    case 15: play_animation_15(); break;
     case 111:
     case 110:
     case 108:
     case 109:
     case 1:
     case 18: play_animation_ranged_attack(animeid, anicol, anisound); break;
-    case 9: play_animation_9(anicol); break;
-    case 12: play_animation_12(anicol); break;
-    case 20: play_animation_20(anicol); break;
-    case 19: play_animation_19(anicol); break;
-    case 22: play_animation_22(anicol); break;
-    case 21: play_animation_21(anicol); break;
+    case 9: play_animation_9(); break;
+    case 12: play_animation_12(); break;
+    case 20: play_animation_20(); break;
+    case 19: play_animation_19(); break;
+    case 22: play_animation_22(); break;
+    case 21: play_animation_21(); break;
     case 14:
-    case 16: play_animation_14_16(animeid, anicol); break;
+    case 16: play_animation_14_16(animeid); break;
     default: break;
     }
 

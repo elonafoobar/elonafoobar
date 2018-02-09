@@ -1175,7 +1175,6 @@ void label_0311()
 
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
-    int itemnamehack = 0;
     elona_vector1<int> iqiality_at_m63;
     int num2_at_m63 = 0;
     std::string s2_at_m63;
@@ -1184,13 +1183,10 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     std::string s4_at_m63;
     int len_at_m63 = 0;
     elona_vector1<std::string> buf_at_m63;
-    int ret_at_m63 = 0;
     elona::prm_518 = prm_518;
-    itemnamehack = inv[prm_518].id + 1;
     if (inv[prm_518].id >= maxitemid - 2
         || size_t(inv[prm_518].id) > length(ioriginalnameref))
     {
-        itemnamehack = 0;
         return lang(
             u8"未知のアイテム(バージョン非互換)"s,
             u8"unknown item (incompatible version)"s);
@@ -1779,10 +1775,9 @@ label_0313_internal:
     {
         len_at_m63 = zentohan(s_at_m63, buf_at_m63, 0);
         SDIM2(buf_at_m63, len_at_m63);
-        ret_at_m63 = zentohan(s_at_m63, s_at_m63, len_at_m63);
+        zentohan(s_at_m63, s_at_m63, len_at_m63);
     }
     skip_at_m63 = 0;
-    itemnamehack = 0;
     return s_at_m63;
 }
 

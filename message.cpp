@@ -585,8 +585,6 @@ void msg_write(std::string& prm_307)
 
 void txtmore()
 {
-    int tmore_at_txtfunc = 0;
-    tmore_at_txtfunc = 1;
     return;
 }
 
@@ -773,8 +771,6 @@ void txtnew()
 
 void msg_clear()
 {
-    int msg_len = 0;
-    msg_len = 0;
     msgtemp = "";
     {
         int cnt = 0;
