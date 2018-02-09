@@ -1,3 +1,4 @@
+#include "config.hpp"
 #include <fstream>
 #include <functional>
 #include <stdexcept>
@@ -842,6 +843,13 @@ void load_config2()
             }
         }
     }
+}
+
+
+config& config::instance()
+{
+    static config the_instance;
+    return the_instance;
 }
 
 
