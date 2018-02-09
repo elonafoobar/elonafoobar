@@ -3631,35 +3631,6 @@ void addefmap(
 
 
 
-void initialize_cloud_data()
-{
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
-        {
-            if (rnd(2) == 0)
-            {
-                cloud(2, cnt) = 288;
-                cloud(3, cnt) = 1040;
-                cloud(4, cnt) = 208;
-                cloud(5, cnt) = 160;
-            }
-            else
-            {
-                cloud(2, cnt) = 0;
-                cloud(3, cnt) = 976;
-                cloud(4, cnt) = 288;
-                cloud(5, cnt) = 224;
-            }
-            cloud(0, cnt) = rnd(100) + cnt * 200 + 100000;
-            cloud(1, cnt) = rnd(100) + cnt / 5 * 200 + 100000;
-        }
-    }
-    return;
-}
-
-
-
 void initialize_map_chip()
 {
     DIM3(chipm, 8, 825);
@@ -3890,7 +3861,6 @@ void initialize_map_chip()
 
 void initialize_item_chip()
 {
-    DIM3(cloud, 6, 12);
     DIM3(mefsubref, 6, 6);
     mefsubref(0, 1) = 144;
     mefsubref(1, 1) = 624;

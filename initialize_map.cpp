@@ -3582,7 +3582,7 @@ label_1744_internal:
     noaggrorefresh = 0;
     if (adata(0, gdata_current_map) == 1)
     {
-        initialize_cloud_data();
+        // initialize_cloud_data();
         label_1748();
     }
     if (mode == 3)

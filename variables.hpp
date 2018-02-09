@@ -225,7 +225,6 @@ inline elona_vector2<int> card;
 inline elona_vector2<int> chipc;
 inline elona_vector2<int> chipi;
 inline elona_vector2<int> chipm;
-inline elona_vector2<int> cloud;
 inline elona_vector2<int> cmapdata;
 inline elona_vector2<int> cycle;
 inline elona_vector2<int> dblist;
