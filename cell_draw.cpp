@@ -492,22 +492,47 @@ void cell_draw()
             continue;
         }
         color(0, 0, 0);
+        int cnt = 0;
+        for (int cnt_end = cnt + (repw); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (repw); cnt < cnt_end; ++cnt)
+            x_ = repw(1) + repw - 1 - cnt;
+            if (reph(3) == y_)
             {
-                x_ = repw(1) + repw - 1 - cnt;
-                if (reph(3) == y_)
+                if (x_ == repw(2))
                 {
-                    if (x_ == repw(2))
+                    px_ = (cdata[0].position.x - scx) * inf_tiles + inf_screenx
+                        - 48;
+                    if (scxbk == scx)
                     {
+                        px_ -= sxfix;
+                    }
+                    py_ = (cdata[0].position.y + 1 - scy) * inf_tiles
+                        + inf_screeny;
+                    if (scybk == scy)
+                    {
+                        py_ -= syfix;
+                    }
+                    color(0, 0, 0);
+                    gmode(5, inf_tiles, inf_tiles, 50 + flick_);
+                    pos(px_, py_);
+                    gcopy(3, 800, 208, 144, 48);
+                }
+            }
+            if (reph(2) == y_)
+            {
+                if (x_ == repw(2))
+                {
+                    if (cdata[0].state == 1)
+                    {
+                        ground_ =
+                            map(cdata[0].position.x, cdata[0].position.y, 0);
                         px_ = (cdata[0].position.x - scx) * inf_tiles
-                            + inf_screenx - 48;
+                            + inf_screenx;
                         if (scxbk == scx)
                         {
                             px_ -= sxfix;
                         }
-                        py_ = (cdata[0].position.y + 1 - scy) * inf_tiles
+                        py_ = (cdata[0].position.y - scy) * inf_tiles
                             + inf_screeny;
                         if (scybk == scy)
                         {
@@ -515,427 +540,300 @@ void cell_draw()
                         }
                         color(0, 0, 0);
                         gmode(5, inf_tiles, inf_tiles, 50 + flick_);
-                        pos(px_, py_);
-                        gcopy(3, 800, 208, 144, 48);
-                    }
-                }
-                if (reph(2) == y_)
-                {
-                    if (x_ == repw(2))
-                    {
-                        if (cdata[0].state == 1)
+                        pos(px_ - 48, py_ - 48);
+                        gcopy(3, 800, 112, 144, 96);
+                        if (py_ < windowh - inf_verh - 24)
                         {
-                            ground_ = map(
-                                cdata[0].position.x, cdata[0].position.y, 0);
-                            px_ = (cdata[0].position.x - scx) * inf_tiles
-                                + inf_screenx;
-                            if (scxbk == scx)
+                            if (cdata[0].continuous_action_id == 7)
                             {
-                                px_ -= sxfix;
+                                ani_ = 0;
                             }
-                            py_ = (cdata[0].position.y - scy) * inf_tiles
-                                + inf_screeny;
-                            if (scybk == scy)
+                            else
                             {
-                                py_ -= syfix;
+                                ani_ = cdata[0].turn % 4 * 32;
                             }
-                            color(0, 0, 0);
-                            gmode(5, inf_tiles, inf_tiles, 50 + flick_);
-                            pos(px_ - 48, py_ - 48);
-                            gcopy(3, 800, 112, 144, 96);
-                            if (py_ < windowh - inf_verh - 24)
+                            if (mdata(6) == 1)
                             {
-                                if (cdata[0].continuous_action_id == 7)
-                                {
-                                    ani_ = 0;
-                                }
-                                else
-                                {
-                                    ani_ = cdata[0].turn % 4 * 32;
-                                }
-                                if (mdata(6) == 1)
-                                {
-                                    gmode(6, 32, 16, 85);
-                                    color(0, 0, 0);
-                                    pos(px_ + 24, py_ + 27);
-                                    grotate(3, 240, 384, 0, 20, 10);
-                                    gmode(2, 32, 48);
-                                    pos(px_ + 24, py_ + 14);
-                                    grotate(
-                                        10,
-                                        ani_,
-                                        cdata[0].direction * 48,
-                                        0,
-                                        16,
-                                        24);
-                                }
-                                else if (chipm(0, ground_) == 3)
-                                {
-                                    gmode(4, 32, 20, 146);
-                                    color(0, 0, 0);
-                                    pos(px_ + 24, py_ + 36);
-                                    grotate(
-                                        10,
-                                        ani_,
-                                        cdata[0].direction * 48 + 28,
-                                        0,
-                                        24,
-                                        16);
-                                    gmode(2, 32, 28);
-                                    pos(px_ + 24, py_ + 16);
-                                    grotate(
-                                        10,
-                                        ani_,
-                                        cdata[0].direction * 48,
-                                        0,
-                                        24,
-                                        24);
-                                }
-                                else
-                                {
-                                    gmode(6, -1, -1, 110);
-                                    color(0, 0, 0);
-                                    pos(px_ + 8, py_ + 20);
-                                    gcopy(3, 240, 384, 32, 16);
-                                    if (fishanime == 3)
-                                    {
-                                        if (fishanime(1) % 8 < 4)
-                                        {
-                                            py_ -= fishanime(1) % 4
-                                                * (fishanime(1) % 4);
-                                        }
-                                        else
-                                        {
-                                            py_ += fishanime(1) % 4
-                                                    * (fishanime(1) % 4)
-                                                - 9;
-                                        }
-                                    }
-                                    gmode(2, 32, 48);
-                                    pos(px_ + 24, py_ + 8);
-                                    grotate(
-                                        10,
-                                        ani_,
-                                        cdata[0].direction * 48,
-                                        0,
-                                        24,
-                                        40);
-                                }
-                                gmode(2);
+                                gmode(6, 32, 16, 85);
                                 color(0, 0, 0);
+                                pos(px_ + 24, py_ + 27);
+                                grotate(3, 240, 384, 0, 20, 10);
+                                gmode(2, 32, 48);
+                                pos(px_ + 24, py_ + 14);
+                                grotate(
+                                    10,
+                                    ani_,
+                                    cdata[0].direction * 48,
+                                    0,
+                                    16,
+                                    24);
                             }
-                            if (cdata[0].furious != 0)
+                            else if (chipm(0, ground_) == 3)
                             {
-                                pos(px_, py_ - 24);
-                                gcopy(3, 32, 608, 16, 16);
+                                gmode(4, 32, 20, 146);
+                                color(0, 0, 0);
+                                pos(px_ + 24, py_ + 36);
+                                grotate(
+                                    10,
+                                    ani_,
+                                    cdata[0].direction * 48 + 28,
+                                    0,
+                                    24,
+                                    16);
+                                gmode(2, 32, 28);
+                                pos(px_ + 24, py_ + 16);
+                                grotate(
+                                    10,
+                                    ani_,
+                                    cdata[0].direction * 48,
+                                    0,
+                                    24,
+                                    24);
                             }
-                            if (cdata[0].emotion_icon != 0)
+                            else
                             {
-                                draw_emo(0, px_ + 4, py_ - 32);
-                            }
-                        }
-                    }
-                }
-                if (dx_ <= -inf_tiles || dx_ >= windoww)
-                {
-                    dx_ -= inf_tiles;
-                    ++lx_;
-                    continue;
-                }
-                if (x_ < 0 || x_ >= mdata(0))
-                {
-                    gmode(0, inf_tiles, inf_tiles);
-                    p_ = tile_fog;
-                    pos(dx_, dy_);
-                    gcopy(2, p_ % 33 * inf_tiles, p_ / 33 * inf_tiles);
-                    dx_ -= inf_tiles;
-                    continue;
-                }
-                ground_ = map(x_, y_, 2);
-                sel_ = 2;
-                gmode(0, inf_tiles, inf_tiles);
-                pos(dx_, dy_);
-                wall_ = 0;
-                if (chipm(2, ground_) == 2)
-                {
-                    if (y_ < mdata(1) - 1)
-                    {
-                        if (chipm(2, map(x_, y_ + 1, 2)) != 2
-                            && map(x_, y_ + 1, 2) != tile_fog)
-                        {
-                            ground_ += 33;
-                        }
-                    }
-                }
-                if (chipm(2, ground_))
-                {
-                    wall_ = 1;
-                }
-                if (chipm(3, ground_) != 0)
-                {
-                    gcopy(
-                        sel_,
-                        (ground_ % 33
-                         + (scrturn_ % (chipm(3, ground_) + 1)
-                            - (scrturn_ % (chipm(3, ground_) + 1)
-                               == chipm(3, ground_))
-                                * 2 * (chipm(3, ground_) != 0)))
-                            * inf_tiles,
-                        ground_ / 33 * inf_tiles);
-                }
-                else
-                {
-                    gcopy(
-                        sel_,
-                        ground_ % 33 * inf_tiles,
-                        ground_ / 33 * inf_tiles);
-                }
-                gmode(2, inf_tiles, inf_tiles);
-                if (map(x_, y_, 7) != 0)
-                {
-                    if (mapsync(x_, y_) == msync)
-                    {
-                        p_(0) = map(x_, y_, 7) % 10;
-                        p_(1) = map(x_, y_, 7) / 10;
-                        if (p_(1))
-                        {
-                            gcopy(5, p_(1) * inf_tiles + 288, 1152);
-                        }
-                        if (p_)
-                        {
-                            if (p_ > 6)
-                            {
-                                p_ = 6;
-                            }
-                            gcopy(5, p_ * inf_tiles, 1152);
-                        }
-                    }
-                }
-                if (efmap(1, x_, y_) > 0)
-                {
-                    if (mapsync(x_, y_) == msync)
-                    {
-                        p_ = efmap(0, x_, y_);
-                        if (scrturnnew_ == 1)
-                        {
-                            --efmap(1, x_, y_);
-                        }
-                        if (mefsubref(2, p_) == 1)
-                        {
-                            gmode(4, 32, 32, efmap(1, x_, y_) * 12 + 30);
-                            pos(dx_ + 24, dy_ + 24);
-                            grotate(
-                                3,
-                                mefsubref(0, p_) + efmap(3, x_, y_) * 32,
-                                mefsubref(1, p_),
-                                0.785 * efmap(2, x_, y_),
-                                32,
-                                32);
-                        }
-                        else
-                        {
-                            gmode(4, 32, 32, 150);
-                            pos(dx_ + 8, dy_ + 8);
-                            gcopy(
-                                3,
-                                mefsubref(0, p_) + efmap(1, x_, y_) * 32,
-                                mefsubref(1, p_));
-                        }
-                        gmode(2, inf_tiles, inf_tiles);
-                    }
-                }
-                if (map(x_, y_, 6) != 0)
-                {
-                    if (map(x_, y_, 2) == map(x_, y_, 0))
-                    {
-                        p_ = map(x_, y_, 6) % 1000;
-                        if (p_ != 999 && p_ != 0)
-                        {
-                            pos(dx_, dy_ - chipm(5, p_));
-                            gcopy(
-                                2,
-                                p_ % 33 * inf_tiles,
-                                p_ / 33 * inf_tiles,
-                                inf_tiles,
-                                48 + chipm(6, p_));
-                        }
-                        if (mdata(6) == 1)
-                        {
-                            p_ = map(x_, y_, 6) / 100000 % 100
-                                + map(x_, y_, 6) / 10000000 * 100;
-                            if (adata(16, p_) == 8)
-                            {
-                                if (adata(6, p_) == adata(10, p_))
+                                gmode(6, -1, -1, 110);
+                                color(0, 0, 0);
+                                pos(px_ + 8, py_ + 20);
+                                gcopy(3, 240, 384, 32, 16);
+                                if (fishanime == 3)
                                 {
-                                    pos(dx_ + 16, dy_ - 16);
-                                    gcopy(3, 32, 624, 16, 16);
-                                }
-                                else if (adata(6, p_) != 0)
-                                {
-                                    pos(dx_ + 16, dy_ - 16);
-                                    gcopy(3, 48, 624, 16, 16);
-                                }
-                            }
-                        }
-                    }
-                }
-                if (map(x_, y_, 8) != 0)
-                {
-                    if (mapsync(x_, y_) == msync)
-                    {
-                        p2_ = map(x_, y_, 8) - 1;
-                        p_(0) = mef(1, p2_) % 10000;
-                        p_(1) = mef(1, p2_) / 10000;
-                        pos(dx_, dy_ - chipi(4, p_));
-                        if (chipi(7, p_))
-                        {
-                            p_ += (scrturn_ + p2_) % (chipi(7, p_) + 1)
-                                - ((scrturn_ + p2_) % (chipi(7, p_) + 1)
-                                   == chipi(7, p_))
-                                    * 2 * (chipi(7, p_) != 0);
-                        }
-                        if (mef(1, p2_) > 10000)
-                        {
-                            prepare_item_image(p_, p_(1));
-                            gcopy(1, 0, 960, inf_tiles, inf_tiles);
-                        }
-                        else
-                        {
-                            gcopy(
-                                1,
-                                chipi(0, p_),
-                                chipi(1, p_),
-                                inf_tiles,
-                                inf_tiles);
-                        }
-                    }
-                }
-                if (map(x_, y_, 5) != 0)
-                {
-                    if (map(x_, y_, 5) < 0)
-                    {
-                        if (mode == 6 || mode == 9)
-                        {
-                            i_ = 0;
-                            p_ = 363;
-                            goto label_0380_internal;
-                        }
-                        p_ = -map(x_, y_, 5);
-                        flooritem_(0) = p_ % 1000 + 5080;
-                        flooritem_(1) = p_ / 1000 % 1000 + 5080;
-                        flooritem_(2) = p_ / 1000000 % 1000 + 5080;
-                        stackh_ = 0;
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                            {
-                                cnt2_ = 2 - cnt;
-                                if (flooritem_(cnt2_) == 6079)
-                                {
-                                    continue;
-                                }
-                                p_ = inv[flooritem_(cnt2_)].image;
-                                i_ = inv[flooritem_(cnt2_)].color;
-                                prepare_item_image(p_, i_);
-                                if (mdata(6) == 1)
-                                {
-                                    gmode(2, chipi(2, p_), chipi(3, p_));
-                                    pos(dx_ + 24, dy_ + 24 - stackh_ / 2);
-                                    grotate(1, 0, 960, 0, 24, 24);
-                                }
-                                else
-                                {
-                                    if (cfg_objectshadow)
+                                    if (fishanime(1) % 8 < 4)
                                     {
-                                        if (chipi(6, p_))
-                                        {
-                                            gmode(
-                                                2,
-                                                chipi(2, p_),
-                                                chipi(3, p_),
-                                                70);
-                                            if (chipi(3, p_) == inf_tiles)
-                                            {
-                                                pos(dx_ + chipi(2, p_) / 2
-                                                        + chipi(6, p_) / 80 + 2,
-                                                    dy_ - chipi(4, p_) + 22
-                                                        - stackh_);
-                                                if (chipi(4, p_) < 24)
-                                                {
-                                                    func_2(
-                                                        1,
-                                                        0,
-                                                        960,
-                                                        chipi(6, p_) / 2,
-                                                        chipi(2, p_),
-                                                        chipi(3, p_));
-                                                }
-                                            }
-                                            else
-                                            {
-                                                pos(dx_ + chipi(2, p_) / 2
-                                                        + chipi(6, p_) / 4,
-                                                    dy_ - chipi(4, p_) + 46
-                                                        - stackh_);
-                                                func_2(
-                                                    1,
-                                                    0,
-                                                    960,
-                                                    chipi(6, p_) * 2,
-                                                    chipi(2, p_),
-                                                    chipi(3, p_));
-                                            }
-                                            gmode(2);
-                                        }
-                                    }
-                                    pos(dx_, dy_ - chipi(4, p_) - stackh_);
-                                    if (chipi(7, p_) == 0)
-                                    {
-                                        gcopy(
-                                            1,
-                                            0,
-                                            960,
-                                            chipi(2, p_),
-                                            chipi(3, p_));
+                                        py_ -= fishanime(1) % 4
+                                            * (fishanime(1) % 4);
                                     }
                                     else
                                     {
-                                        gcopy(
-                                            1,
-                                            chipi(0, p_)
-                                                + (scrturn_ % (chipi(7, p_) + 1)
-                                                   - (scrturn_
-                                                          % (chipi(7, p_) + 1)
-                                                      == chipi(7, p_))
-                                                       * 2
-                                                       * (chipi(7, p_) != 0))
-                                                    * inf_tiles,
-                                            chipi(1, p_),
-                                            chipi(2, p_),
-                                            chipi(3, p_));
+                                        py_ += fishanime(1) % 4
+                                                * (fishanime(1) % 4)
+                                            - 9;
                                     }
                                 }
-                                stackh_ += chipi(5, p_);
-                                if (p_ == 531)
-                                {
-                                    if (chipc(3, i_) == 96)
-                                    {
-                                        stackh_ += 44;
-                                    }
-                                }
+                                gmode(2, 32, 48);
+                                pos(px_ + 24, py_ + 8);
+                                grotate(
+                                    10,
+                                    ani_,
+                                    cdata[0].direction * 48,
+                                    0,
+                                    24,
+                                    40);
                             }
+                            gmode(2);
+                            color(0, 0, 0);
                         }
+                        if (cdata[0].furious != 0)
+                        {
+                            pos(px_, py_ - 24);
+                            gcopy(3, 32, 608, 16, 16);
+                        }
+                        if (cdata[0].emotion_icon != 0)
+                        {
+                            draw_emo(0, px_ + 4, py_ - 32);
+                        }
+                    }
+                }
+            }
+            if (dx_ <= -inf_tiles || dx_ >= windoww)
+            {
+                dx_ -= inf_tiles;
+                ++lx_;
+                continue;
+            }
+            if (x_ < 0 || x_ >= mdata(0))
+            {
+                gmode(0, inf_tiles, inf_tiles);
+                p_ = tile_fog;
+                pos(dx_, dy_);
+                gcopy(2, p_ % 33 * inf_tiles, p_ / 33 * inf_tiles);
+                dx_ -= inf_tiles;
+                continue;
+            }
+            ground_ = map(x_, y_, 2);
+            sel_ = 2;
+            gmode(0, inf_tiles, inf_tiles);
+            pos(dx_, dy_);
+            wall_ = 0;
+            if (chipm(2, ground_) == 2)
+            {
+                if (y_ < mdata(1) - 1)
+                {
+                    if (chipm(2, map(x_, y_ + 1, 2)) != 2
+                        && map(x_, y_ + 1, 2) != tile_fog)
+                    {
+                        ground_ += 33;
+                    }
+                }
+            }
+            if (chipm(2, ground_))
+            {
+                wall_ = 1;
+            }
+            if (chipm(3, ground_) != 0)
+            {
+                gcopy(
+                    sel_,
+                    (ground_ % 33
+                     + (scrturn_ % (chipm(3, ground_) + 1)
+                        - (scrturn_ % (chipm(3, ground_) + 1)
+                           == chipm(3, ground_))
+                            * 2 * (chipm(3, ground_) != 0)))
+                        * inf_tiles,
+                    ground_ / 33 * inf_tiles);
+            }
+            else
+            {
+                gcopy(sel_, ground_ % 33 * inf_tiles, ground_ / 33 * inf_tiles);
+            }
+            gmode(2, inf_tiles, inf_tiles);
+            if (map(x_, y_, 7) != 0)
+            {
+                if (mapsync(x_, y_) == msync)
+                {
+                    p_(0) = map(x_, y_, 7) % 10;
+                    p_(1) = map(x_, y_, 7) / 10;
+                    if (p_(1))
+                    {
+                        gcopy(5, p_(1) * inf_tiles + 288, 1152);
+                    }
+                    if (p_)
+                    {
+                        if (p_ > 6)
+                        {
+                            p_ = 6;
+                        }
+                        gcopy(5, p_ * inf_tiles, 1152);
+                    }
+                }
+            }
+            if (efmap(1, x_, y_) > 0)
+            {
+                if (mapsync(x_, y_) == msync)
+                {
+                    p_ = efmap(0, x_, y_);
+                    if (scrturnnew_ == 1)
+                    {
+                        --efmap(1, x_, y_);
+                    }
+                    if (mefsubref(2, p_) == 1)
+                    {
+                        gmode(4, 32, 32, efmap(1, x_, y_) * 12 + 30);
+                        pos(dx_ + 24, dy_ + 24);
+                        grotate(
+                            3,
+                            mefsubref(0, p_) + efmap(3, x_, y_) * 32,
+                            mefsubref(1, p_),
+                            0.785 * efmap(2, x_, y_),
+                            32,
+                            32);
                     }
                     else
                     {
-                        i_ = wpeek(map(x_, y_, 5), 2);
-                        p_ = wpeek(map(x_, y_, 5), 0);
-                    label_0380_internal:
+                        gmode(4, 32, 32, 150);
+                        pos(dx_ + 8, dy_ + 8);
+                        gcopy(
+                            3,
+                            mefsubref(0, p_) + efmap(1, x_, y_) * 32,
+                            mefsubref(1, p_));
+                    }
+                    gmode(2, inf_tiles, inf_tiles);
+                }
+            }
+            if (map(x_, y_, 6) != 0)
+            {
+                if (map(x_, y_, 2) == map(x_, y_, 0))
+                {
+                    p_ = map(x_, y_, 6) % 1000;
+                    if (p_ != 999 && p_ != 0)
+                    {
+                        pos(dx_, dy_ - chipm(5, p_));
+                        gcopy(
+                            2,
+                            p_ % 33 * inf_tiles,
+                            p_ / 33 * inf_tiles,
+                            inf_tiles,
+                            48 + chipm(6, p_));
+                    }
+                    if (mdata(6) == 1)
+                    {
+                        p_ = map(x_, y_, 6) / 100000 % 100
+                            + map(x_, y_, 6) / 10000000 * 100;
+                        if (adata(16, p_) == 8)
+                        {
+                            if (adata(6, p_) == adata(10, p_))
+                            {
+                                pos(dx_ + 16, dy_ - 16);
+                                gcopy(3, 32, 624, 16, 16);
+                            }
+                            else if (adata(6, p_) != 0)
+                            {
+                                pos(dx_ + 16, dy_ - 16);
+                                gcopy(3, 48, 624, 16, 16);
+                            }
+                        }
+                    }
+                }
+            }
+            if (map(x_, y_, 8) != 0)
+            {
+                if (mapsync(x_, y_) == msync)
+                {
+                    p2_ = map(x_, y_, 8) - 1;
+                    p_(0) = mef(1, p2_) % 10000;
+                    p_(1) = mef(1, p2_) / 10000;
+                    pos(dx_, dy_ - chipi(4, p_));
+                    if (chipi(7, p_))
+                    {
+                        p_ += (scrturn_ + p2_) % (chipi(7, p_) + 1)
+                            - ((scrturn_ + p2_) % (chipi(7, p_) + 1)
+                               == chipi(7, p_))
+                                * 2 * (chipi(7, p_) != 0);
+                    }
+                    if (mef(1, p2_) > 10000)
+                    {
+                        prepare_item_image(p_, p_(1));
+                        gcopy(1, 0, 960, inf_tiles, inf_tiles);
+                    }
+                    else
+                    {
+                        gcopy(
+                            1,
+                            chipi(0, p_),
+                            chipi(1, p_),
+                            inf_tiles,
+                            inf_tiles);
+                    }
+                }
+            }
+            if (map(x_, y_, 5) != 0)
+            {
+                if (map(x_, y_, 5) < 0)
+                {
+                    if (mode == 6 || mode == 9)
+                    {
+                        i_ = 0;
+                        p_ = 363;
+                        goto label_0380_internal;
+                    }
+                    p_ = -map(x_, y_, 5);
+                    flooritem_(0) = p_ % 1000 + 5080;
+                    flooritem_(1) = p_ / 1000 % 1000 + 5080;
+                    flooritem_(2) = p_ / 1000000 % 1000 + 5080;
+                    stackh_ = 0;
+                    for (int i = 2; i >= 0; --i)
+                    {
+                        if (flooritem_(i) == 6079)
+                        {
+                            continue;
+                        }
+                        p_ = inv[flooritem_(i)].image;
+                        i_ = inv[flooritem_(i)].color;
                         prepare_item_image(p_, i_);
                         if (mdata(6) == 1)
                         {
                             gmode(2, chipi(2, p_), chipi(3, p_));
-                            pos(dx_ + 24, dy_ + 24);
+                            pos(dx_ + 24, dy_ + 24 - stackh_ / 2);
                             grotate(1, 0, 960, 0, 24, 24);
                         }
                         else
@@ -944,12 +842,12 @@ void cell_draw()
                             {
                                 if (chipi(6, p_))
                                 {
-                                    gmode(2, chipi(2, p_), chipi(3, p_), 80);
+                                    gmode(2, chipi(2, p_), chipi(3, p_), 70);
                                     if (chipi(3, p_) == inf_tiles)
                                     {
                                         pos(dx_ + chipi(2, p_) / 2
                                                 + chipi(6, p_) / 80 + 2,
-                                            dy_ - chipi(4, p_) + 22);
+                                            dy_ - chipi(4, p_) + 22 - stackh_);
                                         if (chipi(4, p_) < 24)
                                         {
                                             func_2(
@@ -965,7 +863,7 @@ void cell_draw()
                                     {
                                         pos(dx_ + chipi(2, p_) / 2
                                                 + chipi(6, p_) / 4,
-                                            dy_ - chipi(4, p_) + 46);
+                                            dy_ - chipi(4, p_) + 46 - stackh_);
                                         func_2(
                                             1,
                                             0,
@@ -977,7 +875,7 @@ void cell_draw()
                                     gmode(2);
                                 }
                             }
-                            pos(dx_, dy_ - chipi(4, p_));
+                            pos(dx_, dy_ - chipi(4, p_) - stackh_);
                             if (chipi(7, p_) == 0)
                             {
                                 gcopy(1, 0, 960, chipi(2, p_), chipi(3, p_));
@@ -997,326 +895,361 @@ void cell_draw()
                                     chipi(3, p_));
                             }
                         }
-                    }
-                }
-                if (map(x_, y_, 1) != 0)
-                {
-                    c_ = map(x_, y_, 1) - 1;
-                    if (synccheck(c_, -1))
-                    {
-                        if (cbit(6, c_) == 1)
+                        stackh_ += chipi(5, p_);
+                        if (p_ == 531)
                         {
-                            if (cbit(7, 0) == 0)
+                            if (chipc(3, i_) == 96)
                             {
-                                if (cdata[c_].wet == 0)
-                                {
-                                    c_ = 0;
-                                }
-                            }
-                        }
-                        if (c_ != 0)
-                        {
-                            if (cbit(967, c_) == 1)
-                            {
-                                if (mdata(6) == 1)
-                                {
-                                    gmode(6, 32, 16, 85);
-                                    color(0, 0, 0);
-                                    pos(dx_ + 24, dy_ + 27);
-                                    grotate(3, 240, 384, 0, 20, 10);
-                                    gmode(2, 32, 48);
-                                    pos(dx_ + 24, dy_ + 14);
-                                    grotate(
-                                        10 + c_,
-                                        ani_,
-                                        cdata[c_].direction * 48,
-                                        0,
-                                        16,
-                                        24);
-                                }
-                                else if (chipm(0, ground_) == 3)
-                                {
-                                    gmode(4, 32, 20, 146);
-                                    color(0, 0, 0);
-                                    pos(dx_ + 24, dy_ + 36);
-                                    grotate(
-                                        10 + c_,
-                                        ani_,
-                                        cdata[c_].direction * 48 + 28,
-                                        0,
-                                        24,
-                                        16);
-                                    gmode(2, 32, 28);
-                                    pos(dx_ + 24, dy_ + 16);
-                                    grotate(
-                                        10 + c_,
-                                        ani_,
-                                        cdata[c_].direction * 48,
-                                        0,
-                                        24,
-                                        24);
-                                }
-                                else
-                                {
-                                    gmode(6, -1, -1, 110);
-                                    color(0, 0, 0);
-                                    pos(dx_ + 8, dy_ + 20);
-                                    gcopy(3, 240, 384, 32, 16);
-                                    gmode(2, 32, 48);
-                                    pos(dx_ + 24, dy_ + 8);
-                                    grotate(
-                                        10 + c_,
-                                        ani_,
-                                        cdata[c_].direction * 48,
-                                        0,
-                                        24,
-                                        40);
-                                }
-                                gmode(2);
-                                color(0, 0, 0);
-                                if (cdata[c_].furious != 0)
-                                {
-                                    pos(dx_ + 12, dy_ - 28);
-                                    gcopy(3, 32, 608, 16, 16);
-                                }
-                                if (cdata[c_].emotion_icon != 0)
-                                {
-                                    draw_emo(c_, dx_ + 4, dy_ - 32);
-                                }
-                            }
-                            else
-                            {
-                                col_ = cdata[c_].image / 1000;
-                                p_ = cdata[c_].image % 1000;
-                                if (cbit(985, c_))
-                                {
-                                    gmode(2, 48, 96, 80);
-                                    pos(dx_ + 26 - 11, dy_ - 32 + 11);
-                                    func_2(1, 96, 816, -80, 48, 96);
-                                    pos(dx_, dy_ - 63);
-                                    gcopy(1, 96, 816, 48, 96);
-                                    chipc(4, p_) += 24;
-                                }
-                                gsel(5);
-                                color(0);
-                                boxf(0, 960, chipc(2, p_), chipc(3, p_) + 960);
-                                pos(0, 960);
-                                gcopy(
-                                    5,
-                                    chipc(0, p_),
-                                    chipc(1, p_),
-                                    chipc(2, p_),
-                                    chipc(3, p_));
-                                gfini(chipc(2, p_), chipc(3, p_));
-                                gfdec2(
-                                    c_col(0, col_),
-                                    c_col(1, col_),
-                                    c_col(2, col_));
-                                gsel(0);
-                                if (mdata(6) == 1)
-                                {
-                                    gmode(6, 32, 16, 85);
-                                    color(0, 0, 0);
-                                    pos(dx_ + 24, dy_ + 32);
-                                    grotate(3, 240, 384, 0, 20, 10);
-                                    gmode(2, chipc(2, p_), chipc(3, p_));
-                                    pos(dx_ + 24, dy_ + 24 - chipc(4, p_) / 4);
-                                    grotate(5, 0, 960, 0, 24, chipc(3, p_) / 2);
-                                    if (cdata[c_].emotion_icon != 0)
-                                    {
-                                        draw_emo(
-                                            c_,
-                                            dx_ + 4,
-                                            dy_ - chipc(4, p_) / 4 - 16);
-                                    }
-                                }
-                                else
-                                {
-                                    if (chipm(0, ground_) == 3)
-                                    {
-                                        gmode(4, inf_tiles, inf_tiles, 100);
-                                        color(0, 0, 0);
-                                        pos(dx_,
-                                            dy_ + 16 - chipc(4, p_)
-                                                - (chipm(0, ground_) == 3)
-                                                    * -16);
-                                        gcopy(
-                                            5,
-                                            0,
-                                            976,
-                                            chipc(2, p_),
-                                            chipc(3, p_) - 16);
-                                        gmode(2, inf_tiles, inf_tiles);
-                                        pos(dx_,
-                                            dy_ - chipc(4, p_)
-                                                - (chipm(0, ground_) == 3)
-                                                    * -16);
-                                        gcopy(
-                                            5,
-                                            0,
-                                            960,
-                                            chipc(2, p_),
-                                            chipc(3, p_) - 16);
-                                    }
-                                    else
-                                    {
-                                        gmode(6, -1, -1, 110);
-                                        color(0, 0, 0);
-                                        pos(dx_ + 8, dy_ + 20);
-                                        gcopy(3, 240, 384, 32, 16);
-                                        gmode(2, inf_tiles, inf_tiles);
-                                        pos(dx_,
-                                            dy_ - chipc(4, p_)
-                                                - (chipm(0, ground_) == 3)
-                                                    * -16);
-                                        gcopy(
-                                            5,
-                                            0,
-                                            960,
-                                            chipc(2, p_),
-                                            chipc(3, p_));
-                                    }
-                                    if (cdata[c_].furious != 0)
-                                    {
-                                        pos(dx_ + 12, dy_ - chipc(4, p_) - 12);
-                                        gcopy(3, 32, 608, 16, 16);
-                                    }
-                                    if (cdata[c_].emotion_icon != 0)
-                                    {
-                                        draw_emo(
-                                            c_,
-                                            dx_ + 4,
-                                            dy_ - chipc(4, p_) - 16);
-                                    }
-                                }
-                                if (cbit(985, c_))
-                                {
-                                    pos(dx_, dy_ - 26);
-                                    gcopy(1, 96, 768, 48, 48);
-                                    chipc(4, p_) -= 24;
-                                }
-                            }
-                            if (cbit(966, c_) == 1 || gdata(94) == c_)
-                            {
-                                h_ = std::min(
-                                    cdata[c_].hp * 30 / cdata[c_].max_hp, 30);
-                                if (h_ > 0)
-                                {
-                                    if (c_ < 16)
-                                    {
-                                        if (mdata(6) != 1)
-                                        {
-                                            pos(dx_ + 9, dy_ + 32);
-                                            gcopy(3, 480 - h_, 517, h_, 3);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        pos(dx_ + 9, dy_ + 32);
-                                        gcopy(3, 480 - h_, 513, h_, 3);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                if (map(x_, y_, 9) != 0)
-                {
-                    p_ = map(x_, y_, 9);
-                    if (gdata_hour > 17 || gdata_hour < 6 || lightdata(6, p_))
-                    {
-                        if (mapsync(x_, y_) == msync)
-                        {
-                            light_ -= (6
-                                       - std::clamp(
-                                             dist(
-                                                 cdata[0].position.x,
-                                                 cdata[0].position.y,
-                                                 x_,
-                                                 y_),
-                                             0,
-                                             6))
-                                * lightdata(4, p_);
-                            pos(dx_, dy_ - lightdata(3, p_));
-                            gmode(
-                                5,
-                                inf_tiles,
-                                inf_tiles,
-                                lightdata(2, p_) + rnd((lightdata(5, p_) + 1)));
-                            gcopy(
-                                3,
-                                192 + lightdata(0, p_) * 48
-                                    + rnd((lightdata(1, p_) + 1)) * inf_tiles,
-                                704);
-                        }
-                    }
-                }
-                if (wall_ == 0)
-                {
-                    if (ground_ != tile_fog)
-                    {
-                        if (y_ > 0)
-                        {
-                            if (dy_ > 48)
-                            {
-                                ground_ = map(x_, y_ - 1, 0);
-                                if (chipm(2, ground_))
-                                {
-                                    pos(dx_ + (dx_ < 0) * -dx_, dy_);
-                                    gfini(
-                                        inf_tiles
-                                            - (dx_ > windoww - inf_tiles)
-                                                * (dx_ + inf_tiles - windoww)
-                                            + (dx_ < 0) * dx_,
-                                        24);
-                                    gfdec2(16, 16, 16);
-                                    pos(dx_ + (dx_ < 0) * -dx_, dy_ + 24);
-                                    gfini(
-                                        inf_tiles
-                                            - (dx_ > windoww - inf_tiles)
-                                                * (dx_ + inf_tiles - windoww)
-                                            + (dx_ < 0) * dx_,
-                                        12);
-                                    gfdec2(12, 12, 12);
-                                }
+                                stackh_ += 44;
                             }
                         }
                     }
                 }
                 else
                 {
-                    gmode(0);
-                    if (y_ > 0)
+                    i_ = wpeek(map(x_, y_, 5), 2);
+                    p_ = wpeek(map(x_, y_, 5), 0);
+                label_0380_internal:
+                    prepare_item_image(p_, i_);
+                    if (mdata(6) == 1)
                     {
-                        p_ = map(x_, y_ - 1, 2);
-                        if (chipm(2, p_) != 2 && p_ != tile_fog)
+                        gmode(2, chipi(2, p_), chipi(3, p_));
+                        pos(dx_ + 24, dy_ + 24);
+                        grotate(1, 0, 960, 0, 24, 24);
+                    }
+                    else
+                    {
+                        if (cfg_objectshadow)
                         {
-                            if (dy_ > 20)
+                            if (chipi(6, p_))
                             {
-                                pos(dx_, dy_ - 12);
+                                gmode(2, chipi(2, p_), chipi(3, p_), 80);
+                                if (chipi(3, p_) == inf_tiles)
+                                {
+                                    pos(dx_ + chipi(2, p_) / 2
+                                            + chipi(6, p_) / 80 + 2,
+                                        dy_ - chipi(4, p_) + 22);
+                                    if (chipi(4, p_) < 24)
+                                    {
+                                        func_2(
+                                            1,
+                                            0,
+                                            960,
+                                            chipi(6, p_) / 2,
+                                            chipi(2, p_),
+                                            chipi(3, p_));
+                                    }
+                                }
+                                else
+                                {
+                                    pos(dx_ + chipi(2, p_) / 2
+                                            + chipi(6, p_) / 4,
+                                        dy_ - chipi(4, p_) + 46);
+                                    func_2(
+                                        1,
+                                        0,
+                                        960,
+                                        chipi(6, p_) * 2,
+                                        chipi(2, p_),
+                                        chipi(3, p_));
+                                }
+                                gmode(2);
+                            }
+                        }
+                        pos(dx_, dy_ - chipi(4, p_));
+                        if (chipi(7, p_) == 0)
+                        {
+                            gcopy(1, 0, 960, chipi(2, p_), chipi(3, p_));
+                        }
+                        else
+                        {
+                            gcopy(
+                                1,
+                                chipi(0, p_)
+                                    + (scrturn_ % (chipi(7, p_) + 1)
+                                       - (scrturn_ % (chipi(7, p_) + 1)
+                                          == chipi(7, p_))
+                                           * 2 * (chipi(7, p_) != 0))
+                                        * inf_tiles,
+                                chipi(1, p_),
+                                chipi(2, p_),
+                                chipi(3, p_));
+                        }
+                    }
+                }
+            }
+            if (map(x_, y_, 1) != 0)
+            {
+                c_ = map(x_, y_, 1) - 1;
+                if (c_ != 0 && synccheck(c_, -1)
+                    && (cbit(6, c_) == 0 || cbit(7, 0) == 1
+                        || cdata[c_].wet != 0))
+                {
+                    if (cbit(967, c_) == 1)
+                    {
+                        if (mdata(6) == 1)
+                        {
+                            gmode(6, 32, 16, 85);
+                            color(0, 0, 0);
+                            pos(dx_ + 24, dy_ + 27);
+                            grotate(3, 240, 384, 0, 20, 10);
+                            gmode(2, 32, 48);
+                            pos(dx_ + 24, dy_ + 14);
+                            grotate(
+                                10 + c_,
+                                ani_,
+                                cdata[c_].direction * 48,
+                                0,
+                                16,
+                                24);
+                        }
+                        else if (chipm(0, ground_) == 3)
+                        {
+                            gmode(4, 32, 20, 146);
+                            color(0, 0, 0);
+                            pos(dx_ + 24, dy_ + 36);
+                            grotate(
+                                10 + c_,
+                                ani_,
+                                cdata[c_].direction * 48 + 28,
+                                0,
+                                24,
+                                16);
+                            gmode(2, 32, 28);
+                            pos(dx_ + 24, dy_ + 16);
+                            grotate(
+                                10 + c_,
+                                ani_,
+                                cdata[c_].direction * 48,
+                                0,
+                                24,
+                                24);
+                        }
+                        else
+                        {
+                            gmode(6, -1, -1, 110);
+                            color(0, 0, 0);
+                            pos(dx_ + 8, dy_ + 20);
+                            gcopy(3, 240, 384, 32, 16);
+                            gmode(2, 32, 48);
+                            pos(dx_ + 24, dy_ + 8);
+                            grotate(
+                                10 + c_,
+                                ani_,
+                                cdata[c_].direction * 48,
+                                0,
+                                24,
+                                40);
+                        }
+                        gmode(2);
+                        color(0, 0, 0);
+                        if (cdata[c_].furious != 0)
+                        {
+                            pos(dx_ + 12, dy_ - 28);
+                            gcopy(3, 32, 608, 16, 16);
+                        }
+                        if (cdata[c_].emotion_icon != 0)
+                        {
+                            draw_emo(c_, dx_ + 4, dy_ - 32);
+                        }
+                    }
+                    else
+                    {
+                        col_ = cdata[c_].image / 1000;
+                        p_ = cdata[c_].image % 1000;
+                        if (cbit(985, c_))
+                        {
+                            gmode(2, 48, 96, 80);
+                            pos(dx_ + 26 - 11, dy_ - 32 + 11);
+                            func_2(1, 96, 816, -80, 48, 96);
+                            pos(dx_, dy_ - 63);
+                            gcopy(1, 96, 816, 48, 96);
+                            chipc(4, p_) += 24;
+                        }
+                        gsel(5);
+                        color(0);
+                        boxf(0, 960, chipc(2, p_), chipc(3, p_) + 960);
+                        pos(0, 960);
+                        gcopy(
+                            5,
+                            chipc(0, p_),
+                            chipc(1, p_),
+                            chipc(2, p_),
+                            chipc(3, p_));
+                        gfini(chipc(2, p_), chipc(3, p_));
+                        gfdec2(c_col(0, col_), c_col(1, col_), c_col(2, col_));
+                        gsel(0);
+                        if (mdata(6) == 1)
+                        {
+                            gmode(6, 32, 16, 85);
+                            color(0, 0, 0);
+                            pos(dx_ + 24, dy_ + 32);
+                            grotate(3, 240, 384, 0, 20, 10);
+                            gmode(2, chipc(2, p_), chipc(3, p_));
+                            pos(dx_ + 24, dy_ + 24 - chipc(4, p_) / 4);
+                            grotate(5, 0, 960, 0, 24, chipc(3, p_) / 2);
+                            if (cdata[c_].emotion_icon != 0)
+                            {
+                                draw_emo(
+                                    c_, dx_ + 4, dy_ - chipc(4, p_) / 4 - 16);
+                            }
+                        }
+                        else
+                        {
+                            if (chipm(0, ground_) == 3)
+                            {
+                                gmode(4, inf_tiles, inf_tiles, 100);
+                                color(0, 0, 0);
+                                pos(dx_,
+                                    dy_ + 16 - chipc(4, p_)
+                                        - (chipm(0, ground_) == 3) * -16);
                                 gcopy(
-                                    sel_,
-                                    ground_ % 33 * inf_tiles,
-                                    ground_ / 33 * inf_tiles,
-                                    inf_tiles
-                                        - (dx_ > windoww - inf_tiles)
-                                            * (dx_ + inf_tiles - windoww),
-                                    12);
-                                pos(dx_ + (dx_ < 0) * -dx_, dy_ - 20);
-                                gfini(
-                                    inf_tiles
-                                        - (dx_ > windoww - inf_tiles)
-                                            * (dx_ + inf_tiles - windoww)
-                                        + (dx_ < 0) * dx_,
-                                    8);
-                                gfdec2(25, 25, 25);
+                                    5, 0, 976, chipc(2, p_), chipc(3, p_) - 16);
+                                gmode(2, inf_tiles, inf_tiles);
+                                pos(dx_,
+                                    dy_ - chipc(4, p_)
+                                        - (chipm(0, ground_) == 3) * -16);
+                                gcopy(
+                                    5, 0, 960, chipc(2, p_), chipc(3, p_) - 16);
+                            }
+                            else
+                            {
+                                gmode(6, -1, -1, 110);
+                                color(0, 0, 0);
+                                pos(dx_ + 8, dy_ + 20);
+                                gcopy(3, 240, 384, 32, 16);
+                                gmode(2, inf_tiles, inf_tiles);
+                                pos(dx_,
+                                    dy_ - chipc(4, p_)
+                                        - (chipm(0, ground_) == 3) * -16);
+                                gcopy(5, 0, 960, chipc(2, p_), chipc(3, p_));
+                            }
+                            if (cdata[c_].furious != 0)
+                            {
+                                pos(dx_ + 12, dy_ - chipc(4, p_) - 12);
+                                gcopy(3, 32, 608, 16, 16);
+                            }
+                            if (cdata[c_].emotion_icon != 0)
+                            {
+                                draw_emo(c_, dx_ + 4, dy_ - chipc(4, p_) - 16);
+                            }
+                        }
+                        if (cbit(985, c_))
+                        {
+                            pos(dx_, dy_ - 26);
+                            gcopy(1, 96, 768, 48, 48);
+                            chipc(4, p_) -= 24;
+                        }
+                    }
+                    if (cbit(966, c_) == 1 || gdata(94) == c_)
+                    {
+                        h_ = std::min(cdata[c_].hp * 30 / cdata[c_].max_hp, 30);
+                        if (h_ > 0)
+                        {
+                            if (c_ < 16)
+                            {
+                                if (mdata(6) != 1)
+                                {
+                                    pos(dx_ + 9, dy_ + 32);
+                                    gcopy(3, 480 - h_, 517, h_, 3);
+                                }
+                            }
+                            else
+                            {
+                                pos(dx_ + 9, dy_ + 32);
+                                gcopy(3, 480 - h_, 513, h_, 3);
                             }
                         }
                     }
                 }
-                dx_ -= inf_tiles;
-                ++lx_;
             }
+            if (map(x_, y_, 9) != 0)
+            {
+                p_ = map(x_, y_, 9);
+                if (gdata_hour > 17 || gdata_hour < 6 || lightdata(6, p_))
+                {
+                    if (mapsync(x_, y_) == msync)
+                    {
+                        light_ -= (6
+                                   - std::clamp(
+                                         dist(
+                                             cdata[0].position.x,
+                                             cdata[0].position.y,
+                                             x_,
+                                             y_),
+                                         0,
+                                         6))
+                            * lightdata(4, p_);
+                        pos(dx_, dy_ - lightdata(3, p_));
+                        gmode(
+                            5,
+                            inf_tiles,
+                            inf_tiles,
+                            lightdata(2, p_) + rnd((lightdata(5, p_) + 1)));
+                        gcopy(
+                            3,
+                            192 + lightdata(0, p_) * 48
+                                + rnd((lightdata(1, p_) + 1)) * inf_tiles,
+                            704);
+                    }
+                }
+            }
+            if (wall_ == 0)
+            {
+                if (ground_ != tile_fog && y_ > 0 && dy_ > 48)
+                {
+                    ground_ = map(x_, y_ - 1, 0);
+                    if (chipm(2, ground_))
+                    {
+                        pos(dx_ + (dx_ < 0) * -dx_, dy_);
+                        gfini(
+                            inf_tiles
+                                - (dx_ > windoww - inf_tiles)
+                                    * (dx_ + inf_tiles - windoww)
+                                + (dx_ < 0) * dx_,
+                            24);
+                        gfdec2(16, 16, 16);
+                        pos(dx_ + (dx_ < 0) * -dx_, dy_ + 24);
+                        gfini(
+                            inf_tiles
+                                - (dx_ > windoww - inf_tiles)
+                                    * (dx_ + inf_tiles - windoww)
+                                + (dx_ < 0) * dx_,
+                            12);
+                        gfdec2(12, 12, 12);
+                    }
+                }
+            }
+            else
+            {
+                gmode(0);
+                if (y_ > 0)
+                {
+                    p_ = map(x_, y_ - 1, 2);
+                    if (chipm(2, p_) != 2 && p_ != tile_fog && dy_ > 20)
+                    {
+                        pos(dx_, dy_ - 12);
+                        gcopy(
+                            sel_,
+                            ground_ % 33 * inf_tiles,
+                            ground_ / 33 * inf_tiles,
+                            inf_tiles
+                                - (dx_ > windoww - inf_tiles)
+                                    * (dx_ + inf_tiles - windoww),
+                            12);
+                        pos(dx_ + (dx_ < 0) * -dx_, dy_ - 20);
+                        gfini(
+                            inf_tiles
+                                - (dx_ > windoww - inf_tiles)
+                                    * (dx_ + inf_tiles - windoww)
+                                + (dx_ < 0) * dx_,
+                            8);
+                        gfdec2(25, 25, 25);
+                    }
+                }
+            }
+            dx_ -= inf_tiles;
+            ++lx_;
         }
         dy_ += inf_tiles;
         ++ly_;
