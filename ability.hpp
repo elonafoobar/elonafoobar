@@ -2,12 +2,43 @@
 
 #include <cassert>
 #include <memory>
+#include <unordered_map>
 #include <vector>
-
 
 
 namespace elona
 {
+
+
+
+struct ability_data
+{
+    int id;
+    int sdataref0;
+    int sdataref1;
+    int sdataref2;
+    int sdataref3;
+    int sdataref4;
+};
+
+
+
+class ability_db
+{
+public:
+    ability_db();
+
+
+    const ability_data& operator[](int id) const;
+
+
+private:
+    std::unordered_map<int, ability_data> storage;
+};
+
+
+inline ability_db the_ability_db;
+
 
 
 struct ability

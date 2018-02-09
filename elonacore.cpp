@@ -5306,11 +5306,13 @@ int randomele()
     {
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (sdataref(4, p_at_m45)); cnt < cnt_end;
+            for (int cnt_end = cnt + (the_ability_db[p_at_m45].sdataref4);
+                 cnt < cnt_end;
                  ++cnt)
             {
                 i_at_m45 = rnd(11) + 50;
-                if (sdataref(4, i_at_m45) < sdataref(4, p_at_m45))
+                if (the_ability_db[i_at_m45].sdataref4
+                    < the_ability_db[p_at_m45].sdataref4)
                 {
                     if (rnd(2) == 0)
                     {
@@ -8687,9 +8689,12 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
     {
         return 0;
     }
-    if (sdataref(0, prm_569) != 0)
+    if (the_ability_db[prm_569].sdataref0 != 0)
     {
-        skillexp(sdataref(0, prm_569), prm_570, prm_571 / (2 + prm_572));
+        skillexp(
+            the_ability_db[prm_569].sdataref0,
+            prm_570,
+            prm_571 / (2 + prm_572));
     }
     lv_at_m77 = sdata.get(prm_569, prm_570).original_level;
     growth_at_m77 = sdata.get(prm_569, prm_570).potential;
@@ -9223,7 +9228,8 @@ int breath_list()
     dy = cdata[cc].position.y;
     {
         int cnt = 0;
-        for (int cnt_end = cnt + (sdataref(3, efid) % 1000 + 1); cnt < cnt_end;
+        for (int cnt_end = cnt + (the_ability_db[efid].sdataref3 % 1000 + 1);
+             cnt < cnt_end;
              ++cnt)
         {
             if (route(0, cnt % maxroute) == 1)
@@ -18133,7 +18139,7 @@ int advfavoriteskill(int prm_868)
         for (;; ++cnt)
         {
             rtval(i_at_m145) = rnd(300) + 100;
-            if (sdataref(0, rtval(i_at_m145)) == 0)
+            if (the_ability_db[rtval(i_at_m145)].sdataref0 == 0)
             {
                 continue;
             }
@@ -21473,12 +21479,12 @@ void gain_skill_experience_casting()
 {
     if (r1 == 0)
     {
-        skillexp(r2, r1, sdataref(2, r2) * 4 + 20, 4, 5);
-        skillexp(172, r1, sdataref(2, r2) + 10, 5);
+        skillexp(r2, r1, the_ability_db[r2].sdataref2 * 4 + 20, 4, 5);
+        skillexp(172, r1, the_ability_db[r2].sdataref2 + 10, 5);
     }
     else
     {
-        skillexp(172, r1, sdataref(2, r2) + 10, 5);
+        skillexp(172, r1, the_ability_db[r2].sdataref2 + 10, 5);
     }
     return;
 }
@@ -21585,7 +21591,7 @@ void label_1470()
 
 void label_1471()
 {
-    skillexp(165, 0, 10 + sdataref(4, efid) / 5);
+    skillexp(165, 0, 10 + the_ability_db[efid].sdataref4 / 5);
     return;
 }
 
@@ -22264,7 +22270,7 @@ int try_to_cast_spell()
         }
         else
         {
-            r4 = sdata(sdataref(0, r3), cc);
+            r4 = sdata(the_ability_db[r3].sdataref0, cc);
         }
         if (rnd(sdata(150, cc) * r4 * 4 + 250) < rnd(r2 + 1))
         {
@@ -27827,7 +27833,7 @@ void apply_general_eating_effect()
                 int cnt = 100;
                 for (int cnt_end = cnt + (300); cnt < cnt_end; ++cnt)
                 {
-                    if (sdataref(0, cnt) == 0
+                    if (the_ability_db[cnt].sdataref0 == 0
                         || sdata.get(cnt, cc).original_level == 0)
                     {
                         continue;
@@ -48210,7 +48216,7 @@ void label_2007()
             if (sdata(cnt, cc) > 0)
             {
                 list(0, listmax) = cnt;
-                list(1, listmax) = sdataref(0, cnt) * 1000 + cnt;
+                list(1, listmax) = the_ability_db[cnt].sdataref0 * 1000 + cnt;
                 ++listmax;
             }
         }
@@ -48222,7 +48228,7 @@ void label_2007()
             if (spact(cnt) != 0)
             {
                 list(0, listmax) = cnt + 600;
-                list(1, listmax) = sdataref(0, cnt) * 1000 + cnt;
+                list(1, listmax) = the_ability_db[cnt].sdataref0 * 1000 + cnt;
                 ++listmax;
             }
         }
@@ -48298,7 +48304,7 @@ label_2009_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(
                 1,
-                (sdataref(0, list(0, p)) - 10) * inf_tiles,
+                (the_ability_db[list(0, p)].sdataref0) - 10 * inf_tiles,
                 672,
                 0,
                 inf_tiles,
@@ -48320,7 +48326,7 @@ label_2009_internal:
                 wx + 84,
                 wy + 66 + cnt * 19 - 1,
                 19);
-            s = ""s + sdataref(2, list(0, p)) + u8" Sp"s;
+            s = ""s + the_ability_db[list(0, p)].sdataref2 + u8" Sp"s;
             pos(wx + 288 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
             mes(s);
             label_2031();
@@ -49257,7 +49263,7 @@ void label_2027()
             if (spell(cnt) > 0)
             {
                 list(0, listmax) = cnt + 400;
-                list(1, listmax) = sdataref(0, 400 + cnt);
+                list(1, listmax) = the_ability_db[400 + cnt].sdataref0;
                 ++listmax;
             }
         }
@@ -49336,7 +49342,7 @@ label_2029_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(
                 1,
-                (sdataref(0, i) - 10) * inf_tiles,
+                (the_ability_db[i].sdataref0 - 10) * inf_tiles,
                 672,
                 0,
                 inf_tiles,
@@ -49495,9 +49501,9 @@ label_2029_internal:
 void label_2031()
 {
     s = "";
-    if (sdataref(1, i) / 1000 == 1)
+    if (the_ability_db[i].sdataref1 / 1000 == 1)
     {
-        p = sdataref(1, i) % 1000;
+        p = the_ability_db[i].sdataref1 % 1000;
         const auto duration = calc_buff_duration(p, calcspellpower(i, cc));
         const auto description = get_buff_description(p, calcspellpower(i, cc));
         s = ""s + duration + lang(u8"ﾀｰﾝ "s, u8"t "s) + description;
@@ -49760,7 +49766,7 @@ void label_2032()
             f = 0;
             if (sdata.get(p, cc).original_level == 0)
             {
-                if (sdataref(0, p) != 0)
+                if (the_ability_db[p].sdataref0 != 0)
                 {
                     f = 1;
                 }
@@ -49768,7 +49774,7 @@ void label_2032()
             if (f)
             {
                 list(0, listmax) = p;
-                list(1, listmax) = sdataref(0, p) + 21000;
+                list(1, listmax) = the_ability_db[p].sdataref0 + 21000;
                 ++listmax;
             }
         }
@@ -49828,7 +49834,7 @@ label_20331:
                 if (f)
                 {
                     list(0, listmax) = cnt;
-                    list(1, listmax) = sdataref(0, cnt) + 21000;
+                    list(1, listmax) = the_ability_db[cnt].sdataref0 + 21000;
                     ++listmax;
                 }
             }
@@ -49852,7 +49858,7 @@ label_20331:
             }
             else if (sdata(cnt, cc) == 0)
             {
-                if (sdataref(0, cnt) != 0)
+                if (the_ability_db[cnt].sdataref0 != 0)
                 {
                     f = 1;
                 }
@@ -49860,7 +49866,7 @@ label_20331:
             if (f)
             {
                 list(0, listmax) = cnt;
-                list(1, listmax) = sdataref(0, cnt) + 31000;
+                list(1, listmax) = the_ability_db[cnt].sdataref0 + 31000;
                 ++listmax;
             }
         }
@@ -49878,7 +49884,7 @@ label_20331:
                 if (sdata(cnt, cc) != 0)
                 {
                     list(0, listmax) = cnt;
-                    list(1, listmax) = sdataref(0, cnt) + 41000;
+                    list(1, listmax) = the_ability_db[cnt].sdataref0 + 41000;
                     ++listmax;
                 }
             }
@@ -50466,7 +50472,7 @@ label_2035_internal:
                     else
                     {
                         x = 84;
-                        p(1) = sdataref(0, i) - 10;
+                        p(1) = the_ability_db[i].sdataref0 - 10;
                     }
                     pos(wx + 38, wy + 75 + cnt * 19);
                     gmode(2, inf_tiles, inf_tiles);
@@ -59098,7 +59104,7 @@ int label_2163()
         }
         else
         {
-            p = sdataref(4, efid);
+            p = the_ability_db[efid].sdataref4;
         }
         cdata[cc].continuous_action_turn = p / (2 + sdata(150, 0)) + 1;
         cdata[cc].continuous_action_item = ci;
@@ -59129,7 +59135,7 @@ int label_2163()
         }
         else
         {
-            r2 = sdataref(4, efid);
+            r2 = the_ability_db[efid].sdataref4;
             r3 = efid;
         }
         if (inv[ci].curse_state >= 1)
@@ -59396,7 +59402,7 @@ int label_2168()
     }
     if (cc != 0)
     {
-        if (sdataref(1, efid) == 7)
+        if (the_ability_db[efid].sdataref1 == 7)
         {
             if (cdata[cc].relationship == 10 || gdata_current_map == 40)
             {
@@ -59509,7 +59515,7 @@ int label_2168()
         efp = efp * (100 + p / 10) / 100;
     }
     rapidmagic = 0;
-    if (cbit(20, cc) && sdataref(1, efid) == 2)
+    if (cbit(20, cc) && the_ability_db[efid].sdataref1 == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -59936,7 +59942,7 @@ int label_2172()
     }
     if (efid >= 400 && efid < 467)
     {
-        if (stat == 0 && sdataref(3, efid) / 1000 * 1000 == 2000
+        if (stat == 0 && the_ability_db[efid].sdataref3 / 1000 * 1000 == 2000
             || noeffect == 1)
         {
             if (synccheck(cc, -1))
@@ -59976,7 +59982,7 @@ int label_2172()
         {
             f = 1;
         }
-        if (rnd((sdataref(4, efid) + 1)) / 2 <= r1)
+        if (rnd((the_ability_db[efid].sdataref4 + 1)) / 2 <= r1)
         {
             f = 1;
         }
@@ -60057,8 +60063,8 @@ int label_2174()
             return 0;
         }
     }
-    if (sdataref(3, efid) / 1000 * 1000 != 3000
-        && sdataref(3, efid) / 1000 * 1000 != 10000)
+    if (the_ability_db[efid].sdataref3 / 1000 * 1000 != 3000
+        && the_ability_db[efid].sdataref3 / 1000 * 1000 != 10000)
     {
         if (cdata[cc].confused != 0 || cdata[cc].blind != 0)
         {
@@ -60086,13 +60092,15 @@ int label_2174()
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, sdataref(2, efid) / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
                     return 1;
                 }
             }
             dmgsp(
-                0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
-            skillexp(sdataref(0, efid), cc, 25);
+                0,
+                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
+                    + the_ability_db[efid].sdataref2 / 2 + 1);
+            skillexp(the_ability_db[efid].sdataref0, cc, 25);
         }
     }
     efp = calcspellpower(efid, cc);
@@ -60124,7 +60132,7 @@ int label_2175()
         tc = cc;
         return 1;
     }
-    tg = sdataref(3, efid) / 1000 * 1000;
+    tg = the_ability_db[efid].sdataref3 / 1000 * 1000;
     if (efsource == 1)
     {
         if (tg == 3000)
@@ -60132,7 +60140,7 @@ int label_2175()
             tg = 8000;
         }
     }
-    if (sdataref(1, efid) == 7)
+    if (the_ability_db[efid].sdataref1 == 7)
     {
         if (cc == 0)
         {
@@ -60167,7 +60175,7 @@ int label_2175()
                     cdata[tc].position.y,
                     cdata[cc].position.x,
                     cdata[cc].position.y)
-                > sdataref(3, efid) % 1000 + 1)
+                > the_ability_db[efid].sdataref3 % 1000 + 1)
             {
                 return 0;
             }
@@ -60239,14 +60247,14 @@ int label_2175()
     {
         if (cc != 0)
         {
-            if (sdataref(1, efid) == 3)
+            if (the_ability_db[efid].sdataref1 == 3)
             {
                 if (dist(
                         cdata[tc].position.x,
                         cdata[tc].position.y,
                         cdata[cc].position.x,
                         cdata[cc].position.y)
-                    > sdataref(3, efid) % 1000 + 1)
+                    > the_ability_db[efid].sdataref3 % 1000 + 1)
                 {
                     return 0;
                 }
@@ -60292,7 +60300,7 @@ int label_2175()
                 cdata[tc].position.y,
                 cdata[cc].position.x,
                 cdata[cc].position.y)
-            > sdataref(3, efid) % 1000 + 1)
+            > the_ability_db[efid].sdataref3 % 1000 + 1)
         {
             if (cc == 0)
             {

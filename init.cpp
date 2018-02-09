@@ -250,7 +250,6 @@ void initialize_elona()
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);
 
-    set_sdataref();
     initialize_craft_material_data();
 
     DIM3(dirxy, 2, 4);
@@ -1976,7 +1975,7 @@ void label_1567(int CNT)
                 gmode(2, inf_tiles, inf_tiles);
                 grotate(
                     1,
-                    (sdataref(0, cnt) - 10) * inf_tiles,
+                    (the_ability_db[cnt].sdataref0 - 10) * inf_tiles,
                     672,
                     0,
                     inf_tiles,

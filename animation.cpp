@@ -1,4 +1,5 @@
 #include "animation.hpp"
+#include "ability.hpp"
 #include "character.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -344,7 +345,7 @@ void play_animation_0(int anicol, int anisound)
                         anidy,
                         cdata[cc].position.x,
                         cdata[cc].position.y)
-                    > sdataref(3, efid) % 1000 + 1)
+                    > the_ability_db[efid].sdataref3 % 1000 + 1)
                 {
                     ap(cnt) = -2;
                     ap(20) = 4;
