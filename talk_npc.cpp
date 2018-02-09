@@ -1084,7 +1084,7 @@ void talk_npc()
             }
         }
         allyctrl = 2;
-        int stat = label_1959();
+        int stat = ctrl_ally();
         if (stat == -1)
         {
             buff = lang(
@@ -1275,7 +1275,7 @@ void talk_npc()
     if (chatval == 33)
     {
         allyctrl = 0;
-        int stat = label_1959();
+        int stat = ctrl_ally();
         if (stat != -1)
         {
             rc = stat;
@@ -1447,7 +1447,7 @@ void talk_npc()
     if (chatval == 37)
     {
         allyctrl = 1;
-        int stat = label_1959();
+        int stat = ctrl_ally();
         if (stat != -1)
         {
             rc = stat;
@@ -1731,7 +1731,7 @@ void talk_npc()
     {
         tcchat = tc;
         allyctrl = 4;
-        int stat = label_1959();
+        int stat = ctrl_ally();
         if (stat != -1)
         {
             rc = stat;

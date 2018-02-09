@@ -619,7 +619,7 @@ label_20591:
     {
         if (listmax == 0)
         {
-            label_2742();
+            turn_end();
             return 0;
         }
     }
@@ -1208,7 +1208,7 @@ label_2061_internal:
                 ++dropcontinue;
                 goto label_20591;
             }
-            label_2742();
+            turn_end();
             return 0;
         }
         if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22
@@ -1439,7 +1439,7 @@ label_2061_internal:
             }
             if (stat == -1)
             {
-                label_2742();
+                turn_end();
                 return 0;
             }
             if (invctrl == 22)
@@ -1495,7 +1495,7 @@ label_2061_internal:
                 update_screen();
                 pc_turn(false);
             }
-            label_2198();
+            do_eat_command();
             return 0;
         }
         if (invctrl == 6)
@@ -1545,10 +1545,10 @@ label_2061_internal:
             }
             if (cdata_body_part(cc, body) / 10000 == 5)
             {
-                label_2049();
+                equip_melee_weapon();
             }
             menucycle = 1;
-            label_2050();
+            ctrl_inventory_equipment();
             return 0;
         }
         if (invctrl == 7)
@@ -1556,7 +1556,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            label_2197();
+            do_read_commad();
             return 0;
         }
         if (invctrl == 8)
@@ -1790,7 +1790,7 @@ label_2061_internal:
                     goto label_20591;
                 }
                 update_screen();
-                label_2742();
+                turn_end();
                 return 0;
             }
             snd(27);
@@ -1849,7 +1849,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            label_2212();
+            do_open_command();
             return 0;
         }
         if (invctrl == 17)
@@ -1865,7 +1865,7 @@ label_2061_internal:
         {
             screenupdate = -1;
             update_screen();
-            label_2227();
+            do_dip_command();
             return 0;
         }
         if (invctrl == 19)
@@ -1920,7 +1920,7 @@ label_2061_internal:
                 inv[citrade].body_part = 0;
             }
             ti = citrade;
-            label_2191();
+            item_exchange(ci, ti);
             convertartifact(ci);
             rc = tc;
             ci = citrade;
@@ -2371,7 +2371,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             menucycle = 1;
-            label_2050();
+            ctrl_inventory_equipment();
             return 0;
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)
@@ -2386,7 +2386,7 @@ label_2061_internal:
         if (dropcontinue)
         {
             dropcontinue = 0;
-            label_2742();
+            turn_end();
             return 0;
         }
         screenupdate = 0;

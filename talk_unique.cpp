@@ -2384,7 +2384,7 @@ void talk_unique()
                 return;
             }
             allyctrl = 1;
-            int stat = label_1959();
+            int stat = ctrl_ally();
             if (stat == -1)
             {
                 listmax = 0;

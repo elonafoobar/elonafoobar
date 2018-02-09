@@ -36,7 +36,7 @@ void label_1550(bool = true);
 void label_1553(bool = true);
 void label_1557(bool = true);
 void pc_turn(bool = true);
-void label_2737(bool = true);
+void pass_one_turn(bool = true);
 
 int access_character_info();
 

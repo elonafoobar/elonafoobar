@@ -1020,7 +1020,7 @@ void fmode_22_21(int fmode, const fs::path& file)
                     }
                     cxinit = cdata[tg].position.x;
                     cyinit = cdata[tg].position.y;
-                    label_1532();
+                    place_character();
                 }
                 if (importmode == 1)
                 {
