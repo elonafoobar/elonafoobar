@@ -3,6 +3,7 @@
 #include <type_traits>
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item_db.hpp"
 #include "main.hpp"
 #include "variables.hpp"
@@ -1016,8 +1017,17 @@ void label_0311()
         if (inv[prm_518].id == 563)
         {
             s_at_m63 += lang(
-                u8"《"s + skillname(inv[prm_518].param1) + u8"》という題名の"s,
-                u8" titled <Art of "s + skillname(inv[prm_518].param1)
+                u8"《"s
+                    + i18n::_(
+                          u8"ability",
+                          std::to_string(inv[prm_518].param1),
+                          u8"name")
+                    + u8"》という題名の"s,
+                u8" titled <Art of "s
+                    + i18n::_(
+                          u8"ability",
+                          std::to_string(inv[prm_518].param1),
+                          u8"name")
                     + u8">"s);
         }
         else if (inv[prm_518].id == 668)

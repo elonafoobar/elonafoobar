@@ -6,6 +6,7 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
@@ -43,16 +44,16 @@ int magic()
         if (efid < 661)
         {
             f = 0;
-            if (sdataref(1, efid) / 1000 == 1)
+            if (the_ability_db[efid].sdataref1 / 1000 == 1)
             {
                 f = 1;
-                p = sdataref(1, efid) % 1000;
+                p = the_ability_db[efid].sdataref1 % 1000;
                 if (the_buff_db[p].type == buff_data::type_t::hex)
                 {
                     efbad = 1;
                 }
             }
-            if (sdataref(1, efid) == 7)
+            if (the_ability_db[efid].sdataref1 == 7)
             {
                 efbad = 1;
             }
@@ -160,7 +161,7 @@ int magic()
                 dice2 = dice2 / 2 + 1;
                 bonus = bonus / 2 + 1;
             }
-            switch (sdataref(1, efid))
+            switch (the_ability_db[efid].sdataref1)
             {
             case 10:
                 play_animation(18);
@@ -196,7 +197,7 @@ int magic()
                                 dy,
                                 cdata[cc].position.x,
                                 cdata[cc].position.y)
-                            > sdataref(3, efid) % 1000 + 1)
+                            > the_ability_db[efid].sdataref3 % 1000 + 1)
                         {
                             break;
                         }
@@ -275,7 +276,7 @@ int magic()
                 }
             label_2177_internal:
                 cbitmod(972, cc, 0);
-                range_ = sdataref(3, efid) % 1000 + 1;
+                range_ = the_ability_db[efid].sdataref3 % 1000 + 1;
                 if (debug::voldemort && cc == 0)
                 {
                     range_ *= 2;
@@ -583,9 +584,18 @@ int magic()
                         if (cc == 0)
                         {
                             txt(lang(
-                                name(cc) + u8"は"s + skillname(efid) + u8"の"s
+                                name(cc) + u8"は"s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(efid),
+                                          u8"name")
+                                    + u8"の"s
                                     + _cast(cdata[cc].special_attack_type),
-                                name(cc) + u8" cast "s + skillname(efid)
+                                name(cc) + u8" cast "s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(efid),
+                                          u8"name")
                                     + u8"."s));
                             txtmore();
                         }
@@ -1009,7 +1019,8 @@ int magic()
                 }
                 if (ele)
                 {
-                    valn = skillname(ele) + lang(u8"の"s, u8" breath"s);
+                    valn = i18n::_(u8"ability", std::to_string(ele), u8"name")
+                        + lang(u8"の"s, u8" breath"s);
                 }
                 else
                 {
@@ -1542,12 +1553,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, sdataref(2, efid) / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
-                0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
+                0,
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         invsubroutine = 1;
         invctrl(0) = 27;
@@ -1565,12 +1578,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, sdataref(2, efid) / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
-                0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
+                0,
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         if (gdata_mount != 0)
         {
@@ -1717,12 +1732,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, sdataref(2, efid) / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
-                0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
+                0,
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         label_2146();
         goto label_2186_internal;
@@ -1753,12 +1770,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, sdataref(2, efid) / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
-                0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
+                0,
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         cook();
         goto label_2186_internal;
@@ -1866,12 +1885,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, sdataref(2, efid) / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
-                0, rnd(sdataref(2, efid) / 2 + 1) + sdataref(2, efid) / 2 + 1);
+                0,
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         item_separate(ci);
         --inv[ci].count;
@@ -2433,7 +2454,7 @@ label_2181_internal:
                         }
                         if (efstatus >= 0)
                         {
-                            if (sdataref(0, p) != 0)
+                            if (the_ability_db[p].related_basic_attribute != 0)
                             {
                                 if (cnt2 == 0)
                                 {
@@ -2446,10 +2467,18 @@ label_2181_internal:
                                 skillgain(0, p, 1, 200);
                                 txtef(2);
                                 txt(lang(
-                                    s + name(0) + u8"は"s + skillname(p)
+                                    s + name(0) + u8"は"s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
                                         + u8"の魔法の知識を得た。"s,
                                     s + u8"you gain knowledge of a spell, "s
-                                        + skillname(p) + u8"."s));
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
+                                        + u8"."s));
                                 snd(24);
                                 f = 1;
                                 break;
@@ -2467,10 +2496,17 @@ label_2181_internal:
                                 txtef(3);
                                 txt(lang(
                                     u8"突然、"s + name(0) + u8"は"s
-                                        + skillname((p + 400))
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p + 400),
+                                              u8"name")
                                         + u8"の魔法の知識を失った。"s,
                                     u8"Suddenly, you lose knowledge of a spell, "s
-                                        + skillname((p + 400)) + u8"."s));
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p + 400),
+                                              u8"name")
+                                        + u8"."s));
                                 snd(117);
                                 animeload(14, 0);
                                 f = 1;
@@ -2548,7 +2584,7 @@ label_2181_internal:
         {
             await();
             p = rnd(300) + 100;
-            if (sdataref(0, p) != 0)
+            if (the_ability_db[p].related_basic_attribute != 0)
             {
                 if (efstatus >= 0)
                 {
@@ -2565,10 +2601,14 @@ label_2181_internal:
                         snd(24);
                         txtef(2);
                         txt(lang(
-                            ""s + name(tc) + u8"は"s + skillname(p)
+                            ""s + name(tc) + u8"は"s
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
                                 + u8"の技術を獲得した！"s,
                             name(tc) + u8" gain"s + _s(tc) + u8" a skill of "s
-                                + skillname(p) + u8"!"s));
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
+                                + u8"!"s));
                     }
                     break;
                 }
@@ -2657,7 +2697,7 @@ label_2181_internal:
                 {
                     await();
                     p = rnd(300) + 100;
-                    if (sdataref(0, p) != 0)
+                    if (the_ability_db[p].related_basic_attribute != 0)
                     {
                         if (sdata.get(p, tc).original_level == 0)
                         {
@@ -2679,10 +2719,18 @@ label_2181_internal:
                                 snd(24);
                                 txtef(2);
                                 txt(lang(
-                                    s + ""s + name(tc) + u8"の"s + skillname(p)
+                                    s + ""s + name(tc) + u8"の"s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
                                         + u8"の技術の潜在能力が上昇した。"s,
                                     s + u8"potential of "s + name(tc) + your(tc)
-                                        + u8" "s + skillname(p)
+                                        + u8" "s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
                                         + u8" skill increases."s));
                             }
                         }
@@ -2691,10 +2739,18 @@ label_2181_internal:
                             snd(117);
                             txtef(3);
                             txt(lang(
-                                ""s + name(tc) + u8"の"s + skillname(p)
+                                ""s + name(tc) + u8"の"s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(p),
+                                          u8"name")
                                     + u8"の技術の潜在能力が減少した。"s,
                                 u8"The potential of "s + name(tc) + your(tc)
-                                    + u8" "s + skillname(p)
+                                    + u8" "s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(p),
+                                          u8"name")
                                     + u8" skill decreases."s));
                         }
                         break;
@@ -2753,7 +2809,7 @@ label_2181_internal:
         else
         {
             i = rnd(8) + 10;
-            valn = skillname(i);
+            valn = i18n::_(u8"ability", std::to_string(i), u8"name");
             if (efstatus == 0)
             {
                 txt(lang(
@@ -4235,7 +4291,7 @@ label_2181_internal:
                 dx = cdata[tc].position.x;
                 dy = cdata[tc].position.y;
                 if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                    > sdataref(3, 631) % 1000 + 1)
+                    > the_ability_db[631].sdataref3 % 1000 + 1)
                 {
                     continue;
                 }
@@ -4396,7 +4452,7 @@ label_2181_internal:
                 dx = cdata[tc].position.x;
                 dy = cdata[tc].position.y;
                 if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                    > sdataref(3, 656) % 1000 + 1)
+                    > the_ability_db[656].sdataref3 % 1000 + 1)
                 {
                     continue;
                 }

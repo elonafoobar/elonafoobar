@@ -1,5 +1,6 @@
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -891,17 +892,21 @@ std::string txtskillchange(int prm_370, int prm_371, int prm_372)
     if (prm_371 == 0)
     {
         return lang(
-            name(prm_372) + u8"は"s + skillname(prm_370)
+            name(prm_372) + u8"は"s
+                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
                 + u8"の技術の向上を感じた。"s,
-            name(prm_372) + your(prm_372) + u8" "s + skillname(prm_370)
+            name(prm_372) + your(prm_372) + u8" "s
+                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
                 + u8" skill increases."s);
     }
     else
     {
         return lang(
-            name(prm_372) + u8"は"s + skillname(prm_370)
+            name(prm_372) + u8"は"s
+                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
                 + u8"の技術の衰えを感じた。"s,
-            name(prm_372) + your(prm_372) + u8" "s + skillname(prm_370)
+            name(prm_372) + your(prm_372) + u8" "s
+                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
                 + u8" skill falls off."s);
     }
 }
@@ -5230,16 +5235,25 @@ void label_0247()
             {
                 rtval = 9;
                 s = lang(
-                    ""s + skillname(sid) + u8"を"s + std::abs((val(1) / 50 + 1))
-                        + u8"下げる"s,
-                    u8"decreases your "s + skillname(sid) + u8" by "s
-                        + std::abs((val(1) / 50 + 1)) + u8"."s);
+                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"を"s + std::abs((val(1) / 50 + 1)) + u8"下げる"s,
+                    u8"decreases your "s
+                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8" by "s + std::abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000)
                 {
                     s = lang(
-                            ""s + skillname(sid)
+                            ""s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(sid),
+                                      u8"name")
                                 + u8"を減衰させる毒素を含んでいる"s,
-                            u8"has which deteriorates your "s + skillname(sid)
+                            u8"has which deteriorates your "s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(sid),
+                                      u8"name")
                                 + u8"."s)
                         + u8" ["s;
                     putenclv(val(1) / 50);
@@ -5249,17 +5263,26 @@ void label_0247()
             else
             {
                 s = lang(
-                    ""s + skillname(sid) + u8"を"s + std::abs((val(1) / 50 + 1))
-                        + u8"上げる"s,
-                    u8"increases your "s + skillname(sid) + u8" by "s
-                        + std::abs((val(1) / 50 + 1)) + u8"."s);
+                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"を"s + std::abs((val(1) / 50 + 1)) + u8"上げる"s,
+                    u8"increases your "s
+                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8" by "s + std::abs((val(1) / 50 + 1)) + u8"."s);
                 if (val(3) == 57000)
                 {
                     s = lang(
-                            ""s + skillname(sid)
+                            ""s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(sid),
+                                      u8"name")
                                 + u8"を増強させる栄養をもっている"s,
                             u8"has essential nutrients to enhance your "s
-                                + skillname(sid) + u8"."s)
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(sid),
+                                      u8"name")
+                                + u8"."s)
                         + u8" ["s;
                     putenclv(val(1) / 50);
                     s += u8"]"s;
@@ -5274,17 +5297,28 @@ void label_0247()
             {
                 rtval = 9;
                 s = lang(
-                    ""s + skillname(sid) + u8"への耐性を弱化する"s,
-                    u8"weaken your resistance to "s + skillname(sid) + u8"."s);
+                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"への耐性を弱化する"s,
+                    u8"weaken your resistance to "s
+                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"."s);
             }
             else
             {
-                s = skillencdesc(sid);
+                s = i18n::_(
+                    u8"ability",
+                    std::to_string(sid),
+                    u8"enchantment_description");
                 if (s == ""s)
                 {
                     s = lang(
-                        ""s + skillname(sid) + u8"への耐性を授ける"s,
-                        u8"grants your resistance to "s + skillname(sid)
+                        ""s
+                            + i18n::_(
+                                  u8"ability", std::to_string(sid), u8"name")
+                            + u8"への耐性を授ける"s,
+                        u8"grants your resistance to "s
+                            + i18n::_(
+                                  u8"ability", std::to_string(sid), u8"name")
                             + u8"."s);
                 }
             }
@@ -5300,17 +5334,29 @@ void label_0247()
             {
                 rtval = 9;
                 s = lang(
-                    ""s + skillname(sid) + u8"の技能を下げる"s,
-                    u8"decreases your "s + skillname(sid) + u8" skill."s);
+                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"の技能を下げる"s,
+                    u8"decreases your "s
+                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8" skill."s);
             }
             else
             {
-                s = skillencdesc(sid);
+                s = i18n::_(
+                    u8"ability",
+                    std::to_string(sid),
+                    u8"enchantment_description");
                 if (s == ""s)
                 {
                     s = lang(
-                        ""s + skillname(sid) + u8"の技能を上げる"s,
-                        u8"improves your "s + skillname(sid) + u8" skill."s);
+                        ""s
+                            + i18n::_(
+                                  u8"ability", std::to_string(sid), u8"name")
+                            + u8"の技能を上げる"s,
+                        u8"improves your "s
+                            + i18n::_(
+                                  u8"ability", std::to_string(sid), u8"name")
+                            + u8" skill."s);
                 }
             }
             s += u8" ["s;
@@ -5321,14 +5367,21 @@ void label_0247()
         {
             rtval = 8;
             s = lang(
-                skillname(sid) + u8"を維持する"s,
-                u8"maintains "s + skillname(sid) + u8"."s);
+                i18n::_(u8"ability", std::to_string(sid), u8"name")
+                    + u8"を維持する"s,
+                u8"maintains "s
+                    + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                    + u8"."s);
             if (val(3) == 57000)
             {
                 s = lang(
-                        ""s + skillname(sid)
+                        ""s
+                            + i18n::_(
+                                  u8"ability", std::to_string(sid), u8"name")
                             + u8"の成長を助ける栄養をもっている"s,
-                        u8"can help you exercise your "s + skillname(sid)
+                        u8"can help you exercise your "s
+                            + i18n::_(
+                                  u8"ability", std::to_string(sid), u8"name")
                             + u8" faster."s)
                     + u8" ["s;
                 putenclv(val(1) / 50);
@@ -5339,12 +5392,16 @@ void label_0247()
         {
             rtval = 4;
             i = val(1) / 2 / 50;
-            s = skillencdesc(sid);
+            s = i18n::_(
+                u8"ability", std::to_string(sid), u8"enchantment_description");
             if (s == ""s)
             {
                 s = lang(
-                    ""s + skillname(sid) + u8"属性の追加ダメージを与える"s,
-                    u8"deals "s + skillname(sid) + u8" damage."s);
+                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"属性の追加ダメージを与える"s,
+                    u8"deals "s
+                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8" damage."s);
             }
             s += u8" ["s;
             putenclv(i);
@@ -5356,8 +5413,11 @@ void label_0247()
             i = val(1) / 50;
             sid = encprocref(0, sid);
             s = lang(
-                ""s + skillname(sid) + u8"を発動する"s,
-                u8"invokes "s + skillname(sid) + u8"."s);
+                ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                    + u8"を発動する"s,
+                u8"invokes "s
+                    + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                    + u8"."s);
             s += u8" ["s;
             putenclv(i);
             s += u8"]"s;

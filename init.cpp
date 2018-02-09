@@ -250,7 +250,6 @@ void initialize_elona()
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);
 
-    set_sdataref();
     initialize_craft_material_data();
 
     DIM3(dirxy, 2, 4);
@@ -1325,7 +1324,8 @@ label_1554:
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
             list(0, listmax) = cmstats(cnt - 10);
-            listn(0, listmax) = skillname(cnt);
+            listn(0, listmax) =
+                i18n::_(u8"ability", std::to_string(cnt), u8"name");
             ++listmax;
         }
     }
@@ -1915,7 +1915,11 @@ void label_1567(int CNT)
                         inf_tiles,
                         inf_tiles);
                     pos(cnt * 150 + tx + 32, ty);
-                    mes(strmid(skillname(r), 0, jp ? 6 : 3) + u8": "s + s(p));
+                    mes(strmid(
+                            i18n::_(u8"ability", std::to_string(r), u8"name"),
+                            0,
+                            jp ? 6 : 3)
+                        + u8": "s + s(p));
                 }
             }
             ty += 16;
@@ -1938,7 +1942,7 @@ void label_1567(int CNT)
                 {
                     s += u8","s;
                 }
-                s += skillname(cnt);
+                s += i18n::_(u8"ability", std::to_string(cnt), u8"name");
                 ++r;
             }
         }
@@ -1958,7 +1962,7 @@ void label_1567(int CNT)
         {
             if (sdata.get(cnt, 0).original_level != 0)
             {
-                s = skillname(cnt);
+                s = i18n::_(u8"ability", std::to_string(cnt), u8"name");
                 if (jp)
                 {
                     lenfix(s, 12);
@@ -1971,12 +1975,14 @@ void label_1567(int CNT)
                 gmode(2, inf_tiles, inf_tiles);
                 grotate(
                     1,
-                    (sdataref(0, cnt) - 10) * inf_tiles,
+                    (the_ability_db[cnt].related_basic_attribute - 10)
+                        * inf_tiles,
                     672,
                     0,
                     inf_tiles,
                     inf_tiles);
-                s(1) = skilldesc(cnt);
+                s(1) =
+                    i18n::_(u8"ability", std::to_string(cnt), u8"description");
                 if (en)
                 {
                     if (strlen_u(s(1)) > 45)

@@ -2,6 +2,7 @@
 #include "character.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
@@ -176,8 +177,10 @@ std::string get_buff_description(int id, int power)
     case 27:
     case 28:
         return lang(
-            skillname(id - 20 + 10) + u8"の成長率を"s + effect1 + u8"%上昇"s,
-            u8"Increases the growth rate "s + skillname((id - 20 + 10))
+            i18n::_(u8"ability", std::to_string(id - 20 + 10), u8"name")
+                + u8"の成長率を"s + effect1 + u8"%上昇"s,
+            u8"Increases the growth rate "s
+                + i18n::_(u8"ability", std::to_string(id - 20 + 10), u8"name")
                 + u8" by "s + effect1 + ""s);
     default: assert(0);
     }
@@ -274,7 +277,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
 {
     int ep = 0;
     int rs_at_m9 = 0;
-    rs_at_m9 = sdata(sdataref(0, prm_269), prm_270);
+    rs_at_m9 = sdata(the_ability_db[prm_269].related_basic_attribute, prm_270);
     ele = 0;
     elep = 0;
     if (prm_269 == 412)
@@ -2209,9 +2212,9 @@ int calcspellpower(int prm_918, int prm_919)
 {
     if (prm_918 >= 600)
     {
-        if (sdataref(0, prm_918) != 0)
+        if (the_ability_db[prm_918].related_basic_attribute != 0)
         {
-            return sdataref(0, prm_918) * 6 + 10;
+            return the_ability_db[prm_918].related_basic_attribute * 6 + 10;
         }
         return 100;
     }
@@ -2279,7 +2282,8 @@ int calcspellfail(int prm_920, int prm_921)
         i_at_m157 += sdata(prm_920, prm_921) / 3;
     }
     p_at_m157 = 90 + sdata(prm_920, prm_921)
-        - sdataref(4, prm_920) * i_at_m157 / (5 + sdata(172, prm_921) * 4);
+        - the_ability_db[prm_920].sdataref4 * i_at_m157
+            / (5 + sdata(172, prm_921) * 4);
     if (f_at_m157 == 169)
     {
         if (p_at_m157 > 80)
@@ -2329,17 +2333,17 @@ int calcspellcostmp(int prm_922, int prm_923)
             || prm_922 == 409 || prm_922 == 408 || prm_922 == 410
             || prm_922 == 466)
         {
-            cost_at_m158 = sdataref(2, prm_922);
+            cost_at_m158 = the_ability_db[prm_922].cost;
             return cost_at_m158;
         }
-        cost_at_m158 =
-            sdataref(2, prm_922) * (100 + sdata(prm_922, prm_923) * 3) / 100
+        cost_at_m158 = the_ability_db[prm_922].cost
+                * (100 + sdata(prm_922, prm_923) * 3) / 100
             + sdata(prm_922, prm_923) / 8;
     }
     else
     {
-        cost_at_m158 =
-            sdataref(2, prm_922) * (50 + cdata[prm_923].level * 3) / 100;
+        cost_at_m158 = the_ability_db[prm_922].cost
+            * (50 + cdata[prm_923].level * 3) / 100;
     }
     return cost_at_m158;
 }
@@ -2349,11 +2353,11 @@ int calcspellcostmp(int prm_922, int prm_923)
 int calcspellcoststock(int prm_924, int prm_925)
 {
     int cost_at_m159 = 0;
-    cost_at_m159 =
-        sdataref(2, prm_924) * 200 / (sdata(prm_924, prm_925) * 3 + 100);
-    if (cost_at_m159 < sdataref(2, prm_924) / 5)
+    cost_at_m159 = the_ability_db[prm_924].cost * 200
+        / (sdata(prm_924, prm_925) * 3 + 100);
+    if (cost_at_m159 < the_ability_db[prm_924].cost / 5)
     {
-        cost_at_m159 = sdataref(2, prm_924) / 5;
+        cost_at_m159 = the_ability_db[prm_924].cost / 5;
     }
     cost_at_m159 = rnd(cost_at_m159 / 2 + 1) + cost_at_m159 / 2;
     if (cost_at_m159 < 1)
