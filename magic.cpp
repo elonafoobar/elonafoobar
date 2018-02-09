@@ -4,6 +4,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
@@ -275,6 +276,10 @@ int magic()
             label_2177_internal:
                 cbitmod(972, cc, 0);
                 range_ = sdataref(3, efid) % 1000 + 1;
+                if (debug::voldemort && cc == 0)
+                {
+                    range_ *= 2;
+                }
                 if (efid == 644)
                 {
                     range_ = 2;

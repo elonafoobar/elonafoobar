@@ -16762,7 +16762,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         dmg_at_m141 = prm_854;
     }
     rtdmg = dmg_at_m141;
+
+    if (debug::voldemort && tc == 0)
+    {
+        dmg_at_m141 = 0;
+    }
     cdata[prm_853].hp -= dmg_at_m141;
+
     if (ele_at_m141 == 56)
     {
         if (prm_855 >= 0)
@@ -22814,6 +22820,10 @@ void label_1520()
         }
         if (gdata_continuous_active_hours >= 30)
         {
+            if (debug::voldemort)
+            {
+                gdata_continuous_active_hours = 0;
+            }
             if (gdata_play_turns % 100 == 0)
             {
                 txt(lang(
@@ -62664,6 +62674,10 @@ int open_box()
             u8"The lock mechanism is beyond your skill."s));
         f = 1;
     }
+    if (debug::voldemort)
+    {
+        f = 0;
+    }
     if (f == 0)
     {
         if (i / 2 >= val)
@@ -63312,6 +63326,10 @@ void label_2215()
         }
     }
     else
+    {
+        f = 1;
+    }
+    if (debug::voldemort)
     {
         f = 1;
     }
