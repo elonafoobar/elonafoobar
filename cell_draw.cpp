@@ -11,21 +11,252 @@ namespace
 {
 
 
+
+template <typename T>
+struct loop_xy
+{
+    struct iterator
+    {
+        using value_type = std::pair<T, T>;
+        using difference_type = size_t;
+        using pointer = const value_type*;
+        using reference = const value_type&;
+        using iterator_category = std::input_iterator_tag;
+
+        iterator(T x, T y, T width)
+            : value(x, y)
+            , width(width)
+        {
+        }
+
+        reference operator*() const
+        {
+            return value;
+        }
+
+        pointer operator->() const
+        {
+            return &value;
+        }
+
+        bool operator!=(const iterator& other) const noexcept
+        {
+            return value != other.value;
+        }
+
+        void operator++()
+        {
+            ++value.first;
+            if (value.first == width)
+            {
+                value.first = 0;
+                ++value.second;
+            }
+        }
+
+    private:
+        value_type value;
+        T width;
+    };
+
+
+    loop_xy(T width, T height)
+        : width(width)
+        , height(height)
+    {
+    }
+
+
+    iterator begin() const
+    {
+        return {0, 0, width};
+    }
+
+    iterator end() const
+    {
+        return {0, height, width};
+    }
+
+private:
+    T width;
+    T height;
+};
+
+
+
 void render_shadow_low(int light)
 {
     color(0, 0, 0);
     gmode(6, inf_tiles, inf_tiles, light);
 
-    for (int y = 0; y < inf_screenh; ++y)
+    for (const auto& [x, y] : loop_xy{inf_screenw, inf_screenh})
     {
-        for (int x = 0; x < inf_screenw; ++x)
+        if (slight(x + 2, y + 2) >= 1000)
         {
-            if (slight(x + 2, y + 2) >= 1000)
+            pos(x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
+            gcopy(3, 144, 752);
+        }
+    }
+}
+
+
+
+void render_shadow(int p_, int dx_, int dy_)
+{
+    if (p_ <= 0)
+        return;
+    if (p_ < 300)
+    {
+        for (int i = 0; i < 1 + (deco(2, p_) != 0); ++i)
+        {
+            if (deco(0, p_) < 0 || i == 1)
             {
-                pos(x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
-                gcopy(3, 144, 752);
+                int deco2;
+                if (i == 0)
+                {
+                    deco2 = deco(1, p_);
+                }
+                else
+                {
+                    deco2 = deco(2, p_);
+                }
+                switch (deco2)
+                {
+                case 1:
+                    pos(dx_, dy_);
+                    gcopy(3, 168, 680, 24, 24);
+                    break;
+                case 2:
+                    pos(dx_ + 24, dy_ + 24);
+                    gcopy(3, 144, 656, 24, 24);
+                    break;
+                case 3:
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 168, 656, 24, 24);
+                    break;
+                case 4:
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 144, 680, 24, 24);
+                    break;
+                case 5:
+                    pos(dx_ + 24, dy_ + 24);
+                    gcopy(3, 144, 656, 24, 24);
+                    pos(dx_, dy_);
+                    gcopy(3, 168, 680, 24, 24);
+                    break;
+                case 6:
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 168, 656, 24, 24);
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 144, 680, 24, 24);
+                    break;
+                case 7:
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 168, 656, 24, 24);
+                    pos(dx_ + 24, dy_ + 24);
+                    gcopy(3, 144, 656, 24, 24);
+                    break;
+                case 8:
+                    pos(dx_, dy_);
+                    gcopy(3, 168, 680, 24, 24);
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 144, 680, 24, 24);
+                    break;
+                case 9:
+                    pos(dx_, dy_);
+                    gcopy(3, 168, 680, 24, 24);
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 168, 656, 24, 24);
+                    break;
+                case 10:
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 144, 680, 24, 24);
+                    pos(dx_ + 24, dy_ + 24);
+                    gcopy(3, 144, 656, 24, 24);
+                    break;
+                case 20:
+                    pos(dx_, dy_);
+                    gcopy(3, 0, 704, 24, 48);
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 120, 704, 24, 48);
+                    break;
+                case 21:
+                    pos(dx_, dy_);
+                    gcopy(3, 48, 656, 48, 24);
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 48, 776, 48, 24);
+                    break;
+                case 30:
+                    pos(dx_, dy_);
+                    gcopy(3, 0, 656, 48, 24);
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 0, 776, 48, 24);
+                    break;
+                case 31:
+                    pos(dx_, dy_);
+                    gcopy(3, 96, 656, 48, 24);
+                    pos(dx_, dy_ + 24);
+                    gcopy(3, 96, 776, 48, 24);
+                    break;
+                case 32:
+                    pos(dx_, dy_);
+                    gcopy(3, 0, 656, 24, 48);
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 120, 656, 24, 48);
+                    break;
+                case 33:
+                    pos(dx_, dy_);
+                    gcopy(3, 0, 752, 24, 48);
+                    pos(dx_ + 24, dy_);
+                    gcopy(3, 120, 752, 24, 48);
+                    break;
+                default: break;
+                }
+            }
+            else
+            {
+                pos(dx_, dy_);
+                gcopy(
+                    3,
+                    0 + deco(0, p_) * inf_tiles,
+                    656 + deco(1, p_) * inf_tiles);
             }
         }
+    }
+    else
+    {
+        int p2_ = (p_ - 1000) % 16;
+        int i_ = 0;
+        if (p2_ == 15)
+        {
+            p2_ = (p_ - 1000) % 256;
+            if (p2_ == 127)
+            {
+                i_ = 13;
+            }
+            if (p2_ == 223)
+            {
+                i_ = 14;
+            }
+            if (p2_ == 191)
+            {
+                i_ = 15;
+            }
+            if (p2_ == 239)
+            {
+                i_ = 16;
+            }
+            if (p2_ == 207 || p2_ == 63)
+            {
+                i_ = 17;
+            }
+        }
+        else
+        {
+            i_ = shadowmap(p2_);
+        }
+        pos(dx_, dy_);
+        gcopy(3, 144 + i_ * inf_tiles, 752);
     }
 }
 
@@ -34,216 +265,15 @@ void render_shadow_low(int light)
 void render_shadow_high(int light, int sxfix_, int syfix_)
 {
     gmode(6, inf_tiles, inf_tiles, light);
+
     if (scrollanime == 0)
     {
-        int y_ = 2;
-        int dy_ = inf_screeny + syfix_ * (scrollp > 3);
-        int cnt = 0;
-        for (int cnt_end = cnt + (inf_screenh); cnt < cnt_end; ++cnt)
+        for (const auto& [x, y] : loop_xy{inf_screenw, inf_screenh})
         {
-            int x_ = 2;
-            int dx_ = inf_screenx + sxfix_ * (scrollp > 3);
-            int cnt = 0;
-            for (int cnt_end = cnt + (inf_screenw); cnt < cnt_end; ++cnt)
-            {
-                int p_ = slight(x_, y_);
-                if (p_ > 0)
-                {
-                    if (p_ < 300)
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (1 + (deco(2, p_) != 0));
-                             cnt < cnt_end;
-                             ++cnt)
-                        {
-                            int deco2;
-                            if (deco(0, p_) < 0 || cnt)
-                            {
-                                if (cnt == 1)
-                                {
-                                    deco2 = deco(2, p_);
-                                }
-                                else
-                                {
-                                    deco2 = deco(1, p_);
-                                }
-                                int cnt = 0;
-                                for (int cnt_end = cnt + (1); cnt < cnt_end;
-                                     ++cnt)
-                                {
-                                    if (deco2 == 1)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 2)
-                                    {
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 3)
-                                    {
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 4)
-                                    {
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 5)
-                                    {
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 6)
-                                    {
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 7)
-                                    {
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 8)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 9)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 10)
-                                    {
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 20)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 704, 24, 48);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 120, 704, 24, 48);
-                                        break;
-                                    }
-                                    if (deco2 == 21)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 48, 656, 48, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 48, 776, 48, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 30)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 656, 48, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 0, 776, 48, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 31)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 96, 656, 48, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 96, 776, 48, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 32)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 656, 24, 48);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 120, 656, 24, 48);
-                                        break;
-                                    }
-                                    if (deco2 == 33)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 752, 24, 48);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 120, 752, 24, 48);
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                pos(dx_, dy_);
-                                gcopy(
-                                    3,
-                                    0 + deco(0, p_) * inf_tiles,
-                                    656 + deco(1, p_) * inf_tiles);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        int p2_ = (p_ - 1000) % 16;
-                        int i_ = 0;
-                        if (p2_ == 15)
-                        {
-                            p2_ = (p_ - 1000) % 256;
-                            if (p2_ == 127)
-                            {
-                                i_ = 13;
-                            }
-                            if (p2_ == 223)
-                            {
-                                i_ = 14;
-                            }
-                            if (p2_ == 191)
-                            {
-                                i_ = 15;
-                            }
-                            if (p2_ == 239)
-                            {
-                                i_ = 16;
-                            }
-                            if (p2_ == 207 || p2_ == 63)
-                            {
-                                i_ = 17;
-                            }
-                        }
-                        else
-                        {
-                            i_ = shadowmap(p2_);
-                        }
-                        pos(dx_, dy_);
-                        gcopy(3, 144 + i_ * inf_tiles, 752);
-                    }
-                }
-                ++x_;
-                dx_ += inf_tiles;
-            }
-            ++y_;
-            dy_ += inf_tiles;
+            render_shadow(
+                slight(x + 2, y + 2),
+                inf_screenx + sxfix_ * (scrollp > 3) + x * inf_tiles,
+                inf_screeny + syfix_ * (scrollp > 3) + y * inf_tiles);
         }
     }
     else
@@ -253,220 +283,15 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
         {
             f_ = 1;
         }
-        int y_ = 1;
-        int dy_ = inf_screeny + syfix_ * f_ - 48;
-        int cnt = 0;
-        for (int cnt_end = cnt + (inf_screenh + 2); cnt < cnt_end; ++cnt)
+        for (const auto& [x, y] : loop_xy{inf_screenw + 2, inf_screenh + 2})
         {
+            int dy_ = inf_screeny + syfix_ * f_ - 48 + y * inf_tiles;
             if (dy_ <= -inf_tiles || dy_ >= windowh - inf_verh)
-            {
-                dy_ += inf_tiles;
-                ++y_;
                 continue;
-            }
-            int x_ = 1;
-            int dx_ = inf_screenx + sxfix_ * f_ - 48;
-            int cnt = 0;
-            for (int cnt_end = cnt + (inf_screenw + 2); cnt < cnt_end; ++cnt)
-            {
-                int p_ = slight(x_, y_);
-                if (p_ > 0)
-                {
-                    if (p_ < 300)
-                    {
-                        int deco2;
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (1 + (deco(2, p_) != 0));
-                             cnt < cnt_end;
-                             ++cnt)
-                        {
-                            if (deco(0, p_) < 0 || cnt)
-                            {
-                                if (cnt == 1)
-                                {
-                                    deco2 = deco(2, p_);
-                                }
-                                else
-                                {
-                                    deco2 = deco(1, p_);
-                                }
-                                int cnt = 0;
-                                for (int cnt_end = cnt + (1); cnt < cnt_end;
-                                     ++cnt)
-                                {
-                                    if (deco2 == 1)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 2)
-                                    {
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 3)
-                                    {
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 4)
-                                    {
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 5)
-                                    {
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 6)
-                                    {
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 7)
-                                    {
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 8)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 9)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 168, 680, 24, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 168, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 10)
-                                    {
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 144, 680, 24, 24);
-                                        pos(dx_ + 24, dy_ + 24);
-                                        gcopy(3, 144, 656, 24, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 20)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 704, 24, 48);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 120, 704, 24, 48);
-                                        break;
-                                    }
-                                    if (deco2 == 21)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 48, 656, 48, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 48, 776, 48, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 30)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 656, 48, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 0, 776, 48, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 31)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 96, 656, 48, 24);
-                                        pos(dx_, dy_ + 24);
-                                        gcopy(3, 96, 776, 48, 24);
-                                        break;
-                                    }
-                                    if (deco2 == 32)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 656, 24, 48);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 120, 656, 24, 48);
-                                        break;
-                                    }
-                                    if (deco2 == 33)
-                                    {
-                                        pos(dx_, dy_);
-                                        gcopy(3, 0, 752, 24, 48);
-                                        pos(dx_ + 24, dy_);
-                                        gcopy(3, 120, 752, 24, 48);
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                pos(dx_, dy_);
-                                gcopy(
-                                    3,
-                                    0 + deco(0, p_) * inf_tiles,
-                                    656 + deco(1, p_) * inf_tiles);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        int p2_ = (p_ - 1000) % 16;
-                        int i_ = 0;
-                        if (p2_ == 15)
-                        {
-                            p2_ = (p_ - 1000) % 256;
-                            if (p2_ == 127)
-                            {
-                                i_ = 13;
-                            }
-                            if (p2_ == 223)
-                            {
-                                i_ = 14;
-                            }
-                            if (p2_ == 191)
-                            {
-                                i_ = 15;
-                            }
-                            if (p2_ == 239)
-                            {
-                                i_ = 16;
-                            }
-                            if (p2_ == 207 || p2_ == 63)
-                            {
-                                i_ = 17;
-                            }
-                        }
-                        else
-                        {
-                            i_ = shadowmap(p2_);
-                        }
-                        pos(dx_, dy_);
-                        gcopy(3, 144 + i_ * inf_tiles, 752, 48, 48);
-                    }
-                }
-                ++x_;
-                dx_ += inf_tiles;
-            }
-            ++y_;
-            dy_ += inf_tiles;
+            render_shadow(
+                slight(x + 1, y + 1),
+                inf_screenx + sxfix_ * f_ - 48 + x * inf_tiles,
+                dy_);
         }
     }
 }
