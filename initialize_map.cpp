@@ -91,7 +91,7 @@ label_17401:
         {
             goto label_1741_internal;
         }
-        if (mdata(19) != gdata(184) || gdata(79) == 1 && mdata(6) == 1)
+        if (mdata(19) != gdata(184) || (gdata(79) == 1 && mdata(6) == 1))
         {
             if (mdata(6) == 3 || mdata(6) == 2 || mdata(6) == 6
                 || mdata(6) == 1)
@@ -120,8 +120,8 @@ label_1741_internal:
                 {
                     continue;
                 }
-                if (cdata[cnt].character_role >= 1000
-                        && cdata[cnt].character_role < 2000
+                if ((cdata[cnt].character_role >= 1000
+                     && cdata[cnt].character_role < 2000)
                     || cdata[cnt].character_role == 2003)
                 {
                     rolebk(0, maxnpcbk) = cdata[cnt].character_role;
@@ -2826,8 +2826,8 @@ label_1741_internal:
         || mdata(6) == 3 || mdata(6) == 1 || mdata(6) == 5 || mdata(6) == 2
         || gdata_current_map == 30 || gdata_current_map == 32
         || gdata_current_map == 34 || gdata_current_map == 35
-        || gdata_current_map == 13
-            && gdata_executing_immediate_quest_type == 1009)
+        || (gdata_current_map == 13
+            && gdata_executing_immediate_quest_type == 1009))
     {
         {
             int cnt = 0;
@@ -2967,8 +2967,8 @@ label_1741_internal:
                 {
                     continue;
                 }
-                if (cdata[cnt].character_role >= 1000
-                        && cdata[cnt].character_role < 2000
+                if ((cdata[cnt].character_role >= 1000
+                     && cdata[cnt].character_role < 2000)
                     || cdata[cnt].character_role == 2003)
                 {
                     cnt2 = cnt;

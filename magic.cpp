@@ -89,7 +89,7 @@ int magic()
                 }
                 if (efid == 625 || efid == 446)
                 {
-                    if (tc == 0 && cc == 0 || cc == gdata_mount)
+                    if ((tc == 0 && cc == 0) || cc == gdata_mount)
                     {
                         if (gdata_mount != 0)
                         {
@@ -682,7 +682,7 @@ int magic()
                 if (efid == 613)
                 {
                     p = rnd(10);
-                    if (cdata[tc].quality >= 4 && rnd(4)
+                    if ((cdata[tc].quality >= 4 && rnd(4))
                         || encfind(tc, 60010 + p) != -1)
                     {
                         p = -1;
@@ -1197,7 +1197,8 @@ label_2181_internal:
                                         map(dx + x(cnt2) * cnt,
                                             dy + y(cnt2) * cnt,
                                             0);
-                                    if (264 <= p && p < 363 || chipm(7, p) & 4)
+                                    if ((264 <= p && p < 363)
+                                        || chipm(7, p) & 4)
                                     {
                                         f = 0;
                                         break;
@@ -3809,7 +3810,7 @@ label_2181_internal:
                 access_item_db(2);
                 if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480
                     || inv[ci].id == 289 || inv[ci].id == 732
-                    || inv[ci].id == 687 && inv[ci].param2 != 0)
+                    || (inv[ci].id == 687 && inv[ci].param2 != 0))
                 {
                     txt(lang(
                         u8"それは充填ができないようだ。"s,

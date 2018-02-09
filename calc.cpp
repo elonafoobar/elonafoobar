@@ -1865,8 +1865,8 @@ int calchirecost(int prm_903)
     {
         value_at_m153 = 50;
     }
-    if (cdata[prm_903].character_role >= 1000
-            && cdata[prm_903].character_role < 2000
+    if ((cdata[prm_903].character_role >= 1000
+         && cdata[prm_903].character_role < 2000)
         || cdata[prm_903].character_role == 2003)
     {
         value_at_m153 = 1000;
@@ -1887,8 +1887,8 @@ int calchirecost(int prm_903)
 void generatemoney(int prm_904)
 {
     p_at_m153 = rnd(100) + rnd((cdata[prm_904].level * 50 + 1));
-    if (cdata[prm_904].character_role >= 1000
-            && cdata[prm_904].character_role < 2000
+    if ((cdata[prm_904].character_role >= 1000
+         && cdata[prm_904].character_role < 2000)
         || cdata[prm_904].character_role == 2003)
     {
         p_at_m153 += 2500 + cdata[prm_904].shop_rank * 250;
