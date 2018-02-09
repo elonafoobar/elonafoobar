@@ -14,9 +14,9 @@ namespace elona
 struct ability_data
 {
     int id;
-    int sdataref0;
+    int related_basic_attribute;
     int sdataref1;
-    int sdataref2;
+    int cost;
     int sdataref3;
     int sdataref4;
 };

@@ -8689,10 +8689,10 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
     {
         return 0;
     }
-    if (the_ability_db[prm_569].sdataref0 != 0)
+    if (the_ability_db[prm_569].related_basic_attribute != 0)
     {
         skillexp(
-            the_ability_db[prm_569].sdataref0,
+            the_ability_db[prm_569].related_basic_attribute,
             prm_570,
             prm_571 / (2 + prm_572));
     }
@@ -18139,7 +18139,7 @@ int advfavoriteskill(int prm_868)
         for (;; ++cnt)
         {
             rtval(i_at_m145) = rnd(300) + 100;
-            if (the_ability_db[rtval(i_at_m145)].sdataref0 == 0)
+            if (the_ability_db[rtval(i_at_m145)].related_basic_attribute == 0)
             {
                 continue;
             }
@@ -21479,12 +21479,12 @@ void gain_skill_experience_casting()
 {
     if (r1 == 0)
     {
-        skillexp(r2, r1, the_ability_db[r2].sdataref2 * 4 + 20, 4, 5);
-        skillexp(172, r1, the_ability_db[r2].sdataref2 + 10, 5);
+        skillexp(r2, r1, the_ability_db[r2].cost * 4 + 20, 4, 5);
+        skillexp(172, r1, the_ability_db[r2].cost + 10, 5);
     }
     else
     {
-        skillexp(172, r1, the_ability_db[r2].sdataref2 + 10, 5);
+        skillexp(172, r1, the_ability_db[r2].cost + 10, 5);
     }
     return;
 }
@@ -22270,7 +22270,7 @@ int try_to_cast_spell()
         }
         else
         {
-            r4 = sdata(the_ability_db[r3].sdataref0, cc);
+            r4 = sdata(the_ability_db[r3].related_basic_attribute, cc);
         }
         if (rnd(sdata(150, cc) * r4 * 4 + 250) < rnd(r2 + 1))
         {
@@ -27833,7 +27833,7 @@ void apply_general_eating_effect()
                 int cnt = 100;
                 for (int cnt_end = cnt + (300); cnt < cnt_end; ++cnt)
                 {
-                    if (the_ability_db[cnt].sdataref0 == 0
+                    if (the_ability_db[cnt].related_basic_attribute == 0
                         || sdata.get(cnt, cc).original_level == 0)
                     {
                         continue;
@@ -48216,7 +48216,8 @@ void label_2007()
             if (sdata(cnt, cc) > 0)
             {
                 list(0, listmax) = cnt;
-                list(1, listmax) = the_ability_db[cnt].sdataref0 * 1000 + cnt;
+                list(1, listmax) =
+                    the_ability_db[cnt].related_basic_attribute * 1000 + cnt;
                 ++listmax;
             }
         }
@@ -48228,7 +48229,8 @@ void label_2007()
             if (spact(cnt) != 0)
             {
                 list(0, listmax) = cnt + 600;
-                list(1, listmax) = the_ability_db[cnt].sdataref0 * 1000 + cnt;
+                list(1, listmax) =
+                    the_ability_db[cnt].related_basic_attribute * 1000 + cnt;
                 ++listmax;
             }
         }
@@ -48304,7 +48306,8 @@ label_2009_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(
                 1,
-                (the_ability_db[list(0, p)].sdataref0) - 10 * inf_tiles,
+                (the_ability_db[list(0, p)].related_basic_attribute)
+                    - 10 * inf_tiles,
                 672,
                 0,
                 inf_tiles,
@@ -48326,7 +48329,7 @@ label_2009_internal:
                 wx + 84,
                 wy + 66 + cnt * 19 - 1,
                 19);
-            s = ""s + the_ability_db[list(0, p)].sdataref2 + u8" Sp"s;
+            s = ""s + the_ability_db[list(0, p)].cost + u8" Sp"s;
             pos(wx + 288 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
             mes(s);
             label_2031();
@@ -49263,7 +49266,8 @@ void label_2027()
             if (spell(cnt) > 0)
             {
                 list(0, listmax) = cnt + 400;
-                list(1, listmax) = the_ability_db[400 + cnt].sdataref0;
+                list(1, listmax) =
+                    the_ability_db[400 + cnt].related_basic_attribute;
                 ++listmax;
             }
         }
@@ -49342,7 +49346,7 @@ label_2029_internal:
             gmode(2, inf_tiles, inf_tiles);
             grotate(
                 1,
-                (the_ability_db[i].sdataref0 - 10) * inf_tiles,
+                (the_ability_db[i].related_basic_attribute - 10) * inf_tiles,
                 672,
                 0,
                 inf_tiles,
@@ -49766,7 +49770,7 @@ void label_2032()
             f = 0;
             if (sdata.get(p, cc).original_level == 0)
             {
-                if (the_ability_db[p].sdataref0 != 0)
+                if (the_ability_db[p].related_basic_attribute != 0)
                 {
                     f = 1;
                 }
@@ -49774,7 +49778,8 @@ void label_2032()
             if (f)
             {
                 list(0, listmax) = p;
-                list(1, listmax) = the_ability_db[p].sdataref0 + 21000;
+                list(1, listmax) =
+                    the_ability_db[p].related_basic_attribute + 21000;
                 ++listmax;
             }
         }
@@ -49834,7 +49839,8 @@ label_20331:
                 if (f)
                 {
                     list(0, listmax) = cnt;
-                    list(1, listmax) = the_ability_db[cnt].sdataref0 + 21000;
+                    list(1, listmax) =
+                        the_ability_db[cnt].related_basic_attribute + 21000;
                     ++listmax;
                 }
             }
@@ -49858,7 +49864,7 @@ label_20331:
             }
             else if (sdata(cnt, cc) == 0)
             {
-                if (the_ability_db[cnt].sdataref0 != 0)
+                if (the_ability_db[cnt].related_basic_attribute != 0)
                 {
                     f = 1;
                 }
@@ -49866,7 +49872,8 @@ label_20331:
             if (f)
             {
                 list(0, listmax) = cnt;
-                list(1, listmax) = the_ability_db[cnt].sdataref0 + 31000;
+                list(1, listmax) =
+                    the_ability_db[cnt].related_basic_attribute + 31000;
                 ++listmax;
             }
         }
@@ -49884,7 +49891,8 @@ label_20331:
                 if (sdata(cnt, cc) != 0)
                 {
                     list(0, listmax) = cnt;
-                    list(1, listmax) = the_ability_db[cnt].sdataref0 + 41000;
+                    list(1, listmax) =
+                        the_ability_db[cnt].related_basic_attribute + 41000;
                     ++listmax;
                 }
             }
@@ -50472,7 +50480,7 @@ label_2035_internal:
                     else
                     {
                         x = 84;
-                        p(1) = the_ability_db[i].sdataref0 - 10;
+                        p(1) = the_ability_db[i].related_basic_attribute - 10;
                     }
                     pos(wx + 38, wy + 75 + cnt * 19);
                     gmode(2, inf_tiles, inf_tiles);
@@ -60092,15 +60100,15 @@ int label_2174()
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     return 1;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
-                    + the_ability_db[efid].sdataref2 / 2 + 1);
-            skillexp(the_ability_db[efid].sdataref0, cc, 25);
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
+            skillexp(the_ability_db[efid].related_basic_attribute, cc, 25);
         }
     }
     efp = calcspellpower(efid, cc);

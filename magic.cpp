@@ -1553,14 +1553,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
-                    + the_ability_db[efid].sdataref2 / 2 + 1);
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         invsubroutine = 1;
         invctrl(0) = 27;
@@ -1578,14 +1578,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
-                    + the_ability_db[efid].sdataref2 / 2 + 1);
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         if (gdata_mount != 0)
         {
@@ -1732,14 +1732,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
-                    + the_ability_db[efid].sdataref2 / 2 + 1);
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         label_2146();
         goto label_2186_internal;
@@ -1770,14 +1770,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
-                    + the_ability_db[efid].sdataref2 / 2 + 1);
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         cook();
         goto label_2186_internal;
@@ -1885,14 +1885,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].sdataref2 / 2 + 1);
+                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
                     goto label_2186_internal;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].sdataref2 / 2 + 1)
-                    + the_ability_db[efid].sdataref2 / 2 + 1);
+                rnd(the_ability_db[efid].cost / 2 + 1)
+                    + the_ability_db[efid].cost / 2 + 1);
         }
         item_separate(ci);
         --inv[ci].count;
@@ -2454,7 +2454,7 @@ label_2181_internal:
                         }
                         if (efstatus >= 0)
                         {
-                            if (the_ability_db[p].sdataref0 != 0)
+                            if (the_ability_db[p].related_basic_attribute != 0)
                             {
                                 if (cnt2 == 0)
                                 {
@@ -2584,7 +2584,7 @@ label_2181_internal:
         {
             await();
             p = rnd(300) + 100;
-            if (the_ability_db[p].sdataref0 != 0)
+            if (the_ability_db[p].related_basic_attribute != 0)
             {
                 if (efstatus >= 0)
                 {
@@ -2697,7 +2697,7 @@ label_2181_internal:
                 {
                     await();
                     p = rnd(300) + 100;
-                    if (the_ability_db[p].sdataref0 != 0)
+                    if (the_ability_db[p].related_basic_attribute != 0)
                     {
                         if (sdata.get(p, tc).original_level == 0)
                         {

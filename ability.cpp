@@ -28,9 +28,9 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     int name = luaL_checkinteger(state, -1);
 
-    FIELD_I(sdataref0);
+    FIELD_I(related_basic_attribute);
     FIELD_I(sdataref1);
-    FIELD_I(sdataref2);
+    FIELD_I(cost);
     FIELD_I(sdataref3);
     FIELD_I(sdataref4);
 
@@ -40,9 +40,9 @@ int define(lua_State* state)
         std::stoi(id), // TODO
         ability_data{
             std::stoi(id),
-            sdataref0,
+            related_basic_attribute,
             sdataref1,
-            sdataref2,
+            cost,
             sdataref3,
             sdataref4,
         });

@@ -277,7 +277,7 @@ int calcskill(int prm_269, int prm_270, int prm_271)
 {
     int ep = 0;
     int rs_at_m9 = 0;
-    rs_at_m9 = sdata(the_ability_db[prm_269].sdataref0, prm_270);
+    rs_at_m9 = sdata(the_ability_db[prm_269].related_basic_attribute, prm_270);
     ele = 0;
     elep = 0;
     if (prm_269 == 412)
@@ -2212,9 +2212,9 @@ int calcspellpower(int prm_918, int prm_919)
 {
     if (prm_918 >= 600)
     {
-        if (the_ability_db[prm_918].sdataref0 != 0)
+        if (the_ability_db[prm_918].related_basic_attribute != 0)
         {
-            return the_ability_db[prm_918].sdataref0 * 6 + 10;
+            return the_ability_db[prm_918].related_basic_attribute * 6 + 10;
         }
         return 100;
     }
@@ -2333,16 +2333,16 @@ int calcspellcostmp(int prm_922, int prm_923)
             || prm_922 == 409 || prm_922 == 408 || prm_922 == 410
             || prm_922 == 466)
         {
-            cost_at_m158 = the_ability_db[prm_922].sdataref2;
+            cost_at_m158 = the_ability_db[prm_922].cost;
             return cost_at_m158;
         }
-        cost_at_m158 = the_ability_db[prm_922].sdataref2
+        cost_at_m158 = the_ability_db[prm_922].cost
                 * (100 + sdata(prm_922, prm_923) * 3) / 100
             + sdata(prm_922, prm_923) / 8;
     }
     else
     {
-        cost_at_m158 = the_ability_db[prm_922].sdataref2
+        cost_at_m158 = the_ability_db[prm_922].cost
             * (50 + cdata[prm_923].level * 3) / 100;
     }
     return cost_at_m158;
@@ -2353,11 +2353,11 @@ int calcspellcostmp(int prm_922, int prm_923)
 int calcspellcoststock(int prm_924, int prm_925)
 {
     int cost_at_m159 = 0;
-    cost_at_m159 = the_ability_db[prm_924].sdataref2 * 200
+    cost_at_m159 = the_ability_db[prm_924].cost * 200
         / (sdata(prm_924, prm_925) * 3 + 100);
-    if (cost_at_m159 < the_ability_db[prm_924].sdataref2 / 5)
+    if (cost_at_m159 < the_ability_db[prm_924].cost / 5)
     {
-        cost_at_m159 = the_ability_db[prm_924].sdataref2 / 5;
+        cost_at_m159 = the_ability_db[prm_924].cost / 5;
     }
     cost_at_m159 = rnd(cost_at_m159 / 2 + 1) + cost_at_m159 / 2;
     if (cost_at_m159 < 1)
