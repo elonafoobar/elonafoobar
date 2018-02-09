@@ -52,4 +52,19 @@ private:
 
 
 
+template <typename Range>
+auto choice(const Range& range)
+{
+    assert(!std::empty(range));
+
+    // FIXME: use global random engine.
+    std::mt19937 random_engine{std::random_device{}()};
+    std::uniform_int_distribution<size_t> dist{0, std::size(range) - 1};
+    auto itr = std::begin(range);
+    std::advance(itr, dist(random_engine));
+    return *itr;
+}
+
+
+
 } // namespace elona
