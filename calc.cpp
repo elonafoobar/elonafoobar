@@ -2,6 +2,7 @@
 #include "character.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
@@ -176,8 +177,10 @@ std::string get_buff_description(int id, int power)
     case 27:
     case 28:
         return lang(
-            skillname(id - 20 + 10) + u8"の成長率を"s + effect1 + u8"%上昇"s,
-            u8"Increases the growth rate "s + skillname((id - 20 + 10))
+            i18n::_(u8"ability", std::to_string(id - 20 + 10), u8"name")
+                + u8"の成長率を"s + effect1 + u8"%上昇"s,
+            u8"Increases the growth rate "s
+                + i18n::_(u8"ability", std::to_string(id - 20 + 10), u8"name")
                 + u8" by "s + effect1 + ""s);
     default: assert(0);
     }

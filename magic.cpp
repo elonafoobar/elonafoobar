@@ -6,6 +6,7 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
@@ -583,9 +584,18 @@ int magic()
                         if (cc == 0)
                         {
                             txt(lang(
-                                name(cc) + u8"は"s + skillname(efid) + u8"の"s
+                                name(cc) + u8"は"s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(efid),
+                                          u8"name")
+                                    + u8"の"s
                                     + _cast(cdata[cc].special_attack_type),
-                                name(cc) + u8" cast "s + skillname(efid)
+                                name(cc) + u8" cast "s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(efid),
+                                          u8"name")
                                     + u8"."s));
                             txtmore();
                         }
@@ -1009,7 +1019,8 @@ int magic()
                 }
                 if (ele)
                 {
-                    valn = skillname(ele) + lang(u8"の"s, u8" breath"s);
+                    valn = i18n::_(u8"ability", std::to_string(ele), u8"name")
+                        + lang(u8"の"s, u8" breath"s);
                 }
                 else
                 {
@@ -2446,10 +2457,18 @@ label_2181_internal:
                                 skillgain(0, p, 1, 200);
                                 txtef(2);
                                 txt(lang(
-                                    s + name(0) + u8"は"s + skillname(p)
+                                    s + name(0) + u8"は"s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
                                         + u8"の魔法の知識を得た。"s,
                                     s + u8"you gain knowledge of a spell, "s
-                                        + skillname(p) + u8"."s));
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
+                                        + u8"."s));
                                 snd(24);
                                 f = 1;
                                 break;
@@ -2467,10 +2486,17 @@ label_2181_internal:
                                 txtef(3);
                                 txt(lang(
                                     u8"突然、"s + name(0) + u8"は"s
-                                        + skillname((p + 400))
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p + 400),
+                                              u8"name")
                                         + u8"の魔法の知識を失った。"s,
                                     u8"Suddenly, you lose knowledge of a spell, "s
-                                        + skillname((p + 400)) + u8"."s));
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p + 400),
+                                              u8"name")
+                                        + u8"."s));
                                 snd(117);
                                 animeload(14, 0);
                                 f = 1;
@@ -2565,10 +2591,14 @@ label_2181_internal:
                         snd(24);
                         txtef(2);
                         txt(lang(
-                            ""s + name(tc) + u8"は"s + skillname(p)
+                            ""s + name(tc) + u8"は"s
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
                                 + u8"の技術を獲得した！"s,
                             name(tc) + u8" gain"s + _s(tc) + u8" a skill of "s
-                                + skillname(p) + u8"!"s));
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
+                                + u8"!"s));
                     }
                     break;
                 }
@@ -2679,10 +2709,18 @@ label_2181_internal:
                                 snd(24);
                                 txtef(2);
                                 txt(lang(
-                                    s + ""s + name(tc) + u8"の"s + skillname(p)
+                                    s + ""s + name(tc) + u8"の"s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
                                         + u8"の技術の潜在能力が上昇した。"s,
                                     s + u8"potential of "s + name(tc) + your(tc)
-                                        + u8" "s + skillname(p)
+                                        + u8" "s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(p),
+                                              u8"name")
                                         + u8" skill increases."s));
                             }
                         }
@@ -2691,10 +2729,18 @@ label_2181_internal:
                             snd(117);
                             txtef(3);
                             txt(lang(
-                                ""s + name(tc) + u8"の"s + skillname(p)
+                                ""s + name(tc) + u8"の"s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(p),
+                                          u8"name")
                                     + u8"の技術の潜在能力が減少した。"s,
                                 u8"The potential of "s + name(tc) + your(tc)
-                                    + u8" "s + skillname(p)
+                                    + u8" "s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(p),
+                                          u8"name")
                                     + u8" skill decreases."s));
                         }
                         break;
@@ -2753,7 +2799,7 @@ label_2181_internal:
         else
         {
             i = rnd(8) + 10;
-            valn = skillname(i);
+            valn = i18n::_(u8"ability", std::to_string(i), u8"name");
             if (efstatus == 0)
             {
                 txt(lang(

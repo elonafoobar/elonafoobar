@@ -19980,7 +19980,15 @@ void label_1421()
             }
             pos(16, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
-            bmes(""s + strmid(skillname(ap), 0, 6), 255, 255, 255);
+            bmes(
+                ""s
+                    + strmid(
+                          i18n::_(u8"ability", std::to_string(ap), u8"name"),
+                          0,
+                          6),
+                255,
+                255,
+                255);
             pos(66, inf_clocky + 155 - ap3 * 16);
             color(0, 0, 0);
             bmes(
@@ -21597,13 +21605,16 @@ void cnvbonus(int prm_895, int prm_896)
     {
         if (prm_896 > 0)
         {
-            buff += u8"　　"s + skillname(prm_895) + u8"耐性に <green>クラス"s
-                + prm_896 / 50 + u8"<col>("s + prm_896 + u8") のボーナス\n"s;
+            buff += u8"　　"s
+                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + u8"耐性に <green>クラス"s + prm_896 / 50 + u8"<col>("s
+                + prm_896 + u8") のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
-            buff += u8"　　"s + skillname(prm_895) + u8"耐性に <red>クラス"s
-                + prm_896 / 50 + u8"<col>("s + prm_896
+            buff += u8"　　"s
+                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + u8"耐性に <red>クラス"s + prm_896 / 50 + u8"<col>("s + prm_896
                 + u8") のマイナス修正\n"s;
         }
     }
@@ -21611,13 +21622,15 @@ void cnvbonus(int prm_895, int prm_896)
     {
         if (prm_896 > 0)
         {
-            buff += u8"　　"s + skillname(prm_895) + u8"に <green>+"s + prm_896
-                + u8"<col> のボーナス\n"s;
+            buff += u8"　　"s
+                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + u8"に <green>+"s + prm_896 + u8"<col> のボーナス\n"s;
         }
         if (prm_896 < 0)
         {
-            buff += u8"　　"s + skillname(prm_895) + u8"に <red>"s + prm_896
-                + u8"<col> のマイナス修正\n"s;
+            buff += u8"　　"s
+                + i18n::_(u8"ability", std::to_string(prm_895), u8"name")
+                + u8"に <red>"s + prm_896 + u8"<col> のマイナス修正\n"s;
         }
     }
     return;
@@ -22897,8 +22910,12 @@ void gain_special_action()
             txtmore();
             txtef(5);
             txt(lang(
-                u8"あなたは「"s + skillname(629) + u8"」の能力を得た。"s,
-                u8"You have learned new ability, "s + skillname(629) + u8"."s));
+                u8"あなたは「"s
+                    + i18n::_(u8"ability", std::to_string(629), u8"name")
+                    + u8"」の能力を得た。"s,
+                u8"You have learned new ability, "s
+                    + i18n::_(u8"ability", std::to_string(629), u8"name")
+                    + u8"."s));
         }
         if (spact(30) == 0)
         {
@@ -22906,8 +22923,12 @@ void gain_special_action()
             txtmore();
             txtef(5);
             txt(lang(
-                u8"あなたは「"s + skillname(630) + u8"」の能力を得た。"s,
-                u8"You have learned new ability, "s + skillname(630) + u8"."s));
+                u8"あなたは「"s
+                    + i18n::_(u8"ability", std::to_string(630), u8"name")
+                    + u8"」の能力を得た。"s,
+                u8"You have learned new ability, "s
+                    + i18n::_(u8"ability", std::to_string(630), u8"name")
+                    + u8"."s));
         }
     }
     if (sdata.get(152, 0).original_level > 15)
@@ -22918,8 +22939,12 @@ void gain_special_action()
             txtmore();
             txtef(5);
             txt(lang(
-                u8"あなたは「"s + skillname(631) + u8"」の能力を得た。"s,
-                u8"You have learned new ability, "s + skillname(631) + u8"."s));
+                u8"あなたは「"s
+                    + i18n::_(u8"ability", std::to_string(631), u8"name")
+                    + u8"」の能力を得た。"s,
+                u8"You have learned new ability, "s
+                    + i18n::_(u8"ability", std::to_string(631), u8"name")
+                    + u8"."s));
         }
     }
     return;
@@ -27966,17 +27991,33 @@ void apply_general_eating_effect()
                         if (inv[ci].enchantments[cnt].power >= 0)
                         {
                             txt(lang(
-                                name(cc) + u8"の"s + skillname(enc)
+                                name(cc) + u8"の"s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(enc),
+                                          u8"name")
                                     + u8"は発達した。"s,
-                                name(cc) + his(cc) + u8" "s + skillname(enc)
+                                name(cc) + his(cc) + u8" "s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(enc),
+                                          u8"name")
                                     + u8" develops."s));
                         }
                         else
                         {
                             txt(lang(
-                                name(cc) + u8"の"s + skillname(enc)
+                                name(cc) + u8"の"s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(enc),
+                                          u8"name")
                                     + u8"は衰えた。"s,
-                                name(cc) + his(cc) + u8" "s + skillname(enc)
+                                name(cc) + his(cc) + u8" "s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(enc),
+                                          u8"name")
                                     + u8" deteriorates."s));
                         }
                     }
@@ -27987,9 +28028,17 @@ void apply_general_eating_effect()
                     if (synccheck(cc, -1))
                     {
                         txt(lang(
-                            name(cc) + u8"の"s + skillname(enc)
+                            name(cc) + u8"の"s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(enc),
+                                      u8"name")
                                 + u8"は成長期に突入した。"s,
-                            name(cc) + his(cc) + u8" "s + skillname(enc)
+                            name(cc) + his(cc) + u8" "s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(enc),
+                                      u8"name")
                                 + u8" enters a period of rapid growth."s));
                     }
                     addbuff(
@@ -38622,7 +38671,8 @@ label_1876_internal:
             listn(0, listmax) = u8"調べる"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = u8"採取する("s + skillname(180) + u8": "s
+            listn(0, listmax) = u8"採取する("s
+                + i18n::_(u8"ability", std::to_string(180), u8"name") + u8": "s
                 + sdata(180, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
@@ -38638,8 +38688,9 @@ label_1876_internal:
             listn(0, listmax) = u8"調べる"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) =
-                u8"掘る("s + skillname(163) + u8": "s + sdata(163, 0) + u8")"s;
+            listn(0, listmax) = u8"掘る("s
+                + i18n::_(u8"ability", std::to_string(163), u8"name") + u8": "s
+                + sdata(163, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -38654,8 +38705,9 @@ label_1876_internal:
             listn(0, listmax) = u8"飲む"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) =
-                u8"釣る("s + skillname(185) + u8": "s + sdata(185, 0) + u8")"s;
+            listn(0, listmax) = u8"釣る("s
+                + i18n::_(u8"ability", std::to_string(185), u8"name") + u8": "s
+                + sdata(185, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
         }
@@ -38670,7 +38722,8 @@ label_1876_internal:
             listn(0, listmax) = u8"あさる"s;
             ++listmax;
             list(0, listmax) = 2;
-            listn(0, listmax) = u8"解剖する("s + skillname(161) + u8": "s
+            listn(0, listmax) = u8"解剖する("s
+                + i18n::_(u8"ability", std::to_string(161), u8"name") + u8": "s
                 + sdata(161, 0) + u8")"s;
             ++listmax;
             atxrefval1 = 7;
@@ -38852,7 +38905,8 @@ label_1876_internal:
         atxpic(3) = 96;
         noteadd(u8"宝箱がある。"s);
         list(0, listmax) = 1;
-        listn(0, listmax) = u8"錠を解体する("s + skillname(158) + u8": "s
+        listn(0, listmax) = u8"錠を解体する("s
+            + i18n::_(u8"ability", std::to_string(158), u8"name") + u8": "s
             + sdata(158, 0) + u8")"s;
         ++listmax;
         list(0, listmax) = 3;
@@ -42259,8 +42313,11 @@ void window_recipe_(
                     color(0, 120, 0);
                 }
                 pos(dx_at_m184 + cnt % 2 * 140, dy_at_m184 + cnt / 2 * 17);
-                mes(skillname(rpdata(10 + cnt * 2, rpid)) + u8"  "s
-                    + rpdata((11 + cnt * 2), rpid) + u8"("s
+                mes(i18n::_(
+                        u8"ability",
+                        std::to_string(rpdata(10 + cnt * 2, rpid)),
+                        u8"name")
+                    + u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s
                     + sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s);
             }
         }
@@ -45060,10 +45117,18 @@ label_1961_internal:
                             }
                             else
                             {
-                                s += ""s + skillname(rtval);
+                                s += ""s
+                                    + i18n::_(
+                                          u8"ability",
+                                          std::to_string(rtval),
+                                          u8"name");
                                 if (rtval(1) != -1)
                                 {
-                                    s += u8", "s + skillname(rtval(1));
+                                    s += u8", "s
+                                        + i18n::_(
+                                              u8"ability",
+                                              std::to_string(rtval(1)),
+                                              u8"name");
                                 }
                             }
                         }
@@ -47796,11 +47861,11 @@ label_1999_internal:
             }
             p = 0;
             cnt2 = cnt;
-            if (skillname(cnt) == inputlog)
+            if (i18n::_(u8"ability", std::to_string(cnt), u8"name") == inputlog)
             {
                 p = 10000;
             }
-            s = skillname(cnt2);
+            s = i18n::_(u8"ability", std::to_string(cnt2), u8"name");
             if (en)
             {
                 s = strutil::to_lower(s(0));
@@ -47841,21 +47906,27 @@ label_1999_internal:
                 }
             }
         }
-        if (skillname(p) != ""s)
+        if (i18n::_(u8"ability", std::to_string(p), u8"name") != ""s)
         {
             txtef(5);
             if (sdata.get(p, 0).original_level == 0)
             {
                 txt(lang(
-                    skillname(p) + u8"の技術を会得した！"s,
-                    u8"You learn "s + skillname(p) + u8"!"s));
+                    i18n::_(u8"ability", std::to_string(p), u8"name")
+                        + u8"の技術を会得した！"s,
+                    u8"You learn "s
+                        + i18n::_(u8"ability", std::to_string(p), u8"name")
+                        + u8"!"s));
                 skillgain(0, p, 1);
             }
             else
             {
                 txt(lang(
-                    skillname(p) + u8"が上昇した！"s,
-                    u8"Your "s + skillname(p) + u8" skill improves!"s));
+                    i18n::_(u8"ability", std::to_string(p), u8"name")
+                        + u8"が上昇した！"s,
+                    u8"Your "s
+                        + i18n::_(u8"ability", std::to_string(p), u8"name")
+                        + u8" skill improves!"s));
                 skillmod(p, 0, 1000);
                 modgrowth(0, p, 25);
             }
@@ -48245,7 +48316,7 @@ label_2009_internal:
             }
             cs_list(
                 cnt,
-                skillname(list(0, p)) + s,
+                i18n::_(u8"ability", std::to_string(list(0, p)), u8"name") + s,
                 wx + 84,
                 wy + 66 + cnt * 19 - 1,
                 19);
@@ -49281,7 +49352,12 @@ label_2029_internal:
                     }
                 }
             }
-            cs_list(cnt, skillname(i) + s, wx + 84, wy + 66 + cnt * 19 - 1, 19);
+            cs_list(
+                cnt,
+                i18n::_(u8"ability", std::to_string(i), u8"name") + s,
+                wx + 84,
+                wy + 66 + cnt * 19 - 1,
+                19);
             s = ""s + calcspellcostmp(i, cc) + u8" ("s + spell((i - 400))
                 + u8")"s;
             pos(wx + 328 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
@@ -49465,7 +49541,7 @@ void label_2031()
         }
         s += u8" "s;
     }
-    s += skilldesc(i);
+    s += i18n::_(u8"ability", std::to_string(i), u8"description");
     return;
 }
 
@@ -50395,7 +50471,7 @@ label_2035_internal:
                     pos(wx + 38, wy + 75 + cnt * 19);
                     gmode(2, inf_tiles, inf_tiles);
                     grotate(1, p(1) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
-                    s = skillname(i);
+                    s = i18n::_(u8"ability", std::to_string(i), u8"name");
                     if (i >= 50 && i < 100)
                     {
                         s = lang(""s, u8"Resist "s) + cnven(s)
@@ -50434,7 +50510,8 @@ label_2035_internal:
                     pos(wx + 280 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
                     mes(s);
                     pos(wx + 330, wy + 66 + cnt * 19 + 2);
-                    mes(skilldesc(i));
+                    mes(i18n::_(
+                        u8"ability", std::to_string(i), u8"description"));
                     if (csctrl == 2 || csctrl == 3)
                     {
                         if (csctrl == 2)
@@ -57303,8 +57380,14 @@ void label_2148()
             if (inv[ci].id == 563)
             {
                 txt(lang(
-                    skillname(inv[ci].param1) + u8"の学習を始めた。"s,
-                    u8"You begin to study "s + skillname(inv[ci].param1)
+                    i18n::_(
+                        u8"ability", std::to_string(inv[ci].param1), u8"name")
+                        + u8"の学習を始めた。"s,
+                    u8"You begin to study "s
+                        + i18n::_(
+                              u8"ability",
+                              std::to_string(inv[ci].param1),
+                              u8"name")
                         + u8"."s));
             }
             else
@@ -57749,8 +57832,11 @@ void label_2148()
         if (inv[ci].id == 563)
         {
             txt(lang(
-                skillname(inv[ci].param1) + u8"の学習を終えた。"s,
-                u8"You finish studying "s + skillname(inv[ci].param1)
+                i18n::_(u8"ability", std::to_string(inv[ci].param1), u8"name")
+                    + u8"の学習を終えた。"s,
+                u8"You finish studying "s
+                    + i18n::_(
+                          u8"ability", std::to_string(inv[ci].param1), u8"name")
                     + u8"."s));
         }
         else
@@ -59371,9 +59457,12 @@ int label_2168()
         if (cc == 0)
         {
             txt(lang(
-                name(cc) + u8"は"s + skillname(efid) + u8"の"s
-                    + _cast(cdata[cc].special_attack_type),
-                name(cc) + u8" cast "s + skillname(efid) + u8"."s));
+                name(cc) + u8"は"s
+                    + i18n::_(u8"ability", std::to_string(efid), u8"name")
+                    + u8"の"s + _cast(cdata[cc].special_attack_type),
+                name(cc) + u8" cast "s
+                    + i18n::_(u8"ability", std::to_string(efid), u8"name")
+                    + u8"."s));
             txtmore();
         }
         else
@@ -66132,10 +66221,18 @@ void label_2228()
                         skillgain(rc, rtval(cnt), 1);
                         txtef(2);
                         txt(lang(
-                            cdatan(0, rc) + u8"は"s + skillname(rtval(cnt))
+                            cdatan(0, rc) + u8"は"s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(rtval(cnt)),
+                                      u8"name")
                                 + u8"の技術を覚えた！"s,
                             cdatan(0, rc) + u8" learns "s
-                                + skillname(rtval(cnt)) + u8" skill!"s));
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(rtval(cnt)),
+                                      u8"name")
+                                + u8" skill!"s));
                     }
                 }
             }
@@ -67159,12 +67256,12 @@ void label_2244()
                 ++listmax;
                 if (sdata.get(csskill, 0).original_level == 0)
                 {
-                    buff = lang(skillname(csskill) +
+                    buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
                             calclearncost(csskill, cc, 1) + strplat +
                             u8"で教えてあげてもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
-                        u8"I can teach you the art of "s + skillname(csskill) +
+                        u8"I can teach you the art of "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8" for a friendly price of "s +
                             calclearncost(csskill, cc, 1) +
                             u8" platinum pieces. Do you want me to train you?"s);
@@ -67178,12 +67275,12 @@ void label_2244()
                 }
                 else
                 {
-                    buff = lang(skillname(csskill) +
+                    buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
                             calctraincost(csskill, cc, 1) + strplat +
                             u8"で訓練してもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
-                        u8"I can train your "s + skillname(csskill) +
+                        u8"I can train your "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8" skill for a friendly price of "s +
                             calctraincost(csskill, cc, 1) +
                             u8" platinum pieces. Do you want me to train you?"s);
@@ -67415,9 +67512,10 @@ void label_2244()
             csskill = rtval(rnd(stat));
             listmax = 0;
             buff = lang(
-                skillname(csskill) + u8"は"s + _ore(3)
-                    + u8"の得意なスキルの内の一つ"s + _da(),
-                ""s + skillname(csskill) + u8" is one of my favorite skills."s);
+                i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                    + u8"は"s + _ore(3) + u8"の得意なスキルの内の一つ"s + _da(),
+                ""s + i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                    + u8" is one of my favorite skills."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strmore;
@@ -67441,9 +67539,12 @@ void label_2244()
             csskill = stat;
             listmax = 0;
             buff = lang(
-                _ore(3) + u8"は"s + skillname(csskill) + u8"が自慢なの"s
-                    + _da(),
-                u8"I'm proud of my good "s + skillname(csskill) + u8"."s);
+                _ore(3) + u8"は"s
+                    + i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                    + u8"が自慢なの"s + _da(),
+                u8"I'm proud of my good "s
+                    + i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                    + u8"."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = strmore;
@@ -67647,8 +67748,12 @@ void label_2244()
                     }
                     list(0, listmax) = p(cnt);
                     listn(0, listmax) = lang(
-                        skillname(p(cnt)) + u8"を鍛える"s,
-                        u8"I want to improve "s + skillname(p(cnt)) + u8"."s);
+                        i18n::_(u8"ability", std::to_string(p(cnt)), u8"name")
+                            + u8"を鍛える"s,
+                        u8"I want to improve "s
+                            + i18n::_(
+                                  u8"ability", std::to_string(p(cnt)), u8"name")
+                            + u8"."s);
                     ++listmax;
                 }
             }
@@ -67679,9 +67784,11 @@ void label_2244()
         snd(61);
         txtef(2);
         txt(lang(
-            name(0) + u8"の"s + skillname(chatval)
+            name(0) + u8"の"s
+                + i18n::_(u8"ability", std::to_string(chatval), u8"name")
                 + u8"の潜在能力が大きく上昇した。"s,
-            name(0) + your(0) + u8" potential of "s + skillname(chatval)
+            name(0) + your(0) + u8" potential of "s
+                + i18n::_(u8"ability", std::to_string(chatval), u8"name")
                 + u8" greatly expands."s));
         modgrowth(0, chatval, 10);
         listmax = 0;
@@ -68676,11 +68783,13 @@ void label_2254()
     if (csctrl == 2)
     {
         buff = lang(
-            skillname(csskill) + u8"の能力を訓練するには"s
-                + calctraincost(csskill, cc) + strplat + u8"かかるけどいい"s
-                + _kana(1),
-            u8"Training "s + skillname(csskill) + u8" will cost you "s
-                + calctraincost(csskill, cc) + u8" platinum pieces."s);
+            i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                + u8"の能力を訓練するには"s + calctraincost(csskill, cc)
+                + strplat + u8"かかるけどいい"s + _kana(1),
+            u8"Training "s
+                + i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                + u8" will cost you "s + calctraincost(csskill, cc)
+                + u8" platinum pieces."s);
         if (cdata[0].platinum_coin >= calctraincost(csskill, cc))
         {
             list(0, listmax) = 1;
@@ -68691,11 +68800,13 @@ void label_2254()
     else
     {
         buff = lang(
-            skillname(csskill) + u8"の能力を習得するには"s
-                + calclearncost(csskill, cc) + strplat + u8"かかるけどいい"s
-                + _kana(1),
-            u8"Learning "s + skillname(csskill) + u8" will cost you "s
-                + calclearncost(csskill, cc) + u8" platinum pieces."s);
+            i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                + u8"の能力を習得するには"s + calclearncost(csskill, cc)
+                + strplat + u8"かかるけどいい"s + _kana(1),
+            u8"Learning "s
+                + i18n::_(u8"ability", std::to_string(csskill), u8"name")
+                + u8" will cost you "s + calclearncost(csskill, cc)
+                + u8" platinum pieces."s);
         if (cdata[0].platinum_coin >= calclearncost(csskill, cc))
         {
             list(0, listmax) = 1;
@@ -78298,8 +78409,8 @@ label_2747:
                 int cnt = 10;
                 for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                 {
-                    txt(skillname(cnt) + u8":"s
-                        + cdata[0].growth_buffs[cnt - 10] + u8"%"s);
+                    txt(i18n::_(u8"ability", std::to_string(cnt), u8"name")
+                        + u8":"s + cdata[0].growth_buffs[cnt - 10] + u8"%"s);
                 }
             }
             chara_vomit(0);
