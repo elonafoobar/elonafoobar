@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "trait.hpp"
 #include "variables.hpp"
 
 
@@ -2049,9 +2050,8 @@ label_2181_internal:
                     int cnt = 0;
                     for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
                     {
-                        tid = rnd(45);
-                        traitmode = 0;
-                        int stat = get_trait_info();
+                        int tid = rnd(45);
+                        int stat = get_trait_info(0, tid);
                         if (stat == 0 || traitref != 1)
                         {
                             continue;
@@ -2146,9 +2146,8 @@ label_2181_internal:
                     int cnt = 0;
                     for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
                     {
-                        tid = rnd(217);
-                        traitmode = 0;
-                        int stat = get_trait_info();
+                        int tid = rnd(217);
+                        int stat = get_trait_info(0, tid);
                         if (stat == 0 || traitref != 1)
                         {
                             continue;

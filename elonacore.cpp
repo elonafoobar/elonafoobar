@@ -15,6 +15,7 @@
 #include "main.hpp"
 #include "race.hpp"
 #include "snail/color.hpp"
+#include "trait.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -14606,9 +14607,8 @@ void modcorrupt(int prm_815)
                     for (int cnt_end = cnt + (100000); cnt < cnt_end; ++cnt)
                     {
                         await();
-                        tid = rnd(17) + 200;
-                        traitmode = 0;
-                        int stat = get_trait_info();
+                        int tid = rnd(17) + 200;
+                        int stat = get_trait_info(0, tid);
                         if (stat == 0 || traitref != 3)
                         {
                             continue;
@@ -14679,7 +14679,7 @@ void modcorrupt(int prm_815)
                     for (int cnt_end = cnt + (100000); cnt < cnt_end; ++cnt)
                     {
                         await();
-                        tid = rnd(17) + 200;
+                        int tid = rnd(17) + 200;
                         if (cnt == 0)
                         {
                             i_at_m134 = 700 + org_at_m134 - cnt2_at_m134 - 1;
@@ -14688,8 +14688,7 @@ void modcorrupt(int prm_815)
                                 tid = gdata(i_at_m134);
                             }
                         }
-                        traitmode = 0;
-                        int stat = get_trait_info();
+                        int stat = get_trait_info(0, tid);
                         if (stat == 0 || traitref != 3)
                         {
                             continue;
@@ -22023,15 +22022,13 @@ void refresh_character()
     if (r1 == 0)
     {
         apply_god_blessing();
-        traitmode = 1;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (217); cnt < cnt_end; ++cnt)
             {
                 if (trait(cnt) != 0)
                 {
-                    tid = cnt;
-                    get_trait_info();
+                    int stat = get_trait_info(1, cnt);
                 }
             }
         }
@@ -27720,9 +27717,7 @@ void apply_general_eating_effect()
                     {
                         if (rnd(5) == 0)
                         {
-                            tid = 41;
-                            traitmode = 0;
-                            get_trait_info();
+                            int stat = get_trait_info(0, 41);
                             txtef(2);
                             txt(traitrefn(0));
                             trait(41) = 1;
@@ -45452,9 +45447,7 @@ label_196901_internal:
             {
                 break;
             }
-            traitmode = 0;
-            tid = cnt;
-            int stat = get_trait_info();
+            int stat = get_trait_info(0, cnt);
             if (stat == 0)
             {
                 continue;
@@ -45519,9 +45512,8 @@ label_196901_internal:
                 listn(0, cnt) = s;
                 continue;
             }
-            tid = i;
-            traitmode = 0;
-            int stat = get_trait_info();
+            int tid = i;
+            int stat = get_trait_info(0, tid);
             featrq = stat;
             s = "";
             if (list(1, cnt) < 10000)
@@ -45877,15 +45869,13 @@ label_1970_internal:
             }
             if (list(1, p) != 99999)
             {
-                tid = i;
-                traitmode = 0;
-                int stat = get_trait_info();
+                int stat = get_trait_info(0, i);
                 featrq = stat;
-                if (trait(tid) == 0)
+                if (trait(i) == 0)
                 {
                     color(0, 0, 0);
                 }
-                else if (trait(tid) > 0)
+                else if (trait(i) > 0)
                 {
                     color(0, 0, 200);
                 }
@@ -45947,9 +45937,8 @@ label_1970_internal:
             {
                 if (list(1, p) < 10000)
                 {
-                    tid = list(0, p);
-                    traitmode = 0;
-                    get_trait_info();
+                    int tid = list(0, p);
+                    int stat = get_trait_info(0, tid);
                     if (traitref(2) <= trait(tid))
                     {
                         if (mode != 1)
