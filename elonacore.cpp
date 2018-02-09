@@ -14081,10 +14081,12 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     {
         txtmore();
         txt(lang(
-            name(prm_801) + i18n::_(u8"buff_"s + prm_802 + u8"_message_0"),
+            name(prm_801)
+                + i18n::_(u8"buff", std::to_string(prm_802), u8"message_0"),
             name(prm_801) + u8" "s
-                + i18n::_(u8"buff_"s + prm_802 + u8"_message_0") + _s(prm_801)
-                + i18n::_(u8"buff_"s + prm_802 + u8"_message_1")));
+                + i18n::_(u8"buff", std::to_string(prm_802), u8"message_0")
+                + _s(prm_801)
+                + i18n::_(u8"buff", std::to_string(prm_802), u8"message_1")));
     }
     cdata[prm_801].buffs[p_at_m132].id = prm_802;
     cdata[prm_801].buffs[p_at_m132].power = prm_803;
@@ -14104,11 +14106,15 @@ void delbuff(int prm_805, int prm_806)
         txt(lang(
             ""s
                 + i18n::_(
-                      u8"buff_"s + cdata[prm_805].buffs[prm_806].id + u8"_name")
+                      u8"buff",
+                      std::to_string(cdata[prm_805].buffs[prm_806].id),
+                      u8"name")
                 + u8"の効果が切れた。"s,
             u8"The effect of "s
                 + i18n::_(
-                      u8"buff_"s + cdata[prm_805].buffs[prm_806].id + u8"_name")
+                      u8"buff",
+                      std::to_string(cdata[prm_805].buffs[prm_806].id),
+                      u8"name")
                 + u8" ends."s));
     }
     if (cdata[prm_805].buffs[prm_806].id == 15)
@@ -50331,7 +50337,10 @@ label_2035_internal:
             const auto description = get_buff_description(
                 cdata[cc].buffs[cs_buff].id, cdata[cc].buffs[cs_buff].power);
             s = ""s
-                + i18n::_(u8"buff_"s + cdata[cc].buffs[cs_buff].id + u8"_name")
+                + i18n::_(
+                      u8"buff",
+                      std::to_string(cdata[cc].buffs[cs_buff].id),
+                      u8"name")
                 + u8": "s + cdata[cc].buffs[cs_buff].turns
                 + lang(
                       (u8"("s + duration + u8")ﾀｰﾝの間、"s),

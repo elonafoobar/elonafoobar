@@ -11,11 +11,12 @@ std::unique_ptr<lua_State, decltype(&lua_close)> lang_state{nullptr, lua_close};
 }
 
 
+
 namespace elona::i18n
 {
 
 
-void load(const char* language)
+void load(const std::string& language)
 {
     lang_state.reset(luaL_newstate());
     luaL_openlibs(lang_state.get());
@@ -30,13 +31,22 @@ void load(const char* language)
 }
 
 
-std::string _(const std::string& key)
+std::string _(
+    const std::string& key_head,
+    const std::vector<std::string>& key_tail)
 {
-    lua_getglobal(lang_state.get(), key.c_str());
+    lua_getglobal(lang_state.get(), key_head.c_str());
+    int pop_count = 1;
+    for (const auto& k : key_tail)
+    {
+        lua_getfield(lang_state.get(), -1, k.c_str());
+        ++pop_count;
+    }
     const char* ret = lua_tostring(lang_state.get(), -1);
-    lua_pop(lang_state.get(), 1);
+    lua_pop(lang_state.get(), pop_count);
     return ret;
 }
+
 
 
 } // namespace elona::i18n
