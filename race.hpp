@@ -11,15 +11,9 @@ namespace elona
 struct race_data
 {
     std::string id;
-    std::string name_en;
-    std::string name_jp;
-    std::string description_en;
-    std::string description_jp;
     int male_image;
     int female_image;
-    int dbspec7;
-    int dbspec9;
-    int dbmode9;
+    int breed_power;
 };
 
 
@@ -43,7 +37,7 @@ inline race_db the_race_db;
 
 
 void get_race_list(bool is_extra_race);
-int access_race_info(int dbmode);
+int access_race_info(int dbmode, const std::string& dbidn);
 
 
 } // namespace elona

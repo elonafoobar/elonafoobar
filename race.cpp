@@ -3,6 +3,7 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "variables.hpp"
 
 
@@ -31,16 +32,9 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
 
-    FIELD_S(name_en);
-    FIELD_S(name_jp);
-    FIELD_S(description_en);
-    FIELD_S(description_jp);
-
     FIELD_I(male_image);
     FIELD_I(female_image);
-    FIELD_I(dbspec7);
-    FIELD_I(dbspec9);
-    FIELD_I(dbmode9);
+    FIELD_I(breed_power);
 
 #undef FIELD_I
 #undef FIELD_S
@@ -49,15 +43,9 @@ int define(lua_State* state)
         id,
         race_data{
             id,
-            name_en,
-            name_jp,
-            description_en,
-            description_jp,
             male_image,
             female_image,
-            dbspec7,
-            dbspec9,
-            dbmode9,
+            breed_power,
         });
 
     return 0;
@@ -194,23 +182,7 @@ void get_race_list(bool is_extra_race)
 
 
 
-#define DBMODE16(s, ret) \
-    do \
-    { \
-        if (dbspec == s) \
-            return ret; \
-    } while (0)
-
-#define DBMODE9(ret) \
-    do \
-    { \
-        if (dbmode == 9) \
-            return ret; \
-    } while (0)
-
-
-
-int access_race_info(int dbmode)
+int access_race_info(int dbmode, const std::string& dbidn)
 {
     auto info = the_race_db[dbidn];
     if (!info)
@@ -219,26 +191,17 @@ int access_race_info(int dbmode)
     switch (dbmode)
     {
     case 2:
-        racename = lang(info->name_jp, info->name_en);
+        racename = i18n::_(u8"race", dbidn, u8"name");
         cpicref = info->male_image;
         return 0;
     case 3: break;
-    case 9: return info->dbmode9;
     case 11:
-        buff = lang(info->description_jp, info->description_en);
+        buff = i18n::_(u8"race", dbidn, u8"description");
         ref1 = info->male_image;
         ref2 = info->female_image;
         return 0;
-    case 16:
-        switch (dbspec)
-        {
-        case 7: return info->dbspec7;
-        case 9: return info->dbspec9;
-        default: assert(0);
-        }
     default: assert(0);
     }
-
 
     if (false)
     {

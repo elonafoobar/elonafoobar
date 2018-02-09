@@ -596,15 +596,6 @@ int refclass(int prm_261, int prm_262)
 
 
 
-int refrace(const std::string& prm_263, int prm_264)
-{
-    dbidn = prm_263;
-    dbspec = prm_264;
-    return access_race_info(16);
-}
-
-
-
 std::string ranktitle(int prm_265)
 {
     int p_at_m6 = 0;
@@ -34255,7 +34246,7 @@ int cbreeder(int prm_984)
     std::string s_at_m173;
     int p_at_m173 = 0;
     s_at_m173 = refchara_str(cdata[prm_984].id, 8);
-    p_at_m173 = refrace(cdatan(2, prm_984), 9);
+    p_at_m173 = the_race_db[cdatan(2, prm_984)]->breed_power;
     p_at_m173 = p_at_m173 * 100 / (100 + cdata[prm_984].level * 5);
     return p_at_m173;
 }
@@ -50168,8 +50159,7 @@ label_2035_internal:
         }
         s(0) = cdatan(0, cc);
         s(1) = cdatan(1, cc);
-        dbidn = cdatan(2, cc);
-        access_race_info(2);
+        access_race_info(2, cdatan(2, cc));
         s(2) = cnven(lang(""s + racename, cdatan(2, cc)));
         dbidn = cdatan(3, cc);
         dbmode = 2;
@@ -53623,8 +53613,7 @@ void label_2084()
 void label_2085()
 {
     cc = 0;
-    dbidn = cdatan(2, 0);
-    access_race_info(2);
+    access_race_info(2, cdatan(2, 0));
     dbidn = cdatan(3, 0);
     dbmode = 2;
     access_class_info();
@@ -53826,8 +53815,7 @@ void label_2085()
             {
                 continue;
             }
-            dbidn = cdatan(2, cnt);
-            access_race_info(2);
+            access_race_info(2, cdatan(2, cnt));
             dbidn = cdatan(3, cnt);
             dbmode = 2;
             access_class_info();
@@ -54558,8 +54546,7 @@ void create_cnpc()
             std::clamp(userdata(11, cun), 5000000, 6400000);
     }
     cdata[rc].ai_heal = userdata(10, cun);
-    dbidn = userdatan(2, cun);
-    access_race_info(3);
+    access_race_info(3, userdatan(2, cun));
     dbidn = userdatan(3, cun);
     dbmode = 3;
     access_class_info();
