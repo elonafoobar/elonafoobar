@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "lib/noncopyable.hpp"
 
 
@@ -16,6 +17,11 @@ public:
 private:
     config() = default;
 };
+
+
+void set_config(const std::string& key, int value);
+void set_config(const std::string& key, const std::string& value);
+void set_config(const std::string& key, const std::string& value1, int value2);
 
 
 } // namespace elona

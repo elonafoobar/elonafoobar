@@ -528,15 +528,19 @@ void load_config()
             }),
     };
 
-    std::fstream file{fs::u8path(u8"./config.json")};
-    if (!file)
-    {
-        throw config_loading_error{u8"Failed to open: "s
-                                   + fs::u8path(u8"./config.json").u8string()};
-    }
-
     picojson::value value;
-    file >> value;
+
+    {
+        std::ifstream file{fs::u8path(u8"./config.json")};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
+        }
+
+        file >> value;
+    }
 
     const picojson::object& options = value.get<picojson::object>();
     for (const auto& config : config_list)
@@ -635,9 +639,7 @@ void load_config()
         }
 
         cfg_language = p;
-        valn(0) = u8"language"s;
-        valn(1) = ""s + p;
-        set_config();
+        set_config(u8"language", p);
         redraw(0);
     }
     if (cfg_language == 0)
@@ -653,65 +655,112 @@ void load_config()
     if (key_mode == ""s)
     {
         key_mode = u8"z"s;
-        file << u8"key_mode.\t\"z\"" << std::endl;
+        set_config("key_mode", key_mode);
     }
     if (key_mode2 == ""s)
     {
         key_mode2 = u8"*"s;
-        file << u8"key_mode2.\t\"*\"" << std::endl;
+        set_config("key_mode2", key_mode2);
     }
     if (key_ammo == ""s)
     {
         key_ammo = u8"A"s;
-        file << u8"key_ammo.\t\"A\"" << std::endl;
+        set_config("key_mode2", key_ammo);
     }
 }
 
 
 
-void set_config()
+void set_config(const std::string& key, int value)
 {
-    std::vector<std::string> lines;
-    range::copy(
-        fileutil::read_by_line{fs::u8path(u8"./config.txt")},
-        std::back_inserter(lines));
-    bool already_exists = false;
-    for (auto&& line : lines)
+    picojson::value options;
+
     {
-        if (!strutil::contains(line, valn(0)))
-            continue;
-        std::string tmp = line;
-        int i = 1;
-        int p = 0;
-        while (1)
+        std::ifstream file{fs::u8path(u8"./config.json")};
+        if (!file)
         {
-            int p2 = instr(tmp, p, u8"\"");
-            if (p2 == -1)
-                break;
-            p += p2;
-            int p1 = instr(tmp, p + 1, u8"\"") + p + 1;
-            if (p1 == -1)
-                break;
-            tmp = strmid(tmp, 0, p + 1) + valn(i) + strmid(tmp, p1, 999);
-            p += std::size(valn(i)) + 2;
-            ++i;
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
         }
-        line = tmp;
-        already_exists = true;
-        break;
+        file >> options;
     }
 
-    if (!already_exists)
+    options.get(key) = picojson::value{int64_t{value}};
+
     {
-        lines.emplace_back(valn(0) + u8" \"" + valn(1) + u8"\"");
+        std::ofstream file{fs::u8path(u8"./config.json")};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
+        }
+        options.serialize(std::ostream_iterator<char>{file}, true);
+    }
+}
+
+
+
+void set_config(const std::string& key, const std::string& value)
+{
+    picojson::value options;
+
+    {
+        std::ifstream file{fs::u8path(u8"./config.json")};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
+        }
+        file >> options;
     }
 
-    std::ofstream out{fs::u8path(u8"./config.txt")};
-    if (!out)
+    options.get(key) = picojson::value{value};
+
     {
-        throw config_loading_error{u8"Failed to open: ./config.txt"};
+        std::ofstream file{fs::u8path(u8"./config.json")};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
+        }
+        options.serialize(std::ostream_iterator<char>{file}, true);
     }
-    range::for_each(lines, [&](const auto& line) { out << line << std::endl; });
+}
+
+
+
+void set_config(const std::string& key, const std::string& value1, int value2)
+{
+    picojson::value options;
+
+    {
+        std::ifstream file{fs::u8path(u8"./config.json")};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
+        }
+        file >> options;
+    }
+
+    options.get(key) = picojson::value{value1};
+    (void)value2; // TODO
+
+    {
+        std::ofstream file{fs::u8path(u8"./config.json")};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + fs::u8path(u8"./config.json").u8string()};
+        }
+        options.serialize(std::ostream_iterator<char>{file}, true);
+    }
 }
 
 
@@ -781,7 +830,7 @@ void load_config2()
             u8"charamake_wiz", [&](auto value) { cfg_wizard = value; }),
     };
 
-    std::fstream file{fs::u8path(u8"./config.json")};
+    std::ifstream file{fs::u8path(u8"./config.json")};
     if (!file)
     {
         throw config_loading_error{u8"Failed to open: "s

@@ -1,3 +1,4 @@
+#include "config.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
 
@@ -995,78 +996,18 @@ label_2725_internal:
                                 }
                             }
                         }
-                        valn(0) = u8"key_enter."s;
-                        valn(1) = key_enter;
-                        valn(2) = ""s + list(1, 1);
-                        valn(3) = "";
-                        jkey(list(1, 1)) = ""s + key_enter;
-                        set_config();
-                        valn(0) = u8"key_cancel."s;
-                        valn(1) = key_cancel;
-                        valn(2) = ""s + list(1, 2);
-                        valn(3) = "";
-                        jkey(list(1, 2)) = ""s + key_cancel;
-                        set_config();
-                        valn(0) = u8"key_quickinv."s;
-                        valn(1) = key_quickinv;
-                        valn(2) = ""s + list(1, 3);
-                        valn(3) = "";
-                        jkey(list(1, 3)) = ""s + key_quickinv;
-                        set_config();
-                        valn(0) = u8"key_quick."s;
-                        valn(1) = key_quick;
-                        valn(2) = ""s + list(1, 4);
-                        valn(3) = "";
-                        jkey(list(1, 4)) = ""s + key_quick;
-                        set_config();
-                        valn(0) = u8"key_alter."s;
-                        valn(1) = key_alter;
-                        valn(2) = ""s + list(1, 5);
-                        valn(3) = "";
-                        jkey(list(1, 5)) = ""s + key_alter;
-                        set_config();
-                        valn(0) = u8"key_get."s;
-                        valn(1) = key_get;
-                        valn(2) = ""s + list(1, 6);
-                        valn(3) = "";
-                        jkey(list(1, 6)) = ""s + key_get;
-                        set_config();
-                        valn(0) = u8"key_fire."s;
-                        valn(1) = key_fire;
-                        valn(2) = ""s + list(1, 7);
-                        valn(3) = "";
-                        jkey(list(1, 7)) = ""s + key_fire;
-                        set_config();
-                        valn(0) = u8"key_target."s;
-                        valn(1) = key_target;
-                        valn(2) = ""s + list(1, 8);
-                        valn(3) = "";
-                        jkey(list(1, 8)) = ""s + key_target;
-                        set_config();
-                        valn(0) = u8"key_esc."s;
-                        valn(1) = key_esc;
-                        valn(2) = ""s + list(1, 9);
-                        valn(3) = "";
-                        jkey(list(1, 9)) = ""s + key_esc;
-                        set_config();
-                        valn(0) = u8"key_help."s;
-                        valn(1) = key_help;
-                        valn(2) = ""s + list(1, 10);
-                        valn(3) = "";
-                        jkey(list(1, 10)) = ""s + key_help;
-                        set_config();
-                        valn(0) = u8"key_charainfo."s;
-                        valn(1) = key_charainfo;
-                        valn(2) = ""s + list(1, 11);
-                        valn(3) = "";
-                        jkey(list(1, 11)) = ""s + key_charainfo;
-                        set_config();
-                        valn(0) = u8"key_ammo."s;
-                        valn(1) = key_ammo;
-                        valn(2) = ""s + list(1, 12);
-                        valn(3) = "";
-                        jkey(list(1, 12)) = ""s + key_ammo;
-                        set_config();
+                        set_config(u8"enter", key_enter, list(1, 1));
+                        set_config(u8"cancel", key_cancel, list(1, 2));
+                        set_config(u8"quickinv", key_quickinv, list(1, 3));
+                        set_config(u8"quick", key_quick, list(1, 4));
+                        set_config(u8"alter", key_alter, list(1, 5));
+                        set_config(u8"get", key_get, list(1, 6));
+                        set_config(u8"fire", key_fire, list(1, 7));
+                        set_config(u8"target", key_target, list(1, 8));
+                        set_config(u8"esc", key_esc, list(1, 9));
+                        set_config(u8"help", key_help, list(1, 10));
+                        set_config(u8"charainfo", key_charainfo, list(1, 11));
+                        set_config(u8"ammo", key_ammo, list(1, 12));
                         p(0) = 0;
                         p(1) = cnvjkey(key_enter);
                         p(2) = cnvjkey(key_cancel);
@@ -1124,9 +1065,7 @@ label_2725_internal:
                     cfg_extrahelp = 0;
                 }
                 snd(20);
-                valn(0) = u8"extraHelp."s;
-                valn(1) = std::to_string(cfg_extrahelp);
-                set_config();
+                set_config(u8"extraHelp", cfg_extrahelp);
                 goto label_2724_internal;
             }
             if (cs == 1)
@@ -1141,9 +1080,7 @@ label_2725_internal:
                     cfg_ignoredislike = 0;
                 }
                 snd(20);
-                valn(0) = u8"ignoreDislike."s;
-                valn(1) = std::to_string(cfg_ignoredislike);
-                set_config();
+                set_config(u8"ignoreDislike", cfg_ignoredislike);
                 goto label_2724_internal;
             }
             if (cs == 2)
@@ -1158,9 +1095,7 @@ label_2725_internal:
                     cfg_zkey = 0;
                 }
                 snd(20);
-                valn(0) = u8"zkey."s;
-                valn(1) = std::to_string(cfg_zkey);
-                set_config();
+                set_config(u8"zkey", cfg_zkey);
                 goto label_2724_internal;
             }
             if (cs == 3)
@@ -1175,9 +1110,7 @@ label_2725_internal:
                     cfg_xkey = 0;
                 }
                 snd(20);
-                valn(0) = u8"xkey."s;
-                valn(1) = std::to_string(cfg_xkey);
-                set_config();
+                set_config(u8"xkey", cfg_xkey);
                 goto label_2724_internal;
             }
             if (cs == 4)
@@ -1192,9 +1125,7 @@ label_2725_internal:
                     cfg_startrun = 0;
                 }
                 snd(20);
-                valn(0) = u8"startRun."s;
-                valn(1) = std::to_string(cfg_startrun);
-                set_config();
+                set_config(u8"startRun", cfg_startrun);
                 goto label_2724_internal;
             }
             if (cs == 5)
@@ -1209,9 +1140,7 @@ label_2725_internal:
                     cfg_walkwait = 1;
                 }
                 snd(20);
-                valn(0) = u8"walkWait."s;
-                valn(1) = std::to_string(cfg_walkwait);
-                set_config();
+                set_config(u8"walkWait", cfg_walkwait);
                 goto label_2724_internal;
             }
             if (cs == 6)
@@ -1226,9 +1155,7 @@ label_2725_internal:
                     cfg_attackwait = 1;
                 }
                 snd(20);
-                valn(0) = u8"attackWait."s;
-                valn(1) = std::to_string(cfg_attackwait);
-                set_config();
+                set_config(u8"attackWait", cfg_attackwait);
                 goto label_2724_internal;
             }
         }
@@ -1246,9 +1173,7 @@ label_2725_internal:
                     cfg_sound2 = 0;
                 }
                 snd(20);
-                valn(0) = u8"sound."s;
-                valn(1) = std::to_string(cfg_sound2);
-                set_config();
+                set_config(u8"sound", cfg_sound2);
                 goto label_2724_internal;
             }
             if (cs == 1)
@@ -1263,9 +1188,7 @@ label_2725_internal:
                     cfg_music2 = 0;
                 }
                 snd(20);
-                valn(0) = u8"music."s;
-                valn(1) = std::to_string(cfg_music2);
-                set_config();
+                set_config(u8"music", cfg_music2);
                 goto label_2724_internal;
             }
             if (cs == 2)
@@ -1280,9 +1203,7 @@ label_2725_internal:
                     cfg_fullscreen2 = 0;
                 }
                 snd(20);
-                valn(0) = u8"fullscreen."s;
-                valn(1) = std::to_string(cfg_fullscreen2);
-                set_config();
+                set_config(u8"fullscreen", cfg_fullscreen2);
                 goto label_2724_internal;
             }
             if (cs == 4)
@@ -1297,9 +1218,7 @@ label_2725_internal:
                     cfg_scroll = 0;
                 }
                 snd(20);
-                valn(0) = u8"scroll."s;
-                valn(1) = std::to_string(cfg_scroll);
-                set_config();
+                set_config(u8"scroll", cfg_scroll);
                 goto label_2724_internal;
             }
             if (cs == 5)
@@ -1314,9 +1233,7 @@ label_2725_internal:
                     cfg_alwayscenter = 0;
                 }
                 snd(20);
-                valn(0) = u8"alwaysCenter."s;
-                valn(1) = std::to_string(cfg_alwayscenter);
-                set_config();
+                set_config(u8"alwaysCenter", cfg_alwayscenter);
                 goto label_2724_internal;
             }
             if (cs == 6)
@@ -1331,9 +1248,7 @@ label_2725_internal:
                     cfg_heart = 0;
                 }
                 snd(20);
-                valn(0) = u8"heartbeat."s;
-                valn(1) = std::to_string(cfg_heart);
-                set_config();
+                set_config(u8"heartbeat", cfg_heart);
                 goto label_2724_internal;
             }
             if (cs == 7)
@@ -1348,9 +1263,7 @@ label_2725_internal:
                     cfg_attackanime = 0;
                 }
                 snd(20);
-                valn(0) = u8"attackAnime."s;
-                valn(1) = std::to_string(cfg_attackanime);
-                set_config();
+                set_config(u8"attackAnime", cfg_attackanime);
                 goto label_2724_internal;
             }
             if (cs == 8)
@@ -1365,9 +1278,7 @@ label_2725_internal:
                     cfg_env = 0;
                 }
                 snd(20);
-                valn(0) = u8"envEffect."s;
-                valn(1) = std::to_string(cfg_env);
-                set_config();
+                set_config(u8"envEffect", cfg_env);
                 goto label_2724_internal;
             }
             if (cs == 9)
@@ -1382,9 +1293,7 @@ label_2725_internal:
                     cfg_shadow = 0;
                 }
                 snd(20);
-                valn(0) = u8"shadow."s;
-                valn(1) = std::to_string(cfg_shadow);
-                set_config();
+                set_config(u8"shadow", cfg_shadow);
                 goto label_2724_internal;
             }
             if (cs == 10)
@@ -1399,9 +1308,7 @@ label_2725_internal:
                     cfg_objectshadow = 0;
                 }
                 snd(20);
-                valn(0) = u8"objectShadow."s;
-                valn(1) = std::to_string(cfg_objectshadow);
-                set_config();
+                set_config(u8"objectShadow", cfg_objectshadow);
                 goto label_2724_internal;
             }
             if (cs == 3)
@@ -1444,12 +1351,8 @@ label_2725_internal:
                 }
                 windoww2 = x(i);
                 windowh2 = y(i);
-                valn(0) = u8"windowW."s;
-                valn(1) = ""s + windoww2;
-                set_config();
-                valn(0) = u8"windowH."s;
-                valn(1) = ""s + windowh2;
-                set_config();
+                set_config(u8"windowW", windoww2);
+                set_config(u8"windowH", windowh2);
                 snd(20);
                 goto label_2724_internal;
             }
@@ -1468,9 +1371,7 @@ label_2725_internal:
                     cfg_net = 0;
                 }
                 snd(20);
-                valn(0) = u8"net."s;
-                valn(1) = std::to_string(cfg_net);
-                set_config();
+                set_config(u8"net", cfg_net);
                 goto label_2724_internal;
             }
             if (cs == 1)
@@ -1485,9 +1386,7 @@ label_2725_internal:
                     cfg_netwish = 0;
                 }
                 snd(20);
-                valn(0) = u8"netWish."s;
-                valn(1) = std::to_string(cfg_netwish);
-                set_config();
+                set_config(u8"netWish", cfg_netwish);
                 goto label_2724_internal;
             }
             if (cs == 2)
@@ -1502,9 +1401,7 @@ label_2725_internal:
                     cfg_netchat = 0;
                 }
                 snd(20);
-                valn(0) = u8"netChat."s;
-                valn(1) = std::to_string(cfg_netchat);
-                set_config();
+                set_config(u8"netChat", cfg_netchat);
                 goto label_2724_internal;
             }
         }
@@ -1522,9 +1419,7 @@ label_2725_internal:
                     cfg_runwait = 2;
                 }
                 snd(20);
-                valn(0) = u8"runWait."s;
-                valn(1) = std::to_string(cfg_runwait);
-                set_config();
+                set_config(u8"runWait", cfg_runwait);
                 goto label_2724_internal;
             }
             if (cs == 1)
@@ -1539,17 +1434,13 @@ label_2725_internal:
                     cfg_autonumlock = 0;
                 }
                 snd(20);
-                valn(0) = u8"autoNumlock."s;
-                valn(1) = std::to_string(cfg_autonumlock);
-                set_config();
+                set_config(u8"autoNumlock", cfg_autonumlock);
                 goto label_2724_internal;
             }
             if (cs == 2)
             {
                 snd(20);
-                valn(0) = u8"titleEffect."s;
-                valn(1) = std::to_string(0);
-                set_config();
+                set_config(u8"titleEffect", 0);
                 goto label_2724_internal;
             }
             if (cs == 3)
@@ -1564,9 +1455,7 @@ label_2725_internal:
                     cfg_scrsync = 2;
                 }
                 snd(20);
-                valn(0) = u8"scr_sync."s;
-                valn(1) = std::to_string(cfg_scrsync);
-                set_config();
+                set_config(u8"scr_sync", cfg_scrsync);
                 goto label_2724_internal;
             }
             if (cs == 4)
@@ -1581,9 +1470,7 @@ label_2725_internal:
                     cfg_runscroll = 0;
                 }
                 snd(20);
-                valn(0) = u8"scroll_run."s;
-                valn(1) = std::to_string(cfg_runscroll);
-                set_config();
+                set_config(u8"scroll_run", cfg_runscroll);
                 goto label_2724_internal;
             }
             if (cs == 5)
@@ -1598,9 +1485,7 @@ label_2725_internal:
                     cfg_autoturn = 0;
                 }
                 snd(20);
-                valn(0) = u8"autoTurnType."s;
-                valn(1) = std::to_string(cfg_autoturn);
-                set_config();
+                set_config(u8"autoTurnType", cfg_autoturn);
                 goto label_2724_internal;
             }
             if (cs == 6)
@@ -1615,9 +1500,7 @@ label_2725_internal:
                     cfg_skiprandevents = 0;
                 }
                 snd(20);
-                valn(0) = u8"skipRandEvents."s;
-                valn(1) = std::to_string(cfg_skiprandevents);
-                set_config();
+                set_config(u8"skipRandEvents", cfg_skiprandevents);
                 goto label_2724_internal;
             }
         }
@@ -1635,9 +1518,7 @@ label_2725_internal:
                     cfg_joypad = 0;
                 }
                 snd(20);
-                valn(0) = u8"joypad."s;
-                valn(1) = std::to_string(cfg_joypad);
-                set_config();
+                set_config(u8"joypad", cfg_joypad);
                 goto label_2724_internal;
             }
         }
@@ -1655,9 +1536,7 @@ label_2725_internal:
                     cfg_msgaddtime = 0;
                 }
                 snd(20);
-                valn(0) = u8"msg_addTime."s;
-                valn(1) = std::to_string(cfg_msgaddtime);
-                set_config();
+                set_config(u8"msg_addTime", cfg_msgaddtime);
                 goto label_2724_internal;
             }
             if (cs == 1)
@@ -1672,9 +1551,7 @@ label_2725_internal:
                     cfg_msgtrans = 0;
                 }
                 snd(20);
-                valn(0) = u8"msg_trans."s;
-                valn(1) = std::to_string(cfg_msgtrans);
-                set_config();
+                set_config(u8"msg_trans", cfg_msgtrans);
                 goto label_2724_internal;
             }
         }
@@ -1692,9 +1569,7 @@ label_2725_internal:
                     cfg_language = 0;
                 }
                 snd(20);
-                valn(0) = u8"language."s;
-                valn(1) = std::to_string(cfg_language);
-                set_config();
+                set_config(u8"language", cfg_language);
                 goto label_2724_internal;
             }
         }
