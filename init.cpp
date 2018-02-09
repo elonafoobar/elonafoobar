@@ -398,6 +398,7 @@ void initialize_elona()
     label_2111();
     label_2296();
     initialize_character_filters();
+    initialize_cbit_filters();
     set_item_filters();
     initialize_item_chip();
     initialize_building_daga();

@@ -338,6 +338,7 @@ inline character_data cdata;
 
 int cbit(size_t type, int cc);
 void cbitmod(size_t type, int cc, int on);
+void initialize_character_filters();
 
 
 

@@ -1522,7 +1522,7 @@ void label_2280();
 void set_cdata_158();
 void label_2296();
 void get_random_npc_id();
-void initialize_character_filters();
+void initialize_cbit_filters();
 void label_2660();
 void label_2661();
 void label_2662();
