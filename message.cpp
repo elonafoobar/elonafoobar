@@ -585,8 +585,6 @@ void msg_write(std::string& prm_307)
 
 void txtmore()
 {
-    int tmore_at_txtfunc = 0;
-    tmore_at_txtfunc = 1;
     return;
 }
 
@@ -773,8 +771,6 @@ void txtnew()
 
 void msg_clear()
 {
-    int msg_len = 0;
-    msg_len = 0;
     msgtemp = "";
     {
         int cnt = 0;
@@ -987,7 +983,8 @@ std::string name(int prm_309)
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || cbit(6, prm_309) == 1 && cbit(7, 0) == 0 && cdata[prm_309].wet == 0)
+        || (cbit(6, prm_309) == 1 && cbit(7, 0) == 0
+            && cdata[prm_309].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }
@@ -1389,7 +1386,7 @@ void txt_check(int prm_329)
 
 void stxt(int prm_340, const std::string& prm_341)
 {
-    if (prm_340 == 0 || synccheck(prm_340, -1) && cdata[0].blind == 0)
+    if (prm_340 == 0 || (synccheck(prm_340, -1) && cdata[0].blind == 0))
     {
         txt(prm_341);
     }

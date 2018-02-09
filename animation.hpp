@@ -36,4 +36,4 @@ enum class animation_type
 void play_animation(int);
 
 
-}
+} // namespace elona

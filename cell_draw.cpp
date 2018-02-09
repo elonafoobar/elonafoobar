@@ -43,7 +43,6 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
         {
             int x_ = 2;
             int dx_ = inf_screenx + sxfix_ * (scrollp > 3);
-            int cnt2_ = cnt;
             int cnt = 0;
             for (int cnt_end = cnt + (inf_screenw); cnt < cnt_end; ++cnt)
             {
@@ -484,7 +483,6 @@ namespace elona
 
 void cell_draw()
 {
-    int deco2 = 0;
     int syfix_ = 0;
     int sxfix_ = 0;
     int scrturn_ = 0;
@@ -497,7 +495,6 @@ void cell_draw()
     int y_ = 0;
     int dx_ = 0;
     int lx_ = 0;
-    int sx_ = 0;
     elona_vector1<int> p_;
     int x_ = 0;
     int px_ = 0;
@@ -514,7 +511,6 @@ void cell_draw()
     int c_ = 0;
     int col_ = 0;
     int h_ = 0;
-    int f_ = 0;
     syfix_ = (scy != scybk) * syfix;
     sxfix_ = (scx != scxbk) * sxfix;
     scrturn_ = scrturn / 5;
@@ -587,7 +583,6 @@ void cell_draw()
             int cnt = scx;
             for (int cnt_end = cnt + (inf_screenw); cnt < cnt_end; ++cnt)
             {
-                sx_ = cnt;
                 gmode(0, inf_tiles, inf_tiles);
                 p_ = tile_fog;
                 pos(dx_, dy_);

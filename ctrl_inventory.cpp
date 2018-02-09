@@ -1120,7 +1120,7 @@ label_2061_internal:
     if (p != -1)
     {
         ci = p;
-        if (invctrl == 12 || invctrl == 24 && invctrl(1) != 0)
+        if (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0))
         {
             cc = -1;
         }
@@ -1212,7 +1212,7 @@ label_2061_internal:
             return 0;
         }
         if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22
-            || invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5))
+            || (invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5)))
         {
             if (invctrl != 3 && invctrl != 22)
             {

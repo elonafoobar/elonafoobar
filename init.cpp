@@ -1057,7 +1057,6 @@ void label_1547(bool label_1548_flg)
     {
         snd(102);
     }
-label_1548:
     redraw(0);
     cs = 0;
     cs_bk = -1;
@@ -1143,7 +1142,6 @@ void label_1550(bool label_1551_flg)
     {
         snd(20);
     }
-label_1551:
     redraw(0);
     cs = 0;
     cs_bk = -1;
@@ -1484,7 +1482,6 @@ void label_1557(bool label_1558_flg)
             label_1553(false);
         }
     }
-label_1558:
     redraw(0);
     pagemax = 0;
     page = 0;
@@ -1610,7 +1607,6 @@ void label_1560()
 {
     int cmportrait = 0;
     std::string cmname;
-    int msgconfirm = 0;
     pcc(15, 0) = 0;
 label_1561_internal:
     redraw(0);
@@ -1768,7 +1764,6 @@ label_1565_internal:
         pos(0, 100);
         gcopy(2, 0, 0, windoww, windowh - 100);
         gmode(2);
-        msgconfirm = 1;
         s = lang(
             u8"あいにく、その名前の冒険者はすでに存在する。"s,
             u8"Sorry, but the name is already taken."s);
@@ -2010,7 +2005,6 @@ void label_1567(int CNT)
 
 void label_2732()
 {
-    int dbgchara = 0;
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
@@ -2033,7 +2027,6 @@ void label_2732()
         gdata(43) = 631;
         gdata_next_inventory_serial_id = 1000;
         gdata_next_shelter_serial_id = 100;
-        dbgchara = 23;
         playerid = u8"sav_noa"s;
         gdata_pc_home_x = 22;
         gdata_pc_home_y = 21;

@@ -16,7 +16,7 @@ namespace
 
 
 
-void fmode_8_7(int fmode, const fs::path& file)
+void fmode_8_7(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
@@ -368,7 +368,7 @@ void fmode_8_7(int fmode, const fs::path& file)
 }
 
 
-void fmode_14_15(int fmode, const fs::path& file)
+void fmode_14_15(int fmode)
 {
     std::string filepath;
     int fsize = 0;
@@ -575,7 +575,7 @@ void fmode_14_15(int fmode, const fs::path& file)
 }
 
 
-void fmode_2_1(int fmode, const fs::path& file)
+void fmode_2_1(int fmode)
 {
     std::string filepath;
     int fsize = 0;
@@ -712,7 +712,7 @@ void fmode_2_1(int fmode, const fs::path& file)
 }
 
 
-void fmode_20_19(int fmode, const fs::path& file)
+void fmode_20_19(int fmode)
 {
     std::string filepath;
     int fsize = 0;
@@ -807,7 +807,7 @@ void fmode_20_19(int fmode, const fs::path& file)
 }
 
 
-void fmode_22_21(int fmode, const fs::path& file)
+void fmode_22_21(int fmode)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
@@ -1039,7 +1039,7 @@ void fmode_22_21(int fmode, const fs::path& file)
 }
 
 
-void fmode_16(const fs::path& file)
+void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
@@ -1058,7 +1058,7 @@ void fmode_16(const fs::path& file)
 }
 
 
-void fmode_6_5(int fmode, const fs::path& file)
+void fmode_6_5(int fmode)
 {
     bool read = fmode == 5;
     if (read)
@@ -1262,7 +1262,7 @@ void fmode_18_17(int fmode, const fs::path& file)
 }
 
 
-void fmode_10(const fs::path& file)
+void fmode_10()
 {
     for (const auto& entry : filesystem::dir_entries(
              fs::u8path(u8"./tmp"),
@@ -1274,13 +1274,13 @@ void fmode_10(const fs::path& file)
 }
 
 
-void fmode_9(const fs::path& file)
+void fmode_9()
 {
     elona_delete(fs::u8path(u8"./save/"s + playerid));
 }
 
 
-void fmode_11_12(int fmode, const fs::path& file)
+void fmode_11_12(int fmode)
 {
     std::string filepath;
     if (fmode == 12)
@@ -1324,7 +1324,7 @@ void fmode_11_12(int fmode, const fs::path& file)
 }
 
 
-void fmode_13(const fs::path& file)
+void fmode_13()
 {
     for (int i = 0; i < 40; ++i)
     {
@@ -1358,29 +1358,29 @@ void ctrl_file(int mode, const fs::path& filepath)
     switch (mode)
     {
     case 8:
-    case 7: fmode_8_7(mode, filepath); break;
+    case 7: fmode_8_7(mode); break;
     case 14:
-    case 15: fmode_14_15(mode, filepath); break;
+    case 15: fmode_14_15(mode); break;
     case 2:
-    case 1: fmode_2_1(mode, filepath); break;
+    case 1: fmode_2_1(mode); break;
     case 20:
-    case 19: fmode_20_19(mode, filepath); break;
+    case 19: fmode_20_19(mode); break;
     case 22:
-    case 21: fmode_22_21(mode, filepath); break;
-    case 16: fmode_16(filepath); break;
+    case 21: fmode_22_21(mode); break;
+    case 16: fmode_16(); break;
     case 6:
-    case 5: fmode_6_5(mode, filepath); break;
+    case 5: fmode_6_5(mode); break;
     case 4:
     case 3: fmode_4_3(mode, filepath); break;
     case 23:
     case 24: fmode_23_24(mode, filepath); break;
     case 18:
     case 17: fmode_18_17(mode, filepath); break;
-    case 10: fmode_10(filepath); break;
-    case 9: fmode_9(filepath); break;
+    case 10: fmode_10(); break;
+    case 9: fmode_9(); break;
     case 11:
-    case 12: fmode_11_12(mode, filepath); break;
-    case 13: fmode_13(filepath); break;
+    case 12: fmode_11_12(mode); break;
+    case 13: fmode_13(); break;
     default: assert(0);
     }
 }

@@ -62,7 +62,7 @@ inventory::inventory()
 
 
 
-int ibit(int type, int ci)
+int ibit(size_t type, int ci)
 {
     assert(type < sizeof(item::flags) * 8);
     return inv(ci).flags & (1 << type) ? 1 : 0;
@@ -70,7 +70,7 @@ int ibit(int type, int ci)
 
 
 
-void ibitmod(int type, int ci, int on)
+void ibitmod(size_t type, int ci, int on)
 {
     assert(type < sizeof(item::flags) * 8);
     if (on)
@@ -371,7 +371,7 @@ int itemusingfind(int prm_485, int prm_486)
                 {
                     if (cdata[cnt].continuous_action_item == prm_485)
                     {
-                        if (prm_486 == 0 || prm_486 == 1 && cnt != 0)
+                        if (prm_486 == 0 || (prm_486 == 1 && cnt != 0))
                         {
                             f_at_m54 = cnt;
                             break;
@@ -1175,7 +1175,6 @@ void label_0311()
 
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
-    int itemnamehack = 0;
     elona_vector1<int> iqiality_at_m63;
     int num2_at_m63 = 0;
     std::string s2_at_m63;
@@ -1184,13 +1183,10 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     std::string s4_at_m63;
     int len_at_m63 = 0;
     elona_vector1<std::string> buf_at_m63;
-    int ret_at_m63 = 0;
     elona::prm_518 = prm_518;
-    itemnamehack = inv[prm_518].id + 1;
     if (inv[prm_518].id >= maxitemid - 2
-        || inv[prm_518].id > length(ioriginalnameref))
+        || size_t(inv[prm_518].id) > length(ioriginalnameref))
     {
-        itemnamehack = 0;
         return lang(
             u8"未知のアイテム(バージョン非互換)"s,
             u8"unknown item (incompatible version)"s);
@@ -1779,10 +1775,9 @@ label_0313_internal:
     {
         len_at_m63 = zentohan(s_at_m63, buf_at_m63, 0);
         SDIM2(buf_at_m63, len_at_m63);
-        ret_at_m63 = zentohan(s_at_m63, s_at_m63, len_at_m63);
+        zentohan(s_at_m63, s_at_m63, len_at_m63);
     }
     skip_at_m63 = 0;
-    itemnamehack = 0;
     return s_at_m63;
 }
 
