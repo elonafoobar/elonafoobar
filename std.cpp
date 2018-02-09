@@ -1312,32 +1312,6 @@ void pos(int x, int y)
 }
 
 
-
-namespace rnd_detail
-{
-std::mt19937 random_engine{std::random_device{}()};
-// For exrand
-std::mt19937 random_engine2{std::random_device{}()};
-
-} // namespace rnd_detail
-
-
-void randomize(std::random_device::result_type seed)
-{
-    rnd_detail::random_engine.seed(seed);
-}
-
-
-
-int rnd(int n)
-{
-    std::uniform_int_distribution<> dist{0,
-                                         std::clamp(n - 1, 0, (1 << 16) - 1)};
-    return dist(rnd_detail::random_engine);
-}
-
-
-
 void redraw(int n)
 {
     if (n != 1)
@@ -1498,27 +1472,6 @@ void wpoke(int& x, size_t index, int y)
 
 
 // imported functions
-
-
-void exrand_randomize(std::random_device::result_type seed)
-{
-    rnd_detail::random_engine2.seed(seed);
-}
-
-
-
-void exrand_rnd(int& result, int max)
-{
-    if (max <= 0)
-    {
-        result = 0;
-    }
-    else
-    {
-        result = std::uniform_int_distribution<>{
-            0, max - 1}(rnd_detail::random_engine2);
-    }
-}
 
 
 

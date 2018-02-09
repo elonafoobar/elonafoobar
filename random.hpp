@@ -12,6 +12,17 @@ namespace elona
 
 
 
+namespace detail
+{
+
+inline std::mt19937 random_engine{std::random_device{}()};
+// For exrand
+inline std::mt19937 random_engine2{std::random_device{}()};
+
+} // namespace detail
+
+
+
 template <typename T, typename Weight = int>
 struct weighted_random_sampler
 {
@@ -29,10 +40,8 @@ struct weighted_random_sampler
         if (sum == 0)
             return std::nullopt;
 
-        // FIXME: use global random engine.
-        std::mt19937 random_engine{std::random_device{}()};
         std::uniform_int_distribution<Weight> dist{0, sum - 1};
-        int n = dist(random_engine);
+        int n = dist(detail::random_engine2);
         for (const auto& candidate : candidates)
         {
             if (candidate.second > n)
@@ -57,11 +66,9 @@ auto choice(const Range& range)
 {
     assert(!std::empty(range));
 
-    // FIXME: use global random engine.
-    std::mt19937 random_engine{std::random_device{}()};
     std::uniform_int_distribution<size_t> dist{0, std::size(range) - 1};
     auto itr = std::begin(range);
-    std::advance(itr, dist(random_engine));
+    std::advance(itr, dist(detail::random_engine));
     return *itr;
 }
 
