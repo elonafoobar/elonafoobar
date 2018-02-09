@@ -78536,7 +78536,10 @@ label_2747:
         {
             for (int i = 400; i < 467; ++i)
             {
-                skillgain(0, i, 100, 10000);
+                if (i != 426 && i != 427)
+                {
+                    skillgain(0, i, 100, 10000);
+                }
             }
             goto label_2747;
         }
