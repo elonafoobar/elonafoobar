@@ -8,7 +8,7 @@ namespace elona
 {
 
 
-int access_class_info()
+int access_class_info(int dbmode, const std::string& dbidn)
 {
     if (dbmode == 1)
     {
@@ -35,13 +35,18 @@ int access_class_info()
         ++listmax;
         return 0;
     }
+
     if (dbidn == ""s)
     {
         classname = u8"なし"s;
         cequipment = 0;
         return 0;
     }
-    if (dbidn == u8"warrior"s)
+
+    if (false)
+    {
+    }
+    else if (dbidn == u8"warrior"s)
     {
         if (dbmode == 16)
         {
@@ -102,13 +107,7 @@ int access_class_info()
             skillinit(168, rc, 5);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"thief"s)
+    else if (dbidn == u8"thief"s)
     {
         if (dbmode == 16)
         {
@@ -166,13 +165,7 @@ int access_class_info()
             skillinit(170, rc, 4);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"wizard"s)
+    else if (dbidn == u8"wizard"s)
     {
         if (dbmode == 16)
         {
@@ -229,13 +222,7 @@ int access_class_info()
             skillinit(172, rc, 5);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"farmer"s)
+    else if (dbidn == u8"farmer"s)
     {
         if (dbmode == 16)
         {
@@ -292,13 +279,7 @@ int access_class_info()
             skillinit(177, rc, 5);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"predator"s)
+    else if (dbidn == u8"predator"s)
     {
         if (dbmode == 16)
         {
@@ -345,13 +326,7 @@ int access_class_info()
             skillinit(152, rc, 4);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"archer"s)
+    else if (dbidn == u8"archer"s)
     {
         if (dbmode == 16)
         {
@@ -409,13 +384,7 @@ int access_class_info()
             skillinit(189, rc, 3);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"warmage"s)
+    else if (dbidn == u8"warmage"s)
     {
         if (dbmode == 16)
         {
@@ -472,13 +441,7 @@ int access_class_info()
             skillinit(172, rc, 4);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"tourist"s)
+    else if (dbidn == u8"tourist"s)
     {
         if (dbmode == 16)
         {
@@ -528,13 +491,7 @@ int access_class_info()
             skillinit(182, rc, 3);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"pianist"s)
+    else if (dbidn == u8"pianist"s)
     {
         if (dbmode == 16)
         {
@@ -590,13 +547,7 @@ int access_class_info()
             skillinit(301, rc, 3);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"gunner"s)
+    else if (dbidn == u8"gunner"s)
     {
         if (dbmode == 16)
         {
@@ -647,13 +598,7 @@ int access_class_info()
             skillinit(189, rc, 3);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"priest"s)
+    else if (dbidn == u8"priest"s)
     {
         if (dbmode == 16)
         {
@@ -710,13 +655,7 @@ int access_class_info()
             skillinit(172, rc, 5);
         }
     }
-    if (dbidn == ""s)
-    {
-        classname = u8"なし"s;
-        cequipment = 0;
-        return 0;
-    }
-    if (dbidn == u8"claymore"s)
+    else if (dbidn == u8"claymore"s)
     {
         if (dbmode == 16)
         {
@@ -777,4 +716,4 @@ int access_class_info()
 
 
 
-}
+} // namespace elona

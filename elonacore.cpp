@@ -588,10 +588,8 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
 
 int refclass(int prm_261, int prm_262)
 {
-    dbmode = 16;
-    dbidn = cdatan(3, prm_261);
     dbspec = prm_262;
-    return access_class_info();
+    return access_class_info(16, cdatan(3, prm_261));
 }
 
 
@@ -50161,9 +50159,7 @@ label_2035_internal:
         s(1) = cdatan(1, cc);
         access_race_info(2, cdatan(2, cc));
         s(2) = cnven(lang(""s + racename, cdatan(2, cc)));
-        dbidn = cdatan(3, cc);
-        dbmode = 2;
-        access_class_info();
+        access_class_info(2, cdatan(3, cc));
         s(4) = cnven(lang(""s + classname, cdatan(3, cc)));
         if (cdata[cc].sex == 0)
         {
@@ -53614,9 +53610,7 @@ void label_2085()
 {
     cc = 0;
     access_race_info(2, cdatan(2, 0));
-    dbidn = cdatan(3, 0);
-    dbmode = 2;
-    access_class_info();
+    access_class_info(2, cdatan(3, 0));
     buff = "";
     notesel(buff);
     noteadd(
@@ -53816,9 +53810,7 @@ void label_2085()
                 continue;
             }
             access_race_info(2, cdatan(2, cnt));
-            dbidn = cdatan(3, cnt);
-            dbmode = 2;
-            access_class_info();
+            access_class_info(2, cdatan(3, cnt));
             noteadd(
                 cdatan(0, cnt) + u8" "s + racename + u8"の"s + classname
                 + u8" "s + _sex(cdata[cnt].sex) + u8" "s + calcage(cnt)
@@ -54547,9 +54539,7 @@ void create_cnpc()
     }
     cdata[rc].ai_heal = userdata(10, cun);
     access_race_info(3, userdatan(2, cun));
-    dbidn = userdatan(3, cun);
-    dbmode = 3;
-    access_class_info();
+    access_class_info(3, userdatan(3, cun));
     cdata[rc].sex = userdata(3, cun);
     if (userdata(3, cun) != 0)
     {
