@@ -17,10 +17,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"短距離走者"s, u8"Short Distance Runner"s);
             traitrefn2(1) = lang(u8"中距離走者"s, u8"Middle Distance Runner"s);
             traitrefn2(2) = lang(u8"長距離走者"s, u8"Long Distance Runner"s);
@@ -50,10 +46,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"吸血鬼"s, u8"Vampiric Ability"s);
             if (trait(tid) >= 0)
             {
@@ -76,10 +68,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"指導者"s, u8"Natural Leader"s);
             if (trait(tid) >= 0)
             {
@@ -102,10 +90,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"空間歪曲"s, u8"Dimensional Move"s);
             if (trait(tid) >= 0)
             {
@@ -128,10 +112,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"火炎芸"s, u8"Fire Breath"s);
             if (trait(tid) >= 0)
             {
@@ -153,10 +133,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"催眠術師"s, u8"Hypnotism"s);
             if (trait(tid) >= 0)
             {
@@ -179,10 +155,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"毒の知恵"s, u8"Poison Nail"s);
             if (trait(tid) >= 0)
             {
@@ -205,10 +177,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"セクシー"s, u8"Sexy"s);
             traitrefn2(1) = lang(u8"色魔"s, u8"Lady Killer"s);
             if (trait(tid) >= 0)
@@ -235,10 +203,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"腕相撲"s, u8"Arm Wrestler"s);
             traitrefn2(1) = lang(u8"腕相撲の達人"s, u8"Adept Arm Wrestler"s);
             traitrefn2(2) =
@@ -271,10 +235,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"見習い会計士"s, u8"Apprentice Accountant"s);
             traitrefn2(1) = lang(u8"熟練会計士"s, u8"Expert Accountant"s);
             if (trait(tid) >= 0)
@@ -300,10 +260,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) =
                 lang(u8"見習い補給係"s, u8"Apprentice Quartermaster"s);
             traitrefn2(1) = lang(u8"熟練補給係"s, u8"Expert Quartermaster"s);
@@ -330,10 +286,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"祈祷師"s, u8"Exorcist"s);
             if (trait(tid) >= 0)
             {
@@ -355,10 +307,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"我慢強い"s, u8"Tough"s);
             traitrefn2(1) = lang(u8"とても我慢強い"s, u8"Pretty Tough"s);
             traitrefn2(2) = lang(u8"恐ろしく我慢強い"s, u8"Awfully Tough"s);
@@ -389,10 +337,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"格闘家"s, u8"Martial Artist"s);
             traitrefn2(1) = lang(u8"拳聖"s, u8"Ken-Sei"s);
             if (trait(tid) >= 0)
@@ -420,10 +364,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"集中"s, u8"Concentration"s);
             traitrefn2(1) = lang(u8"高い集中"s, u8"More Concentration"s);
             if (trait(tid) >= 0)
@@ -455,10 +395,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"盾殴り"s, u8"Shield Bash"s);
             if (trait(tid) >= 0)
             {
@@ -485,10 +421,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2 = lang(u8"優しい笑顔"s, u8"Gentle Face"s);
             if (trait(tid) >= 0)
             {
@@ -510,10 +442,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"二刀流の習熟"s, u8"Ambidextrous"s);
             traitrefn2(1) = lang(u8"二刀流の達人"s, u8"Improved Ambidextrous"s);
             if (trait(tid) >= 0)
@@ -545,10 +473,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"暗闇への適正"s, u8"Conquer Darkness"s);
             traitrefn2(1) =
                 lang(u8"暗闇への強い適正"s, u8"Conquer Deep Darkness"s);
@@ -577,10 +501,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"免疫"s, u8"Poison Tolerance"s);
             traitrefn2(1) = lang(u8"強い免疫"s, u8"More Poison Tolerance"s);
             if (trait(tid) >= 0)
@@ -608,10 +528,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"交渉上手"s, u8"Negotiator"s);
             traitrefn2(1) = lang(u8"交渉の神"s, u8"Great Negotiator"s);
             if (trait(tid) >= 0)
@@ -643,10 +559,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"信者"s, u8"Believer"s);
             traitrefn2(1) = lang(u8"狂信者"s, u8"Zealot"s);
             if (trait(tid) >= 0)
@@ -674,10 +586,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"幸運の持ち主"s, u8"Lucky"s);
             traitrefn2(1) = lang(u8"類稀な幸運"s, u8"Incredibly Lucky"s);
             traitrefn2(2) = lang(u8"幸運の女神の寵愛"s, u8"Goddess of Luck"s);
@@ -708,10 +616,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 5;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"苦行者見習い"s, u8"Apprentice Ascetic"s);
             traitrefn2(1) = lang(u8"苦行者"s, u8"Journeyman Ascetic"s);
             traitrefn2(2) = lang(u8"熟練の苦行者"s, u8"Expert Ascetic"s);
@@ -751,10 +655,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 5;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"魔力の遺伝子"s, u8"Magical Gene"s);
             traitrefn2(1) = lang(u8"魔力の細胞"s, u8"Magical Cell"s);
             traitrefn2(2) = lang(u8"魔力の血液"s, u8"Magical Blood"s);
@@ -794,10 +694,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"罠への注意"s, u8"Careful"s);
             traitrefn2(1) = lang(u8"罠への警戒"s, u8"Very Careful"s);
             if (trait(tid) >= 0)
@@ -829,10 +725,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"俊足"s, u8"Agile"s);
             traitrefn2(1) = lang(u8"韋駄天"s, u8"Very Agile"s);
             if (trait(tid) >= 0)
@@ -867,10 +759,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"石の守備"s, u8"Stone Defense"s);
             traitrefn2(1) = lang(u8"鉄の守備"s, u8"Iron Defense"s);
             traitrefn2(2) = lang(u8"鋼の守備"s, u8"Steel Defense"s);
@@ -909,10 +797,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"見極め"s, u8"Dodge"s);
             traitrefn2(1) = lang(u8"見極めの熟練者"s, u8"Improved Dodge"s);
             traitrefn2(2) = lang(u8"見極めの達人"s, u8"Greater Dodge"s);
@@ -944,10 +828,6 @@ int get_trait_info()
             traitref(0) = 0;
             traitref(1) = 0;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             traitrefn2(0) = lang(u8"回避の修練者"s, u8"Evade"s);
             traitrefn2(1) = lang(u8"回避の熟練者"s, u8"Improved Evade"s);
             traitrefn2(2) = lang(u8"回避の達人"s, u8"Greater Evade"s);
@@ -983,10 +863,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"カンニバリズム"s, u8"Cannibalism"s);
@@ -1011,10 +887,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -3;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"鉄の皮膚"s, u8"Iron Skin"s);
@@ -1058,10 +930,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -3;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"しなやかな関節"s, u8"Flexible Joint"s);
@@ -1106,10 +974,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"トロールの血"s, u8"Troll Blood"s);
@@ -1148,10 +1012,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -3;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"しなやかな脚"s, u8"Lithe Leg"s);
@@ -1196,10 +1056,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -3;
             traitref(2) = 3;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"強い腕"s, u8"Strong Arm"s);
@@ -1243,10 +1099,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"美声"s, u8"Sweet Voice"s);
@@ -1284,10 +1136,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"脳内コンピュータ"s, u8"Brain Computer"s);
@@ -1325,10 +1173,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -1;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"魔法への耐性"s, u8"Magic Res+"s);
@@ -1362,10 +1206,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -1;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"強い鼓膜"s, u8"Sound Res+"s);
@@ -1399,10 +1239,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -1;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"火炎耐性"s, u8"Fire Res+"s);
@@ -1435,10 +1271,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -1;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"冷気耐性"s, u8"Cold Res+"s);
@@ -1470,10 +1302,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -1;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"電撃耐性"s, u8"Lightning Res+"s);
@@ -1507,10 +1335,6 @@ int get_trait_info()
             traitref(0) = 1;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(u8"鷹の目"s, u8"Hawk Eye"s);
@@ -1548,10 +1372,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1584,10 +1404,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1620,10 +1436,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1656,10 +1468,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1693,10 +1501,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1715,10 +1519,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1753,10 +1553,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1779,10 +1575,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1801,10 +1593,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1823,10 +1611,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1845,10 +1629,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1867,10 +1647,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1889,10 +1665,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1911,10 +1683,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1931,10 +1699,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1952,10 +1716,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1974,10 +1734,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -1996,10 +1752,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -2018,10 +1770,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = -2;
             traitref(2) = 2;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -2054,10 +1802,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -2076,10 +1820,6 @@ int get_trait_info()
             traitref(0) = 2;
             traitref(1) = 0;
             traitref(2) = 1;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = "";
@@ -2098,10 +1838,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -3;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2131,10 +1867,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -3;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2174,10 +1906,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2207,10 +1935,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2243,10 +1967,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2278,10 +1998,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2314,10 +2030,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2348,10 +2060,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2400,10 +2108,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2428,10 +2132,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2456,10 +2156,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2489,10 +2185,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2522,10 +2214,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2559,10 +2247,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2586,10 +2270,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
@@ -2614,10 +2294,6 @@ int get_trait_info()
             traitref(0) = 3;
             traitref(1) = -1;
             traitref(2) = 0;
-            traitref(3) = 1;
-            traitref(4) = 0;
-            traitref(5) = 100;
-            traitref(6) = -1;
             if (trait(tid) < 0)
             {
                 traitrefn(2) = "";
