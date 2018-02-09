@@ -1,4 +1,5 @@
-buff = {}
+buff = buff or {}
+
 buff['1'] = {}
 buff['1'].name = "Holy Shield"
 buff['1'].message_0 = "begin"
