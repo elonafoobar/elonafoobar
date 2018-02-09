@@ -143,8 +143,8 @@ struct dir_entries
 
 private:
     const fs::path base_dir;
-    const std::regex pattern;
     const type entry_type;
+    const std::regex pattern;
 };
 
 
