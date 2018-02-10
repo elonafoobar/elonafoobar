@@ -396,7 +396,6 @@ void initialize_elona()
     SDIM2(netbuf, 20000);
     delete_temporary_npc_files();
     delete_temporary_user_files();
-    initialize_racebit();
     initialize_character_filters();
     initialize_cbit_filters();
     set_item_filters();
