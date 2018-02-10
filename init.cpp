@@ -2352,7 +2352,7 @@ void label_2732()
         evadd(2);
         evadd(24);
         sceneid = 0;
-        label_2680();
+        do_play_scene();
     }
     if (mode == 2)
     {

@@ -19318,7 +19318,7 @@ void update_screen()
         label_1433();
     }
     screendrawhack = 10;
-    label_1421();
+    render_hud();
     if (autoturn == 1)
     {
         label_1423();
@@ -19430,7 +19430,7 @@ void label_1420()
     gmode(2);
     redraw(0);
     label_1433();
-    label_1421();
+    render_hud();
     redraw(1);
     screenupdate = 0;
     return;
@@ -19438,7 +19438,7 @@ void label_1420()
 
 
 
-void label_1421()
+void render_hud()
 {
     int ap3 = 0;
     int ap2 = 0;
@@ -20054,7 +20054,7 @@ void label_1423()
         label_1433();
         msgtemp = "";
     }
-    label_1421();
+    render_hud();
     if (cdata[0].continuous_action_id == 7)
     {
         if (rowactre == 0)
@@ -20771,7 +20771,7 @@ void label_1438()
             pos(0, windowh - inf_verh);
             gcopy(4, 0, 0, windoww, inf_tiles);
             gmode(2);
-            label_1421();
+            render_hud();
             gmode(2);
             redraw(1);
             await(40);
@@ -30919,7 +30919,7 @@ label_16951_internal:
                         flttypemajor = fltsetdungeon();
                         itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
                     }
-                    label_1735();
+                    set_character_generation_filter();
                     int stat = characreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
                     if (stat == 1)
                     {
@@ -30979,7 +30979,7 @@ label_16951_internal:
                                          ++cnt)
                                     {
                                         rdx3 = cnt;
-                                        label_1735();
+                                        set_character_generation_filter();
                                         characreate(-1, 0, rdx3, rdy3);
                                     }
                                 }
@@ -31035,7 +31035,7 @@ label_16951_internal:
         int cnt = 0;
         for (int cnt_end = cnt + (mobdensity); cnt < cnt_end; ++cnt)
         {
-            label_1735();
+            set_character_generation_filter();
             characreate(-1, 0, -3, 0);
         }
     }
@@ -31146,7 +31146,7 @@ void label_1696()
         int cnt = 0;
         for (int cnt_end = cnt + (10 + rnd(6)); cnt < cnt_end; ++cnt)
         {
-            label_1735();
+            set_character_generation_filter();
             int stat = characreate(-1, 0, -3, 0);
             if (stat != 0)
             {
@@ -31303,7 +31303,7 @@ int label_1697()
         int cnt = 0;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            label_1735();
+            set_character_generation_filter();
             characreate(-1, 0, -3, 0);
         }
     }
@@ -32845,7 +32845,7 @@ void label_1712()
         txt(lang(u8"新しい家を建てた！ "s, u8"You've built a new house!"s));
         msg_halt();
         snd(49);
-        label_1737();
+        exit_map();
         return;
     }
     ctrl_file(13);
@@ -34488,7 +34488,7 @@ void label_1733()
 
 
 
-void label_1735()
+void set_character_generation_filter()
 {
     int obvjlv = 0;
     dbid = 0;
@@ -34702,7 +34702,7 @@ void label_1736()
         {
             if (rnd(2) == 0)
             {
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, dbid, -2, 0);
             }
         }
@@ -34715,7 +34715,7 @@ void label_1736()
     {
         if (rnd(2) == 0)
         {
-            label_1735();
+            set_character_generation_filter();
             characreate(-1, dbid, -2, 0);
         }
     }
@@ -34723,7 +34723,7 @@ void label_1736()
     {
         if (rnd(4) == 0)
         {
-            label_1735();
+            set_character_generation_filter();
             characreate(-1, dbid, -2, 0);
         }
     }
@@ -34731,7 +34731,7 @@ void label_1736()
     {
         if (rnd(8) == 0)
         {
-            label_1735();
+            set_character_generation_filter();
             characreate(-1, dbid, -2, 0);
         }
     }
@@ -34740,7 +34740,7 @@ void label_1736()
 
 
 
-void label_1737()
+void exit_map()
 {
     int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
@@ -37769,7 +37769,7 @@ label_1857_internal:
         label_1472();
         r1 = 0;
         refresh_character();
-        label_1421();
+        render_hud();
         page_save();
         goto label_18551_internal;
     }
@@ -39926,7 +39926,7 @@ label_1887_internal:
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh - inf_verh);
     gmode(2);
-    label_1421();
+    render_hud();
     dx = 520;
     dy = 270;
     window2((windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 6);
@@ -40006,7 +40006,7 @@ void label_1888()
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh - inf_verh);
         gmode(2);
-        label_1421();
+        render_hud();
         redraw(1);
         if (cdata[0].god != 0)
         {
@@ -40251,7 +40251,7 @@ void pray()
             novoidlv = 1;
             characreate(56, dbid, -3, 0);
             rc = 56;
-            label_2659();
+            new_ally_joins();
         }
         if (gdata_god_rank == 3)
         {
@@ -43275,7 +43275,7 @@ label_19341_internal:
                 ++gdata_hour;
                 label_2736();
                 redraw(0);
-                label_1421();
+                render_hud();
                 if (cnt % 5 == 0)
                 {
                     txtef(4);
@@ -44614,7 +44614,7 @@ label_1953_internal:
         txttargetnpc(
             cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
         cs_bk = cs;
-        label_1421();
+        render_hud();
         redraw(1);
     }
     await(cfg_wait1);
@@ -45965,7 +45965,7 @@ label_1970_internal:
                     else
                     {
                         redraw(0);
-                        label_1421();
+                        render_hud();
                     }
                     goto label_196901_internal;
                 }
@@ -46529,7 +46529,7 @@ void show_quest_board()
             gcopy(3, 960, 240, 48, 84);
         }
     }
-    label_1421();
+    render_hud();
     gsel(0);
 label_1977_internal:
     redraw(0);
@@ -46702,11 +46702,11 @@ label_1978_internal:
         magic();
         tc = client;
         questteleport = 1;
-        label_2242();
+        speak_to_npc();
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            label_1737();
+            exit_map();
             return;
         }
         turn_end();
@@ -48619,11 +48619,11 @@ void label_2012()
     if (p == 0)
     {
         update_screen();
-        label_2242();
+        speak_to_npc();
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            label_1737();
+            exit_map();
             return;
         }
         else
@@ -48661,7 +48661,7 @@ void label_2012()
     if (p == 5)
     {
         rc = tc;
-        label_2659();
+        new_ally_joins();
         update_screen();
         turn_end();
         return;
@@ -50683,7 +50683,7 @@ label_2035_internal:
                 csskill,
                 std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             redraw(0);
-            label_1421();
+            render_hud();
             goto label_2034_internal;
         }
     }
@@ -51830,7 +51830,7 @@ label_2052_internal:
                 equip_melee_weapon();
             }
             redraw(0);
-            label_1421();
+            render_hud();
             goto label_2051_internal;
         }
         nowindowanime = 1;
@@ -55206,7 +55206,7 @@ void label_2114()
     gdata_destination_map = 35;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
-    label_1737();
+    exit_map();
     return;
 }
 
@@ -56164,7 +56164,7 @@ void label_2136()
     {
         dbg_exitshowroom = 0;
         levelexitby = 4;
-        label_1737();
+        exit_map();
         return;
     }
     pc_turn(false);
@@ -57859,7 +57859,7 @@ void label_2149()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh - inf_verh);
     gmode(2);
-    label_1421();
+    render_hud();
     if (screenupdate == 0)
     {
         redraw(1);
@@ -60534,7 +60534,7 @@ void label_2189()
                     return;
                 }
                 rc = tc;
-                label_2659();
+                new_ally_joins();
             }
             chara_vanquish(tc);
             check_quest();
@@ -61750,11 +61750,11 @@ void label_2203()
             turn_end();
             return;
         }
-        label_2242();
+        speak_to_npc();
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            label_1737();
+            exit_map();
             return;
         }
         turn_end();
@@ -61838,7 +61838,7 @@ void label_2203()
                     snd(49);
                     --gdata_current_dungeon_level;
                     levelexitby = 4;
-                    label_1737();
+                    exit_map();
                     return;
                 }
                 pc_turn(false);
@@ -62084,7 +62084,7 @@ void label_2205()
             {
                 encounterlv = cdata[0].fame / 1000;
                 levelexitby = 4;
-                label_1737();
+                exit_map();
                 return;
             }
             if (encounter == 3)
@@ -62098,14 +62098,14 @@ void label_2205()
                 gdata_previous_x = cdata[0].position.x;
                 gdata_previous_y = cdata[0].position.y;
                 levelexitby = 4;
-                label_1737();
+                exit_map();
                 return;
             }
             if (encounter == 2)
             {
                 encounterlv = 10 + rnd(100);
                 levelexitby = 4;
-                label_1737();
+                exit_map();
                 return;
             }
             if (encounter == 1)
@@ -62170,7 +62170,7 @@ void label_2205()
                 txt(lang(u8"襲撃だ！"s, u8"Ambush!"s) + valn);
                 msg_halt();
                 levelexitby = 4;
-                label_1737();
+                exit_map();
                 return;
             }
             encounter = 0;
@@ -62682,7 +62682,7 @@ void label_2207()
     }
     snd(49);
     levelexitby = 4;
-    label_1737();
+    exit_map();
     return;
 }
 
@@ -66098,7 +66098,7 @@ void do_use_command()
         novoidlv = 1;
         characreate(56, inv[ci].subname, -3, 0);
         rc = 56;
-        label_2659();
+        new_ally_joins();
         goto label_2229_internal;
     case 31:
         x = cdata[cc].position.x;
@@ -66862,7 +66862,7 @@ void label_2241()
 
 
 
-void label_2242()
+void speak_to_npc()
 {
     keyhalt = 1;
     if (cdata[tc].character_role == 1005)
@@ -68645,7 +68645,7 @@ void label_2252()
                 }
             }
             rc = 56;
-            label_2659();
+            new_ally_joins();
             cbitmod(963, rc, 1);
             qdata(13, rq) = cdata[rc].id;
         }
@@ -70222,7 +70222,7 @@ label_22711:
     picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
-    label_1421();
+    render_hud();
     drawmenu(3);
     windowshadow = 1;
     city = adata(28, gdata_current_map);
@@ -70451,7 +70451,7 @@ void label_2276()
     picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
-    label_1421();
+    render_hud();
     gsel(7);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
@@ -70645,7 +70645,7 @@ label_2281_internal:
     picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
-    label_1421();
+    render_hud();
     gsel(7);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
@@ -71385,7 +71385,7 @@ void initialize_cbit_filters()
 
 
 
-int label_2659()
+int new_ally_joins()
 {
     f = get_freeally();
     if (f == 0)
@@ -72585,7 +72585,7 @@ void label_2675()
     skillexp(15, 0, -500);
     levelexitby = 4;
     gdata_current_dungeon_level = 0;
-    label_1737();
+    exit_map();
     return;
 }
 
@@ -72960,7 +72960,7 @@ void label_2679()
 
 
 
-void label_2680()
+void do_play_scene()
 {
     int scidx = 0;
     int scidxtop = 0;
@@ -73186,7 +73186,7 @@ label_2684_internal:
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
         tc = 0;
-        label_2242();
+        speak_to_npc();
         goto label_2681;
     }
     if (val == 2)
@@ -76593,7 +76593,7 @@ label_2729_internal:
     if (p != -1)
     {
         sceneid = p;
-        label_2680();
+        do_play_scene();
         screenupdate = -1;
         update_entire_screen();
         txtnew();
@@ -76733,7 +76733,7 @@ void turn_begin()
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            label_1737();
+            exit_map();
             return;
         }
         turn_begin();
@@ -77385,7 +77385,7 @@ label_2738:
                 msg_halt();
                 update_screen();
                 levelexitby = 2;
-                label_1737();
+                exit_map();
                 return;
             }
             goto label_2740_internal;
@@ -77801,7 +77801,7 @@ label_2738:
             if (chatteleport == 1)
             {
                 chatteleport = 0;
-                label_1737();
+                exit_map();
                 return;
             }
         }
@@ -78151,7 +78151,7 @@ void pc_turn(bool label_2747_flg)
                         cdata[cnt].state = followerexist(cnt);
                     }
                 }
-                label_1737();
+                exit_map();
                 return;
             }
         label_2744_internal:
@@ -79329,7 +79329,7 @@ label_27491:
         txt(u8"あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。"s);
         msg_halt();
         tc = findchara(23);
-        label_2242();
+        speak_to_npc();
         msg_clear();
         txt(u8"青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。"s);
         msg_halt();
@@ -79620,7 +79620,7 @@ void pc_died()
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;
-    label_1737();
+    exit_map();
     return;
 }
 

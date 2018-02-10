@@ -1434,7 +1434,7 @@ void talk_npc()
             snd(12);
             cdata[0].gold -= calcslavevalue(56);
             rc = 56;
-            label_2659();
+            new_ally_joins();
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
         else
@@ -1882,7 +1882,7 @@ void talk_npc()
                 return;
             }
             rc = tc;
-            label_2659();
+            new_ally_joins();
             cdata[rc].character_role = 0;
             cdata[rc].current_map = 0;
             cdata[tc].impression = 100;

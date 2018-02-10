@@ -2614,7 +2614,7 @@ void talk_unique()
                 name(tc) + u8"を保護した。無事に連れて帰らなければ。"s,
                 u8"You must return the puppy safely."s));
             rc = tc;
-            label_2659();
+            new_ally_joins();
             cbitmod(971, rc, 1);
             r1 = rc;
             refresh_character();
@@ -5075,7 +5075,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
                 rc = tc;
-                label_2659();
+                new_ally_joins();
                 gdata_blue_capsule_drug = 0;
                 talk_end();
                 return;

@@ -115,7 +115,7 @@ void proc_event()
         goto label_2755_internal;
     case 2:
         tc = findchara(34);
-        label_2242();
+        speak_to_npc();
         goto label_2755_internal;
     case 24:
         initeco = 1;
@@ -123,15 +123,15 @@ void proc_event()
         goto label_2755_internal;
     case 3:
         tc = findchara(2);
-        label_2242();
+        speak_to_npc();
         goto label_2755_internal;
     case 11:
         tc = findchara(1);
-        label_2242();
+        speak_to_npc();
         goto label_2755_internal;
     case 23:
         tc = findchara(302);
-        label_2242();
+        speak_to_npc();
         gdata(171) = 23;
         goto label_2755_internal;
     case 12:
@@ -175,7 +175,7 @@ void proc_event()
         initlv = cdata[0].level * 2 / 3 + 1;
         novoidlv = 1;
         characreate(-1, p, cdata[cc].position.x, cdata[cc].position.y);
-        label_2659();
+        new_ally_joins();
         goto label_2755_internal;
     case 13:
         music = 80;
@@ -256,7 +256,7 @@ void proc_event()
         int cnt = 0;
         for (;; ++cnt)
         {
-            label_1735();
+            set_character_generation_filter();
             fixlv = 4;
             initlv = gdata_current_dungeon_level + rnd(5);
             int stat = characreate(-1, 0, -3, 0);
@@ -346,7 +346,7 @@ void proc_event()
             u8"あなたは無事に護衛の任務を終えた。"s,
             u8"You complete the escort."s));
         tc = evdata2(evnum - (evnum != 0) * 1);
-        label_2242();
+        speak_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
         label_2679();
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
@@ -685,7 +685,7 @@ void proc_event()
                 }
             }
         }
-        label_2242();
+        speak_to_npc();
         goto label_2755_internal;
     case 30:
         i = 0;
@@ -789,7 +789,7 @@ void proc_event()
             }
             if (tc != 0)
             {
-                label_2242();
+                speak_to_npc();
             }
         }
         goto label_2755_internal;

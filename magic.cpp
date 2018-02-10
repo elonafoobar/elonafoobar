@@ -3427,7 +3427,7 @@ label_2181_internal:
         novoidlv = 1;
         characreate(56, p, -3, 0);
         rc = 56;
-        label_2659();
+        new_ally_joins();
         goto label_2186_internal;
     case 435:
         if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
@@ -3465,7 +3465,7 @@ label_2181_internal:
         if (f == 1)
         {
             rc = tc;
-            label_2659();
+            new_ally_joins();
             check_quest();
         }
         else if (f == 0)
