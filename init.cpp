@@ -926,7 +926,7 @@ void label_1544()
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
             access_race_info(2, listn(1, cnt));
-            listn(0, cnt) = racename;
+            listn(0, cnt) = i18n::_(u8"race", listn(1, cnt), u8"name");
             if (list(0, cnt) == 1)
             {
                 listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
