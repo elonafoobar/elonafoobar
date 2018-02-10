@@ -14,7 +14,7 @@ FIND := find
 XARGS := xargs
 
 
-.PHONY: FORCE clean
+.PHONY: FORCE clean cleandep
 
 
 all: build
@@ -37,7 +37,8 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 clean:
 	-@$(RM) -f $(PROGRAM)
-	-@$(RM) -f $(BIN_DIR)/*.d $(BIN_DIR)/*.o
+	$(MAKE) cleandep
+	-@$(RM) -f $(BIN_DIR)/*.o
 
 
 format: FORCE
@@ -46,6 +47,10 @@ format: FORCE
 
 checksyntax:
 	$(MAKE) EX_CXX_FLAGS=-fsyntax-only
+
+
+cleandep:
+	-@$(RM) -f $(BIN_DIR)/*.d
 
 
 
