@@ -17,6 +17,10 @@ struct race_data
     int male_image;
     int female_image;
     int breed_power;
+    int min_age;
+    int max_age;
+    int height;
+    int male_ratio;
 };
 
 
