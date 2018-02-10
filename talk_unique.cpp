@@ -9,12 +9,12 @@
 #define SCENE_CUT() \
     do \
     { \
-        label_2257(); \
+        talk_window(); \
         if (scenemode) \
         { \
             if (scene_cut == 1) \
             { \
-                label_2256(); \
+                talk_end(); \
                 return; \
             } \
         } \
@@ -50,7 +50,7 @@ void talk_unique()
         chatesc = 1;
         SCENE_CUT();
         gdata_main_quest_flag = 170;
-        label_2256();
+        talk_end();
         return;
     case 23:
         if (evid() == 1)
@@ -111,7 +111,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
             }
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -122,7 +122,7 @@ void talk_unique()
         RESPONSE(0, strbye);
         chatesc = 1;
         SCENE_CUT();
-        label_2256();
+        talk_end();
         return;
     case 29:
         if (cdata[0].fame < 20000)
@@ -134,7 +134,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_nightmare == 1000)
@@ -147,7 +147,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_nightmare == 0)
@@ -171,7 +171,7 @@ void talk_unique()
             buff = lang(
                 u8"貴様に金になる仕事をやろう。ザナンのある機関からの要望で、実験のデータをとるために被験者が必要なのだ。俺に言わせれば、被験者というより『生贄』だがな。生き延びて戻ってくれば、老後を遊んで暮らせるだけの報酬はくれてやる。どうするかこの場で決めろ。"s,
                 u8"You wanna make some quick cash? I've got a request from the organization of Zanan. They need a test subject in order to get some experimental data. Or perhaps \"sacrifice\" would be a more appropriate term. *If* you survive, I'll pay you enough to party until you waste away. Make your decision quickly."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -182,7 +182,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -199,7 +199,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_nightmare = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_nightmare == 1 || gdata_nightmare == 2)
@@ -209,7 +209,7 @@ void talk_unique()
             buff = lang(
                 u8"フッ。よく逃げ出さずに戻ってきたな。準備はいいか。"s,
                 u8"So, are you ready?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -218,7 +218,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -238,7 +238,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 5;
             levelexitby = 2;
             chatteleport = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_nightmare == 3)
@@ -273,10 +273,10 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_nightmare = 1000;
-            label_2256();
+            talk_end();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 30:
         if (gdata_putit_attacks == 1000)
@@ -289,7 +289,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_putit_attacks == 0)
@@ -307,7 +307,7 @@ void talk_unique()
             buff = lang(
                 u8"最近、朝起きると私のぬいぐるみがぼろぼろになっているの。夜中に起きてこっそり見張ってたらね、なんとプチ…プチがぬいぐるみ食べてるのよ！どうも隣の家の窓を伝って、私の家に入ってくるみたいなの。冒険者さん、お願いだから、ちょっと行って退治してきてくれない？"s,
                 u8"Recently, when I wake in the morning my stuffed toys are always chewed up. So I stayed up last night and secretly watched. You know what I found? Putits were chewing up my stuffed animals! I'm pretty sure they're getting into my house through the window to the neighbor's place. I beg of you adventurer, won't you eradicate the Putits for me?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -318,7 +318,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -335,7 +335,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_putit_attacks = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_putit_attacks == 1)
@@ -348,7 +348,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_putit_attacks == 2)
@@ -382,7 +382,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_putit_attacks = 1000;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -397,7 +397,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_thieves_hideout == 0)
@@ -419,7 +419,7 @@ void talk_unique()
             buff = lang(
                 u8"ちょっとお時間いいですか？バーの酒樽が度々盗まれて、店長困ってるんです。もし手が空いていたら、助けてくださいな。盗みを働いている輩の目星はついています。きっと、ヴェルニースを拠点に活動している、こそ泥の集団です！拠点は確か墓の方にあったはずですよ。"s,
                 u8"Excuse me, do you have a moment? The kegs from the bar have been stolen, and the manager is really put out. If you're not busy, could you help out? It was those thugs, I'm sure of it. They've certainly set up a base inside Vernis. With all the mud they leave behind, they're most likely hanging out near the gravesite."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -430,7 +430,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -448,7 +448,7 @@ void talk_unique()
             SCENE_CUT();
             gdata_thieves_hideout = 1;
             cell_featset(48, 5, tile_downstairs, 11, 4);
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_thieves_hideout == 1)
@@ -461,7 +461,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_thieves_hideout == 2)
@@ -498,7 +498,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_thieves_hideout = 1000;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -516,7 +516,7 @@ void talk_unique()
         buff = lang(
             u8"無事に意識が戻ってよかったわ。あなたを最初に見たときは、もう手遅れかと思ったほどだもの。"s,
             u8"I'm glad you got well again. I thought you were a goner until just a few minutes ago."s);
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             listmax = 0;
@@ -604,7 +604,7 @@ void talk_unique()
             talk_unique();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 34:
         if (chatflag == 0)
@@ -749,7 +749,7 @@ void talk_unique()
                     RESPONSE(0, strbye);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2256();
+                    talk_end();
                     return;
                 }
                 listmax = 0;
@@ -798,7 +798,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = 8;
-                label_2256();
+                talk_end();
                 return;
             }
             if (gdata_tutorial_flag == 8)
@@ -856,7 +856,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = -1;
-                label_2256();
+                talk_end();
                 return;
             }
             if (gdata_tutorial_flag == -1)
@@ -871,7 +871,7 @@ void talk_unique()
                     u8"わが家から出て行ってほしい"s, u8"Get out of my house!"s);
                 ++listmax;
             }
-            label_2257();
+            talk_window();
         }
         if (chatval == 1)
         {
@@ -907,17 +907,17 @@ void talk_unique()
                 tc = tc * 1 + 0;
                 RESPONSE(0, strbye);
                 chatesc = 1;
-                label_2257();
+                talk_window();
                 if (scenemode)
                 {
                     if (scene_cut == 1)
                     {
-                        label_2256();
+                        talk_end();
                         return;
                         hostileaction(0, tc);
                     }
                 }
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -1084,7 +1084,7 @@ void talk_unique()
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 6;
         }
-        label_2256();
+        talk_end();
         return;
     case 79:
         if (gdata_main_quest_flag == 200)
@@ -1097,7 +1097,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag < 90)
@@ -1122,7 +1122,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
         }
-        label_2256();
+        talk_end();
         return;
     case 80:
         if (gdata_main_quest_flag >= 60)
@@ -1135,7 +1135,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag == 50)
@@ -1148,7 +1148,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag == 40)
@@ -1164,7 +1164,7 @@ void talk_unique()
             SCENE_CUT();
             redraw(0);
             update_screen();
-            label_1441();
+            fade_out();
             gsel(4);
             pos(0, 0);
             picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
@@ -1260,7 +1260,7 @@ void talk_unique()
                 cdatan(0, tc) + u8"は静かに息絶えた…"s,
                 cdatan(0, tc) + u8" dies silently..."s));
             chara_vanquish(tc);
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -1302,7 +1302,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
             }
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag == 120)
@@ -1353,7 +1353,7 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_main_quest_flag = 125;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag == 105)
@@ -1369,7 +1369,7 @@ void talk_unique()
             SCENE_CUT();
             redraw(0);
             update_screen();
-            label_1441();
+            fade_out();
             gsel(4);
             pos(0, 0);
             picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
@@ -1412,7 +1412,7 @@ void talk_unique()
                 u8"レシマス17階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 17th level. Your journal has been updated."s));
             gdata_main_quest_flag = 110;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag >= 60)
@@ -1448,7 +1448,7 @@ void talk_unique()
             }
             RESPONSE(0, strbye);
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 6)
             {
                 listmax = 0;
@@ -1630,7 +1630,7 @@ void talk_unique()
                 talk_unique();
                 return;
             }
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_main_quest_flag == 50)
@@ -1647,7 +1647,7 @@ void talk_unique()
             ++listmax;
             RESPONSE(0, lang(u8"断る"s, u8"I'm not interested."s));
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 0)
             {
                 listmax = 0;
@@ -1658,7 +1658,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -1700,7 +1700,7 @@ void talk_unique()
                 u8"レシマス4階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 4th level. Your journal has been updated."s));
             gdata_main_quest_flag = 60;
-            label_2256();
+            talk_end();
             return;
         }
     case 146:
@@ -1786,7 +1786,7 @@ void talk_unique()
                 cdatan(0, tc) + u8"は自ら命を絶った…"s,
                 cdatan(0, tc) + u8" kills himself..."s));
             chara_vanquish(tc);
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -1795,7 +1795,7 @@ void talk_unique()
         buff = lang(
             u8"見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"s,
             u8"Don't you see I'm busy!"s);
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             invctrl = 1;
@@ -1804,7 +1804,7 @@ void talk_unique()
             talk_unique();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 209:
         list(0, listmax) = 2;
@@ -1819,7 +1819,7 @@ void talk_unique()
         buff = lang(
             u8"ほほう、客人とはこれまた珍しい。暖かい飯でも馳走してさしあげたいが、あいにくと今日の飯番はガロクでの。あやつの作る料理は自らの作品に似て、なんとも無骨で味気ない。とても客人に楽しんでもらえる代物じゃないのう。まぁ、せっかくこんな辺境の地にまで、やって来なさったんだ。何か用件があれば、話だけは聞こうじゃないか。"s,
             u8"Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"s);
-        label_2257();
+        talk_window();
         if (chatval == 2)
         {
             listmax = 0;
@@ -1863,7 +1863,7 @@ void talk_unique()
             }
             RESPONSE(0, lang(u8"断る"s, u8"I think not."s));
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -1894,7 +1894,7 @@ void talk_unique()
             talk_unique();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 221:
         if (gdata_pael_and_her_mom == 1000)
@@ -1909,7 +1909,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -1920,7 +1920,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 1001)
@@ -1933,7 +1933,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 1002)
@@ -1946,7 +1946,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 0)
@@ -1957,7 +1957,7 @@ void talk_unique()
             int stat = label_2248();
             if (stat == 0)
             {
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -1966,7 +1966,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_pael_and_her_mom = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3)
@@ -1979,7 +1979,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7)
@@ -1993,7 +1993,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 2 || gdata_pael_and_her_mom == 4)
@@ -2005,7 +2005,7 @@ void talk_unique()
             int stat = label_2248();
             if (stat == 0)
             {
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2014,7 +2014,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 6)
@@ -2025,7 +2025,7 @@ void talk_unique()
             int stat = label_2248();
             if (stat == 0)
             {
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2034,7 +2034,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 8)
@@ -2046,7 +2046,7 @@ void talk_unique()
             int stat = label_2248();
             if (stat == 0)
             {
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2055,7 +2055,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 9)
@@ -2068,7 +2068,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 10)
@@ -2081,7 +2081,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -2094,7 +2094,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom == 10)
@@ -2164,7 +2164,7 @@ void talk_unique()
                 }
                 RESPONSE(0, lang(u8"お元気で"s, u8"Take care."s));
                 chatesc = 1;
-                label_2257();
+                talk_window();
                 if (chatval == 2)
                 {
                     int stat = inv_find(559, 0);
@@ -2182,7 +2182,7 @@ void talk_unique()
                     RESPONSE(0, strbye);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2256();
+                    talk_end();
                     return;
                 }
                 listmax = 0;
@@ -2193,7 +2193,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
         }
@@ -2226,7 +2226,7 @@ void talk_unique()
                 lang(u8"希望はまだある"s, u8"There's still hope."s);
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 listmax = 0;
@@ -2238,7 +2238,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
                 evadd(20, tc);
-                label_2256();
+                talk_end();
                 return;
             }
             if (chatval == 2)
@@ -2258,7 +2258,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -2269,7 +2269,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom > 7)
@@ -2282,7 +2282,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom > 5)
@@ -2296,7 +2296,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pael_and_her_mom > 3)
@@ -2309,7 +2309,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         listmax = 0;
@@ -2320,7 +2320,7 @@ void talk_unique()
         RESPONSE(0, strmore);
         chatesc = 1;
         SCENE_CUT();
-        label_2256();
+        talk_end();
         return;
     case 223:
         if (gdata_wife_collector == 0)
@@ -2333,7 +2333,7 @@ void talk_unique()
             buff = lang(
                 u8"俺を誰だか知らないだと？この街で一番の色男、ラファエロ様だよ。俺が狙った女は、例えパルミアの王妃だろうとイチコロさ。だがな、最近はどうも恋の駆け引きみたいなのに、飽き飽きしちまった。本音をいや、無条件で俺に仕えてくれる女が欲しいんだよ。で、お前の嫁を俺によこさないか？礼はするぜ。"s,
                 u8"Don't you know who I am? I am, by far, without question, doubtlessly and unabashedly, the sexiest man in this town -- if not the whole of North Tyris. I can have any woman I desire. I could even take the princess of Palmia if I wanted. Yet, strange as it sounds, lately I've grown tired of the game. Honestly, I want a woman who will serve me unconditionally and never complain. Why don't you let me keep one of your wives? You'd have my thanks. "s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2344,7 +2344,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2361,7 +2361,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_wife_collector = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_wife_collector == 1 || gdata_wife_collector == 1000)
@@ -2371,7 +2371,7 @@ void talk_unique()
             buff = lang(
                 u8"どれどれ、お前さんの嫁を吟味させてもらおうか！"s,
                 u8"Which one? Who have you brought for me to inspect?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2380,7 +2380,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             allyctrl = 1;
@@ -2393,7 +2393,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             rc = stat;
@@ -2407,7 +2407,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -2488,7 +2488,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -2504,7 +2504,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_novice_knight == 0)
@@ -2514,7 +2514,7 @@ void talk_unique()
             buff = lang(
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…失礼しました。あなた…見たところ強そうですね。私に力を貸してくれませんか？騎士昇格のための試験で、イークの首領を討伐しなければならないんです。私には、荷が重い使命ですよ…イーク…うわあああ…ダメだ…思い出しただけでも膝が震える…お願いです。私の代わりに倒してきてください。"s,
                 u8"Yeeeck! Nooo! Don't!! Get away from me!! Yeeeee-eeeck! Hump, oh....excuse me. You...you look like a skilled adventurer. Could you give me your hand? I need to slay the head of Yeek to be promoted to the rank of knight. The duty is too heavy for me....yeeee-eeck! No...! Hump...I don't want to recall anything anymore. Please do this duty for me."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2523,7 +2523,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2540,7 +2540,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_novice_knight = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_novice_knight == 1)
@@ -2553,7 +2553,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_novice_knight == 2)
@@ -2585,7 +2585,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_novice_knight = 1000;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -2598,7 +2598,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (get_freeally() != 0)
@@ -2607,7 +2607,7 @@ void talk_unique()
         }
         RESPONSE(0, strbye);
         buff = lang(u8"くぅうううん。"s, u8"Woof!"s);
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             txt(lang(
@@ -2618,12 +2618,12 @@ void talk_unique()
             cbitmod(971, rc, 1);
             r1 = rc;
             refresh_character();
-            label_2256();
+            talk_end();
             return;
         }
         else
         {
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -2637,7 +2637,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_puppys_cave == 0)
@@ -2647,7 +2647,7 @@ void talk_unique()
             buff = lang(
                 u8"はうっ。ポピーがいなくなっちゃった…また、あの洞窟に迷い込んじゃったのかな？どうしよう、お父さんは今いそがしくて相手にしてもらえないし…あ、冒険者さん、ポピーを探してきてよ〜。ポピー？ポピーは子犬だよ。私の一番のお友達なの。"s,
                 u8"Oh no, Poppy has disappeared again... He probably got lost in that cave again. Now what do I do, Papa is too busy to deal with this... Oh, Adventurer, go and find Poppy for me. Poppy? He's my puppy, and my best friend."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2656,7 +2656,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2673,7 +2673,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_puppys_cave = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_puppys_cave == 1)
@@ -2686,7 +2686,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -2720,7 +2720,7 @@ void talk_unique()
             flt();
             characreate(-1, 225, 31, 4);
             cdata[rc].character_role = 3;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -2735,7 +2735,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_cat_house == 0)
@@ -2745,7 +2745,7 @@ void talk_unique()
             buff = lang(
                 u8"あなた、猫は大丈夫ですか？いえね、私は猫が大の苦手なんですが、こともあろうに、私の家に大量の猫が住み着いてしまったんですよ。そこで冒険者さん達に猫の退治を依頼しているものの、何故か誰も帰ってこない…いったい、家の中はどうなってるんでしょうか。あなた、もしよかったら見てきてくれませんか？"s,
                 u8"Hey you, are you..uh...alright with cats? Well, those filthy...they creatures took over my house. I've been asking adventurers to clean up the cats from my house ever since but none returned. What's happening in my house? You...can you take a look inside my house?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2754,7 +2754,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2772,7 +2772,7 @@ void talk_unique()
             SCENE_CUT();
             gdata_cat_house = 1;
             cell_featset(23, 22, tile_downstairs, 11, 3);
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_cat_house == 1)
@@ -2785,7 +2785,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_cat_house == 2)
@@ -2819,7 +2819,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_cat_house = 1000;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -2834,7 +2834,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (cdata[0].fame < 5000)
@@ -2847,7 +2847,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_defense_line == 0)
@@ -2870,7 +2870,7 @@ void talk_unique()
             buff = lang(
                 u8"私はジューアの解放軍の大佐、ギルバートと申す。軍といっても国軍ではないが、イェルスの犬に占拠された各地のジューア自治区を、解放してまわっておるのだ。その我が軍が、パルミア国境でイェルスの強力な防衛線の前に苦戦しておる。最新鋭の武装を持つ奴らに対し、我らは剣に頼るのみ。このままでは、全滅する恐れさえあるのだ。どうか、貴殿の力、貸してもらえぬか？"s,
                 u8"I am colonel of the Juere Liberation Army, Gilbert. We're not the true national army, but even so we fully intend to free the Juere Territories from their occupation by those Yerles dogs. However, our army is having a hard time breaking through their strong front lines on the Palmia border. We only have our swords against their advanced weapons, after all. If things go on like they are, our army might be totally annihalated. So I ask you, will you lend us your power?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2881,7 +2881,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2898,7 +2898,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_defense_line = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_defense_line == 1 || gdata_defense_line == 2)
@@ -2908,7 +2908,7 @@ void talk_unique()
             buff = lang(
                 u8"準備はいいかな？"s,
                 u8"Are your preparations complete, then?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2917,7 +2917,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -2939,7 +2939,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 4;
             levelexitby = 2;
             chatteleport = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_defense_line == 3)
@@ -2971,10 +2971,10 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_defense_line = 1000;
-            label_2256();
+            talk_end();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 243:
         if (gdata_kamikaze_attack == 1000)
@@ -2989,7 +2989,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_kamikaze_attack == 0)
@@ -3002,7 +3002,7 @@ void talk_unique()
             listn(0, listmax) = lang(
                 u8"やめておこう"s, u8"That sounds... dangerous. No thanks."s);
             ++listmax;
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3011,7 +3011,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -3028,7 +3028,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_kamikaze_attack = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_kamikaze_attack == 1 || gdata_kamikaze_attack == 2)
@@ -3038,7 +3038,7 @@ void talk_unique()
             buff = lang(
                 u8"準備はよろしいですか？あなたは、パルミア軍が撤退するまでの間、どうにかカミカゼ特攻隊の猛撃に耐え、時間稼ぎをして下さい。"s,
                 u8"Are you ready to go? We need you to hold off the suicide squadron's onslaught and buy time for the Palmian army to retreat."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3047,7 +3047,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -3069,7 +3069,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 25;
             levelexitby = 2;
             chatteleport = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_kamikaze_attack == 3)
@@ -3101,10 +3101,10 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_kamikaze_attack = 1000;
-            label_2256();
+            talk_end();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 247:
         if (gdata_mias_dream == 1000)
@@ -3117,7 +3117,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_mias_dream == 0)
@@ -3130,7 +3130,7 @@ void talk_unique()
             buff = lang(
                 u8"るんるんるん♪ねっこねっここっねこっ♪ふ〜んふ〜ん♪お〜冒険者さんだ〜。お仕事お疲れ様でありますぅ。冒険者さんは、シルバーキャット見たことありますかぁ？シルバーにゃんことお風呂できゃっきゃするのが、ミーアの夢なんですっ！う〜。ねっこねっここっねこ♪ふ〜んふ〜ん♪"s,
                 u8"Nyobody knyows the touble Mia's seen, nyobody knyows Mia's Tru-bull. Nuah? Adventurer? Nyou find silver cat for me?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3141,7 +3141,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -3158,7 +3158,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_mias_dream = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_mias_dream == 1)
@@ -3173,7 +3173,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             if (jp)
@@ -3217,7 +3217,7 @@ void talk_unique()
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             cdata[rc].character_role = 3;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -3232,7 +3232,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_rare_books == 0 || gdata_rare_books == 1)
@@ -3277,7 +3277,7 @@ void talk_unique()
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 gdata_rare_books = 1;
-                label_2256();
+                talk_end();
                 return;
             }
             p(0) = 0;
@@ -3321,7 +3321,7 @@ void talk_unique()
                     RESPONSE(0, strbye);
                     chatesc = 1;
                     SCENE_CUT();
-                    label_2256();
+                    talk_end();
                     return;
                 }
                 p(0) = 0;
@@ -3422,7 +3422,7 @@ void talk_unique()
                     u8"Your journal has been updated."s));
                 gdata_rare_books = 1000;
             }
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -3437,7 +3437,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (cdata[0].fame < 3000)
@@ -3450,7 +3450,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_pyramid_trial == 0)
@@ -3475,7 +3475,7 @@ void talk_unique()
             buff = lang(
                 u8"私宛にね、面白い手紙が届いたんですよ。送り主はピラミッドの主『ツェン』。そして、内容は私にピラミッドへの挑戦権を与えると。…しかし、私は危険な罠に自ら陥るほど愚かではない。あなたにこの挑戦状を譲りましょう。むろん、タダではない。金貨20000枚でいかがですか？"s,
                 u8"I have received a very strange letter. The sender calls himself Tsen, lord of the Pyramid. He has sent me an invitation to enter his pyramid... However, I am not foolish enough to barge into such a trap. I'll turn this invitation over to you. Of course, I won't let you have it for nothing. 20,000 gold and it's yours."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3486,7 +3486,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -3512,7 +3512,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_pyramid_trial = 1;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -3584,7 +3584,7 @@ void talk_unique()
             buff = lang(
                 u8"あたし達は他人の血を吸って生きるのよ。憎しみや妬み、執着、悪意が、この街では力になる。外の世界では疎まれ軽蔑される弱き者達が、自分に与えられた能力をはじめて認めてもらえる、ダルフィはそんな街。ねえ、あなたもこっちの世界に来る気はない？"s,
                 u8"It's so simple, we live by feeding off of others. Spite, hatred, wickedness, and unrelenting cutthroat vigor are the only strengths you can rely on in this town. The outside world looks down on our lot, so we will make the outside world recognize our might. Say, stranger, why don't you join me in my world?"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3595,7 +3595,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -3621,7 +3621,7 @@ void talk_unique()
         buff = lang(
             u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
             u8"Here, you need a nuke. Only 12000 gold pices."s);
-        label_2257();
+        talk_window();
         if (chatval != 1)
         {
             listmax = 0;
@@ -3630,7 +3630,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         txtmore();
@@ -3649,7 +3649,7 @@ void talk_unique()
         RESPONSE(0, strbye);
         chatesc = 1;
         SCENE_CUT();
-        label_2256();
+        talk_end();
         return;
     case 279:
         if (gdata_ambitious_scientist >= 1000)
@@ -3662,7 +3662,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_ambitious_scientist == 0)
@@ -3675,7 +3675,7 @@ void talk_unique()
             buff = lang(
                 u8"おうおう、良いところに来た。猫の手も借りたいほど忙しいのじゃ。今わしは遺伝子操作の研究をしておってな、成功すればなんと、二体の生物を合成させて、より強力な種を造りだすことができるのじゃ！最後の段階として、5体の実験体が必要じゃが、ちょっと取ってきてはくれまいか？報酬として、今使っている試作機をくれてやってもよいぞ。"s,
                 u8"Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3686,7 +3686,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             flt();
@@ -3711,7 +3711,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_ambitious_scientist = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
@@ -3797,7 +3797,7 @@ void talk_unique()
                 u8"Your journal has been updated."s));
             gdata_ambitious_scientist = 1000;
         }
-        label_2256();
+        talk_end();
         return;
     case 280:
         if (gdata_sewer_sweeping == 1000)
@@ -3810,7 +3810,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_sewer_sweeping == 0)
@@ -3826,7 +3826,7 @@ void talk_unique()
             buff = lang(
                 u8"俺はルミエストの清掃を生涯の使命とし、この道十年のベテラン掃除屋バルザックだ。街道に落ちているどんな小さなゴミも見逃さないプロ魂を持つが、そんなプライドも傷つけられちまった。下水道にとんでもない化け物が住みついて、もう俺の手には負えないぜ。お前なら、俺の気持ちを汲み取って、退治に出向いてくれるな？"s,
                 u8"I'm Balzak, a well known pro garage man who has been cleaning the roads of Lumiest for 10 years. I've never missed a single garbage that messes the beautiful town of Lumiest. But my days are over. Foul creatures now nest in the sewer and sick smells spread everywhere. Adventurer, you are my only hope. Kill them, kill them for my sake!"s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3835,7 +3835,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -3853,7 +3853,7 @@ void talk_unique()
             SCENE_CUT();
             gdata_sewer_sweeping = 1;
             cell_featset(18, 45, tile_downstairs, 11, 20);
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_sewer_sweeping == 1)
@@ -3866,7 +3866,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_sewer_sweeping == 2)
@@ -3902,7 +3902,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_sewer_sweeping = 1000;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -3922,7 +3922,7 @@ void talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は魔術士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Mages Guild office. Only the members of the guild are allowed to enter."s);
-            label_2257();
+            talk_window();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4034,7 +4034,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 4;
                 cdata[tc].initial_position.y = 20;
             }
-            label_2256();
+            talk_end();
             return;
         }
         cell_movechara(tc, 4, 20);
@@ -4060,7 +4060,7 @@ void talk_unique()
                 + cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Mages Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             gdata_mages_guild_quota2 = 1;
@@ -4139,10 +4139,10 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 294:
         if (gdata_belongs_to_thieves_guild == 0)
@@ -4160,7 +4160,7 @@ void talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は盗賊ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Thieves Guild office. Only the members of the guild are allowed to enter."s);
-            label_2257();
+            talk_window();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4263,7 +4263,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 17;
                 cdata[tc].initial_position.y = 17;
             }
-            label_2256();
+            talk_end();
             return;
         }
         cell_movechara(tc, 17, 17);
@@ -4289,7 +4289,7 @@ void talk_unique()
                 + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Thieves Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             gdata_thieves_guild_quota2 = 1;
@@ -4368,10 +4368,10 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 297:
         if (gdata_belongs_to_fighters_guild == 0)
@@ -4389,7 +4389,7 @@ void talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は戦士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Fighters Guild office. Only the members of the guild are allowed to enter."s);
-            label_2257();
+            talk_window();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4525,7 +4525,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 29;
                 cdata[tc].initial_position.y = 2;
             }
-            label_2256();
+            talk_end();
             return;
         }
         cell_movechara(tc, 29, 2);
@@ -4551,7 +4551,7 @@ void talk_unique()
                 + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Fighters Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             {
@@ -4653,10 +4653,10 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
-        label_2256();
+        talk_end();
         return;
     case 301:
         if (gdata_minotaur_king == 1000)
@@ -4669,7 +4669,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_minotaur_king == 0)
@@ -4679,7 +4679,7 @@ void talk_unique()
             buff = lang(
                 u8"困った…困ったぞ。そこのおぬし、良いところに来た。実はヨウィンがミノタウロスの軍による侵攻の危機にさらされておるのだ。ヨウィンの村長とは親しくしておって、一軍を討伐に向かわせたいのだが、今は何やら不穏な空気がパルミアを包んでいる。城から離れるわけにはいかないのだ。そこで、冒険者のおぬしに依頼したい。ミノタウロスを退治してきてはくれぬか？報酬はもちろん用意しよう。"s,
                 u8"What do I do about this... You, over there... You couldn't have gotten here a moment too soon. Yowyn is in great danger of being destroyed by the minotaur legion. The mayor of Yowyn is a close friend of mine and I don't want to leave him out in the cold. I want to send a detachment to reinforce him but I can't. The current political climate in Palmia is too volatile and the troops must remain in the castle. That's why I'm asking an adventurer like you. Will you attack the minotaur's camp for me? I will reward you handsomely if you do this."s);
-            label_2257();
+            talk_window();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -4690,7 +4690,7 @@ void talk_unique()
                 RESPONSE(0, strbye);
                 chatesc = 1;
                 SCENE_CUT();
-                label_2256();
+                talk_end();
                 return;
             }
             snd(44);
@@ -4708,7 +4708,7 @@ void talk_unique()
             chatesc = 1;
             SCENE_CUT();
             gdata_minotaur_king = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_minotaur_king == 1)
@@ -4721,7 +4721,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_minotaur_king == 2)
@@ -4755,7 +4755,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_minotaur_king = 1000;
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -4771,7 +4771,7 @@ void talk_unique()
             RESPONSE(0, strmore);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         RESPONSE(1, lang(u8"返り討ちにする"s, u8"Try me."s));
@@ -4786,7 +4786,7 @@ void talk_unique()
                 cdata[0].gold / 5 +
                 u8" gold pices and your cargos. Quite fortunate indeed."s);
         chatesc = 0;
-        label_2257();
+        talk_window();
         if (chatval == 0)
         {
             snd(12);
@@ -4819,7 +4819,7 @@ void talk_unique()
             levelexitby = 4;
             chatteleport = 1;
             snd(49);
-            label_2256();
+            talk_end();
             return;
         }
         listmax = 0;
@@ -4831,7 +4831,7 @@ void talk_unique()
         RESPONSE(0, strbye);
         chatesc = 1;
         SCENE_CUT();
-        label_2256();
+        talk_end();
         return;
     case 322:
         if (gdata_little_sister == 0)
@@ -4856,7 +4856,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_little_sister = 1;
-            label_2256();
+            talk_end();
             return;
         }
         if (gdata_little_sister > 0)
@@ -4883,7 +4883,7 @@ void talk_unique()
             buff = lang(
                 u8"リトルたちを、終わりのない苦痛から解放するべきだという人もいる。でも、大抵の人間はあの子達の力が欲しくて殺すのよ。そう、確かにリトルの肉は人の肉体を進化させる。それでも、私はあの子たちを救う別の道があることを信じているの。…そして覚えておいて。もしあなたがリトルの命を奪うようなことがあれば、いつかその酬いを受ける時がくるから。"s,
                 u8"Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "s);
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 p = gdata_kill_count_of_little_sister;
@@ -4992,7 +4992,7 @@ void talk_unique()
                     chatesc = 1;
                     SCENE_CUT();
                 }
-                label_2256();
+                talk_end();
                 return;
             }
             if (chatval == 2)
@@ -5011,7 +5011,7 @@ void talk_unique()
                 txt(lang(
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
-                label_2256();
+                talk_end();
                 return;
             }
             if (chatval == 3)
@@ -5040,7 +5040,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
             }
-            label_2256();
+            talk_end();
             return;
         }
         goto label_2247_internal;
@@ -5053,7 +5053,7 @@ void talk_unique()
             RESPONSE(1, lang(u8"乗りたい"s, u8"Yes!"s));
             RESPONSE(0, lang(u8"別に乗りたくない"s, u8"Not really."s));
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 f = get_freeally();
@@ -5077,7 +5077,7 @@ void talk_unique()
                 rc = tc;
                 label_2659();
                 gdata_blue_capsule_drug = 0;
-                label_2256();
+                talk_end();
                 return;
             }
             listmax = 0;
@@ -5086,7 +5086,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         {
@@ -5099,7 +5099,7 @@ void talk_unique()
                 RESPONSE(1, lang(u8"譲る"s, u8"Take it."s));
                 RESPONSE(0, lang(u8"断る"s, u8"Nope."s));
                 chatesc = 1;
-                label_2257();
+                talk_window();
                 if (chatval == 1)
                 {
                     int stat = inv_find(771, 0);
@@ -5115,7 +5115,7 @@ void talk_unique()
                     chatesc = 1;
                     SCENE_CUT();
                     ++gdata_blue_capsule_drug;
-                    label_2256();
+                    talk_end();
                     return;
                 }
             }
@@ -5127,7 +5127,7 @@ void talk_unique()
         RESPONSE(0, strbye);
         chatesc = 1;
         SCENE_CUT();
-        label_2256();
+        talk_end();
         return;
     case 348:
         if (gdata_current_map != 33 || adata(29, gdata_current_map) == 0)
@@ -5144,7 +5144,7 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
-            label_2256();
+            talk_end();
             return;
         }
         list(0, listmax) = 1;
@@ -5157,7 +5157,7 @@ void talk_unique()
             u8"ジュア教団では、ただ今他の神からの乗り換えキャンペーン実施中だ！聖夜祭の期間中なら、改宗によるペナルティは払わなくていいよ。さらになんと、今なら無料で数量限定のジュア様の抱き枕も付けちゃうよ！お客さん、このチャンスを見逃す手はないよ。"s,
             u8"We are running a special campagin to help you join our religion! Be a brother of Jure today and win free body pillow of Jure! During the festival, you won't have to pay penalty to convert your religion neither. So what are you waiting? Sign up now!"s);
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             RESPONSE(1, lang(u8"はい"s, u8"Yes."s));
@@ -5166,7 +5166,7 @@ void talk_unique()
                 u8"よし、本当に改宗していいね？"s,
                 u8"Okie, just making sure. Do you really want to convert your religion?"s);
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 listmax = 0;
@@ -5185,7 +5185,7 @@ void talk_unique()
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
                 cdata[0].god = 6;
                 switch_religion();
-                label_2256();
+                talk_end();
                 return;
             }
         }
@@ -5195,7 +5195,7 @@ void talk_unique()
         RESPONSE(0, strbye);
         chatesc = 1;
         SCENE_CUT();
-        label_2256();
+        talk_end();
         return;
     }
 label_2247_internal:
@@ -5206,7 +5206,7 @@ label_2247_internal:
     RESPONSE(0, strbye);
     chatesc = 1;
     SCENE_CUT();
-    label_2256();
+    talk_end();
     return;
 }
 

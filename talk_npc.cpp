@@ -571,7 +571,7 @@ void talk_npc()
     ++listmax;
     chatid = 0;
     chatesc = 1;
-    label_2257();
+    talk_window();
     if (chatval == 10 || chatval == 11)
     {
         if (cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000
@@ -594,12 +594,12 @@ void talk_npc()
                             listn(0, listmax) = strmore;
                             ++listmax;
                             chatesc = 1;
-                            label_2257();
+                            talk_window();
                             if (scenemode)
                             {
                                 if (scene_cut == 1)
                                 {
-                                    label_2256();
+                                    talk_end();
                                     return;
                                 }
                             }
@@ -867,7 +867,7 @@ void talk_npc()
                 txt(lang(
                     u8"降りるスペースがない。"s,
                     u8"There's no place to get off."s));
-                label_2256();
+                talk_end();
                 return;
             }
             cell_setchara(gdata_mount, rtval, rtval(1));
@@ -963,7 +963,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"I'll pass."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval != 1)
         {
             buff = lang(
@@ -994,7 +994,7 @@ void talk_npc()
         gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 40 || chatval == 41 || chatval == 49)
@@ -1066,7 +1066,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"I'll pass."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval != 1)
         {
             buff = lang(
@@ -1105,7 +1105,7 @@ void talk_npc()
         gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 42)
@@ -1193,7 +1193,7 @@ void talk_npc()
             lang(u8"いや、冗談です"s, u8"W-Wait! I was just kidding."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
@@ -1201,7 +1201,7 @@ void talk_npc()
             return;
         }
         gohostile();
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 32)
@@ -1220,7 +1220,7 @@ void talk_npc()
             listn(0, listmax) = lang(u8"しまった…"s, u8"Oops...!"s);
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             modkarma(0, -5);
         }
         else
@@ -1233,7 +1233,7 @@ void talk_npc()
             listn(0, listmax) = lang(u8"当然のことだ"s, u8"It's nothing."s);
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             modkarma(0, 5);
             ++gdata_lost_wallet_count;
             if (gdata_lost_wallet_count >= 4)
@@ -1248,12 +1248,12 @@ void talk_npc()
                 listn(0, listmax) = strmore;
                 ++listmax;
                 chatesc = 1;
-                label_2257();
+                talk_window();
                 if (scenemode)
                 {
                     if (scene_cut == 1)
                     {
-                        label_2256();
+                        talk_end();
                         return;
                     }
                 }
@@ -1263,7 +1263,7 @@ void talk_npc()
                     lang(u8"ぎくっ"s, u8"I really found it on the street!"s);
                 ++listmax;
                 chatesc = 1;
-                label_2257();
+                talk_window();
                 modkarma(0, -10);
             }
         }
@@ -1303,7 +1303,7 @@ void talk_npc()
             listn(0, listmax) = lang(u8"やめる"s, u8"Never mind."s);
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 snd(12);
@@ -1338,19 +1338,19 @@ void talk_npc()
         listn(0, listmax) = strmore;
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
         map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
         cdata[tc].state = 7;
         cdata[tc].current_map = 0;
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 35)
@@ -1368,7 +1368,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"No."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             txt(lang(
@@ -1376,7 +1376,7 @@ void talk_npc()
                 u8"You abandoned "s + name(tc) + u8"..."s));
             map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
             del_chara(tc);
-            label_2256();
+            talk_end();
             return;
         }
         buff = "";
@@ -1425,7 +1425,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"Never mind."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             txt(lang(
@@ -1464,7 +1464,7 @@ void talk_npc()
             listn(0, listmax) = lang(u8"やめる"s, u8"No way."s);
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 txt(lang(
@@ -1513,18 +1513,18 @@ void talk_npc()
         listn(0, listmax) = strmore;
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
         marry = tc;
         evadd(13);
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 39)
@@ -1538,16 +1538,16 @@ void talk_npc()
             listn(0, listmax) = strmore;
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (scenemode)
             {
                 if (scene_cut == 1)
                 {
-                    label_2256();
+                    talk_end();
                     return;
                 }
             }
-            label_2256();
+            talk_end();
             return;
         }
         listmax = 0;
@@ -1557,12 +1557,12 @@ void talk_npc()
         listn(0, listmax) = strmore;
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
@@ -1571,7 +1571,7 @@ void talk_npc()
         {
             gdata(98) = tc;
         }
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 43)
@@ -1586,12 +1586,12 @@ void talk_npc()
         listn(0, listmax) = strmore;
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
@@ -1604,7 +1604,7 @@ void talk_npc()
         levelexitby = 2;
         chatteleport = 1;
         snd(49);
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 44)
@@ -1622,7 +1622,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"No."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             txt(lang(
@@ -1630,7 +1630,7 @@ void talk_npc()
                 u8"You dismiss "s + name(tc) + u8"."s));
             chara_vanquish(tc);
             calccosthire();
-            label_2256();
+            talk_end();
             return;
         }
         buff = "";
@@ -1712,7 +1712,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"The price is too high."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             snd(12);
@@ -1750,7 +1750,7 @@ void talk_npc()
             listn(0, listmax) = lang(u8"やめる"s, u8"No way!"s);
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (chatval == 1)
             {
                 snd(12);
@@ -1816,7 +1816,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"Some other time."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             snd(12);
@@ -1862,12 +1862,12 @@ void talk_npc()
             listn(0, listmax) = strmore;
             ++listmax;
             chatesc = 1;
-            label_2257();
+            talk_window();
             if (scenemode)
             {
                 if (scene_cut == 1)
                 {
-                    label_2256();
+                    talk_end();
                     return;
                 }
             }
@@ -1888,7 +1888,7 @@ void talk_npc()
             cdata[tc].impression = 100;
             rc = oc;
             label_2661();
-            label_2256();
+            talk_end();
             return;
         }
         buff = lang(
@@ -1910,7 +1910,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"You cold bastard."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mon..."s));
@@ -1945,17 +1945,17 @@ void talk_npc()
         listn(0, listmax) = strmore;
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
         label_2081();
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 54)
@@ -1983,7 +1983,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"やめる"s, u8"Another time."s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (chatval == 1)
         {
             snd(12);
@@ -2019,7 +2019,7 @@ void talk_npc()
         buff = lang(
             u8"なかなかの体つき"s + _dana() + u8"よし、買"s + _u(2),
             u8"You are...quite attractive. I'll buy you."s);
-        label_2257();
+        talk_window();
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
@@ -2033,23 +2033,23 @@ void talk_npc()
         listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
         label_2147();
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 58)
     {
         evadd(25);
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 59)
@@ -2062,12 +2062,12 @@ void talk_npc()
         listn(0, listmax) = strmore;
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
@@ -2092,7 +2092,7 @@ void talk_npc()
                 + _kure(),
             u8"Okay sweetie, I need "s + sexvalue
                 + u8" gold pieces in front."s);
-        label_2257();
+        talk_window();
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
@@ -2109,12 +2109,12 @@ void talk_npc()
         listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
         ++listmax;
         chatesc = 1;
-        label_2257();
+        talk_window();
         if (scenemode)
         {
             if (scene_cut == 1)
             {
-                label_2256();
+                talk_end();
                 return;
             }
         }
@@ -2122,7 +2122,7 @@ void talk_npc()
         tc = 0;
         label_2147();
         cc = 0;
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval == 61)
@@ -2162,7 +2162,7 @@ void talk_npc()
             }
         }
         buff = lang(u8"つぇｔ"s, u8"tset"s);
-        label_2257();
+        talk_window();
         if (chatval <= 0)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
@@ -2178,7 +2178,7 @@ void talk_npc()
         gdata_pc_home_y = adata(2, chatval);
         fixtransfermap = 1;
         chatteleport = 1;
-        label_2256();
+        talk_end();
         return;
     }
     if (chatval >= 10000)
@@ -2281,7 +2281,7 @@ void talk_npc()
         chatteleport = 1;
         snd(49);
     }
-    label_2256();
+    talk_end();
     return;
 }
 
