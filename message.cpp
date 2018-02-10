@@ -687,10 +687,6 @@ void txtef(int prm_308)
 
 void msg_newlog()
 {
-    if (cfg_exlog == 0)
-    {
-        return;
-    }
     gsel(8);
     gmode(0);
     pos(0, msgline % inf_maxlog * inf_msgspace);

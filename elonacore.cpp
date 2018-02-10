@@ -75667,135 +75667,81 @@ void label_2710()
         1);
     drawmenu(2);
     windowanimecorner(wx, wy, ww, wh, 8, 4);
-    if (cfg_exlog)
+
+    p = (windoww - inf_msgx) / 192;
+    window2(wx, wy, ww, wh, 1, -1);
     {
-        p = (windoww - inf_msgx) / 192;
-        window2(wx, wy, ww, wh, 1, -1);
+        int cnt = 0;
+        for (int cnt_end = cnt + (inf_maxlog - 3); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (inf_maxlog - 3); cnt < cnt_end; ++cnt)
+            cnt2 = cnt;
+            pos(cnt);
             {
-                cnt2 = cnt;
-                pos(cnt);
+                int cnt = 0;
+                for (int cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
+                    if (cnt == p)
                     {
-                        if (cnt == p)
-                        {
-                            x = (windoww - inf_msgx) % 192;
-                        }
-                        else
-                        {
-                            x = 192;
-                        }
-                        pos(cnt * 192 + inf_msgx,
-                            inf_msgy - (cnt2 + 1) * inf_msgspace);
-                        gcopy(
-                            3,
-                            496,
-                            536 + cnt2 % 4 * inf_msgspace,
-                            x,
-                            inf_msgspace);
+                        x = (windoww - inf_msgx) % 192;
                     }
+                    else
+                    {
+                        x = 192;
+                    }
+                    pos(cnt * 192 + inf_msgx,
+                        inf_msgy - (cnt2 + 1) * inf_msgspace);
+                    gcopy(
+                        3, 496, 536 + cnt2 % 4 * inf_msgspace, x, inf_msgspace);
                 }
             }
         }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
-            {
-                if (cnt == p)
-                {
-                    sx = (windoww - inf_msgx) % 192;
-                }
-                else
-                {
-                    sx = 192;
-                }
-                pos(cnt * 192 + inf_msgx, inf_msgy);
-                gcopy(3, 496, 528, sx, 6);
-            }
-        }
-        gsel(4);
-        gmode(0);
-        color(0, 0, 0);
-        boxf();
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (inf_maxlog - 3); cnt < cnt_end; ++cnt)
-            {
-                p = msgline - cnt - 3;
-                if (p < 0)
-                {
-                    p += inf_maxlog;
-                }
-                else if (p >= inf_maxlog)
-                {
-                    p -= inf_maxlog;
-                }
-                if (p < 0)
-                {
-                    continue;
-                }
-                pos(inf_msgx, inf_msgy - cnt * inf_msgspace);
-                gcopy(8, 0, p * inf_msgspace, windoww - inf_msgx, inf_msgspace);
-            }
-        }
-        gsel(0);
-        gmode(2);
-        pos(0, -3);
-        gcopy(4, 0, 0, windoww, inf_msgy);
     }
-    else
     {
-        gsel(4);
+        int cnt = 0;
+        for (int cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+            if (cnt == p)
             {
-                pos(cnt % 4 * 180, cnt / 4 * 300);
-                picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+                sx = (windoww - inf_msgx) % 192;
             }
-        }
-        gsel(0);
-        s(0) = lang(u8"過去のメッセージ"s, u8"Log"s);
-        s(1) = lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s);
-        x = windoww - 90;
-        display_window((windoww - x) / 2 + inf_screenx, winposy(432), x, 432);
-        display_topic(
-            lang(u8"メッセージログの内容"s, u8"Message"s), wx + 28, wy + 30);
-        ++cmbg;
-        x = ww / 5 * 2;
-        y = wh - 80;
-        gmode(4, 180, 300, 50);
-        pos(wx + ww / 4, wy + wh / 2);
-        grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
-        gmode(2);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+            else
             {
-                p = msgline - cnt;
-                if (p < 0)
-                {
-                    p += inf_maxlog;
-                }
-                else if (p >= inf_maxlog)
-                {
-                    p -= inf_maxlog;
-                }
-                if (p < 0)
-                {
-                    continue;
-                }
-                pos(wx + 28, (19 - cnt) * 16 + wy + 58);
-                mes(msg(p));
+                sx = 192;
             }
+            pos(cnt * 192 + inf_msgx, inf_msgy);
+            gcopy(3, 496, 528, sx, 6);
         }
     }
+    gsel(4);
+    gmode(0);
+    color(0, 0, 0);
+    boxf();
+    {
+        int cnt = 0;
+        for (int cnt_end = cnt + (inf_maxlog - 3); cnt < cnt_end; ++cnt)
+        {
+            p = msgline - cnt - 3;
+            if (p < 0)
+            {
+                p += inf_maxlog;
+            }
+            else if (p >= inf_maxlog)
+            {
+                p -= inf_maxlog;
+            }
+            if (p < 0)
+            {
+                continue;
+            }
+            pos(inf_msgx, inf_msgy - cnt * inf_msgspace);
+            gcopy(8, 0, p * inf_msgspace, windoww - inf_msgx, inf_msgspace);
+        }
+    }
+    gsel(0);
+    gmode(2);
+    pos(0, -3);
+    gcopy(4, 0, 0, windoww, inf_msgy);
+
     redraw(1);
 label_2711_internal:
     await(cfg_wait1);

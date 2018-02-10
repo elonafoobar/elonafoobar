@@ -146,29 +146,8 @@ void initialize_elona()
     buffer(3, 1440, 800);
     picload(fs::u8path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
-    cfg_exlog = 1;
-    if (cfg_exlog)
-    {
-        buffer(8, windoww, windowh);
-        p = windoww / 192;
-        for (int i = 0; i < inf_maxlog; ++i)
-        {
-            for (int j = 0; j < p + 1; ++j)
-            {
-                if (j == p)
-                {
-                    x = (windoww - inf_msgx) % 192;
-                }
-                else
-                {
-                    x = 192;
-                }
-                pos(j * 192, i * inf_msgspace);
-                gcopy(3, 496, 536 + i % 4 * inf_msgspace, x, inf_msgspace);
-            }
-        }
-        gsel(0);
-    }
+    buffer(8, windoww, windowh);
+    gsel(0);
     folder = fs::u8path(u8"./user/graphic/");
     buffer(1, 1584, 1200);
     picload(fs::u8path(u8"./graphic/item.bmp"), 1);
