@@ -11,6 +11,7 @@ namespace elona
 struct race_data
 {
     std::string id;
+    bool is_extra;
     int ordering;
     int male_image;
     int female_image;

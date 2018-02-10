@@ -31,7 +31,11 @@ int define(lua_State* state)
 #define FIELD_S(name) \
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
+#define FIELD_B(name) \
+    lua_getfield(state, 2, #name); \
+    bool name = lua_toboolean(state, -1);
 
+    FIELD_B(is_extra);
     FIELD_I(ordering);
     FIELD_I(male_image);
     FIELD_I(female_image);
@@ -39,11 +43,13 @@ int define(lua_State* state)
 
 #undef FIELD_I
 #undef FIELD_S
+#undef FIELD_B
 
     storage_ptr->emplace(
         id,
         race_data{
             id,
+            is_extra,
             ordering,
             male_image,
             female_image,
