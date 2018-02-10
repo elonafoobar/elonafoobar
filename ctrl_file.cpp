@@ -28,63 +28,32 @@ void fmode_8_7(int fmode)
         bsave(folder + u8"header.txt"s, playerheader);
     }
 
-    for (int i = 0; i < 15; ++i)
     {
-        std::pair<const char*, size_t> file_info[] = {
-            {u8"gdata.s1", 4000},
-            {u8"cdata.s1", 114000},
-            {u8"sdata.s1", 273600},
-            {u8"spell.s1", 800},
-            {u8"inv.s1", 369600},
-            {u8"kitem.s1", 9600},
-            {u8"knpc.s1", 6400},
-            {u8"adata.s1", 80000},
-            {u8"spact.s1", 2000},
-            {u8"qdata.s1", 40000},
-            {u8"mat.s1", 1600},
-            {u8"trait.s1", 2000},
-            {u8"pcc.s1", 2400},
-            {u8"card.s1", 16000},
-            {u8"krecipe.s1", 4800},
-        };
-
-        const auto filepath = folder + file_info[i].first;
-        fsize = file_info[i].second;
+        const auto filepath = folder + u8"gdata.s1";
+        fsize = 4000;
         if (read)
         {
-            if (!fs::exists(filepath))
-            {
-                continue;
-            }
-        }
-
-        if (i == 0)
-        {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(gdata, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(gdata, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 1)
+        else
         {
-            if (!read)
-            {
-                std::ofstream out{filepath};
-                putit::binary_oarchive ar{out};
-                for (int cc = 0; cc < 57; ++cc)
-                {
-                    ar.save(cdata[cc]);
-                }
-            }
-            else
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(gdata, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"cdata.s1";
+        fsize = 114000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 std::ifstream in{filepath};
                 putit::binary_iarchive ar{in};
@@ -94,48 +63,63 @@ void fmode_8_7(int fmode)
                 }
             }
         }
-        if (i == 2)
+        else
         {
-            if (!read)
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 0; cc < 57; ++cc)
             {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(sdata, hgz, fsize);
-                zClose(hgz);
+                ar.save(cdata[cc]);
             }
-            if (read)
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"sdata.s1";
+        fsize = 273600;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(sdata, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 3)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(spell, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(sdata, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"spell.s1";
+        fsize = 800;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(spell, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 4)
+        else
         {
-            if (!read)
-            {
-                std::ofstream out{filepath};
-                putit::binary_oarchive ar{out};
-                for (int ci = 0; ci < 1320; ++ci)
-                {
-                    ar.save(inv[ci]);
-                }
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(spell, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"inv.s1";
+        fsize = 369600;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 std::ifstream in{filepath};
                 putit::binary_iarchive ar{in};
@@ -145,150 +129,203 @@ void fmode_8_7(int fmode)
                 }
             }
         }
-        if (i == 5)
+        else
         {
-            if (!read)
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int ci = 0; ci < 1320; ++ci)
             {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(itemmemory, hgz, fsize);
-                zClose(hgz);
+                ar.save(inv[ci]);
             }
-            if (read)
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"kitem.s1";
+        fsize = 9600;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(itemmemory, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 6)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(npcmemory, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(itemmemory, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"knpc.s1";
+        fsize = 6400;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(npcmemory, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 7)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(adata, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(npcmemory, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"adata.s1";
+        fsize = 80000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(adata, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 8)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(spact, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(adata, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"spact.s1";
+        fsize = 2000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(spact, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 9)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(qdata, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(spact, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"qdata.s1";
+        fsize = 40000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(qdata, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 10)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(mat, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(qdata, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"mat.s1";
+        fsize = 1600;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(mat, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 11)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(trait, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(mat, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"trait.s1";
+        fsize = 2000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(trait, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 12)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(pcc, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(trait, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"pcc.s1";
+        fsize = 2400;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(pcc, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 13)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(card, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(pcc, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"card.s1";
+        fsize = 16000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 zRead(card, hgz, fsize);
                 zClose(hgz);
             }
         }
-        if (i == 14)
+        else
         {
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                zWrite(recipememory, hgz, fsize);
-                zClose(hgz);
-            }
-            if (read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(card, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"krecipe.s1";
+        fsize = 4800;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
                 if (gdata_version >= 1200)
@@ -297,6 +334,12 @@ void fmode_8_7(int fmode)
                 }
                 zClose(hgz);
             }
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(recipememory, hgz, fsize);
+            zClose(hgz);
         }
     }
 
@@ -317,6 +360,7 @@ void fmode_8_7(int fmode)
                 std::back_inserter(artifactlocation));
         }
     }
+
     {
         const auto filepath = folder + u8"news.log"s;
         notesel(newsbuff);
@@ -336,6 +380,7 @@ void fmode_8_7(int fmode)
             }
         }
     }
+
     arrayfile(read, u8"cdatan1", folder + u8"cdatan.s1");
     arrayfile(read, u8"qname", folder + u8"qname.s1");
     arrayfile(read, u8"gdatan", folder + u8"gdatan.s1");
@@ -389,186 +434,181 @@ void fmode_14_15(int fmode)
         bsave(filepath, playerheader);
         fileadd(filepath);
     }
+
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (9); cnt < cnt_end; ++cnt)
+        const auto filepath = folder + u8"g_cdata.s1"s;
+        if (read)
         {
-            filepath = folder;
-            if (cnt == 0)
+            if (fs::exists(filepath))
             {
-                filepath += u8"gene.s1"s;
-                fsize = 400;
-            }
-            if (cnt == 1)
-            {
-                filepath += u8"g_cdata.s1"s;
-                if (read)
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int cc = 0; cc < 57; ++cc)
                 {
-                    if (!fs::exists(filepath))
-                        continue;
-                }
-                if (!read)
-                {
-                    fileadd(filepath);
-                    std::ofstream out{filepath};
-                    putit::binary_oarchive ar{out};
-                    for (int cc = 0; cc < 57; ++cc)
-                    {
-                        ar.save(cdata[cc]);
-                    }
-                }
-                else
-                {
-                    std::ifstream in{filepath};
-                    putit::binary_iarchive ar{in};
-                    for (int cc = 0; cc < 57; ++cc)
-                    {
-                        ar.load(cdata[cc]);
-                    }
-                }
-                continue;
-            }
-            if (cnt == 2)
-            {
-                filepath += u8"g_sdata.s1"s;
-                fsize = 273600;
-            }
-            if (cnt == 3)
-            {
-                filepath += u8"g_spell.s1"s;
-                fsize = 800;
-            }
-            if (cnt == 4)
-            {
-                filepath += u8"g_inv.s1"s;
-                if (read)
-                {
-                    if (!fs::exists(filepath))
-                        continue;
-                }
-                if (!read)
-                {
-                    fileadd(filepath);
-                    std::ofstream out{filepath};
-                    putit::binary_oarchive ar{out};
-                    for (int ci = 0; ci < 1320; ++ci)
-                    {
-                        ar.save(inv[ci]);
-                    }
-                }
-                else
-                {
-                    std::ifstream in{filepath};
-                    putit::binary_iarchive ar{in};
-                    for (int ci = 0; ci < 1320; ++ci)
-                    {
-                        ar.load(inv[ci]);
-                    }
-                }
-                continue;
-            }
-            if (cnt == 5)
-            {
-                filepath += u8"g_spact.s1"s;
-                fsize = 2000;
-            }
-            if (cnt == 6)
-            {
-                filepath += u8"g_mat.s1"s;
-                fsize = 1600;
-            }
-            if (cnt == 7)
-            {
-                filepath += u8"g_card.s1"s;
-                fsize = 16000;
-            }
-            if (cnt == 8)
-            {
-                filepath += u8"g_genetemp.s1"s;
-                fsize = 4000;
-            }
-            if (read)
-            {
-                if (!fs::exists(filepath))
-                {
-                    continue;
+                    ar.load(cdata[cc]);
                 }
             }
-            if (!read)
+        }
+        else
+        {
+            fileadd(filepath);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 0; cc < 57; ++cc)
             {
-                zOpen(hgz, filepath, 1, 3);
-                fileadd(""s + filepath);
+                ar.save(cdata[cc]);
             }
-            if (read)
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_sdata.s1"s;
+        int fsize = 273600;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
                 zOpen(hgz, filepath, 0);
+                zRead(sdata, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 2)
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(sdata, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_spell.s1"s;
+        int fsize = 800;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
-                if (!read)
-                {
-                    zWrite(sdata, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(sdata, hgz, fsize);
-                }
+                zOpen(hgz, filepath, 0);
+                zRead(spell, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 3)
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(spell, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_inv.s1"s;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
-                if (!read)
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int ci = 0; ci < 1320; ++ci)
                 {
-                    zWrite(spell, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(spell, hgz, fsize);
+                    ar.load(inv[ci]);
                 }
             }
-            if (cnt == 5)
+        }
+        else
+        {
+            fileadd(filepath);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int ci = 0; ci < 1320; ++ci)
             {
-                if (!read)
-                {
-                    zWrite(spact, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(spact, hgz, fsize);
-                }
+                ar.save(inv[ci]);
             }
-            if (cnt == 6)
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_spact.s1"s;
+        int fsize = 2000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
-                if (!read)
-                {
-                    zWrite(mat, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(mat, hgz, fsize);
-                }
+                zOpen(hgz, filepath, 0);
+                zRead(spact, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 7)
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(spact, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_mat.s1"s;
+        int fsize = 1600;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
-                if (!read)
-                {
-                    zWrite(card, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(card, hgz, fsize);
-                }
+                zOpen(hgz, filepath, 0);
+                zRead(mat, hgz, fsize);
+                zClose(hgz);
             }
-            if (cnt == 8)
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(mat, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_card.s1"s;
+        int fsize = 16000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
-                if (!read)
-                {
-                    zWrite(gdata, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(genetemp, hgz, fsize);
-                }
+                zOpen(hgz, filepath, 0);
+                zRead(card, hgz, fsize);
+                zClose(hgz);
             }
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(card, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"g_genetemp.s1"s;
+        int fsize = 4000;
+        if (read)
+        {
+            if (fs::exists(filepath))
+            {
+                zOpen(hgz, filepath, 0);
+                zRead(genetemp, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(gdata, hgz, fsize);
             zClose(hgz);
         }
     }
@@ -581,132 +621,119 @@ void fmode_2_1(int fmode)
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
     bool read = fmode == 1;
+
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        const auto filepath = folder + u8"mdata_"s + mid + u8".s2"s;
+        int fsize = 400;
+        if (read)
         {
-            filepath = folder;
-            if (cnt == 0)
-            {
-                filepath += u8"mdata_"s + mid + u8".s2"s;
-                fsize = 400;
-            }
-            if (cnt == 1)
-            {
-                if (read)
-                {
-                    DIM4(map, mdata(0), mdata(1), 10);
-                    DIM3(mapsync, mdata(0), mdata(1));
-                    DIM3(mef, 9, 200);
-                }
-                filepath += u8"map_"s + mid + u8".s2"s;
-                fsize = mdata(0) * mdata(1) * 10 * 4;
-            }
-            if (cnt == 2)
-            {
-                filepath += u8"cdata_"s + mid + u8".s2"s;
-                if (!read)
-                {
-                    fileadd(filepath);
-                    std::ofstream out{filepath};
-                    putit::binary_oarchive ar{out};
-                    for (int cc = 57; cc < 245; ++cc)
-                    {
-                        ar.save(cdata[cc]);
-                    }
-                }
-                else
-                {
-                    std::ifstream in{filepath};
-                    putit::binary_iarchive ar{in};
-                    for (int cc = 57; cc < 245; ++cc)
-                    {
-                        ar.load(cdata[cc]);
-                    }
-                }
-                continue;
-            }
-            if (cnt == 3)
-            {
-                filepath += u8"sdata_"s + mid + u8".s2"s;
-                fsize = 902400;
-            }
-            if (cnt == 4)
-            {
-                if (read)
-                {
-                    if (mdata(21) == 0)
-                    {
-                        for (int y = 0; y < mdata(1); ++y)
-                        {
-                            for (int x = 0; x < mdata(0); ++x)
-                            {
-                                map(x, y, 8) = 0;
-                            }
-                        }
-                        mdata(21) = 1;
-                        continue;
-                    }
-                }
-                filepath += u8"mef_"s + mid + u8".s2"s;
-                fsize = 7200;
-            }
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                fileadd(""s + filepath);
-            }
-            if (read)
-            {
-                zOpen(hgz, filepath, 0);
-            }
-            if (cnt == 0)
-            {
-                if (!read)
-                {
-                    zWrite(mdata, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(mdata, hgz, fsize);
-                }
-            }
-            if (cnt == 1)
-            {
-                if (!read)
-                {
-                    zWrite(map, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(map, hgz, fsize);
-                }
-            }
-            if (cnt == 3)
-            {
-                if (!read)
-                {
-                    zWrite(sdata, hgz, fsize, 57);
-                }
-                if (read)
-                {
-                    zRead(sdata, hgz, fsize, 57);
-                }
-            }
-            if (cnt == 4)
-            {
-                if (!read)
-                {
-                    zWrite(mef, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(mef, hgz, fsize);
-                }
-            }
+            zOpen(hgz, filepath, 0);
+            zRead(mdata, hgz, fsize);
+            zClose(hgz);
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(mdata, hgz, fsize);
             zClose(hgz);
         }
     }
+
+    {
+        const auto filepath = folder + u8"map_"s + mid + u8".s2"s;
+        int fsize = mdata(0) * mdata(1) * 10 * 4;
+        if (read)
+        {
+            DIM4(map, mdata(0), mdata(1), 10);
+            DIM3(mapsync, mdata(0), mdata(1));
+            DIM3(mef, 9, 200);
+            zOpen(hgz, filepath, 0);
+            zRead(map, hgz, fsize);
+            zClose(hgz);
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(map, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
+        if (read)
+        {
+            std::ifstream in{filepath};
+            putit::binary_iarchive ar{in};
+            for (int cc = 57; cc < 245; ++cc)
+            {
+                ar.load(cdata[cc]);
+            }
+        }
+        else
+        {
+            fileadd(filepath);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 57; cc < 245; ++cc)
+            {
+                ar.save(cdata[cc]);
+            }
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
+        int fsize = 902400;
+        if (read)
+        {
+            zOpen(hgz, filepath, 0);
+            zRead(sdata, hgz, fsize, 57);
+            zClose(hgz);
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(sdata, hgz, fsize, 57);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"mef_"s + mid + u8".s2"s;
+        int fsize = 7200;
+        if (read)
+        {
+            if (mdata(21) == 0)
+            {
+                for (int y = 0; y < mdata(1); ++y)
+                {
+                    for (int x = 0; x < mdata(0); ++x)
+                    {
+                        map(x, y, 8) = 0;
+                    }
+                }
+                mdata(21) = 1;
+            }
+            else
+            {
+                zOpen(hgz, filepath, 0);
+                zRead(mef, hgz, fsize);
+                zClose(hgz);
+            }
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(mef, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
     arrayfile(read, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
     arrayfile(read, u8"mdatan", folder + u8"mdatan_"s + mid + u8".s2");
 }
@@ -718,83 +745,66 @@ void fmode_20_19(int fmode)
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
     bool read = fmode == 19;
+
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        const auto filepath = folder + u8"m1_"s + id + u8".t"s;
+        int fsize = 400;
+        if (read)
         {
-            filepath = folder;
-            if (cnt == 0)
-            {
-                filepath += u8"m1_"s + id + u8".t"s;
-                fsize = 400;
-            }
-            if (cnt == 1)
-            {
-                if (read)
-                {
-                    DIM4(map, mdata(0), mdata(1), 10);
-                    DIM3(mapsync, mdata(0), mdata(1));
-                    DIM3(mef, 9, 200);
-                }
-                filepath += u8"m2_"s + id + u8".t"s;
-                fsize = mdata(0) * mdata(1) * 10 * 4;
-            }
-            if (cnt == 2)
-            {
-                filepath += u8"m3_"s + id + u8".t"s;
-                if (!read)
-                {
-                    std::ofstream out{filepath};
-                    putit::binary_oarchive ar{out};
-                    for (int ci = 1320; ci < 5480; ++ci)
-                    {
-                        ar.save(inv[ci]);
-                    }
-                }
-                if (read)
-                {
-                    std::ifstream in{filepath};
-                    putit::binary_iarchive ar{in};
-                    for (int ci = 1320; ci < 5480; ++ci)
-                    {
-                        ar.load(inv[ci]);
-                    }
-                }
-                continue;
-            }
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-            }
-            if (read)
-            {
-                zOpen(hgz, filepath, 0);
-            }
-            if (cnt == 0)
-            {
-                if (!read)
-                {
-                    zWrite(mdata, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(mdata, hgz, fsize);
-                }
-            }
-            if (cnt == 1)
-            {
-                if (!read)
-                {
-                    zWrite(map, hgz, fsize);
-                }
-                if (read)
-                {
-                    zRead(map, hgz, fsize);
-                }
-            }
+            zOpen(hgz, filepath, 0);
+            zRead(mdata, hgz, fsize);
+            zClose(hgz);
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(mdata, hgz, fsize);
             zClose(hgz);
         }
     }
+
+    {
+        const auto filepath = folder + u8"m2_"s + id + u8".t"s;
+        int fsize = mdata(0) * mdata(1) * 10 * 4;
+        if (read)
+        {
+            DIM4(map, mdata(0), mdata(1), 10);
+            DIM3(mapsync, mdata(0), mdata(1));
+            DIM3(mef, 9, 200);
+            zOpen(hgz, filepath, 0);
+            zRead(map, hgz, fsize);
+            zClose(hgz);
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(map, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"m3_"s + id + u8".t"s;
+        if (read)
+        {
+            std::ifstream in{filepath};
+            putit::binary_iarchive ar{in};
+            for (int ci = 1320; ci < 5480; ++ci)
+            {
+                ar.load(inv[ci]);
+            }
+        }
+        else
+        {
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int ci = 1320; ci < 5480; ++ci)
+            {
+                ar.save(inv[ci]);
+            }
+        }
+    }
+
     elona_export = 1;
     arrayfile(read, u8"mdatan", folder + u8"m4_"s + id + u8".t");
     if (!read)
@@ -1066,83 +1076,65 @@ void fmode_6_5(int fmode)
         DIM3(cmapdata, 5, 400);
         DIM3(mef, 9, 200);
     }
-    for (int i = 0; i < 3; ++i)
+
     {
-        std::string filepath;
-        int fsize = 0;
-        if (i == 0)
-        {
-            filepath = fmapfile + u8".idx"s;
-            fsize = 400;
-        }
-        if (i == 1)
-        {
-            if (read)
-            {
-                DIM4(map, mdata(0), mdata(1), 10);
-                DIM3(mapsync, mdata(0), mdata(1));
-            }
-            filepath = fmapfile + u8".map"s;
-            fsize = mdata(0) * mdata(1) * 10 * 4;
-        }
-        if (i == 2)
-        {
-            filepath = fmapfile + u8".obj"s;
-            fsize = 8000;
-        }
-        if (i == 2 && read)
-        {
-            if (!fs::exists(filepath))
-            {
-                continue;
-            }
-        }
-        if (!read)
-        {
-            zOpen(hgz, filepath, 1, 3);
-        }
+        const auto filepath = fmapfile + u8".idx"s;
+        int fsize = 400;
         if (read)
         {
             zOpen(hgz, filepath, 0);
+            zRead(mdatatmp, hgz, fsize);
+            for (int j = 0; j < 5; ++j)
+            {
+                mdata(j) = mdatatmp(j);
+            }
+            zClose(hgz);
         }
-        if (i == 0)
+        else
         {
-            if (!read)
-            {
-                zWrite(mdata, hgz, fsize);
-            }
-            if (read)
-            {
-                zRead(mdatatmp, hgz, fsize);
-                for (int j = 0; j < 5; ++j)
-                {
-                    mdata(j) = mdatatmp(j);
-                }
-            }
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(mdata, hgz, fsize);
+            zClose(hgz);
         }
-        if (i == 1)
+    }
+
+    {
+        const auto filepath = fmapfile + u8".map"s;
+        int fsize = mdata(0) * mdata(1) * 10 * 4;
+        if (read)
         {
-            if (!read)
-            {
-                zWrite(map, hgz, fsize);
-            }
-            if (read)
-            {
-                zRead(map, hgz, fsize);
-            }
+            DIM4(map, mdata(0), mdata(1), 10);
+            DIM3(mapsync, mdata(0), mdata(1));
+            zOpen(hgz, filepath, 0);
+            zRead(map, hgz, fsize);
+            zClose(hgz);
         }
-        if (i == 2)
+        else
         {
-            if (!read)
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(map, hgz, fsize);
+            zClose(hgz);
+        }
+    }
+
+    {
+        const auto filepath = fmapfile + u8".obj"s;
+        int fsize = 8000;
+        if (read)
+        {
+            if (fs::exists(filepath))
             {
-                zWrite(cmapdata, hgz, fsize);
-            }
-            if (read)
-            {
+                zOpen(hgz, filepath, 0);
                 zRead(cmapdata, hgz, fsize);
+                zClose(hgz);
             }
         }
-        zClose(hgz);
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            zWrite(cmapdata, hgz, fsize);
+            zClose(hgz);
+        }
     }
 }
 
@@ -1200,64 +1192,48 @@ void fmode_18_17(int fmode, const fs::path& file)
     {
         return;
     }
+
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
+        if (read)
         {
-            std::string filepath;
-            filepath = folder;
-            if (cnt == 0)
+            std::ifstream in{filepath};
+            putit::binary_iarchive ar{in};
+            for (int cc = 57; cc < 245; ++cc)
             {
-                filepath += u8"cdata_"s + mid + u8".s2"s;
-                if (!read)
-                {
-                    fileadd(filepath);
-                    std::ofstream out{filepath};
-                    putit::binary_oarchive ar{out};
-                    for (int cc = 57; cc < 245; ++cc)
-                    {
-                        ar.save(cdata[cc]);
-                    }
-                }
-                else
-                {
-                    std::ifstream in{filepath};
-                    putit::binary_iarchive ar{in};
-                    for (int cc = 57; cc < 245; ++cc)
-                    {
-                        ar.load(cdata[cc]);
-                    }
-                }
-                continue;
+                ar.load(cdata[cc]);
             }
-            if (cnt == 1)
+        }
+        else
+        {
+            fileadd(filepath);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 57; cc < 245; ++cc)
             {
-                filepath += u8"sdata_"s + mid + u8".s2"s;
-                fsize = 902400;
+                ar.save(cdata[cc]);
             }
-            if (!read)
-            {
-                zOpen(hgz, filepath, 1, 3);
-                fileadd(""s + filepath);
-            }
-            if (read)
-            {
-                zOpen(hgz, filepath, 0);
-            }
-            if (cnt == 1)
-            {
-                if (!read)
-                {
-                    zWrite(sdata, hgz, fsize, 57);
-                }
-                if (read)
-                {
-                    zRead(sdata, hgz, fsize, 57);
-                }
-            }
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
+        int fsize = 902400;
+        if (read)
+        {
+            zOpen(hgz, filepath, 0);
+            zRead(sdata, hgz, fsize, 57);
+            zClose(hgz);
+        }
+        else
+        {
+            zOpen(hgz, filepath, 1, 3);
+            fileadd(""s + filepath);
+            zWrite(sdata, hgz, fsize, 57);
             zClose(hgz);
         }
     }
+
     arrayfile(read, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
 }
 
