@@ -3110,7 +3110,7 @@ label_2181_internal:
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval != 0)
                 {
                     goto label_2186_internal;

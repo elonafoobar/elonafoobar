@@ -18939,7 +18939,7 @@ void label_1399()
     val(3) = 1;
     val(4) = 0;
     inputlog = "";
-    label_21262();
+    show_number_of_text_prompt();
     imeset(0);
     if (inputlog == ""s)
     {
@@ -19165,7 +19165,7 @@ label_1402_internal:
             val(1) = prompty;
             val(2) = 200;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             goto label_14001_internal;
         }
         if (gdata_next_voting_time > gdata_hour + gdata_day * 24
@@ -19194,7 +19194,7 @@ label_1402_internal:
         val(1) = prompty;
         val(2) = 200;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         goto label_14001_internal;
     }
     if (key == key_pageup)
@@ -23416,7 +23416,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqamulet1 = 0;
                 continue;
             }
@@ -23437,7 +23437,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqamulet2 = 0;
                 continue;
             }
@@ -23461,7 +23461,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqring1 = 0;
                 continue;
             }
@@ -23482,7 +23482,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqring2 = 0;
                 continue;
             }
@@ -23506,7 +23506,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqcloack = 0;
                 continue;
             }
@@ -23531,7 +23531,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqgirdle = 0;
                 continue;
             }
@@ -23556,7 +23556,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqhelm = 0;
                 continue;
             }
@@ -23581,7 +23581,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqarmor = 0;
                 continue;
             }
@@ -23606,7 +23606,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqglove = 0;
                 continue;
             }
@@ -23631,7 +23631,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqboots = 0;
                 continue;
             }
@@ -23660,7 +23660,7 @@ void label_1530()
                 }
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqweapon1 = 0;
                 continue;
             }
@@ -23711,7 +23711,7 @@ void label_1530()
                 }
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqweapon1 = 0;
                 continue;
             }
@@ -23752,7 +23752,7 @@ void label_1530()
                 eqweapon2 = 0;
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 continue;
             }
             if (eqshield)
@@ -23772,7 +23772,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqshield = 0;
                 continue;
             }
@@ -23797,7 +23797,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqrange = 0;
                 continue;
             }
@@ -23822,7 +23822,7 @@ void label_1530()
                 itemcreate(rc, dbid, -1, -1, 0);
                 r1 = rc;
                 body = 100 + i;
-                label_2194();
+                equip_item();
                 eqammo = 0;
                 continue;
             }
@@ -32818,7 +32818,7 @@ void label_1712()
     val(1) = prompty;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval != 0)
     {
         update_screen();
@@ -33111,7 +33111,7 @@ void label_1714()
     val(1) = prompty;
     val(2) = 240;
     val(3) = 1;
-    int stat = label_2131();
+    int stat = show_prompt();
     if (stat == 0)
     {
         update_screen();
@@ -33228,7 +33228,7 @@ void label_1714()
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
         color(0, 0, 0);
         listmax = 10;
-        label_2056();
+        sort_list_by_column1();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -40101,7 +40101,7 @@ void pray()
     val(1) = prompty;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval != 0)
     {
         update_screen();
@@ -40187,7 +40187,7 @@ void pray()
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval == 0)
                 {
                     ++gdata_god_rank;
@@ -42682,7 +42682,7 @@ label_1923:
             val(3) = 2;
             val(4) = p;
             rpmode = 1;
-            label_2131();
+            show_prompt();
             rpmode = 0;
             if (rtval == 0)
             {
@@ -42731,7 +42731,7 @@ label_1923:
                 }
             }
         }
-        label_2056();
+        sort_list_by_column1();
         windowshadow(1) = 1;
         txtnew();
         txt(lang(
@@ -42748,7 +42748,7 @@ label_1923:
         int stat = blendlist(list, step);
         listmax = stat;
     }
-    label_2056();
+    sort_list_by_column1();
     goto label_1927_internal;
     return;
 label_1924_internal:
@@ -44103,7 +44103,7 @@ label_1945_internal:
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval == 0)
                 {
                     elona_delete(fs::u8path(u8"./user/"s + userfile));
@@ -44828,7 +44828,7 @@ int ctrl_ally()
             ++listmax;
         }
     }
-    label_2056();
+    sort_list_by_column1();
     if (allyctrl == 2)
     {
         p = 0;
@@ -45479,7 +45479,7 @@ label_196901_internal:
         list(1, listmax) = 10000;
         ++listmax;
     }
-    label_2056();
+    sort_list_by_column1();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
@@ -46505,7 +46505,7 @@ void show_quest_board()
         turn_end();
         return;
     }
-    label_2056();
+    sort_list_by_column1();
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_board.bmp"), 1);
@@ -46690,7 +46690,7 @@ label_1978_internal:
         val(1) = prompty;
         val(2) = 160;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         if (rtval != 0)
         {
             goto label_1977_internal;
@@ -46797,7 +46797,7 @@ int label_1980()
             ++listmax;
         }
     }
-    label_2056();
+    sort_list_by_column1();
     windowshadow = 1;
 label_1981_internal:
     redraw(0);
@@ -46980,7 +46980,7 @@ int label_1984()
             ++listmax;
         }
     }
-    label_2056();
+    sort_list_by_column1();
     windowshadow = 1;
 label_1985_internal:
     redraw(0);
@@ -47142,7 +47142,7 @@ void list_adventurers()
             ++listmax;
         }
     }
-    label_2056();
+    sort_list_by_column1();
     windowshadow = 1;
 label_1989_internal:
     redraw(0);
@@ -47425,7 +47425,7 @@ void what_do_you_wish_for()
     val(3) = 0;
     val(4) = 0;
     inputlog = "";
-    label_21262();
+    show_number_of_text_prompt();
     txtmore();
     txt(lang(u8"「"s + inputlog + u8"！！」"s, cnvtalk(inputlog + u8"!!"s)));
     msgtemp = "";
@@ -48224,7 +48224,7 @@ void label_2007()
             }
         }
     }
-    label_2056();
+    sort_list_by_column1();
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_skill.bmp"), 1);
@@ -48607,7 +48607,7 @@ void label_2012()
     val(2) = 200;
     val(3) = 1;
     {
-        int stat = label_2131();
+        int stat = show_prompt();
         if (stat == 0)
         {
             update_screen();
@@ -48686,7 +48686,7 @@ void label_2012()
         val(3) = 1;
         val(4) = 0;
         inputlog = "";
-        label_21262();
+        show_number_of_text_prompt();
         cbitmod(989, tc, 0);
         if (inputlog == ""s)
         {
@@ -48746,7 +48746,7 @@ void call_npc()
     val(4) = 0;
     inputlog = "";
     input_mode = 1;
-    label_21262();
+    show_number_of_text_prompt();
     if (inputlog == ""s)
     {
         txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
@@ -49261,7 +49261,7 @@ void label_2027()
             }
         }
     }
-    label_2056();
+    sort_list_by_column1();
     redraw(0);
     gsel(3);
     pos(960, 96);
@@ -49887,7 +49887,7 @@ label_20331:
             }
         }
     }
-    label_2056();
+    sort_list_by_column1();
     gsel(7);
     picload(fs::u8path(u8"./graphic/ie_sheet.bmp"));
     gsel(0);
@@ -51641,7 +51641,7 @@ void ctrl_inventory_equipment()
             ++listmax;
         }
     }
-    label_2056();
+    sort_list_by_column1();
     redraw(0);
     drawmenu();
     ww = 690;
@@ -51847,7 +51847,7 @@ label_2052_internal:
         {
             ci = cdata_body_part(cc, p) % 10000 - 1;
             cs_prev = cs;
-            label_2068();
+            show_item_description();
             nowindowanime = 1;
             returnfromidentify = 0;
             screenupdate = -1;
@@ -52036,7 +52036,7 @@ void label_2054()
                             val(1) = prompty;
                             val(2) = 160;
                             val(3) = 1;
-                            label_2131();
+                            show_prompt();
                             if (rtval != 0)
                             {
                                 update_screen();
@@ -52136,7 +52136,7 @@ void label_2054()
     }
     in = inv[ci].number;
     {
-        int stat = label_2192();
+        int stat = pick_up_item();
         if (stat == 1 || stat == -1)
         {
             turn_end();
@@ -52172,7 +52172,7 @@ void label_2055()
 
 
 
-void label_2056()
+void sort_list_by_column1()
 {
     if (listmax < 1)
     {
@@ -52338,7 +52338,7 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
 
 
 
-void label_2068()
+void show_item_description()
 {
     int inhmax = 0;
     if (ci < 0)
@@ -52835,7 +52835,7 @@ int label_2073()
     val(1) = prompty;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval == 0)
     {
         update_screen();
@@ -53098,7 +53098,7 @@ void label_2078()
     val(1) = prompty;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     return;
 }
 
@@ -53136,7 +53136,7 @@ void label_2079()
     val(1) = prompty;
     val(2) = 190;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval == 0)
     {
         if (gdata_current_map != 35)
@@ -53211,7 +53211,7 @@ void label_2081()
         val(1) = prompty;
         val(2) = 160;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         if (rtval != 0)
         {
             update_screen();
@@ -53293,7 +53293,7 @@ void label_2081()
     val(1) = prompty;
     val(2) = 240;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     update_screen();
     if (rtval >= 0)
     {
@@ -53349,7 +53349,7 @@ void label_2082()
     val(1) = prompty;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval == 0)
     {
         if (mat(tmat) > 0)
@@ -53407,7 +53407,7 @@ int label_2083()
             val(1) = prompty;
             val(2) = 160;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             if (rtval != 0)
             {
                 return 0;
@@ -53491,7 +53491,7 @@ void label_2084()
     val(1) = prompty;
     val(2) = 240;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     update_screen();
     label_2719();
     if (rtval == 0)
@@ -53800,7 +53800,7 @@ void label_2085()
                     q(1) = cnvweight(inv[p(1)].weight);
                     ci = p(1);
                     dump_return = 1;
-                    label_2068();
+                    show_item_description();
                 }
                 else
                 {
@@ -54021,7 +54021,7 @@ void label_2086()
 
 
 
-void label_2087()
+void remove_card_and_figures()
 {
     inv_getheader(-1);
     {
@@ -55346,7 +55346,7 @@ label_2119_internal:
                 val(1) = prompty;
                 val(2) = 200;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval != 0)
                 {
                     label_2118();
@@ -55374,7 +55374,7 @@ label_2119_internal:
                 val(1) = prompty;
                 val(2) = 200;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval == 0)
                 {
                     snd(20);
@@ -55572,7 +55572,7 @@ void label_2124()
 
 
 
-void label_21262()
+void show_number_of_text_prompt()
 {
     int inputfail = 0;
     int ime_esc = 0;
@@ -55977,7 +55977,7 @@ label_2128_internal:
 
 
 
-int label_2131()
+int show_prompt()
 {
     snd(26);
     csprev = cs;
@@ -57804,7 +57804,7 @@ void label_2148()
             u8"You finish constructing"s + itemname(ci, 1) + u8"."s));
         in = 1;
         dropval = 1;
-        label_2193();
+        drop_item();
     }
     if (gdata(91) == 102)
     {
@@ -57828,7 +57828,7 @@ void label_2148()
                 + u8")"s,
             u8"You harvest "s + itemname(ci, 1) + u8". ("s
                 + cnvweight(inv[ci].weight) + u8")"s));
-        label_2192();
+        pick_up_item();
     }
     if (gdata(91) == 104)
     {
@@ -59380,7 +59380,7 @@ int label_2168()
             val(1) = prompty;
             val(2) = 160;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             if (rtval != 0)
             {
                 update_screen();
@@ -60763,7 +60763,7 @@ void label_2190()
 
 
 
-int label_2192()
+int pick_up_item()
 {
     int sellgold = 0;
     if (cc != -1)
@@ -60842,7 +60842,7 @@ int label_2192()
             val(1) = prompty;
             val(2) = 160;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             if (rtval == 0)
             {
                 snd(58);
@@ -61137,7 +61137,7 @@ int label_2192()
 
 
 
-int label_2193()
+int drop_item()
 {
     inumbk = inv[ci].number - in;
     inv[ci].number = in;
@@ -61219,7 +61219,7 @@ int label_2193()
 
 
 
-int label_2194()
+int equip_item()
 {
     if (ci == -1)
     {
@@ -61356,7 +61356,7 @@ void do_eat_command()
 
 
 
-void label_2199()
+void do_drink_command()
 {
     dbid = inv[ci].id;
     access_item_db(15);
@@ -61366,7 +61366,7 @@ void label_2199()
 
 
 
-void label_2200()
+void do_zap_command()
 {
     dbid = inv[ci].id;
     access_item_db(14);
@@ -61829,7 +61829,7 @@ void label_2203()
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 update_screen();
                 if (rtval == 0)
                 {
@@ -62452,7 +62452,7 @@ void label_2207()
             val(1) = prompty;
             val(2) = 160;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             if (rtval != 0)
             {
                 update_screen();
@@ -62626,7 +62626,7 @@ void label_2207()
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval != 0)
                 {
                     update_screen();
@@ -62762,7 +62762,7 @@ int open_box()
         val(1) = prompty;
         val(2) = 160;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         if (rtval == 0)
         {
             open_box();
@@ -65058,7 +65058,7 @@ void do_dip_command()
 
 
 
-void label_2228()
+void do_use_command()
 {
     int blendtool = 0;
     screenupdate = -1;
@@ -65210,7 +65210,7 @@ void label_2228()
             val(1) = prompty;
             val(2) = 400;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             txtnew();
             if (rtval == -1)
             {
@@ -65326,7 +65326,7 @@ void label_2228()
         val(2) = 260;
         val(3) = 1;
         {
-            int stat = label_2131();
+            int stat = show_prompt();
             if (stat == 0)
             {
                 goto label_2229_internal;
@@ -65734,7 +65734,7 @@ void label_2228()
                     val(1) = prompty;
                     val(2) = 160;
                     val(3) = 1;
-                    label_2131();
+                    show_prompt();
                     if (rtval != 0)
                     {
                         update_screen();
@@ -65964,7 +65964,7 @@ void label_2228()
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval != 0)
                 {
                     update_screen();
@@ -66068,7 +66068,7 @@ void label_2228()
         val(1) = prompty;
         val(2) = 160;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         if (rtval != 0)
         {
             turn_end();
@@ -66182,7 +66182,7 @@ void label_2228()
         val(1) = prompty;
         val(2) = 160;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         if (rtval != 0)
         {
             turn_end();
@@ -66270,7 +66270,7 @@ void label_2228()
                     ++listmax;
                 }
             }
-            label_2056();
+            sort_list_by_column1();
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
@@ -71757,7 +71757,7 @@ void label_2667()
                 i = cdata_body_part(rc, body) % 10000;
                 if (i == 0)
                 {
-                    label_2194();
+                    equip_item();
                     break;
                 }
                 --i;
@@ -71786,7 +71786,7 @@ void label_2667()
                     cibk = ci;
                     unequip_item();
                     ci = cibk;
-                    label_2194();
+                    equip_item();
                     break;
                 }
             }
@@ -73771,7 +73771,7 @@ label_2688_internal:
     }
     if (a == 52000)
     {
-        label_2199();
+        do_drink_command();
         return;
     }
     if (a == 53000)
@@ -73839,7 +73839,7 @@ label_2689_internal:
                                         {
                                             if (inv[ci].id != 602)
                                             {
-                                                label_2199();
+                                                do_drink_command();
                                                 return;
                                             }
                                         }
@@ -73858,7 +73858,7 @@ label_2689_internal:
                                         in = inv[ci].number;
                                         if (gdata_mount != cc)
                                         {
-                                            int stat = label_2192();
+                                            int stat = pick_up_item();
                                             if (stat == 1)
                                             {
                                                 turn_end();
@@ -78233,7 +78233,7 @@ void pc_turn(bool label_2747_flg)
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval == 0)
                 {
                     petarenawin = 2;
@@ -79297,7 +79297,7 @@ label_27491:
     val(1) = prompty;
     val(2) = 310;
     val(3) = 0;
-    label_2131();
+    show_prompt();
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
@@ -79439,7 +79439,7 @@ void play_the_last_scene_again()
     val(1) = prompty;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval == 0)
     {
         conquer_lesimas();
@@ -79472,7 +79472,7 @@ void pc_died()
     val(3) = 1;
     val(4) = 0;
     inputlog = "";
-    label_21262();
+    show_number_of_text_prompt();
     if (inputlog == ""s)
     {
         txtsetlastword();
@@ -79594,7 +79594,7 @@ void pc_died()
     val(1) = 100;
     val(2) = 240;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval == 1)
     {
         show_game_score_ranking();

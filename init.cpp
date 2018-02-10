@@ -1708,7 +1708,7 @@ label_1563_internal:
     val(1) = 240;
     val(2) = 160;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     snd(20);
     if (rtval == 1 || rtval == -1)
     {
@@ -1736,7 +1736,7 @@ label_1565_internal:
     val(4) = 0;
     inputlog = "";
     input_mode = 1;
-    label_21262();
+    show_number_of_text_prompt();
     cmname = ""s + inputlog;
     if (cmname == ""s || cmname == u8" "s)
     {
