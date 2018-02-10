@@ -270,7 +270,7 @@ label_1741_internal:
                 }
             }
         }
-        label_2111();
+        delete_temporary_user_files();
         evadd(19);
         map_placeplayer();
     }
@@ -959,7 +959,7 @@ label_1741_internal:
             label_2095(userfile);
             importmode = 1;
             ctrl_file(21);
-            label_2111();
+            delete_temporary_user_files();
         }
         else
         {

@@ -19224,7 +19224,7 @@ label_1402_internal:
 
 
 
-void label_1415()
+void initialize_ui_constants()
 {
     inf_clockarrowx = inf_clockx + 62;
     inf_clockarrowy = inf_clocky + 48;
@@ -24642,7 +24642,7 @@ label_1570_internal:
 
 
 
-void label_1572()
+void initialize_set_of_random_generation()
 {
     fsetincome(0) = 52000;
     fsetincome(1) = 52000;
@@ -32829,7 +32829,7 @@ void label_1712()
         gdata_home_scale = inv[ci].param1;
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        label_1713();
+        initialize_home_adata();
         midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
         ctrl_file(12);
@@ -32920,7 +32920,7 @@ void label_1712()
 
 
 
-void label_1713()
+void initialize_home_adata()
 {
     p = 7;
     adata(15, p) = 143;
@@ -35616,7 +35616,7 @@ void label_1748()
 {
     if (gdata(79) == 1)
     {
-        label_1752();
+        initialize_adata();
         label_1749();
         {
             int cnt = 450;
@@ -35828,7 +35828,7 @@ void label_1751()
 
 
 
-void label_1752()
+void initialize_adata()
 {
     p = 47;
     adata(16, p) = 47;
@@ -42418,7 +42418,7 @@ void label_1920()
 
 
 
-void label_1921()
+void initialize_recipe()
 {
     DIM3(rpdata, 100, 1200);
     SDIM4(rfnameorg, 20, 2, 6);
@@ -49076,8 +49076,8 @@ label_2020_internal:
                 }
             }
         }
-        label_2111();
-        label_2110();
+        delete_temporary_user_files();
+        delete_temporary_npc_files();
         return 1;
     }
     if (key == key_pageup)
@@ -54206,7 +54206,7 @@ void label_2090()
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
     gdata_number_of_existing_quests = 0;
-    label_1752();
+    initialize_adata();
     return;
 }
 
@@ -54789,8 +54789,8 @@ void load_cnpc_data()
             ++tg;
         }
     }
-    label_2111();
-    label_2110();
+    delete_temporary_user_files();
+    delete_temporary_npc_files();
     gsel(5);
     for (const auto& entry :
          filesystem::dir_entries{fs::u8path(u8"./user/graphic"),
@@ -54937,7 +54937,7 @@ void create_new_cnpc()
         name(rc) + u8"は興奮して襲い掛かってきた。"s,
         name(rc) + u8" is excited and attacks you."s));
     folder = fs::u8path(u8"./user/");
-    label_2111();
+    delete_temporary_user_files();
     return;
 }
 
@@ -54987,7 +54987,7 @@ void label_2108()
     }
     ctrl_file(22);
     bsave(userfile, filebuff);
-    label_2111();
+    delete_temporary_user_files();
     return;
 }
 
@@ -55009,13 +55009,13 @@ void label_2109()
     memcpy_(filebuff, headtemp, 1024, 0);
     ctrl_file(22);
     bsave(userfile, filebuff);
-    label_2111();
+    delete_temporary_user_files();
     return;
 }
 
 
 
-void label_2110()
+void delete_temporary_npc_files()
 {
     for (const auto& entry :
          filesystem::dir_entries{fs::u8path(u8"./user"),
@@ -55036,7 +55036,7 @@ void label_2110()
 
 
 
-void label_2111()
+void delete_temporary_user_files()
 {
     for (const auto& entry :
          filesystem::dir_entries{fs::u8path(u8"./user"),
@@ -71220,7 +71220,7 @@ void set_cdata_158()
 
 
 
-void label_2296()
+void initialize_racebit()
 {
     DIM3(racebit, 10, 78);
     return;
@@ -76275,7 +76275,7 @@ label_2711_internal:
 
 
 
-void label_2714()
+void initialize_jkey()
 {
     SDIM3(jkey, 2, 12);
     return;

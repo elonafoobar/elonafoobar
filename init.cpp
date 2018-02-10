@@ -123,10 +123,10 @@ void initialize_elona()
     SDIM3(rtvaln, 50, 10);
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
-    label_2714();
+    initialize_jkey();
     load_config2();
     load_config();
-    label_1415();
+    initialize_ui_constants();
     if (cfg_fullscreen)
     {
         chgdisp(1, windoww, windowh);
@@ -394,15 +394,15 @@ void initialize_elona()
     SDIM1(filtern);
     SDIM1(filter_creature);
     SDIM2(netbuf, 20000);
-    label_2110();
-    label_2111();
-    label_2296();
+    delete_temporary_npc_files();
+    delete_temporary_user_files();
+    initialize_racebit();
     initialize_character_filters();
     initialize_cbit_filters();
     set_item_filters();
     initialize_item_chip();
     initialize_building_daga();
-    label_1752();
+    initialize_adata();
     initialize_cell_object_data();
     load_random_name_table();
     load_random_title_table();
@@ -416,12 +416,12 @@ void initialize_elona()
     initialize_item_material_data();
     initialize_ego_data();
     initialize_enchantment_data();
-    label_1572();
+    initialize_set_of_random_generation();
     initialize_picfood();
-    label_1921();
+    initialize_recipe();
     initialize_fish_data();
     initialize_nefia_names();
-    label_1713();
+    initialize_home_adata();
     load_cnpc_data();
     if (cfg_music == 1 && DMINIT() == 0)
     {
