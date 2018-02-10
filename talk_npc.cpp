@@ -17,7 +17,7 @@ void talk_npc()
     listmax = 0;
     if (buff == ""s)
     {
-        label_0176();
+        get_npc_talk();
         int stat = customtalk(tc, 106);
         if (stat)
         {

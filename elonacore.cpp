@@ -27867,11 +27867,11 @@ void apply_general_eating_effect()
                 name(cc) + u8"はクッキーの中のおみくじを読んだ。"s,
                 name(cc) + u8" read"s + _s(cc) + u8" the paper fortune."s));
             valn = u8"%COOKIE2"s;
-            label_0175();
+            read_talk_file();
             if (inv[ci].curse_state >= 1 || inv[ci].curse_state == 0 && rnd(2))
             {
                 valn = u8"%COOKIE1"s;
-                label_0175();
+                read_talk_file();
             }
             txtef(5);
             txt(""s + buff);
@@ -42365,7 +42365,7 @@ void window_recipe_(
                 val(1) = inv[prm_1050].enchantments[cnt2_at_m184].power;
                 val(2) = 0;
                 val(3) = the_item_db[inv[prm_1050].id]->category;
-                label_0247();
+                get_enchantment_description();
                 color(0, 0, 100);
                 if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
                 {
@@ -45680,7 +45680,7 @@ label_196901_internal:
                 val(1) = inv[ci].enchantments[cnt].power;
                 val(2) = 1;
                 val(3) = 0;
-                label_0247();
+                get_enchantment_description();
                 if (s == ""s)
                 {
                     continue;
@@ -46155,7 +46155,7 @@ void update_journal()
         }
     }
     val = 0;
-    label_0181();
+    append_subquest_journal();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
@@ -46167,7 +46167,7 @@ void update_journal()
     }
     noteadd(u8" - Quest Item - "s);
     noteadd(""s);
-    label_0182();
+    append_quest_item_journal();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
@@ -46273,7 +46273,7 @@ void update_journal()
     noteadd(u8" - Completed Quests - "s);
     noteadd(""s);
     val = 1;
-    label_0181();
+    append_subquest_journal();
     listmax = noteinfo(0);
     redraw(0);
     showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
@@ -52523,7 +52523,7 @@ void label_2068()
                 val(1) = inv[ci].enchantments[cnt].power;
                 val(2) = 0;
                 val(3) = reftype;
-                label_0247();
+                get_enchantment_description();
                 listn(0, p) = lang(u8"それは"s, u8"It "s) + s;
                 list(0, p) = rtval;
                 list(1, p) = rtval(1);
@@ -65190,7 +65190,7 @@ void label_2228()
                         val(0) = list(0, listmax);
                         val(1) = list(1, listmax);
                         val(2) = 0;
-                        label_0247();
+                        get_enchantment_description();
                         promptl(0, promptmax) = s;
                         promptl(1, promptmax) = u8"null"s;
                         promptl(2, promptmax) = ""s + promptmax;
@@ -78364,7 +78364,7 @@ label_2747:
                 + u8"時間が経過しています。"s,
             u8"You have been playing Elona for "s + hour_played + u8" hour"s
                 + _s2(hour_played) + u8"."s);
-        label_0230();
+        cheer_up_message();
         txtmore();
         txtef(5);
         txt(s);
