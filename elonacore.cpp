@@ -59065,7 +59065,7 @@ void label_2162()
 
 
 
-int label_2163()
+int decode_book()
 {
     int cibkread = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -59252,7 +59252,7 @@ int label_2163()
 
 
 
-int label_2164()
+int read_normal_book()
 {
     if (cdata[cc].blind != 0)
     {
@@ -59552,7 +59552,7 @@ int label_2168()
 
 
 
-int label_2169()
+int drink_potion()
 {
     tc = cc;
     efsource = 4;
@@ -59617,7 +59617,7 @@ int label_2169()
 
 
 
-int label_2170()
+int drink_well()
 {
     if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
         || inv[ci].id == 602 && gdata_holy_well_count <= 0)
@@ -59846,7 +59846,7 @@ int label_2170()
 
 
 
-int label_2171()
+int read_scroll()
 {
     tc = cc;
     tlocx = cdata[cc].position.x;
@@ -61869,7 +61869,7 @@ void label_2203()
         if (cellfeat == 33)
         {
             menucycle = 1;
-            label_22712();
+            show_city_chart();
             pc_turn(false);
         }
     }
@@ -70213,7 +70213,7 @@ void label_2270()
 
 
 
-void label_22712()
+void show_city_chart()
 {
 label_22711:
     listmax = 0;
@@ -70575,7 +70575,7 @@ label_2278_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    label_22712();
+                    show_city_chart();
                     return;
                 }
                 if (curmenu == 1)
@@ -70789,7 +70789,7 @@ label_2283_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    label_22712();
+                    show_city_chart();
                     return;
                 }
                 if (curmenu == 1)
