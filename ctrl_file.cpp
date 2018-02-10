@@ -16,12 +16,11 @@ namespace
 
 
 
-void fmode_8_7(int fmode)
+void fmode_8_7(bool read)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
-    bool read = fmode == 7;
-    if (fmode == 8)
+    if (!read)
     {
         playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata[0].level + u8" "s
             + mdatan(0);
@@ -413,20 +412,19 @@ void fmode_8_7(int fmode)
 }
 
 
-void fmode_14_15(int fmode)
+void fmode_14_15(bool read)
 {
     std::string filepath;
     int fsize = 0;
-    bool read = fmode == 15;
-    if (fmode == 14)
+    if (!read)
     {
         folder = fs::u8path(u8"./tmp/");
     }
-    if (fmode == 15)
+    if (read)
     {
         folder = fs::u8path(u8"./save/"s + geneuse + u8"/");
     }
-    if (fmode == 14)
+    if (!read)
     {
         playerheader =
             ""s + cdatan(0, 0) + u8"(Lv"s + cdata[0].level + u8")の遺伝子"s;
@@ -615,12 +613,11 @@ void fmode_14_15(int fmode)
 }
 
 
-void fmode_2_1(int fmode)
+void fmode_2_1(bool read)
 {
     std::string filepath;
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
-    bool read = fmode == 1;
 
     {
         const auto filepath = folder + u8"mdata_"s + mid + u8".s2"s;
@@ -739,12 +736,11 @@ void fmode_2_1(int fmode)
 }
 
 
-void fmode_20_19(int fmode)
+void fmode_20_19(bool read)
 {
     std::string filepath;
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
-    bool read = fmode == 19;
 
     {
         const auto filepath = folder + u8"m1_"s + id + u8".t"s;
@@ -817,18 +813,17 @@ void fmode_20_19(int fmode)
 }
 
 
-void fmode_22_21(int fmode)
+void fmode_22_21(bool read)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./user/");
-    bool read = fmode == 21;
-    if (fmode == 22)
-    {
-        tg = 1;
-    }
-    if (fmode == 21)
+    if (read)
     {
         tg = 0;
+    }
+    else
+    {
+        tg = 1;
     }
     enemyteam = -1;
     gdata(86) = 0;
@@ -1068,9 +1063,8 @@ void fmode_16()
 }
 
 
-void fmode_6_5(int fmode)
+void fmode_6_5(bool read)
 {
-    bool read = fmode == 5;
     if (read)
     {
         DIM3(cmapdata, 5, 400);
@@ -1139,10 +1133,19 @@ void fmode_6_5(int fmode)
 }
 
 
-void fmode_4_3(int fmode, const fs::path& file)
+void fmode_4_3(bool read, const fs::path& file)
 {
     const auto path = fs::u8path(u8"./tmp") / file;
-    if (fmode == 4)
+    if (read)
+    {
+        std::ifstream in{path};
+        putit::binary_iarchive ar{in};
+        for (int ci = 1320; ci < 5480; ++ci)
+        {
+            ar.load(inv[ci]);
+        }
+    }
+    else
     {
         fileadd(path);
         std::ofstream out{path};
@@ -1152,22 +1155,13 @@ void fmode_4_3(int fmode, const fs::path& file)
             ar.save(inv[ci]);
         }
     }
-    else
-    {
-        std::ifstream in{path};
-        putit::binary_iarchive ar{in};
-        for (int ci = 1320; ci < 5480; ++ci)
-        {
-            ar.load(inv[ci]);
-        }
-    }
 }
 
 
 
-void fmode_23_24(int fmode, const fs::path& file)
+void fmode_23_24(bool read, const fs::path& file)
 {
-    if (fmode == 23)
+    if (read)
     {
         zOpen(hgz, file, 1, 3);
         fileadd(file);
@@ -1183,11 +1177,10 @@ void fmode_23_24(int fmode, const fs::path& file)
 }
 
 
-void fmode_18_17(int fmode, const fs::path& file)
+void fmode_18_17(bool read, const fs::path& file)
 {
     int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
-    bool read = fmode == 17;
     if (!fs::exists(std::string(file) + u8"cdata_"s + mid + u8".s2"s))
     {
         return;
@@ -1334,24 +1327,24 @@ void ctrl_file(int mode, const fs::path& filepath)
     switch (mode)
     {
     case 8:
-    case 7: fmode_8_7(mode); break;
+    case 7: fmode_8_7(mode == 7); break;
     case 14:
-    case 15: fmode_14_15(mode); break;
+    case 15: fmode_14_15(mode == 15); break;
     case 2:
-    case 1: fmode_2_1(mode); break;
+    case 1: fmode_2_1(mode == 1); break;
     case 20:
-    case 19: fmode_20_19(mode); break;
+    case 19: fmode_20_19(mode == 19); break;
     case 22:
-    case 21: fmode_22_21(mode); break;
+    case 21: fmode_22_21(mode == 21); break;
     case 16: fmode_16(); break;
     case 6:
-    case 5: fmode_6_5(mode); break;
+    case 5: fmode_6_5(mode == 5); break;
     case 4:
-    case 3: fmode_4_3(mode, filepath); break;
+    case 3: fmode_4_3(mode == 3, filepath); break;
     case 23:
-    case 24: fmode_23_24(mode, filepath); break;
+    case 24: fmode_23_24(mode == 24, filepath); break;
     case 18:
-    case 17: fmode_18_17(mode, filepath); break;
+    case 17: fmode_18_17(mode == 17, filepath); break;
     case 10: fmode_10(); break;
     case 9: fmode_9(); break;
     case 11:
