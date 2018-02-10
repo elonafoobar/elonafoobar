@@ -32,6 +32,7 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
 
+    FIELD_I(ordering);
     FIELD_I(male_image);
     FIELD_I(female_image);
     FIELD_I(breed_power);
@@ -43,6 +44,7 @@ int define(lua_State* state)
         id,
         race_data{
             id,
+            ordering,
             male_image,
             female_image,
             breed_power,
