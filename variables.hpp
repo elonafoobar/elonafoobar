@@ -1507,8 +1507,6 @@ void label_2270();
 void show_city_chart();
 void label_2276();
 void label_2280();
-void set_cdata_158();
-void initialize_racebit();
 void get_random_npc_id();
 void initialize_cbit_filters();
 void label_2660();
