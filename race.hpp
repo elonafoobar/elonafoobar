@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <vector>
 #include "optional_ref.hpp"
 
 
@@ -28,6 +29,8 @@ public:
 
     optional_ref<race_data> operator[](const std::string& id) const;
 
+    std::vector<std::reference_wrapper<const race_data>> get_available_races(
+        bool is_extra_race) const;
 
 private:
     std::unordered_map<std::string, race_data> storage;
@@ -38,7 +41,6 @@ inline race_db the_race_db;
 
 
 
-void get_race_list(bool is_extra_race);
 int access_race_info(int dbmode, const std::string& dbidn);
 
 

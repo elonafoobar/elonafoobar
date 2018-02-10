@@ -916,10 +916,20 @@ void label_1544()
         mes(u8"Gene from "s + geneuse);
     }
     listmax = 0;
-    get_race_list(false);
+    for (const auto& race : the_race_db.get_available_races(false))
+    {
+        listn(1, listmax) = race.get().id;
+        list(0, listmax) = 0;
+        ++listmax;
+    }
     if (cfg_extrarace)
     {
-        get_race_list(true);
+        for (const auto& race : the_race_db.get_available_races(true))
+        {
+            listn(1, listmax) = race.get().id;
+            list(0, listmax) = 1;
+            ++listmax;
+        }
     }
     {
         int cnt = 0;
