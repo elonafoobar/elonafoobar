@@ -301,7 +301,6 @@ inline int cfg_autonumlock;
 inline int cfg_autoturn;
 inline int cfg_env;
 inline int cfg_exanime;
-inline int cfg_exlog;
 inline int cfg_extrahelp;
 inline int cfg_extrarace;
 inline int cfg_fullscreen;
