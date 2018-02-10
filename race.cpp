@@ -130,14 +130,18 @@ int access_race_info(int dbmode, const std::string& dbidn)
     default: assert(0);
     }
 
+    // Common initialization
+    cdatan(2, rc) = dbidn;
+    cdata[rc].melee_attack_type = 0; // Default
+    cdata[rc].special_attack_type = 0; // Default
+    cdata[rc].dv_correction_value = 100; // Default
+    cdata[rc].pv_correction_value = 100; // Default
+
     if (false)
     {
     }
     else if (dbidn == u8"kobolt")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 150;
         if (rnd(100) < 50)
@@ -153,8 +157,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 171;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 80);
         skillinit(10, rc, 8);
@@ -175,9 +177,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"orc")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 150;
         if (rnd(100) < 51)
@@ -193,8 +192,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 165;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 130);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -215,9 +212,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"troll")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 400;
         if (rnd(100) < 51)
@@ -233,7 +227,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 391;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 150;
         skillinit(2, rc, 90);
         skillinit(3, rc, 80);
@@ -253,9 +246,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"lizardman")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 240;
         if (rnd(100) < 51)
@@ -272,7 +262,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 397;
         cdata[rc].dv_correction_value = 120;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 120);
         skillinit(3, rc, 70);
         skillinit(10, rc, 7);
@@ -293,9 +282,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"minotaur")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 350;
         if (rnd(100) < 51)
@@ -311,8 +297,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 398;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 160);
         skillinit(3, rc, 60);
         skillinit(10, rc, 12);
@@ -332,9 +316,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"yerles")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(20) + 15);
         cdata[rc].height = 165;
         if (rnd(100) < 52)
@@ -354,8 +335,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 2;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 110);
         skillinit(3, rc, 90);
         skillinit(10, rc, 7);
@@ -377,9 +356,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"norland")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(20) + 15);
         cdata[rc].height = 170;
         if (rnd(100) < 52)
@@ -399,8 +375,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 2;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 90);
         skillinit(10, rc, 8);
@@ -422,9 +396,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"eulderna")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(20) + 16);
         cdata[rc].height = 175;
         if (rnd(100) < 52)
@@ -444,8 +415,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 6;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 100);
         skillinit(10, rc, 6);
@@ -466,9 +435,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"fairy")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(100) + 5);
         cdata[rc].height = 50;
         if (rnd(100) < 52)
@@ -496,7 +462,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         sdata(57, rc) = 200;
         sdata(59, rc) = 200;
         cdata[rc].dv_correction_value = 250;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 40);
         skillinit(3, rc, 130);
         skillinit(10, rc, 3);
@@ -517,9 +482,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"asura")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(20) + 15);
         cdata[rc].height = 220;
         if (rnd(100) < 52)
@@ -536,7 +498,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 405;
         cdata[rc].dv_correction_value = 200;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 70);
         skillinit(10, rc, 11);
@@ -557,8 +518,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"slime")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
         cdata[rc].special_attack_type = 2;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 1);
         cdata[rc].height = 40;
@@ -575,8 +534,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 168;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 80);
         skillinit(3, rc, 100);
         skillinit(10, rc, 4);
@@ -596,9 +553,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"wolf")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 2);
         cdata[rc].height = 100;
         if (rnd(100) < 55)
@@ -615,7 +569,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 254;
         cdata[rc].dv_correction_value = 140;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 8);
@@ -635,9 +588,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"dwarf")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(60) + 20);
         cdata[rc].height = 100;
         if (rnd(100) < 56)
@@ -653,8 +603,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 66;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 100);
         skillinit(10, rc, 10);
@@ -675,9 +623,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"juere")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 165;
         if (rnd(100) < 50)
@@ -697,8 +642,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 10;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 100);
         skillinit(10, rc, 7);
@@ -720,9 +663,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"zombie")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(200) + 10);
         cdata[rc].height = 160;
         if (rnd(100) < 50)
@@ -742,8 +682,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         sdata(58, rc) = 500;
         sdata(56, rc) = 500;
         sdata(50, rc) = 80;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 120);
         skillinit(3, rc, 100);
         skillinit(10, rc, 10);
@@ -763,9 +701,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"elea")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(200) + 10);
         cdata[rc].height = 180;
         if (rnd(100) < 53)
@@ -785,8 +720,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 4;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 110);
         skillinit(10, rc, 6);
@@ -807,9 +740,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"rabbit")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(5) + 2);
         cdata[rc].height = 40;
         if (rnd(100) < 53)
@@ -825,8 +755,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 169;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -845,9 +773,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"sheep")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(5) + 2);
         cdata[rc].height = 150;
         if (rnd(100) < 53)
@@ -863,8 +788,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 170;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 130);
         skillinit(3, rc, 80);
         skillinit(10, rc, 6);
@@ -884,9 +807,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"frog")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(5) + 2);
         cdata[rc].height = 10;
         if (rnd(100) < 53)
@@ -902,8 +822,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 172;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 80);
         skillinit(3, rc, 80);
         skillinit(10, rc, 6);
@@ -923,9 +841,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"centipede")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 10;
         if (rnd(100) < 53)
@@ -941,8 +856,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 173;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 80);
         skillinit(10, rc, 6);
@@ -961,9 +874,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"snail")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 8;
         if (rnd(100) < 53)
@@ -979,8 +889,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 174;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 4);
@@ -999,9 +907,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"mandrake")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 25;
         if (rnd(100) < 53)
@@ -1017,8 +922,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 175;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 70);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -1039,9 +942,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"beetle")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 10;
         if (rnd(100) < 53)
@@ -1057,7 +957,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 176;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 140;
         skillinit(2, rc, 80);
         skillinit(3, rc, 80);
@@ -1078,7 +977,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"mushroom")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 7;
         cdata[rc].special_attack_type = 5;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
@@ -1096,8 +994,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 177;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 50);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -1117,9 +1013,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"bat")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 70;
         if (rnd(100) < 53)
@@ -1136,7 +1030,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 200;
         cdata[rc].dv_correction_value = 320;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 10);
         skillinit(3, rc, 80);
         skillinit(10, rc, 3);
@@ -1155,9 +1048,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"ent")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 1500;
         if (rnd(100) < 53)
@@ -1173,8 +1063,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 201;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 170);
         skillinit(3, rc, 80);
         skillinit(10, rc, 9);
@@ -1194,9 +1082,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"lich")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 180;
         if (rnd(100) < 53)
@@ -1238,9 +1123,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"hound")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 160;
         if (rnd(100) < 53)
@@ -1257,7 +1140,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 203;
         cdata[rc].dv_correction_value = 120;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 8);
@@ -1277,9 +1159,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"ghost")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 6;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 180;
         if (rnd(100) < 53)
@@ -1300,7 +1180,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         sdata(56, rc) = 500;
         sdata(50, rc) = 80;
         cdata[rc].dv_correction_value = 160;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 60);
         skillinit(3, rc, 80);
         skillinit(10, rc, 4);
@@ -1320,9 +1199,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"spirit")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 100;
         if (rnd(100) < 53)
@@ -1338,8 +1214,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 206;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -1359,9 +1233,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"eye")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 4;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 40;
         if (rnd(100) < 53)
@@ -1377,8 +1249,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 207;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 3);
@@ -1398,9 +1268,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"wyvern")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 1600;
         if (rnd(100) < 53)
@@ -1416,8 +1284,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 235;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 190);
         skillinit(3, rc, 80);
         skillinit(10, rc, 11);
@@ -1437,9 +1303,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"wasp")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 5;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 80;
         if (rnd(100) < 53)
@@ -1456,7 +1320,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 210;
         cdata[rc].dv_correction_value = 220;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 50);
         skillinit(3, rc, 80);
         skillinit(10, rc, 7);
@@ -1475,9 +1338,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"giant")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 1800;
         if (rnd(100) < 53)
@@ -1493,8 +1353,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 232;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 200);
         skillinit(3, rc, 80);
         skillinit(10, rc, 12);
@@ -1515,9 +1373,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"imp")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 80;
         if (rnd(100) < 53)
@@ -1534,7 +1390,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 212;
         cdata[rc].dv_correction_value = 200;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 70);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -1554,9 +1409,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"hand")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 70;
         if (rnd(100) < 53)
@@ -1572,8 +1424,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 213;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 8);
@@ -1592,9 +1442,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"snake")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 50;
         if (rnd(100) < 53)
@@ -1610,8 +1458,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 216;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 6);
@@ -1630,9 +1476,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"drake")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 1400;
         if (rnd(100) < 53)
@@ -1648,7 +1492,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 233;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 120;
         skillinit(2, rc, 160);
         skillinit(3, rc, 80);
@@ -1669,9 +1512,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"goblin")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 140;
         if (rnd(100) < 53)
@@ -1687,8 +1527,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 220;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 110);
         skillinit(3, rc, 90);
         skillinit(10, rc, 8);
@@ -1710,9 +1548,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"bear")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 280;
         if (rnd(100) < 53)
@@ -1728,8 +1564,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 222;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 160);
         skillinit(3, rc, 80);
         skillinit(10, rc, 9);
@@ -1750,9 +1584,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"armor")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 550;
         cbitmod(983, rc, 1);
@@ -1769,7 +1600,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 223;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 300;
         skillinit(2, rc, 40);
         skillinit(3, rc, 80);
@@ -1790,9 +1620,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"medusa")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 160;
         if (rnd(100) < 53)
@@ -1809,7 +1636,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 224;
         cdata[rc].dv_correction_value = 140;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 110);
         skillinit(10, rc, 7);
@@ -1829,9 +1655,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"cupid")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 120;
         if (rnd(100) < 53)
@@ -1848,7 +1671,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 225;
         cdata[rc].dv_correction_value = 200;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 80);
         skillinit(3, rc, 130);
         skillinit(10, rc, 6);
@@ -1868,9 +1690,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"phantom")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 450;
         cbitmod(983, rc, 1);
@@ -1891,7 +1710,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         sdata(58, rc) = 500;
         sdata(56, rc) = 500;
         sdata(50, rc) = 80;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 200;
         skillinit(2, rc, 60);
         skillinit(3, rc, 90);
@@ -1912,9 +1730,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"harpy")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 140;
         if (rnd(100) < 53)
@@ -1931,7 +1746,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 227;
         cdata[rc].dv_correction_value = 150;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 100);
         skillinit(10, rc, 8);
@@ -1951,9 +1765,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"dragon")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 2400;
         if (rnd(100) < 53)
@@ -1969,7 +1781,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 228;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 120;
         skillinit(2, rc, 220);
         skillinit(3, rc, 80);
@@ -1990,9 +1801,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"dinosaur")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 2000;
         if (rnd(100) < 53)
@@ -2008,7 +1817,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 389;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 120;
         skillinit(2, rc, 140);
         skillinit(3, rc, 80);
@@ -2029,9 +1837,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"cerberus")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 1200;
         if (rnd(100) < 53)
@@ -2047,8 +1853,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 229;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 160);
         skillinit(3, rc, 80);
         skillinit(10, rc, 11);
@@ -2068,7 +1872,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"spider")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
         cdata[rc].special_attack_type = 1;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
@@ -2087,7 +1890,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 230;
         cdata[rc].dv_correction_value = 170;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 50);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -2107,9 +1909,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"golem")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 700;
         cbitmod(983, rc, 1);
@@ -2126,7 +1925,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 231;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 140;
         skillinit(2, rc, 150);
         skillinit(3, rc, 70);
@@ -2147,9 +1945,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"rock")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 500;
         cbitmod(983, rc, 1);
@@ -2166,7 +1961,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 386;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 200;
         skillinit(2, rc, 40);
         skillinit(3, rc, 50);
@@ -2187,9 +1981,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"crab")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 50;
         if (rnd(100) < 53)
@@ -2205,7 +1997,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 237;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 150;
         skillinit(2, rc, 60);
         skillinit(3, rc, 80);
@@ -2226,9 +2017,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"skeleton")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 160;
         cbitmod(983, rc, 1);
@@ -2249,8 +2037,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         sdata(58, rc) = 500;
         sdata(56, rc) = 500;
         sdata(50, rc) = 80;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 8);
@@ -2271,9 +2057,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"piece")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 750;
         cbitmod(983, rc, 1);
@@ -2290,7 +2073,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 244;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 150;
         skillinit(2, rc, 120);
         skillinit(3, rc, 80);
@@ -2311,7 +2093,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"cat")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
         cdata[rc].special_attack_type = 4;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
@@ -2329,8 +2110,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 253;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 120);
         skillinit(3, rc, 120);
         skillinit(10, rc, 6);
@@ -2351,9 +2130,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"dog")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 80;
         if (rnd(100) < 53)
@@ -2369,8 +2146,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 254;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 120);
         skillinit(3, rc, 80);
         skillinit(10, rc, 7);
@@ -2391,9 +2166,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"roran")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 150;
         if (rnd(100) < 0)
@@ -2414,7 +2186,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].image = 4;
         }
         cdata[rc].dv_correction_value = 150;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 4);
@@ -2435,9 +2206,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"rat")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 30;
         if (rnd(100) < 53)
@@ -2453,8 +2222,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 255;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 80);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -2474,9 +2241,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"shell")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 120;
         if (rnd(100) < 53)
@@ -2492,7 +2257,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 256;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 340;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
@@ -2513,9 +2277,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"catgod")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 120;
         if (rnd(100) < 0)
@@ -2532,7 +2294,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         }
         cdata[rc].image = 199;
         cdata[rc].dv_correction_value = 250;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 120);
         skillinit(3, rc, 80);
         skillinit(10, rc, 12);
@@ -2553,9 +2314,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"machinegod")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 3000;
         cbitmod(983, rc, 1);
@@ -2572,7 +2330,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 349;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 150;
         skillinit(2, rc, 200);
         skillinit(3, rc, 80);
@@ -2592,9 +2349,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"undeadgod")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 1500;
         if (rnd(100) < 53)
@@ -2610,8 +2364,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 350;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 150);
         skillinit(3, rc, 500);
         skillinit(10, rc, 10);
@@ -2631,8 +2383,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"machine")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
         cdata[rc].special_attack_type = 6;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 240;
@@ -2650,8 +2400,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 270;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 80);
         skillinit(10, rc, 7);
@@ -2672,9 +2420,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"wisp")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 4;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 40;
         if (rnd(100) < 53)
@@ -2690,8 +2436,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 272;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 150);
         skillinit(3, rc, 150);
         skillinit(10, rc, 5);
@@ -2711,9 +2455,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"chicken")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 40;
         if (rnd(100) < 53)
@@ -2729,8 +2471,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 274;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 80);
         skillinit(3, rc, 80);
         skillinit(10, rc, 5);
@@ -2750,9 +2490,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"stalker")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 180;
         if (rnd(100) < 53)
@@ -2773,7 +2511,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         sdata(56, rc) = 500;
         sdata(50, rc) = 80;
         cdata[rc].dv_correction_value = 130;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 120);
         skillinit(3, rc, 140);
         skillinit(10, rc, 9);
@@ -2793,9 +2530,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"catsister")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 1;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (10 + rnd(4));
         cdata[rc].height = 140;
         if (rnd(100) < 0)
@@ -2811,8 +2546,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 354;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 30);
         skillinit(3, rc, 100);
         skillinit(10, rc, 7);
@@ -2832,9 +2565,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"mutant")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(50) + 25);
         cdata[rc].height = 180;
         if (rnd(100) < 53)
@@ -2854,8 +2584,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 4;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 100);
         skillinit(3, rc, 100);
         skillinit(10, rc, 9);
@@ -2875,9 +2603,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"yeek")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(30) + 15);
         cdata[rc].height = 90;
         if (rnd(100) < 50)
@@ -2893,8 +2618,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 378;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 80);
         skillinit(3, rc, 90);
         skillinit(10, rc, 4);
@@ -2914,7 +2637,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"yith")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 6;
         cdata[rc].special_attack_type = 3;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
@@ -2932,8 +2654,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 429;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 150);
         skillinit(3, rc, 200);
         skillinit(10, rc, 13);
@@ -2954,9 +2674,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"servant")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(200) + 100);
         cdata[rc].height = 165;
         if (rnd(100) < 52)
@@ -2976,8 +2693,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         {
             cdata[rc].image = 2;
         }
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 90);
         skillinit(3, rc, 150);
         skillinit(10, rc, 6);
@@ -3002,9 +2717,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"horse")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 250;
         if (rnd(100) < 53)
@@ -3020,8 +2733,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 262;
-        cdata[rc].dv_correction_value = 100;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 150);
         skillinit(3, rc, 50);
         skillinit(10, rc, 9);
@@ -3040,9 +2751,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"god")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - 999999;
         cdata[rc].height = 180;
         if (rnd(100) < 0)
@@ -3085,9 +2793,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"quickling")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 25;
         if (rnd(100) < 53)
@@ -3105,7 +2810,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
         cdata[rc].image = 281;
         sdata(60, rc) = 500;
         cdata[rc].dv_correction_value = 550;
-        cdata[rc].pv_correction_value = 100;
         skillinit(2, rc, 3);
         skillinit(3, rc, 40);
         skillinit(10, rc, 2);
@@ -3126,9 +2830,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"metal")
     {
-        cdatan(2, rc) = dbidn;
         cdata[rc].melee_attack_type = 3;
-        cdata[rc].special_attack_type = 0;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 12;
         if (rnd(100) < 53)
@@ -3166,8 +2868,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     else if (dbidn == u8"bike")
     {
-        cdatan(2, rc) = dbidn;
-        cdata[rc].melee_attack_type = 0;
         cdata[rc].special_attack_type = 6;
         cdata[rc].birth_year = gdata_year - (rnd(10) + 10);
         cdata[rc].height = 240;
@@ -3185,7 +2885,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
             cdata[rc].sex = cmsex;
         }
         cdata[rc].image = 471;
-        cdata[rc].dv_correction_value = 100;
         cdata[rc].pv_correction_value = 150;
         skillinit(2, rc, 170);
         skillinit(3, rc, 60);
@@ -3205,6 +2904,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
         s(1) = u8"HD|BD|BK|HA|HA|W_|L_|L_";
         initialize_body_parts_by_string();
     }
+
     return 0;
 }
 
