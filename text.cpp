@@ -3003,7 +3003,7 @@ void replace_tags_in_quest_board()
 
 
 
-void label_0174()
+void parse_talk_file()
 {
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     if (noteinfo(0) <= 1)
@@ -3028,7 +3028,7 @@ void label_0174()
 
 
 
-void label_0175()
+void read_talk_file()
 {
     buff = "";
     notesel(buff);
@@ -3042,13 +3042,13 @@ void label_0175()
         }
     }
     p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
-    label_0174();
+    parse_talk_file();
     return;
 }
 
 
 
-void label_0176()
+void get_npc_talk()
 {
     buff = "";
     notesel(buff);
@@ -3160,7 +3160,7 @@ void label_0176()
     {
         p = instr(buff, 0, u8"%DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
     }
-    label_0174();
+    parse_talk_file();
     return;
 }
 
@@ -3278,7 +3278,7 @@ void update_main_quest_journal()
 
 
 
-void label_0181()
+void append_subquest_journal()
 {
     if (val == 0)
     {
@@ -4174,7 +4174,7 @@ void label_0181()
 
 
 
-void label_0182()
+void append_quest_item_journal()
 {
     noteadd(lang(u8"[古びたお守り]"s, u8"[An old talisman]"s));
     if (gdata_main_quest_flag >= 30)
@@ -5138,7 +5138,7 @@ label_0228_internal:
 
 
 
-void label_0230()
+void cheer_up_message()
 {
     if (hour_played == 1)
     {
@@ -5213,7 +5213,7 @@ void label_0230()
 
 
 
-void label_0247()
+void get_enchantment_description()
 {
     int sid = 0;
     rtval(0) = 4;

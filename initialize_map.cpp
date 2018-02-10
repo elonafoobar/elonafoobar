@@ -270,7 +270,7 @@ label_1741_internal:
                 }
             }
         }
-        label_2111();
+        delete_temporary_user_files();
         evadd(19);
         map_placeplayer();
     }
@@ -402,7 +402,7 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (mdata(10) / 2); cnt < cnt_end; ++cnt)
             {
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, 0, -3, 0);
             }
         }
@@ -455,7 +455,7 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (mdata(10) / 2); cnt < cnt_end; ++cnt)
             {
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, 0, -3, 0);
             }
         }
@@ -785,7 +785,7 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (mdata(10) / 2); cnt < cnt_end; ++cnt)
             {
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, 0, -3, 0);
             }
         }
@@ -854,7 +854,7 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (mdata(10) / 2); cnt < cnt_end; ++cnt)
             {
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, 0, -3, 0);
             }
         }
@@ -959,7 +959,7 @@ label_1741_internal:
             label_2095(userfile);
             importmode = 1;
             ctrl_file(21);
-            label_2111();
+            delete_temporary_user_files();
         }
         else
         {
@@ -1243,7 +1243,7 @@ label_1741_internal:
                 for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
                 {
                     dbid = 0;
-                    label_1735();
+                    set_character_generation_filter();
                     characreate(-1, dbid, -3, 0);
                 }
             }
@@ -1458,7 +1458,7 @@ label_1741_internal:
             for (int cnt_end = cnt + (25); cnt < cnt_end; ++cnt)
             {
                 dbid = 0;
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, dbid, -3, 0);
             }
         }
@@ -1587,7 +1587,7 @@ label_1741_internal:
                 for (int cnt_end = cnt + (25); cnt < cnt_end; ++cnt)
                 {
                     dbid = 0;
-                    label_1735();
+                    set_character_generation_filter();
                     characreate(-1, dbid, -3, 0);
                 }
             }
@@ -1756,7 +1756,7 @@ label_1741_internal:
                 for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
                 {
                     dbid = 0;
-                    label_1735();
+                    set_character_generation_filter();
                     characreate(-1, dbid, -3, 0);
                 }
             }
@@ -1936,7 +1936,7 @@ label_1741_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, 35, rnd(11) + 25, rnd(5) + 15);
                 cdata[rc].character_role = 3;
             }
@@ -1946,7 +1946,7 @@ label_1741_internal:
             for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
             {
                 dbid = 0;
-                label_1735();
+                set_character_generation_filter();
                 characreate(-1, dbid, rnd(55), rnd(mdata(1)));
             }
         }
@@ -2089,7 +2089,7 @@ label_1741_internal:
                 int cnt = 0;
                 for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
                 {
-                    label_1735();
+                    set_character_generation_filter();
                     characreate(-1, 0, -3, 0);
                 }
             }
@@ -2283,7 +2283,7 @@ label_1741_internal:
                 for (int cnt_end = cnt + (25); cnt < cnt_end; ++cnt)
                 {
                     dbid = 0;
-                    label_1735();
+                    set_character_generation_filter();
                     characreate(-1, dbid, -3, 0);
                 }
             }
@@ -2479,7 +2479,7 @@ label_1741_internal:
                 int cnt = 0;
                 for (int cnt_end = cnt + (mdata(10) + 1); cnt < cnt_end; ++cnt)
                 {
-                    label_1735();
+                    set_character_generation_filter();
                     flt();
                     characreate(-1, 0, -3, 0);
                 }
@@ -2804,7 +2804,7 @@ label_1741_internal:
                 int cnt = 0;
                 for (int cnt_end = cnt + (mdata(10) + 1); cnt < cnt_end; ++cnt)
                 {
-                    label_1735();
+                    set_character_generation_filter();
                     characreate(-1, 0, -3, 0);
                 }
             }
@@ -3335,19 +3335,19 @@ label_1744_internal:
     if (gdata_main_quest_flag == 9)
     {
         sceneid = 2;
-        label_2680();
+        do_play_scene();
         gdata_main_quest_flag = 10;
     }
     if (gdata_main_quest_flag == 60)
     {
         sceneid = 5;
-        label_2680();
+        do_play_scene();
         gdata_main_quest_flag = 65;
     }
     if (gdata_main_quest_flag == 110)
     {
         sceneid = 26;
-        label_2680();
+        do_play_scene();
         gdata_main_quest_flag = 115;
     }
     if (gdata_main_quest_flag == 115)
@@ -3357,7 +3357,7 @@ label_1744_internal:
             >= 1)
         {
             sceneid = 28;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 116;
         }
     }
@@ -3368,7 +3368,7 @@ label_1744_internal:
             >= 2)
         {
             sceneid = 29;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 117;
         }
     }
@@ -3379,7 +3379,7 @@ label_1744_internal:
             >= 3)
         {
             sceneid = 30;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 120;
         }
     }
@@ -3388,7 +3388,7 @@ label_1744_internal:
         if (gdata_main_quest_flag == 10)
         {
             sceneid = 3;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 20;
         }
         if (gdata_current_dungeon_level == 4)
@@ -3396,7 +3396,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 65)
             {
                 sceneid = 7;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 70;
             }
         }
@@ -3405,7 +3405,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 70)
             {
                 sceneid = 15;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 75;
             }
         }
@@ -3414,7 +3414,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 75)
             {
                 sceneid = 16;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 80;
             }
         }
@@ -3423,7 +3423,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 80)
             {
                 sceneid = 17;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 85;
             }
         }
@@ -3432,7 +3432,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 85)
             {
                 sceneid = 24;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 90;
             }
         }
@@ -3441,7 +3441,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 125)
             {
                 sceneid = 33;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 130;
             }
         }
@@ -3450,7 +3450,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 130)
             {
                 sceneid = 35;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 135;
             }
         }
@@ -3459,7 +3459,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 135)
             {
                 sceneid = 40;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 140;
             }
         }
@@ -3468,7 +3468,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 140)
             {
                 sceneid = 60;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 145;
             }
         }
@@ -3477,7 +3477,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 145)
             {
                 sceneid = 70;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 150;
             }
         }
@@ -3486,7 +3486,7 @@ label_1744_internal:
             if (gdata_main_quest_flag == 150)
             {
                 sceneid = 90;
-                label_2680();
+                do_play_scene();
                 gdata_main_quest_flag = 160;
             }
         }
@@ -3529,7 +3529,7 @@ label_1744_internal:
         if (gdata_main_quest_flag == 0)
         {
             sceneid = 1;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 9;
         }
         if (gdata_has_not_been_to_vernis == 0)
@@ -3543,13 +3543,13 @@ label_1744_internal:
         if (gdata_main_quest_flag == 30)
         {
             sceneid = 4;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 40;
         }
         if (gdata_main_quest_flag == 100)
         {
             sceneid = 25;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 105;
         }
     }
@@ -3558,7 +3558,7 @@ label_1744_internal:
         if (gdata_main_quest_flag == 180)
         {
             sceneid = 100;
-            label_2680();
+            do_play_scene();
             gdata_main_quest_flag = 200;
             gdata_year += 3;
         }

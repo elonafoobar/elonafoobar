@@ -26,7 +26,7 @@ label_20591:
     {
         if (invctrl(1) == 1)
         {
-            label_2087();
+            remove_card_and_figures();
         }
     }
     if (menucycle == 1)
@@ -614,7 +614,7 @@ label_20591:
         update_screen();
         pc_turn(false);
     }
-    label_2056();
+    sort_list_by_column1();
     if (invctrl == 3)
     {
         if (listmax == 0)
@@ -1136,7 +1136,7 @@ label_2061_internal:
         }
         if (invctrl == 1)
         {
-            label_2068();
+            show_item_description();
             goto label_20591;
         }
         if (invctrl == 2)
@@ -1184,7 +1184,7 @@ label_2061_internal:
                 val(3) = 1;
                 val(4) = inv[ci].number;
                 inputlog = ""s + inv[ci].number;
-                label_21262();
+                show_number_of_text_prompt();
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
                 {
@@ -1201,7 +1201,7 @@ label_2061_internal:
             }
             savecycle();
             dropval = 0;
-            label_2193();
+            drop_item();
             if (dropcontinue)
             {
                 menucycle = 1;
@@ -1341,7 +1341,7 @@ label_2061_internal:
                 val(3) = 1;
                 val(4) = inv[ci].number;
                 inputlog = ""s + inv[ci].number;
-                label_21262();
+                show_number_of_text_prompt();
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
                 {
@@ -1390,7 +1390,7 @@ label_2061_internal:
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval != 0)
                 {
                     screenupdate = -1;
@@ -1432,7 +1432,7 @@ label_2061_internal:
                     }
                 }
             }
-            int stat = label_2192();
+            int stat = pick_up_item();
             if (stat == 0)
             {
                 goto label_20591;
@@ -1514,7 +1514,7 @@ label_2061_internal:
                 }
             }
             r1 = cc;
-            label_2194();
+            equip_item();
             r1 = cc;
             refresh_character();
             screenupdate = -1;
@@ -1564,7 +1564,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            label_2199();
+            do_drink_command();
             return 0;
         }
         if (invctrl == 9)
@@ -1572,7 +1572,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            label_2200();
+            do_zap_command();
             return 0;
         }
         if (invctrl == 10)
@@ -1834,7 +1834,7 @@ label_2061_internal:
         if (invctrl == 14)
         {
             savecycle();
-            label_2228();
+            do_use_command();
             return 0;
         }
         if (invctrl == 16)
@@ -2192,7 +2192,7 @@ label_2061_internal:
         if (listmax != 0)
         {
             ci = list(0, pagesize * page + cs);
-            label_2068();
+            show_item_description();
             goto label_20591;
         }
     }
@@ -2351,7 +2351,7 @@ label_2061_internal:
                     val(1) = prompty;
                     val(2) = 160;
                     val(3) = 1;
-                    label_2131();
+                    show_prompt();
                     if (rtval != 0)
                     {
                         goto label_2060_internal;

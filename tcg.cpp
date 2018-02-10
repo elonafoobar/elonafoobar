@@ -1901,7 +1901,7 @@ label_1812_internal:
     val(1) = basey_at_tcg + 230;
     val(2) = 300;
     val(3) = 1;
-    label_2131();
+    show_prompt();
     if (rtval != -1)
     {
         DIM2(deck, 1000);
@@ -1921,7 +1921,7 @@ label_1812_internal:
             val(1) = basey_at_tcg + 230;
             val(2) = 240;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             if (rtval == -1)
             {
                 goto label_1812_internal;
@@ -2893,7 +2893,7 @@ label_1830_internal:
             val(1) = basey_at_tcg + 230;
             val(2) = 240;
             val(3) = 1;
-            label_2131();
+            show_prompt();
             if (rtval == 0)
             {
                 ctrl_file(23, fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2"));
@@ -3218,7 +3218,7 @@ label_1837_internal:
         val(1) = basey_at_tcg + 230;
         val(2) = 200;
         val(3) = 1;
-        label_2131();
+        show_prompt();
         if (rtval == 0)
         {
             cpdata_at_tcg(4, 0) = 0;

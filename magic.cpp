@@ -3110,7 +3110,7 @@ label_2181_internal:
                 val(1) = prompty;
                 val(2) = 160;
                 val(3) = 1;
-                label_2131();
+                show_prompt();
                 if (rtval != 0)
                 {
                     goto label_2186_internal;
@@ -3427,7 +3427,7 @@ label_2181_internal:
         novoidlv = 1;
         characreate(56, p, -3, 0);
         rc = 56;
-        label_2659();
+        new_ally_joins();
         goto label_2186_internal;
     case 435:
         if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
@@ -3465,7 +3465,7 @@ label_2181_internal:
         if (f == 1)
         {
             rc = tc;
-            label_2659();
+            new_ally_joins();
             check_quest();
         }
         else if (f == 0)
