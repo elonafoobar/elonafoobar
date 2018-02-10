@@ -50207,7 +50207,8 @@ label_2035_internal:
         s(0) = cdatan(0, cc);
         s(1) = cdatan(1, cc);
         access_race_info(2, cdatan(2, cc));
-        s(2) = cnven(lang(""s + racename, cdatan(2, cc)));
+        s(2) = cnven(lang(
+            ""s + i18n::_(u8"race", cdatan(2, cc), u8"name"), cdatan(2, cc)));
         access_class_info(2, cdatan(3, cc));
         s(4) = cnven(lang(""s + classname, cdatan(3, cc)));
         if (cdata[cc].sex == 0)
@@ -53674,7 +53675,8 @@ void label_2085()
         + cdata[0].height + u8"cm"s + u8" "s + cdata[0].weight + u8"kg"s);
     noteadd(""s);
     noteadd(
-        fixtxt(u8"種族       : "s + racename, 30)
+        fixtxt(
+            u8"種族       : "s + i18n::_(u8"race", cdatan(2, 0), u8"name"), 30)
         + fixtxt((u8"信仰      : "s + godname(cdata[0].god)), 32));
     noteadd(
         fixtxt(u8"職業       : "s + classname, 30)
@@ -53862,10 +53864,11 @@ void label_2085()
             access_race_info(2, cdatan(2, cnt));
             access_class_info(2, cdatan(3, cnt));
             noteadd(
-                cdatan(0, cnt) + u8" "s + racename + u8"の"s + classname
-                + u8" "s + _sex(cdata[cnt].sex) + u8" "s + calcage(cnt)
-                + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s + u8" "s
-                + cdata[cnt].weight + u8"kg"s);
+                cdatan(0, cnt) + u8" "s
+                + i18n::_(u8"race", cdatan(2, cnt), u8"name") + u8"の"s
+                + classname + u8" "s + _sex(cdata[cnt].sex) + u8" "s
+                + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height + u8"cm"s
+                + u8" "s + cdata[cnt].weight + u8"kg"s);
             s = u8"レベル "s + cdata[cnt].level + u8" "s;
             if (cbit(961, cnt) == 1)
             {

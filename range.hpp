@@ -132,4 +132,22 @@ bool equal(const R1& range1, const R2& range2)
 }
 
 
+
+template <typename R>
+void sort(R&& range)
+{
+    using std::begin, std::end;
+    std::sort(begin(range), end(range));
+}
+
+
+
+template <typename R, typename F>
+void sort(R&& range, F compare)
+{
+    using std::begin, std::end;
+    std::sort(begin(range), end(range), compare);
+}
+
+
 } // namespace elona::range

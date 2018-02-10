@@ -31,18 +31,26 @@ int define(lua_State* state)
 #define FIELD_S(name) \
     lua_getfield(state, 2, #name); \
     const char* name = luaL_checkstring(state, -1);
+#define FIELD_B(name) \
+    lua_getfield(state, 2, #name); \
+    bool name = lua_toboolean(state, -1);
 
+    FIELD_B(is_extra);
+    FIELD_I(ordering);
     FIELD_I(male_image);
     FIELD_I(female_image);
     FIELD_I(breed_power);
 
 #undef FIELD_I
 #undef FIELD_S
+#undef FIELD_B
 
     storage_ptr->emplace(
         id,
         race_data{
             id,
+            is_extra,
+            ordering,
             male_image,
             female_image,
             breed_power,
@@ -85,99 +93,21 @@ optional_ref<race_data> race_db::operator[](const std::string& id) const
 
 
 
-#define RACE(name) \
-    do \
-    { \
-        listn(1, listmax) = (name); \
-        list(0, listmax) = int(is_extra_race); \
-        ++listmax; \
-    } while (0)
-
-
-void get_race_list(bool is_extra_race)
+std::vector<std::reference_wrapper<const race_data>>
+race_db::get_available_races(bool is_extra_race) const
 {
-    if (is_extra_race)
+    std::vector<std::reference_wrapper<const race_data>> ret;
+    for (const auto& [_, race] : storage)
     {
-        RACE(u8"kobolt");
-        RACE(u8"orc");
-        RACE(u8"troll");
-        RACE(u8"lizardman");
-        RACE(u8"minotaur");
-        RACE(u8"norland");
-        RACE(u8"asura");
-        RACE(u8"slime");
-        RACE(u8"wolf");
-        RACE(u8"zombie");
-        RACE(u8"rabbit");
-        RACE(u8"sheep");
-        RACE(u8"frog");
-        RACE(u8"centipede");
-        RACE(u8"mandrake");
-        RACE(u8"beetle");
-        RACE(u8"mushroom");
-        RACE(u8"bat");
-        RACE(u8"ent");
-        RACE(u8"hound");
-        RACE(u8"ghost");
-        RACE(u8"spirit");
-        RACE(u8"eye");
-        RACE(u8"wyvern");
-        RACE(u8"wasp");
-        RACE(u8"giant");
-        RACE(u8"imp");
-        RACE(u8"hand");
-        RACE(u8"snake");
-        RACE(u8"drake");
-        RACE(u8"bear");
-        RACE(u8"armor");
-        RACE(u8"medusa");
-        RACE(u8"cupid");
-        RACE(u8"phantom");
-        RACE(u8"harpy");
-        RACE(u8"dragon");
-        RACE(u8"dinosaur");
-        RACE(u8"cerberus");
-        RACE(u8"spider");
-        RACE(u8"rock");
-        RACE(u8"crab");
-        RACE(u8"skeleton");
-        RACE(u8"piece");
-        RACE(u8"cat");
-        RACE(u8"dog");
-        RACE(u8"roran");
-        RACE(u8"rat");
-        RACE(u8"shell");
-        RACE(u8"catgod");
-        RACE(u8"machinegod");
-        RACE(u8"undeadgod");
-        RACE(u8"machine");
-        RACE(u8"wisp");
-        RACE(u8"chicken");
-        RACE(u8"stalker");
-        RACE(u8"catsister");
-        RACE(u8"yeek");
-        RACE(u8"yith");
-        RACE(u8"servant");
-        RACE(u8"horse");
-        RACE(u8"god");
-        RACE(u8"quickling");
-        RACE(u8"metal");
-        RACE(u8"bike");
+        if (race.is_extra == is_extra_race)
+        {
+            ret.emplace_back(race);
+        }
     }
-    else
-    {
-        RACE(u8"yerles");
-        RACE(u8"eulderna");
-        RACE(u8"fairy");
-        RACE(u8"dwarf");
-        RACE(u8"juere");
-        RACE(u8"elea");
-        RACE(u8"snail");
-        RACE(u8"lich");
-        RACE(u8"goblin");
-        RACE(u8"golem");
-        RACE(u8"mutant");
-    }
+    range::sort(ret, [](const auto& a, const auto& b) {
+        return a.get().ordering < b.get().ordering;
+    });
+    return ret;
 }
 
 
@@ -190,10 +120,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
 
     switch (dbmode)
     {
-    case 2:
-        racename = i18n::_(u8"race", dbidn, u8"name");
-        cpicref = info->male_image;
-        return 0;
+    case 2: cpicref = info->male_image; return 0;
     case 3: break;
     case 11:
         buff = i18n::_(u8"race", dbidn, u8"description");

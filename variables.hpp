@@ -627,7 +627,6 @@ inline std::string mid;
 inline std::string msgtemp_at_txtfunc;
 inline std::string note_buff;
 inline std::string playerid;
-inline std::string racename;
 inline std::string refstr;
 inline std::string s2;
 inline std::string save_buff;
