@@ -25,25 +25,28 @@ int define(lua_State* state)
     if (!id)
         throw 0;
 
-#define FIELD_I(name) \
+#define FIELD_I(name, default_value) \
     lua_getfield(state, 2, #name); \
-    int name = luaL_checkinteger(state, -1);
-#define FIELD_S(name) \
+    int name = \
+        lua_isnil(state, -1) ? (default_value) : luaL_checkinteger(state, -1);
+#define FIELD_S(name, default_value) \
     lua_getfield(state, 2, #name); \
-    const char* name = luaL_checkstring(state, -1);
-#define FIELD_B(name) \
+    const char* name = \
+        lua_isnil(state, -1) ? (default_value) : luaL_checkstring(state, -1);
+#define FIELD_B(name, default_value) \
     lua_getfield(state, 2, #name); \
-    bool name = lua_toboolean(state, -1);
+    bool name = \
+        lua_isnil(state, -1) ? (default_value) : lua_toboolean(state, -1);
 
-    FIELD_B(is_extra);
-    FIELD_I(ordering);
-    FIELD_I(male_image);
-    FIELD_I(female_image);
-    FIELD_I(breed_power);
-    FIELD_I(min_age);
-    FIELD_I(max_age);
-    FIELD_I(height);
-    FIELD_I(male_ratio);
+    FIELD_B(is_extra, true);
+    FIELD_I(ordering, 30000);
+    FIELD_I(male_image, 174);
+    FIELD_I(female_image, 174);
+    FIELD_I(breed_power, 500);
+    FIELD_I(min_age, 1);
+    FIELD_I(max_age, 1);
+    FIELD_I(height, 2);
+    FIELD_I(male_ratio, 50);
 
 #undef FIELD_I
 #undef FIELD_S
