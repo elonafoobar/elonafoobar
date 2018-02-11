@@ -16,6 +16,8 @@ struct class_data
     int ordering;
     bool is_extra;
     int item_type;
+    int equipment_type;
+    std::unordered_map<int, int> skills;
 };
 
 
