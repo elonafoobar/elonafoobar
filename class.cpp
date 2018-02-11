@@ -31,6 +31,7 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     bool name = lua_toboolean(state, -1);
 
+    FIELD_I(ordering);
     FIELD_B(is_extra);
     FIELD_I(item_type);
 
@@ -41,6 +42,7 @@ int define(lua_State* state)
         id,
         class_data{
             id,
+            ordering,
             is_extra,
             item_type,
         });
@@ -57,20 +59,22 @@ namespace elona
 {
 
 
-std::vector<std::string> get_available_classes()
+
+std::vector<std::reference_wrapper<const class_data>>
+class_db::get_available_classes(bool is_extra_class) const
 {
-    return {
-        u8"warrior",
-        u8"thief",
-        u8"wizard",
-        u8"farmer",
-        u8"archer",
-        u8"warmage",
-        u8"tourist",
-        u8"pianist",
-        u8"priest",
-        u8"claymore",
-    };
+    std::vector<std::reference_wrapper<const class_data>> ret;
+    for (const auto& [_, class_] : storage)
+    {
+        if (class_.is_extra == is_extra_class)
+        {
+            ret.emplace_back(class_);
+        }
+    }
+    range::sort(ret, [](const auto& a, const auto& b) {
+        return a.get().ordering < b.get().ordering;
+    });
+    return ret;
 }
 
 

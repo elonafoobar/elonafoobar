@@ -13,6 +13,7 @@ namespace elona
 struct class_data
 {
     std::string id;
+    int ordering;
     bool is_extra;
     int item_type;
 };
@@ -27,6 +28,8 @@ public:
 
     optional_ref<class_data> operator[](const std::string& id) const;
 
+    std::vector<std::reference_wrapper<const class_data>> get_available_classes(
+        bool is_extra_class) const;
 
 private:
     std::unordered_map<std::string, class_data> storage;
