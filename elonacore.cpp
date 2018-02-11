@@ -8266,75 +8266,69 @@ void cutname(std::string& prm_541, int prm_542)
 
 void cs_list(
     int CNT,
-    const std::string& prm_543,
-    int prm_544,
-    int prm_545,
-    int prm_546,
-    int prm_547,
-    int prm_548,
-    int prm_549)
+    const std::string& text,
+    int x,
+    int y,
+    int height,
+    int x_offset,
+    int color_mode,
+    int ci)
 {
-    int tx_at_m72 = 0;
     if (cs == CNT)
     {
-        tx_at_m72 =
-            std::clamp(int(std::size(prm_543) * 7 + 32 + prm_547), 10, 480);
+        int tx_at_m72 =
+            std::clamp(int(std::size(text) * 7 + 32 + x_offset), 10, 480);
         gsel(3);
         pos(264, 96);
-        gcopy(0, prm_544, prm_545, tx_at_m72, prm_546);
+        gcopy(0, x, y, tx_at_m72, height);
         gsel(0);
-        pos(prm_544, prm_545);
-        gfini(tx_at_m72, prm_546);
+        pos(x, y);
+        gfini(tx_at_m72, height);
         gfdec2(30, 10, 0);
-        pos(prm_544 + 1, prm_545 + 1);
-        gfini(tx_at_m72 - 2, prm_546 - 2);
+        pos(x + 1, y + 1);
+        gfini(tx_at_m72 - 2, height - 2);
         gfinc(50, 50, 50);
-        pos(prm_544 + tx_at_m72 - 20, prm_545 + 4);
+        pos(x + tx_at_m72 - 20, y + 4);
         gcopy(3, 48, 360, 16, 16);
-        cs_posbk(0) = prm_544;
-        cs_posbk(1) = prm_545;
+        cs_posbk(0) = x;
+        cs_posbk(1) = y;
         cs_posbk(2) = tx_at_m72;
-        cs_posbk(3) = prm_546;
+        cs_posbk(3) = height;
     }
-    if (prm_548 == 0)
+
+    switch (color_mode)
     {
-        color(10, 10, 10);
-    }
-    if (prm_548 == 1)
-    {
+    case 0: color(10, 10, 10); break;
+    case 1:
         color(0, 0, 0);
-        if (inv[prm_549].identification_state >= 3)
+        if (inv[ci].identification_state >= 3)
         {
             color(10, 40, 120);
-            if (inv[prm_549].curse_state == 1)
+            if (inv[ci].curse_state == 1)
             {
                 color(10, 110, 30);
             }
-            if (inv[prm_549].curse_state == -1)
+            if (inv[ci].curse_state == -1)
             {
                 color(150, 10, 10);
             }
-            if (inv[prm_549].curse_state == -2)
+            if (inv[ci].curse_state == -2)
             {
                 color(100, 10, 100);
             }
         }
-        if (ibit(13, prm_549))
+        if (ibit(13, ci))
         {
             color(120, 80, 0);
         }
+        break;
+    case 2: color(240, 240, 240); break;
+    case 3: color(160, 10, 10); break;
+    default: break;
     }
-    if (prm_548 == 2)
-    {
-        color(240, 240, 240);
-    }
-    if (prm_548 == 3)
-    {
-        color(160, 10, 10);
-    }
-    pos(prm_544 + 4 + prm_547, prm_545 + 3);
-    mes(prm_543);
-    return;
+
+    pos(x + 4 + x_offset, y + 3);
+    mes(text);
 }
 
 
