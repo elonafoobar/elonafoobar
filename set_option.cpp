@@ -418,7 +418,6 @@ label_2725_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -448,7 +447,7 @@ label_2725_internal:
                     }
                 }
             }
-            cs_list(cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 19, 0);
+            cs_list(cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
             if ((submenu != 5 || cnt <= 0) && submenu != 0)
             {
                 pos(wx + 220, wy + 66 + cnt * 19 - 5);

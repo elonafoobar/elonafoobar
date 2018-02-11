@@ -10,7 +10,6 @@ inline elona_vector1<int> arenaop;
 inline elona_vector1<int> chatval;
 inline elona_vector1<int> commark;
 inline elona_vector1<int> crlfs_at_crlf;
-inline elona_vector1<int> cs_posbk;
 inline elona_vector1<int> cyclemax;
 inline elona_vector1<int> deck;
 inline elona_vector1<int> deliver;
@@ -1036,7 +1035,6 @@ void cpflip();
 void cpisenemy();
 void cpisme();
 void create_pcpic(int, bool);
-void cs_listbk();
 void csfix();
 void cslinedown();
 void cslineup();
@@ -1671,15 +1669,7 @@ void zipadd(const std::string&);
 void zipadd2(const std::string&);
 void zipend2();
 void zipinit2(const std::string&, const std::string&);
-void cs_list(
-    int CNT,
-    const std::string& prm_543,
-    int prm_544 = 0,
-    int prm_545 = 0,
-    int prm_546 = 0,
-    int prm_547 = 0,
-    int prm_548 = 0,
-    int prm_549 = 0);
+void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
 
 
 template <typename T>
