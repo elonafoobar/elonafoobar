@@ -315,7 +315,6 @@ void initialize_elona()
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
 
-    DIM2(cs_posbk, 4);
     DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
@@ -735,7 +734,6 @@ label_2116_internal:
             f = 2;
         }
     }
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)

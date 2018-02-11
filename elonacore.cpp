@@ -8276,24 +8276,12 @@ void cs_list(
 {
     if (cs == CNT)
     {
-        int tx_at_m72 =
-            std::clamp(int(std::size(text) * 7 + 32 + x_offset), 10, 480);
-        gsel(3);
-        pos(264, 96);
-        gcopy(0, x, y, tx_at_m72, height);
-        gsel(0);
-        pos(x, y);
-        gfini(tx_at_m72, height);
-        gfdec2(30, 10, 0);
-        pos(x + 1, y + 1);
-        gfini(tx_at_m72 - 2, height - 2);
-        gfinc(50, 50, 50);
-        pos(x + tx_at_m72 - 20, y + 4);
-        gcopy(3, 48, 360, 16, 16);
-        cs_posbk(0) = x;
-        cs_posbk(1) = y;
-        cs_posbk(2) = tx_at_m72;
-        cs_posbk(3) = height;
+        // color(128, 192, 255);
+        // boxf(
+        //     x + 4 + x_offset,
+        //     y + 3,
+        //     x + 4 + x_offset + std::size(text) * 7 + 32,
+        //     y + 3 + height);
     }
 
     switch (color_mode)
@@ -8329,19 +8317,6 @@ void cs_list(
 
     pos(x + 4 + x_offset, y + 3);
     mes(text);
-}
-
-
-
-void cs_listbk()
-{
-    if (cs_bk == -1)
-    {
-        return;
-    }
-    pos(cs_posbk, cs_posbk(1));
-    gcopy(3, 264, 96, cs_posbk(2), cs_posbk(3));
-    return;
 }
 
 
@@ -19091,7 +19066,6 @@ label_1402_internal:
     }
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -37494,7 +37468,6 @@ label_1857_internal:
             display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
         }
     }
-    cs_listbk();
     f = 0;
     {
         int cnt = 0;
@@ -37775,7 +37748,6 @@ label_1861_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -38097,7 +38069,6 @@ label_1868_internal:
     gcopy(2, x, y, x(1), y(1));
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -38317,7 +38288,6 @@ void label_1872()
         170 + x(1),
         noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -39846,7 +39816,6 @@ label_1887_internal:
     get_god_description();
     gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
@@ -41134,7 +41103,6 @@ label_1897_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
@@ -42723,7 +42691,6 @@ label_1925_internal:
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -42863,7 +42830,6 @@ label_1928_internal:
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -43890,7 +43856,6 @@ label_1945_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -44889,7 +44854,6 @@ label_1961_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -45740,7 +45704,6 @@ label_1970_internal:
     }
     display_note(s, 50);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -46471,7 +46434,6 @@ label_1978_internal:
             display_key(wx + 70, y - 2, cnt);
         }
     }
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -46749,7 +46711,6 @@ label_1982_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -46920,7 +46881,6 @@ label_1986_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -47084,7 +47044,6 @@ label_1990_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -48177,7 +48136,6 @@ label_2009_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -48743,7 +48701,6 @@ label_2016_internal:
     }
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -48912,7 +48869,6 @@ label_2020_internal:
     }
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -49217,7 +49173,6 @@ label_2029_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -50346,7 +50301,6 @@ label_2035_internal:
     if (page > 0)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        cs_listbk();
         {
             int cnt = 0;
             for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -50986,7 +50940,6 @@ label_2041_internal:
     }
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -51232,7 +51185,6 @@ label_2045_internal:
     grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -51635,7 +51587,6 @@ label_2052_internal:
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -55099,7 +55050,6 @@ label_2119_internal:
     }
     display_window(
         (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + save_data_count; cnt < cnt_end; ++cnt)
@@ -55283,7 +55233,6 @@ label_2122_internal:
     }
     display_window(
         (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
@@ -55879,7 +55828,6 @@ label_2132_internal:
     color(255, 255, 255);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     keyrange = 0;
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (promptmax); cnt < cnt_end; ++cnt)
@@ -68767,7 +68715,6 @@ void talk_window()
 label_2258_internal:
     show_talk_window();
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
@@ -70077,7 +70024,6 @@ label_2272_internal:
     j = 0;
     n = 0;
     color(0, 0, 0);
-    cs_listbk();
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -70545,7 +70491,6 @@ label_2283_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -75285,7 +75230,6 @@ label_2705_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -75923,7 +75867,6 @@ label_2729_internal:
         u8"アンロックされたシーンを再生できます。\nシーンNoは連続していません。"s,
         u8"You can play the unlocked scenes."s));
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)

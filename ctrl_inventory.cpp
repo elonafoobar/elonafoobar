@@ -999,7 +999,6 @@ label_2061_internal:
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
-    cs_listbk();
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
