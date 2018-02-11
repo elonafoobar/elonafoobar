@@ -50,5 +50,12 @@ class.claymore = {
 }
 
 
+-- For debug
+class.debugger = {
+  name = "デバッガー",
+  description = "デバッグ用",
+}
+
+
 
 -- vim: et sw=2 sts=2
