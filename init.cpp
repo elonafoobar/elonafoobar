@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -1151,10 +1152,18 @@ void label_1550(bool label_1551_flg)
         mes(u8"Gene from "s + geneuse);
     }
     listmax = 0;
-    for (const auto& id : get_available_classes())
+    for (const auto& class_ : the_class_db.get_available_classes(false))
     {
-        listn(1, listmax) = id;
+        listn(1, listmax) = class_.get().id;
         ++listmax;
+    }
+    if (cfg_extraclass)
+    {
+        for (const auto& class_ : the_class_db.get_available_classes(true))
+        {
+            listn(1, listmax) = class_.get().id;
+            ++listmax;
+        }
     }
     {
         int cnt = 0;

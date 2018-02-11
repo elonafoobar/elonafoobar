@@ -799,6 +799,8 @@ void load_config2()
         std::make_unique<config_integer>(
             u8"extraRace", [&](auto value) { cfg_extrarace = value; }),
         std::make_unique<config_integer>(
+            u8"extraClass", [&](auto value) { cfg_extraclass = value; }),
+        std::make_unique<config_integer>(
             u8"joypad", [&](auto value) { cfg_joypad = value; }),
         std::make_unique<config_integer>(
             u8"msg_box", [&](auto value) { cfg_msg_box = value; }),
