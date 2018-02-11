@@ -15,6 +15,30 @@ namespace
 {
 
 
+template <typename T>
+void load(const fs::path& filepath, T& data, size_t begin, size_t end)
+{
+    std::ifstream in{filepath};
+    putit::binary_iarchive ar{in};
+    for (size_t i = begin; i < end; ++i)
+    {
+        ar.load(data[i]);
+    }
+}
+
+
+template <typename T>
+void save(const fs::path& filepath, T& data, size_t begin, size_t end)
+{
+    std::ofstream out{filepath};
+    putit::binary_oarchive ar{out};
+    for (size_t i = begin; i < end; ++i)
+    {
+        ar.save(data[i]);
+    }
+}
+
+
 
 void fmode_8_7(bool read)
 {
@@ -54,22 +78,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int cc = 0; cc < 57; ++cc)
-                {
-                    ar.load(cdata[cc]);
-                }
+                load(filepath, cdata, 0, 57);
             }
         }
         else
         {
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 0; cc < 57; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 0, 57);
         }
     }
 
@@ -120,22 +134,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int ci = 0; ci < 1320; ++ci)
-                {
-                    ar.load(inv[ci]);
-                }
+                load(filepath, inv, 0, 1320);
             }
         }
         else
         {
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int ci = 0; ci < 1320; ++ci)
-            {
-                ar.save(inv[ci]);
-            }
+            save(filepath, inv, 0, 1320);
         }
     }
 
@@ -439,23 +443,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int cc = 0; cc < 57; ++cc)
-                {
-                    ar.load(cdata[cc]);
-                }
+                load(filepath, cdata, 0, 57);
             }
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 0; cc < 57; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 0, 57);
         }
     }
 
@@ -507,23 +501,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int ci = 0; ci < 1320; ++ci)
-                {
-                    ar.load(inv[ci]);
-                }
+                load(filepath, inv, 0, 1320);
             }
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int ci = 0; ci < 1320; ++ci)
-            {
-                ar.save(inv[ci]);
-            }
+            save(filepath, inv, 0, 1320);
         }
     }
 
@@ -662,22 +646,12 @@ void fmode_2_1(bool read)
         const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
         if (read)
         {
-            std::ifstream in{filepath};
-            putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.load(cdata[cc]);
-            }
+            load(filepath, cdata, 57, 245);
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 57, 245);
         }
     }
 
@@ -783,21 +757,11 @@ void fmode_20_19(bool read)
         const auto filepath = folder + u8"m3_"s + id + u8".t"s;
         if (read)
         {
-            std::ifstream in{filepath};
-            putit::binary_iarchive ar{in};
-            for (int ci = 1320; ci < 5480; ++ci)
-            {
-                ar.load(inv[ci]);
-            }
+            load(filepath, inv, 1320, 5480);
         }
         else
         {
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int ci = 1320; ci < 5480; ++ci)
-            {
-                ar.save(inv[ci]);
-            }
+            save(filepath, inv, 1320, 5480);
         }
     }
 
@@ -872,17 +836,13 @@ void fmode_22_21(bool read)
                     if (cnt == 0)
                     {
                         filepath += u8"c1_"s + id + u8".t"s;
-                        if (!read)
+                        if (read)
                         {
-                            std::ofstream out{filepath};
-                            putit::binary_oarchive ar{out};
-                            ar.save(cdata[tg]);
+                            load(filepath, cdata, tg, tg + 1);
                         }
                         else
                         {
-                            std::ifstream in{filepath};
-                            putit::binary_iarchive ar{in};
-                            ar.load(cdata[tg]);
+                            save(filepath, cdata, tg, tg + 1);
                         }
                         continue;
                     }
@@ -895,25 +855,13 @@ void fmode_22_21(bool read)
                     {
                         filepath += u8"c3_"s + id + u8".t"s;
                         inv_getheader(tg);
-                        if (!read)
+                        if (read)
                         {
-                            std::ofstream out{filepath};
-                            putit::binary_oarchive ar{out};
-                            for (int ci = invhead; ci < invhead + invrange;
-                                 ++ci)
-                            {
-                                ar.save(inv[ci]);
-                            }
+                            load(filepath, inv, invhead, invhead + invrange);
                         }
                         else
                         {
-                            std::ifstream in{filepath};
-                            putit::binary_iarchive ar{in};
-                            for (int ci = invhead; ci < invhead + invrange;
-                                 ++ci)
-                            {
-                                ar.load(inv[ci]);
-                            }
+                            save(filepath, inv, invhead, invhead + invrange);
                         }
                         continue;
                     }
@@ -1138,22 +1086,12 @@ void fmode_4_3(bool read, const fs::path& file)
     const auto path = fs::u8path(u8"./tmp") / file;
     if (read)
     {
-        std::ifstream in{path};
-        putit::binary_iarchive ar{in};
-        for (int ci = 1320; ci < 5480; ++ci)
-        {
-            ar.load(inv[ci]);
-        }
+        load(path, inv, 1320, 5480);
     }
     else
     {
         fileadd(path);
-        std::ofstream out{path};
-        putit::binary_oarchive ar{out};
-        for (int ci = 1320; ci < 5480; ++ci)
-        {
-            ar.save(inv[ci]);
-        }
+        save(path, inv, 1320, 5480);
     }
 }
 
@@ -1190,22 +1128,12 @@ void fmode_18_17(bool read, const fs::path& file)
         const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
         if (read)
         {
-            std::ifstream in{filepath};
-            putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.load(cdata[cc]);
-            }
+            load(filepath, cdata, 57, 245);
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 57, 245);
         }
     }
 
