@@ -316,4 +316,12 @@ race.bike = {
   description = "",
 }
 
+
+-- For debug
+race.slug = {
+  name = "ナメクジ",
+  description = "デバッグ用",
+}
+
+
 -- vim: et sw=2 sts=2
