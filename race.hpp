@@ -21,6 +21,14 @@ struct race_data
     int max_age;
     int height;
     int male_ratio;
+    bool is_made_of_rock;
+    int melee_attack_type;
+    int special_attack_type;
+    int dv_correction;
+    int pv_correction;
+    std::vector<int> body_parts;
+    std::unordered_map<int, int> skills;
+    std::unordered_map<int, int> resistances;
 };
 
 

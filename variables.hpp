@@ -1206,7 +1206,6 @@ void label_1520();
 void refresh_burden_state();
 void gain_special_action();
 void label_1530();
-void initialize_body_parts_by_string();
 void place_character();
 void label_1534();
 void label_1535();
