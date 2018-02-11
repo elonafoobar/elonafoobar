@@ -10,7 +10,7 @@ namespace elona
 std::string calcage(int);
 
 void update_screen();
-void label_1567(int);
+void show_race_or_class_info(int);
 
 inline int prm_518;
 inline int prm_818;
@@ -31,10 +31,10 @@ inline double r_at_m133;
 
 
 
-void label_1547(bool = true);
-void label_1550(bool = true);
-void label_1553(bool = true);
-void label_1557(bool = true);
+void character_making_select_sex(bool = true);
+void character_making_select_class(bool = true);
+void character_making_role_attributes(bool = true);
+void character_making_select_feats_and_alias(bool = true);
 void pc_turn(bool = true);
 void pass_one_turn(bool = true);
 

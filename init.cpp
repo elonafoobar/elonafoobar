@@ -574,11 +574,11 @@ void start_elona()
             playerid = defload;
             mode = 3;
             music = 0;
-            label_2732();
+            initialize_game();
             return;
         }
     }
-    label_2115();
+    main_title_menu();
     return;
 }
 
@@ -610,7 +610,7 @@ int main()
 
 
 
-void label_2115()
+void main_title_menu()
 {
     mode = 10;
     lomiaseaster = 0;
@@ -765,19 +765,19 @@ label_2116_internal:
     {
         snd(20);
         geneuse = "";
-        label_1541();
+        main_menu_new_game();
         return;
     }
     if (key == u8"a"s)
     {
         snd(20);
-        label_2118();
+        main_menu_continue();
         return;
     }
     if (key == u8"c"s)
     {
         snd(20);
-        label_2121();
+        main_menu_incarnate();
         return;
     }
     if (key == u8"d"s)
@@ -803,7 +803,7 @@ label_2116_internal:
 
 
 
-void label_1541()
+void main_menu_new_game()
 {
     if (cfg_wizard)
     {
@@ -811,7 +811,7 @@ void label_1541()
     }
     if (geneuse != ""s)
     {
-        label_2092();
+        load_gene_files();
     }
     redraw(0);
     rc = 0;
@@ -847,7 +847,7 @@ void label_1541()
         s = lang(
             u8"これ以上は冒険者を保存できない。"s,
             u8"Save slots are full. You have to delete some of your adventurers."s);
-        label_1425();
+        draw_caption();
         redraw(1);
     label_1542_internal:
         key_check();
@@ -855,20 +855,20 @@ void label_1541()
         await(cfg_wait1);
         if (key != ""s)
         {
-            label_2115();
+            main_title_menu();
             return;
         }
         goto label_1542_internal;
-        label_2115();
+        main_title_menu();
         return;
     }
-    label_1544();
+    character_making_select_race();
     return;
 }
 
 
 
-void label_1544()
+void character_making_select_race()
 {
     redraw(0);
     cs = 0;
@@ -882,7 +882,7 @@ void label_1544()
     s = lang(
         u8"やあ、待っていたよ。早速旅の支度をしようか。"s,
         u8"Welcome traveler, I've been looking for you."s);
-    label_1425();
+    draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
     color(0, 0, 0);
@@ -974,7 +974,7 @@ label_1546_internal:
         access_race_info(3, listn(1, page * pagesize + cs));
         access_race_info(11, listn(1, page * pagesize + cs));
         val = 0;
-        label_1567(cnt);
+        show_race_or_class_info(cnt);
     }
     redraw(1);
     await(cfg_wait1);
@@ -1000,7 +1000,7 @@ label_1546_internal:
         cmrace(0) = listn(1, p);
         cmrace(1) = listn(0, p);
         access_race_info(11, cmrace);
-        label_1547();
+        character_making_select_sex();
         return;
     }
     if (key == key_pageup)
@@ -1023,13 +1023,13 @@ label_1546_internal:
     }
     if (key == key_cancel)
     {
-        label_2115();
+        main_title_menu();
         return;
     }
     if (getkey(snail::key::f1))
     {
-        label_2703();
-        label_1544();
+        show_game_help();
+        character_making_select_race();
         return;
     }
     goto label_1546_internal;
@@ -1037,7 +1037,7 @@ label_1546_internal:
 
 
 
-void label_1547(bool label_1548_flg)
+void character_making_select_sex(bool label_1548_flg)
 {
     if (label_1548_flg)
     {
@@ -1052,7 +1052,7 @@ void label_1547(bool label_1548_flg)
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
     s = lang(u8"男性と女性に能力の違いはない。"s, u8"What's your gender?"s);
-    label_1425();
+    draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
     color(0, 0, 0);
@@ -1098,31 +1098,31 @@ label_1549_internal:
     if (key == key_select(0))
     {
         cmsex = 0;
-        label_1550();
+        character_making_select_class();
         return;
     }
     if (key == key_select(1))
     {
         cmsex = 1;
-        label_1550();
+        character_making_select_class();
         return;
     }
     if (key == key_cancel)
     {
-        label_1541();
+        main_menu_new_game();
         return;
     }
     if (getkey(snail::key::f1))
     {
-        label_2703();
-        label_1547(false);
+        show_game_help();
+        character_making_select_sex(false);
     }
     goto label_1549_internal;
 }
 
 
 
-void label_1550(bool label_1551_flg)
+void character_making_select_class(bool label_1551_flg)
 {
     if (label_1551_flg)
     {
@@ -1140,7 +1140,7 @@ void label_1550(bool label_1551_flg)
     s = lang(
         u8"職業や種族は、初期の能力だけでなく、成長の方向性に影響するんだ。"s,
         u8"Your class and race determine growth rate of your skills and attributes."s);
-    label_1425();
+    draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
     color(0, 0, 0);
@@ -1217,7 +1217,7 @@ label_1552_internal:
         access_class_info(3, listn(1, cs));
         access_class_info(11, listn(1, cs));
         val = 1;
-        label_1567(cnt);
+        show_race_or_class_info(cnt);
         redraw(1);
     }
     await(cfg_wait1);
@@ -1241,24 +1241,24 @@ label_1552_internal:
     if (p != -1)
     {
         cmclass = listn(1, p);
-        label_1553();
+        character_making_role_attributes();
         return;
     }
     if (key == key_cancel)
     {
-        label_1547(false);
+        character_making_select_sex(false);
     }
     if (getkey(snail::key::f1))
     {
-        label_2703();
-        label_1550(false);
+        show_game_help();
+        character_making_select_class(false);
     }
     goto label_1552_internal;
 }
 
 
 
-void label_1553(bool label_1554_flg)
+void character_making_role_attributes(bool label_1554_flg)
 {
     elona_vector1<int> cmlock;
     if (label_1554_flg)
@@ -1279,7 +1279,7 @@ label_1554:
     s = lang(
         u8"死にたくないなら、ある程度の能力は必要だね。"s,
         u8"You should prepare well, if you want to survive long enough in Irva."s);
-    label_1425();
+    draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
     color(0, 0, 0);
@@ -1406,7 +1406,7 @@ label_1555_internal:
         }
         if (p == 1)
         {
-            label_1557();
+            character_making_select_feats_and_alias();
             return;
         }
         if (cmlock(p - 2) != 0)
@@ -1423,19 +1423,19 @@ label_1555_internal:
     }
     if (key == key_cancel)
     {
-        label_1550(false);
+        character_making_select_class(false);
     }
     if (getkey(snail::key::f1))
     {
-        label_2703();
-        label_1553(false);
+        show_game_help();
+        character_making_role_attributes(false);
     }
     goto label_1555_internal;
 }
 
 
 
-void label_1557(bool label_1558_flg)
+void character_making_select_feats_and_alias(bool label_1558_flg)
 {
     if (label_1558_flg)
     {
@@ -1451,7 +1451,7 @@ void label_1557(bool label_1558_flg)
         s = lang(
             u8"フィートとは、君の持っている有益な特徴だ。3つまで選べるよ。"s,
             u8"Choose your feats wisely."s);
-        label_1425();
+        draw_caption();
         font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
         pos(20, windowh - 20);
         color(0, 0, 0);
@@ -1461,16 +1461,16 @@ void label_1557(bool label_1558_flg)
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        int stat = label_19672();
-        label_1566();
+        int stat = feat_menu();
+        clear_background_in_character_making();
         if (stat == -1)
         {
-            label_1557();
+            character_making_select_feats_and_alias();
             return;
         }
         if (stat == 0)
         {
-            label_1553(false);
+            character_making_role_attributes(false);
         }
     }
     redraw(0);
@@ -1483,7 +1483,7 @@ void label_1557(bool label_1558_flg)
     s = lang(
         u8"有名になると、名前とは別の通り名で呼ばれることがあるらしい。"s,
         u8"Choose your Alias."s);
-    label_1425();
+    draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
     color(0, 0, 0);
@@ -1575,26 +1575,26 @@ label_1559_internal:
         else
         {
             cmaka = listn(0, p);
-            label_1560();
+            character_making_final_phase();
             return;
         }
     }
     if (key == key_cancel)
     {
-        label_1557();
+        character_making_select_feats_and_alias();
         return;
     }
     if (getkey(snail::key::f1))
     {
-        label_2703();
-        label_1557(false);
+        show_game_help();
+        character_making_select_feats_and_alias(false);
     }
     goto label_1559_internal;
 }
 
 
 
-void label_1560()
+void character_making_final_phase()
 {
     int cmportrait = 0;
     std::string cmname;
@@ -1608,7 +1608,7 @@ label_1561_internal:
     s = lang(
         u8"君の見た目を知っておきたいな。まあ、後からいつでも変えられるけどね。"s,
         u8"What you look like? Don't worry, you can change them later."s);
-    label_1425();
+    draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
     color(0, 0, 0);
@@ -1620,20 +1620,20 @@ label_1561_internal:
     }
     cbitmod(967, 0, 1);
     {
-        int stat = label_2039();
+        int stat = change_appearance();
         if (stat == 0)
         {
-            label_1566();
-            label_1557(false);
+            clear_background_in_character_making();
+            character_making_select_feats_and_alias(false);
         }
         if (stat == -1)
         {
-            label_2703();
-            label_1566();
+            show_game_help();
+            clear_background_in_character_making();
             goto label_1561_internal;
         }
     }
-    label_1566();
+    clear_background_in_character_making();
     cmportrait = cdata[rc].portrait;
 label_1562_internal:
     snd(94);
@@ -1646,7 +1646,7 @@ label_1563_internal:
     s = lang(
         u8"決定ｷｰを押すことで、生い立ちをリロールできる。"s,
         u8"Hit the enter key to reroll your personal history."s);
-    label_1425();
+    draw_caption();
     del_chara(0);
     access_race_info(3, cmrace);
     access_class_info(3, cmclass);
@@ -1663,8 +1663,8 @@ label_1563_internal:
             sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
         }
     }
-    label_1535();
-    label_1536();
+    initialize_character();
+    initialize_pc_character();
     cdata[rc].portrait = cmportrait;
     create_pcpic(0, true);
     mode = 1;
@@ -1675,7 +1675,7 @@ label_1563_internal:
         if (stat == 0)
         {
             nowindowanime = 1;
-            label_1566();
+            clear_background_in_character_making();
             goto label_1563_internal;
         }
     }
@@ -1685,9 +1685,9 @@ label_1563_internal:
     gmode(0);
     gcopy(0, 0, 100, windoww, windowh - 100);
     gsel(0);
-    label_1566();
+    clear_background_in_character_making();
     s = lang(u8"満足できたかな？"s, u8"Are you satisfied now?"s);
-    label_1425();
+    draw_caption();
     promptl(0, promptmax) = lang(u8"はい"s, u8"Yes"s);
     promptl(1, promptmax) = u8"a"s;
     promptl(2, promptmax) = ""s + promptmax;
@@ -1713,7 +1713,7 @@ label_1563_internal:
     if (rtval == 2)
     {
         nowindowanime = 0;
-        label_1541();
+        main_menu_new_game();
         return;
     }
     redraw(0);
@@ -1723,7 +1723,7 @@ label_1563_internal:
     gmode(2);
     s = lang(
         u8"最後の質問だ。君の名前は？"s, u8"Last question. What's your name?"s);
-    label_1425();
+    draw_caption();
 label_1565_internal:
     val(0) = (windoww - 230) / 2 + inf_screenx;
     val(1) = winposy(120);
@@ -1755,7 +1755,7 @@ label_1565_internal:
         s = lang(
             u8"あいにく、その名前の冒険者はすでに存在する。"s,
             u8"Sorry, but the name is already taken."s);
-        label_1425();
+        draw_caption();
         goto label_1565_internal;
     }
     snd(101);
@@ -1763,17 +1763,17 @@ label_1565_internal:
     cdata[0].gold = 400 + rnd(200);
     if (geneuse != ""s)
     {
-        label_2091();
+        get_inheritance();
     }
     await(250);
     mode = 5;
-    label_2732();
+    initialize_game();
     return;
 }
 
 
 
-void label_1567(int CNT)
+void show_race_or_class_info(int CNT)
 {
     if (val == 1)
     {
@@ -1997,14 +1997,14 @@ void label_1567(int CNT)
 
 
 
-void label_2732()
+void initialize_game()
 {
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
     if (cfg_net)
     {
-        label_1398();
+        initialize_server_info();
     }
     if (mode == 4)
     {
@@ -2041,7 +2041,7 @@ void label_2732()
         rc = 0;
         flt(100);
         characreate(0, 84, -3, 0);
-        label_1536();
+        initialize_pc_character();
         gdata_year = 517;
         gdata_month = 12;
         gdata_day = 30;
@@ -2312,7 +2312,7 @@ void label_2732()
                 mat(cnt) = 200;
             }
         }
-        label_2660();
+        create_all_adventurers();
         create_pcpic(0, true);
         cdatan(1, 0) = random_title();
         cdatan(0, 0) = randomname();
@@ -2343,7 +2343,7 @@ void label_2732()
                 gdata(120 + cnt) = 10000;
             }
         }
-        label_2660();
+        create_all_adventurers();
         mode = 2;
         evadd(2);
         evadd(24);
@@ -2354,13 +2354,13 @@ void label_2732()
     {
         gdata_next_inventory_serial_id = 1000;
         gdata_next_shelter_serial_id = 100;
-        label_1920();
+        initialize_recipememory();
     }
     if (mode == 3)
     {
-        label_2112();
+        load_save_data();
     }
-    label_2124();
+    initialize_fovmap_and_fovlist();
     initialize_map();
     return;
 }

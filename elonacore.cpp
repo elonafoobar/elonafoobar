@@ -7361,7 +7361,7 @@ void initialize_item_material_data()
 
 
 
-void change_item_material()
+void initialize_item_material()
 {
     determine_item_material();
     apply_item_material();
@@ -7469,7 +7469,7 @@ void determine_item_material()
 
 
 
-void label_0265()
+void change_item_material()
 {
     int originalvalue = 0;
     inv[ci].color = 0;
@@ -13577,7 +13577,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
         }
     }
     rc = tc_at_m125;
-    label_2666();
+    wear_most_valuable_equipment_for_all_body_parts();
     r1 = tc_at_m125;
     refresh_character();
     return prm_784;
@@ -18822,7 +18822,7 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
 
 
 
-void label_1398()
+void initialize_server_info()
 {
     elona_vector1<std::string> serverlist;
     SDIM1(cgiurl2);
@@ -20115,7 +20115,7 @@ void label_1423()
 
 
 
-void label_1425()
+void draw_caption()
 {
     int msgx = 0;
     gmode(0);
@@ -22343,7 +22343,7 @@ int try_to_reveal()
 
 
 
-int label_1515()
+int can_evade_trap()
 {
     if (feat(2) == 7)
     {
@@ -22365,7 +22365,7 @@ int label_1515()
 
 
 
-void label_1516()
+void gain_disarm_trap_experience()
 {
     skillexp(175, cc, 50);
     return;
@@ -22373,12 +22373,12 @@ void label_1516()
 
 
 
-int label_1517()
+int try_to_disarm_trap()
 {
     if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc))
         > rnd(gdata_current_dungeon_level * 12 + 100))
     {
-        label_1516();
+        gain_disarm_trap_experience();
         return 1;
     }
     return 0;
@@ -22386,7 +22386,7 @@ int label_1517()
 
 
 
-int label_1518()
+int try_to_perceive_npc()
 {
     int cv = 0;
     cv = 8;
@@ -24112,14 +24112,14 @@ int do_create_character()
         cdata[rc].image = 280;
     }
     cdata[rc].quality = fixlv;
-    label_1535();
+    initialize_character();
     rtval = rc;
     return 1;
 }
 
 
 
-void label_1534()
+void add_quality_parentheses()
 {
     if (fixlv == 4)
     {
@@ -24137,11 +24137,11 @@ void label_1534()
 
 
 
-void label_1535()
+void initialize_character()
 {
     if (mode != 1)
     {
-        label_1534();
+        add_quality_parentheses();
     }
     cdata[rc].state = 1;
     cdata[rc].interest = 100;
@@ -24182,7 +24182,7 @@ void label_1535()
     cdata[rc].sp = cdata[rc].max_sp;
     if (rc == 0)
     {
-        label_2124();
+        initialize_fovmap_and_fovlist();
         gdata_initial_cart_limit = 80000;
         gdata_current_cart_limit = gdata_initial_cart_limit;
     }
@@ -24196,7 +24196,7 @@ void label_1535()
 
 
 
-void label_1536()
+void initialize_pc_character()
 {
     cdata[rc].quality = 2;
     cdata[rc].relationship = 10;
@@ -24414,7 +24414,7 @@ void label_1540()
 
 
 
-void label_1566()
+void clear_background_in_character_making()
 {
     redraw(0);
     gsel(4);
@@ -25758,7 +25758,7 @@ label_1575_internal:
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     if (cdata[rc].character_role == 13)
     {
-        label_2668();
+        supply_new_equipment();
     }
     return;
 }
@@ -26222,7 +26222,7 @@ void label_1581()
     {
         if (inv[ci].material >= 1000 || reftype == 60000)
         {
-            change_item_material();
+            initialize_item_material();
         }
         else
         {
@@ -26263,7 +26263,7 @@ void label_1581()
 
 
 
-int label_1582()
+int do_create_item()
 {
     int ii_p = 0;
     if (val == 0 || val == -1)
@@ -30451,7 +30451,7 @@ label_1665_internal:
 
 
 
-void label_16952()
+void generate_random_nefia()
 {
     int rdroomdoor = 0;
     int rdtype = 0;
@@ -30694,67 +30694,67 @@ label_16951_internal:
         }
         if (gdata_executing_immediate_quest_type == 1009)
         {
-            label_1703();
+            initialize_quest_map_party();
             return;
         }
         if (gdata_executing_immediate_quest_type == 1006)
         {
-            label_1697();
+            initialize_quest_map_crop();
             return;
         }
         if (gdata_executing_immediate_quest_type == 1008)
         {
-            label_1704();
+            initialize_quest_map_town();
             return;
         }
         if (gdata_executing_immediate_quest_type == 1010)
         {
-            label_1704();
+            initialize_quest_map_town();
             return;
         }
     }
     int stat = 1;
     if (rdtype == 2)
     {
-        label_1701();
+        initialize_random_nefia_rdtype2();
     }
     if (rdtype == 1)
     {
-        stat = label_1698();
+        stat = initialize_random_nefia_rdtype1();
     }
     if (rdtype == 4)
     {
-        label_1699();
+        initialize_random_nefia_rdtype4();
     }
     if (rdtype == 5)
     {
-        label_1700();
+        initialize_random_nefia_rdtype5();
     }
     if (rdtype == 3)
     {
-        label_1702();
+        initialize_random_nefia_rdtype3();
     }
     if (rdtype == 6)
     {
         mdata(14) = 2;
-        label_1696();
+        initialize_random_nefia_rdtype6();
         return;
     }
     if (rdtype == 8)
     {
-        label_1705();
+        initialize_random_nefia_rdtype8();
     }
     if (rdtype == 10)
     {
         _mclass = 5 + rnd(4);
         _bold = 2;
-        label_1710();
+        initialize_random_nefia_rdtype10();
     }
     if (rdtype == 9)
     {
         _mclass = 12;
         _bold = 2;
-        label_1708();
+        initialize_random_nefia_rdtype9();
     }
     if (stat == 0)
     {
@@ -30973,7 +30973,7 @@ label_16951_internal:
 
 
 
-void label_1696()
+void initialize_random_nefia_rdtype6()
 {
     map_initialize();
     {
@@ -31036,7 +31036,7 @@ void label_1696()
 
 
 
-int label_1697()
+int initialize_quest_map_crop()
 {
     gdata_left_minutes_of_executing_quest = 120;
     gdata(87) = 9999;
@@ -31178,7 +31178,7 @@ int label_1697()
 
 
 
-int label_1698()
+int initialize_random_nefia_rdtype1()
 {
     map_initialize();
     int stat = map_createroom(1);
@@ -31215,7 +31215,7 @@ int label_1698()
 
 
 
-int label_1699()
+int initialize_random_nefia_rdtype4()
 {
     rdroomsizemin = 8;
     map_initialize();
@@ -31296,7 +31296,7 @@ int label_1699()
 
 
 
-int label_1700()
+int initialize_random_nefia_rdtype5()
 {
     rdroomsizemin = 8;
     mdata(0) = 48 + rnd(20);
@@ -31380,7 +31380,7 @@ int label_1700()
 
 
 
-int label_1701()
+int initialize_random_nefia_rdtype2()
 {
     rdroomsizemax = 3;
     map_initialize();
@@ -31510,7 +31510,7 @@ int label_1701()
 
 
 
-int label_1702()
+int initialize_random_nefia_rdtype3()
 {
     mdata(0) = 48 + rnd(20);
     mdata(1) = 22;
@@ -31551,7 +31551,7 @@ int label_1702()
 
 
 
-int label_1703()
+int initialize_quest_map_party()
 {
     int roomdiff = 0;
     gdata_left_minutes_of_executing_quest = 60;
@@ -31915,7 +31915,7 @@ int label_1703()
 
 
 
-void label_1704()
+void initialize_quest_map_town()
 {
     mdata(10) = 0;
     mdata(14) = 2;
@@ -31993,7 +31993,7 @@ void label_1704()
 
 
 
-void label_1705()
+void initialize_random_nefia_rdtype8()
 {
     mdata(0) = 30;
     mdata(1) = 60 + rnd(60);
@@ -32113,7 +32113,7 @@ void dimmix(elona_vector1<int>& prm_983)
 
 
 
-void label_1708()
+void initialize_random_nefia_rdtype9()
 {
     mdata(0) = _mclass * (_bold * 2) - _bold + 8;
     mdata(1) = mdata(0);
@@ -32374,7 +32374,7 @@ void label_1709()
 
 
 
-void label_1710()
+void initialize_random_nefia_rdtype10()
 {
     mdata(0) = _mclass * (_bold * 2) - _bold + 8;
     mdata(1) = mdata(0);
@@ -32596,7 +32596,7 @@ void label_1710()
 
 
 
-void label_1711()
+void initialize_home_mdata()
 {
     if (gdata_home_scale == 0)
     {
@@ -32634,7 +32634,7 @@ void label_1711()
 
 
 
-void label_1712()
+void build_new_building()
 {
     if (mdata(6) != 1)
     {
@@ -32813,7 +32813,7 @@ void initialize_home_adata()
 
 
 
-void label_1714()
+void use_house_board()
 {
     int homemakewall = 0;
     int cxbk = 0;
@@ -33004,7 +33004,7 @@ void label_1714()
             {
                 await();
                 homemakewall = 1;
-                int stat = label_1947();
+                int stat = target_position();
                 if (stat == -1)
                 {
                     break;
@@ -33163,7 +33163,7 @@ void label_1714()
             cdatan(0, tc) + u8"をどこに移動させる？"s,
             u8"Where do you want to move "s + cdatan(0, tc) + u8"?"s));
         {
-            int stat = label_1947();
+            int stat = target_position();
             if (stat == -1)
             {
                 goto label_1717_internal;
@@ -33426,7 +33426,7 @@ label_1722_internal:
     tlocinity = 0;
     screenupdate = -1;
     update_screen();
-    label_1714();
+    use_house_board();
     return;
 }
 
@@ -33532,7 +33532,7 @@ void label_1724()
             {
                 area = cnt;
                 mid = ""s + area + u8"_"s + 101;
-                label_1725();
+                show_shop_log();
             }
         }
     }
@@ -33546,7 +33546,7 @@ void label_1724()
 
 
 
-void label_1725()
+void show_shop_log()
 {
     int shoplv = 0;
     int customer = 0;
@@ -34137,7 +34137,7 @@ int cbreeder(int prm_984)
 
 
 
-void label_1733()
+void update_ranch()
 {
     worker = getworker(gdata_current_map);
     livestock = 0;
@@ -34559,7 +34559,7 @@ void set_character_generation_filter()
 
 
 
-void label_1736()
+void monster_respawn()
 {
     if (adata(16, gdata_current_map) == 101
         || adata(16, gdata_current_map) == 102)
@@ -35176,7 +35176,7 @@ void label_1745()
         }
         if (adata(16, gdata_current_map) == 31)
         {
-            label_1733();
+            update_ranch();
         }
         if (adata(16, gdata_current_map) == 7)
         {
@@ -35281,7 +35281,7 @@ void label_1745()
                         rc = cnt;
                         if (rnd(5) == 0)
                         {
-                            label_2668();
+                            supply_new_equipment();
                         }
                         if (rnd(2) == 0)
                         {
@@ -35442,7 +35442,7 @@ void label_1746()
 
 
 
-int label_1747()
+int initialize_world_map()
 {
     p = 0;
     {
@@ -35529,7 +35529,7 @@ void label_1748()
                 }
             }
         }
-        label_1747();
+        initialize_world_map();
         label_1749();
     }
     gdata(79) = 0;
@@ -37665,7 +37665,7 @@ label_1857_internal:
 
 
 
-void label_1859()
+void craft_material_menu()
 {
     listmax = 0;
     page = 0;
@@ -37819,12 +37819,12 @@ label_1861_internal:
                 }
                 if (curmenu == 2)
                 {
-                    label_19672();
+                    feat_menu();
                     return;
                 }
                 if (curmenu == 3)
                 {
-                    label_1859();
+                    craft_material_menu();
                     return;
                 }
             }
@@ -42262,7 +42262,7 @@ void clear_rprefmat()
 
 
 
-void label_1920()
+void initialize_recipememory()
 {
     {
         int cnt = 0;
@@ -43996,7 +43996,7 @@ label_1945_internal:
 
 
 
-int label_1947()
+int target_position()
 {
     if (tlocinitx != 0 || tlocinity != 0)
     {
@@ -45238,7 +45238,7 @@ label_1966_internal:
 
 
 
-int label_19672()
+int feat_menu()
 {
     label_1968();
     return label_196902();
@@ -45857,12 +45857,12 @@ label_1970_internal:
                 }
                 if (curmenu == 2)
                 {
-                    label_19672();
+                    feat_menu();
                     return 0;
                 }
                 if (curmenu == 3)
                 {
-                    label_1859();
+                    craft_material_menu();
                     return 0;
                 }
             }
@@ -45935,7 +45935,7 @@ label_1970_internal:
     {
         if (getkey(snail::key::f1))
         {
-            label_2703();
+            show_game_help();
             return -1;
         }
     }
@@ -47961,7 +47961,7 @@ void label_2004()
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
     val = 0;
-    int stat = label_2127();
+    int stat = ask_direction();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -48003,7 +48003,7 @@ void label_2005()
         u8"どの方向に体当たりする？ "s,
         u8"Which direction do you want to bash? "s));
     val = 0;
-    int stat = label_2127();
+    int stat = ask_direction();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -48291,12 +48291,12 @@ label_2009_internal:
 
 
 
-void label_2011()
+void do_give_command()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     update_screen();
     val = 0;
-    int stat = label_2127();
+    int stat = ask_direction();
     if (stat == 0)
     {
         txt(strinteractfail);
@@ -48341,12 +48341,12 @@ void label_2011()
 
 
 
-void label_2012()
+void do_interact_command()
 {
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
     val = 0;
-    int stat = label_2127();
+    int stat = ask_direction();
     if (stat == 0)
     {
         txt(strinteractfail);
@@ -48476,7 +48476,7 @@ void label_2012()
     if (p == 1)
     {
         update_screen();
-        label_2218();
+        try_to_melee_attack();
         turn_end();
         return;
     }
@@ -48550,7 +48550,7 @@ void label_2012()
         gsel(0);
         ccbk = cc;
         cc = tc;
-        label_2039();
+        change_appearance();
         cc = ccbk;
         update_screen();
         pc_turn(false);
@@ -48900,7 +48900,7 @@ label_2020_internal:
             + lang(
                   u8"は、あなたの世界に召喚された！"s,
                   u8" has been summoned to your world!"s));
-        label_2095(userfile);
+        load_user_file(userfile);
         bcopy(
             fs::u8path(u8"./user/"s + listn(1, listmax)),
             fs::u8path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
@@ -50403,7 +50403,7 @@ label_2035_internal:
         {
             if (cc < 16)
             {
-                label_2039();
+                change_appearance();
                 if (mode != 1)
                 {
                     nowindowanime = 1;
@@ -50574,12 +50574,12 @@ label_2035_internal:
                 }
                 if (curmenu == 2)
                 {
-                    label_19672();
+                    feat_menu();
                     return 0;
                 }
                 if (curmenu == 3)
                 {
-                    label_1859();
+                    craft_material_menu();
                     return 0;
                 }
             }
@@ -50743,7 +50743,7 @@ void label_2038()
 
 
 
-int label_2039()
+int change_appearance()
 {
     create_pcpic(cc, false);
     page = 0;
@@ -51279,7 +51279,7 @@ void label_2047()
         label_2048();
     }
     attacknum = 0;
-    int stat = label_2075();
+    int stat = can_do_ranged_attack();
     if (stat == 1)
     {
         s(1) = lang(u8"射撃"s, u8"Dist"s);
@@ -51741,12 +51741,12 @@ label_2052_internal:
                 }
                 if (curmenu == 2)
                 {
-                    label_19672();
+                    feat_menu();
                     return;
                 }
                 if (curmenu == 3)
                 {
-                    label_1859();
+                    craft_material_menu();
                     return;
                 }
             }
@@ -51782,7 +51782,7 @@ label_2052_internal:
 
 
 
-void label_2054()
+void do_get_command()
 {
     if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0)
     {
@@ -52702,7 +52702,7 @@ void label_2074()
         }
     }
     {
-        int stat = label_2075();
+        int stat = can_do_ranged_attack();
         if (stat == -1)
         {
             ++msgdup;
@@ -52738,7 +52738,7 @@ void label_2074()
 
 
 
-int label_2075()
+int can_do_ranged_attack()
 {
     cw = -1;
     ammo = -1;
@@ -53249,7 +53249,7 @@ int label_2083()
         }
     }
     gdata(91) = 104;
-    label_2148();
+    continuous_action_others();
     return 1;
 }
 
@@ -53915,7 +53915,7 @@ void label_2088()
 
 
 
-void label_2089()
+void migrate_save_data()
 {
     elona_vector1<std::string> file_cnv;
     int p1 = 0;
@@ -54030,7 +54030,7 @@ void label_2089()
     }
     gdata_version = 1220;
     cbitmod(967, 0, 1);
-    label_1920();
+    initialize_recipememory();
     return;
 }
 
@@ -54048,7 +54048,7 @@ void label_2090()
 
 
 
-void label_2091()
+void get_inheritance()
 {
     ctrl_file(4, u8"shop3.s2");
     p = 0;
@@ -54100,7 +54100,7 @@ void label_2091()
 
 
 
-void label_2092()
+void load_gene_files()
 {
     ctrl_file(15);
     DIM2(spell, 200);
@@ -54175,7 +54175,7 @@ void label_2092()
 
 
 
-void label_2093()
+void save_gene()
 {
     ctrl_file(14);
     return;
@@ -54204,7 +54204,7 @@ void zipadd(const std::string& prm_1062)
 
 
 
-void label_2095(const fs::path& file)
+void load_user_file(const fs::path& file)
 {
     int zipsize = 0;
     p = 12;
@@ -54816,7 +54816,7 @@ void delete_temporary_user_files()
 
 
 
-void label_2112()
+void load_save_data()
 {
     filemod = "";
     ctrl_file(10);
@@ -54856,7 +54856,7 @@ void label_2112()
         }
     }
     ctrl_file(7);
-    label_2089();
+    migrate_save_data();
     set_item_info();
     {
         int cnt = 0;
@@ -54978,7 +54978,7 @@ void label_2114()
 
 
 
-void label_2118()
+void main_menu_continue()
 {
     cs = 0;
     cs_bk = -1;
@@ -55000,7 +55000,7 @@ void label_2118()
     {
         s = u8"Which save game do you want to continue?"s;
     }
-    label_1425();
+    draw_caption();
     keyrange = 0;
     int save_data_count = 0;
     for (const auto& entry : filesystem::dir_entries{
@@ -55080,7 +55080,7 @@ label_2119_internal:
         await(200);
         mode = 3;
         music = 0;
-        label_2732();
+        initialize_game();
         return;
     }
     if (ginfo(2) == 0)
@@ -55099,7 +55099,7 @@ label_2119_internal:
                 {
                     s = u8"Do you really want to delete "s + playerid + u8" ?"s;
                 }
-                label_1425();
+                draw_caption();
                 promptl(0, 0) = stryes;
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
@@ -55114,7 +55114,7 @@ label_2119_internal:
                 show_prompt();
                 if (rtval != 0)
                 {
-                    label_2118();
+                    main_menu_continue();
                     return;
                 }
                 if (jp)
@@ -55127,7 +55127,7 @@ label_2119_internal:
                     s = u8"Are you sure you really want to delete "s + playerid
                         + u8" ?"s;
                 }
-                label_1425();
+                draw_caption();
                 promptl(0, 0) = stryes;
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
@@ -55145,14 +55145,14 @@ label_2119_internal:
                     snd(20);
                     ctrl_file(9);
                 }
-                label_2118();
+                main_menu_continue();
                 return;
             }
         }
     }
     if (key == key_cancel)
     {
-        label_2115();
+        main_title_menu();
         return;
     }
     goto label_2119_internal;
@@ -55160,7 +55160,7 @@ label_2119_internal:
 
 
 
-void label_2121()
+void main_menu_incarnate()
 {
     cs = 0;
     cs_bk = -1;
@@ -55182,7 +55182,7 @@ void label_2121()
     {
         s = u8"Which gene do you want to incarnate?"s;
     }
-    label_1425();
+    draw_caption();
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries{
@@ -55261,12 +55261,12 @@ label_2122_internal:
         snd(20);
         geneuse = listn(0, p);
         playerid = listn(0, p);
-        label_1541();
+        main_menu_new_game();
         return;
     }
     if (key == key_cancel)
     {
-        label_2115();
+        main_title_menu();
         return;
     }
     goto label_2122_internal;
@@ -55274,7 +55274,7 @@ label_2122_internal:
 
 
 
-void label_2124()
+void initialize_fovmap_and_fovlist()
 {
     elona_vector2<int> fovmap;
     DIM3(fovlist, 2, 15);
@@ -55596,7 +55596,7 @@ label_21261_internal:
 
 
 
-int label_2127()
+int ask_direction()
 {
     snd(26);
     redraw(0);
@@ -56189,7 +56189,7 @@ label_21451_internal:
                 {
                     if (sdata(175, cc) != 0)
                     {
-                        int stat = label_1517();
+                        int stat = try_to_disarm_trap();
                         if (stat == 1)
                         {
                             label_2144();
@@ -56204,7 +56204,7 @@ label_21451_internal:
                     }
                 }
             }
-            int stat = label_1515();
+            int stat = can_evade_trap();
             if (stat == 1)
             {
                 if (synccheck(cc, -1))
@@ -57069,7 +57069,7 @@ void label_2147()
 
 
 
-void label_2148()
+void continuous_action_others()
 {
     if (cc != 0)
     {
@@ -57769,7 +57769,7 @@ void label_2151()
             ++listmax;
             cbitmod(962, tc, 0);
             show_random_event_window(u8"bg_re14");
-            label_2093();
+            save_gene();
         }
     }
     label_2149();
@@ -59915,7 +59915,7 @@ int label_2175()
             tc = 0;
             txt(lang(u8"どの方向？"s, u8"Which direction?"s));
             update_screen();
-            int stat = label_2127();
+            int stat = ask_direction();
             if (stat == 0)
             {
                 return 0;
@@ -59972,7 +59972,7 @@ int label_2175()
             }
             else
             {
-                int stat = label_1947();
+                int stat = target_position();
                 if (stat != 1)
                 {
                     if (stat == 0)
@@ -60101,7 +60101,7 @@ int label_2175()
             }
             update_screen();
             val = 0;
-            int stat = label_2127();
+            int stat = ask_direction();
             if (stat == 0)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -60172,7 +60172,7 @@ void label_2188()
 
 
 
-void label_2189()
+void do_throw_command()
 {
     int ccthrowpotion = 0;
     if (synccheck(cc, -1))
@@ -60584,7 +60584,7 @@ int pick_up_item()
                         return 0;
                     }
                     gdata(91) = 103;
-                    label_2148();
+                    continuous_action_others();
                     return -1;
                 }
             }
@@ -61069,7 +61069,7 @@ void do_read_commad()
     access_item_db(13);
     if (efid == 1115)
     {
-        label_1712();
+        build_new_building();
         return;
     }
     turn_end();
@@ -61509,7 +61509,7 @@ void label_2203()
                 keybd_wait = 1;
                 keybd_attacking = 1;
             }
-            label_2218();
+            try_to_melee_attack();
             turn_end();
             return;
         }
@@ -61689,7 +61689,7 @@ void label_2205()
         cell_featread(dx, dy);
         if (feat(1) == 21)
         {
-            label_2215();
+            try_to_open_locked_door();
             return;
         }
         if (feat(1) == 30)
@@ -62451,7 +62451,7 @@ void label_2207()
 
 
 
-int open_box()
+int unlock_box()
 {
     int stat = item_find(636, 3);
     if (stat == -1)
@@ -62528,7 +62528,7 @@ int open_box()
         show_prompt();
         if (rtval == 0)
         {
-            open_box();
+            unlock_box();
             return 0;
         }
         return 0;
@@ -62555,7 +62555,7 @@ void do_open_command()
         invctrl(1) = 0;
         invfile = inv[ci].param1;
         snd(23);
-        label_2263();
+        sell_item();
         screenupdate = -1;
         update_screen();
         turn_end();
@@ -62711,7 +62711,7 @@ void do_open_command()
         if (inv[ci].param2 != 0)
         {
             val = inv[ci].param2;
-            int stat = open_box();
+            int stat = unlock_box();
             if (stat == 0)
             {
                 screenupdate = -1;
@@ -62729,11 +62729,11 @@ void do_open_command()
     {
         if (inv[ci].id == 752)
         {
-            label_2214();
+            open_new_year_gift();
         }
         else
         {
-            label_2213();
+            open_box();
         }
         item_stack(cc, ri);
     }
@@ -62745,7 +62745,7 @@ void do_open_command()
 
 
 
-void label_2213()
+void open_box()
 {
     snd(23);
     txt(lang(
@@ -62917,7 +62917,7 @@ void label_2213()
 
 
 
-void label_2214()
+void open_new_year_gift()
 {
     snd(23);
     txt(lang(
@@ -63105,7 +63105,7 @@ void label_2214()
 
 
 
-void label_2215()
+void try_to_open_locked_door()
 {
     cell_featread(dx, dy);
     if (feat == tile_doorclosed4 && feat(2) > 0)
@@ -63113,7 +63113,7 @@ void label_2215()
         if (cc == 0)
         {
             val = feat(2);
-            int stat = open_box();
+            int stat = unlock_box();
             if (stat == 0)
             {
                 screenupdate = -1;
@@ -63194,12 +63194,12 @@ void label_2215()
 
 
 
-void label_2216()
+void do_close_command()
 {
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
     update_screen();
     val = 0;
-    int stat = label_2127();
+    int stat = ask_direction();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -63280,10 +63280,10 @@ int label_2217()
             int cnt = 0;
             for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
-                label_2075();
+                can_do_ranged_attack();
                 ele = 0;
                 extraattack = 0;
-                label_22192();
+                do_physical_attack();
                 if (cdata[tc].state != 1)
                 {
                     int stat = label_2072();
@@ -63305,7 +63305,7 @@ int label_2217()
             int cnt = 0;
             for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
-                label_2075();
+                can_do_ranged_attack();
                 ele = 0;
                 label_2076();
                 if (listmax == 0)
@@ -63330,14 +63330,14 @@ int label_2217()
                     continue;
                 }
                 extraattack = 0;
-                label_22192();
+                do_physical_attack();
             }
         }
     }
     else
     {
         extraattack = 0;
-        label_22192();
+        do_physical_attack();
     }
     if (ammoproc == 1)
     {
@@ -63354,7 +63354,7 @@ int label_2217()
 
 
 
-void label_2218()
+void try_to_melee_attack()
 {
     if (cc != 0)
     {
@@ -63368,7 +63368,7 @@ void label_2218()
                         cdata[tc].position.x,
                         cdata[tc].position.y))
                 {
-                    int stat = label_2075();
+                    int stat = can_do_ranged_attack();
                     if (stat == 1)
                     {
                         label_2217();
@@ -63432,14 +63432,14 @@ void label_2218()
                 attackskill = inv[cw].skill;
                 ++attacknum;
                 extraattack = 0;
-                label_22192();
+                do_physical_attack();
             }
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        label_22192();
+        do_physical_attack();
     }
     attackvar = 0;
     return;
@@ -63447,7 +63447,7 @@ void label_2218()
 
 
 
-void label_22192()
+void do_physical_attack()
 {
     int expmodifer = 0;
 label_22191_internal:
@@ -64878,7 +64878,7 @@ void do_use_command()
             pc_turn(false);
         }
         gdata(91) = 100;
-        label_2148();
+        continuous_action_others();
         turn_end();
         return;
     }
@@ -65137,13 +65137,13 @@ void do_use_command()
         }
         screenupdate = -1;
         update_screen();
-        label_1714();
+        use_house_board();
         return;
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         val = 0;
         {
-            int stat = label_2127();
+            int stat = ask_direction();
             f = 0;
             if (stat != 0)
             {
@@ -65237,7 +65237,7 @@ void do_use_command()
         update_screen();
         val = 0;
         {
-            int stat = label_2127();
+            int stat = ask_direction();
             if (stat == 0)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -65294,7 +65294,7 @@ void do_use_command()
         update_screen();
         val = 0;
         {
-            int stat = label_2127();
+            int stat = ask_direction();
             f = 0;
             if (stat != 0)
             {
@@ -65372,7 +65372,7 @@ void do_use_command()
         update_screen();
         val = 0;
         {
-            int stat = label_2127();
+            int stat = ask_direction();
             f = 0;
             if (stat != 0)
             {
@@ -65473,7 +65473,7 @@ void do_use_command()
                 pc_turn(false);
             }
             gdata(91) = 101;
-            label_2148();
+            continuous_action_others();
             turn_end();
             return;
         }
@@ -65507,7 +65507,7 @@ void do_use_command()
             }
         }
         gdata(91) = 102;
-        label_2148();
+        continuous_action_others();
         goto label_2229_internal;
     case 11:
         if (moneybox(inv[ci].param2) > cdata[0].gold)
@@ -66515,10 +66515,10 @@ void label_2236()
 
 
 
-void label_2237()
+void do_steal_command()
 {
     gdata(91) = 105;
-    label_2148();
+    continuous_action_others();
     return;
 }
 
@@ -67787,7 +67787,7 @@ void label_2244()
         {
             invctrl = 11;
             invfile = cdata[tc].shop_store_id;
-            label_2263();
+            sell_item();
             screenupdate = -1;
             update_screen();
             cs = 0;
@@ -67799,7 +67799,7 @@ void label_2244()
         {
             invctrl = 12;
             invfile = cdata[tc].shop_store_id;
-            label_2263();
+            sell_item();
             cc = 0;
             screenupdate = -1;
             update_screen();
@@ -67836,7 +67836,7 @@ void label_2244()
 
 
 
-int label_2248()
+int give_potion_of_cure_corruption()
 {
     list(0, listmax) = 1;
     listn(0, listmax) = lang(
@@ -68988,13 +68988,13 @@ void label_2262()
         ctrl_file(3, u8"shop"s + invfile + u8".s2");
     }
     invfile = cdata[tc].shop_store_id;
-    label_2264();
+    load_shoptmp();
     return;
 }
 
 
 
-void label_2263()
+void sell_item()
 {
     mode = 6;
     ctrl_file(4, u8"shoptmp.s2");
@@ -69013,7 +69013,7 @@ void label_2263()
 
 
 
-void label_2264()
+void load_shoptmp()
 {
     ctrl_file(4, u8"shop"s + invfile + u8".s2");
     ctrl_file(3, u8"shoptmp.s2");
@@ -69865,7 +69865,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 
 
 
-void label_2270()
+void initialize_economy()
 {
     elona_vector1<int> bkdata;
     if (initeco)
@@ -70780,14 +70780,14 @@ int new_ally_joins()
 
 
 
-void label_2660()
+void create_all_adventurers()
 {
     {
         int cnt = 16;
         for (int cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
         {
             rc = cnt;
-            label_2661();
+            create_adventurer();
         }
     }
     return;
@@ -70795,7 +70795,7 @@ void label_2660()
 
 
 
-void label_2661()
+void create_adventurer()
 {
     flt(0, 4);
     initlv = rnd(60 + cdata[0].level) + 1;
@@ -70865,7 +70865,7 @@ void label_2662()
             }
             if (cdata[rc].state == 5)
             {
-                label_2661();
+                create_adventurer();
                 continue;
             }
             if (cdata[rc].state == 4)
@@ -70878,7 +70878,7 @@ void label_2662()
                     {
                         addnews(5, rc);
                         cdata[rc].state = 0;
-                        label_2661();
+                        create_adventurer();
                     }
                     else
                     {
@@ -70970,7 +70970,7 @@ void label_2662()
 
 
 
-void label_2663()
+void set_item_which_will_be_used()
 {
     a = the_item_db[inv[ci].id]->category;
     if (a == 57000 || a == 52000 || a == 53000)
@@ -71039,13 +71039,13 @@ int label_2664()
             addnews(1, rc);
         }
     }
-    label_2667();
+    wear_most_valuable_equipment();
     return 0;
 }
 
 
 
-int label_2665()
+int inv_getfreeid_force()
 {
     p = inv_getfreeid(tc);
     if (p != -1)
@@ -71073,7 +71073,7 @@ int label_2665()
 
 
 
-void label_2666()
+void wear_most_valuable_equipment_for_all_body_parts()
 {
     inv_getheader(rc);
     {
@@ -71085,7 +71085,7 @@ void label_2666()
             {
                 continue;
             }
-            label_2667();
+            wear_most_valuable_equipment();
         }
     }
     return;
@@ -71093,7 +71093,7 @@ void label_2666()
 
 
 
-void label_2667()
+void wear_most_valuable_equipment()
 {
     int eqdup = 0;
     elona_vector1<int> bodylist;
@@ -71162,7 +71162,7 @@ void label_2667()
 
 
 
-void label_2668()
+void supply_new_equipment()
 {
     int haveweapon = 0;
     int mustequip = 0;
@@ -71296,7 +71296,7 @@ void label_2668()
                     }
                 }
             }
-            label_2667();
+            wear_most_valuable_equipment();
             if (cdata[rc].character_role != 13)
             {
                 if (rnd(3))
@@ -71879,7 +71879,7 @@ void label_2673()
             if (qdata(9, rq) == 0)
             {
                 val = qdata(3, rq);
-                label_2676();
+                failed_quest();
             }
         }
     }
@@ -71930,7 +71930,7 @@ void label_2674()
             }
         }
         val = gdata_executing_immediate_quest_type;
-        label_2676();
+        failed_quest();
         msg_halt();
     }
     gdata_executing_immediate_quest_type = 0;
@@ -71956,7 +71956,7 @@ void label_2675()
 
 
 
-void label_2676()
+void failed_quest()
 {
     if (val == 1)
     {
@@ -72145,7 +72145,7 @@ void label_2677()
 
 
 
-void label_2678()
+void hunt_all_targets()
 {
     music = 74;
     musicloop = 1;
@@ -72200,7 +72200,7 @@ void label_2678()
 
 
 
-void label_2679()
+void complete_quest()
 {
     snd(51);
     p = qdata(6, rq);
@@ -73354,7 +73354,7 @@ label_2689_internal:
     {
         r1 = tc;
         r2 = cc;
-        int stat = label_1518();
+        int stat = try_to_perceive_npc();
         if (stat == 1)
         {
             if (cdata[cc].relationship == -3)
@@ -73540,7 +73540,7 @@ label_2692_internal:
                                                 lang(
                                                     u8"「くらえー！」"s,
                                                     cnvtalk(u8"Eat this!"s)));
-                                            label_2189();
+                                            do_throw_command();
                                             return;
                                         }
                                     }
@@ -73577,7 +73577,7 @@ label_2692_internal:
                                     int stat = itemcreate(cc, 587, -1, -1, 0);
                                     if (stat == 1)
                                     {
-                                        label_2189();
+                                        do_throw_command();
                                         return;
                                     }
                                 }
@@ -73636,7 +73636,7 @@ label_2692_internal:
                                             u8"「避けてー」"s,
                                             cnvtalk(u8"Scut!"s)));
                                     txtmore();
-                                    label_2189();
+                                    do_throw_command();
                                     return;
                                 }
                             }
@@ -73742,7 +73742,7 @@ label_2692_internal:
                                         cnvtalk(u8"Snail!"s)),
                                     lang(u8"「殺す！」"s, cnvtalk(u8"Kill!"s)));
                             }
-                            label_2189();
+                            do_throw_command();
                             return;
                         }
                     }
@@ -74322,7 +74322,7 @@ void label_2696()
                         }
                         if (stat == 1)
                         {
-                            label_2189();
+                            do_throw_command();
                             return;
                         }
                         turn_end();
@@ -74358,7 +74358,7 @@ void label_2696()
                     cdata[tc].position.x,
                     cdata[tc].position.y))
             {
-                int stat = label_2075();
+                int stat = can_do_ranged_attack();
                 if (stat == 1)
                 {
                     label_2217();
@@ -74406,7 +74406,7 @@ void label_2696()
     {
         if (distance == 1)
         {
-            label_2218();
+            try_to_melee_attack();
         }
         if (rnd(3) == 0 || cc < 16)
         {
@@ -74418,7 +74418,7 @@ void label_2696()
                         cdata[tc].position.x,
                         cdata[tc].position.y))
                 {
-                    int stat = label_2075();
+                    int stat = can_do_ranged_attack();
                     if (stat == 1)
                     {
                         label_2217();
@@ -74433,7 +74433,7 @@ void label_2696()
     }
     if (distance == 1)
     {
-        label_2218();
+        try_to_melee_attack();
         turn_end();
         return;
     }
@@ -74445,7 +74445,7 @@ void label_2696()
                 cdata[tc].position.x,
                 cdata[tc].position.y))
         {
-            int stat = label_2075();
+            int stat = can_do_ranged_attack();
             if (stat == 1)
             {
                 label_2217();
@@ -74927,7 +74927,7 @@ void label_2702()
 
 
 
-void label_2703()
+void show_game_help()
 {
     snd(26);
     listmax = 0;
@@ -76085,7 +76085,7 @@ label_2734_internal:
         cc = 0;
         if (gdata_play_turns % 20 == 0)
         {
-            label_1736();
+            monster_respawn();
         }
         if (gdata_play_turns % 10 == 1)
         {
@@ -77080,7 +77080,7 @@ label_2738:
             {
                 at(20);
             }
-            label_2148();
+            continuous_action_others();
         }
         if (cdata[cc].continuous_action_id == 12)
         {
@@ -77190,7 +77190,7 @@ void turn_end()
             {
                 gdata(98) += 10000;
                 gdata(91) = 100;
-                label_2148();
+                continuous_action_others();
             }
         }
         if (cdata[0].inventory_weight_type >= 3)
@@ -77696,7 +77696,7 @@ label_2747:
             msg_newline();
             msgtemp = u8"  "s;
             firstturn = 1;
-            label_2112();
+            load_save_data();
             mode = 3;
             initialize_map();
             return;
@@ -78150,12 +78150,12 @@ label_2747:
     }
     if (key == key_material)
     {
-        label_1859();
+        craft_material_menu();
         return;
     }
     if (key == key_trait)
     {
-        label_19672();
+        feat_menu();
         return;
     }
     if (key == key_wear)
@@ -78234,7 +78234,7 @@ label_2747:
     }
     if (key == key_help)
     {
-        label_2703();
+        show_game_help();
         update_screen();
         goto label_2747;
     }
@@ -78257,14 +78257,14 @@ label_2747:
         }
         else
         {
-            label_2012();
+            do_interact_command();
             return;
         }
     }
     if (key == key_target)
     {
         findlocmode = 1;
-        label_1947();
+        target_position();
         findlocmode = 0;
         goto label_2747;
     }
@@ -78300,13 +78300,13 @@ label_2747:
         }
         else
         {
-            label_2011();
+            do_give_command();
             return;
         }
     }
     if (key == key_get || key == key_get2)
     {
-        label_2054();
+        do_get_command();
         return;
     }
     if (key == key_look)
@@ -78318,7 +78318,7 @@ label_2747:
         }
         else
         {
-            label_1947();
+            target_position();
             goto label_2747;
         }
     }
@@ -78369,7 +78369,7 @@ label_2747:
         }
         else
         {
-            label_2216();
+            do_close_command();
             return;
         }
     }
@@ -78669,7 +78669,7 @@ label_27491:
             + u8"に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！"s,
         u8"Blessing to "s + cdatan(0, 0) + u8", "s + cdatan(1, 0)
             + u8"! You've finally aquired the codex!"s);
-    label_1425();
+    draw_caption();
     s(0) = lang(u8"*勝利*"s, u8"*Win*"s);
     s(1) = ""s + strhint3;
     windowshadow = 1;
@@ -78889,7 +78889,7 @@ void pc_died()
     show_game_score_ranking();
     s = lang(
         u8"あともう少しで埋葬される…"s, u8"You are about to be burried..."s);
-    label_1425();
+    draw_caption();
     promptl(0, promptmax) = lang(u8"這い上がる"s, u8"Crawl up"s);
     promptl(1, promptmax) = u8"a"s;
     promptl(2, promptmax) = ""s + promptmax;
@@ -78909,7 +78909,7 @@ void pc_died()
         s = lang(
             u8"あなたは埋められた。さようなら…（キーを押すと終了します）"s,
             u8"You have been burried. Bye...(Hit any key to exit)"s);
-        label_1425();
+        draw_caption();
         redraw(1);
         press();
         finish_elona();

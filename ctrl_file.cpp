@@ -1005,7 +1005,7 @@ void fmode_22_21(bool read)
                     }
                 }
                 rc = tg;
-                label_2666();
+                wear_most_valuable_equipment_for_all_body_parts();
                 cdata[rc].item_which_will_be_used = 0;
                 rowactend(rc);
                 cbitmod(967, rc, 0);

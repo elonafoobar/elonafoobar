@@ -121,7 +121,7 @@ int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
     val(1) = prm_469;
     val(2) = prm_470;
     itemcreatehack = 0;
-    return label_1582();
+    return do_create_item();
 }
 
 
@@ -964,7 +964,7 @@ void item_checkknown(int prm_515)
 
 
 
-void label_0311()
+void itemname_additional_info()
 {
     if (inv[prm_518].id == 578)
     {
@@ -1420,7 +1420,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (jp)
     {
-        label_0311();
+        itemname_additional_info();
     }
     if (a_at_m63 == 60000)
     {
@@ -1607,7 +1607,7 @@ label_0313_internal:
                 }
             }
         }
-        label_0311();
+        itemname_additional_info();
     }
     if (inv[prm_518].identification_state >= 3)
     {

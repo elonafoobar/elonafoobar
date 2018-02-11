@@ -1586,14 +1586,14 @@ label_2725_internal:
         {
             if (cfg_net)
             {
-                label_1398();
+                initialize_server_info();
             }
             update_screen();
             pc_turn(false);
         }
         else
         {
-            label_2115();
+            main_title_menu();
             return;
         }
     }

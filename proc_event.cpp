@@ -15,7 +15,7 @@ void proc_event()
     elona_vector1<int> voidboss;
     switch (evid())
     {
-    case 8: label_2678(); goto label_2755_internal;
+    case 8: hunt_all_targets(); goto label_2755_internal;
     case 14:
         if (gdata_executing_immediate_quest_type == 1009)
         {
@@ -119,7 +119,7 @@ void proc_event()
         goto label_2755_internal;
     case 24:
         initeco = 1;
-        label_2270();
+        initialize_economy();
         goto label_2755_internal;
     case 3:
         tc = findchara(2);
@@ -348,7 +348,7 @@ void proc_event()
         tc = evdata2(evnum - (evnum != 0) * 1);
         speak_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
-        label_2679();
+        complete_quest();
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
         goto label_2755_internal;
     case 15:
@@ -366,7 +366,7 @@ void proc_event()
                     {
                         rq = cnt;
                         val = qdata(3, rq);
-                        label_2676();
+                        failed_quest();
                         break;
                     }
                 }
