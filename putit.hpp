@@ -10,17 +10,11 @@ namespace elona::putit
 
 class iarchive_base
 {
-public:
-    static constexpr bool input = true;
-    static constexpr bool output = false;
 };
 
 
 class oarchive_base
 {
-public:
-    static constexpr bool input = false;
-    static constexpr bool output = true;
 };
 
 
@@ -172,7 +166,7 @@ PRIMITIVE_TYPES(long double)
 template <typename Archive>
 void serialize(Archive& ar, std::string& data)
 {
-    if constexpr (std::is_same_v<Archive, binary_iarchive>)
+    if constexpr (std::is_base_of_v<iarchive_base, Archive>)
     {
         std::string::size_type length;
         ar.primitive(length);

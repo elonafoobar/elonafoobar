@@ -47,6 +47,16 @@ struct ability
     int original_level = 0;
     int experience = 0;
     int potential = 0;
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(current_level);
+        ar(original_level);
+        ar(experience);
+        ar(potential);
+    }
 };
 
 
@@ -73,12 +83,6 @@ public:
     void clear(int cc);
 
     void copy(int tc, int cc);
-
-
-    std::unique_ptr<char[]> serialize(int offset = 0) const;
-
-    void
-    deserialize(std::unique_ptr<char[]> raw_data, int size, int offset = 0);
 
 
 private:

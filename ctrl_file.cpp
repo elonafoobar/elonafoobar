@@ -15,6 +15,156 @@ namespace
 {
 
 
+template <typename T>
+void load_v1(
+    const fs::path& filepath,
+    elona_vector1<T>& data,
+    size_t begin,
+    size_t end)
+{
+    std::ifstream in{filepath};
+    putit::binary_iarchive ar{in};
+    for (size_t i = begin; i < end; ++i)
+    {
+        ar.load(data(i));
+    }
+}
+
+
+template <typename T>
+void save_v1(
+    const fs::path& filepath,
+    elona_vector1<T>& data,
+    size_t begin,
+    size_t end)
+{
+    std::ofstream out{filepath};
+    putit::binary_oarchive ar{out};
+    for (size_t i = begin; i < end; ++i)
+    {
+        ar.save(data(i));
+    }
+}
+
+
+template <typename T>
+void load_v2(
+    const fs::path& filepath,
+    elona_vector2<T>& data,
+    size_t i_begin,
+    size_t i_end,
+    size_t j_begin,
+    size_t j_end)
+{
+    std::ifstream in{filepath};
+    putit::binary_iarchive ar{in};
+    for (size_t j = j_begin; j < j_end; ++j)
+    {
+        for (size_t i = i_begin; i < i_end; ++i)
+        {
+            ar.load(data(i, j));
+        }
+    }
+}
+
+
+template <typename T>
+void save_v2(
+    const fs::path& filepath,
+    elona_vector2<T>& data,
+    size_t i_begin,
+    size_t i_end,
+    size_t j_begin,
+    size_t j_end)
+{
+    std::ofstream out{filepath};
+    putit::binary_oarchive ar{out};
+    for (size_t j = j_begin; j < j_end; ++j)
+    {
+        for (size_t i = i_begin; i < i_end; ++i)
+        {
+            ar.save(data(i, j));
+        }
+    }
+}
+
+
+template <typename T>
+void load_v3(
+    const fs::path& filepath,
+    elona_vector3<T>& data,
+    size_t i_begin,
+    size_t i_end,
+    size_t j_begin,
+    size_t j_end,
+    size_t k_begin,
+    size_t k_end)
+{
+    std::ifstream in{filepath};
+    putit::binary_iarchive ar{in};
+    for (size_t k = k_begin; k < k_end; ++k)
+    {
+        for (size_t j = j_begin; j < j_end; ++j)
+        {
+            for (size_t i = i_begin; i < i_end; ++i)
+            {
+                ar.load(data(i, j, k));
+            }
+        }
+    }
+}
+
+
+template <typename T>
+void save_v3(
+    const fs::path& filepath,
+    elona_vector3<T>& data,
+    size_t i_begin,
+    size_t i_end,
+    size_t j_begin,
+    size_t j_end,
+    size_t k_begin,
+    size_t k_end)
+{
+    std::ofstream out{filepath};
+    putit::binary_oarchive ar{out};
+    for (size_t k = k_begin; k < k_end; ++k)
+    {
+        for (size_t j = j_begin; j < j_end; ++j)
+        {
+            for (size_t i = i_begin; i < i_end; ++i)
+            {
+                ar.save(data(i, j, k));
+            }
+        }
+    }
+}
+
+
+template <typename T>
+void load(const fs::path& filepath, T& data, size_t begin, size_t end)
+{
+    std::ifstream in{filepath};
+    putit::binary_iarchive ar{in};
+    for (size_t i = begin; i < end; ++i)
+    {
+        ar.load(data[i]);
+    }
+}
+
+
+template <typename T>
+void save(const fs::path& filepath, T& data, size_t begin, size_t end)
+{
+    std::ofstream out{filepath};
+    putit::binary_oarchive ar{out};
+    for (size_t i = begin; i < end; ++i)
+    {
+        ar.save(data[i]);
+    }
+}
+
+
 
 void fmode_8_7(bool read)
 {
@@ -34,16 +184,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(gdata, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, gdata, 0, 1000);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(gdata, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, gdata, 0, 1000);
         }
     }
 
@@ -54,22 +200,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int cc = 0; cc < 57; ++cc)
-                {
-                    ar.load(cdata[cc]);
-                }
+                load(filepath, cdata, 0, 57);
             }
         }
         else
         {
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 0; cc < 57; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 0, 57);
         }
     }
 
@@ -80,16 +216,28 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(sdata, hgz, fsize);
-                zClose(hgz);
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int cc = 0; cc < 57; ++cc)
+                {
+                    for (int i = 0; i < 600; ++i)
+                    {
+                        ar.load(sdata.get(i, cc));
+                    }
+                }
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(sdata, hgz, fsize);
-            zClose(hgz);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 0; cc < 57; ++cc)
+            {
+                for (int i = 0; i < 600; ++i)
+                {
+                    ar.save(sdata.get(i, cc));
+                }
+            }
         }
     }
 
@@ -100,16 +248,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(spell, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, spell, 0, 200);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(spell, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, spell, 0, 200);
         }
     }
 
@@ -120,22 +264,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int ci = 0; ci < 1320; ++ci)
-                {
-                    ar.load(inv[ci]);
-                }
+                load(filepath, inv, 0, 1320);
             }
         }
         else
         {
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int ci = 0; ci < 1320; ++ci)
-            {
-                ar.save(inv[ci]);
-            }
+            save(filepath, inv, 0, 1320);
         }
     }
 
@@ -146,16 +280,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(itemmemory, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, itemmemory, 0, 3, 0, 800);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(itemmemory, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, itemmemory, 0, 3, 0, 800);
         }
     }
 
@@ -166,16 +296,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(npcmemory, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, npcmemory, 0, 2, 0, 800);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(npcmemory, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, npcmemory, 0, 2, 0, 800);
         }
     }
 
@@ -186,16 +312,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(adata, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, adata, 0, 40, 0, 500);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(adata, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, adata, 0, 40, 0, 500);
         }
     }
 
@@ -206,16 +328,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(spact, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, spact, 0, 500);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(spact, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, spact, 0, 500);
         }
     }
 
@@ -226,16 +344,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(qdata, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, qdata, 0, 20, 0, 500);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(qdata, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, qdata, 0, 20, 0, 500);
         }
     }
 
@@ -246,16 +360,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(mat, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, mat, 0, 400);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(mat, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, mat, 0, 400);
         }
     }
 
@@ -266,16 +376,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(trait, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, trait, 0, 500);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(trait, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, trait, 0, 500);
         }
     }
 
@@ -286,16 +392,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(pcc, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, pcc, 0, 30, 0, 20);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(pcc, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, pcc, 0, 30, 0, 20);
         }
     }
 
@@ -306,16 +408,12 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(card, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, card, 0, 100, 0, 40);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(card, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, card, 0, 100, 0, 40);
         }
     }
 
@@ -326,19 +424,15 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
                 if (gdata_version >= 1200)
                 {
-                    zRead(recipememory, hgz, fsize);
+                    load_v1(filepath, recipememory, 0, 1200);
                 }
-                zClose(hgz);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(recipememory, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, recipememory, 0, 1200);
         }
     }
 
@@ -439,23 +533,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int cc = 0; cc < 57; ++cc)
-                {
-                    ar.load(cdata[cc]);
-                }
+                load(filepath, cdata, 0, 57);
             }
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 0; cc < 57; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 0, 57);
         }
     }
 
@@ -466,17 +550,29 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(sdata, hgz, fsize);
-                zClose(hgz);
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int cc = 0; cc < 57; ++cc)
+                {
+                    for (int i = 0; i < 600; ++i)
+                    {
+                        ar.load(sdata.get(i, cc));
+                    }
+                }
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(sdata, hgz, fsize);
-            zClose(hgz);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 0; cc < 57; ++cc)
+            {
+                for (int i = 0; i < 600; ++i)
+                {
+                    ar.save(sdata.get(i, cc));
+                }
+            }
         }
     }
 
@@ -487,17 +583,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(spell, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, spell, 0, 200);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(spell, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, spell, 0, 200);
         }
     }
 
@@ -507,23 +599,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
-                putit::binary_iarchive ar{in};
-                for (int ci = 0; ci < 1320; ++ci)
-                {
-                    ar.load(inv[ci]);
-                }
+                load(filepath, inv, 0, 1320);
             }
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int ci = 0; ci < 1320; ++ci)
-            {
-                ar.save(inv[ci]);
-            }
+            save(filepath, inv, 0, 1320);
         }
     }
 
@@ -534,17 +616,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(spact, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, spact, 0, 500);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(spact, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, spact, 0, 500);
         }
     }
 
@@ -555,17 +633,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(mat, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, mat, 0, 400);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(mat, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, mat, 0, 400);
         }
     }
 
@@ -576,17 +650,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(card, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, card, 0, 100, 0, 40);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(card, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, card, 0, 100, 0, 40);
         }
     }
 
@@ -597,17 +667,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(genetemp, hgz, fsize);
-                zClose(hgz);
+                load_v1(filepath, genetemp, 0, 1000);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(gdata, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, genetemp, 0, 1000);
         }
     }
 }
@@ -624,16 +690,12 @@ void fmode_2_1(bool read)
         int fsize = 400;
         if (read)
         {
-            zOpen(hgz, filepath, 0);
-            zRead(mdata, hgz, fsize);
-            zClose(hgz);
+            load_v1(filepath, mdata, 0, 100);
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(mdata, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, mdata, 0, 100);
         }
     }
 
@@ -645,16 +707,12 @@ void fmode_2_1(bool read)
             DIM4(map, mdata(0), mdata(1), 10);
             DIM3(mapsync, mdata(0), mdata(1));
             DIM3(mef, 9, 200);
-            zOpen(hgz, filepath, 0);
-            zRead(map, hgz, fsize);
-            zClose(hgz);
+            load_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(map, hgz, fsize);
-            zClose(hgz);
+            save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
     }
 
@@ -662,22 +720,12 @@ void fmode_2_1(bool read)
         const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
         if (read)
         {
-            std::ifstream in{filepath};
-            putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.load(cdata[cc]);
-            }
+            load(filepath, cdata, 57, 245);
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 57, 245);
         }
     }
 
@@ -686,16 +734,28 @@ void fmode_2_1(bool read)
         int fsize = 902400;
         if (read)
         {
-            zOpen(hgz, filepath, 0);
-            zRead(sdata, hgz, fsize, 57);
-            zClose(hgz);
+            std::ifstream in{filepath};
+            putit::binary_iarchive ar{in};
+            for (int cc = 57; cc < 245; ++cc)
+            {
+                for (int i = 0; i < 600; ++i)
+                {
+                    ar.load(sdata.get(i, cc));
+                }
+            }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(sdata, hgz, fsize, 57);
-            zClose(hgz);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 57; cc < 245; ++cc)
+            {
+                for (int i = 0; i < 600; ++i)
+                {
+                    ar.save(sdata.get(i, cc));
+                }
+            }
         }
     }
 
@@ -717,17 +777,13 @@ void fmode_2_1(bool read)
             }
             else
             {
-                zOpen(hgz, filepath, 0);
-                zRead(mef, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, mef, 0, 9, 0, 200);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(mef, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, mef, 0, 9, 0, 200);
         }
     }
 
@@ -747,15 +803,11 @@ void fmode_20_19(bool read)
         int fsize = 400;
         if (read)
         {
-            zOpen(hgz, filepath, 0);
-            zRead(mdata, hgz, fsize);
-            zClose(hgz);
+            load_v1(filepath, mdata, 0, 100);
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(mdata, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, mdata, 0, 100);
         }
     }
 
@@ -767,15 +819,11 @@ void fmode_20_19(bool read)
             DIM4(map, mdata(0), mdata(1), 10);
             DIM3(mapsync, mdata(0), mdata(1));
             DIM3(mef, 9, 200);
-            zOpen(hgz, filepath, 0);
-            zRead(map, hgz, fsize);
-            zClose(hgz);
+            load_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(map, hgz, fsize);
-            zClose(hgz);
+            save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
     }
 
@@ -783,21 +831,11 @@ void fmode_20_19(bool read)
         const auto filepath = folder + u8"m3_"s + id + u8".t"s;
         if (read)
         {
-            std::ifstream in{filepath};
-            putit::binary_iarchive ar{in};
-            for (int ci = 1320; ci < 5480; ++ci)
-            {
-                ar.load(inv[ci]);
-            }
+            load(filepath, inv, 1320, 5480);
         }
         else
         {
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int ci = 1320; ci < 5480; ++ci)
-            {
-                ar.save(inv[ci]);
-            }
+            save(filepath, inv, 1320, 5480);
         }
     }
 
@@ -864,79 +902,49 @@ void fmode_22_21(bool read)
                 }
             }
             {
-                std::string filepath;
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                const auto filepath = folder + u8"c1_"s + id + u8".t"s;
+                if (read)
                 {
-                    filepath = folder;
-                    if (cnt == 0)
+                    load(filepath, cdata, tg, tg + 1);
+                }
+                else
+                {
+                    save(filepath, cdata, tg, tg + 1);
+                }
+                continue;
+            }
+            {
+                const auto filepath = folder + u8"c2_"s + id + u8".t"s;
+                fsize = 4800;
+                if (read)
+                {
+                    std::ifstream in{filepath};
+                    putit::binary_iarchive ar{in};
+                    for (int i = 0; i < 600; ++i)
                     {
-                        filepath += u8"c1_"s + id + u8".t"s;
-                        if (!read)
-                        {
-                            std::ofstream out{filepath};
-                            putit::binary_oarchive ar{out};
-                            ar.save(cdata[tg]);
-                        }
-                        else
-                        {
-                            std::ifstream in{filepath};
-                            putit::binary_iarchive ar{in};
-                            ar.load(cdata[tg]);
-                        }
-                        continue;
+                        ar.load(sdata.get(i, tg));
                     }
-                    if (cnt == 1)
+                }
+                else
+                {
+                    std::ofstream out{filepath};
+                    putit::binary_oarchive ar{out};
+                    for (int i = 0; i < 600; ++i)
                     {
-                        filepath += u8"c2_"s + id + u8".t"s;
-                        fsize = 4800;
+                        ar.save(sdata.get(i, tg));
                     }
-                    if (cnt == 2)
-                    {
-                        filepath += u8"c3_"s + id + u8".t"s;
-                        inv_getheader(tg);
-                        if (!read)
-                        {
-                            std::ofstream out{filepath};
-                            putit::binary_oarchive ar{out};
-                            for (int ci = invhead; ci < invhead + invrange;
-                                 ++ci)
-                            {
-                                ar.save(inv[ci]);
-                            }
-                        }
-                        else
-                        {
-                            std::ifstream in{filepath};
-                            putit::binary_iarchive ar{in};
-                            for (int ci = invhead; ci < invhead + invrange;
-                                 ++ci)
-                            {
-                                ar.load(inv[ci]);
-                            }
-                        }
-                        continue;
-                    }
-                    if (!read)
-                    {
-                        zOpen(hgz, filepath, 1, 3);
-                    }
-                    if (read)
-                    {
-                        zOpen(hgz, filepath, 0);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (!read)
-                        {
-                            zWrite(sdata, hgz, fsize, tg);
-                        }
-                        if (read)
-                        {
-                            zRead(sdata, hgz, fsize, tg);
-                        }
-                    }
-                    zClose(hgz);
+                }
+            }
+            {
+                const auto filepath = folder + u8"c3_"s + id + u8".t"s;
+                inv_getheader(tg);
+                if (read)
+                {
+                    load(filepath, inv, invhead, invhead + invrange);
+                }
+                else
+                {
+                    save(filepath, inv, invhead, invhead + invrange);
                 }
             }
             elona_export = 1;
@@ -1048,18 +1056,14 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
-    zOpen(hgz, fmapfile + u8".map", 0);
-    zRead(map, hgz, mdata(0) * mdata(1) * 3 * 4);
-    zClose(hgz);
+    load_v3(fmapfile + u8".map", map, 0, mdata(0), 0, mdata(1), 0, 3);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
     {
         return;
     }
-    zOpen(hgz, filepath, 0);
-    zRead(cmapdata, hgz, 8000);
-    zClose(hgz);
+    load_v2(filepath, cmapdata, 0, 5, 0, 400);
 }
 
 
@@ -1076,19 +1080,15 @@ void fmode_6_5(bool read)
         int fsize = 400;
         if (read)
         {
-            zOpen(hgz, filepath, 0);
-            zRead(mdatatmp, hgz, fsize);
+            load_v1(filepath, mdatatmp, 0, 100);
             for (int j = 0; j < 5; ++j)
             {
                 mdata(j) = mdatatmp(j);
             }
-            zClose(hgz);
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(mdata, hgz, fsize);
-            zClose(hgz);
+            save_v1(filepath, mdata, 0, 100);
         }
     }
 
@@ -1099,15 +1099,11 @@ void fmode_6_5(bool read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
             DIM3(mapsync, mdata(0), mdata(1));
-            zOpen(hgz, filepath, 0);
-            zRead(map, hgz, fsize);
-            zClose(hgz);
+            load_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(map, hgz, fsize);
-            zClose(hgz);
+            save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
     }
 
@@ -1118,16 +1114,12 @@ void fmode_6_5(bool read)
         {
             if (fs::exists(filepath))
             {
-                zOpen(hgz, filepath, 0);
-                zRead(cmapdata, hgz, fsize);
-                zClose(hgz);
+                load_v2(filepath, cmapdata, 0, 5, 0, 400);
             }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
-            zWrite(cmapdata, hgz, fsize);
-            zClose(hgz);
+            save_v2(filepath, cmapdata, 0, 5, 0, 400);
         }
     }
 }
@@ -1138,41 +1130,27 @@ void fmode_4_3(bool read, const fs::path& file)
     const auto path = fs::u8path(u8"./tmp") / file;
     if (read)
     {
-        std::ifstream in{path};
-        putit::binary_iarchive ar{in};
-        for (int ci = 1320; ci < 5480; ++ci)
-        {
-            ar.load(inv[ci]);
-        }
+        load(path, inv, 1320, 5480);
     }
     else
     {
         fileadd(path);
-        std::ofstream out{path};
-        putit::binary_oarchive ar{out};
-        for (int ci = 1320; ci < 5480; ++ci)
-        {
-            ar.save(inv[ci]);
-        }
+        save(path, inv, 1320, 5480);
     }
 }
 
 
 
-void fmode_23_24(bool read, const fs::path& file)
+void fmode_23_24(bool read, const fs::path& filepath)
 {
     if (read)
     {
-        zOpen(hgz, file, 1, 3);
-        fileadd(file);
-        zWrite(deck, hgz, 4000);
-        zClose(hgz);
+        fileadd(filepath);
+        save_v1(filepath, deck, 0, 1000);
     }
     else
     {
-        zOpen(hgz, file, 0);
-        zRead(deck, hgz, 4000);
-        zClose(hgz);
+        load_v1(filepath, deck, 0, 1000);
     }
 }
 
@@ -1190,22 +1168,12 @@ void fmode_18_17(bool read, const fs::path& file)
         const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
         if (read)
         {
-            std::ifstream in{filepath};
-            putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.load(cdata[cc]);
-            }
+            load(filepath, cdata, 57, 245);
         }
         else
         {
             fileadd(filepath);
-            std::ofstream out{filepath};
-            putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
-            {
-                ar.save(cdata[cc]);
-            }
+            save(filepath, cdata, 57, 245);
         }
     }
 
@@ -1214,16 +1182,28 @@ void fmode_18_17(bool read, const fs::path& file)
         int fsize = 902400;
         if (read)
         {
-            zOpen(hgz, filepath, 0);
-            zRead(sdata, hgz, fsize, 57);
-            zClose(hgz);
+            std::ifstream in{filepath};
+            putit::binary_iarchive ar{in};
+            for (int cc = 57; cc < 245; ++cc)
+            {
+                for (int i = 0; i < 600; ++i)
+                {
+                    ar.load(sdata.get(i, cc));
+                }
+            }
         }
         else
         {
-            zOpen(hgz, filepath, 1, 3);
             fileadd(""s + filepath);
-            zWrite(sdata, hgz, fsize, 57);
-            zClose(hgz);
+            std::ofstream out{filepath};
+            putit::binary_oarchive ar{out};
+            for (int cc = 57; cc < 245; ++cc)
+            {
+                for (int i = 0; i < 600; ++i)
+                {
+                    ar.save(sdata.get(i, cc));
+                }
+            }
         }
     }
 
