@@ -1669,15 +1669,7 @@ void zipadd(const std::string&);
 void zipadd2(const std::string&);
 void zipend2();
 void zipinit2(const std::string&, const std::string&);
-void cs_list(
-    bool is_selected,
-    const std::string& prm_543,
-    int prm_544 = 0,
-    int prm_545 = 0,
-    int prm_546 = 0,
-    int prm_547 = 0,
-    int prm_548 = 0,
-    int prm_549 = 0);
+void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
 
 
 template <typename T>
