@@ -747,12 +747,12 @@ label_2116_internal:
                 pos(x + 40, y - 4);
                 mes(s(cnt * 2));
                 font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-                cs_list(cnt, s(cnt * 2 + 1), x + 40, y + 8, 19);
+                cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8, 19);
             }
             else
             {
                 font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-                cs_list(cnt, s(cnt), x + 40, y + 1, 19);
+                cs_list(cs == cnt, s(cnt), x + 40, y + 1, 19);
             }
         }
     }
@@ -963,7 +963,12 @@ label_1546_internal:
                 key_list(cnt) = key_select(cnt);
                 keyrange = cnt + 1;
                 display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-                cs_list(cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1, 19);
+                cs_list(
+                    cs == cnt,
+                    listn(0, p),
+                    wx + 64,
+                    wy + 66 + cnt * 19 - 1,
+                    19);
             }
         }
         cs_bk = cs;
@@ -1086,7 +1091,8 @@ label_1549_internal:
             keyrange = cnt + 1;
             pos(wx + 38, wy + 66 + cnt * 19 - 2);
             gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            cs_list(cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1, 19);
+            cs_list(
+                cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1, 19);
         }
     }
     cs_bk = cs;
@@ -1206,7 +1212,7 @@ label_1552_internal:
                 {
                     s = cnven(listn(1, cnt));
                 }
-                cs_list(cnt, s, wx + 64, wy + 66 + cnt * 19 - 1, 19);
+                cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1, 19);
             }
         }
         cs_bk = cs;
@@ -1356,7 +1362,8 @@ label_1555_internal:
             pos(wx + 38, wy + 66 + cnt * 23 - 2);
             gcopy(3, cnt * 24 + 72, 30, 24, 18);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            cs_list(cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1, 19);
+            cs_list(
+                cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1, 19);
             font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
             color(0, 0, 0);
             if (cnt >= 2)
@@ -1538,7 +1545,11 @@ label_1559_internal:
                 pos(wx + 38, wy + 66 + cnt * 19 - 2);
                 gcopy(3, cnt * 24 + 72, 30, 24, 18);
                 cs_list(
-                    cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1, 19);
+                    cs == cnt,
+                    listn(0, cnt),
+                    wx + 64,
+                    wy + 66 + cnt * 19 - 1,
+                    19);
             }
         }
         cs_bk = cs;

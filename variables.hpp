@@ -1670,7 +1670,7 @@ void zipadd2(const std::string&);
 void zipend2();
 void zipinit2(const std::string&, const std::string&);
 void cs_list(
-    int CNT,
+    bool is_selected,
     const std::string& prm_543,
     int prm_544 = 0,
     int prm_545 = 0,

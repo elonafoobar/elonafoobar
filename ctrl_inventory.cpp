@@ -1069,7 +1069,7 @@ label_2061_internal:
                 equipinfo(p, wx + 300, wy + 60 + cnt * 19 + 2);
                 s = strmid(s, 0, 24);
             }
-            cs_list(cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 19, 0, 1, p);
+            cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 19, 0, 1, p);
             pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
             mes(s(1));
         }
