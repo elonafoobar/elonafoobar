@@ -30293,7 +30293,6 @@ int map_barrel(int prm_980, int prm_981)
 label_1658_internal:
     if (p_at_m170 >= 3)
     {
-        label_1659();
         return 0;
     }
     if (prm_980 == 0)
@@ -30316,13 +30315,6 @@ label_1658_internal:
     }
     p_at_m170 += 1;
     goto label_1658_internal;
-}
-
-
-
-int label_1659()
-{
-    return 0;
 }
 
 

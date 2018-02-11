@@ -795,7 +795,6 @@ int label_1517();
 int label_1518();
 int do_create_character();
 int label_1582();
-int label_1659();
 int label_1697();
 int label_1698();
 int label_1699();
