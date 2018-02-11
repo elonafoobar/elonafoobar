@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -1155,6 +1156,14 @@ void label_1550(bool label_1551_flg)
     {
         listn(1, listmax) = class_.get().id;
         ++listmax;
+    }
+    if (cfg_extraclass)
+    {
+        for (const auto& class_ : the_class_db.get_available_classes(true))
+        {
+            listn(1, listmax) = class_.get().id;
+            ++listmax;
+        }
     }
     {
         int cnt = 0;
