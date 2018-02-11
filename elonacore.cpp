@@ -54550,47 +54550,12 @@ void load_cnpc_data()
         int cnt = 0;
         for (int cnt_end = cnt + (usernpcmax); cnt < cnt_end; ++cnt)
         {
+            // TODO: Delete
             noteget(s, cnt);
             cnt2 = tg;
             unzip2(fs::u8path(u8"./user/"), s);
-            if (fread == 0)
-            {
-                zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 1, 3);
-                zWrite(userdata, hgz, 280, tg);
-                zClose(hgz);
-            }
-            else
-            {
-                zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 0);
-                zRead(userdata, hgz, 280, tg);
-                zClose(hgz);
-            }
             DIM2(bmpbuff, userdata(0, tg));
             SDIM2(txtbuff, userdata(1, tg));
-            if (fread == 0)
-            {
-                zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 1, 3);
-                zWrite(bmpbuff, hgz, userdata(0, tg));
-                zClose(hgz);
-            }
-            else
-            {
-                zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 0);
-                zRead(bmpbuff, hgz, userdata(0, tg));
-                zClose(hgz);
-            }
-            if (fread == 0)
-            {
-                zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 1, 3);
-                zWrite(txtbuff, hgz, userdata(1, tg));
-                zClose(hgz);
-            }
-            else
-            {
-                zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 0);
-                zRead(txtbuff, hgz, userdata(1, tg));
-                zClose(hgz);
-            }
             s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
             csvstr2(s, s);
             userdatan(0, tg) = s;
@@ -54761,42 +54726,7 @@ void create_new_cnpc()
     userdata(0, cun) = bmp_file_size;
     DIM2(bmpbuff, bmp_file_size);
     bload(bmpfile, bmpbuff);
-    if (fread == 0)
-    {
-        zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 1, 3);
-        zWrite(userdata, hgz, 280, cun);
-        zClose(hgz);
-    }
-    else
-    {
-        zOpen(hgz, fs::u8path(u8"./user/npc1.t"s), 0);
-        zRead(userdata, hgz, 280, cun);
-        zClose(hgz);
-    }
-    if (fread == 0)
-    {
-        zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 1, 3);
-        zWrite(bmpbuff, hgz, userdata(0, cun));
-        zClose(hgz);
-    }
-    else
-    {
-        zOpen(hgz, fs::u8path(u8"./user/npc2.t"s), 0);
-        zRead(bmpbuff, hgz, userdata(0, cun));
-        zClose(hgz);
-    }
-    if (fread == 0)
-    {
-        zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 1, 3);
-        zWrite(txtbuff, hgz, userdata(1, cun));
-        zClose(hgz);
-    }
-    else
-    {
-        zOpen(hgz, fs::u8path(u8"./user/npc3.t"s), 0);
-        zRead(txtbuff, hgz, userdata(1, cun));
-        zClose(hgz);
-    }
+    // TODO: Delete
     s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
     csvstr2(s, s);
     cnv_filestr(s);
