@@ -24088,15 +24088,12 @@ int do_create_character()
     }
     if (gdata_current_map == 42)
     {
-        if (novoidlv)
-        {
-            novoidlv = 0;
-        }
-        else
+        if (!novoidlv)
         {
             voidlv = gdata_current_dungeon_level / 50 * 50;
         }
     }
+    novoidlv = 0;
     if (dbid == 343)
     {
         create_cnpc();
