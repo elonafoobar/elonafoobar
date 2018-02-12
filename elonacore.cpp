@@ -45528,8 +45528,6 @@ label_196901_internal:
         if (cdata_body_part(tc, i) % 10000 != 0)
         {
             ci = cdata_body_part(tc, i) % 10000 - 1;
-        }
-        {
             int cnt = 0;
             for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
             {
