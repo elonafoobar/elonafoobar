@@ -1186,7 +1186,6 @@ int calcattackhit(int prm_893)
 {
     int tohitorg = 0;
     int tohitfix = 0;
-    int tohi = 0;
     int twohit = 0;
     int evaderef = 0;
     critical = 0;
@@ -1228,7 +1227,7 @@ int calcattackhit(int prm_893)
                         - 1,
                     0,
                     9);
-                tohi = tohit * rangemap(rangedist) / 100;
+                tohit = tohit * rangemap(rangedist) / 100;
             }
         }
         else
