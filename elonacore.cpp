@@ -51415,18 +51415,18 @@ void equip_melee_weapon()
                             + u8" is too heavy for two-wield fighting style."s));
                 }
             }
-        }
-    }
-    if (cc == 0)
-    {
-        if (gdata_mount != 0)
-        {
-            if (inv[cw].weight >= 4000)
+            if (cc == 0)
             {
-                txt(lang(
-                    u8"装備中の"s + itemname(cw)
-                        + u8"は乗馬中に扱うには重過ぎる。"s,
-                    itemname(cw) + u8" is too heavy to use when riding."s));
+                if (gdata_mount != 0)
+                {
+                    if (inv[cw].weight >= 4000)
+                    {
+                        txt(lang(
+                            u8"装備中の"s + itemname(cw)
+                                + u8"は乗馬中に扱うには重すぎる。"s,
+                            itemname(cw) + u8" is too heavy to use when riding."s));
+                    }
+                }
             }
         }
     }
