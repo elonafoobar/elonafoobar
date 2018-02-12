@@ -14010,7 +14010,8 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
             hostileaction(0, prm_801);
         }
     }
-    if (the_buff_db[prm_802].type != buff_data::type_t::food && synccheck(prm_801, -1))
+    if (the_buff_db[prm_802].type != buff_data::type_t::food
+        && synccheck(prm_801, -1))
     {
         txtmore();
         txt(lang(
@@ -17816,7 +17817,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             == adata(10, gdata_current_map)
                         || gdata_current_map == 42)
                     {
-                        if (adata(20, gdata_current_map) == prm_853 && cbit(976, prm_853) == 1)
+                        if (adata(20, gdata_current_map) == prm_853
+                            && cbit(976, prm_853) == 1)
                         {
                             evadd(5);
                         }
@@ -17835,7 +17837,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
                 else if (gdata_current_map == 42)
                 {
-                    if (adata(20, gdata_current_map) == prm_853 && cbit(976, prm_853) == 1)
+                    if (adata(20, gdata_current_map) == prm_853
+                        && cbit(976, prm_853) == 1)
                     {
                         evadd(5);
                     }
@@ -22986,7 +22989,8 @@ void label_1530()
         r1 = rc;
         {
             int cnt = 0;
-            for (int cnt_end = cnt + std::clamp(cdata[r1].level / 3, 0, 12); cnt < cnt_end;
+            for (int cnt_end = cnt + std::clamp(cdata[r1].level / 3, 0, 12);
+                 cnt < cnt_end;
                  ++cnt)
             {
                 gain_new_body_part();
@@ -25644,8 +25648,7 @@ label_1575_internal:
         if (rnd(90) == 0)
         {
             flt();
-            itemcreate(
-                -1, 771, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate(-1, 771, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
     }
     if (cdata[rc].id == 307 || cdata[rc].id == 308)
@@ -44475,7 +44478,9 @@ label_1953_internal:
                     }
                 }
                 display_key(
-                    x * inf_tiles + inf_screenx - 12, y * inf_tiles + inf_screeny - 12, cnt);
+                    x * inf_tiles + inf_screenx - 12,
+                    y * inf_tiles + inf_screeny - 12,
+                    cnt);
             }
         }
         txttargetnpc(
@@ -48072,7 +48077,8 @@ void label_2007()
             {
                 list(0, listmax) = cnt + 600;
                 list(1, listmax) =
-                    the_ability_db[cnt + 600].related_basic_attribute * 1000 + cnt;
+                    the_ability_db[cnt + 600].related_basic_attribute * 1000
+                    + cnt;
                 ++listmax;
             }
         }
@@ -51334,7 +51340,10 @@ void label_2048()
         s(3) = s;
     }
     s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
-        + strmid(s(2), 0, 3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
+        + strmid(
+              s(2),
+              0,
+              3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
     if (val == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
@@ -51422,7 +51431,8 @@ void equip_melee_weapon()
                         txt(lang(
                             u8"装備中の"s + itemname(cw)
                                 + u8"は乗馬中に扱うには重すぎる。"s,
-                            itemname(cw) + u8" is too heavy to use when riding."s));
+                            itemname(cw)
+                                + u8" is too heavy to use when riding."s));
                     }
                 }
             }
@@ -63508,8 +63518,8 @@ label_22191_internal:
     {
         txtmore();
     }
-    expmodifer =
-        1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc) + (gdata_current_map == 35);
+    expmodifer = 1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc)
+        + (gdata_current_map == 35);
     hit = calcattackhit();
     i = 0;
     if (hit == 1)
@@ -63913,7 +63923,8 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                std::clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
+                                std::clamp(
+                                    attackdmg / 10, 1, cdata[tc].max_hp / 10),
                                 tc,
                                 p,
                                 cdata[tc].damage_reaction_info / 1000);
@@ -63932,7 +63943,8 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                std::clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
+                                std::clamp(
+                                    attackdmg / 10, 1, cdata[tc].max_hp / 10),
                                 tc,
                                 p,
                                 cdata[tc].damage_reaction_info / 1000);
@@ -78676,7 +78688,7 @@ label_27491:
     ww = 680;
     wh = 488;
     pagesize = 0;
-    display_window(windoww/2 - ww/2, windowh/2 - wh/2, ww, wh);
+    display_window(windoww / 2 - ww / 2, windowh / 2 - wh / 2, ww, wh);
     gsel(0);
     label_1443();
     pos(0, 0);

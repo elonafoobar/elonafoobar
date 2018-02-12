@@ -933,8 +933,8 @@ void talk_npc()
             }
             arenaop(1) = cdata[rc].id;
             buff = lang(
-                u8"今日の対戦相手は"s + refchara_str(cdata[rc].id, 2) + _da() + u8"挑戦する"s
-                    + _noka(1),
+                u8"今日の対戦相手は"s + refchara_str(cdata[rc].id, 2) + _da()
+                    + u8"挑戦する"s + _noka(1),
                 u8"You got "s + cdatan(0, rc) + u8" today. What'ya say?"s);
         }
         else
