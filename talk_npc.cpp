@@ -460,7 +460,7 @@ void talk_npc()
         {
             val = 3;
             set_quest_data();
-            label_2679();
+            complete_quest();
         }
         else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
         {
@@ -621,7 +621,7 @@ void talk_npc()
     {
         invctrl = 11;
         invfile = cdata[tc].shop_store_id;
-        label_2263();
+        sell_item();
         screenupdate = -1;
         update_screen();
         cs = 0;
@@ -633,7 +633,7 @@ void talk_npc()
     {
         invctrl = 12;
         invfile = cdata[tc].shop_store_id;
-        label_2263();
+        sell_item();
         cc = 0;
         screenupdate = -1;
         update_screen();
@@ -1133,13 +1133,13 @@ void talk_npc()
     }
     if (chatval == 25)
     {
-        int stat = label_2665();
+        int stat = inv_getfreeid_force();
         ti = stat;
         item_copy(deliver(1), ti);
         inv[ti].number = 1;
         ci = ti;
         rc = tc;
-        label_2663();
+        set_item_which_will_be_used();
         rq = deliver;
         --inv[deliver(1)].number;
         txt(lang(
@@ -1147,28 +1147,28 @@ void talk_npc()
             u8"You hand over "s + itemname(deliver(1), 1) + u8"."s));
         val = 3;
         set_quest_data();
-        label_2679();
+        complete_quest();
         refresh_burden_state();
         talk_npc();
         return;
     }
     if (chatval == 26)
     {
-        int stat = label_2665();
+        int stat = inv_getfreeid_force();
         ti = stat;
         item_copy(supply, ti);
         inv[ti].number = 1;
         cbitmod(987, tc, 1);
         ci = ti;
         rc = tc;
-        label_2663();
+        set_item_which_will_be_used();
         --inv[supply].number;
         txt(lang(
             itemname(supply, 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(supply, 1) + u8"."s));
         val = 3;
         set_quest_data();
-        label_2679();
+        complete_quest();
         refresh_burden_state();
         talk_npc();
         return;
@@ -1887,7 +1887,7 @@ void talk_npc()
             cdata[rc].current_map = 0;
             cdata[tc].impression = 100;
             rc = oc;
-            label_2661();
+            create_adventurer();
             talk_end();
             return;
         }

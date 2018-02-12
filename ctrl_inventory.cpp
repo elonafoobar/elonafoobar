@@ -1775,8 +1775,8 @@ label_2061_internal:
                 item_stack(tc, ti, 1);
                 ci = ti;
                 rc = tc;
-                label_2663();
-                label_2666();
+                set_item_which_will_be_used();
+                wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
                     create_pcpic(tc, true);
@@ -1927,12 +1927,12 @@ label_2061_internal:
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            label_2666();
+            wear_most_valuable_equipment_for_all_body_parts();
             if (tc >= 16)
             {
-                label_2668();
+                supply_new_equipment();
             }
-            label_2665();
+            inv_getfreeid_force();
             r1 = tc;
             refresh_character();
             refresh_burden_state();
@@ -2104,7 +2104,7 @@ label_2061_internal:
                 convertartifact(ti);
             }
             rc = tc;
-            label_2666();
+            wear_most_valuable_equipment_for_all_body_parts();
             if (tc < 16)
             {
                 create_pcpic(tc, true);
@@ -2117,7 +2117,7 @@ label_2061_internal:
         if (invctrl == 26)
         {
             savecycle();
-            int stat = label_1947();
+            int stat = target_position();
             if (stat != 1)
             {
                 if (stat == 0)
@@ -2137,12 +2137,12 @@ label_2061_internal:
                 update_screen();
                 pc_turn(false);
             }
-            label_2189();
+            do_throw_command();
             return 0;
         }
         if (invctrl == 27)
         {
-            label_2237();
+            do_steal_command();
             invsubroutine = 0;
             return 1;
         }
@@ -2375,7 +2375,7 @@ label_2061_internal:
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)
         {
-            label_2264();
+            load_shoptmp();
             return 0;
         }
         if (invally == 1)

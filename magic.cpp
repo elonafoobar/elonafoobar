@@ -166,7 +166,7 @@ int magic()
             {
             case 10:
                 play_animation(18);
-                label_2218();
+                try_to_melee_attack();
                 goto label_2186_internal;
             case 1:
             {
@@ -3645,7 +3645,7 @@ label_2181_internal:
         equip = inv[ci].body_part;
         animeload(8, cc);
         fixmaterial = inv[ci].material;
-        label_0265();
+        change_item_material();
         randomize(inv[efcibk].param1);
         inv[ci].quality = 4;
         inv[ci].subname = 40000 + rnd(30000);
@@ -3743,7 +3743,7 @@ label_2181_internal:
                 objlv = efp / 10;
                 objfix = efp / 100;
                 randomize();
-                label_0265();
+                change_item_material();
                 txt(lang(
                     name(cc) + u8"の"s + s + u8"は"s + itemname(ci, 1)
                         + u8"に変化した。"s,
@@ -4300,7 +4300,7 @@ label_2181_internal:
                     continue;
                 }
                 play_animation(9);
-                label_2218();
+                try_to_melee_attack();
             }
         }
         goto label_2186_internal;

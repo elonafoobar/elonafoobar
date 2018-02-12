@@ -1832,7 +1832,7 @@ void talk_unique()
             SCENE_CUT();
             invctrl = 28;
             invfile = cdata[tc].shop_store_id;
-            label_2263();
+            sell_item();
             screenupdate = -1;
             update_screen();
             cs = 0;
@@ -1954,7 +1954,7 @@ void talk_unique()
             buff = lang(
                 u8"おかあさんがひどい病気で…お医者さんはエーテル病だから手に負えないって…"s,
                 u8"Mommy is really sick... but the doctor said she has the ether plague and he can't do anything..."s);
-            int stat = label_2248();
+            int stat = give_potion_of_cure_corruption();
             if (stat == 0)
             {
                 talk_end();
@@ -2002,7 +2002,7 @@ void talk_unique()
                     u8"さん。おかげで、おかあさんの身体も良くなっています。でもまだ、もとどおりに元気になるには時間がかかるみたいなの…"s,
                 u8"Ah, hi "s + cdatan(0, 0) +
                     u8". Thanks to you Mommy's been getting better! But... it still looks like she needs more time before she's really healthy."s);
-            int stat = label_2248();
+            int stat = give_potion_of_cure_corruption();
             if (stat == 0)
             {
                 talk_end();
@@ -2022,7 +2022,7 @@ void talk_unique()
             buff = lang(
                 u8"おかあさん、最近すごく調子いいの！お医者さんも、もう大丈夫だろうって。最近は、近所の子供達もお見舞いに来てくれるんだよ。はやく、おかあさんやみんなと遊びたいな〜。"s,
                 u8"Mommy looks a lot better these days! The doctor said she's gonna be okay. Even the other kids have come to visit her in the past few weeks. I want mommy to be able to play with us soon..."s);
-            int stat = label_2248();
+            int stat = give_potion_of_cure_corruption();
             if (stat == 0)
             {
                 talk_end();
@@ -2043,7 +2043,7 @@ void talk_unique()
                     u8"さん…おかあさんが…！おかあさんが…急に具合が悪くなって…身体がおかしくなって…あぁ…神様…"s,
                 ""s + cdatan(0, 0) +
                     u8"! It's mommy... something's wrong! Suddenly she started acting strange and... now her body is changing and... oh gods..."s);
-            int stat = label_2248();
+            int stat = give_potion_of_cure_corruption();
             if (stat == 0)
             {
                 talk_end();

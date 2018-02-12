@@ -218,7 +218,7 @@ label_1741_internal:
     }
     if (adata(16, gdata_current_map) == 8)
     {
-        label_16952();
+        generate_random_nefia();
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
             evadd(4);
@@ -227,7 +227,7 @@ label_1741_internal:
     if (adata(16, gdata_current_map) == 35)
     {
         id = 0;
-        label_2095(userfile);
+        load_user_file(userfile);
         ctrl_file(19);
         {
             int cnt = 0;
@@ -345,7 +345,7 @@ label_1741_internal:
     }
     if (gdata_current_map == 13)
     {
-        label_16952();
+        generate_random_nefia();
     }
     if (gdata_current_map == 9)
     {
@@ -956,7 +956,7 @@ label_1741_internal:
         if (arenaimport == 1)
         {
             id = 0;
-            label_2095(userfile);
+            load_user_file(userfile);
             importmode = 1;
             ctrl_file(21);
             delete_temporary_user_files();
@@ -1133,24 +1133,24 @@ label_1741_internal:
             flt();
             itemcreate(-1, 219, cdata[0].position.x, cdata[0].position.y, 0);
         }
-        label_1711();
+        initialize_home_mdata();
     }
     if (gdata_current_map == 4)
     {
         map_initcustom(u8"ntyris"s);
-        label_1747();
+        initialize_world_map();
         map_placeplayer();
     }
     if (gdata_current_map == 44)
     {
         map_initcustom(u8"styris"s);
-        label_1747();
+        initialize_world_map();
         map_placeplayer();
     }
     if (gdata_current_map == 47)
     {
         map_initcustom(u8"test"s);
-        label_1747();
+        initialize_world_map();
         map_placeplayer();
     }
     if (gdata_current_map == 14)
@@ -2599,7 +2599,7 @@ label_1741_internal:
     }
     if (gdata_current_map == 42)
     {
-        label_16952();
+        generate_random_nefia();
         if (gdata(186) == 0)
         {
             gdata(186) = adata(17, gdata_current_map) + 4;
@@ -2648,7 +2648,7 @@ label_1741_internal:
                     }
                     break;
                 }
-                label_16952();
+                generate_random_nefia();
                 break;
             }
         }
@@ -2676,7 +2676,7 @@ label_1741_internal:
         }
         else
         {
-            label_16952();
+            generate_random_nefia();
         }
     }
     if (gdata_current_map == 17)
@@ -2690,7 +2690,7 @@ label_1741_internal:
         }
         else
         {
-            label_16952();
+            generate_random_nefia();
         }
     }
     if (gdata_current_map == 18)
@@ -2704,7 +2704,7 @@ label_1741_internal:
         }
         else
         {
-            label_16952();
+            generate_random_nefia();
         }
     }
     if (gdata_current_map == 19)
@@ -2718,12 +2718,12 @@ label_1741_internal:
         }
         else
         {
-            label_16952();
+            generate_random_nefia();
         }
     }
     if (gdata_current_map == 27)
     {
-        label_16952();
+        generate_random_nefia();
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
             if (gdata_puppys_cave < 2)
@@ -2739,7 +2739,7 @@ label_1741_internal:
     }
     if (gdata_current_map == 38)
     {
-        label_16952();
+        generate_random_nefia();
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
             if (gdata_minotaur_king < 2)
@@ -2751,7 +2751,7 @@ label_1741_internal:
     }
     if (gdata_current_map == 28)
     {
-        label_16952();
+        generate_random_nefia();
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
             if (gdata_novice_knight < 2)
@@ -2819,7 +2819,7 @@ label_1741_internal:
     }
     if (gdata_current_map == 26)
     {
-        label_16952();
+        generate_random_nefia();
     }
     map_setfog();
     if (gdata_current_map == 40 || dbg_revealmap || gdata_current_map == 6
@@ -3689,7 +3689,7 @@ label_1744_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
-                label_1736();
+                monster_respawn();
             }
         }
     }
