@@ -27656,6 +27656,7 @@ void apply_general_eating_effect()
     {
         nutrition = nutrition * 50 / 100;
     }
+    cdata[cc].nutrition += nutrition;
     if (nutrition >= 3000)
     {
         if (rnd(10) == 0 || cdata[cc].nutrition >= 12000)
@@ -27663,7 +27664,6 @@ void apply_general_eating_effect()
             modweight(cc, rnd(3) + 1, cdata[cc].nutrition >= 12000);
         }
     }
-    cdata[cc].nutrition += nutrition;
     if (cdata[cc].id == 261)
     {
         if (nutrition >= 2000)
