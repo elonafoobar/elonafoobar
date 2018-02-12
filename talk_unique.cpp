@@ -246,7 +246,8 @@ void talk_unique()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].material = 15;
+            fixmaterial = 15;
+            change_item_material();
             flt();
             itemcreate(
                 -1, 54, cdata[0].position.x, cdata[0].position.y, 100000);
@@ -2793,7 +2794,8 @@ void talk_unique()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].material = 24;
+            fixmaterial = 24;
+            change_item_material();
             flt();
             itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 25500);
             flt();
@@ -4737,7 +4739,8 @@ void talk_unique()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].material = 31;
+            fixmaterial = 31;
+            change_item_material();
             flt();
             itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 50000);
             flt();
