@@ -78669,6 +78669,12 @@ label_27491:
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    pos(0, 0);
+    gzoom(windoww, windowh, 4, 0, 0, 640, 480);
+    ww = 680;
+    wh = 488;
+    pagesize = 0;
+    display_window(windoww/2 - ww/2, windowh/2 - wh/2, ww, wh);
     gsel(0);
     label_1443();
     pos(0, 0);
