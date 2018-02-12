@@ -3706,7 +3706,7 @@ void talk_unique()
                 u8"Something is put on the ground."s));
             listmax = 0;
             buff = lang(
-                u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLV以下の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
+                u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLVより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
                 u8"Good good! Take these monster balls with you. Do you know how to use them? Yes yes, throw them at a monster when it is near death. The ball won't work if the monster is too high in level, so be careful. Please bring me five captured monsters. Oh... and... *please* bring them back to me IN the balls!"s);
             tc = tc * 1 + 0;
             RESPONSE(0, strbye);
