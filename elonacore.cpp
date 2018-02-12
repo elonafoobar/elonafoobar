@@ -64049,6 +64049,7 @@ label_22191_internal:
             }
         }
     }
+    ele = 0;
     if (extraattack == 0)
     {
         if (attackrange)
