@@ -51334,7 +51334,7 @@ void label_2048()
         s(3) = s;
     }
     s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s
-        + strmid(s(2), 0, (3 + (elona::stoi(s(2)) >= 10)));
+        + strmid(s(2), 0, 3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
     if (val == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
