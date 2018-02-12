@@ -30,7 +30,8 @@ int define(lua_State* state)
 
 #define FIELD_I(name) \
     lua_getfield(state, 2, #name); \
-    int name = luaL_checkinteger(state, -1);
+    int name = luaL_checkinteger(state, -1); \
+    lua_pop(state, 1);
 
     FIELD_I(traitref0);
     FIELD_I(traitref1);

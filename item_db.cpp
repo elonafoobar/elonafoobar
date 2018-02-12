@@ -25,13 +25,16 @@ int define(lua_State* state)
 
 #define FIELD_I(name) \
     lua_getfield(state, 2, #name); \
-    int name = luaL_checkinteger(state, -1);
+    int name = luaL_checkinteger(state, -1); \
+    lua_pop(state, 1);
 #define FIELD_S(name) \
     lua_getfield(state, 2, #name); \
-    const char* name = luaL_checkstring(state, -1);
+    const char* name = luaL_checkstring(state, -1); \
+    lua_pop(state, 1);
 #define FIELD_B(name) \
     lua_getfield(state, 2, #name); \
-    bool name = lua_toboolean(state, -1);
+    bool name = lua_toboolean(state, -1); \
+    lua_pop(state, 1);
 
     FIELD_I(image);
     FIELD_I(value);

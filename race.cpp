@@ -28,15 +28,18 @@ int define(lua_State* state)
 #define FIELD_I(name, default_value) \
     lua_getfield(state, 2, #name); \
     int name = \
-        lua_isnil(state, -1) ? (default_value) : luaL_checkinteger(state, -1);
+        lua_isnil(state, -1) ? (default_value) : luaL_checkinteger(state, -1); \
+    lua_pop(state, 1);
 #define FIELD_S(name, default_value) \
     lua_getfield(state, 2, #name); \
     const char* name = \
-        lua_isnil(state, -1) ? (default_value) : luaL_checkstring(state, -1);
+        lua_isnil(state, -1) ? (default_value) : luaL_checkstring(state, -1); \
+    lua_pop(state, 1);
 #define FIELD_B(name, default_value) \
     lua_getfield(state, 2, #name); \
     bool name = \
-        lua_isnil(state, -1) ? (default_value) : lua_toboolean(state, -1);
+        lua_isnil(state, -1) ? (default_value) : lua_toboolean(state, -1); \
+    lua_pop(state, 1);
 
     FIELD_B(is_extra, true);
     FIELD_I(ordering, 30000);
