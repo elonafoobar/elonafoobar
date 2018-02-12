@@ -2048,7 +2048,10 @@ void talk_npc()
     }
     if (chatval == 58)
     {
-        evadd(25);
+        if (gdata_left_turns_of_timestop == 0)
+        {
+            evadd(25);
+        }
         talk_end();
         return;
     }
