@@ -16652,7 +16652,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (ele_at_m141 == 50 || prm_855 == -9)
         {
             dmg_at_m141 = dmg_at_m141 / 3;
-            ele_at_m141 = 0;
         }
         if (ele_at_m141 == 52)
         {
@@ -17040,7 +17039,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (ele_at_m141 == 50 || prm_855 == -9)
+        if ((ele_at_m141 == 50 || prm_855 == -9) && cdata[prm_853].wet == 0)
         {
             item_fire(prm_853, -1);
         }
