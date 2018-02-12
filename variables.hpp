@@ -847,7 +847,7 @@ int magic();
 int pick_up_item();
 int drop_item();
 int equip_item();
-int unlock_box();
+int unlock_box(int);
 int label_2217();
 int label_2230();
 int label_2231();

@@ -62451,7 +62451,7 @@ void label_2207()
 
 
 
-int unlock_box()
+int unlock_box(int difficulty)
 {
     int stat = item_find(636, 3);
     if (stat == -1)
@@ -62480,7 +62480,7 @@ int unlock_box()
         }
     }
     f = 0;
-    if (i * 2 < val)
+    if (i * 2 < difficulty)
     {
         txt(lang(
             u8"この鍵を開ける技術はない。"s,
@@ -62493,11 +62493,11 @@ int unlock_box()
     }
     if (f == 0)
     {
-        if (i / 2 >= val)
+        if (i / 2 >= difficulty)
         {
             txt(lang(u8"楽勝だ。"s, u8"Easy."s));
         }
-        else if (rnd(rnd(i * 2) + 1) < val)
+        else if (rnd(rnd(i * 2) + 1) < difficulty)
         {
             txt(lang(u8"開錠に失敗した。"s, u8"You fail to unlock it."s));
             f = 1;
@@ -62528,7 +62528,7 @@ int unlock_box()
         show_prompt();
         if (rtval == 0)
         {
-            unlock_box();
+            unlock_box(difficulty);
             return 0;
         }
         return 0;
@@ -62710,8 +62710,7 @@ void do_open_command()
     {
         if (inv[ci].param2 != 0)
         {
-            val = inv[ci].param2;
-            int stat = unlock_box();
+            int stat = unlock_box(inv[ci].param2);
             if (stat == 0)
             {
                 screenupdate = -1;
@@ -63112,8 +63111,7 @@ void try_to_open_locked_door()
     {
         if (cc == 0)
         {
-            val = feat(2);
-            int stat = unlock_box();
+            int stat = unlock_box(feat(2));
             if (stat == 0)
             {
                 screenupdate = -1;
