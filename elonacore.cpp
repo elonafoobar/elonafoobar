@@ -17927,7 +17927,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cc_at_m141 == 0)
+        if (prm_855 == 0)
         {
             if (gdata_catches_god_signal)
             {
