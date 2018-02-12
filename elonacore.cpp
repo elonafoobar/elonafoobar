@@ -22980,7 +22980,7 @@ void label_1530()
         r1 = rc;
         {
             int cnt = 0;
-            for (int cnt_end = cnt + (cdata[r1].level / 3); cnt < cnt_end;
+            for (int cnt_end = cnt + std::clamp(cdata[r1].level / 3, 0, 12); cnt < cnt_end;
                  ++cnt)
             {
                 gain_new_body_part();
