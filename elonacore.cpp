@@ -23990,6 +23990,9 @@ void place_character()
         if (cdata[rc].character_role == 13)
         {
             cdata[rc].state = 4;
+            cdata[prm_853].time_to_revive = gdata_hour + gdata_day * 24
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
+                + rnd(12);
         }
     }
     return;
