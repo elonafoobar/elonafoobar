@@ -34673,11 +34673,13 @@ void exit_map()
                 != -1)
             {
                 feat(1) = 11;
+                feat(2) = 0;
             }
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750)
                 != -1)
             {
                 feat(1) = 10;
+                feat(2) = 0;
             }
         }
         f = 0;
