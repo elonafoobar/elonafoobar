@@ -45495,7 +45495,7 @@ label_196901_internal:
                     + cdata[tc].speed_correction_value + u8"%]"s));
         ++listmax;
     }
-    if (gdata_ether_disease_speed != 0)
+    if (tc == 0 && gdata_ether_disease_speed != 0)
     {
         if (gdata_ether_disease_speed > 0)
         {
