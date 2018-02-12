@@ -897,7 +897,7 @@ void talk_unique()
         if (chatval == 2)
         {
             tc = findchara(33);
-            if (tc == 0)
+            if (tc == 0 || cdata[tc].state != 1)
             {
                 tc = findchara(34);
                 listmax = 0;
