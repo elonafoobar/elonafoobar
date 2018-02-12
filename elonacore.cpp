@@ -42049,7 +42049,7 @@ void window_recipe_(
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
-    dy_at_m184 = 120;
+    dy_at_m184 = y + 48;
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
     color(0, 0, 0);
     pos(dx_at_m184 - 10, dy_at_m184);
