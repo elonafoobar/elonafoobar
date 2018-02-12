@@ -57601,6 +57601,7 @@ void continuous_action_others()
                 + u8")"s,
             u8"You harvest "s + itemname(ci, 1) + u8". ("s
                 + cnvweight(inv[ci].weight) + u8")"s));
+        in = inv[ci].number;
         pick_up_item();
     }
     if (gdata(91) == 104)
