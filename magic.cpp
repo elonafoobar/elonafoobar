@@ -882,7 +882,7 @@ int magic()
                         goto label_2186_internal;
                     }
                     p = rnd(cdata[tc].gold / 10 + 1);
-                    if (rnd(sdata(13, tc)) > rnd(sdata(12, tc) * 4)
+                    if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
                         || cbit(15, tc) == 1)
                     {
                         txt(lang(
