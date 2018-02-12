@@ -1767,6 +1767,7 @@ label_2061_internal:
                     modimp(tc, -20);
                     cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
+                    refresh_burden_state();
                     goto label_20591;
                 }
                 item_copy(ci, ti);
