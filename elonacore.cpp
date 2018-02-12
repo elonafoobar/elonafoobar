@@ -57836,7 +57836,7 @@ void label_2151()
                 {
                     break;
                 }
-                modgrowth(0, 10 + rnd(6), 1);
+                modgrowth(0, 10 + rnd(8), 1);
                 ++grown;
                 if (cnt > 6)
                 {
