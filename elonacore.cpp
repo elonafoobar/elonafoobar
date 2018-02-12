@@ -70806,6 +70806,7 @@ void create_adventurer()
     p(0) = 75;
     p(1) = 41;
     p(2) = 160;
+    novoidlv = 1;
     characreate(rc, p(rnd(3)), -1, -1);
     cdata[rc].relationship = 0;
     cdata[rc].original_relationship = 0;
