@@ -62645,7 +62645,7 @@ void do_open_command()
         ctrl_file(4, u8"shoptmp.s2");
         if (fs::exists(fs::u8path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3);
+            ctrl_file(3, fs::u8path(u8"shop"s + invfile + u8".s2"));
         }
         else
         {
