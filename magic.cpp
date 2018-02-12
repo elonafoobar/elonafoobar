@@ -3644,10 +3644,10 @@ label_2181_internal:
         randomize(inv[efcibk].param1);
         equip = inv[ci].body_part;
         animeload(8, cc);
+        inv[ci].quality = 4;
         fixmaterial = inv[ci].material;
         change_item_material();
         randomize(inv[efcibk].param1);
-        inv[ci].quality = 4;
         inv[ci].subname = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         egolv = rnd(std::clamp(rnd(6), 0, 4) + 1);
