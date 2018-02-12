@@ -39292,13 +39292,6 @@ void label_1879()
 
 int modpiety(int prm_1035)
 {
-    if (sdata(181, 0) * 100 < cdata[0].piety_point)
-    {
-        txt(lang(
-            u8"あなたの信仰は既に限界まで高まっている。"s,
-            u8" Your God becomes indifferent to your gift."s));
-        return 0;
-    }
     if (gdata_god_rank == 4)
     {
         if (cdata[0].piety_point >= 4000)
@@ -39322,6 +39315,13 @@ int modpiety(int prm_1035)
             ++gdata_god_rank;
             txtgod(cdata[0].god, 7);
         }
+    }
+    if (sdata(181, 0) * 100 < cdata[0].piety_point)
+    {
+        txt(lang(
+            u8"あなたの信仰は既に限界まで高まっている。"s,
+            u8" Your God becomes indifferent to your gift."s));
+        return 0;
     }
     cdata[0].piety_point += prm_1035 / (1 + (gdata_current_map == 35) * 9);
     return 1;
