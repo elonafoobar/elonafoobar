@@ -14010,7 +14010,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
             hostileaction(0, prm_801);
         }
     }
-    if (synccheck(prm_801, -1))
+    if (the_buff_db[prm_802].type != buff_data::type_t::food && synccheck(prm_801, -1))
     {
         txtmore();
         txt(lang(
