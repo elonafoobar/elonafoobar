@@ -43005,6 +43005,12 @@ int label_1932()
                         + u8"."s));
                 --inv[rpref(10 + cnt * 2)].number;
             }
+            int stat = chara_unequip(rpref(10 + cnt * 2));
+            if (stat == 1)
+            {
+                r1 = 0;
+                refresh_character();
+            }
             cell_refresh(
                 inv[rpref(10 + cnt * 2)].position.x,
                 inv[rpref(10 + cnt * 2)].position.y);
