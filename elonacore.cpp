@@ -17706,6 +17706,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 gdata_sleep_experience += exp_at_m141;
             }
             cdata[prm_855].hate = 0;
+            if (prm_855 < 16)
+            {
+                cdata[prm_855].enemy_id = 0;
+                cdata[0].enemy_id = 0;
+                gdata(94) = 0;
+            }
         }
         if (prm_853 != 0)
         {
