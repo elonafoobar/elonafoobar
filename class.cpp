@@ -26,10 +26,12 @@ int define(lua_State* state)
 
 #define FIELD_I(name) \
     lua_getfield(state, 2, #name); \
-    int name = luaL_checkinteger(state, -1);
+    int name = luaL_checkinteger(state, -1); \
+    lua_pop(state, 1);
 #define FIELD_B(name) \
     lua_getfield(state, 2, #name); \
-    bool name = lua_toboolean(state, -1);
+    bool name = lua_toboolean(state, -1); \
+    lua_pop(state, 1);
 
     FIELD_I(ordering);
     FIELD_B(is_extra);
