@@ -6064,13 +6064,13 @@ void get_enchantment_description()
         else if (val(2) == 0)
         {
             s += u8" ["s;
-            putenclv(val(1));
+            putenclv(val(1) / 100);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1);
+            rtval(1) = val(1) / 100;
             return;
         }
     }
