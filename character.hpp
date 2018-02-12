@@ -1,13 +1,42 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
+#include "optional_ref.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
 
 namespace elona
 {
+
+
+
+struct character_data
+{
+    int id;
+    int level;
+};
+
+
+
+class character_db
+{
+public:
+    character_db();
+
+
+    optional_ref<character_data> operator[](int id) const;
+
+
+private:
+    std::unordered_map<int, character_data> storage;
+};
+
+
+inline character_db the_character_db;
+
 
 
 struct buff_t
@@ -308,9 +337,9 @@ struct character
 
 
 
-struct character_data
+struct cdata_t
 {
-    character_data();
+    cdata_t();
 
 
     character& operator()(int index)
@@ -330,7 +359,7 @@ private:
 };
 
 
-inline character_data cdata;
+inline cdata_t cdata;
 
 
 

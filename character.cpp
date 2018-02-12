@@ -2,14 +2,88 @@
 #include <cassert>
 #include <iostream>
 #include <type_traits>
+#include "cat.hpp"
 #include "elona.hpp"
 #include "range.hpp"
 #include "variables.hpp"
+
+using namespace elona;
+
+
+namespace
+{
+
+
+// FIXME: DO NOT USE A GLOBAL VARIABLE!
+std::unordered_map<int, character_data>* storage_ptr;
+
+
+int define(lua_State* state)
+{
+    int argc = lua_gettop(state);
+    if (argc != 2)
+        throw 0;
+
+    const char* id = luaL_checklstring(state, 1, nullptr);
+    if (!id)
+        throw 0;
+
+#define FIELD_I(name) \
+    lua_getfield(state, 2, #name); \
+    int name = luaL_checkinteger(state, -1);
+#define FIELD_S(name) \
+    lua_getfield(state, 2, #name); \
+    const char* name = luaL_checkstring(state, -1);
+#define FIELD_B(name) \
+    lua_getfield(state, 2, #name); \
+    bool name = lua_toboolean(state, -1);
+
+    FIELD_I(level);
+
+#undef FIELD_I
+#undef FIELD_S
+
+    storage_ptr->emplace(
+        std::stoi(id), // TODO
+        character_data{
+            std::stoi(id),
+            level,
+        });
+
+    return 0;
+}
+
+
+} // namespace
 
 
 
 namespace elona
 {
+
+
+
+character_db::character_db()
+{
+    lua_State* state = luaL_newstate();
+    luaL_openlibs(state);
+    cat::register_function(state, "define", &define);
+    storage_ptr = &storage;
+    cat::load(state, fs::u8path(u8"../data/character.lua"));
+    storage_ptr = nullptr;
+    lua_close(state);
+}
+
+
+
+optional_ref<character_data> character_db::operator[](int id) const
+{
+    const auto itr = storage.find(id);
+    if (itr == std::end(storage))
+        return std::nullopt;
+    else
+        return itr->second;
+}
 
 
 character::character()
@@ -37,7 +111,7 @@ void character::clear_flags()
 }
 
 
-character_data::character_data()
+cdata_t::cdata_t()
     : storage(245)
 {
 }
