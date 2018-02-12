@@ -18,6 +18,10 @@ define('0', {
   race = "slime",
   class_ = "predator",
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('343', {
   dbmode16_dbspec3 = 6,
@@ -42,6 +46,10 @@ define('343', {
   image = 1,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('1', {
   dbmode16_dbspec3 = 3,
@@ -67,6 +75,10 @@ define('1', {
   male_image = 140,
   female_image = 141,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('353', {
   dbmode16_dbspec3 = 3,
@@ -90,6 +102,10 @@ define('353', {
   class_ = "gunner",
   image = 443,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('70', {
   dbmode16_dbspec3 = 3,
@@ -115,6 +131,10 @@ define('70', {
   male_image = 144,
   female_image = 145,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('69', {
   dbmode16_dbspec3 = 3,
@@ -140,6 +160,10 @@ define('69', {
   male_image = 15,
   female_image = 16,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('73', {
   dbmode16_dbspec3 = 3,
@@ -165,6 +189,10 @@ define('73', {
   sex = 0,
   image = 41,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('74', {
   dbmode16_dbspec3 = 3,
@@ -190,6 +218,10 @@ define('74', {
   sex = 1,
   image = 69,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('206', {
   dbmode16_dbspec3 = 3,
@@ -215,6 +247,10 @@ define('206', {
   sex = 1,
   image = 163,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('38', {
   dbmode16_dbspec3 = 3,
@@ -240,6 +276,10 @@ define('38', {
   male_image = 142,
   female_image = 143,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('40', {
   dbmode16_dbspec3 = 3,
@@ -265,6 +305,10 @@ define('40', {
   male_image = 7,
   female_image = 10,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('333', {
   dbmode16_dbspec3 = 3,
@@ -290,6 +334,10 @@ define('333', {
   male_image = 415,
   female_image = 414,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('76', {
   dbmode16_dbspec3 = 3,
@@ -314,6 +362,10 @@ define('76', {
   class_ = "archer",
   image = 363,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('77', {
   dbmode16_dbspec3 = 3,
@@ -338,6 +390,10 @@ define('77', {
   class_ = "archer",
   image = 25,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('204', {
   dbmode16_dbspec3 = 3,
@@ -365,6 +421,10 @@ define('204', {
   male_image = 74,
   female_image = 75,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('2', {
   dbmode16_dbspec3 = 3,
@@ -395,6 +455,10 @@ define('2', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 63,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('37', {
   dbmode16_dbspec3 = 3,
@@ -419,6 +483,10 @@ define('37', {
   sex = 0,
   image = 347,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('23', {
   dbmode16_dbspec3 = 3,
@@ -445,6 +513,10 @@ define('23', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 64,
+  fltselect = 3,
+  category = 0,
+  rarity = 1000,
+  coefficient = 400,
 })
 define('26', {
   dbmode16_dbspec3 = 3,
@@ -469,6 +541,10 @@ define('26', {
   image = 332,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 2,
+  category = 0,
+  rarity = 1000,
+  coefficient = 400,
 })
 define('27', {
   dbmode16_dbspec3 = 3,
@@ -493,6 +569,10 @@ define('27', {
   image = 333,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 2,
+  category = 0,
+  rarity = 1000,
+  coefficient = 400,
 })
 define('28', {
   dbmode16_dbspec3 = 3,
@@ -519,6 +599,10 @@ define('28', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 73,
+  fltselect = 3,
+  category = 0,
+  rarity = 1000,
+  coefficient = 400,
 })
 define('29', {
   dbmode16_dbspec3 = 3,
@@ -544,6 +628,10 @@ define('29', {
   image = 337,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 1000,
+  coefficient = 400,
 })
 define('140', {
   dbmode16_dbspec3 = 5,
@@ -569,6 +657,10 @@ define('140', {
   image = 338,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 1000,
+  coefficient = 400,
 })
 define('30', {
   dbmode16_dbspec3 = 3,
@@ -594,6 +686,10 @@ define('30', {
   image = 8,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('31', {
   dbmode16_dbspec3 = 3,
@@ -619,6 +715,10 @@ define('31', {
   image = 109,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('351', {
   dbmode16_dbspec3 = 3,
@@ -647,6 +747,10 @@ define('351', {
   cspecialeq = 1,
   eqtwohand = 1,
   eqweapon1 = 232,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('352', {
   dbmode16_dbspec3 = 3,
@@ -672,6 +776,10 @@ define('352', {
   image = 479,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('32', {
   dbmode16_dbspec3 = 3,
@@ -697,6 +805,10 @@ define('32', {
   image = 344,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 2,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('33', {
   dbmode16_dbspec3 = 3,
@@ -724,6 +836,10 @@ define('33', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 206,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('34', {
   dbmode16_dbspec3 = 3,
@@ -754,6 +870,10 @@ define('34', {
   eqrange_0 = 207,
   eqammo_0 = 25001,
   eqammo_1 = 3,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('139', {
   dbmode16_dbspec3 = 3,
@@ -779,6 +899,10 @@ define('139', {
   image = 99,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('146', {
   dbmode16_dbspec3 = 3,
@@ -804,6 +928,10 @@ define('146', {
   image = 99,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('142', {
   dbmode16_dbspec3 = 3,
@@ -829,6 +957,10 @@ define('142', {
   image = 340,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('141', {
   dbmode16_dbspec3 = 6,
@@ -858,6 +990,10 @@ define('141', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 358,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('143', {
   dbmode16_dbspec3 = 3,
@@ -886,6 +1022,10 @@ define('143', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 359,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('144', {
   dbmode16_dbspec3 = 6,
@@ -915,6 +1055,10 @@ define('144', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 356,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('145', {
   dbmode16_dbspec3 = 5,
@@ -939,6 +1083,10 @@ define('145', {
   fixlv = 6,
   cspecialeq = 1,
   eqring1 = 357,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('306', {
   dbmode16_dbspec3 = 6,
@@ -965,6 +1113,10 @@ define('306', {
   image = 393,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('331', {
   dbmode16_dbspec3 = 6,
@@ -990,6 +1142,10 @@ define('331', {
   image = 413,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('336', {
   dbmode16_dbspec3 = 6,
@@ -1020,6 +1176,10 @@ define('336', {
   cspecialeq = 1,
   eqtwohand = 1,
   eqweapon1 = 739,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('338', {
   dbmode16_dbspec3 = 6,
@@ -1047,6 +1207,10 @@ define('338', {
   cspecialeq = 1,
   eqtwohand = 1,
   eqweapon1 = 739,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('339', {
   dbmode16_dbspec3 = 6,
@@ -1074,6 +1238,10 @@ define('339', {
   cspecialeq = 1,
   eqtwohand = 1,
   eqweapon1 = 739,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('342', {
   dbmode16_dbspec3 = 6,
@@ -1101,6 +1269,10 @@ define('342', {
   cspecialeq = 1,
   eqtwohand = 1,
   eqweapon1 = 739,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('340', {
   dbmode16_dbspec3 = 6,
@@ -1131,6 +1303,10 @@ define('340', {
   cspecialeq = 1,
   eqtwohand = 1,
   eqweapon1 = 739,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('3', {
   dbmode16_dbspec3 = 1,
@@ -1154,6 +1330,10 @@ define('3', {
   class_ = "tourist",
   resistances = {_63 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 3,
+  rarity = 80000,
+  coefficient = 400,
 })
 define('4', {
   dbmode16_dbspec3 = 1,
@@ -1177,6 +1357,10 @@ define('4', {
   resistances = {_63 = 500},
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 3,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('169', {
   dbmode16_dbspec3 = 1,
@@ -1203,6 +1387,10 @@ define('169', {
   color = 4,
   cspecialeq = 0,
   damage_reaction_info = 100063,
+  fltselect = 0,
+  category = 3,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('194', {
   dbmode16_dbspec3 = 1,
@@ -1231,6 +1419,10 @@ define('194', {
   color = 2,
   cspecialeq = 0,
   damage_reaction_info = 200063,
+  fltselect = 0,
+  category = 3,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('286', {
   dbmode16_dbspec3 = 1,
@@ -1254,6 +1446,10 @@ define('286', {
   resistances = {_63 = 500},
   image = 400,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('285', {
   dbmode16_dbspec3 = 1,
@@ -1278,6 +1474,10 @@ define('285', {
   image = 400,
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('287', {
   dbmode16_dbspec3 = 1,
@@ -1300,6 +1500,10 @@ define('287', {
   race = "drake",
   image = 401,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('327', {
   dbmode16_dbspec3 = 1,
@@ -1322,6 +1526,10 @@ define('327', {
   race = "machine",
   image = 282,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 15000,
+  coefficient = 400,
 })
 define('5', {
   dbmode16_dbspec3 = 1,
@@ -1343,6 +1551,10 @@ define('5', {
   race = "rabbit",
   class_ = "tourist",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('6', {
   dbmode16_dbspec3 = 1,
@@ -1365,6 +1577,10 @@ define('6', {
   race = "snail",
   class_ = "tourist",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('7', {
   dbmode16_dbspec3 = 0,
@@ -1388,6 +1604,10 @@ define('7', {
   class_ = "warrior",
   image = 37,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('8', {
   dbmode16_dbspec3 = 0,
@@ -1412,6 +1632,10 @@ define('8', {
   male_image = 139,
   female_image = 178,
   cspecialeq = 0,
+  fltselect = 5,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('9', {
   dbmode16_dbspec3 = 0,
@@ -1437,6 +1661,10 @@ define('9', {
   male_image = 102,
   female_image = 103,
   cspecialeq = 0,
+  fltselect = 5,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('269', {
   dbmode16_dbspec3 = 0,
@@ -1462,6 +1690,10 @@ define('269', {
   male_image = 179,
   female_image = 180,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('320', {
   dbmode16_dbspec3 = 0,
@@ -1488,6 +1720,10 @@ define('320', {
   sex = 0,
   image = 410,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 10000,
+  coefficient = 100,
 })
 define('273', {
   dbmode16_dbspec3 = 0,
@@ -1513,6 +1749,10 @@ define('273', {
   male_image = 187,
   female_image = 188,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('326', {
   dbmode16_dbspec3 = 0,
@@ -1537,6 +1777,10 @@ define('326', {
   class_ = "pianist",
   image = 148,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('270', {
   dbmode16_dbspec3 = 0,
@@ -1562,6 +1806,10 @@ define('270', {
   male_image = 181,
   female_image = 182,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('349', {
   dbmode16_dbspec3 = 0,
@@ -1585,6 +1833,10 @@ define('349', {
   class_ = "tourist",
   image = 442,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('348', {
   dbmode16_dbspec3 = 0,
@@ -1609,6 +1861,10 @@ define('348', {
   image = 473,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('347', {
   dbmode16_dbspec3 = 0,
@@ -1635,6 +1891,10 @@ define('347', {
   male_image = 285,
   female_image = 284,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('271', {
   dbmode16_dbspec3 = 0,
@@ -1661,6 +1921,10 @@ define('271', {
   male_image = 183,
   female_image = 184,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('335', {
   dbmode16_dbspec3 = 0,
@@ -1686,6 +1950,10 @@ define('335', {
   male_image = 418,
   female_image = 417,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('337', {
   dbmode16_dbspec3 = 0,
@@ -1711,6 +1979,10 @@ define('337', {
   male_image = 419,
   female_image = 420,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('272', {
   dbmode16_dbspec3 = 0,
@@ -1736,6 +2008,10 @@ define('272', {
   male_image = 185,
   female_image = 186,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('274', {
   dbmode16_dbspec3 = 0,
@@ -1761,6 +2037,10 @@ define('274', {
   male_image = 189,
   female_image = 190,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('289', {
   dbmode16_dbspec3 = 3,
@@ -1789,6 +2069,10 @@ define('289', {
   male_image = 195,
   female_image = 194,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('293', {
   dbmode16_dbspec3 = 3,
@@ -1814,6 +2098,10 @@ define('293', {
   male_image = 76,
   female_image = 77,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('295', {
   dbmode16_dbspec3 = 3,
@@ -1839,6 +2127,10 @@ define('295', {
   male_image = 78,
   female_image = 79,
   cspecialeq = 0,
+  fltselect = 9,
+  category = 0,
+  rarity = 2000,
+  coefficient = 400,
 })
 define('35', {
   dbmode16_dbspec3 = 0,
@@ -1864,6 +2156,10 @@ define('35', {
   male_image = 104,
   female_image = 357,
   cspecialeq = 0,
+  fltselect = 5,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('36', {
   dbmode16_dbspec3 = 0,
@@ -1889,6 +2185,10 @@ define('36', {
   male_image = 106,
   female_image = 107,
   cspecialeq = 0,
+  fltselect = 5,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('174', {
   dbmode16_dbspec3 = 0,
@@ -1913,6 +2213,10 @@ define('174', {
   male_image = 112,
   female_image = 27,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('10', {
   dbmode16_dbspec3 = 1,
@@ -1934,6 +2238,10 @@ define('10', {
   race = "sheep",
   class_ = "tourist",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('11', {
   dbmode16_dbspec3 = 1,
@@ -1955,6 +2263,10 @@ define('11', {
   race = "frog",
   class_ = "tourist",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('12', {
   dbmode16_dbspec3 = 3,
@@ -1979,6 +2291,10 @@ define('12', {
   male_image = 31,
   female_image = 36,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('13', {
   dbmode16_dbspec3 = 3,
@@ -2000,6 +2316,10 @@ define('13', {
   race = "kobolt",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 5,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('236', {
   dbmode16_dbspec3 = 3,
@@ -2020,6 +2340,10 @@ define('236', {
   original_relationship = -3,
   race = "yeek",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 7,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('238', {
   dbmode16_dbspec3 = 3,
@@ -2041,6 +2365,10 @@ define('238', {
   race = "yeek",
   color = 6,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 7,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('241', {
   dbmode16_dbspec3 = 3,
@@ -2063,6 +2391,10 @@ define('241', {
   class_ = "archer",
   color = 2,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 7,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('240', {
   dbmode16_dbspec3 = 3,
@@ -2088,6 +2420,10 @@ define('240', {
   race = "yeek",
   color = 8,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 7,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('237', {
   dbmode16_dbspec3 = 3,
@@ -2109,6 +2445,10 @@ define('237', {
   race = "yeek",
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 12,
+  rarity = 150000,
+  coefficient = 400,
 })
 define('244', {
   dbmode16_dbspec3 = 3,
@@ -2132,6 +2472,10 @@ define('244', {
   class_ = "warrior",
   image = 385,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 12,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('245', {
   dbmode16_dbspec3 = 1,
@@ -2155,6 +2499,10 @@ define('245', {
   class_ = "predator",
   image = 386,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('321', {
   dbmode16_dbspec3 = 3,
@@ -2179,6 +2527,10 @@ define('321', {
   sex = 0,
   image = 411,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 15000,
+  coefficient = 200,
 })
 define('242', {
   dbmode16_dbspec3 = 3,
@@ -2209,6 +2561,10 @@ define('242', {
   image = 381,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 7,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('239', {
   dbmode16_dbspec3 = 3,
@@ -2233,6 +2589,10 @@ define('239', {
   male_image = 379,
   female_image = 380,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('14', {
   dbmode16_dbspec3 = 2,
@@ -2253,6 +2613,10 @@ define('14', {
   original_relationship = -3,
   race = "centipede",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('15', {
   dbmode16_dbspec3 = 2,
@@ -2275,6 +2639,10 @@ define('15', {
   original_relationship = -3,
   race = "mushroom",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('283', {
   dbmode16_dbspec3 = 2,
@@ -2298,6 +2666,10 @@ define('283', {
   element_of_unarmed_attack = 5400150,
   image = 399,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('284', {
   dbmode16_dbspec3 = 2,
@@ -2322,6 +2694,10 @@ define('284', {
   image = 399,
   color = 8,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('16', {
   dbmode16_dbspec3 = 3,
@@ -2347,6 +2723,10 @@ define('16', {
   male_image = 136,
   female_image = 137,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('39', {
   dbmode16_dbspec3 = 3,
@@ -2372,6 +2752,10 @@ define('39', {
   male_image = 134,
   female_image = 135,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('171', {
   dbmode16_dbspec3 = 3,
@@ -2397,6 +2781,10 @@ define('171', {
   male_image = 128,
   female_image = 129,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('172', {
   dbmode16_dbspec3 = 3,
@@ -2422,6 +2810,10 @@ define('172', {
   male_image = 127,
   female_image = 131,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('173', {
   dbmode16_dbspec3 = 3,
@@ -2447,6 +2839,10 @@ define('173', {
   male_image = 146,
   female_image = 147,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('71', {
   dbmode16_dbspec3 = 3,
@@ -2472,6 +2868,10 @@ define('71', {
   male_image = 120,
   female_image = 121,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('72', {
   dbmode16_dbspec3 = 3,
@@ -2497,6 +2897,10 @@ define('72', {
   sex = 0,
   image = 119,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('79', {
   dbmode16_dbspec3 = 3,
@@ -2522,6 +2926,10 @@ define('79', {
   image = 117,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('80', {
   dbmode16_dbspec3 = 3,
@@ -2547,6 +2955,10 @@ define('80', {
   image = 116,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('17', {
   dbmode16_dbspec3 = 3,
@@ -2568,6 +2980,10 @@ define('17', {
   race = "orc",
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 2,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('281', {
   dbmode16_dbspec3 = 3,
@@ -2589,6 +3005,10 @@ define('281', {
   race = "lizardman",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('282', {
   dbmode16_dbspec3 = 3,
@@ -2610,6 +3030,10 @@ define('282', {
   race = "minotaur",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('296', {
   dbmode16_dbspec3 = 3,
@@ -2636,6 +3060,10 @@ define('296', {
   class_ = "priest",
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('298', {
   dbmode16_dbspec3 = 3,
@@ -2658,6 +3086,10 @@ define('298', {
   class_ = "predator",
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('299', {
   dbmode16_dbspec3 = 3,
@@ -2681,6 +3113,10 @@ define('299', {
   color = 8,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('300', {
   dbmode16_dbspec3 = 3,
@@ -2707,6 +3143,10 @@ define('300', {
   cspecialeq = 1,
   eqweapon1 = 695,
   eqtwohand = 1,
+  fltselect = 3,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('251', {
   dbmode16_dbspec3 = 3,
@@ -2728,6 +3168,10 @@ define('251', {
   race = "troll",
   resistances = {_50 = 50},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 2,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('18', {
   dbmode16_dbspec3 = 3,
@@ -2750,6 +3194,10 @@ define('18', {
   class_ = "warrior",
   female_image = 34,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 4,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('24', {
   dbmode16_dbspec3 = 3,
@@ -2776,6 +3224,10 @@ define('24', {
   male_image = 47,
   female_image = 42,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 4,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('309', {
   dbmode16_dbspec3 = 3,
@@ -2798,6 +3250,10 @@ define('309', {
   class_ = "warrior",
   cspecialeq = 1,
   eqmultiweapon = 2,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('310', {
   dbmode16_dbspec3 = 3,
@@ -2821,6 +3277,10 @@ define('310', {
   color = 2,
   cspecialeq = 1,
   eqmultiweapon = 266,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('311', {
   dbmode16_dbspec3 = 3,
@@ -2844,6 +3304,10 @@ define('311', {
   color = 3,
   cspecialeq = 1,
   eqmultiweapon = 224,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('41', {
   dbmode16_dbspec3 = 3,
@@ -2872,6 +3336,10 @@ define('41', {
   male_image = 13,
   female_image = 14,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('75', {
   dbmode16_dbspec3 = 3,
@@ -2896,6 +3364,10 @@ define('75', {
   male_image = 21,
   female_image = 20,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('19', {
   dbmode16_dbspec3 = 2,
@@ -2916,6 +3388,10 @@ define('19', {
   original_relationship = -3,
   race = "mandrake",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('22', {
   dbmode16_dbspec3 = 2,
@@ -2937,6 +3413,10 @@ define('22', {
   race = "beetle",
   class_ = "predator",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('20', {
   dbmode16_dbspec3 = 3,
@@ -2958,6 +3438,10 @@ define('20', {
   race = "orc",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 2,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('25', {
   dbmode16_dbspec3 = 3,
@@ -2981,6 +3465,10 @@ define('25', {
   color = 3,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 2,
+  category = 2,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('21', {
   dbmode16_dbspec3 = 3,
@@ -3002,6 +3490,10 @@ define('21', {
   race = "zombie",
   class_ = "predator",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 9,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('42', {
   dbmode16_dbspec3 = 1,
@@ -3022,6 +3514,10 @@ define('42', {
   original_relationship = -3,
   race = "bat",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('43', {
   dbmode16_dbspec3 = 1,
@@ -3046,6 +3542,10 @@ define('43', {
   resistances = {_56 = 500},
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('44', {
   dbmode16_dbspec3 = 1,
@@ -3068,6 +3568,10 @@ define('44', {
   class_ = "predator",
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('45', {
   dbmode16_dbspec3 = 1,
@@ -3095,6 +3599,10 @@ define('45', {
   },
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('46', {
   dbmode16_dbspec3 = 1,
@@ -3122,6 +3630,10 @@ define('46', {
   },
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('47', {
   dbmode16_dbspec3 = 6,
@@ -3147,6 +3659,10 @@ define('47', {
   race = "lich",
   class_ = "wizard",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('48', {
   dbmode16_dbspec3 = 6,
@@ -3174,6 +3690,10 @@ define('48', {
   class_ = "wizard",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('49', {
   dbmode16_dbspec3 = 6,
@@ -3200,6 +3720,10 @@ define('49', {
   class_ = "wizard",
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('307', {
   dbmode16_dbspec3 = 6,
@@ -3228,6 +3752,10 @@ define('307', {
   cspecialeq = 1,
   eqweapon1 = 735,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('308', {
   dbmode16_dbspec3 = 6,
@@ -3255,6 +3783,10 @@ define('308', {
   color = 4,
   cspecialeq = 1,
   eqweapon1 = 735,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('50', {
   dbmode16_dbspec3 = 1,
@@ -3278,6 +3810,10 @@ define('50', {
   color = 6,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 80000,
+  coefficient = 400,
 })
 define('51', {
   dbmode16_dbspec3 = 1,
@@ -3305,6 +3841,10 @@ define('51', {
   },
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 14,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('52', {
   dbmode16_dbspec3 = 1,
@@ -3332,6 +3872,10 @@ define('52', {
   },
   color = 12,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 15,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('53', {
   dbmode16_dbspec3 = 1,
@@ -3356,6 +3900,10 @@ define('53', {
   resistances = {_52 = 500},
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 16,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('54', {
   dbmode16_dbspec3 = 1,
@@ -3380,6 +3928,10 @@ define('54', {
   resistances = {_53 = 500},
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 17,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('55', {
   dbmode16_dbspec3 = 1,
@@ -3404,6 +3956,10 @@ define('55', {
   resistances = {_54 = 500},
   color = 10,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 18,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('56', {
   dbmode16_dbspec3 = 1,
@@ -3428,6 +3984,10 @@ define('56', {
   resistances = {_58 = 500},
   color = 9,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 19,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('57', {
   dbmode16_dbspec3 = 1,
@@ -3452,6 +4012,10 @@ define('57', {
   resistances = {_55 = 500},
   color = 2,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 20,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('58', {
   dbmode16_dbspec3 = 1,
@@ -3476,6 +4040,10 @@ define('58', {
   resistances = {_57 = 500},
   color = 11,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 21,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('59', {
   dbmode16_dbspec3 = 1,
@@ -3500,6 +4068,10 @@ define('59', {
   resistances = {_56 = 500},
   color = 15,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 22,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('60', {
   dbmode16_dbspec3 = 1,
@@ -3524,6 +4096,10 @@ define('60', {
   resistances = {_59 = 500},
   color = 18,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 23,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('61', {
   dbmode16_dbspec3 = 1,
@@ -3547,6 +4123,10 @@ define('61', {
   image = 204,
   color = 6,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('62', {
   dbmode16_dbspec3 = 1,
@@ -3570,6 +4150,10 @@ define('62', {
   image = 204,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('63', {
   dbmode16_dbspec3 = 3,
@@ -3593,6 +4177,10 @@ define('63', {
   original_relationship = -3,
   race = "ghost",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('64', {
   dbmode16_dbspec3 = 3,
@@ -3615,6 +4203,10 @@ define('64', {
   race = "ghost",
   color = 2,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('312', {
   dbmode16_dbspec3 = 3,
@@ -3638,6 +4230,10 @@ define('312', {
   class_ = "predator",
   image = 406,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('313', {
   dbmode16_dbspec3 = 3,
@@ -3662,6 +4258,10 @@ define('313', {
   image = 406,
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('65', {
   dbmode16_dbspec3 = 1,
@@ -3686,6 +4286,10 @@ define('65', {
   resistances = {_52 = 500},
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('66', {
   dbmode16_dbspec3 = 1,
@@ -3710,6 +4314,10 @@ define('66', {
   resistances = {_59 = 500},
   color = 18,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('67', {
   dbmode16_dbspec3 = 1,
@@ -3735,6 +4343,10 @@ define('67', {
     _58 = 500,
   },
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 80000,
+  coefficient = 400,
 })
 define('315', {
   dbmode16_dbspec3 = 1,
@@ -3763,6 +4375,10 @@ define('315', {
   },
   color = 8,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('316', {
   dbmode16_dbspec3 = 1,
@@ -3791,6 +4407,10 @@ define('316', {
   image = 407,
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('314', {
   dbmode16_dbspec3 = 1,
@@ -3820,6 +4440,10 @@ define('314', {
   image = 407,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('68', {
   dbmode16_dbspec3 = 4,
@@ -3843,6 +4467,10 @@ define('68', {
   class_ = "predator",
   resistances = {_50 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('78', {
   dbmode16_dbspec3 = 3,
@@ -3868,6 +4496,10 @@ define('78', {
   class_ = "predator",
   image = 209,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('81', {
   dbmode16_dbspec3 = 2,
@@ -3889,6 +4521,10 @@ define('81', {
   original_relationship = -3,
   race = "wasp",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('82', {
   dbmode16_dbspec3 = 2,
@@ -3911,6 +4547,10 @@ define('82', {
   race = "wasp",
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('83', {
   dbmode16_dbspec3 = 3,
@@ -3932,6 +4572,10 @@ define('83', {
   race = "giant",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('84', {
   dbmode16_dbspec3 = 3,
@@ -3955,6 +4599,10 @@ define('84', {
   class_ = "warrior",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('85', {
   dbmode16_dbspec3 = 3,
@@ -3980,6 +4628,10 @@ define('85', {
   race = "imp",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('86', {
   dbmode16_dbspec3 = 3,
@@ -4004,6 +4656,10 @@ define('86', {
   race = "imp",
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('87', {
   dbmode16_dbspec3 = 3,
@@ -4028,6 +4684,10 @@ define('87', {
   race = "imp",
   color = 18,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('88', {
   dbmode16_dbspec3 = 3,
@@ -4051,6 +4711,10 @@ define('88', {
   race = "hand",
   element_of_unarmed_attack = 5300080,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('89', {
   dbmode16_dbspec3 = 3,
@@ -4074,6 +4738,10 @@ define('89', {
   element_of_unarmed_attack = 5900180,
   color = 18,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('90', {
   dbmode16_dbspec3 = 3,
@@ -4099,6 +4767,10 @@ define('90', {
   color = 16,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('91', {
   dbmode16_dbspec3 = 3,
@@ -4123,6 +4795,10 @@ define('91', {
   element_of_unarmed_attack = 5600080,
   image = 214,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('92', {
   dbmode16_dbspec3 = 3,
@@ -4150,6 +4826,10 @@ define('92', {
   image = 214,
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('93', {
   dbmode16_dbspec3 = 2,
@@ -4172,6 +4852,10 @@ define('93', {
   element_of_unarmed_attack = 5400200,
   image = 215,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('94', {
   dbmode16_dbspec3 = 2,
@@ -4195,6 +4879,10 @@ define('94', {
   image = 215,
   color = 10,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('95', {
   dbmode16_dbspec3 = 1,
@@ -4217,6 +4905,10 @@ define('95', {
   race = "snake",
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('96', {
   dbmode16_dbspec3 = 1,
@@ -4239,6 +4931,10 @@ define('96', {
   race = "snake",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('97', {
   dbmode16_dbspec3 = 4,
@@ -4262,6 +4958,10 @@ define('97', {
   resistances = {_50 = 500},
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('98', {
   dbmode16_dbspec3 = 4,
@@ -4284,6 +4984,10 @@ define('98', {
   race = "drake",
   resistances = {_51 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('99', {
   dbmode16_dbspec3 = 3,
@@ -4307,6 +5011,10 @@ define('99', {
   race = "zombie",
   image = 219,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 13,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('100', {
   dbmode16_dbspec3 = 3,
@@ -4332,6 +5040,10 @@ define('100', {
   image = 219,
   color = 10,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 13,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('101', {
   dbmode16_dbspec3 = 3,
@@ -4357,6 +5069,10 @@ define('101', {
   image = 219,
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 13,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('257', {
   dbmode16_dbspec3 = 3,
@@ -4383,6 +5099,10 @@ define('257', {
   color = 8,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 13,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('254', {
   dbmode16_dbspec3 = 3,
@@ -4408,6 +5128,10 @@ define('254', {
   race = "zombie",
   image = 395,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 13,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('102', {
   dbmode16_dbspec3 = 3,
@@ -4429,6 +5153,10 @@ define('102', {
   race = "goblin",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 1,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('103', {
   dbmode16_dbspec3 = 3,
@@ -4451,6 +5179,10 @@ define('103', {
   class_ = "warrior",
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 1,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('104', {
   dbmode16_dbspec3 = 3,
@@ -4477,6 +5209,10 @@ define('104', {
   class_ = "warmage",
   color = 18,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 1,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('105', {
   dbmode16_dbspec3 = 3,
@@ -4500,6 +5236,10 @@ define('105', {
   class_ = "wizard",
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 1,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('106', {
   dbmode16_dbspec3 = 3,
@@ -4526,6 +5266,10 @@ define('106', {
   image = 221,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('107', {
   dbmode16_dbspec3 = 3,
@@ -4552,6 +5296,10 @@ define('107', {
   image = 221,
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('108', {
   dbmode16_dbspec3 = 1,
@@ -4574,6 +5322,10 @@ define('108', {
   original_relationship = -3,
   race = "bear",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 11,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('109', {
   dbmode16_dbspec3 = 1,
@@ -4595,6 +5347,10 @@ define('109', {
   race = "bear",
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 11,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('344', {
   dbmode16_dbspec3 = 1,
@@ -4616,6 +5372,10 @@ define('344', {
   race = "bear",
   image = 439,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 11,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('110', {
   dbmode16_dbspec3 = 3,
@@ -4637,6 +5397,10 @@ define('110', {
   race = "armor",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('111', {
   dbmode16_dbspec3 = 3,
@@ -4659,6 +5423,10 @@ define('111', {
   class_ = "warrior",
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('112', {
   dbmode16_dbspec3 = 3,
@@ -4681,6 +5449,10 @@ define('112', {
   class_ = "warrior",
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('113', {
   dbmode16_dbspec3 = 3,
@@ -4704,6 +5476,10 @@ define('113', {
   class_ = "warrior",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('114', {
   dbmode16_dbspec3 = 3,
@@ -4725,6 +5501,10 @@ define('114', {
   race = "medusa",
   class_ = "warmage",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('115', {
   dbmode16_dbspec3 = 3,
@@ -4747,6 +5527,10 @@ define('115', {
   class_ = "warmage",
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('116', {
   dbmode16_dbspec3 = 3,
@@ -4769,6 +5553,10 @@ define('116', {
   class_ = "warmage",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('117', {
   dbmode16_dbspec3 = 3,
@@ -4791,6 +5579,10 @@ define('117', {
   race = "cupid",
   class_ = "archer",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('118', {
   dbmode16_dbspec3 = 3,
@@ -4813,6 +5605,10 @@ define('118', {
   race = "phantom",
   class_ = "wizard",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('248', {
   dbmode16_dbspec3 = 1,
@@ -4834,6 +5630,10 @@ define('248', {
   race = "dinosaur",
   class_ = "predator",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('119', {
   dbmode16_dbspec3 = 3,
@@ -4854,6 +5654,10 @@ define('119', {
   original_relationship = -3,
   race = "harpy",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('120', {
   dbmode16_dbspec3 = 5,
@@ -4877,6 +5681,10 @@ define('120', {
   class_ = "predator",
   color = 19,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('121', {
   dbmode16_dbspec3 = 5,
@@ -4901,6 +5709,10 @@ define('121', {
   resistances = {_50 = 500},
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('122', {
   dbmode16_dbspec3 = 5,
@@ -4924,6 +5736,10 @@ define('122', {
   class_ = "predator",
   resistances = {_51 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('123', {
   dbmode16_dbspec3 = 5,
@@ -4948,6 +5764,10 @@ define('123', {
   resistances = {_52 = 500},
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('124', {
   dbmode16_dbspec3 = 5,
@@ -4972,6 +5792,10 @@ define('124', {
   resistances = {_56 = 500},
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('125', {
   dbmode16_dbspec3 = 5,
@@ -4996,6 +5820,10 @@ define('125', {
   resistances = {_59 = 500},
   color = 18,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('126', {
   dbmode16_dbspec3 = 4,
@@ -5019,6 +5847,10 @@ define('126', {
   class_ = "predator",
   resistances = {_50 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('255', {
   dbmode16_dbspec3 = 2,
@@ -5042,6 +5874,10 @@ define('255', {
   resistances = {_55 = 500},
   image = 396,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('256', {
   dbmode16_dbspec3 = 2,
@@ -5066,6 +5902,10 @@ define('256', {
   image = 396,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('127', {
   dbmode16_dbspec3 = 2,
@@ -5089,6 +5929,10 @@ define('127', {
   race = "spider",
   resistances = {_55 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 6,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('128', {
   dbmode16_dbspec3 = 2,
@@ -5114,6 +5958,10 @@ define('128', {
   resistances = {_55 = 500},
   color = 19,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 6,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('129', {
   dbmode16_dbspec3 = 2,
@@ -5139,6 +5987,10 @@ define('129', {
   resistances = {_55 = 500},
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 6,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('130', {
   dbmode16_dbspec3 = 2,
@@ -5164,6 +6016,10 @@ define('130', {
   resistances = {_55 = 500},
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 6,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('131', {
   dbmode16_dbspec3 = 2,
@@ -5189,6 +6045,10 @@ define('131', {
   resistances = {_55 = 500},
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 6,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('132', {
   dbmode16_dbspec3 = 3,
@@ -5211,6 +6071,10 @@ define('132', {
   race = "golem",
   color = 6,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('133', {
   dbmode16_dbspec3 = 3,
@@ -5232,6 +6096,10 @@ define('133', {
   original_relationship = -3,
   race = "golem",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('134', {
   dbmode16_dbspec3 = 3,
@@ -5255,6 +6123,10 @@ define('134', {
   class_ = "predator",
   color = 15,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('135', {
   dbmode16_dbspec3 = 3,
@@ -5278,6 +6150,10 @@ define('135', {
   class_ = "predator",
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('136', {
   dbmode16_dbspec3 = 3,
@@ -5301,6 +6177,10 @@ define('136', {
   class_ = "predator",
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('137', {
   dbmode16_dbspec3 = 3,
@@ -5324,6 +6204,10 @@ define('137', {
   class_ = "predator",
   color = 9,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 15000,
+  coefficient = 400,
 })
 define('138', {
   dbmode16_dbspec3 = 3,
@@ -5347,6 +6231,10 @@ define('138', {
   class_ = "predator",
   color = 2,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 15000,
+  coefficient = 400,
 })
 define('147', {
   dbmode16_dbspec3 = 2,
@@ -5369,6 +6257,10 @@ define('147', {
   element_of_unarmed_attack = 5000150,
   resistances = {_50 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('148', {
   dbmode16_dbspec3 = 2,
@@ -5392,6 +6284,10 @@ define('148', {
   resistances = {_50 = 500},
   image = 239,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('149', {
   dbmode16_dbspec3 = 3,
@@ -5418,6 +6314,10 @@ define('149', {
   resistances = {_50 = 500},
   image = 240,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('150', {
   dbmode16_dbspec3 = 3,
@@ -5439,6 +6339,10 @@ define('150', {
   race = "skeleton",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 9,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('151', {
   dbmode16_dbspec3 = 3,
@@ -5462,6 +6366,10 @@ define('151', {
   color = 3,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 9,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('152', {
   dbmode16_dbspec3 = 3,
@@ -5486,6 +6394,10 @@ define('152', {
   element_of_unarmed_attack = 5400150,
   image = 243,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 9,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('153', {
   dbmode16_dbspec3 = 3,
@@ -5507,6 +6419,10 @@ define('153', {
   race = "piece",
   class_ = "warrior",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('154', {
   dbmode16_dbspec3 = 3,
@@ -5529,6 +6445,10 @@ define('154', {
   class_ = "predator",
   image = 245,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('155', {
   dbmode16_dbspec3 = 3,
@@ -5554,6 +6474,10 @@ define('155', {
   class_ = "wizard",
   image = 246,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('156', {
   dbmode16_dbspec3 = 3,
@@ -5577,6 +6501,10 @@ define('156', {
   image = 247,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('157', {
   dbmode16_dbspec3 = 3,
@@ -5602,6 +6530,10 @@ define('157', {
   class_ = "wizard",
   image = 248,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('158', {
   dbmode16_dbspec3 = 3,
@@ -5625,6 +6557,10 @@ define('158', {
   class_ = "warrior",
   image = 249,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('159', {
   dbmode16_dbspec3 = 3,
@@ -5649,6 +6585,10 @@ define('159', {
   class_ = "warrior",
   image = 159,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 8,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('160', {
   dbmode16_dbspec3 = 3,
@@ -5673,6 +6613,10 @@ define('160', {
   class_ = "archer",
   image = 57,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 8,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('161', {
   dbmode16_dbspec3 = 3,
@@ -5698,6 +6642,10 @@ define('161', {
   class_ = "wizard",
   image = 100,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 8,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('302', {
   dbmode16_dbspec3 = 3,
@@ -5724,6 +6672,10 @@ define('302', {
   image = 150,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('303', {
   dbmode16_dbspec3 = 3,
@@ -5749,6 +6701,10 @@ define('303', {
   image = 31,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('304', {
   dbmode16_dbspec3 = 3,
@@ -5773,6 +6729,10 @@ define('304', {
   class_ = "gunner",
   image = 158,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('305', {
   dbmode16_dbspec3 = 3,
@@ -5800,6 +6760,10 @@ define('305', {
   class_ = "priest",
   image = 157,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('162', {
   dbmode16_dbspec3 = 3,
@@ -5823,6 +6787,10 @@ define('162', {
   class_ = "gunner",
   image = 250,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('234', {
   dbmode16_dbspec3 = 3,
@@ -5847,6 +6815,10 @@ define('234', {
   image = 250,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('231', {
   dbmode16_dbspec3 = 3,
@@ -5872,6 +6844,10 @@ define('231', {
   image = 370,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('232', {
   dbmode16_dbspec3 = 3,
@@ -5894,6 +6870,10 @@ define('232', {
   class_ = "gunner",
   image = 373,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('233', {
   dbmode16_dbspec3 = 3,
@@ -5917,6 +6897,10 @@ define('233', {
   class_ = "warrior",
   image = 377,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('235', {
   dbmode16_dbspec3 = 3,
@@ -5941,6 +6925,10 @@ define('235', {
   image = 377,
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('163', {
   dbmode16_dbspec3 = 3,
@@ -5964,6 +6952,10 @@ define('163', {
   image = 251,
   cspecialeq = 1,
   eqrange_0 = 210,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('164', {
   dbmode16_dbspec3 = 1,
@@ -5986,6 +6978,10 @@ define('164', {
   original_relationship = -1,
   race = "cat",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('246', {
   dbmode16_dbspec3 = 1,
@@ -6009,6 +7005,10 @@ define('246', {
   race = "cat",
   image = 387,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 1000,
+  coefficient = 0,
 })
 define('332', {
   dbmode16_dbspec3 = 1,
@@ -6033,6 +7033,10 @@ define('332', {
   image = 387,
   color = 6,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 0,
 })
 define('229', {
   dbmode16_dbspec3 = 1,
@@ -6056,6 +7060,10 @@ define('229', {
   class_ = "predator",
   image = 368,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 10,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('230', {
   dbmode16_dbspec3 = 1,
@@ -6081,6 +7089,10 @@ define('230', {
   image = 369,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('228', {
   dbmode16_dbspec3 = 1,
@@ -6106,6 +7118,10 @@ define('228', {
   class_ = "wizard",
   image = 367,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('165', {
   dbmode16_dbspec3 = 1,
@@ -6128,6 +7144,10 @@ define('165', {
   original_relationship = -3,
   race = "dog",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 10,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('225', {
   dbmode16_dbspec3 = 1,
@@ -6151,6 +7171,10 @@ define('225', {
   image = 364,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('226', {
   dbmode16_dbspec3 = 3,
@@ -6174,6 +7198,10 @@ define('226', {
   image = 365,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('227', {
   dbmode16_dbspec3 = 3,
@@ -6198,6 +7226,10 @@ define('227', {
   image = 366,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('166', {
   dbmode16_dbspec3 = 3,
@@ -6222,6 +7254,10 @@ define('166', {
   class_ = "warrior",
   image = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('167', {
   dbmode16_dbspec3 = 1,
@@ -6244,6 +7280,10 @@ define('167', {
   race = "rat",
   color = 6,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('168', {
   dbmode16_dbspec3 = 1,
@@ -6265,6 +7305,10 @@ define('168', {
   race = "shell",
   class_ = "predator",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('170', {
   dbmode16_dbspec3 = 3,
@@ -6289,6 +7333,10 @@ define('170', {
   image = 258,
   cspecialeq = 1,
   eqrange_0 = 210,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('175', {
   dbmode16_dbspec3 = 3,
@@ -6312,6 +7360,10 @@ define('175', {
   image = 348,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('176', {
   dbmode16_dbspec3 = 3,
@@ -6336,6 +7388,10 @@ define('176', {
   class_ = "thief",
   image = 105,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('249', {
   dbmode16_dbspec3 = 3,
@@ -6361,6 +7417,10 @@ define('249', {
   class_ = "thief",
   image = 105,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('210', {
   dbmode16_dbspec3 = 3,
@@ -6384,6 +7444,10 @@ define('210', {
   race = "catsister",
   class_ = "thief",
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('211', {
   dbmode16_dbspec3 = 3,
@@ -6412,6 +7476,10 @@ define('211', {
   class_ = "warmage",
   image = 355,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('177', {
   dbmode16_dbspec3 = 3,
@@ -6443,6 +7511,10 @@ define('177', {
   eqrange_0 = 514,
   eqammo_0 = 25030,
   eqammo_1 = 3,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('178', {
   dbmode16_dbspec3 = 6,
@@ -6474,6 +7546,10 @@ define('178', {
   color = 3,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('179', {
   dbmode16_dbspec3 = 3,
@@ -6496,6 +7572,10 @@ define('179', {
   class_ = "warrior",
   image = 350,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('208', {
   dbmode16_dbspec3 = 3,
@@ -6521,6 +7601,10 @@ define('208', {
   image = 352,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('209', {
   dbmode16_dbspec3 = 3,
@@ -6546,6 +7630,10 @@ define('209', {
   image = 353,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('180', {
   dbmode16_dbspec3 = 1,
@@ -6568,6 +7656,10 @@ define('180', {
   race = "cat",
   image = 259,
   cspecialeq = 0,
+  fltselect = 4,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('181', {
   dbmode16_dbspec3 = 1,
@@ -6590,6 +7682,10 @@ define('181', {
   race = "hound",
   image = 260,
   cspecialeq = 0,
+  fltselect = 4,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('182', {
   dbmode16_dbspec3 = 3,
@@ -6614,6 +7710,10 @@ define('182', {
   class_ = "wizard",
   image = 208,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('183', {
   dbmode16_dbspec3 = 3,
@@ -6638,6 +7738,10 @@ define('183', {
   male_image = 71,
   female_image = 70,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('184', {
   dbmode16_dbspec3 = 3,
@@ -6662,6 +7766,10 @@ define('184', {
   male_image = 73,
   female_image = 72,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('185', {
   dbmode16_dbspec3 = 3,
@@ -6687,6 +7795,10 @@ define('185', {
   male_image = 122,
   female_image = 129,
   cspecialeq = 0,
+  fltselect = 7,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('350', {
   dbmode16_dbspec3 = 3,
@@ -6713,6 +7825,10 @@ define('350', {
   female_image = 476,
   color = 1,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('186', {
   dbmode16_dbspec3 = 3,
@@ -6734,6 +7850,10 @@ define('186', {
   race = "machine",
   element_of_unarmed_attack = 6100100,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('187', {
   dbmode16_dbspec3 = 3,
@@ -6757,6 +7877,10 @@ define('187', {
   element_of_unarmed_attack = 6100120,
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('188', {
   dbmode16_dbspec3 = 3,
@@ -6780,6 +7904,10 @@ define('188', {
   element_of_unarmed_attack = 6100150,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('345', {
   dbmode16_dbspec3 = 3,
@@ -6804,6 +7932,10 @@ define('345', {
   image = 470,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('346', {
   dbmode16_dbspec3 = 3,
@@ -6827,6 +7959,10 @@ define('346', {
   class_ = "predator",
   image = 471,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 5000,
+  coefficient = 400,
 })
 define('341', {
   dbmode16_dbspec3 = 3,
@@ -6851,6 +7987,10 @@ define('341', {
   race = "machine",
   image = 434,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 25000,
+  coefficient = 400,
 })
 define('258', {
   dbmode16_dbspec3 = 3,
@@ -6874,6 +8014,10 @@ define('258', {
   image = 198,
   cspecialeq = 0,
   damage_reaction_info = 250061,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('189', {
   dbmode16_dbspec3 = 3,
@@ -6896,6 +8040,10 @@ define('189', {
   race = "eye",
   image = 271,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('190', {
   dbmode16_dbspec3 = 3,
@@ -6919,6 +8067,10 @@ define('190', {
   image = 271,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('191', {
   dbmode16_dbspec3 = 3,
@@ -6943,6 +8095,10 @@ define('191', {
   race = "wisp",
   resistances = {_52 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('192', {
   dbmode16_dbspec3 = 1,
@@ -6965,6 +8121,10 @@ define('192', {
   image = 273,
   cspecialeq = 0,
   damage_reaction_info = 200061,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('193', {
   dbmode16_dbspec3 = 1,
@@ -6988,6 +8148,10 @@ define('193', {
   color = 17,
   cspecialeq = 0,
   damage_reaction_info = 500062,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('195', {
   dbmode16_dbspec3 = 1,
@@ -7009,6 +8173,10 @@ define('195', {
   original_relationship = -3,
   race = "chicken",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('196', {
   dbmode16_dbspec3 = 2,
@@ -7032,6 +8200,10 @@ define('196', {
   element_of_unarmed_attack = 5400100,
   image = 275,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('201', {
   dbmode16_dbspec3 = 2,
@@ -7056,6 +8228,10 @@ define('201', {
   image = 275,
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('197', {
   dbmode16_dbspec3 = 2,
@@ -7080,6 +8256,10 @@ define('197', {
   image = 275,
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('198', {
   dbmode16_dbspec3 = 2,
@@ -7104,6 +8284,10 @@ define('198', {
   image = 275,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 60000,
+  coefficient = 400,
 })
 define('199', {
   dbmode16_dbspec3 = 3,
@@ -7126,6 +8310,10 @@ define('199', {
   class_ = "predator",
   image = 276,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('200', {
   dbmode16_dbspec3 = 3,
@@ -7149,6 +8337,10 @@ define('200', {
   image = 276,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('202', {
   dbmode16_dbspec3 = 3,
@@ -7175,6 +8367,10 @@ define('202', {
   image = 351,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('203', {
   dbmode16_dbspec3 = 3,
@@ -7199,6 +8395,10 @@ define('203', {
   sex = 0,
   image = 23,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('205', {
   dbmode16_dbspec3 = 3,
@@ -7224,6 +8424,10 @@ define('205', {
   male_image = 104,
   female_image = 105,
   cspecialeq = 0,
+  fltselect = 1,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('207', {
   dbmode16_dbspec3 = 3,
@@ -7250,6 +8454,10 @@ define('207', {
   image = 351,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('212', {
   dbmode16_dbspec3 = 3,
@@ -7275,6 +8483,10 @@ define('212', {
   fixlv = 6,
   cspecialeq = 1,
   eqweapon1 = 56,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('213', {
   dbmode16_dbspec3 = 3,
@@ -7300,6 +8512,10 @@ define('213', {
   image = 356,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('221', {
   dbmode16_dbspec3 = 3,
@@ -7325,6 +8541,10 @@ define('221', {
   image = 358,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('222', {
   dbmode16_dbspec3 = 3,
@@ -7350,6 +8570,10 @@ define('222', {
   image = 359,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('223', {
   dbmode16_dbspec3 = 3,
@@ -7375,6 +8599,10 @@ define('223', {
   image = 361,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('224', {
   dbmode16_dbspec3 = 3,
@@ -7400,6 +8628,10 @@ define('224', {
   image = 362,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('243', {
   dbmode16_dbspec3 = 3,
@@ -7425,6 +8657,10 @@ define('243', {
   image = 383,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('247', {
   dbmode16_dbspec3 = 3,
@@ -7449,6 +8685,10 @@ define('247', {
   image = 388,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('252', {
   dbmode16_dbspec3 = 3,
@@ -7477,6 +8717,10 @@ define('252', {
   image = 392,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('253', {
   dbmode16_dbspec3 = 3,
@@ -7503,6 +8747,10 @@ define('253', {
   image = 394,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('259', {
   dbmode16_dbspec3 = 3,
@@ -7529,6 +8777,10 @@ define('259', {
   image = 199,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('301', {
   dbmode16_dbspec3 = 3,
@@ -7555,6 +8807,10 @@ define('301', {
   fixlv = 6,
   cspecialeq = 1,
   eqtwohand = 1,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('214', {
   dbmode16_dbspec3 = 3,
@@ -7578,6 +8834,10 @@ define('214', {
   race = "juere",
   image = 166,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('215', {
   dbmode16_dbspec3 = 3,
@@ -7603,6 +8863,10 @@ define('215', {
   image = 166,
   color = 3,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('217', {
   dbmode16_dbspec3 = 3,
@@ -7628,6 +8892,10 @@ define('217', {
   image = 166,
   color = 4,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('216', {
   dbmode16_dbspec3 = 1,
@@ -7652,6 +8920,10 @@ define('216', {
   class_ = "predator",
   resistances = {_54 = 500},
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 20000,
+  coefficient = 400,
 })
 define('218', {
   dbmode16_dbspec3 = 1,
@@ -7679,6 +8951,10 @@ define('218', {
   resistances = {_54 = 500},
   image = 277,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 define('219', {
   dbmode16_dbspec3 = 3,
@@ -7702,6 +8978,10 @@ define('219', {
   class_ = "warrior",
   image = 278,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 80000,
+  coefficient = 400,
 })
 define('220', {
   dbmode16_dbspec3 = 3,
@@ -7729,6 +9009,10 @@ define('220', {
   resistances = {_54 = 500},
   image = 430,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 30000,
+  coefficient = 400,
 })
 define('250', {
   dbmode16_dbspec3 = 3,
@@ -7752,6 +9036,10 @@ define('250', {
   original_relationship = -3,
   race = "fairy",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('260', {
   dbmode16_dbspec3 = 3,
@@ -7780,6 +9068,10 @@ define('260', {
   image = 211,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('261', {
   dbmode16_dbspec3 = 3,
@@ -7808,6 +9100,10 @@ define('261', {
   image = 217,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('262', {
   dbmode16_dbspec3 = 3,
@@ -7833,6 +9129,10 @@ define('262', {
   image = 218,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('263', {
   dbmode16_dbspec3 = 3,
@@ -7865,6 +9165,10 @@ define('263', {
   image = 236,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('264', {
   dbmode16_dbspec3 = 3,
@@ -7891,6 +9195,10 @@ define('264', {
   image = 269,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('265', {
   dbmode16_dbspec3 = 3,
@@ -7919,6 +9227,10 @@ define('265', {
   image = 267,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('266', {
   dbmode16_dbspec3 = 3,
@@ -7947,6 +9259,10 @@ define('266', {
   image = 242,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('267', {
   dbmode16_dbspec3 = 1,
@@ -7970,6 +9286,10 @@ define('267', {
   race = "horse",
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('276', {
   dbmode16_dbspec3 = 1,
@@ -7994,6 +9314,10 @@ define('276', {
   class_ = "predator",
   color = 6,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('275', {
   dbmode16_dbspec3 = 1,
@@ -8018,6 +9342,10 @@ define('275', {
   class_ = "predator",
   color = 15,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('268', {
   dbmode16_dbspec3 = 1,
@@ -8042,6 +9370,10 @@ define('268', {
   class_ = "predator",
   color = 16,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('277', {
   dbmode16_dbspec3 = 1,
@@ -8066,6 +9398,10 @@ define('277', {
   class_ = "predator",
   color = 10,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 400,
 })
 define('278', {
   dbmode16_dbspec3 = 3,
@@ -8089,6 +9425,10 @@ define('278', {
   class_ = "warrior",
   image = 191,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 70000,
+  coefficient = 400,
 })
 define('279', {
   dbmode16_dbspec3 = 3,
@@ -8114,6 +9454,10 @@ define('279', {
   image = 263,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('280', {
   dbmode16_dbspec3 = 3,
@@ -8138,6 +9482,10 @@ define('280', {
   image = 192,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('288', {
   dbmode16_dbspec3 = 3,
@@ -8165,6 +9513,10 @@ define('288', {
   image = 193,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('290', {
   dbmode16_dbspec3 = 3,
@@ -8192,6 +9544,10 @@ define('290', {
   image = 196,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('292', {
   dbmode16_dbspec3 = 3,
@@ -8216,6 +9572,10 @@ define('292', {
   image = 197,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('294', {
   dbmode16_dbspec3 = 3,
@@ -8241,6 +9601,10 @@ define('294', {
   image = 196,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('291', {
   dbmode16_dbspec3 = 3,
@@ -8265,6 +9629,10 @@ define('291', {
   image = 80,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('297', {
   dbmode16_dbspec3 = 3,
@@ -8290,6 +9658,10 @@ define('297', {
   image = 196,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 100000,
+  coefficient = 400,
 })
 define('317', {
   dbmode16_dbspec3 = 3,
@@ -8318,6 +9690,10 @@ define('317', {
   cspecialeq = 1,
   eqweapon1 = 232,
   eqtwohand = 1,
+  fltselect = 0,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('318', {
   dbmode16_dbspec3 = 3,
@@ -8347,6 +9723,10 @@ define('318', {
   eqrange_1 = 4,
   eqammo_0 = 25020,
   eqammo_1 = 3,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('319', {
   dbmode16_dbspec3 = 3,
@@ -8372,6 +9752,10 @@ define('319', {
   image = 409,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('322', {
   dbmode16_dbspec3 = 3,
@@ -8397,6 +9781,10 @@ define('322', {
   image = 412,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('334', {
   dbmode16_dbspec3 = 3,
@@ -8422,6 +9810,10 @@ define('334', {
   image = 416,
   fixlv = 6,
   cspecialeq = 0,
+  fltselect = 3,
+  category = 0,
+  rarity = 50000,
+  coefficient = 400,
 })
 define('323', {
   dbmode16_dbspec3 = 3,
@@ -8446,6 +9838,10 @@ define('323', {
   element_of_unarmed_attack = 5600400,
   image = 280,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 10000,
+  coefficient = 0,
 })
 define('324', {
   dbmode16_dbspec3 = 3,
@@ -8467,6 +9863,10 @@ define('324', {
   race = "quickling",
   color = 19,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 15000,
+  coefficient = 400,
 })
 define('325', {
   dbmode16_dbspec3 = 3,
@@ -8492,6 +9892,10 @@ define('325', {
   class_ = "archer",
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 15000,
+  coefficient = 400,
 })
 define('328', {
   dbmode16_dbspec3 = 1,
@@ -8514,6 +9918,10 @@ define('328', {
   original_relationship = -3,
   race = "metal",
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 2000,
+  coefficient = 0,
 })
 define('329', {
   dbmode16_dbspec3 = 1,
@@ -8537,6 +9945,10 @@ define('329', {
   race = "metal",
   color = 5,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 5000,
+  coefficient = 0,
 })
 define('330', {
   dbmode16_dbspec3 = 1,
@@ -8562,6 +9974,10 @@ define('330', {
   image = 283,
   color = 17,
   cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 40000,
+  coefficient = 400,
 })
 
 -- vim: et sw=2 sts=2

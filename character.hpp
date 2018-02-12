@@ -64,6 +64,10 @@ struct character_data
     std::string race;
     int sex;
     std::unordered_map<int, int> resistances;
+    int fltselect;
+    int category;
+    int rarity;
+    int coefficient;
 };
 
 
@@ -71,10 +75,49 @@ struct character_data
 class character_db
 {
 public:
+    struct iterator
+    {
+        iterator(
+            const std::unordered_map<int, character_data>::const_iterator& itr)
+            : itr(itr)
+        {
+        }
+
+        const character_data& operator*() const
+        {
+            return itr->second;
+        }
+
+        void operator++()
+        {
+            ++itr;
+        }
+
+        bool operator!=(const iterator& other) const
+        {
+            return itr != other.itr;
+        }
+
+    private:
+        std::unordered_map<int, character_data>::const_iterator itr;
+    };
+
+
     character_db();
 
 
     optional_ref<character_data> operator[](int id) const;
+
+
+    iterator begin() const
+    {
+        return iterator{std::begin(storage)};
+    }
+
+    iterator end() const
+    {
+        return iterator{std::end(storage)};
+    }
 
 
 private:

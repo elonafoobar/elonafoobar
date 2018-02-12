@@ -106,6 +106,11 @@ int define(lua_State* state)
         }
     }
 
+    FIELD_I(fltselect, 0);
+    FIELD_I(category, 0);
+    FIELD_I(rarity, 10000);
+    FIELD_I(coefficient, 400);
+
 #undef FIELD_I
 #undef FIELD_S
 #undef FIELD_B
@@ -162,6 +167,10 @@ int define(lua_State* state)
             race,
             sex,
             resistances,
+            fltselect,
+            category,
+            rarity,
+            coefficient,
         });
 
     return 0;
