@@ -366,7 +366,7 @@ int itemusingfind(int prm_485, int prm_486)
             {
                 continue;
             }
-            if (cdata[cnt].continuous_action_id != 0)
+            if (cdata[cnt].continuous_action_id != 0 && cdata[cnt].continuous_action_id != 11)
             {
                 if (cdata[cnt].continuous_action_turn > 0)
                 {
