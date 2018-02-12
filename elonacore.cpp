@@ -45297,7 +45297,7 @@ int label_196902()
     int featrq = 0;
 label_196901_internal:
     listmax = 0;
-    if (gdata_acquirable_feat_count > 0)
+    if (tc == 0 && gdata_acquirable_feat_count > 0)
     {
         list(0, listmax) = -1;
         list(1, listmax) = 0;
