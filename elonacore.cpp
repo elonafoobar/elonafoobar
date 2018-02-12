@@ -73033,11 +73033,10 @@ void label_2687()
                 txtmore();
                 txtef(9);
                 txt(""s + cdatan(4, cc));
-                goto label_2688_internal;
             }
         }
     }
-    if (cdata[cc].can_talk != 0 || cbit(989, cc))
+    else if (cdata[cc].can_talk != 0 || cbit(989, cc))
     {
         if (cbit(965, cc) == 0)
         {
