@@ -29,7 +29,6 @@ int access_character_info()
         case 8: refstr = data->filter; return 0;
         default: assert(0);
         }
-    case 2: access_race_info(2, data->race); return 0;
     case 3:
         cdata[rc].id = dbid;
         cdata[rc].level = initlv != 0 ? initlv : data->level;
@@ -120,27 +119,6 @@ int access_character_info()
     if (false)
     {
     }
-    else if (dbid == 0)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 343)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 1;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
     else if (dbid == 1)
     {
         if (dbmode == 101)
@@ -189,24 +167,6 @@ int access_character_info()
                 txt(u8"\"Die thief.\"", u8"\"You deserve this.\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 140;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 353)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 443;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -297,13 +257,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 144;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 69)
@@ -335,13 +288,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 15;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 73)
@@ -372,13 +318,6 @@ int access_character_info()
                     u8"\"W-What have you done!\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 41;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -432,13 +371,6 @@ int access_character_info()
         {
             eating_effect_eat_holy_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 69;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -539,13 +471,6 @@ int access_character_info()
             eating_effect_eat_holy_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 163;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 38)
@@ -576,13 +501,6 @@ int access_character_info()
                     u8"\"W-What have you done!\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 142;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -625,13 +543,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 7;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 333)
@@ -672,13 +583,6 @@ int access_character_info()
                 txt(u8"「準備はいいかい？いくぞ！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 415;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -737,13 +641,6 @@ int access_character_info()
             eating_effect_eat_guard();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 363;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 77)
@@ -801,13 +698,6 @@ int access_character_info()
             eating_effect_eat_guard();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 25;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 204)
@@ -861,13 +751,6 @@ int access_character_info()
                     u8"\"We got another man killed!\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 74;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -932,13 +815,6 @@ int access_character_info()
                 txt(u8"\"Hahaha!\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"elea");
-            cpicref = 297;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -1014,13 +890,6 @@ int access_character_info()
             eating_effect_eat_at();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 347;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 23)
@@ -1075,38 +944,9 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 331;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 64;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 26)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 332;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 27)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 333;
-            cpicref += 0;
             return 0;
         }
         return 0;
@@ -1185,13 +1025,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 334;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 73;
@@ -1268,13 +1101,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 337;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 140)
@@ -1283,13 +1109,6 @@ int access_character_info()
         {
             eating_effect_fire();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref = 338;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -1364,13 +1183,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 8;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 31)
@@ -1442,13 +1254,6 @@ int access_character_info()
                 txt(u8"\"Ahhh! Are you alright, sir?\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 109;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -1528,13 +1333,6 @@ int access_character_info()
                 txt(u8"\"Let Janus decide your fate\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref = 478;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -1629,13 +1427,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 479;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 32)
@@ -1700,13 +1491,6 @@ int access_character_info()
                 txt(u8"\"WTF\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 344;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -1794,13 +1578,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"elea");
-            cpicref = 345;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 206;
@@ -1886,13 +1663,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"elea");
-            cpicref = 346;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 1;
@@ -1926,13 +1696,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 99;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 146)
@@ -1955,13 +1718,6 @@ int access_character_info()
                     u8"You hear a low moan of pain somewhere");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 99;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2032,13 +1788,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 340;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 141)
@@ -2047,13 +1796,6 @@ int access_character_info()
         {
             eating_effect_insanity2();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lich");
-            cpicref = 339;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -2064,13 +1806,6 @@ int access_character_info()
     }
     else if (dbid == 143)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 341;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 359;
@@ -2080,13 +1815,6 @@ int access_character_info()
     }
     else if (dbid == 144)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 343;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 356;
@@ -2096,13 +1824,6 @@ int access_character_info()
     }
     else if (dbid == 145)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref = 342;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqring1 = 357;
@@ -2110,37 +1831,8 @@ int access_character_info()
         }
         return 0;
     }
-    else if (dbid == 306)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 393;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 331)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 413;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
     else if (dbid == 336)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 413;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -2151,13 +1843,6 @@ int access_character_info()
     }
     else if (dbid == 338)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 432;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -2168,13 +1853,6 @@ int access_character_info()
     }
     else if (dbid == 339)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 433;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -2185,13 +1863,6 @@ int access_character_info()
     }
     else if (dbid == 342)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 447;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -2202,13 +1873,6 @@ int access_character_info()
     }
     else if (dbid == 340)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"god");
-            cpicref = 435;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -2239,12 +1903,6 @@ int access_character_info()
             eating_effect_eat_cute_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 4)
@@ -2269,12 +1927,6 @@ int access_character_info()
             eating_effect_eat_cute_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 169)
@@ -2293,13 +1945,6 @@ int access_character_info()
                 txt(u8"*putit*");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref = 257;
-            cpicref += 4000;
-            return 0;
         }
         return 0;
     }
@@ -2320,13 +1965,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref = 257;
-            cpicref += 2000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 286)
@@ -2345,13 +1983,6 @@ int access_character_info()
                 txt(u8"*putit*");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref = 400;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2372,45 +2003,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"slime");
-            cpicref = 400;
-            cpicref += 17000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 287)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"drake");
-            cpicref = 401;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 327)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machine");
-            cpicref = 282;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 5)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"rabbit");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 6)
@@ -2429,12 +2021,6 @@ int access_character_info()
                 txt(u8"*Zzzzle*");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"snail");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2509,13 +2095,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 37;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 8)
@@ -2588,13 +2167,6 @@ int access_character_info()
                 txt(u8"\"Look at you.\"", u8"\"Bye bye.\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 139;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2669,13 +2241,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 102;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 269)
@@ -2718,13 +2283,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 179;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 320)
@@ -2758,13 +2316,6 @@ int access_character_info()
                 txt(u8"「フハハハハ！」", u8"「この下等生物め」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 410;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2800,13 +2351,6 @@ int access_character_info()
                 txt(u8"「炭鉱で鍛えた成果だな」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 187;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2872,13 +2416,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 148;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 270)
@@ -2902,13 +2439,6 @@ int access_character_info()
                 txt(u8"「なんという悪」", u8"「大罪です…」", u8"「ふにゃー」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 181;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2938,13 +2468,6 @@ int access_character_info()
                     u8"Fervor!");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 442;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -2976,13 +2499,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 473;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 347)
@@ -3012,13 +2528,6 @@ int access_character_info()
                     u8"shame to the name of Jure!\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 285;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3054,13 +2563,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 183;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 335)
@@ -3095,13 +2597,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 418;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 337)
@@ -3135,13 +2630,6 @@ int access_character_info()
                 txt(u8"「あばよ」", u8"「死のう」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 419;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3178,13 +2666,6 @@ int access_character_info()
                 txt(u8"「人をあやめてしまった！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 185;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3224,13 +2705,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 189;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 289)
@@ -3265,13 +2739,6 @@ int access_character_info()
                 txt(u8"「ネズミめ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eulderna");
-            cpicref = 195;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3308,13 +2775,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 76;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 295)
@@ -3349,13 +2809,6 @@ int access_character_info()
                 txt(u8"「ネズミめ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 78;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3430,13 +2883,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 104;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 36)
@@ -3509,13 +2955,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 106;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 174)
@@ -3561,33 +3000,6 @@ int access_character_info()
                     u8"「ゴゥトゥヘル」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 112;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 10)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"sheep");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 11)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"frog");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3635,13 +3047,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 31;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 13)
@@ -3650,62 +3055,6 @@ int access_character_info()
         {
             eating_effect_eat_poisonous_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"kobolt");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 236)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yeek");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 238)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yeek");
-            cpicref += 6000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 241)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yeek");
-            cpicref += 2000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 240)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yeek");
-            cpicref += 8000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 237)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yeek");
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -3742,24 +3091,6 @@ int access_character_info()
                 txt(u8"「討ち取ったり！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 385;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 245)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"rock");
-            cpicref = 386;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3850,13 +3181,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 411;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 242)
@@ -3890,13 +3214,6 @@ int access_character_info()
                 txt(u8"「イーク万歳！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yeek");
-            cpicref = 381;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -3940,13 +3257,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 379;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 14)
@@ -3956,22 +3266,6 @@ int access_character_info()
             eating_effect_eat_poisonous_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"centipede");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 15)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mushroom");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 283)
@@ -3980,24 +3274,6 @@ int access_character_info()
         {
             eating_effect_eat_poisonous_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mushroom");
-            cpicref = 399;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 284)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mushroom");
-            cpicref = 399;
-            cpicref += 8000;
-            return 0;
         }
         return 0;
     }
@@ -4052,13 +3328,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 136;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 39)
@@ -4111,13 +3380,6 @@ int access_character_info()
                 txt(u8"「市民パワー」", u8"「ぺっ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 134;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -4172,13 +3434,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 128;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 172)
@@ -4232,13 +3487,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 127;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 173)
@@ -4275,13 +3523,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 146;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 71)
@@ -4313,13 +3554,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 120;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 72)
@@ -4350,13 +3584,6 @@ int access_character_info()
                     u8"\"W-What have you done!\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 119;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -4414,13 +3641,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 117;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 80)
@@ -4457,73 +3677,10 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 116;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 17)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"orc");
-            cpicref += 17000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 281)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lizardman");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 282)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"minotaur");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 296)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"minotaur");
-            cpicref += 4000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 298)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"minotaur");
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 299)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"minotaur");
-            cpicref += 8000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -4533,12 +3690,6 @@ int access_character_info()
     }
     else if (dbid == 300)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"minotaur");
-            cpicref += 10000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 695;
@@ -4554,43 +3705,10 @@ int access_character_info()
             eating_effect_regeneration();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"troll");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 18)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"elea");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 24)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"elea");
-            cpicref = 47;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 309)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"asura");
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqmultiweapon = 2;
@@ -4600,12 +3718,6 @@ int access_character_info()
     }
     else if (dbid == 310)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"asura");
-            cpicref += 2000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqmultiweapon = 266;
@@ -4615,37 +3727,9 @@ int access_character_info()
     }
     else if (dbid == 311)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"asura");
-            cpicref += 3000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqmultiweapon = 224;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 41)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 13;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 75)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 21;
-            cpicref += 0;
             return 0;
         }
         return 0;
@@ -4657,12 +3741,6 @@ int access_character_info()
             eating_effect_magic();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 22)
@@ -4672,32 +3750,6 @@ int access_character_info()
             eating_effect_strength();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"beetle");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 20)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"orc");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 25)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"orc");
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 21)
@@ -4706,42 +3758,6 @@ int access_character_info()
         {
             eating_effect_eat_rotten_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"zombie");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 42)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bat");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 43)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bat");
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 44)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bat");
-            cpicref += 4000;
-            return 0;
         }
         return 0;
     }
@@ -4755,12 +3771,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ent");
-            cpicref += 16000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 46)
@@ -4773,12 +3783,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ent");
-            cpicref += 17000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 47)
@@ -4787,12 +3791,6 @@ int access_character_info()
         {
             eating_effect_eat_rotten_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lich");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -4803,12 +3801,6 @@ int access_character_info()
             eating_effect_eat_rotten_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lich");
-            cpicref += 16000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 49)
@@ -4818,23 +3810,10 @@ int access_character_info()
             eating_effect_eat_rotten_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lich");
-            cpicref += 17000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 307)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lich");
-            cpicref = 404;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 735;
@@ -4845,13 +3824,6 @@ int access_character_info()
     }
     else if (dbid == 308)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"lich");
-            cpicref = 404;
-            cpicref += 4000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 735;
@@ -4861,115 +3833,9 @@ int access_character_info()
     }
     else if (dbid == 50)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 6000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 51)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 52)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 12000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 53)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 5000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 54)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 4000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 55)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 10000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 56)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 9000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 57)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 2000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 58)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 11000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 59)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 15000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 60)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref += 18000;
             return 0;
         }
         return 0;
@@ -4981,13 +3847,6 @@ int access_character_info()
             eating_effect_calm();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"rabbit");
-            cpicref = 204;
-            cpicref += 6000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 62)
@@ -4996,13 +3855,6 @@ int access_character_info()
         {
             eating_effect_calm();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"rabbit");
-            cpicref = 204;
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -5013,12 +3865,6 @@ int access_character_info()
             eating_effect_insanity3();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 64)
@@ -5027,34 +3873,6 @@ int access_character_info()
         {
             eating_effect_insanity3();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref += 2000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 312)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ent");
-            cpicref = 406;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 313)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ent");
-            cpicref = 406;
-            cpicref += 16000;
-            return 0;
         }
         return 0;
     }
@@ -5067,12 +3885,6 @@ int access_character_info()
                 resistmod(cc, 52, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spirit");
-            cpicref += 5000;
-            return 0;
         }
         return 0;
     }
@@ -5087,12 +3899,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spirit");
-            cpicref += 18000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 67)
@@ -5105,12 +3911,6 @@ int access_character_info()
                 resistmod(cc, 58, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eye");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -5125,12 +3925,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eye");
-            cpicref += 8000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 316)
@@ -5143,13 +3937,6 @@ int access_character_info()
                 resistmod(cc, 54, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eye");
-            cpicref = 407;
-            cpicref += 4000;
-            return 0;
         }
         return 0;
     }
@@ -5164,54 +3951,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eye");
-            cpicref = 407;
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 68)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"wyvern");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 78)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eulderna");
-            cpicref = 209;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 81)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"wasp");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 82)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"wasp");
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 83)
@@ -5221,12 +3960,6 @@ int access_character_info()
             eating_effect_constitution();
             skillexp(11, cc, 500);
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"giant");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -5253,12 +3986,6 @@ int access_character_info()
             skillexp(11, cc, 800);
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"giant");
-            cpicref += 16000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 85)
@@ -5268,12 +3995,6 @@ int access_character_info()
             eating_effect_magic2();
             skillexp(16, cc, 500);
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"imp");
-            cpicref += 16000;
-            return 0;
         }
         return 0;
     }
@@ -5285,12 +4006,6 @@ int access_character_info()
             skillexp(16, cc, 500);
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"imp");
-            cpicref += 4000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 87)
@@ -5300,12 +4015,6 @@ int access_character_info()
             eating_effect_magic2();
             skillexp(16, cc, 500);
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"imp");
-            cpicref += 18000;
-            return 0;
         }
         return 0;
     }
@@ -5317,12 +4026,6 @@ int access_character_info()
             skillexp(10, cc, 400);
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hand");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 89)
@@ -5333,12 +4036,6 @@ int access_character_info()
             skillexp(10, cc, 400);
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hand");
-            cpicref += 18000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 90)
@@ -5348,12 +4045,6 @@ int access_character_info()
             eating_effect_strength2();
             skillexp(10, cc, 400);
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hand");
-            cpicref += 16000;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -5370,13 +4061,6 @@ int access_character_info()
             skillexp(15, cc, 250);
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref = 214;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 92)
@@ -5386,35 +4070,6 @@ int access_character_info()
             eating_effect_will();
             skillexp(15, cc, 400);
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref = 214;
-            cpicref += 5000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 93)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref = 215;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 94)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref = 215;
-            cpicref += 10000;
-            return 0;
         }
         return 0;
     }
@@ -5429,12 +4084,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"snake");
-            cpicref += 17000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 96)
@@ -5448,32 +4097,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"snake");
-            cpicref += 16000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 97)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"drake");
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 98)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"drake");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 99)
@@ -5482,13 +4105,6 @@ int access_character_info()
         {
             eating_effect_eat_rotten_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"zombie");
-            cpicref = 219;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -5499,13 +4115,6 @@ int access_character_info()
             eating_effect_eat_rotten_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"zombie");
-            cpicref = 219;
-            cpicref += 10000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 101)
@@ -5514,13 +4123,6 @@ int access_character_info()
         {
             eating_effect_eat_rotten_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"zombie");
-            cpicref = 219;
-            cpicref += 5000;
-            return 0;
         }
         return 0;
     }
@@ -5531,13 +4133,6 @@ int access_character_info()
             eating_effect_eat_rotten_one();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"zombie");
-            cpicref = 219;
-            cpicref += 8000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 254)
@@ -5546,75 +4141,6 @@ int access_character_info()
         {
             eating_effect_eat_rotten_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"zombie");
-            cpicref = 395;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 102)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"goblin");
-            cpicref += 16000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 103)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"goblin");
-            cpicref += 5000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 104)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"goblin");
-            cpicref += 18000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 105)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"goblin");
-            cpicref += 4000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 106)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref = 221;
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 107)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref = 221;
-            cpicref += 4000;
-            return 0;
         }
         return 0;
     }
@@ -5640,22 +4166,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bear");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 109)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bear");
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 344)
@@ -5664,13 +4174,6 @@ int access_character_info()
         {
             eating_effect_strength2();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bear");
-            cpicref = 439;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -5681,12 +4184,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"armor");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 111)
@@ -5695,12 +4192,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"armor");
-            cpicref += 17000;
-            return 0;
         }
         return 0;
     }
@@ -5711,12 +4202,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"armor");
-            cpicref += 5000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 113)
@@ -5726,42 +4211,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"armor");
-            cpicref += 16000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 114)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"medusa");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 115)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"medusa");
-            cpicref += 5000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 116)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"medusa");
-            cpicref += 16000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 117)
@@ -5770,112 +4219,6 @@ int access_character_info()
         {
             eating_effect_eat_lovely_one();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cupid");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 118)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"phantom");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 248)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dinosaur");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 119)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"harpy");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 120)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref += 19000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 121)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 122)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 123)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref += 5000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 124)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref += 4000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 125)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dragon");
-            cpicref += 18000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 126)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cerberus");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -5890,13 +4233,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"centipede");
-            cpicref = 396;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 256)
@@ -5909,13 +4245,6 @@ int access_character_info()
                 resistmod(cc, 55, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"centipede");
-            cpicref = 396;
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -5930,12 +4259,6 @@ int access_character_info()
                 txt(u8" *カサカサ* ");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spider");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -5960,12 +4283,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spider");
-            cpicref += 19000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 129)
@@ -5988,12 +4305,6 @@ int access_character_info()
                 resistmod(cc, 55, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spider");
-            cpicref += 17000;
-            return 0;
         }
         return 0;
     }
@@ -6018,12 +4329,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spider");
-            cpicref += 5000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 131)
@@ -6037,12 +4342,6 @@ int access_character_info()
                 txt(u8" *カサカサ* ");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"spider");
-            cpicref += 16000;
-            return 0;
         }
         return 0;
     }
@@ -6063,12 +4362,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 6000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 133)
@@ -6087,12 +4380,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -6113,12 +4400,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 15000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 135)
@@ -6137,12 +4418,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 5000;
-            return 0;
         }
         return 0;
     }
@@ -6163,12 +4438,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 17000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 137)
@@ -6187,12 +4456,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 9000;
-            return 0;
         }
         return 0;
     }
@@ -6213,12 +4476,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"golem");
-            cpicref += 2000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 147)
@@ -6232,12 +4489,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"crab");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 148)
@@ -6250,44 +4501,10 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"centipede");
-            cpicref = 239;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 149)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"goblin");
-            cpicref = 240;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 150)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"skeleton");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 151)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"skeleton");
-            cpicref += 3000;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqtwohand = 1;
@@ -6317,13 +4534,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eulderna");
-            cpicref = 243;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 153)
@@ -6332,12 +4542,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"piece");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -6348,13 +4552,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"piece");
-            cpicref = 245;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 155)
@@ -6364,13 +4561,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"piece");
-            cpicref = 246;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 156)
@@ -6379,13 +4569,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"piece");
-            cpicref = 247;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -6401,13 +4584,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"piece");
-            cpicref = 248;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 158)
@@ -6416,13 +4592,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"piece");
-            cpicref = 249;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -6451,13 +4620,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 159;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 160)
@@ -6485,13 +4647,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 57;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 161)
@@ -6518,13 +4673,6 @@ int access_character_info()
                 txt(u8"「ぐふっ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 100;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -6566,13 +4714,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 150;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 303)
@@ -6612,13 +4753,6 @@ int access_character_info()
                 txt(u8"「ついてなかったな」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 31;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -6665,13 +4799,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 158;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 305)
@@ -6712,13 +4839,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 157;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 162)
@@ -6757,13 +4877,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 250;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 234)
@@ -6801,13 +4914,6 @@ int access_character_info()
                 txt(u8"「ターゲット・ダウン！」", u8"「グッドジョブ！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 250;
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -6864,24 +4970,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 370;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 232)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 373;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 233)
@@ -6922,13 +5010,6 @@ int access_character_info()
                 txt(u8"「敵兵の首とったり！」", u8"「敵兵撃破！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 377;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -6971,24 +5052,10 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 377;
-            cpicref += 4000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 163)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 251;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqrange = 210;
@@ -7095,12 +5162,6 @@ int access_character_info()
             eating_effect_eat_cat();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 246)
@@ -7202,13 +5263,6 @@ int access_character_info()
             eating_effect_eat_cat();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref = 387;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 332)
@@ -7286,13 +5340,6 @@ int access_character_info()
             eating_effect_eat_cat();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref = 387;
-            cpicref += 6000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 229)
@@ -7353,13 +5400,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref = 368;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 230)
@@ -7413,13 +5453,6 @@ int access_character_info()
                 txt(u8"「ガオー」", u8"「ガル♪」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"catgod");
-            cpicref = 369;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -7483,13 +5516,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref = 367;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 165)
@@ -7523,12 +5549,6 @@ int access_character_info()
                 txt(u8"「わん！」", u8"「ゥワン！」」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dog");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -7580,13 +5600,6 @@ int access_character_info()
                 txt(u8"「わん！」", u8"「ぁぅぁぅ！」」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dog");
-            cpicref = 364;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -7652,13 +5665,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 365;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 227)
@@ -7703,13 +5709,6 @@ int access_character_info()
                 txt(u8"「ふんっ！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 366;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -7766,13 +5765,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 4;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 167)
@@ -7787,12 +5779,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"rat");
-            cpicref += 6000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 168)
@@ -7801,12 +5787,6 @@ int access_character_info()
         {
             eating_effect_calm();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"shell");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -7842,13 +5822,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 258;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqrange = 210;
@@ -7877,13 +5850,6 @@ int access_character_info()
                 txt(u8"フリージアは死体を玩具にして遊び始めた。");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"catgod");
-            cpicref = 348;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -7940,13 +5906,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 105;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 249)
@@ -8001,13 +5960,6 @@ int access_character_info()
                     u8"妹は上目づかいにあなたの顔を覗いた。");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 105;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8065,12 +6017,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"catsister");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 211)
@@ -8108,13 +6054,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 355;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 177)
@@ -8138,13 +6077,6 @@ int access_character_info()
                 txt(u8"「ターゲット破壊確認！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machinegod");
-            cpicref = 349;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -8183,24 +6115,6 @@ int access_character_info()
             eating_effect_insanity2();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"undeadgod");
-            cpicref = 339;
-            cpicref += 3000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 179)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 350;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 208)
@@ -8238,13 +6152,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dwarf");
-            cpicref = 352;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 209)
@@ -8273,13 +6180,6 @@ int access_character_info()
                     u8"ever be the same.\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dwarf");
-            cpicref = 353;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8333,13 +6233,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"cat");
-            cpicref = 259;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 181)
@@ -8367,13 +6260,6 @@ int access_character_info()
                     u8"prayer");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"hound");
-            cpicref = 260;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8408,13 +6294,6 @@ int access_character_info()
                 txt(u8"「おかえりなさい。怪我はしていませんか♪」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 208;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8466,13 +6345,6 @@ int access_character_info()
                 txt(u8"「フン」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 71;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8527,13 +6399,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 73;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 185)
@@ -8582,13 +6447,6 @@ int access_character_info()
                 txt(u8"「弱い弱い」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 122;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8671,13 +6529,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 477;
-            cpicref += 1000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 186)
@@ -8686,12 +6537,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machine");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8702,12 +6547,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machine");
-            cpicref += 17000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 188)
@@ -8716,12 +6555,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machine");
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -8800,13 +6633,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bike");
-            cpicref = 470;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 346)
@@ -8882,13 +6708,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"bike");
-            cpicref = 471;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 341)
@@ -8897,13 +6716,6 @@ int access_character_info()
         {
             eating_effect_eat_iron();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machine");
-            cpicref = 434;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8914,13 +6726,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machine");
-            cpicref = 198;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 189)
@@ -8929,13 +6734,6 @@ int access_character_info()
         {
             eating_effect_insanity();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eye");
-            cpicref = 271;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -8946,13 +6744,6 @@ int access_character_info()
             eating_effect_insanity();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"eye");
-            cpicref = 271;
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 191)
@@ -8962,23 +6753,6 @@ int access_character_info()
             eating_effect_ether();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"wisp");
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 192)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"crab");
-            cpicref = 273;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 193)
@@ -8987,13 +6761,6 @@ int access_character_info()
         {
             eating_effect_ether();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"crab");
-            cpicref = 273;
-            cpicref += 17000;
-            return 0;
         }
         return 0;
     }
@@ -9026,12 +6793,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"chicken");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 196)
@@ -9043,13 +6804,6 @@ int access_character_info()
                 resistmod(cc, 54, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref = 275;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9063,13 +6817,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref = 275;
-            cpicref += 5000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 197)
@@ -9081,13 +6828,6 @@ int access_character_info()
                 resistmod(cc, 54, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref = 275;
-            cpicref += 4000;
-            return 0;
         }
         return 0;
     }
@@ -9101,13 +6841,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mandrake");
-            cpicref = 275;
-            cpicref += 3000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 199)
@@ -9120,13 +6853,6 @@ int access_character_info()
             }
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"stalker");
-            cpicref = 276;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 200)
@@ -9138,13 +6864,6 @@ int access_character_info()
                 resistmod(cc, 53, 50);
             }
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"stalker");
-            cpicref = 276;
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -9179,13 +6898,6 @@ int access_character_info()
                     u8" *ドスッ* ");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"giant");
-            cpicref = 351;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9224,13 +6936,6 @@ int access_character_info()
                     u8"「金などもってないぞ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 23;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9289,13 +6994,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 104;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 207)
@@ -9330,24 +7028,10 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"giant");
-            cpicref = 351;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 212)
     {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 117;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqweapon1 = 56;
@@ -9415,13 +7099,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 356;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 221)
@@ -9454,13 +7131,6 @@ int access_character_info()
                 txt(u8"「ごめんね…ごめんね…おかあさん」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 358;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9497,13 +7167,6 @@ int access_character_info()
                 txt(u8"「ああ…パエル…パエル…」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 359;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9561,13 +7224,6 @@ int access_character_info()
                 txt(u8"「ペッ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 361;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9627,13 +7283,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 362;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 243)
@@ -9689,13 +7338,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 383;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 247)
@@ -9749,13 +7391,6 @@ int access_character_info()
                 txt(u8"「アーン、バカ♪」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 388;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9818,13 +7453,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 392;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 253)
@@ -9879,13 +7507,6 @@ int access_character_info()
                 txt(u8"「ホホーっ」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 394;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -9945,13 +7566,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 199;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 301)
@@ -10007,13 +7621,6 @@ int access_character_info()
                 txt(u8"「こわっぱが」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 403;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -10075,13 +7682,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 166;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 215)
@@ -10135,13 +7735,6 @@ int access_character_info()
                 txt(u8"「ふん！青二才め」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 166;
-            cpicref += 3000;
-            return 0;
         }
         return 0;
     }
@@ -10197,13 +7790,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 166;
-            cpicref += 4000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 216)
@@ -10212,12 +7798,6 @@ int access_character_info()
         {
             eating_effect_insanity4();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yith");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10228,24 +7808,6 @@ int access_character_info()
             eating_effect_insanity4();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yith");
-            cpicref = 277;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 219)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"orc");
-            cpicref = 278;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 220)
@@ -10254,23 +7816,6 @@ int access_character_info()
         {
             eating_effect_insanity4();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yith");
-            cpicref = 430;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 250)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"fairy");
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10329,13 +7874,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 211;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 261)
@@ -10356,24 +7894,6 @@ int access_character_info()
                     u8"You smell what reminds you of sugerplums…");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 217;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 262)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 218;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10418,46 +7938,6 @@ int access_character_info()
                 txt(u8"「地獄に落ちなさい」", u8"「いいざまね」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 236;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 264)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 269;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 265)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 267;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 266)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"servant");
-            cpicref = 242;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10513,12 +7993,6 @@ int access_character_info()
             eating_effect_eat_horse();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"horse");
-            cpicref += 17000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 276)
@@ -10572,12 +8046,6 @@ int access_character_info()
         {
             eating_effect_eat_horse();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"horse");
-            cpicref += 6000;
-            return 0;
         }
         return 0;
     }
@@ -10634,12 +8102,6 @@ int access_character_info()
             eating_effect_eat_horse();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"horse");
-            cpicref += 15000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 268)
@@ -10695,12 +8157,6 @@ int access_character_info()
             eating_effect_eat_horse();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"horse");
-            cpicref += 16000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 277)
@@ -10755,23 +8211,6 @@ int access_character_info()
             eating_effect_eat_horse();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"horse");
-            cpicref += 10000;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 278)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mutant");
-            cpicref = 191;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 279)
@@ -10806,13 +8245,6 @@ int access_character_info()
                 txt(u8"「カガク万歳！」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"yerles");
-            cpicref = 263;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10857,13 +8289,6 @@ int access_character_info()
                 txt(u8"「掃除完了」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 192;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10921,13 +8346,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 193;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 290)
@@ -10949,24 +8367,6 @@ int access_character_info()
                     u8"\"Stop... Let me make sure you are on my lists.\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 196;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 292)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 197;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -10990,24 +8390,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 196;
-            cpicref += 0;
-            return 0;
-        }
-        return 0;
-    }
-    else if (dbid == 291)
-    {
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 80;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 297)
@@ -11029,13 +8411,6 @@ int access_character_info()
                     u8"\"Stop… Let me make sure you are on my lists.\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"norland");
-            cpicref = 196;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -11092,13 +8467,6 @@ int access_character_info()
                     u8"せばいい」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 279;
-            cpicref += 0;
-            return 0;
         }
         if (dbmode == 4)
         {
@@ -11172,13 +8540,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"machinegod");
-            cpicref = 408;
-            cpicref += 0;
-            return 0;
-        }
         if (dbmode == 4)
         {
             eqrange(0) = 496;
@@ -11241,13 +8602,6 @@ int access_character_info()
                 txt(u8"「天使の血でお腹を満たすの」");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"mutant");
-            cpicref = 409;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -11315,13 +8669,6 @@ int access_character_info()
                 txt(u8"\"Have you no heart?\"");
                 return 1;
             }
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"roran");
-            cpicref = 412;
-            cpicref += 0;
-            return 0;
         }
         return 0;
     }
@@ -11391,13 +8738,6 @@ int access_character_info()
                 return 1;
             }
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"juere");
-            cpicref = 416;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 323)
@@ -11408,13 +8748,6 @@ int access_character_info()
             skillexp(15, cc, 250);
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"ghost");
-            cpicref = 280;
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 324)
@@ -11424,12 +8757,6 @@ int access_character_info()
             eating_effect_quick();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"quickling");
-            cpicref += 19000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 325)
@@ -11438,12 +8765,6 @@ int access_character_info()
         {
             eating_effect_quick();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"quickling");
-            cpicref += 5000;
-            return 0;
         }
         return 0;
     }
@@ -11484,12 +8805,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"metal");
-            cpicref += 0;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 329)
@@ -11529,12 +8844,6 @@ int access_character_info()
             eating_effect_eat_iron();
             return -1;
         }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"metal");
-            cpicref += 5000;
-            return 0;
-        }
         return 0;
     }
     else if (dbid == 330)
@@ -11543,13 +8852,6 @@ int access_character_info()
         {
             eating_effect_pregnant();
             return -1;
-        }
-        if (dbmode == 2)
-        {
-            access_race_info(2, u8"dinosaur");
-            cpicref = 283;
-            cpicref += 17000;
-            return 0;
         }
         return 0;
     }

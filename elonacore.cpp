@@ -50018,7 +50018,6 @@ label_2035_internal:
         }
         s(0) = cdatan(0, cc);
         s(1) = cdatan(1, cc);
-        access_race_info(2, cdatan(2, cc));
         s(2) = cnven(lang(
             ""s + i18n::_(u8"race", cdatan(2, cc), u8"name"), cdatan(2, cc)));
         access_class_info(2, cdatan(3, cc));
@@ -53472,7 +53471,6 @@ void label_2084()
 void label_2085()
 {
     cc = 0;
-    access_race_info(2, cdatan(2, 0));
     access_class_info(2, cdatan(3, 0));
     buff = "";
     notesel(buff);
@@ -53673,7 +53671,6 @@ void label_2085()
             {
                 continue;
             }
-            access_race_info(2, cdatan(2, cnt));
             access_class_info(2, cdatan(3, cnt));
             noteadd(
                 cdatan(0, cnt) + u8" "s
