@@ -794,7 +794,7 @@ void talk_unique()
                     u8"迷宮に落ちている宝箱の開け方を知っておく必要があるな。足元に宝箱を置くので、xキー、またはスペースキーで開けてみるんだ。"s,
                     u8"You might find chests containing loot in ruins. There's one nearby, open it."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, lang(u8"わかった", u8"Okay."));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = 8;
