@@ -9980,4 +9980,40 @@ define('330', {
   coefficient = 400,
 })
 
+
+
+-- For debug
+define('500', {
+  dbmode16_dbspec3 = 1,
+  dbmode16_dbspec5 = 0,
+  dbmode16_dbspec6 = 100,
+  name_jp = "螺旋プチ",
+  name_en = "spiral putit",
+  filter = "/slime/",
+  level = 1,
+  portrait = -1,
+  ai_calm = 1,
+  ai_move = 50,
+  ai_dist = 2,
+  ai_act_sub_freq = 0,
+  creaturepack = 3,
+  act_0 = 417,
+  act_1 = 434,
+  act_2 = 415,
+  act_3 = 454,
+  act_5 = 636,
+  ai_act_num = 14,
+  original_relationship = -3,
+  race = "slime",
+  class_ = "wizard",
+  resistances = {_54 = 500},
+  image = 430,
+  cspecialeq = 0,
+  fltselect = 0,
+  category = 3,
+  rarity = 100000,
+  coefficient = 0,
+})
+
+
 -- vim: et sw=2 sts=2
