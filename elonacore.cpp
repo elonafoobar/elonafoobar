@@ -61846,6 +61846,10 @@ void label_2205()
             if (encounter == 4)
             {
                 encounterlv = cdata[0].fame / 1000;
+                if (encounterlv == 0)
+                {
+                    encounterlv = 1;
+                }
                 levelexitby = 4;
                 exit_map();
                 return;
