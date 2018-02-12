@@ -53550,7 +53550,7 @@ void label_2085()
         + sdata.get(2, 0).original_level + u8")"s;
     s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s
         + sdata.get(3, 0).original_level + u8")"s;
-    s(3) = u8"狂気度    : 0"s;
+    s(3) = u8"狂気度    : "s + cdata[0].insanity;
     s(4) = u8"速度      : "s + cdata[0].current_speed;
     s(5) = u8"名声度    : "s + cdata[0].fame;
     s(6) = u8"カルマ    : "s + cdata[0].karma;
