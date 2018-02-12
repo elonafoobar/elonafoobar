@@ -22158,7 +22158,7 @@ void label_1512()
                     p += sdata(cnt, r1);
                 }
             }
-            if (cnt == 60 && p < 500 || cdata[r1].level == 1)
+            if (cnt == 60 && p < 500 || r1 == 0)
             {
                 p = 100;
             }
