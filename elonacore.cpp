@@ -26534,7 +26534,7 @@ int do_create_item()
     }
     if (inv[ci].id == 687)
     {
-        inv[ci].param1 = rnd(rnd(std::clamp(objlv / 2, 1, 14)) + 1);
+        inv[ci].param1 = rnd(rnd(std::clamp(objlv / 2, 1, 15)) + 1);
     }
     if (inv[ci].id == 667)
     {
