@@ -495,7 +495,6 @@ inline int music;
 inline int mutch_at_filedialog;
 inline int mutex_handle;
 inline int n_at_txtfunc;
-inline int nerve;
 inline int nostack;
 inline int novoidlv;
 inline int nowindowanime;
