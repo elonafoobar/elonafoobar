@@ -63499,14 +63499,6 @@ label_22191_internal:
     i = 0;
     if (hit == 1)
     {
-        if (cc == 0)
-        {
-            if (cfg_attackanime)
-            {
-                aniref = dmg * 100 / cdata[tc].max_hp;
-                play_animation(12);
-            }
-        }
         if (critical)
         {
             if (cc == 0)
@@ -63518,6 +63510,14 @@ label_22191_internal:
         }
         dmg = calcattackdmg();
         attackdmg = dmg;
+        if (cc == 0)
+        {
+            if (cfg_attackanime)
+            {
+                aniref = dmg * 100 / cdata[tc].max_hp;
+                play_animation(12);
+            }
+        }
         if (attackskill != 106)
         {
             if (inv[cw].quality >= 4)
