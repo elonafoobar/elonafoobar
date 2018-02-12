@@ -62759,7 +62759,6 @@ void open_box()
         efp = 100 + inv[ri].param1 * 10;
         inv[ri].param1 = 0;
         magic();
-        turn_end();
         return;
     }
     p = 3 + rnd(5);
