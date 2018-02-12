@@ -235,7 +235,6 @@ struct character
     std::vector<int> attr_adjs;
     std::vector<int> flags;
 
-    int _40 = 0;
     int _156 = 0;
     int _203 = 0;
     int _205 = 0;
@@ -374,7 +373,6 @@ struct character
         range::for_each(buffs, [&](auto&& buff) { ar(buff); });
         range::for_each(attr_adjs, [&](auto&& attr_adj) { ar(attr_adj); });
         range::for_each(flags, [&](auto&& flag) { ar(flag); });
-        ar(_40);
         ar(_156);
         ar(_203);
         ar(_205);

@@ -54390,7 +54390,6 @@ void create_cnpc()
         }
     }
     cdata[rc].can_talk = 1;
-    cdata[rc]._40 = -10000;
     cdatan(0, rc) = userdatan(1, cun);
     cdatan(5, rc) = userdatan(0, cun);
     cdata[rc].relationship = std::clamp(userdata(4, cun), -3, 10);
