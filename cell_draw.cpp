@@ -345,7 +345,7 @@ void render_cloud()
     static int dummy = ((void)initialize_cloud_data(), 0);
     (void)dummy;
 
-    for (int i = 0; i < std::size(clouds); ++i)
+    for (size_t i = 0; i < std::size(clouds); ++i)
     {
         gmode(5, -1, -1, 7 + i * 2);
         int x = (clouds[i].x0 - cdata[0].position.x * inf_tiles + sxfix) * 100
@@ -404,7 +404,6 @@ void cell_draw()
     int i_ = 0;
     elona_vector1<int> flooritem_;
     int stackh_ = 0;
-    int cnt2_ = 0;
     int c_ = 0;
     int col_ = 0;
     int h_ = 0;
