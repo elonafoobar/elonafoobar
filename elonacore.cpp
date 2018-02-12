@@ -44475,7 +44475,7 @@ label_1953_internal:
                     }
                 }
                 display_key(
-                    x * inf_tiles + inf_screenx - 12, y * inf_tiles - 12, cnt);
+                    x * inf_tiles + inf_screenx - 12, y * inf_tiles + inf_screeny - 12, cnt);
             }
         }
         txttargetnpc(
