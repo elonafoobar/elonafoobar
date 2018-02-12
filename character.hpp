@@ -1,13 +1,132 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
+#include "optional_ref.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
 
 namespace elona
 {
+
+
+
+struct character_data
+{
+    int id;
+    int act_0;
+    int act_1;
+    int act_2;
+    int act_3;
+    int act_4;
+    int act_5;
+    int act_6;
+    int act_7;
+    int act_8;
+    int ai_act_num;
+    int ai_act_sub_freq;
+    int ai_calm;
+    int ai_dist;
+    int ai_heal;
+    int ai_move;
+    int can_talk;
+    bool cbit_988;
+    std::string class_;
+    int color;
+    int creaturepack;
+    int cspecialeq;
+    int damage_reaction_info;
+    int dbmode16_dbspec3;
+    int dbmode16_dbspec5;
+    int dbmode16_dbspec6;
+    int element_of_unarmed_attack;
+    int eqammo_0;
+    int eqammo_1;
+    int eqmultiweapon;
+    int eqrange_0;
+    int eqrange_1;
+    int eqring1;
+    int eqtwohand;
+    int eqweapon1;
+    int female_image;
+    std::string filter;
+    int fixlv;
+    bool has_random_name;
+    int image;
+    int level;
+    int male_image;
+    std::string name_en;
+    std::string name_jp;
+    int original_relationship;
+    int portrait;
+    std::string race;
+    int sex;
+    std::unordered_map<int, int> resistances;
+    int fltselect;
+    int category;
+    int rarity;
+    int coefficient;
+};
+
+
+
+class character_db
+{
+public:
+    struct iterator
+    {
+        iterator(
+            const std::unordered_map<int, character_data>::const_iterator& itr)
+            : itr(itr)
+        {
+        }
+
+        const character_data& operator*() const
+        {
+            return itr->second;
+        }
+
+        void operator++()
+        {
+            ++itr;
+        }
+
+        bool operator!=(const iterator& other) const
+        {
+            return itr != other.itr;
+        }
+
+    private:
+        std::unordered_map<int, character_data>::const_iterator itr;
+    };
+
+
+    character_db();
+
+
+    optional_ref<character_data> operator[](int id) const;
+
+
+    iterator begin() const
+    {
+        return iterator{std::begin(storage)};
+    }
+
+    iterator end() const
+    {
+        return iterator{std::end(storage)};
+    }
+
+
+private:
+    std::unordered_map<int, character_data> storage;
+};
+
+
+inline character_db the_character_db;
+
 
 
 struct buff_t
@@ -159,7 +278,6 @@ struct character
     std::vector<int> attr_adjs;
     std::vector<int> flags;
 
-    int _40 = 0;
     int _156 = 0;
     int _203 = 0;
     int _205 = 0;
@@ -298,7 +416,6 @@ struct character
         range::for_each(buffs, [&](auto&& buff) { ar(buff); });
         range::for_each(attr_adjs, [&](auto&& attr_adj) { ar(attr_adj); });
         range::for_each(flags, [&](auto&& flag) { ar(flag); });
-        ar(_40);
         ar(_156);
         ar(_203);
         ar(_205);
@@ -308,9 +425,9 @@ struct character
 
 
 
-struct character_data
+struct cdata_t
 {
-    character_data();
+    cdata_t();
 
 
     character& operator()(int index)
@@ -330,7 +447,7 @@ private:
 };
 
 
-inline character_data cdata;
+inline cdata_t cdata;
 
 
 

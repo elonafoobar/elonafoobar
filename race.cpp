@@ -186,7 +186,6 @@ int access_race_info(int dbmode, const std::string& dbidn)
 
     switch (dbmode)
     {
-    case 2: cpicref = data->male_image; return 0;
     case 3: break;
     case 11:
         buff = i18n::_(u8"race", dbidn, u8"description");

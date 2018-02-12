@@ -348,7 +348,6 @@ inline int cnt2;
 inline int cnt;
 inline int comctrl;
 inline int cooktool;
-inline int cpicref;
 inline int creaturepack;
 inline int critical;
 inline int crlftype_at_crlf;

@@ -2,14 +2,211 @@
 #include <cassert>
 #include <iostream>
 #include <type_traits>
+#include "cat.hpp"
 #include "elona.hpp"
 #include "range.hpp"
 #include "variables.hpp"
+
+using namespace elona;
+
+
+namespace
+{
+
+
+// FIXME: DO NOT USE A GLOBAL VARIABLE!
+std::unordered_map<int, character_data>* storage_ptr;
+
+
+int define(lua_State* state)
+{
+    int argc = lua_gettop(state);
+    if (argc != 2)
+        throw 0;
+
+    const char* id = luaL_checklstring(state, 1, nullptr);
+    if (!id)
+        throw 0;
+
+#define FIELD_I(name, default_value) \
+    lua_getfield(state, 2, #name); \
+    int name = \
+        lua_isnil(state, -1) ? (default_value) : luaL_checkinteger(state, -1); \
+    lua_pop(state, 1);
+#define FIELD_S(name, default_value) \
+    lua_getfield(state, 2, #name); \
+    const char* name = \
+        lua_isnil(state, -1) ? (default_value) : luaL_checkstring(state, -1); \
+    lua_pop(state, 1);
+#define FIELD_B(name, default_value) \
+    lua_getfield(state, 2, #name); \
+    bool name = \
+        lua_isnil(state, -1) ? (default_value) : lua_toboolean(state, -1); \
+    lua_pop(state, 1);
+
+    FIELD_I(act_0, 0);
+    FIELD_I(act_1, 0);
+    FIELD_I(act_2, 0);
+    FIELD_I(act_3, 0);
+    FIELD_I(act_4, 0);
+    FIELD_I(act_5, 0);
+    FIELD_I(act_6, 0);
+    FIELD_I(act_7, 0);
+    FIELD_I(act_8, 0);
+    FIELD_I(ai_act_num, 0);
+    FIELD_I(ai_act_sub_freq, 0);
+    FIELD_I(ai_calm, 0);
+    FIELD_I(ai_dist, 0);
+    FIELD_I(ai_heal, 0);
+    FIELD_I(ai_move, 0);
+    FIELD_I(can_talk, 0);
+    FIELD_B(cbit_988, false);
+    FIELD_S(class_, "");
+    FIELD_I(color, 0);
+    FIELD_I(creaturepack, 0);
+    FIELD_I(cspecialeq, 0);
+    FIELD_I(damage_reaction_info, 0);
+    FIELD_I(dbmode16_dbspec3, 0);
+    FIELD_I(dbmode16_dbspec5, 0);
+    FIELD_I(dbmode16_dbspec6, 0);
+    FIELD_I(element_of_unarmed_attack, 0);
+    FIELD_I(eqammo_0, 0);
+    FIELD_I(eqammo_1, 0);
+    FIELD_I(eqmultiweapon, 0);
+    FIELD_I(eqrange_0, 0);
+    FIELD_I(eqrange_1, 0);
+    FIELD_I(eqring1, 0);
+    FIELD_I(eqtwohand, 0);
+    FIELD_I(eqweapon1, 0);
+    FIELD_I(female_image, 0);
+    FIELD_S(filter, "");
+    FIELD_I(fixlv, 0);
+    FIELD_B(has_random_name, false);
+    FIELD_I(image, 0);
+    FIELD_I(level, 0);
+    FIELD_I(male_image, 0);
+    FIELD_S(name_en, "");
+    FIELD_S(name_jp, "");
+    FIELD_I(original_relationship, 0);
+    FIELD_I(portrait, 0);
+    FIELD_S(race, "");
+    FIELD_I(sex, -1);
+
+    std::unordered_map<int, int> resistances;
+    lua_getfield(state, 2, u8"resistances");
+    if (!lua_isnil(state, -1))
+    {
+        lua_pushnil(state);
+        while (lua_next(state, -2))
+        {
+            int k = std::stoi(luaL_checkstring(state, -2) + 1);
+            int v = luaL_checkinteger(state, -1);
+            resistances.emplace(k, v);
+            lua_pop(state, 1);
+        }
+    }
+
+    FIELD_I(fltselect, 0);
+    FIELD_I(category, 0);
+    FIELD_I(rarity, 10000);
+    FIELD_I(coefficient, 400);
+
+#undef FIELD_I
+#undef FIELD_S
+#undef FIELD_B
+
+    storage_ptr->emplace(
+        std::stoi(id), // TODO
+        character_data{
+            std::stoi(id),
+            act_0,
+            act_1,
+            act_2,
+            act_3,
+            act_4,
+            act_5,
+            act_6,
+            act_7,
+            act_8,
+            ai_act_num,
+            ai_act_sub_freq,
+            ai_calm,
+            ai_dist,
+            ai_heal,
+            ai_move,
+            can_talk,
+            cbit_988,
+            class_,
+            color,
+            creaturepack,
+            cspecialeq,
+            damage_reaction_info,
+            dbmode16_dbspec3,
+            dbmode16_dbspec5,
+            dbmode16_dbspec6,
+            element_of_unarmed_attack,
+            eqammo_0,
+            eqammo_1,
+            eqmultiweapon,
+            eqrange_0,
+            eqrange_1,
+            eqring1,
+            eqtwohand,
+            eqweapon1,
+            female_image,
+            filter,
+            fixlv,
+            has_random_name,
+            image,
+            level,
+            male_image,
+            name_en,
+            name_jp,
+            original_relationship,
+            portrait,
+            race,
+            sex,
+            resistances,
+            fltselect,
+            category,
+            rarity,
+            coefficient,
+        });
+
+    return 0;
+}
+
+
+} // namespace
 
 
 
 namespace elona
 {
+
+
+
+character_db::character_db()
+{
+    lua_State* state = luaL_newstate();
+    luaL_openlibs(state);
+    cat::register_function(state, "define", &define);
+    storage_ptr = &storage;
+    cat::load(state, fs::u8path(u8"../data/character.lua"));
+    storage_ptr = nullptr;
+    lua_close(state);
+}
+
+
+
+optional_ref<character_data> character_db::operator[](int id) const
+{
+    const auto itr = storage.find(id);
+    if (itr == std::end(storage))
+        return std::nullopt;
+    else
+        return itr->second;
+}
 
 
 character::character()
@@ -37,7 +234,7 @@ void character::clear_flags()
 }
 
 
-character_data::character_data()
+cdata_t::cdata_t()
     : storage(245)
 {
 }
