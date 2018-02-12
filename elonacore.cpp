@@ -69050,10 +69050,6 @@ void label_2265()
         }
     }
     p = 20 + cdata[tc].shop_rank / 2;
-    if (p > 80)
-    {
-        p = 80;
-    }
     if (cdata[tc].character_role == 1007)
     {
         p = 6 + cdata[tc].shop_rank / 10;
@@ -69073,6 +69069,10 @@ void label_2265()
     if (cdata[tc].character_role == 1018)
     {
         p /= 2;
+    }
+    if (p > 80)
+    {
+        p = 80;
     }
     {
         int cnt = 0;
