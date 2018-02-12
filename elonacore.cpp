@@ -74650,7 +74650,7 @@ label_2699_internal:
     redraw(0);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     tx = 50;
-    ty = 345;
+    ty = windowh - 255;
     x(0) = 25;
     x(1) = 50;
     x(2) = 50;
