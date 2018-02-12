@@ -18149,7 +18149,7 @@ void modweight(int prm_870, int prm_871, int prm_872)
         cdata[prm_870].weight = mini_at_m146;
         return;
     }
-    if (prm_872 == 0)
+    if (prm_872 == 0 && prm_871 > 0)
     {
         if (cdata[prm_870].weight > max_at_m146)
         {
