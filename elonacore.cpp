@@ -37242,14 +37242,14 @@ int random_material(int prm_1028, int prm_1029)
             }
             if (cnt % 10 == 0)
             {
-                --lv_at_m174;
-                --rare_at_m174;
+                ++lv_at_m174;
+                ++rare_at_m174;
             }
-            if (matref(0, p_at_m174) < lv_at_m174)
+            if (matref(0, p_at_m174) > lv_at_m174)
             {
                 continue;
             }
-            if (matref(1, p_at_m174) < rare_at_m174)
+            if (matref(1, p_at_m174) > rare_at_m174)
             {
                 continue;
             }
