@@ -24033,7 +24033,7 @@ int do_create_character()
     }
     if (dbid == -1)
     {
-        if (fltselect == 0)
+        if (fltselect == 0 && filtermax == 0 && std::empty(fltnrace(0)))
         {
             if (fixlv == 3)
             {
