@@ -34361,7 +34361,6 @@ void update_ranch()
 
 void set_character_generation_filter()
 {
-    int obvjlv = 0;
     dbid = 0;
     if (gdata_current_map == 21)
     {
@@ -34459,7 +34458,7 @@ void set_character_generation_filter()
         {
             if (objlv > 5)
             {
-                obvjlv = 5;
+                objlv = 5;
             }
         }
         return;
