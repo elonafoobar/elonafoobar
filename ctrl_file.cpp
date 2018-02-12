@@ -168,7 +168,6 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 
 void fmode_8_7(bool read)
 {
-    int fsize = 0;
     folder = fs::u8path(u8"./save/"s + playerid + u8"/");
     if (!read)
     {
@@ -179,7 +178,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"gdata.s1";
-        fsize = 4000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -195,7 +193,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"cdata.s1";
-        fsize = 114000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -211,7 +208,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"sdata.s1";
-        fsize = 273600;
         if (read)
         {
             if (fs::exists(filepath))
@@ -243,7 +239,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"spell.s1";
-        fsize = 800;
         if (read)
         {
             if (fs::exists(filepath))
@@ -259,7 +254,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"inv.s1";
-        fsize = 369600;
         if (read)
         {
             if (fs::exists(filepath))
@@ -275,7 +269,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"kitem.s1";
-        fsize = 9600;
         if (read)
         {
             if (fs::exists(filepath))
@@ -291,7 +284,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"knpc.s1";
-        fsize = 6400;
         if (read)
         {
             if (fs::exists(filepath))
@@ -307,7 +299,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"adata.s1";
-        fsize = 80000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -323,7 +314,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"spact.s1";
-        fsize = 2000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -339,7 +329,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"qdata.s1";
-        fsize = 40000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -355,7 +344,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"mat.s1";
-        fsize = 1600;
         if (read)
         {
             if (fs::exists(filepath))
@@ -371,7 +359,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"trait.s1";
-        fsize = 2000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -387,7 +374,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"pcc.s1";
-        fsize = 2400;
         if (read)
         {
             if (fs::exists(filepath))
@@ -403,7 +389,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"card.s1";
-        fsize = 16000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -419,7 +404,6 @@ void fmode_8_7(bool read)
 
     {
         const auto filepath = folder + u8"krecipe.s1";
-        fsize = 4800;
         if (read)
         {
             if (fs::exists(filepath))
@@ -509,7 +493,6 @@ void fmode_8_7(bool read)
 void fmode_14_15(bool read)
 {
     std::string filepath;
-    int fsize = 0;
     if (!read)
     {
         folder = fs::u8path(u8"./tmp/");
@@ -545,7 +528,6 @@ void fmode_14_15(bool read)
 
     {
         const auto filepath = folder + u8"g_sdata.s1"s;
-        int fsize = 273600;
         if (read)
         {
             if (fs::exists(filepath))
@@ -578,7 +560,6 @@ void fmode_14_15(bool read)
 
     {
         const auto filepath = folder + u8"g_spell.s1"s;
-        int fsize = 800;
         if (read)
         {
             if (fs::exists(filepath))
@@ -611,7 +592,6 @@ void fmode_14_15(bool read)
 
     {
         const auto filepath = folder + u8"g_spact.s1"s;
-        int fsize = 2000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -628,7 +608,6 @@ void fmode_14_15(bool read)
 
     {
         const auto filepath = folder + u8"g_mat.s1"s;
-        int fsize = 1600;
         if (read)
         {
             if (fs::exists(filepath))
@@ -645,7 +624,6 @@ void fmode_14_15(bool read)
 
     {
         const auto filepath = folder + u8"g_card.s1"s;
-        int fsize = 16000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -662,7 +640,6 @@ void fmode_14_15(bool read)
 
     {
         const auto filepath = folder + u8"g_genetemp.s1"s;
-        int fsize = 4000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -682,12 +659,10 @@ void fmode_14_15(bool read)
 void fmode_2_1(bool read)
 {
     std::string filepath;
-    int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
 
     {
         const auto filepath = folder + u8"mdata_"s + mid + u8".s2"s;
-        int fsize = 400;
         if (read)
         {
             load_v1(filepath, mdata, 0, 100);
@@ -701,7 +676,6 @@ void fmode_2_1(bool read)
 
     {
         const auto filepath = folder + u8"map_"s + mid + u8".s2"s;
-        int fsize = mdata(0) * mdata(1) * 10 * 4;
         if (read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
@@ -731,7 +705,6 @@ void fmode_2_1(bool read)
 
     {
         const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
-        int fsize = 902400;
         if (read)
         {
             std::ifstream in{filepath};
@@ -761,7 +734,6 @@ void fmode_2_1(bool read)
 
     {
         const auto filepath = folder + u8"mef_"s + mid + u8".s2"s;
-        int fsize = 7200;
         if (read)
         {
             if (mdata(21) == 0)
@@ -795,12 +767,10 @@ void fmode_2_1(bool read)
 void fmode_20_19(bool read)
 {
     std::string filepath;
-    int fsize = 0;
     folder = fs::u8path(u8"./user/");
 
     {
         const auto filepath = folder + u8"m1_"s + id + u8".t"s;
-        int fsize = 400;
         if (read)
         {
             load_v1(filepath, mdata, 0, 100);
@@ -813,7 +783,6 @@ void fmode_20_19(bool read)
 
     {
         const auto filepath = folder + u8"m2_"s + id + u8".t"s;
-        int fsize = mdata(0) * mdata(1) * 10 * 4;
         if (read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
@@ -853,7 +822,6 @@ void fmode_20_19(bool read)
 
 void fmode_22_21(bool read)
 {
-    int fsize = 0;
     folder = fs::u8path(u8"./user/");
     if (read)
     {
@@ -915,7 +883,6 @@ void fmode_22_21(bool read)
             }
             {
                 const auto filepath = folder + u8"c2_"s + id + u8".t"s;
-                fsize = 4800;
                 if (read)
                 {
                     std::ifstream in{filepath};
@@ -1077,7 +1044,6 @@ void fmode_6_5(bool read)
 
     {
         const auto filepath = fmapfile + u8".idx"s;
-        int fsize = 400;
         if (read)
         {
             load_v1(filepath, mdatatmp, 0, 100);
@@ -1094,7 +1060,6 @@ void fmode_6_5(bool read)
 
     {
         const auto filepath = fmapfile + u8".map"s;
-        int fsize = mdata(0) * mdata(1) * 10 * 4;
         if (read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
@@ -1109,7 +1074,6 @@ void fmode_6_5(bool read)
 
     {
         const auto filepath = fmapfile + u8".obj"s;
-        int fsize = 8000;
         if (read)
         {
             if (fs::exists(filepath))
@@ -1157,7 +1121,6 @@ void fmode_23_24(bool read, const fs::path& filepath)
 
 void fmode_18_17(bool read, const fs::path& file)
 {
-    int fsize = 0;
     folder = fs::u8path(u8"./tmp/");
     if (!fs::exists(std::string(file) + u8"cdata_"s + mid + u8".s2"s))
     {
@@ -1179,7 +1142,6 @@ void fmode_18_17(bool read, const fs::path& file)
 
     {
         const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
-        int fsize = 902400;
         if (read)
         {
             std::ifstream in{filepath};

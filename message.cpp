@@ -868,8 +868,8 @@ void txt_conv()
                 int p2 = 0;
                 while (1)
                 {
-                    const auto c = msgtemp(0)[p2];
-                    if (c >= 0x00 && c <= 0x7F)
+                    const uint8_t c = msgtemp(0)[p2];
+                    if (c <= 0x7F)
                         p2 += 1;
                     else if (c >= 0xc2 && c <= 0xdf)
                         p2 += 2;

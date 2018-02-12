@@ -1704,6 +1704,7 @@ void talk_unique()
             talk_end();
             return;
         }
+        break;
     case 146:
         if (gdata_main_quest_flag == 90)
         {

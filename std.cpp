@@ -21,7 +21,7 @@ namespace
 // UTF-8
 size_t byte_count(uint8_t c)
 {
-    if (c >= 0x00 && c <= 0x7F)
+    if (c <= 0x7F)
         return 1;
     else if (c >= 0xc2 && c <= 0xdf)
         return 2;
@@ -234,7 +234,7 @@ void await(int msec)
         await_detail::last_await = now;
     }
     const auto delta = now - await_detail::last_await;
-    if (msec > delta)
+    if (size_t(msec) > delta)
     {
         ::SDL_Delay(msec - delta);
     }
@@ -260,6 +260,9 @@ void bcopy(const fs::path& from, const fs::path& to)
 // fullscreen
 void bgscr(int window_id, int width, int height, int, int)
 {
+    (void)window_id;
+    (void)width;
+    (void)height;
 }
 
 
@@ -339,7 +342,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
         throw 0;
     }
     auto [buf, _] = read_binary(in, size);
-    for (int i = 0; i < length(data); ++i)
+    for (size_t i = 0; i < length(data); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
         size -= sizeof(int);
@@ -373,7 +376,7 @@ void bsave(const fs::path& filename, int data)
 void bsave(const fs::path& filename, elona_vector1<int>& data)
 {
     std::ofstream out{filename, std::ios::binary};
-    for (int i = 0; i < std::size(data); ++i)
+    for (size_t i = 0; i < std::size(data); ++i)
     {
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
     }
@@ -388,7 +391,7 @@ void buffer(int window_id, int width, int height)
         width = 1;
     if (height == 0)
         height = 1;
-    if (window_id >= std::size(detail::tex_buffers))
+    if (size_t(window_id) >= std::size(detail::tex_buffers))
     {
         detail::tex_buffers.resize(window_id + 1);
     }
@@ -440,6 +443,8 @@ void buffer(int window_id, int width, int height)
 
 void chgdisp(int, int width, int height)
 {
+    (void)width;
+    (void)height;
 }
 
 
@@ -501,6 +506,7 @@ void elona_delete(const fs::path& filename)
 
 int dialog(const std::string& message, int)
 {
+    (void)message;
     return 0;
 }
 
@@ -509,6 +515,7 @@ int dialog(const std::string& message, int)
 // TODO
 std::string dirinfo(int n)
 {
+    (void)n;
     return ".";
     // switch (n)
     // {
@@ -544,6 +551,8 @@ std::unordered_map<int, snail::font_t> font_cache;
 
 void font(const std::string& name, int size, int style)
 {
+    (void)name;
+    (void)style;
     if (auto i = font_detail::font_cache.find(size);
         i != std::end(font_detail::font_cache))
     {
@@ -643,6 +652,7 @@ void getstr(
     char delimiter,
     int limit)
 {
+    (void)limit;
     auto pos = source.find(delimiter, offset);
     if (pos == std::string::npos)
     {
@@ -652,7 +662,7 @@ void getstr(
     {
         pos = std::size(source);
     }
-    if (pos >= offset)
+    if (pos >= size_t(offset))
     {
         const auto length = pos - offset;
         strsize = length + 1; // Includes the delimiter.
@@ -890,6 +900,7 @@ void gzoom(
     int src_height,
     int mode)
 {
+    (void)mode;
     snail::application::instance().get_renderer().set_blend_mode(
         snail::blend_mode_t::none);
     snail::detail::enforce_sdl(
@@ -1018,9 +1029,9 @@ void memcpy(
     const auto len = length(src);
     const auto len2 = length2(src);
     auto count = size;
-    for (int i = 0; i < len2; ++i)
+    for (size_t i = 0; i < len2; ++i)
     {
-        for (int j = 0; j < len; ++j)
+        for (size_t j = 0; j < len; ++j)
         {
             src(src_j + j, src_i + i) = dst(dst_j + j, dst_i + i);
             count -= sizeof(int);
@@ -1077,6 +1088,10 @@ void mesbox(
     int style,
     int max_input_size)
 {
+    (void)width;
+    (void)height;
+    (void)style;
+    (void)max_input_size;
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer));
 }
@@ -1092,12 +1107,16 @@ void mkdir(const fs::path& path)
 
 void mmload(const std::string& file, int id, int mode)
 {
+    (void)file;
+    (void)id;
+    (void)mode;
 }
 
 
 
 void mmplay(int id)
 {
+    (void)id;
 }
 
 
@@ -1167,7 +1186,7 @@ void noteadd(const std::string& text, int index, int overwrite)
         index = std::size(lines);
     }
 
-    if (index >= std::size(lines))
+    if (size_t(index) >= std::size(lines))
     {
         lines.resize(index + 1);
     }
@@ -1199,7 +1218,7 @@ void notedel(size_t index)
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
     notemanip::buffer->clear();
-    for (int i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < std::size(lines); ++i)
     {
         if (i != index)
         {
@@ -1274,6 +1293,8 @@ void objsel(int)
 
 void pget(int x, int y)
 {
+    (void)x;
+    (void)y;
 }
 
 
@@ -1332,6 +1353,12 @@ void redraw(int n)
 
 void screen(int window_id, int width, int height, int mode, int x, int y)
 {
+    (void)window_id;
+    (void)width;
+    (void)height;
+    (void)mode;
+    (void)x;
+    (void)y;
 }
 
 
@@ -1375,7 +1402,7 @@ void stick(int& out, int allow_repeat_keys)
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
-    for (int i = 0; i < std::size(str);)
+    for (size_t i = 0; i < std::size(str);)
     {
         const auto byte = byte_count(static_cast<uint8_t>(str[i]));
         ret += byte == 1 ? 1 : 2;
@@ -1392,14 +1419,14 @@ std::string strmid(const std::string& source, int pos, int length)
     if (pos == -1)
     {
         // n characters from right to left.
-        length = std::min(static_cast<decltype(src_len)>(length), src_len);
+        length = std::min(size_t(length), src_len);
         return source.substr(src_len - length, length);
     }
-    else if (pos >= src_len)
+    else if (pos >= int(src_len))
     {
         return "";
     }
-    else if (pos + length >= src_len)
+    else if (pos + length >= int(src_len))
     {
         return source.substr(pos, std::string::npos);
     }
@@ -1437,6 +1464,8 @@ void title(const std::string& title_str)
 
 void width(int width, int height, int, int)
 {
+    (void)width;
+    (void)height;
 }
 
 
@@ -1532,6 +1561,8 @@ void map(F f)
 
 void gfini(int width, int height)
 {
+    (void)width;
+    (void)height;
     // gf_detail::rect = {detail::current_tex_buffer().x,
     // detail::current_tex_buffer().y, width, height}; const auto texture =
     // snail::application::instance().get_renderer().render_target();
@@ -1543,6 +1574,9 @@ void gfini(int width, int height)
 
 void gfdec(int r, int g, int b)
 {
+    (void)r;
+    (void)g;
+    (void)b;
     // gf_detail::map([](uint8_t v_, int v)
     //     {
     //         v = std::min(v, static_cast<int>(v_));
@@ -1555,6 +1589,9 @@ void gfdec(int r, int g, int b)
 
 void gfdec2(int r, int g, int b)
 {
+    (void)r;
+    (void)g;
+    (void)b;
     // gf_detail::map([](uint8_t v_, int v)
     //     {
     //         v = std::min(v, static_cast<int>(v_) - 1);
@@ -1567,6 +1604,9 @@ void gfdec2(int r, int g, int b)
 
 void gfinc(int r, int g, int b)
 {
+    (void)r;
+    (void)g;
+    (void)b;
     // gf_detail::map([](uint8_t v_, int v)
     //     {
     //         v = std::min(v, 255 - static_cast<int>(v_));
@@ -1657,6 +1697,8 @@ void DSRELEASE(int)
 
 void DSLOADFNAME(const std::string& filename, int id)
 {
+    (void)filename;
+    (void)id;
 }
 
 
@@ -1688,6 +1730,7 @@ int DSGETMASTERVOLUME()
 
 int CHECKPLAY(int id)
 {
+    (void)id;
     return 0;
 }
 
@@ -1977,7 +2020,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
     while (1)
     {
         const auto len = std::size(rest);
-        if (len < max_line_length)
+        if (int(len) < max_line_length)
         {
             text += rest;
             return n;
@@ -1986,7 +2029,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
         while (line_length <= len)
         {
             line_length += byte_count(static_cast<uint8_t>(rest[line_length]));
-            if (line_length > max_line_length)
+            if (int(line_length) > max_line_length)
             {
                 // m = strmid(rest, line_length, 2);
                 // if (false
@@ -2036,7 +2079,7 @@ int talk_conv_en(std::string& text, int max_line_length)
                 text += rest;
                 return n;
             }
-            if (line_length + p + 1 > max_line_length)
+            if (int(line_length + p + 1) > max_line_length)
             {
                 text.back() = '\n';
                 ++n;
