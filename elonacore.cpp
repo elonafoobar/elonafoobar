@@ -27869,7 +27869,7 @@ void apply_general_eating_effect()
                             * (1 + (cc != 0) * 5));
                     if (synccheck(cc, -1))
                     {
-                        if (inv[ci].enchantments[cnt].power >= 0)
+                        if (inv[ci].enchantments[cnt].power / 50 + 1 >= 0)
                         {
                             txt(lang(
                                 name(cc) + u8"の"s
