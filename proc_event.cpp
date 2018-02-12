@@ -295,13 +295,14 @@ void proc_event()
         itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
         itemcreate(-1, 236, cdata[0].position.x, cdata[0].position.y, 0);
+        nostack = 1;
         flt();
         itemcreate(
             -1,
             54,
             cdata[0].position.x,
-            cdata[0].position.y,
-            200 + inv[ci].number * 5);
+            cdata[0].position.y);
+        inv[ci].number = 200 + inv[ci].number * 5;
         flt();
         itemcreate(
             -1,
