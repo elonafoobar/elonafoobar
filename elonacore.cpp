@@ -57506,7 +57506,6 @@ void continuous_action_others()
         {
             in = inv[ci].number;
         }
-        ibitmod(12, ci, 0);
         ti = inv_getfreeid(0);
         if (ti == -1)
         {
@@ -57515,6 +57514,7 @@ void continuous_action_others()
                 u8"Your inventory is full."s));
             return;
         }
+        ibitmod(12, ci, 0);
         if (inv[ci].body_part != 0)
         {
             tc = inv_getowner(ci);
