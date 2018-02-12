@@ -16,7 +16,54 @@ namespace elona
 struct character_data
 {
     int id;
+    int act_0;
+    int act_1;
+    int act_2;
+    int act_3;
+    int act_4;
+    int act_5;
+    int act_6;
+    int act_7;
+    int act_8;
+    int ai_act_num;
+    int ai_act_sub_freq;
+    int ai_calm;
+    int ai_dist;
+    int ai_heal;
+    int ai_move;
+    int can_talk;
+    bool cbit_988;
+    std::string class_;
+    int color;
+    int creaturepack;
+    int cspecialeq;
+    int damage_reaction_info;
+    int dbmode16_dbspec3;
+    int dbmode16_dbspec5;
+    int dbmode16_dbspec6;
+    int element_of_unarmed_attack;
+    int eqammo_0;
+    int eqammo_1;
+    int eqmultiweapon;
+    int eqrange_0;
+    int eqrange_1;
+    int eqring1;
+    int eqtwohand;
+    int eqweapon1;
+    int female_image;
+    std::string filter;
+    int fixlv;
+    bool has_random_name;
+    int image;
     int level;
+    int male_image;
+    std::string name_en;
+    std::string name_jp;
+    int original_relationship;
+    int portrait;
+    std::string race;
+    int sex;
+    std::unordered_map<int, int> resistances;
 };
 
 
