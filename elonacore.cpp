@@ -42694,7 +42694,7 @@ label_1925_internal:
             s = lang(""s, u8"Recipe of "s) + cnven(rpname(rpid))
                 + lang(u8"のレシピ"s, ""s);
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-            cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
+            cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 0, p);
         }
     }
     if (cs_bk != cs)
