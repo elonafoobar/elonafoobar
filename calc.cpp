@@ -2214,7 +2214,7 @@ int calcspellpower(int prm_918, int prm_919)
     {
         if (the_ability_db[prm_918].related_basic_attribute != 0)
         {
-            return the_ability_db[prm_918].related_basic_attribute * 6 + 10;
+            return sdata(the_ability_db[prm_918].related_basic_attribute, prm_919) * 6 + 10;
         }
         return 100;
     }
