@@ -16700,6 +16700,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     rtdmg = dmg_at_m141;
 
+    if (tc == 0 && cdata[0].god == 5)
+    {
+        dmg_at_m141 = dmg_at_m141 * 90 / 100;
+    }
+
     if (debug::voldemort && tc == 0)
     {
         dmg_at_m141 = 0;
@@ -16723,10 +16728,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     if (prm_853 == 0)
     {
-        if (cdata[0].god == 5)
-        {
-            dmg_at_m141 = dmg_at_m141 * 90 / 100;
-        }
         if (prm_855 == 0)
         {
             lasttc = prm_853;
