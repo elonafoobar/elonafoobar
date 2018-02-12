@@ -12,7 +12,6 @@ namespace elona
 
 void talk_npc()
 {
-    int chatid = 0;
     int tcchat = 0;
     listmax = 0;
     if (buff == ""s)
@@ -70,7 +69,7 @@ void talk_npc()
         listn(0, listmax) = lang(u8"話がしたい"s, u8"Let's Talk."s);
         ++listmax;
     }
-    if (cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000
+    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
     {
         list(0, listmax) = 10;
@@ -569,12 +568,12 @@ void talk_npc()
     list(0, listmax) = 0;
     listn(0, listmax) = strbye;
     ++listmax;
-    chatid = 0;
     chatesc = 1;
     talk_window();
     if (chatval == 10 || chatval == 11)
     {
-        if (cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000
+        if ((cdata[tc].character_role >= 1000
+             && cdata[tc].character_role < 2000)
             || cdata[tc].character_role == 2003)
         {
             if (cdata[0].karma < -30)
@@ -1794,7 +1793,6 @@ void talk_npc()
                 + u8")"s;
             cbitmod(965, tc, 0);
         }
-        chatid = -1;
         talk_npc();
         return;
     }

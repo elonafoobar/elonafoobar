@@ -3101,8 +3101,8 @@ void get_npc_talk()
                 p = instr(buff, 0, u8"%SLAVEKEEPER,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata[tc].character_role >= 1000
-                    && cdata[tc].character_role < 2000
+            if ((cdata[tc].character_role >= 1000
+                 && cdata[tc].character_role < 2000)
                 || cdata[tc].character_role == 2003)
             {
                 if (rnd(3))

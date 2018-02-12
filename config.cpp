@@ -35,34 +35,6 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 
 
 
-std::vector<std::string_view> parse_records(std::string_view line)
-{
-    std::vector<std::string_view> ret;
-    std::string_view::size_type pos = 0;
-
-    while (1)
-    {
-        const auto open_dquote = line.find(u8'"', pos);
-        if (open_dquote == std::string_view::npos)
-        {
-            break;
-        }
-        const auto closing_dquote = line.find(u8'"', open_dquote + 1);
-        if (closing_dquote == std::string_view::npos)
-        {
-            throw config_loading_error{"Missing closing double quote: "s
-                                       + std::string{line}};
-        }
-        ret.emplace_back(std::string_view{line}.substr(
-            open_dquote + 1, closing_dquote - open_dquote - 1));
-        pos = closing_dquote + 1;
-    }
-
-    return ret;
-}
-
-
-
 struct config_base
 {
     virtual void set(const picojson::object& options) = 0;

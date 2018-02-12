@@ -48,7 +48,7 @@ position_t gmes(
         bool wait_to_break_line = false;
         uint8_t first = message[pos];
         size_t byte;
-        if (first >= 0x00 && first <= 0x7F)
+        if (first <= 0x7F)
             byte = 1;
         else if (first >= 0xc2 && first <= 0xdf)
             byte = 2;
@@ -5111,7 +5111,6 @@ void csvsort(
     std::string prm_436,
     int prm_437)
 {
-    int csvmax = 0;
     elona_vector1<int> p_at_m40;
     p_at_m40(0) = 0;
     {
@@ -5122,7 +5121,6 @@ void csvsort(
             getstr(prm_435(cnt), prm_436, p_at_m40(0), prm_437);
             if (strsize == 0)
             {
-                csvmax = cnt;
                 break;
             }
             p_at_m40(0) += strsize;
@@ -5144,10 +5142,10 @@ void load_random_name_table()
     SDIM3(randn1, 30, 20);
     SDIM4(rnlist, 20, 15, std::size(lines));
 
-    for (int i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < std::size(lines); ++i)
     {
         csvsort(randn1, lines[i], 44);
-        for (int j = 0; j < 15; ++j)
+        for (size_t j = 0; j < 15; ++j)
         {
             rnlist(j, i) = randn1(j);
         }
@@ -5166,7 +5164,7 @@ void load_random_title_table()
     SDIM3(rn1, 15, std::size(lines));
     SDIM3(rn2, 15, std::size(lines));
 
-    for (int i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < std::size(lines); ++i)
     {
         csvsort(randn1, lines[i], 44);
         rn1(i) = lang(randn1(0), randn1(1));
@@ -6430,7 +6428,7 @@ void add_enchantments()
     if (fixlv == 4 || fixlv == 5)
     {
         inv[ci].subname = 40000 + rnd(30000);
-        if (fixlv == 5 || fixlv == 4 && rnd(10) == 0)
+        if (fixlv == 5 || (fixlv == 4 && rnd(10) == 0))
         {
             encadd(ci, randomenc(99), randomencp());
         }
@@ -8225,14 +8223,13 @@ void cutname(std::string& prm_541, int prm_542)
 {
     int len_at_m71 = 0;
     elona_vector1<std::string> buf_at_m71;
-    int ret_at_m71 = 0;
     int p_at_m71 = 0;
-    if (strlen_u(prm_541) > prm_542)
+    if (strlen_u(prm_541) > size_t(prm_542))
     {
         len_at_m71 = zentohan(prm_541, buf_at_m71, 0);
         SDIM2(buf_at_m71, len_at_m71);
-        ret_at_m71 = zentohan(prm_541, prm_541, len_at_m71);
-        if (strlen_u(prm_541) > prm_542)
+        zentohan(prm_541, prm_541, len_at_m71);
+        if (strlen_u(prm_541) > size_t(prm_542))
         {
             len_at_m71 = 0;
             {
@@ -8244,8 +8241,8 @@ void cutname(std::string& prm_541, int prm_542)
                         break;
                     }
                     p_at_m71 = prm_541[len_at_m71];
-                    if ((p_at_m71 >= 129 && p_at_m71 <= 159 || p_at_m71 >= 224)
-                        && p_at_m71 <= 252)
+                    if ((p_at_m71 >= 129 && p_at_m71 <= 159)
+                        || (p_at_m71 >= 224 && p_at_m71 <= 252))
                     {
                         p_at_m71 = 2;
                     }
@@ -9391,7 +9388,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             ty_at_modfov = prm_630 + 1;
         label_0386_internal:
-            if (ty_at_modfov < prm_632 == 0)
+            if (ty_at_modfov >= prm_632)
             {
                 goto label_0387_internal;
             }
@@ -9405,14 +9402,13 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
             ++ty_at_modfov;
             goto label_0386_internal;
-        label_0387_internal:
-            0;
+        label_0387_internal:;
         }
         else
         {
             ty_at_modfov = prm_630 - 1;
         label_0388_internal:
-            if (ty_at_modfov > prm_632 == 0)
+            if (ty_at_modfov <= prm_632)
             {
                 goto label_0389_internal;
             }
@@ -9436,7 +9432,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             tx_at_modfov = prm_629 + 1;
         label_0390_internal:
-            if (tx_at_modfov < prm_631 == 0)
+            if (tx_at_modfov >= prm_631)
             {
                 goto label_0391_internal;
             }
@@ -9450,14 +9446,13 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             }
             ++tx_at_modfov;
             goto label_0390_internal;
-        label_0391_internal:
-            0;
+        label_0391_internal:;
         }
         else
         {
             tx_at_modfov = prm_629 - 1;
         label_0392_internal:
-            if (tx_at_modfov > prm_631 == 0)
+            if (tx_at_modfov <= prm_631)
             {
                 goto label_0393_internal;
             }
@@ -9576,8 +9571,7 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             tx_at_modfov += sx_at_modfov;
         }
         goto label_0394_internal;
-    label_0395_internal:
-        0;
+    label_0395_internal:;
     }
     else
     {
@@ -9668,7 +9662,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = 1;
             ++p_at_modfov;
         label_0399_internal:
-            if (ty_at_modfov < prm_636 == 0)
+            if (ty_at_modfov >= prm_636)
             {
                 goto label_0400_internal;
             }
@@ -9685,8 +9679,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = 1;
             ++p_at_modfov;
             goto label_0399_internal;
-        label_0400_internal:
-            0;
+        label_0400_internal:;
         }
         else
         {
@@ -9695,7 +9688,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = -1;
             ++p_at_modfov;
         label_0401_internal:
-            if (ty_at_modfov > prm_636 == 0)
+            if (ty_at_modfov <= prm_636)
             {
                 goto label_0402_internal;
             }
@@ -9726,7 +9719,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = 1;
             ++p_at_modfov;
         label_0403_internal:
-            if (tx_at_modfov < prm_635 == 0)
+            if (tx_at_modfov >= prm_635)
             {
                 goto label_0404_internal;
             }
@@ -9743,8 +9736,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = 1;
             ++p_at_modfov;
             goto label_0403_internal;
-        label_0404_internal:
-            0;
+        label_0404_internal:;
         }
         else
         {
@@ -9753,7 +9745,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(1, p_at_modfov) = -1;
             ++p_at_modfov;
         label_0405_internal:
-            if (tx_at_modfov > prm_635 == 0)
+            if (tx_at_modfov <= prm_635)
             {
                 goto label_0406_internal;
             }
@@ -9918,8 +9910,7 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             ++p_at_modfov;
         }
         goto label_0407_internal;
-    label_0408_internal:
-        0;
+    label_0408_internal:;
     }
     else
     {
@@ -10619,9 +10610,7 @@ void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 
 void display_msg(int prm_680, int prm_681)
 {
-    int msgclear = 0;
     msgkeep = prm_681;
-    msgclear = 1;
     msgy = prm_680;
     redraw(0);
     return;
@@ -11081,13 +11070,13 @@ std::string fixtxt(const std::string& prm_724, int prm_725)
 {
     std::string m_at_m104;
     m_at_m104 = ""s + prm_724;
-    if (strlen_u(prm_724) < prm_725)
+    if (strlen_u(prm_724) < size_t(prm_725))
     {
         {
             int cnt = 0;
             for (;; ++cnt)
             {
-                if (strlen_u(m_at_m104) >= prm_725)
+                if (strlen_u(m_at_m104) >= size_t(prm_725))
                 {
                     break;
                 }
@@ -15590,8 +15579,8 @@ void check_kill(int prm_836, int prm_837)
                 {
                     p_at_m137 = -5;
                 }
-                if (cdata[prm_837].character_role >= 1000
-                        && cdata[prm_837].character_role < 2000
+                if ((cdata[prm_837].character_role >= 1000
+                     && cdata[prm_837].character_role < 2000)
                     || cdata[prm_837].character_role == 2003)
                 {
                     p_at_m137 = -10;
@@ -16585,17 +16574,14 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
 
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
-    int lasttc = 0;
     int ele_at_m141 = 0;
     int c3_at_m141 = 0;
     int r_at_m141 = 0;
     int dmglevel_at_m141 = 0;
     int f_at_m141 = 0;
-    int pcnoise_at_m141 = 0;
     int se_at_m141 = 0;
     elona_vector1<int> p_at_m141;
     int exp_at_m141 = 0;
-    int cc_at_m141 = 0;
     elona::prm_853 = prm_853;
     ele_at_m141 = prm_856;
     if (txt3rd == 0)
@@ -16728,10 +16714,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     if (prm_853 == 0)
     {
-        if (prm_855 == 0)
-        {
-            lasttc = prm_853;
-        }
         gdata(30) = 0;
         if (cdata[prm_853].hp < 0)
         {
@@ -17062,7 +17044,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (prm_855 == 0)
         {
-            pcnoise_at_m141 = 100;
             hostileaction(0, prm_853);
             gdata(94) = prm_853;
         }
@@ -18312,8 +18293,8 @@ void chara_vomit(int prm_876)
     }
     if (cbit(986, prm_876) == 0)
     {
-        if (prm_876 < 16 && cdata[prm_876].anorexia_count > 10
-            || prm_876 >= 16 && rnd(4) == 0)
+        if ((prm_876 < 16 && cdata[prm_876].anorexia_count > 10)
+            || (prm_876 >= 16 && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
@@ -18489,7 +18470,6 @@ int net_read(int prm_885)
     std::string a_at_m147;
     int sz_at_m147 = 0;
     int t_at_m147 = 0;
-    int c_at_m147 = 0;
     int header_at_m147 = 0;
     int tail_at_m147 = 0;
     int chat_count_at_m147 = 0;
@@ -19360,7 +19340,7 @@ void update_screen_hud()
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     color(0, 0, 0);
     pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
-    if (strlen_u(mdatan(0)) > 16 - (maplevel() != ""s) * 4)
+    if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
         mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
     }
@@ -20023,8 +20003,8 @@ void label_1423()
         label_1422();
     }
     if (msgtemp != ""s
-        || cdata[0].continuous_action_id == 7 && rowactre == 0
-            && fishanime == 0)
+        || (cdata[0].continuous_action_id == 7 && rowactre == 0
+            && fishanime == 0))
     {
         label_1433();
         msgtemp = "";
@@ -20051,7 +20031,7 @@ void label_1423()
     grotate(3, 72, 392, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
     if (cdata[0].continuous_action_id == 9 || cdata[0].continuous_action_id == 5
         || cdata[0].continuous_action_id == 8
-        || cdata[0].continuous_action_id == 7 && rowactre != 0)
+        || (cdata[0].continuous_action_id == 7 && rowactre != 0))
     {
         window2(sx, sy - 104, 148, 101, 0, 5);
         if (racount % 15 == 0)
@@ -20384,7 +20364,6 @@ void label_1429()
 
 void label_1433()
 {
-    int losmode = 0;
     screendrawhack = 2;
     cell_draw();
     screendrawhack = 3;
@@ -20479,7 +20458,6 @@ void label_1433()
     radery = sy;
     pos(inf_raderx + sx, inf_radery + sy);
     gcopy(3, 15, 338, 6, 6);
-    losmode = 0;
     screendrawhack = 5;
     if (cfg_env)
     {
@@ -20893,13 +20871,11 @@ void label_1443()
 
 void label_1444()
 {
-    int evscry = 0;
     redraw(0);
     color(0, 0, 0);
     boxf();
     evx = 12;
     evy = 14;
-    evscry = 40;
     evtiles = 48;
     evscrh = windowh / evtiles - 1;
     evscrw = windoww / evtiles + 2;
@@ -21328,7 +21304,7 @@ void gain_level()
     }
     cdata[r1].skill_bonus += p;
     cdata[r1].total_skill_bonus += p;
-    if (cdatan(2, r1) == u8"mutant"s || r1 == 0 && trait(0) == 1)
+    if (cdatan(2, r1) == u8"mutant"s || (r1 == 0 && trait(0) == 1))
     {
         if (cdata[r1].level < 37)
         {
@@ -21620,11 +21596,9 @@ void cnvbonus(int prm_895, int prm_896)
 
 void refresh_character()
 {
-    int chararefreshhack = 0;
     int rp = 0;
     int rp2 = 0;
     int rp3 = 0;
-    chararefreshhack = 1;
     if (r1 == 0)
     {
         gdata_seven_league_boot_effect = 0;
@@ -21988,7 +21962,7 @@ void refresh_character()
             {
                 if (trait(cnt) != 0)
                 {
-                    int stat = get_trait_info(1, cnt);
+                    get_trait_info(1, cnt);
                 }
             }
         }
@@ -22082,7 +22056,6 @@ void refresh_character()
     refresh_burden_state();
     refreshspeed(r1);
     cbitmod(981, r1, 0);
-    chararefreshhack = 0;
     return;
 }
 
@@ -22167,7 +22140,7 @@ void label_1512()
                     p += sdata(cnt, r1);
                 }
             }
-            if (cnt == 60 && p < 500 || r1 == 0)
+            if ((cnt == 60 && p < 500) || r1 == 0)
             {
                 p = 100;
             }
@@ -25461,8 +25434,8 @@ label_1575_internal:
     if (gdata_current_map != 6 && cdata[rc].character_role != 20)
     {
         if (rnd(175) == 0 || cdata[rc].quality == 6 || 0
-            || cdata[rc].quality == 4 && rnd(2) == 0
-            || cdata[rc].quality == 5 && rnd(3) == 0)
+            || (cdata[rc].quality == 4 && rnd(2) == 0)
+            || (cdata[rc].quality == 5 && rnd(3) == 0))
         {
             flt();
             itemcreate(-1, 504, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -25471,8 +25444,8 @@ label_1575_internal:
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         if (rnd(175) == 0 || cdata[rc].quality == 6 || 0
-            || cdata[rc].quality == 4 && rnd(2) == 0
-            || cdata[rc].quality == 5 && rnd(3) == 0)
+            || (cdata[rc].quality == 4 && rnd(2) == 0)
+            || (cdata[rc].quality == 5 && rnd(3) == 0))
         {
             flt();
             itemcreate(-1, 503, cdata[rc].position.x, cdata[rc].position.y, 0);
@@ -26226,7 +26199,7 @@ void label_1581()
     {
         inv[ci].curse_state = 0;
     }
-    if (reftype < 50000 || reftype == 60000 && rnd(5) == 0)
+    if (reftype < 50000 || (reftype == 60000 && rnd(5) == 0))
     {
         if (inv[ci].material >= 1000 || reftype == 60000)
         {
@@ -27599,7 +27572,7 @@ void apply_general_eating_effect()
                     {
                         if (rnd(5) == 0)
                         {
-                            int stat = get_trait_info(0, 41);
+                            get_trait_info(0, 41);
                             txtef(2);
                             txt(traitrefn(0));
                             trait(41) = 1;
@@ -27617,7 +27590,7 @@ void apply_general_eating_effect()
         }
     }
     if (inv[ci].id == 204
-        || (inv[ci].id == 571 || inv[ci].id == 573) && rnd(3) == 0)
+        || ((inv[ci].id == 571 || inv[ci].id == 573) && rnd(3) == 0))
     {
         dbmode = 12;
         dbid = inv[ci].subname;
@@ -27750,7 +27723,8 @@ void apply_general_eating_effect()
                 name(cc) + u8" read"s + _s(cc) + u8" the paper fortune."s));
             valn = u8"%COOKIE2"s;
             read_talk_file();
-            if (inv[ci].curse_state >= 1 || inv[ci].curse_state == 0 && rnd(2))
+            if (inv[ci].curse_state >= 1
+                || (inv[ci].curse_state == 0 && rnd(2)))
             {
                 valn = u8"%COOKIE1"s;
                 read_talk_file();
@@ -28563,15 +28537,8 @@ void map_converttile()
 
 void map_tileset(int prm_933)
 {
-    int tile_trans = 0;
-    int tile_dungeon = 0;
-    int tile_battlesite = 0;
-    int tile_roomlen = 0;
     tile_doorclosed = 726;
     tile_dooropen = 236;
-    tile_trans = 999;
-    tile_dungeon = 133;
-    tile_battlesite = 134;
     tile_default(0) = 396;
     tile_default(1) = 1;
     tile_default(2) = 1;
@@ -28591,7 +28558,6 @@ void map_tileset(int prm_933)
     tile_tunnel(1) = 1;
     tile_tunnel(2) = 1;
     tile_pot = 242;
-    tile_roomlen = 1;
     if (prm_933 == 12)
     {
         tile_doorclosed = 733;
@@ -30093,10 +30059,10 @@ void map_randsite(int prm_971, int prm_972)
     }
     if (mdata(6) == 1)
     {
-        if (264 <= map(x_at_m169, y_at_m169, 0)
-                && map(x_at_m169, y_at_m169, 0) < 363
-            || 33 <= map(x_at_m169, y_at_m169, 0)
-                && map(x_at_m169, y_at_m169, 0) < 66)
+        if ((264 <= map(x_at_m169, y_at_m169, 0)
+             && map(x_at_m169, y_at_m169, 0) < 363)
+            || (33 <= map(x_at_m169, y_at_m169, 0)
+                && map(x_at_m169, y_at_m169, 0) < 66))
         {
             f_at_m169 = 0;
         }
@@ -30461,7 +30427,6 @@ label_1665_internal:
 
 void generate_random_nefia()
 {
-    int rdroomdoor = 0;
     int rdtype = 0;
     int rdmonsterhouse = 0;
     int rdcreaturepack = 0;
@@ -30480,7 +30445,6 @@ label_16951_internal:
     rdroomnum = mdata(0) * mdata(1) / 70;
     rdroomsizemin = 3;
     rdroomsizemax = 4;
-    rdroomdoor = 80;
     rdroomentrance = 1;
     rdhiddenpath = 20;
     rdval(2) = 2;
@@ -32823,7 +32787,6 @@ void initialize_home_adata()
 
 void use_house_board()
 {
-    int homemakewall = 0;
     int cxbk = 0;
     int cybk = 0;
     int tchome = 0;
@@ -32980,7 +32943,6 @@ void use_house_board()
         promptl(2, promptmax) = ""s + 3;
         ++promptmax;
     }
-    homemakewall = 0;
     val(0) = promptx;
     val(1) = prompty;
     val(2) = 240;
@@ -33011,7 +32973,6 @@ void use_house_board()
             for (;; ++cnt)
             {
                 await();
-                homemakewall = 1;
                 int stat = target_position();
                 if (stat == -1)
                 {
@@ -37221,7 +37182,6 @@ void label_1755()
 
 int random_material(int prm_1028, int prm_1029)
 {
-    int matnum = 0;
     int f_at_m174 = 0;
     int lv_at_m174 = 0;
     int rare_at_m174 = 0;
@@ -37230,7 +37190,6 @@ int random_material(int prm_1028, int prm_1029)
     int f2_at_m174 = 0;
     int p2_at_m174 = 0;
     f_at_m174 = 0;
-    matnum = 1;
     lv_at_m174 = prm_1028;
     rare_at_m174 = prm_1029;
     loc_at_m174 = atxspot;
@@ -43382,7 +43341,7 @@ void label_1935()
         goto label_1936_internal;
     case 10008:
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-            || inv[ci].id == 602 && gdata_holy_well_count <= 0)
+            || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
         {
             valn = itemname(ci);
             txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
@@ -44918,7 +44877,7 @@ label_1961_internal:
                     }
                 }
                 cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 0, n);
-                if (allyctrl != 3 || allyctrl == 3 && gdata_current_map == 7)
+                if (allyctrl != 3 || (allyctrl == 3 && gdata_current_map == 7))
                 {
                     s = u8"Lv."s + cdata[i].level + u8" "s;
                     if (cdata[i].state == 6)
@@ -45800,7 +45759,7 @@ label_1970_internal:
                 if (list(1, p) < 10000)
                 {
                     int tid = list(0, p);
-                    int stat = get_trait_info(0, tid);
+                    get_trait_info(0, tid);
                     if (traitref(2) <= trait(tid))
                     {
                         if (mode != 1)
@@ -51075,7 +51034,7 @@ label_2041_internal:
         }
         if (rtval(1) == 0)
         {
-            if (pcc(rtval, cc) % 1000 == 1 && rtval != 15
+            if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
                 || fs::exists(
                        fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
                        + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s))
@@ -51243,7 +51202,7 @@ label_2045_internal:
             snd(5);
         }
     }
-    if (cs == 0 && key == key_enter || key == key_cancel)
+    if ((cs == 0 && key == key_enter) || key == key_cancel)
     {
         snd(20);
         create_pcpic(cc, true);
@@ -51966,7 +51925,7 @@ void do_get_command()
         ctrl_inventory();
         return;
     }
-    if (inv[ci].own_state > 0 && inv[ci].own_state < 3
+    if ((inv[ci].own_state > 0 && inv[ci].own_state < 3)
         || inv[ci].own_state == 5)
     {
         snd(27);
@@ -52428,7 +52387,7 @@ void show_item_description()
                             noteget(q, cnt);
                             p(1) = 66;
                             p(2) = 0;
-                            if (strlen_u(q) > p(1))
+                            if (strlen_u(q) > size_t(p(1)))
                             {
                                 {
                                     int cnt = 0;
@@ -54493,7 +54452,6 @@ void load_cnpc_data()
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/character.bmp"), 1);
     gmode(0);
-    bool fread = 1;
     func_1(buff, 1);
     tg = 0;
     {
@@ -54633,7 +54591,6 @@ void create_new_cnpc()
 {
     std::string txtfile;
     std::string bmpfile;
-    bool fread = 0;
     cun = usernpcmax;
     txt(lang(
         u8"どのファイルからNPCを作成する？"s, u8"Choose the original file."s));
@@ -55545,8 +55502,8 @@ label_21261_internal:
                     for (int cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
                     {
                         p(3) = inputlog(0)[p(4)];
-                        if (p(3) >= 129 && p(3) <= 159
-                            || p(3) >= 224 && p(3) <= 252)
+                        if ((p(3) >= 129 && p(3) <= 159)
+                            || (p(3) >= 224 && p(3) <= 252))
                         {
                             p(4) += 2;
                         }
@@ -56177,7 +56134,7 @@ label_21451_internal:
         {
             if (feat(2) == 7)
             {
-                if (cbit(5, cc) == 1 && cdata[cc].gravity == 0
+                if ((cbit(5, cc) == 1 && cdata[cc].gravity == 0)
                     || cbit(31, cc) == 1)
                 {
                     return;
@@ -56584,8 +56541,8 @@ void label_2146()
                         {
                             p = rnd(std::clamp(p(0), 1, 100)) + 1;
                         }
-                        if (cdata[tc].character_role >= 1000
-                                && cdata[tc].character_role < 2000
+                        if ((cdata[tc].character_role >= 1000
+                             && cdata[tc].character_role < 2000)
                             || cdata[tc].character_role == 2003)
                         {
                             p /= 5;
@@ -57184,8 +57141,8 @@ void continuous_action_others()
             if (gdata_weather != 0 && gdata_weather != 3)
             {
                 if (gdata_current_map == 30
-                    || mdata(14) == 1
-                        && (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2))
+                    || (mdata(14) == 1
+                        && (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)))
                 {
                     txt(lang(
                         u8"外が悪天候なので、じっくりと取り組むことにした。"s,
@@ -58765,7 +58722,7 @@ void label_2161()
         }
     }
     chara_anorexia(cc);
-    if (inv[ci].id == 755 && rnd(3) || inv[ci].id == 756 && rnd(10) == 0)
+    if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
     {
         if (synccheck(cc, -1))
         {
@@ -59088,10 +59045,10 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 {
     if (sdata(188, prm_1076) != 0)
     {
-        if (cdata[prm_1076].relationship >= 0
-                && cdata[prm_1077].relationship >= 0
-            || cdata[prm_1076].relationship <= -1
-                && cdata[prm_1077].relationship <= -1)
+        if ((cdata[prm_1076].relationship >= 0
+             && cdata[prm_1077].relationship >= 0)
+            || (cdata[prm_1076].relationship <= -1
+                && cdata[prm_1077].relationship <= -1))
         {
             if (sdata(188, prm_1076) * 5 > rnd(dmg + 1))
             {
@@ -59197,7 +59154,7 @@ int label_2168()
             }
         }
     }
-    if (cc == 0 || cc != 0 && npccostmp == 1)
+    if (cc == 0 || (cc != 0 && npccostmp == 1))
     {
         if (cc == 0)
         {
@@ -59404,7 +59361,7 @@ int drink_potion()
 int drink_well()
 {
     if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-        || inv[ci].id == 602 && gdata_holy_well_count <= 0)
+        || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
     {
         valn = itemname(ci);
         txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
@@ -59723,7 +59680,7 @@ int label_2172()
     }
     if (efid >= 400 && efid < 467)
     {
-        if (stat == 0 && the_ability_db[efid].sdataref3 / 1000 * 1000 == 2000
+        if ((stat == 0 && the_ability_db[efid].sdataref3 / 1000 * 1000 == 2000)
             || noeffect == 1)
         {
             if (synccheck(cc, -1))
@@ -59965,7 +59922,7 @@ int label_2175()
         }
         return 1;
     }
-    if (tg == 7000 || tg == 9000 && tgloc == 1 && cc == 0)
+    if (tg == 7000 || (tg == 9000 && tgloc == 1 && cc == 0))
     {
         if (cc == 0)
         {
@@ -61440,10 +61397,10 @@ void label_2203()
     {
         tc = cellchara;
         if (cdata[tc].relationship >= 10
-            || cdata[tc].relationship == -1 && cfg_ignoredislike != 0
-            || cdata[tc].relationship == 0
+            || (cdata[tc].relationship == -1 && cfg_ignoredislike != 0)
+            || (cdata[tc].relationship == 0
                 && (adata(16, gdata_current_map) == 101
-                    || adata(16, gdata_current_map) == 102))
+                    || adata(16, gdata_current_map) == 102)))
         {
             if (cbit(985, tc) == 0)
             {
@@ -64103,7 +64060,6 @@ label_22191_internal:
 
 void label_2220()
 {
-    int subdmg = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
@@ -64163,7 +64119,6 @@ void label_2220()
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
-                    subdmg = 0;
                 }
                 continue;
             }
@@ -64174,7 +64129,6 @@ void label_2220()
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
-                    subdmg = 0;
                 }
                 continue;
             }
@@ -64185,7 +64139,6 @@ void label_2220()
                 {
                     gdata(809) = 1;
                     dmghp(tc, orgdmg / 2, cc);
-                    subdmg = 0;
                 }
                 continue;
             }
@@ -64214,7 +64167,6 @@ void label_2220()
                         cc,
                         ele,
                         inv[cw].enchantments[cnt].power / 2 + 100);
-                    subdmg = 0;
                     continue;
                 }
                 if (i == 8)
@@ -64270,7 +64222,6 @@ void label_2220()
                 cc,
                 rnd(11) + 50,
                 sdata(attackskill, cc) * 10 + 100);
-            subdmg = 0;
         }
     }
     return;
@@ -64641,7 +64592,7 @@ void do_dip_command()
             else
             {
                 if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
-                    || inv[ci].id == 602 && gdata_holy_well_count <= 0)
+                    || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
                 {
                     valn = itemname(ci);
                     txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
@@ -64850,7 +64801,6 @@ void do_dip_command()
 
 void do_use_command()
 {
-    int blendtool = 0;
     screenupdate = -1;
     update_screen();
     tc = cc;
@@ -64892,7 +64842,6 @@ void do_use_command()
     }
     if (the_item_db[inv[ci].id]->subcategory == 59500)
     {
-        blendtool = ci;
         label_1922();
         return;
     }
@@ -65196,6 +65145,7 @@ void do_use_command()
         }
         update_screen();
         pc_turn(false);
+        break;
     case 15:
         efid = 184;
         magic();
@@ -65316,6 +65266,7 @@ void do_use_command()
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
+        break;
     case 23:
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
         update_screen();
@@ -66506,7 +66457,7 @@ void label_2236()
             dbid = 559;
         }
     }
-    if (feat(2) == 40 || feat(2) == 39 && rnd(50) == 0)
+    if (feat(2) == 40 || (feat(2) == 39 && rnd(50) == 0))
     {
         flttypemajor = fsetplantartifact(rnd(length(fsetplantartifact)));
         fixlv = 4;
@@ -66722,7 +66673,7 @@ void speak_to_npc()
     {
         cdata[tc].interest = 100;
     }
-    if (cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000
+    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
     {
         invfile = cdata[tc].shop_store_id;
@@ -68906,7 +68857,7 @@ void show_talk_window()
     {
         s += lang(u8" 名声 "s, u8" Fame: "s) + cdata[tc].fame;
     }
-    if (cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000
+    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
     {
         s += lang(u8" 店の規模:"s, u8" Shop Rank:"s) + cdata[tc].shop_rank;
@@ -71495,8 +71446,8 @@ int label_2672()
                     continue;
                 }
                 if (cdata[n].relationship != 0
-                    || cdata[n].character_role != 4
-                        && cdata[n].character_role != 14)
+                    || (cdata[n].character_role != 4
+                        && cdata[n].character_role != 14))
                 {
                     continue;
                 }
@@ -71678,7 +71629,7 @@ int label_2672()
         }
         return 0;
     }
-    if (rnd(23) == 0 || gdata_current_map == 15 && rnd(8) == 0)
+    if (rnd(23) == 0 || (gdata_current_map == 15 && rnd(8) == 0))
     {
         qdata(5, rq) = std::clamp(
             rnd(sdata(183, 0) + 10),
@@ -71698,7 +71649,7 @@ int label_2672()
         rewardfix = 0;
         return 0;
     }
-    if (rnd(30) == 0 || gdata_current_map == 12 && rnd(2) == 0)
+    if (rnd(30) == 0 || (gdata_current_map == 12 && rnd(2) == 0))
     {
         qdata(5, rq) = std::clamp(
             rnd(cdata[0].level + 5) + rnd((cdata[0].fame / 800 + 1)) + 1,
@@ -72361,7 +72312,7 @@ void do_play_scene()
     {
         gdata_played_scene = sceneid;
     }
-    if (cfg_story == 0 || en == 1 && sceneid != 0)
+    if (cfg_story == 0 || (en == 1 && sceneid != 0))
     {
         return;
     }
@@ -72848,8 +72799,8 @@ void label_2687()
     {
         --cdata[cc].hate;
         if (cdata[cc].enemy_id == 0 || cdata[cc].hate <= 0
-            || cdata[cdata[cc].enemy_id].relationship >= -2
-                && cdata[cdata[cc].enemy_id].enemy_id != cc)
+            || (cdata[cdata[cc].enemy_id].relationship >= -2
+                && cdata[cdata[cc].enemy_id].enemy_id != cc))
         {
             cdata[cc].enemy_id = 0;
             if (pcattacker != 0)
@@ -73108,7 +73059,6 @@ void label_2687()
             }
         }
     }
-label_2688_internal:
     if (cdata[cc].ai_heal != 0)
     {
         if (cdata[cc].hp < cdata[cc].max_hp / 4)
@@ -74026,7 +73976,7 @@ void label_2693()
             return;
         }
         else if (
-            cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level
+            (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
             || cbit(985, tc))
         {
             if (cdata[cc].enemy_id != tc)
@@ -76606,7 +76556,6 @@ void pass_one_turn(bool label_2738_flg)
             return;
         }
     }
-label_2738:
     cc = ct;
     cdata[cc].speed_percentage = cdata[cc].speed_percentage_in_next_turn;
     ++cdata[cc].turn;
@@ -77281,7 +77230,6 @@ void turn_end()
 
 void pc_turn(bool label_2747_flg)
 {
-    int mousemove = 0;
     int automove = 0;
     if (label_2747_flg)
     {
@@ -77587,7 +77535,6 @@ void pc_turn(bool label_2747_flg)
             }
             goto label_2744_internal;
         }
-    label_2746:
         if (trait(210) != 0)
         {
             if (rnd(5) == 0)
@@ -77984,7 +77931,6 @@ label_2747:
     }
     if (mousel == 1)
     {
-        mousemove = 1;
         --automove;
         ematan(p, windoww / 2 - mousex, (windowh - inf_verh) / 2 - mousey);
         p = p * 360 / 255;
@@ -78609,7 +78555,6 @@ void check_angband()
 void conquer_lesimas()
 {
     std::string wincomment;
-label_27491:
     snd(51);
     music = -1;
     play_music();

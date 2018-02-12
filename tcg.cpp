@@ -472,7 +472,7 @@ void tcgdrawcard(int prm_994, int prm_995)
             }
             pos(x_at_tcg, y_at_tcg);
             if (cdbit(1, prm_994) == 1
-                || card_at_tcg(1, prm_994) == 0 && cnt == 1)
+                || (card_at_tcg(1, prm_994) == 0 && cnt == 1))
             {
                 if (card_at_tcg(17, prm_994) > 0)
                 {
