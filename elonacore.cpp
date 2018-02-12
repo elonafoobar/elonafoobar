@@ -17816,7 +17816,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             == adata(10, gdata_current_map)
                         || gdata_current_map == 42)
                     {
-                        if (adata(20, gdata_current_map) == prm_853)
+                        if (adata(20, gdata_current_map) == prm_853 && cbit(976, prm_853) == 1)
                         {
                             evadd(5);
                         }
@@ -17835,7 +17835,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
                 else if (gdata_current_map == 42)
                 {
-                    if (adata(20, gdata_current_map) == prm_853)
+                    if (adata(20, gdata_current_map) == prm_853 && cbit(976, prm_853) == 1)
                     {
                         evadd(5);
                     }
