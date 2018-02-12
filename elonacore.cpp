@@ -70772,7 +70772,7 @@ int new_ally_joins()
     cbitmod(970, rc, 0);
     cbitmod(979, rc, 0);
     cbitmod(985, rc, 0);
-    cbitmod(964, tc, 0);
+    cbitmod(964, rc, 0);
     cbitmod(991, rc, 0);
     snd(64);
     txtef(5);
