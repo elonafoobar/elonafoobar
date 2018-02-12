@@ -74413,7 +74413,7 @@ void label_2696()
         {
             try_to_melee_attack();
         }
-        if (rnd(3) == 0 || cc < 16)
+        else if (rnd(3) == 0 || cc < 16)
         {
             if (distance < 6)
             {
