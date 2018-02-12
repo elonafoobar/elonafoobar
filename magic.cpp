@@ -28,7 +28,6 @@ int magic()
     int teley = 0;
     int efidprev = 0;
     int ccprev = 0;
-    int obvisou = 0;
     int fltbk = 0;
     int valuebk = 0;
     efcibk = ci;
@@ -4123,7 +4122,7 @@ label_2181_internal:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            obvisou = 0;
+            obvious = 0;
             goto label_2186_internal;
         }
         invsubroutine = 1;
