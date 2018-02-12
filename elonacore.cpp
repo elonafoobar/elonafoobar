@@ -39263,7 +39263,7 @@ void label_1879()
                 + u8" has been added to your loot list!"s));
         if (winrow > 3)
         {
-            if (rnd(200) > winrow * 5 + 5)
+            if (rnd(200) < winrow * 5 + 5)
             {
                 flt();
                 itemcreate(-1, 559, -1, -1, 0);
