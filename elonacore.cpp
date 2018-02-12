@@ -63446,6 +63446,7 @@ void try_to_melee_attack()
 
 void do_physical_attack()
 {
+    int attackdmg;
     int expmodifer = 0;
 label_22191_internal:
     if (cdata[cc].state != 1)
@@ -63516,6 +63517,7 @@ label_22191_internal:
             }
         }
         dmg = calcattackdmg();
+        attackdmg = dmg;
         if (attackskill != 106)
         {
             if (inv[cw].quality >= 4)
@@ -63868,7 +63870,7 @@ label_22191_internal:
             {
                 dmghp(
                     cc,
-                    dmg * cdata[tc].cut_counterattack / 100 + 1,
+                    attackdmg * cdata[tc].cut_counterattack / 100 + 1,
                     tc,
                     61,
                     100);
@@ -63896,7 +63898,7 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                std::clamp(dmg / 10, 1, cdata[tc].max_hp / 10),
+                                std::clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                                 tc,
                                 p,
                                 cdata[tc].damage_reaction_info / 1000);
@@ -63915,7 +63917,7 @@ label_22191_internal:
                             }
                             dmghp(
                                 cc,
-                                std::clamp(dmg / 10, 1, cdata[tc].max_hp / 10),
+                                std::clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                                 tc,
                                 p,
                                 cdata[tc].damage_reaction_info / 1000);
@@ -63932,7 +63934,7 @@ label_22191_internal:
                             }
                         }
                     }
-                    if (dmg > cdata[tc].max_hp / 10)
+                    if (attackdmg > cdata[tc].max_hp / 10)
                     {
                         cc = tc;
                         tlocx = cdata[cc].position.x;
