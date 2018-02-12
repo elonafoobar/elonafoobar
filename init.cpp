@@ -1765,6 +1765,13 @@ label_1565_internal:
     {
         get_inheritance();
     }
+    else
+    {
+        for (int i = 0; i < 400; ++i)
+        {
+            mat(i) = 0;
+        }
+    }
     await(250);
     mode = 5;
     initialize_game();
