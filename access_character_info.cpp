@@ -10693,10 +10693,7 @@ int access_character_info()
             access_race_info(3, u8"eye");
             cdata[rc].element_of_unarmed_attack = 5800250;
             sdata(54, rc) = 500;
-            if (nerve != 0)
-            {
-                sdata(58, rc) = 500;
-            }
+            sdata(58, rc) = 500;
             cdata[rc].image += 0;
             cspecialeq = 0;
             return 0;
@@ -10750,10 +10747,7 @@ int access_character_info()
             access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 5900400;
             sdata(54, rc) = 500;
-            if (nerve != 0)
-            {
-                sdata(58, rc) = 500;
-            }
+            sdata(58, rc) = 500;
             cdata[rc].image += 8000;
             cspecialeq = 0;
             return 0;
@@ -10807,10 +10801,7 @@ int access_character_info()
             access_race_info(3, u8"eye");
             cdata[rc].element_of_unarmed_attack = 5400300;
             sdata(54, rc) = 500;
-            if (nerve != 0)
-            {
-                sdata(58, rc) = 500;
-            }
+            sdata(58, rc) = 500;
             cdata[rc].image = 407;
             cdata[rc].image += 4000;
             cspecialeq = 0;
@@ -10866,10 +10857,7 @@ int access_character_info()
             access_class_info(3, u8"predator");
             cdata[rc].element_of_unarmed_attack = 5800450;
             sdata(54, rc) = 500;
-            if (nerve != 0)
-            {
-                sdata(58, rc) = 500;
-            }
+            sdata(58, rc) = 500;
             cdata[rc].image = 407;
             cdata[rc].image += 3000;
             cspecialeq = 0;

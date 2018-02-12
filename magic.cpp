@@ -28,7 +28,6 @@ int magic()
     int teley = 0;
     int efidprev = 0;
     int ccprev = 0;
-    int obvisou = 0;
     int fltbk = 0;
     int valuebk = 0;
     efcibk = ci;
@@ -882,7 +881,7 @@ int magic()
                         goto label_2186_internal;
                     }
                     p = rnd(cdata[tc].gold / 10 + 1);
-                    if (rnd(sdata(13, tc)) > rnd(sdata(12, tc) * 4)
+                    if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
                         || cbit(15, tc) == 1)
                     {
                         txt(lang(
@@ -3644,10 +3643,10 @@ label_2181_internal:
         randomize(inv[efcibk].param1);
         equip = inv[ci].body_part;
         animeload(8, cc);
+        inv[ci].quality = 4;
         fixmaterial = inv[ci].material;
         change_item_material();
         randomize(inv[efcibk].param1);
-        inv[ci].quality = 4;
         inv[ci].subname = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         egolv = rnd(std::clamp(rnd(6), 0, 4) + 1);
@@ -4123,7 +4122,7 @@ label_2181_internal:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            obvisou = 0;
+            obvious = 0;
             goto label_2186_internal;
         }
         invsubroutine = 1;

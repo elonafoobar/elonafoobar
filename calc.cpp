@@ -1186,7 +1186,6 @@ int calcattackhit(int prm_893)
 {
     int tohitorg = 0;
     int tohitfix = 0;
-    int tohi = 0;
     int twohit = 0;
     int evaderef = 0;
     critical = 0;
@@ -1228,7 +1227,7 @@ int calcattackhit(int prm_893)
                         - 1,
                     0,
                     9);
-                tohi = tohit * rangemap(rangedist) / 100;
+                tohit = tohit * rangemap(rangedist) / 100;
             }
         }
         else
@@ -2214,7 +2213,10 @@ int calcspellpower(int prm_918, int prm_919)
     {
         if (the_ability_db[prm_918].related_basic_attribute != 0)
         {
-            return the_ability_db[prm_918].related_basic_attribute * 6 + 10;
+            return sdata(
+                       the_ability_db[prm_918].related_basic_attribute, prm_919)
+                * 6
+                + 10;
         }
         return 100;
     }

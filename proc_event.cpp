@@ -295,13 +295,10 @@ void proc_event()
         itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
         itemcreate(-1, 236, cdata[0].position.x, cdata[0].position.y, 0);
+        nostack = 1;
         flt();
-        itemcreate(
-            -1,
-            54,
-            cdata[0].position.x,
-            cdata[0].position.y,
-            200 + inv[ci].number * 5);
+        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y);
+        inv[ci].number = 200 + inv[ci].number * 5;
         flt();
         itemcreate(
             -1,
@@ -474,9 +471,9 @@ void proc_event()
                     i = rnd(39) + 16;
                     if (cdata[i].state == 3)
                     {
-                        if (cbit(969, i) == 0)
+                        if (cbit(969, i) == 0
+                            && cdata[i].current_map != gdata_current_map)
                         {
-                            cdata[i].current_map != gdata_current_map;
                             if (cdata[i].relationship >= 0)
                             {
                                 if (rnd(25) < p)
@@ -503,7 +500,7 @@ void proc_event()
                                     }
                                     continue;
                                 }
-                                if (cdata[cnt].impression < cdata[i].impression)
+                                if (cdata[tc].impression < cdata[i].impression)
                                 {
                                     tc = i;
                                     ++p;

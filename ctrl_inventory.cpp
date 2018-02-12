@@ -1158,7 +1158,7 @@ label_2061_internal:
             }
             if (mdata(18) != 0)
             {
-                if (inv_sum(-1) > mdata(18))
+                if (inv_sum(-1) >= mdata(18))
                 {
                     if (the_item_db[inv[ci].id]->category != 60000)
                     {
@@ -1767,6 +1767,7 @@ label_2061_internal:
                     modimp(tc, -20);
                     cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
+                    refresh_burden_state();
                     goto label_20591;
                 }
                 item_copy(ci, ti);

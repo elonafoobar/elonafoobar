@@ -797,6 +797,8 @@ void txt_conv()
     {
         if (!std::empty(msg(msgline % inf_maxlog)))
         {
+            msg_newline();
+            tnew = 0;
             if (cfg_msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
@@ -813,11 +815,9 @@ void txt_conv()
                         x_at_txtfunc = 192;
                     }
                     pos(i * 192 + inf_msgx, inf_msgy + 5);
-                    gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 4);
+                    gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
                 }
             }
-            msg_newline();
-            tnew = 0;
             if (cfg_msgaddtime)
             {
                 msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);

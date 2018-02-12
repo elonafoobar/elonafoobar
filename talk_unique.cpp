@@ -246,7 +246,8 @@ void talk_unique()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].material = 15;
+            fixmaterial = 15;
+            change_item_material();
             flt();
             itemcreate(
                 -1, 54, cdata[0].position.x, cdata[0].position.y, 100000);
@@ -794,7 +795,7 @@ void talk_unique()
                     u8"迷宮に落ちている宝箱の開け方を知っておく必要があるな。足元に宝箱を置くので、xキー、またはスペースキーで開けてみるんだ。"s,
                     u8"You might find chests containing loot in ruins. There's one nearby, open it."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, lang(u8"わかった", u8"Okay."));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = 8;
@@ -897,7 +898,7 @@ void talk_unique()
         if (chatval == 2)
         {
             tc = findchara(33);
-            if (tc == 0)
+            if (tc == 0 || cdata[tc].state != 1)
             {
                 tc = findchara(34);
                 listmax = 0;
@@ -2793,7 +2794,8 @@ void talk_unique()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].material = 24;
+            fixmaterial = 24;
+            change_item_material();
             flt();
             itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 25500);
             flt();
@@ -3704,7 +3706,7 @@ void talk_unique()
                 u8"Something is put on the ground."s));
             listmax = 0;
             buff = lang(
-                u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLV以下の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
+                u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLVより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
                 u8"Good good! Take these monster balls with you. Do you know how to use them? Yes yes, throw them at a monster when it is near death. The ball won't work if the monster is too high in level, so be careful. Please bring me five captured monsters. Oh... and... *please* bring them back to me IN the balls!"s);
             tc = tc * 1 + 0;
             RESPONSE(0, strbye);
@@ -4737,7 +4739,8 @@ void talk_unique()
             flt();
             nostack = 1;
             itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].material = 31;
+            fixmaterial = 31;
+            change_item_material();
             flt();
             itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 50000);
             flt();
