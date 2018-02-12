@@ -63494,7 +63494,7 @@ label_22191_internal:
         txtmore();
     }
     expmodifer =
-        1 + cbit(985, tc) * 15 + cbit(23, tc) + (gdata_current_map == 35);
+        1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc) + (gdata_current_map == 35);
     hit = calcattackhit();
     i = 0;
     if (hit == 1)
