@@ -24834,7 +24834,6 @@ void initialize_set_of_random_generation()
 void label_1573()
 {
     int lootrich = 0;
-    int idcupsule = 0;
     if (rc == 0)
     {
         if (gdata_executing_immediate_quest_type != 0)
@@ -25646,7 +25645,7 @@ label_1575_internal:
         {
             flt();
             itemcreate(
-                -1, idcupsule, cdata[rc].position.x, cdata[rc].position.y, 0);
+                -1, 771, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
     }
     if (cdata[rc].id == 307 || cdata[rc].id == 308)
