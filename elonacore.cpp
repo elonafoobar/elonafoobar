@@ -48072,7 +48072,7 @@ void label_2007()
             {
                 list(0, listmax) = cnt + 600;
                 list(1, listmax) =
-                    the_ability_db[cnt].related_basic_attribute * 1000 + cnt;
+                    the_ability_db[cnt + 600].related_basic_attribute * 1000 + cnt;
                 ++listmax;
             }
         }
