@@ -1,7 +1,10 @@
 #include "i18n.hpp"
 #include <memory>
 #include "cat.hpp"
+#include "elona.hpp"
 #include "filesystem.hpp"
+#include "random.hpp"
+#include "variables.hpp"
 
 
 namespace
@@ -42,9 +45,14 @@ std::string _(
         lua_getfield(lang_state.get(), -1, k.c_str());
         ++pop_count;
     }
+    if (lua_istable(lang_state.get(), -1))
+    {
+        lua_rawgeti(
+            lang_state.get(), -1, rnd(lua_rawlen(lang_state.get(), -1)) + 1);
+    }
     const char* ret = lua_tostring(lang_state.get(), -1);
     lua_pop(lang_state.get(), pop_count);
-    return ret;
+    return ret ? ret : "";
 }
 
 
