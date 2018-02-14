@@ -1,5 +1,6 @@
 #include "character.hpp"
 #include "elona.hpp"
+#include "map.hpp"
 #include "variables.hpp"
 
 
@@ -974,7 +975,7 @@ std::string name(int prm_309)
     {
         return lang(u8"あなた"s, u8"you"s);
     }
-    if (synccheck(prm_309, -1) == 0)
+    if (is_in_fov(prm_309) == 0)
     {
         return lang(u8"何か"s, u8"something"s);
     }
@@ -1007,7 +1008,7 @@ std::string aln(int prm_310)
     {
         return "";
     }
-    if (synccheck(prm_310, -1) == 0)
+    if (is_in_fov(prm_310) == 0)
     {
         return u8"それは"s;
     }
@@ -1022,7 +1023,7 @@ std::string npcn(int prm_311)
     {
         return "";
     }
-    if (synccheck(prm_311, -1) == 0)
+    if (is_in_fov(prm_311) == 0)
     {
         return u8"それは"s;
     }
@@ -1160,7 +1161,7 @@ std::string he(int prm_320, int prm_321)
     {
         return u8"it"s;
     }
-    if (synccheck(prm_320, -1) == 0)
+    if (is_in_fov(prm_320) == 0)
     {
         return u8"it"s;
     }
@@ -1213,7 +1214,7 @@ std::string his(int prm_322, int prm_323)
     {
         return u8"its"s;
     }
-    if (synccheck(prm_322, -1) == 0)
+    if (is_in_fov(prm_322) == 0)
     {
         return u8"its"s;
     }
@@ -1258,7 +1259,7 @@ std::string him(int prm_324, int prm_325)
     {
         return u8"it"s;
     }
-    if (synccheck(prm_324, -1) == 0)
+    if (is_in_fov(prm_324) == 0)
     {
         return u8"it"s;
     }
@@ -1296,7 +1297,7 @@ std::string yourself(int prm_328)
     {
         return u8"itself"s;
     }
-    if (synccheck(prm_328, -1) == 0)
+    if (is_in_fov(prm_328) == 0)
     {
         return u8"itself"s;
     }
@@ -1320,7 +1321,7 @@ void txt_check(int prm_329)
     {
         if (cc >= 0)
         {
-            if (synccheck(cc, -1) || cc == 0)
+            if (is_in_fov(cc) || cc == 0)
             {
                 txtvalid = 0;
                 return;
@@ -1331,7 +1332,7 @@ void txt_check(int prm_329)
     {
         if (tc >= 0)
         {
-            if (synccheck(tc, -1) || tc == 0)
+            if (is_in_fov(tc) || tc == 0)
             {
                 txtvalid = 0;
                 return;
@@ -1350,7 +1351,7 @@ void txt_check(int prm_329)
     {
         if (cc > 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txtvalid = 0;
                 return;
@@ -1369,7 +1370,7 @@ void txt_check(int prm_329)
     {
         if (tc > 0)
         {
-            if (synccheck(tc, -1))
+            if (is_in_fov(tc))
             {
                 txtvalid = 0;
             }
@@ -1382,7 +1383,7 @@ void txt_check(int prm_329)
 
 void stxt(int prm_340, const std::string& prm_341)
 {
-    if (prm_340 == 0 || (synccheck(prm_340, -1) && cdata[0].blind == 0))
+    if (prm_340 == 0 || (is_in_fov(prm_340) && cdata[0].blind == 0))
     {
         txt(prm_341);
     }

@@ -13,6 +13,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "main.hpp"
+#include "map.hpp"
 #include "race.hpp"
 #include "snail/color.hpp"
 #include "trait.hpp"
@@ -1071,21 +1072,6 @@ int findunid(const std::string& prm_285)
         }
     }
     return f_at_m14;
-}
-
-
-
-int synccheck(int prm_286, int prm_287)
-{
-    if (prm_287 == -1)
-    {
-        return cdata[prm_286].vision_flag == msync || prm_286 == gdata_mount;
-    }
-    if (mapsync(prm_286, prm_287) == msync)
-    {
-        return 1;
-    }
-    return 0;
 }
 
 
@@ -8576,7 +8562,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
             std::clamp(lv_at_m77, 0, 2000);
         sdata.get(prm_566, prm_567).experience = exp_at_m77;
         sdata.get(prm_566, prm_567).potential = growth_at_m77;
-        if (synccheck(prm_567, -1))
+        if (is_in_fov(prm_567))
         {
             if (prm_567 == 0 || prm_567 < 16)
             {
@@ -8622,7 +8608,7 @@ int skillmod(int prm_566, int prm_567, int prm_568)
         sdata.get(prm_566, prm_567).potential = growth_at_m77;
         if (prm_567 == 0 || prm_567 < 16)
         {
-            if (synccheck(prm_567, -1))
+            if (is_in_fov(prm_567))
             {
                 if (lvchange_at_m77 != 0)
                 {
@@ -8742,7 +8728,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             std::clamp(lv_at_m77, 0, 2000);
         sdata.get(prm_569, prm_570).experience = exp_at_m77;
         sdata.get(prm_569, prm_570).potential = growth_at_m77;
-        if (synccheck(prm_570, -1))
+        if (is_in_fov(prm_570))
         {
             if (prm_570 == 0 || prm_570 < 16)
             {
@@ -8787,7 +8773,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
             std::clamp(lv_at_m77, 0, 2000);
         sdata.get(prm_569, prm_570).experience = exp_at_m77;
         sdata.get(prm_569, prm_570).potential = growth_at_m77;
-        if (synccheck(prm_570, -1))
+        if (is_in_fov(prm_570))
         {
             if (prm_570 == 0 || prm_570 < 16)
             {
@@ -13302,7 +13288,7 @@ void make_sound(
                     if (cdata[cnt].sleep != 0)
                     {
                         cdata[cnt].sleep = 0;
-                        if (synccheck(cnt, -1))
+                        if (is_in_fov(cnt))
                         {
                             txt(lang(
                                 name(cnt) + u8"は物音に気付き目を覚ました。"s,
@@ -13315,7 +13301,7 @@ void make_sound(
                         {
                             if (rnd(500) == 0)
                             {
-                                if (synccheck(cnt, -1))
+                                if (is_in_fov(cnt))
                                 {
                                     txtef(9);
                                     txt(lang(
@@ -13926,7 +13912,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     }
     if (p_at_m132 == -2)
     {
-        if (synccheck(prm_801, -1))
+        if (is_in_fov(prm_801))
         {
             txtmore();
             txt(lang(
@@ -13984,7 +13970,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         }
         if (f_at_m132 == 1)
         {
-            if (synccheck(prm_801, -1))
+            if (is_in_fov(prm_801))
             {
                 txtmore();
                 txt(lang(
@@ -14000,7 +13986,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         }
     }
     if (the_buff_db[prm_802].type != buff_data::type_t::food
-        && synccheck(prm_801, -1))
+        && is_in_fov(prm_801))
     {
         txtmore();
         txt(lang(
@@ -14095,7 +14081,7 @@ void animeload(int prm_807, int prm_808)
     {
         return;
     }
-    if (synccheck(prm_808, -1) == 0)
+    if (is_in_fov(prm_808) == 0)
     {
         return;
     }
@@ -14168,7 +14154,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     elona_vector1<int> x_at_m133;
     elona_vector1<int> y_at_m133;
     int cnt2_at_m133 = 0;
-    if (synccheck(prm_809, -1) == 0)
+    if (is_in_fov(prm_809) == 0)
     {
         return;
     }
@@ -14680,7 +14666,7 @@ void modcorrupt(int prm_815)
 void wet(int prm_816, int prm_817)
 {
     cdata[prm_816].wet += prm_817;
-    if (synccheck(prm_816, -1))
+    if (is_in_fov(prm_816))
     {
         txtmore();
         txt(lang(
@@ -14738,7 +14724,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].blind == 0)
             {
                 cdata[prm_818].blind = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -14784,7 +14770,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].confused == 0)
             {
                 cdata[prm_818].confused = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -14827,7 +14813,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].paralyzed == 0)
             {
                 cdata[prm_818].paralyzed = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -14870,7 +14856,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].poisoned == 0)
             {
                 cdata[prm_818].poisoned = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -14913,7 +14899,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].sleep == 0)
             {
                 cdata[prm_818].sleep = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -14965,7 +14951,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             {
                 cdata[prm_818].fear = p_at_con;
             }
-            if (synccheck(prm_818, -1))
+            if (is_in_fov(prm_818))
             {
                 txtmore();
                 txt(lang(
@@ -15000,7 +14986,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].dimmed == 0)
             {
                 cdata[prm_818].dimmed = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -15029,7 +15015,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].bleeding == 0)
             {
                 cdata[prm_818].bleeding = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -15055,7 +15041,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].drunk == 0)
             {
                 cdata[prm_818].drunk = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txt(lang(
@@ -15079,7 +15065,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].insane == 0)
             {
                 cdata[prm_818].insane = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -15105,7 +15091,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             if (cdata[prm_818].sick == 0)
             {
                 cdata[prm_818].sick = p_at_con;
-                if (synccheck(prm_818, -1))
+                if (is_in_fov(prm_818))
                 {
                     txtmore();
                     txtef(8);
@@ -15197,7 +15183,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].fear <= 0)
             {
                 cdata[prm_827].fear = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は恐怖から立ち直った。"s,
@@ -15223,7 +15209,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].blind <= 0)
             {
                 cdata[prm_827].blind = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は盲目から回復した。"s,
@@ -15248,7 +15234,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].confused <= 0)
             {
                 cdata[prm_827].confused = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は混乱から回復した。"s,
@@ -15274,7 +15260,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].paralyzed <= 0)
             {
                 cdata[prm_827].paralyzed = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は麻痺から回復した。"s,
@@ -15300,7 +15286,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].poisoned <= 0)
             {
                 cdata[prm_827].poisoned = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は毒から回復した。"s,
@@ -15326,7 +15312,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].sleep <= 0)
             {
                 cdata[prm_827].sleep = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は心地よい眠りから覚めた。"s,
@@ -15352,7 +15338,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].dimmed <= 0)
             {
                 cdata[prm_827].dimmed = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"の意識ははっきりした。"s,
@@ -15377,7 +15363,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].bleeding <= 0)
             {
                 cdata[prm_827].bleeding = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"の出血は止まった。"s,
@@ -15401,7 +15387,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].drunk <= 0)
             {
                 cdata[prm_827].drunk = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"の酔いは覚めた。"s,
@@ -15426,7 +15412,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].insane <= 0)
             {
                 cdata[prm_827].insane = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"は正気に戻った。"s,
@@ -15451,7 +15437,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].sick <= 0)
             {
                 cdata[prm_827].sick = 0;
-                if (synccheck(prm_827, -1))
+                if (is_in_fov(prm_827))
                 {
                     txt(lang(
                         name(prm_827) + u8"の病気は治った。"s,
@@ -15751,9 +15737,7 @@ int item_fire(int prm_840, int prm_841)
                         {
                             if (prm_840 == -1)
                             {
-                                if (synccheck(
-                                        inv[ci_at_m138].position.x,
-                                        inv[ci_at_m138].position.y))
+                                if (is_in_fov(inv[ci_at_m138].position))
                                 {
                                     txtef(11);
                                     txt(lang(
@@ -15771,7 +15755,7 @@ int item_fire(int prm_840, int prm_841)
                             }
                             if (prm_840 != -1)
                             {
-                                if (synccheck(prm_840, -1))
+                                if (is_in_fov(prm_840))
                                 {
                                     txtef(11);
                                     txt(lang(
@@ -15827,7 +15811,7 @@ int item_fire(int prm_840, int prm_841)
                     {
                         if (inv[ti_at_m138].number > 0)
                         {
-                            if (synccheck(prm_840, -1))
+                            if (is_in_fov(prm_840))
                             {
                                 txt(lang(
                                     itemname(ti_at_m138, 1) + u8"が"s
@@ -15844,7 +15828,7 @@ int item_fire(int prm_840, int prm_841)
                             else if (rnd(20) == 0)
                             {
                                 --inv[ti_at_m138].number;
-                                if (synccheck(prm_840, -1))
+                                if (is_in_fov(prm_840))
                                 {
                                     txt(lang(
                                         itemname(ti_at_m138, 1)
@@ -15862,7 +15846,7 @@ int item_fire(int prm_840, int prm_841)
                     {
                         if (inv[ci_at_m138].body_part != 0)
                         {
-                            if (synccheck(prm_840, -1))
+                            if (is_in_fov(prm_840))
                             {
                                 txtef(8);
                                 txt(lang(
@@ -15883,7 +15867,7 @@ int item_fire(int prm_840, int prm_841)
                             r1 = prm_840;
                             refresh_character();
                         }
-                        else if (synccheck(prm_840, -1))
+                        else if (is_in_fov(prm_840))
                         {
                             txtef(8);
                             txt(lang(
@@ -15896,9 +15880,7 @@ int item_fire(int prm_840, int prm_841)
                                     + u8" to dust."s));
                         }
                     }
-                    else if (synccheck(
-                                 inv[ci_at_m138].position.x,
-                                 inv[ci_at_m138].position.y))
+                    else if (is_in_fov(inv[ci_at_m138].position))
                     {
                         txtef(8);
                         txt(lang(
@@ -16222,7 +16204,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は燃え上がった。"s,
@@ -16248,7 +16230,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は凍えた。"s,
@@ -16275,7 +16257,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"に電流が走った。"s,
@@ -16303,7 +16285,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は闇の力で傷ついた。"s,
@@ -16331,7 +16313,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"の神経は傷ついた。"s,
@@ -16358,7 +16340,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は狂気に襲われた。"s,
@@ -16386,7 +16368,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は混沌の渦で傷ついた。"s,
@@ -16414,7 +16396,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は冥界の冷気で傷ついた。"s,
@@ -16441,7 +16423,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は吐き気を催した。"s,
@@ -16469,7 +16451,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は轟音の衝撃を受けた。"s,
@@ -16497,7 +16479,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は酸に焼かれた。"s,
@@ -16523,7 +16505,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     {
         if (prm_849 == 0)
         {
-            if (synccheck(prm_851, -1))
+            if (is_in_fov(prm_851))
             {
                 txt(lang(
                     name(prm_851) + u8"は切り傷を負った。"s,
@@ -16548,7 +16530,7 @@ void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
     }
     if (prm_849 == 0)
     {
-        if (synccheck(prm_851, -1))
+        if (is_in_fov(prm_851))
         {
             txt(lang(
                 name(prm_851) + u8"は傷ついた。"s,
@@ -16861,7 +16843,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (dmglevel_at_m141 == 1)
         {
-            if (synccheck(prm_853, -1))
+            if (is_in_fov(prm_853))
             {
                 txtmore();
                 txtef(11);
@@ -16872,7 +16854,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (dmglevel_at_m141 == 2)
         {
-            if (synccheck(prm_853, -1))
+            if (is_in_fov(prm_853))
             {
                 txtmore();
                 txtef(10);
@@ -16884,7 +16866,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (dmglevel_at_m141 >= 3)
         {
-            if (synccheck(prm_853, -1))
+            if (is_in_fov(prm_853))
             {
                 txtmore();
                 txtef(3);
@@ -16900,7 +16882,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 cdata[prm_853].hp = cdata[prm_853].max_hp;
             }
-            if (synccheck(prm_853, -1))
+            if (is_in_fov(prm_853))
             {
                 txtef(4);
                 txt(lang(
@@ -16937,7 +16919,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         if (f_at_m141)
                         {
                             cdata[prm_853].fear = rnd(20) + 5;
-                            if (synccheck(prm_853, -1))
+                            if (is_in_fov(prm_853))
                             {
                                 txtmore();
                                 txtef(4);
@@ -17128,7 +17110,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (rnd(20) == 0)
                     {
-                        if (synccheck(prm_853, -1))
+                        if (is_in_fov(prm_853))
                         {
                             txtef(4);
                             txt(lang(
@@ -17606,7 +17588,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (cbit(983, prm_853))
         {
-            if (synccheck(prm_853, -1))
+            if (is_in_fov(prm_853))
             {
                 x = cdata[prm_853].position.x;
                 y = cdata[prm_853].position.y;
@@ -17934,7 +17916,7 @@ void end_dmghp()
 {
     if (cbit(985, prm_853))
     {
-        if (synccheck(prm_853, -1))
+        if (is_in_fov(prm_853))
         {
             txt(u8"("s + dmg_at_m141 + u8")"s + lang(u8" "s, ""s));
             if (rnd(20) == 0)
@@ -18146,7 +18128,7 @@ void modweight(int prm_870, int prm_871, int prm_872)
     {
         cdata[prm_870].weight = 1;
     }
-    if (synccheck(prm_870, -1))
+    if (is_in_fov(prm_870))
     {
         if (prm_871 > 2)
         {
@@ -18174,7 +18156,7 @@ void modheight(int prm_873, int prm_874)
     {
         cdata[prm_873].height = 1;
     }
-    if (synccheck(prm_873, -1))
+    if (is_in_fov(prm_873))
     {
         if (prm_874 > 0)
         {
@@ -18201,7 +18183,7 @@ void cure_anorexia(int prm_875)
         return;
     }
     cbitmod(986, prm_875, 0);
-    if (synccheck(prm_875, -1) || prm_875 < 16)
+    if (is_in_fov(prm_875) || prm_875 < 16)
     {
         txt(lang(
             name(prm_875) + u8"の拒食症は治った。"s,
@@ -18218,7 +18200,7 @@ void chara_vomit(int prm_876)
 {
     int p_at_m146 = 0;
     ++cdata[prm_876].anorexia_count;
-    if (synccheck(prm_876, -1))
+    if (is_in_fov(prm_876))
     {
         snd(104);
         txt(lang(
@@ -18228,7 +18210,7 @@ void chara_vomit(int prm_876)
     if (cbit(978, prm_876))
     {
         cbitmod(978, prm_876, 0);
-        if (synccheck(prm_876, -1))
+        if (is_in_fov(prm_876))
         {
             txt(lang(
                 name(prm_876) + u8"は体内のエイリアンを吐き出した！"s,
@@ -18299,7 +18281,7 @@ void chara_vomit(int prm_876)
             if (rnd(5) == 0)
             {
                 cbitmod(986, prm_876, 1);
-                if (synccheck(prm_876, -1))
+                if (is_in_fov(prm_876))
                 {
                     txt(lang(
                         name(prm_876) + u8"は拒食症になった。"s,
@@ -18337,7 +18319,7 @@ void eatstatus(int prm_877, int prm_878)
     if (prm_877 <= -1)
     {
         cdata[prm_878].nutrition -= 1500;
-        if (synccheck(prm_878, -1))
+        if (is_in_fov(prm_878))
         {
             txt(lang(
                 name(prm_878) + u8"は嫌な感じがした。"s,
@@ -18347,7 +18329,7 @@ void eatstatus(int prm_877, int prm_878)
     }
     if (prm_877 >= 1)
     {
-        if (synccheck(prm_878, -1))
+        if (is_in_fov(prm_878))
         {
             txt(lang(
                 name(prm_878) + u8"は良い予感がした。"s,
@@ -18382,7 +18364,7 @@ void sickifcursed(int prm_880, int prm_881, int prm_882)
     {
         if (rnd(prm_882 + (prm_882 == 0)) == 0)
         {
-            if (synccheck(prm_881, -1))
+            if (is_in_fov(prm_881))
             {
                 txt(lang(
                     name(prm_881) + u8"は気分が悪くなった。"s,
@@ -22237,7 +22219,7 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"はマナを吸い取られた！"s,
@@ -22255,7 +22237,7 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             if (cdata[cc].confused != 0)
             {
@@ -22273,7 +22255,7 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"魔力の渦が何かを召喚した！"s,
@@ -22298,7 +22280,7 @@ int try_to_cast_spell()
         }
         return 0;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             name(cc) + u8"は奇妙な力に捻じ曲げられた！"s,
@@ -22480,7 +22462,7 @@ void label_1520()
     {
         if (cdata[r1].choked % 3 == 0)
         {
-            if (synccheck(r1, -1))
+            if (is_in_fov(r1))
             {
                 txt(lang(u8"「うぐぐ…！」"s, cnvtalk(u8"Ughh...!"s)));
             }
@@ -22497,7 +22479,7 @@ void label_1520()
         --cdata[r1].gravity;
         if (cdata[r1].gravity == 0)
         {
-            if (synccheck(r1, -1))
+            if (is_in_fov(r1))
             {
                 txt(lang(
                     name(r1) + u8"は重力から抜け出した。"s,
@@ -22511,7 +22493,7 @@ void label_1520()
         --cdata[r1].furious;
         if (cdata[r1].furious == 0)
         {
-            if (synccheck(r1, -1))
+            if (is_in_fov(r1))
             {
                 txt(lang(
                     name(r1) + u8"はやや落ち着いた。"s,
@@ -22615,7 +22597,7 @@ void label_1520()
     }
     if (cdata[r1].insane > 0)
     {
-        if (synccheck(r1, -1))
+        if (is_in_fov(r1))
         {
             if (rnd(3) == 0)
             {
@@ -25909,7 +25891,7 @@ void label_1577()
                 p = cdata[cc].gold;
             }
             cdata[cc].gold -= p;
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txtef(8);
                 txt(lang(
@@ -25930,7 +25912,7 @@ void label_1578()
 {
     if (rnd(15) == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は不安げに腹を押さえた。"s,
@@ -25948,7 +25930,7 @@ void label_1578()
     {
         if (rnd(30) == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     u8"何かが"s + name(cc) + u8"の腹を破り飛び出した！"s,
@@ -26022,7 +26004,7 @@ void label_1579()
                 {
                     if (rnd(4) == 0)
                     {
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txtef(8);
                             txt(lang(
@@ -26039,7 +26021,7 @@ void label_1579()
                 {
                     if (rnd(20) == 0)
                     {
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txtef(8);
                             txt(lang(
@@ -26076,7 +26058,7 @@ void label_1579()
                                       1,
                                       50))
                             {
-                                if (synccheck(cc, -1))
+                                if (is_in_fov(cc))
                                 {
                                     txtef(8);
                                     txt(lang(
@@ -27743,7 +27725,7 @@ void apply_general_eating_effect()
     }
     if (ibit(14, ci) == 1)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"これは毒されている！"s + name(cc)
@@ -27843,7 +27825,7 @@ void apply_general_eating_effect()
                         cc,
                         (inv[ci].enchantments[cnt].power / 50 + 1) * 100
                             * (1 + (cc != 0) * 5));
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         if (inv[ci].enchantments[cnt].power / 50 + 1 >= 0)
                         {
@@ -27882,7 +27864,7 @@ void apply_general_eating_effect()
                 }
                 if (enc2 == 6)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             name(cc) + u8"の"s
@@ -27917,7 +27899,7 @@ void apply_general_eating_effect()
 
 void eating_effect_eat_iron()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -27933,7 +27915,7 @@ void eating_effect_eat_iron()
 
 void eating_effect_insanity()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -27949,7 +27931,7 @@ void eating_effect_insanity()
 
 void eating_effect_eat_horse()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -27964,7 +27946,7 @@ void eating_effect_eat_horse()
 
 void eating_effect_eat_holy_one()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -27983,7 +27965,7 @@ void eating_effect_eat_holy_one()
 
 void eating_effect_eat_at()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(u8"＠を食べるなんて…"s, u8"You dare to eat @..."s));
     }
@@ -27998,7 +27980,7 @@ void eating_effect_eat_guard()
     {
         return;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(u8"ガード達はあなたを憎悪した。"s, u8"Guards hate you."s));
@@ -28011,7 +27993,7 @@ void eating_effect_eat_guard()
 
 void eating_effect_fire()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28026,7 +28008,7 @@ void eating_effect_fire()
 
 void eating_effect_insanity2()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28042,7 +28024,7 @@ void eating_effect_insanity2()
 
 void eating_effect_eat_cute_one()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28057,7 +28039,7 @@ void eating_effect_eat_cute_one()
 
 void eating_effect_eat_lovely_one()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28072,7 +28054,7 @@ void eating_effect_eat_lovely_one()
 
 void eating_effect_eat_poisonous_one()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(u8"これは有毒だ！"s, u8"Argh! It's poisonous!"s));
@@ -28085,7 +28067,7 @@ void eating_effect_eat_poisonous_one()
 
 void eating_effect_regeneration()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28100,7 +28082,7 @@ void eating_effect_regeneration()
 
 void eating_effect_eat_rotten_one()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28115,7 +28097,7 @@ void eating_effect_eat_rotten_one()
 
 void eating_effect_strength()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(u8"力が湧いてくるようだ。"s, u8"Mighty taste!"s));
@@ -28128,7 +28110,7 @@ void eating_effect_strength()
 
 void eating_effect_magic()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28143,7 +28125,7 @@ void eating_effect_magic()
 
 void eating_effect_insanity3()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28159,7 +28141,7 @@ void eating_effect_insanity3()
 
 void eating_effect_calm()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28174,7 +28156,7 @@ void eating_effect_calm()
 
 void eating_effect_insanity4()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28192,7 +28174,7 @@ void eating_effect_insanity4()
 
 void eating_effect_chaos()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28207,7 +28189,7 @@ void eating_effect_chaos()
 
 void eating_effect_lightning()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28226,7 +28208,7 @@ void eating_effect_eat_cat()
     {
         return;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(u8"猫を食べるなんて！！"s, u8"How can you eat a cat!!"s));
     }
@@ -28242,7 +28224,7 @@ void eating_effect_ether()
     {
         return;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(8);
         txt(lang(
@@ -28257,7 +28239,7 @@ void eating_effect_ether()
 
 void eating_effect_constitution()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28271,7 +28253,7 @@ void eating_effect_constitution()
 
 void eating_effect_magic2()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28284,7 +28266,7 @@ void eating_effect_magic2()
 
 void eating_effect_strength2()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28297,7 +28279,7 @@ void eating_effect_strength2()
 
 void eating_effect_will()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28311,7 +28293,7 @@ void eating_effect_will()
 
 void eating_effect_quick()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(2);
         txt(lang(
@@ -28329,7 +28311,7 @@ void eating_effect_quick()
 
 void eating_effect_pregnant()
 {
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             u8"何かが"s + name(cc) + u8"の体内に入り込んだ。"s,
@@ -28346,7 +28328,7 @@ void get_pregnant()
 {
     if (encfind(tc, 48) != -1)
     {
-        if (synccheck(tc, -1))
+        if (is_in_fov(tc))
         {
             txt(lang(
                 u8"しかしすぐに吐き出した。"s,
@@ -44054,7 +44036,7 @@ label_1948_internal:
                     break;
                 }
                 rc = map(tlocx, tlocy, 1) - 1;
-                if (synccheck(rc, -1) == 0)
+                if (is_in_fov(rc) == 0)
                 {
                     break;
                 }
@@ -52561,7 +52543,7 @@ int label_2072()
     {
         cdata[cc].enemy_id = 0;
     }
-    else if (synccheck(cdata[cc].enemy_id, -1) == 0)
+    else if (is_in_fov(cc) == 0)
     {
         cdata[cc].enemy_id = 0;
     }
@@ -52780,7 +52762,7 @@ void label_2076()
                     {
                         continue;
                     }
-                    if (synccheck(cnt, -1) == 0)
+                    if (is_in_fov(cnt) == 0)
                     {
                         continue;
                     }
@@ -56180,7 +56162,7 @@ label_21451_internal:
             int stat = can_evade_trap();
             if (stat == 1)
             {
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txt(lang(
                         name(cc) + u8"は罠を避けた。"s,
@@ -56203,7 +56185,7 @@ label_21451_internal:
                     snd(70);
                 }
                 efsource = 5;
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txt(lang(
                         aln(cc) + u8"罠にかかった！"s,
@@ -56211,7 +56193,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 4)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             u8"墨が噴き出した。"s,
@@ -56221,7 +56203,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 6)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             u8"刺激的な匂いがただよう。"s,
@@ -56231,7 +56213,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 5)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             u8"臭い匂いがたちこめた。"s,
@@ -56244,7 +56226,7 @@ label_21451_internal:
                     cell_featset(movx, movy, 0);
                     if (encfind(cc, 22) != -1)
                     {
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txt(lang(
                                 u8"魔法の力がテレポートを防いだ。"s,
@@ -56263,7 +56245,7 @@ label_21451_internal:
                                 cdata[cc].next_position.y);
                             if (cellaccess == 1)
                             {
-                                if (synccheck(cc, -1))
+                                if (is_in_fov(cc))
                                 {
                                     snd(72);
                                     txt(lang(
@@ -56283,7 +56265,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 0)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             u8"槍が地面から飛び出した。"s,
@@ -56291,7 +56273,7 @@ label_21451_internal:
                     }
                     if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
                     {
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txtmore();
                             txt(lang(
@@ -56309,7 +56291,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 1)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             u8"毒ガスが噴き出した。"s,
@@ -56319,7 +56301,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 2)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             u8"催眠ガスが噴き出した。"s,
@@ -56352,7 +56334,7 @@ void label_2146()
     int performtips = 0;
     if (cdata[cc].continuous_action_id == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は"s + itemname(ci) + u8"の演奏をはじめた。"s,
@@ -56372,7 +56354,7 @@ void label_2146()
         ci = cdata[cc].continuous_action_item;
         if (cdata[cc].continuous_action_turn % 10 == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 if (rnd(10) == 0)
                 {
@@ -56403,7 +56385,7 @@ void label_2146()
                     {
                         cdata[cnt].interest = 100;
                     }
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         if (cdata[cnt].vision_flag != msync)
                         {
@@ -56443,7 +56425,7 @@ void label_2146()
                     {
                         if (cdata[tc].hate == 0)
                         {
-                            if (synccheck(tc, -1))
+                            if (is_in_fov(tc))
                             {
                                 txt(lang(
                                     name(tc) + u8"は激怒した。"s,
@@ -56463,7 +56445,7 @@ void label_2146()
                     }
                     if (cdata[tc].interest <= 0)
                     {
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txtef(9);
                             if (jp)
@@ -56488,7 +56470,7 @@ void label_2146()
                         {
                             cdata[cc].quality_of_performance -=
                                 cdata[tc].level / 2;
-                            if (synccheck(cc, -1))
+                            if (is_in_fov(cc))
                             {
                                 txtef(9);
                                 if (jp)
@@ -56586,7 +56568,7 @@ void label_2146()
                     {
                         if (rnd(3) == 0)
                         {
-                            if (synccheck(cc, -1))
+                            if (is_in_fov(cc))
                             {
                                 txtef(9);
                                 if (jp)
@@ -56730,7 +56712,7 @@ void label_2146()
             if (gold != 0)
             {
                 cdata[cc].tip_gold += gold;
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     snd(11);
                 }
@@ -56811,7 +56793,7 @@ void label_2146()
     }
     if (cdata[cc].tip_gold != 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は合計 "s + cdata[cc].tip_gold + strgold
@@ -56842,7 +56824,7 @@ void label_2147()
         cdata[tc].continuous_action_id = 11;
         cdata[tc].continuous_action_turn = cdata[cc].continuous_action_turn * 2;
         cdata[tc].continuous_action_target = cc + 10000;
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は服を脱ぎ始めた。"s,
@@ -56860,7 +56842,7 @@ void label_2147()
     }
     if (cdata[tc].state != 1 || cdata[tc].continuous_action_id != 11)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"「そ、その"s + _sex2(cdata[tc].sex) + u8"とは体だけの関係"s
@@ -56890,7 +56872,7 @@ void label_2147()
         {
             if (cdata[cc].continuous_action_turn % 5 == 0)
             {
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txtef(9);
                     if (jp)
@@ -56955,7 +56937,7 @@ void label_2147()
         }
     }
     sexvalue = sdata(17, cc) * (50 + rnd(50)) + 100;
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txtef(9);
         if (jp)
@@ -56983,7 +56965,7 @@ void label_2147()
     {
         if (cdata[tc].gold >= sexvalue)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     u8"！さあ、小遣いを受け取って"s + _kure(3) + u8"」"s,
@@ -56992,7 +56974,7 @@ void label_2147()
         }
         else
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     u8"！これが"s + _ore(3) + u8"の財布の中身の全て"s + _da()
@@ -57309,7 +57291,7 @@ void continuous_action_others()
                         }
                     }
                     p = rnd((i + 1))
-                        * (80 + (synccheck(cnt, -1) == 0) * 50
+                        * (80 + (is_in_fov(cnt) == 0) * 50
                            + dist(
                                  cdata[cnt].position.x,
                                  cdata[cnt].position.y,
@@ -57323,7 +57305,7 @@ void continuous_action_others()
                     }
                     if (rnd(sdata(13, cnt) + 1) > p)
                     {
-                        if (synccheck(cnt, -1))
+                        if (is_in_fov(cnt))
                         {
                             txt(lang(
                                 name(cnt) + u8"は窃盗を見咎めた。"s,
@@ -57933,7 +57915,7 @@ void label_2153()
         }
         if (f == 1)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     npcn(cc) + itemname(ci, 1) + u8"を食べ終えた。"s,
@@ -58597,7 +58579,7 @@ void label_2160()
         cdata[cc].continuous_action_id = 1;
         cdata[cc].continuous_action_turn = 8;
         cdata[cc].continuous_action_item = ci;
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             snd(18);
             if (inv[ci].own_state == 1 && cc < 16)
@@ -58627,7 +58609,7 @@ void label_2160()
     {
         return;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             npcn(cc) + itemname(ci, 1) + u8"を食べ終えた。"s,
@@ -58720,7 +58702,7 @@ void label_2161()
     chara_anorexia(cc);
     if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txtef(8);
             txt(lang(
@@ -58819,7 +58801,7 @@ int decode_book()
         }
         if (cdata[cc].blind != 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     name(cc) + u8"は何も見えない。"s,
@@ -58842,7 +58824,7 @@ int decode_book()
         }
         cdata[cc].continuous_action_turn = p / (2 + sdata(150, 0)) + 1;
         cdata[cc].continuous_action_item = ci;
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 npcn(cc) + itemname(ci, 1) + u8"を読み始めた。"s,
@@ -58901,7 +58883,7 @@ int decode_book()
                 {
                     refresh_burden_state();
                 }
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txt(lang(
                         itemname(ci, 1) + u8"は塵となって崩れ落ちた。"s,
@@ -58911,7 +58893,7 @@ int decode_book()
         }
         return 0;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             npcn(cc) + itemname(ci, 1) + u8"を読み終えた。"s,
@@ -58929,7 +58911,7 @@ int decode_book()
         ++recipememory(inv[ci].subname);
         item_identify(ci, 1);
         removeitem(ci, 1);
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 itemname(ci, 1) + u8"は塵となって崩れ落ちた。"s,
@@ -58975,7 +58957,7 @@ int decode_book()
         if (inv[ci].count == 0)
         {
             removeitem(ci, 1);
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     itemname(ci, 1) + u8"は塵となって崩れ落ちた。"s,
@@ -58993,7 +58975,7 @@ int read_normal_book()
 {
     if (cdata[cc].blind != 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は何も見えない。"s,
@@ -59056,7 +59038,7 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
             }
             if (dmg < 1)
             {
-                if (synccheck(prm_1077, -1))
+                if (is_in_fov(prm_1077))
                 {
                     txt(lang(
                         name(prm_1077) + u8"は巻き込みを免れた。"s,
@@ -59177,7 +59159,7 @@ int label_2168()
     }
     if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は混乱しながらも魔法の詠唱を試みた。"s,
@@ -59192,7 +59174,7 @@ int label_2168()
             return 1;
         }
     }
-    else if (synccheck(cc, -1))
+    else if (is_in_fov(cc))
     {
         if (cc == 0)
         {
@@ -59215,7 +59197,7 @@ int label_2168()
     }
     if (findbuff(cc, 2) != -1)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"沈黙の霧が詠唱を阻止した。"s,
@@ -59226,7 +59208,7 @@ int label_2168()
     }
     if (rnd(100) >= calcspellfail(efid, cc))
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は詠唱に失敗した。"s,
@@ -59304,7 +59286,7 @@ int drink_potion()
     else
     {
         efstatus = inv[ci].curse_state;
-        if (synccheck(tc, -1))
+        if (is_in_fov(tc))
         {
             snd(17);
             txt(lang(
@@ -59484,7 +59466,7 @@ int drink_well()
                 {
                     break;
                 }
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txt(lang(
                         ""s + name(cc) + u8"は何かいけないものを飲み込んだ。"s,
@@ -59592,7 +59574,7 @@ int read_scroll()
     efsource = 2;
     if (cdata[cc].blind != 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は何も見えない。"s,
@@ -59605,7 +59587,7 @@ int read_scroll()
     {
         if (rnd(4) != 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     name(cc) + u8"はふらふらした。"s,
@@ -59615,7 +59597,7 @@ int read_scroll()
             return 0;
         }
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             npcn(cc) + itemname(ci, 1) + u8"を読んだ。"s,
@@ -59653,7 +59635,7 @@ int label_2172()
 {
     if (inv[ci].count <= 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 itemname(ci, 1) + u8"を振った。"s,
@@ -59679,7 +59661,7 @@ int label_2172()
         if ((stat == 0 && the_ability_db[efid].sdataref3 / 1000 * 1000 == 2000)
             || noeffect == 1)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 redraw(0);
                 txt(lang(
@@ -59690,7 +59672,7 @@ int label_2172()
             goto label_2173_internal;
         }
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             itemname(ci, 1) + u8"を振った。"s,
@@ -59741,7 +59723,7 @@ int label_2172()
         }
         label_1469();
     }
-    else if (synccheck(cc, -1))
+    else if (is_in_fov(cc))
     {
         txt(lang(
             name(cc) + u8"は杖をうまく使えなかった。"s,
@@ -59804,7 +59786,7 @@ int label_2174()
         {
             if (rnd(5) == 0)
             {
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txt(lang(
                         name(cc) + u8"は頭を振った。"s,
@@ -60149,7 +60131,7 @@ void label_2188()
 void do_throw_command()
 {
     int ccthrowpotion = 0;
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             name(cc) + u8"は"s + itemname(ci, 1) + u8"を投げた。"s,
@@ -60283,7 +60265,7 @@ void do_throw_command()
     {
         if (inv[ci].id != 601)
         {
-            if (synccheck(tlocx, tlocy))
+            if (is_in_fov({tlocx, tlocy}))
             {
                 if (inv[ci].id == 587)
                 {
@@ -60297,7 +60279,7 @@ void do_throw_command()
             if (map(tlocx, tlocy, 1) != 0)
             {
                 tc = map(tlocx, tlocy, 1) - 1;
-                if (synccheck(tc, -1))
+                if (is_in_fov(tc))
                 {
                     txt(lang(
                         name(tc) + u8"に見事に命中した！"s,
@@ -60307,7 +60289,7 @@ void do_throw_command()
                 rowact_check(tc);
                 if (inv[ci].id == 587)
                 {
-                    if (synccheck(tc, -1))
+                    if (is_in_fov(tc))
                     {
                         if (tc != 0)
                         {
@@ -60332,14 +60314,14 @@ void do_throw_command()
                 }
                 if (inv[ci].id == 772)
                 {
-                    if (synccheck(tc, -1))
+                    if (is_in_fov(tc))
                     {
                         txtef(4);
                         txt(lang(u8" *ぷちゅ* "s, u8"*crumble*"s));
                     }
                     if (inv[ci].param3 == -1)
                     {
-                        if (synccheck(tc, -1))
+                        if (is_in_fov(tc))
                         {
                             txtef(4);
                             txt(lang(
@@ -60379,7 +60361,7 @@ void do_throw_command()
                             p = list(0, cnt);
                             if (inv[p].id == 541)
                             {
-                                if (synccheck(tlocx, tlocy))
+                                if (is_in_fov({tlocx, tlocy}))
                                 {
                                     txtmore();
                                     txt(lang(
@@ -60409,7 +60391,7 @@ void do_throw_command()
                     turn_end();
                     return;
                 }
-                if (synccheck(tlocx, tlocy))
+                if (is_in_fov({tlocx, tlocy}))
                 {
                     txtmore();
                     txt(lang(
@@ -60417,7 +60399,7 @@ void do_throw_command()
                         u8"It falls on the ground and melts."s));
                 }
             }
-            else if (synccheck(tlocx, tlocy))
+            else if (is_in_fov({tlocx, tlocy}))
             {
                 txtmore();
                 txt(lang(
@@ -60426,7 +60408,7 @@ void do_throw_command()
             }
             if (inv[ci].id == 772)
             {
-                if (synccheck(tlocx, tlocy))
+                if (is_in_fov({tlocx, tlocy}))
                 {
                     txtef(4);
                     txt(lang(u8" *ぷちゅ* "s, u8"*crumble*"s));
@@ -60463,7 +60445,7 @@ void do_throw_command()
             return;
         }
     }
-    if (synccheck(tlocx, tlocy))
+    if (is_in_fov({tlocx, tlocy}))
     {
         txt(lang(
             u8"それは地面に落ちて砕けた。"s,
@@ -61076,7 +61058,7 @@ void do_eat_command()
         if (tc != cc)
         {
             rowactend(tc);
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     name(cc) + u8"は"s + name(tc) + u8"の食べ物を横取りした。"s,
@@ -61237,7 +61219,7 @@ void label_2201()
                 calcfixlv(2));
             flttypemajor = fsetbarrel(rnd(length(fsetbarrel)));
             itemcreate(-1, 0, x, y, 0);
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 snd(73);
                 txt(lang(
@@ -61300,7 +61282,7 @@ void label_2201()
                         --cdata[cc].attr_adjs[0];
                         r1 = cc;
                         refresh_character();
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txtmore();
                             txtef(8);
@@ -61317,7 +61299,7 @@ void label_2201()
                     {
                         --feat(2);
                         cell_featset(x, y, feat(0), feat(1), feat(2), feat(3));
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txt(lang(
                                 u8"扉は少しだけ壊れた。"s,
@@ -61685,7 +61667,7 @@ void label_2205()
                 if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
                     || cdata[cc].weight > 100)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             name(cc) + u8"は蜘蛛の巣を振り払った。"s,
@@ -61697,7 +61679,7 @@ void label_2205()
                 else
                 {
                     mef(5, i) = mef(5, i) * 3 / 4;
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         txt(lang(
                             name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
@@ -62909,7 +62891,7 @@ void open_new_year_gift()
     {
         if (rnd(3) == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     u8"悪意を持った何かが袋から飛び出してきた！"s,
@@ -62928,7 +62910,7 @@ void open_new_year_gift()
         }
         if (rnd(3) == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     u8"罠だ！お年玉袋は発火した。"s,
@@ -62951,7 +62933,7 @@ void open_new_year_gift()
             }
             return;
         }
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"中には呪いの手紙が入っていた。"s,
@@ -62967,7 +62949,7 @@ void open_new_year_gift()
     {
         if (rnd(4) == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txtef(5);
                 txt(lang(u8" *チリリリリーン* "s, u8"*ring ring ring*"s));
@@ -62987,7 +62969,7 @@ void open_new_year_gift()
         }
         if (rnd(5) == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     u8"妹が入っていた！"s,
@@ -63002,7 +62984,7 @@ void open_new_year_gift()
             }
             return;
         }
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"何かが袋から出てきた。"s,
@@ -63019,7 +63001,7 @@ void open_new_year_gift()
     }
     if (rnd(3) == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txtef(5);
             txt(lang(u8" *チリリリリーン* "s, u8"*ring ring ring*"s));
@@ -63048,7 +63030,7 @@ void open_new_year_gift()
     }
     if (rnd(50) == 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 u8"これは素晴らしい贈り物だ！"s,
@@ -63063,7 +63045,7 @@ void open_new_year_gift()
             1);
         return;
     }
-    if (synccheck(cc, -1))
+    if (is_in_fov(cc))
     {
         txt(lang(
             u8"何かが袋から出てきた。"s,
@@ -63129,7 +63111,7 @@ void try_to_open_locked_door()
             gain_skill_experience_lock_picking();
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             txt(lang(
                 name(cc) + u8"は扉を開けた。"s,
@@ -63151,7 +63133,7 @@ void try_to_open_locked_door()
     else
     {
         ++msgdup;
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             snd(22);
             txt(lang(
@@ -63371,7 +63353,7 @@ void try_to_melee_attack()
                 + cbit(30, cc) * 5
             > rnd(100))
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     name(cc) + u8"は盾で"s + name(tc) + u8"を殴りつけた。"s,
@@ -63450,7 +63432,7 @@ label_22191_internal:
         {
             if (rnd(2) == 0)
             {
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txtmore();
                     txt(lang(
@@ -63515,7 +63497,7 @@ label_22191_internal:
                     s(1) = lang(""s, u8"The "s) + iknownnameref(inv[cw].id);
                 }
                 s(1) = lang(u8"『"s, u8"<"s) + s(1) + lang(u8"』"s, u8">"s);
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     if (rnd(5) == 0)
                     {
@@ -63539,7 +63521,7 @@ label_22191_internal:
                 elep = cdata[cc].element_of_unarmed_attack % 100000;
             }
         }
-        if (synccheck(tc, -1))
+        if (is_in_fov(tc))
         {
             if (extraattack)
             {
@@ -63866,7 +63848,7 @@ label_22191_internal:
                     {
                         if (p == 61)
                         {
-                            if (synccheck(cc, -1))
+                            if (is_in_fov(cc))
                             {
                                 txtef(8);
                                 txt(lang(
@@ -63885,7 +63867,7 @@ label_22191_internal:
                         }
                         if (p == 62)
                         {
-                            if (synccheck(cc, -1))
+                            if (is_in_fov(cc))
                             {
                                 txtef(8);
                                 txt(lang(
@@ -63921,7 +63903,7 @@ label_22191_internal:
                         tlocy = cdata[cc].position.y;
                         if (p == 63)
                         {
-                            if (synccheck(tc, -1))
+                            if (is_in_fov(tc))
                             {
                                 txtef(8);
                                 txt(lang(
@@ -63956,7 +63938,7 @@ label_22191_internal:
     }
     if (hit == -1)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             if (extraattack)
             {
@@ -63981,7 +63963,7 @@ label_22191_internal:
     }
     if (hit == -2)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             if (extraattack)
             {
@@ -65167,7 +65149,7 @@ void do_use_command()
         }
         flt();
         itemcreate(-1, 541, cdata[0].position.x, cdata[0].position.y, 0);
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             snd(86);
             txt(lang(
@@ -72712,7 +72694,7 @@ void label_2687()
     int searchfov = 0;
     if (cbit(985, cc))
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             if (rnd(30) == 0)
             {
@@ -72732,7 +72714,7 @@ void label_2687()
         turn_end();
         return;
     }
-    if (synccheck(cc, -1) == 0)
+    if (is_in_fov(cc) == 0)
     {
         if (cdata[0].blind == 0)
         {
@@ -73363,7 +73345,7 @@ void label_2690()
     }
     if (cdata[cc].drunk != 0)
     {
-        if (synccheck(cc, -1))
+        if (is_in_fov(cc))
         {
             if (cdatan(2, cc) == u8"cat"s)
             {
@@ -73475,7 +73457,7 @@ label_2692_internal:
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {
-                    if (synccheck(cc, -1))
+                    if (is_in_fov(cc))
                     {
                         if (chipm(
                                 0,
@@ -73488,7 +73470,7 @@ label_2692_internal:
                             {
                                 if (cdata[gdata_fire_giant].state == 1)
                                 {
-                                    if (synccheck(gdata_fire_giant, -1))
+                                    if (is_in_fov(gdata_fire_giant))
                                     {
                                         flt();
                                         int stat =
@@ -73689,7 +73671,7 @@ label_2692_internal:
         }
         if (cdata[cc].id == 320 || cdata[cc].id == 280)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 tc = 0;
                 distance = dist(
@@ -73707,7 +73689,7 @@ label_2692_internal:
                         int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
                         {
-                            if (synccheck(cc, -1))
+                            if (is_in_fov(cc))
                             {
                                 txtef(9);
                                 txtmore();
@@ -73979,7 +73961,7 @@ void label_2693()
             if (cdata[cc].enemy_id != tc)
             {
                 cell_swap(cc, tc);
-                if (synccheck(cc, -1))
+                if (is_in_fov(cc))
                 {
                     txt(lang(
                         name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
@@ -73990,7 +73972,7 @@ void label_2693()
                 {
                     if (cdata[tc].continuous_action_turn > 0)
                     {
-                        if (synccheck(cc, -1))
+                        if (is_in_fov(cc))
                         {
                             txt(lang(
                                 name(tc) + u8"は"s + name(cc)
@@ -74028,7 +74010,7 @@ void label_2693()
                                         snd(45);
                                         play_animation(14);
                                         spillfrag(x, y, 2);
-                                        if (synccheck(cc, -1))
+                                        if (is_in_fov(cc))
                                         {
                                             txt(lang(
                                                 name(cc)
@@ -76724,7 +76706,7 @@ void pass_one_turn(bool label_2738_flg)
             {
                 if (sdata(63, tc) / 50 < 7)
                 {
-                    if (synccheck(tc, -1))
+                    if (is_in_fov(tc))
                     {
                         snd(46);
                         txt(lang(
@@ -76749,7 +76731,7 @@ void pass_one_turn(bool label_2738_flg)
         }
         if (mef(0, ef) == 5)
         {
-            if (synccheck(tc, -1))
+            if (is_in_fov(tc))
             {
                 snd(6);
                 txt(lang(
@@ -76774,7 +76756,7 @@ void pass_one_turn(bool label_2738_flg)
         {
             if (cbit(5, tc) == 0 || cdata[tc].gravity > 0)
             {
-                if (synccheck(tc, -1))
+                if (is_in_fov(tc))
                 {
                     snd(46);
                     txt(lang(
@@ -76880,7 +76862,7 @@ void pass_one_turn(bool label_2738_flg)
                             continue;
                         }
                         tc = cnt;
-                        if (synccheck(cc, -1) || synccheck(tc, -1))
+                        if (is_in_fov(cc) || is_in_fov(tc))
                         {
                             txtef(9);
                             txt(lang(
@@ -76908,7 +76890,7 @@ void pass_one_turn(bool label_2738_flg)
                         {
                             if (tc != 0)
                             {
-                                if (synccheck(cc, -1) || synccheck(tc, -1))
+                                if (is_in_fov(cc) || is_in_fov(tc))
                                 {
                                     txtef(9);
                                     txt(lang(
@@ -76959,7 +76941,7 @@ void pass_one_turn(bool label_2738_flg)
         }
         if (cc != 0 || rtval == 0)
         {
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
                     name(cc) + u8"は"s
