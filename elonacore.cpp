@@ -16668,12 +16668,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     rtdmg = dmg_at_m141;
 
-    if (tc == 0 && cdata[0].god == 5)
+    if (prm_853 == 0 && cdata[0].god == 5)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && tc == 0)
+    if (debug::voldemort && prm_853 == 0)
     {
         dmg_at_m141 = 0;
     }
