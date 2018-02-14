@@ -29,7 +29,8 @@ void get_random_item_id()
             bool ok = true;
             for (int i = 0; i < filtermax; ++i)
             {
-                if (filter_item(data.id).find(filtern(i)) == std::string::npos)
+                if (the_item_db[data.id]->filter.find(filtern(i))
+                    == std::string::npos)
                 {
                     ok = false;
                     break;

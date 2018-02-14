@@ -360,8 +360,6 @@ void initialize_elona()
             buffboard(0) += tmp + '\n';
         }
     }
-    SDIM1(filter_item);
-    SDIM1(rffilter_item);
     SDIM1(ioriginalnameref);
     SDIM1(ioriginalnameref2);
     SDIM1(iknownnameref);
@@ -377,7 +375,6 @@ void initialize_elona()
     delete_temporary_user_files();
     initialize_character_filters();
     initialize_cbit_filters();
-    set_item_filters();
     initialize_item_chip();
     initialize_building_daga();
     initialize_adata();

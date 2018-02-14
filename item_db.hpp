@@ -46,6 +46,8 @@ struct item_data
     std::string original_name_en;
     std::string originalnameref2;
     bool has_random_name;
+    std::string filter;
+    std::string rffilter;
 };
 
 

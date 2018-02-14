@@ -1684,7 +1684,8 @@ label_2061_internal:
                 if (reftype == 53000)
                 {
                     f = 1;
-                    if (strutil::contains(filter_item(inv[ci].id), u8"/neg/"))
+                    if (strutil::contains(
+                            the_item_db[inv[ci].id]->filter, u8"/neg/"))
                     {
                         f = 0;
                     }
@@ -1707,12 +1708,13 @@ label_2061_internal:
                             goto label_2060_internal;
                         }
                     }
-                    if (strutil::contains(filter_item(inv[ci].id), u8"/neg/"))
+                    if (strutil::contains(
+                            the_item_db[inv[ci].id]->filter, u8"/neg/"))
                     {
                         f = 0;
                     }
                     if (strutil::contains(
-                            filter_item(inv[ci].id), u8"/nogive/"))
+                            the_item_db[inv[ci].id]->filter, u8"/nogive/"))
                     {
                         f = 0;
                     }
