@@ -75,6 +75,9 @@ int define(lua_State* state)
     FIELD_S(originalnameref2);
     FIELD_B(has_random_name);
 
+    FIELD_S(filter);
+    FIELD_S(rffilter);
+
 #undef FIELD_I
 #undef FIELD_S
 
@@ -121,6 +124,9 @@ int define(lua_State* state)
             original_name_en,
             originalnameref2,
             has_random_name,
+
+            filter,
+            rffilter,
         });
 
     return 0;

@@ -34,6 +34,8 @@ define(792, {
   original_name_en = "putitoro",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(791, {
   image = 697,
@@ -71,6 +73,8 @@ define(791, {
   original_name_en = "<Dragon Slayer>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(790, {
   image = 555,
@@ -108,6 +112,8 @@ define(790, {
   original_name_en = "frying pan for testing",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(789, {
   image = 554,
@@ -145,6 +151,8 @@ define(789, {
   original_name_en = "pot for testing",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(788, {
   image = 402,
@@ -182,6 +190,8 @@ define(788, {
   original_name_en = "skull bow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(787, {
   image = 552,
@@ -219,6 +229,8 @@ define(787, {
   original_name_en = "puff puff bread",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(786, {
   image = 551,
@@ -256,6 +268,8 @@ define(786, {
   original_name_en = "sugar",
   originalnameref2 = "sack",
   has_random_name = false,
+  filter = "",
+  rffilter = "/flavor/",
 })
 define(785, {
   image = 553,
@@ -293,6 +307,8 @@ define(785, {
   original_name_en = "salt",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "/flavor/",
 })
 define(784, {
   image = 549,
@@ -330,6 +346,8 @@ define(784, {
   original_name_en = "recipe holder",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(783, {
   image = 550,
@@ -367,6 +385,8 @@ define(783, {
   original_name_en = "recipe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(782, {
   image = 360,
@@ -404,6 +424,8 @@ define(782, {
   original_name_en = "dish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(781, {
   image = 546,
@@ -441,6 +463,8 @@ define(781, {
   original_name_en = "kitchen knife",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(780, {
   image = 545,
@@ -478,6 +502,8 @@ define(780, {
   original_name_en = "fur carpet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(779, {
   image = 544,
@@ -515,6 +541,8 @@ define(779, {
   original_name_en = "deer head",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(778, {
   image = 543,
@@ -552,6 +580,8 @@ define(778, {
   original_name_en = "luxury sofa",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(777, {
   image = 682,
@@ -589,6 +619,8 @@ define(777, {
   original_name_en = "Mani",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(776, {
   image = 681,
@@ -626,6 +658,8 @@ define(776, {
   original_name_en = "Kumiromi",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(775, {
   image = 542,
@@ -663,6 +697,8 @@ define(775, {
   original_name_en = "special steamed meat bun",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(774, {
   image = 683,
@@ -700,6 +736,8 @@ define(774, {
   original_name_en = "luxury cabinet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(773, {
   image = 541,
@@ -737,6 +775,8 @@ define(773, {
   original_name_en = "large bookshelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(772, {
   image = 540,
@@ -774,6 +814,8 @@ define(772, {
   original_name_en = "tomato",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(771, {
   image = 679,
@@ -811,6 +853,8 @@ define(771, {
   original_name_en = "blue capsule drag",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(770, {
   image = 678,
@@ -848,6 +892,8 @@ define(770, {
   original_name_en = "soda",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(769, {
   image = 677,
@@ -885,6 +931,8 @@ define(769, {
   original_name_en = "miniature tree",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(768, {
   image = 676,
@@ -922,6 +970,8 @@ define(768, {
   original_name_en = "new year's decoration",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(767, {
   image = 675,
@@ -959,6 +1009,8 @@ define(767, {
   original_name_en = "Jure's body pillow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(766, {
   image = 684,
@@ -996,6 +1048,8 @@ define(766, {
   original_name_en = "blue stall",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(765, {
   image = 685,
@@ -1033,6 +1087,8 @@ define(765, {
   original_name_en = "red stall",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(764, {
   image = 674,
@@ -1070,6 +1126,8 @@ define(764, {
   original_name_en = "counter",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(763, {
   image = 673,
@@ -1107,6 +1165,8 @@ define(763, {
   original_name_en = "pedestal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(762, {
   image = 672,
@@ -1144,6 +1204,8 @@ define(762, {
   original_name_en = "festival wreath",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(761, {
   image = 76,
@@ -1181,6 +1243,8 @@ define(761, {
   original_name_en = "<Gould's Piano>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(760, {
   image = 629,
@@ -1218,6 +1282,8 @@ define(760, {
   original_name_en = "Garok's hammer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(759, {
   image = 671,
@@ -1255,6 +1321,8 @@ define(759, {
   original_name_en = "lightsabre",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(758, {
   image = 419,
@@ -1292,6 +1360,8 @@ define(758, {
   original_name_en = "<Mauser C96 Custom>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(757, {
   image = 480,
@@ -1329,6 +1399,8 @@ define(757, {
   original_name_en = "<Five Horned Helm>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(756, {
   image = 670,
@@ -1366,6 +1438,8 @@ define(756, {
   original_name_en = "mochi",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(755, {
   image = 669,
@@ -1403,6 +1477,8 @@ define(755, {
   original_name_en = "kagami mochi",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(754, {
   image = 668,
@@ -1440,6 +1516,8 @@ define(754, {
   original_name_en = "daruma",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(753, {
   image = 667,
@@ -1477,6 +1555,8 @@ define(753, {
   original_name_en = "kotatsu",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(752, {
   image = 666,
@@ -1514,6 +1594,8 @@ define(752, {
   original_name_en = "new year's gift",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(751, {
   image = 664,
@@ -1551,6 +1633,8 @@ define(751, {
   original_name_en = "downstairs",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(750, {
   image = 665,
@@ -1588,6 +1672,8 @@ define(750, {
   original_name_en = "upstairs",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(749, {
   image = 686,
@@ -1625,6 +1711,8 @@ define(749, {
   original_name_en = "Creator",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(748, {
   image = 662,
@@ -1662,6 +1750,8 @@ define(748, {
   original_name_en = "summoning crystal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(747, {
   image = 333,
@@ -1699,6 +1789,8 @@ define(747, {
   original_name_en = "Bokonon",
   originalnameref2 = "book",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(746, {
   image = 657,
@@ -1736,6 +1828,8 @@ define(746, {
   original_name_en = "tamer's whip",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(745, {
   image = 657,
@@ -1773,6 +1867,8 @@ define(745, {
   original_name_en = "heart",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(744, {
   image = 657,
@@ -1810,6 +1906,8 @@ define(744, {
   original_name_en = "Schrodinger's cat ",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(743, {
   image = 657,
@@ -1847,6 +1945,8 @@ define(743, {
   original_name_en = "Carneades",
   originalnameref2 = "plank",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(742, {
   image = 308,
@@ -1884,6 +1984,8 @@ define(742, {
   original_name_en = "the void explorer",
   originalnameref2 = "license",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(741, {
   image = 501,
@@ -1921,6 +2023,8 @@ define(741, {
   original_name_en = "<Hiryu-To>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(740, {
   image = 488,
@@ -1958,6 +2062,8 @@ define(740, {
   original_name_en = "<Unknown Shell>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(739, {
   image = 425,
@@ -1995,6 +2101,8 @@ define(739, {
   original_name_en = "<Frisia's Tail>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(738, {
   image = 539,
@@ -2032,6 +2140,8 @@ define(738, {
   original_name_en = "fortune cookie",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(737, {
   image = 470,
@@ -2069,6 +2179,8 @@ define(737, {
   original_name_en = "name",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(736, {
   image = 354,
@@ -2106,6 +2218,8 @@ define(736, {
   original_name_en = "fireproof liquid",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(735, {
   image = 421,
@@ -2143,6 +2257,8 @@ define(735, {
   original_name_en = "scythe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(734, {
   image = 220,
@@ -2180,6 +2296,8 @@ define(734, {
   original_name_en = "small gamble chest",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(733, {
   image = 563,
@@ -2217,6 +2335,8 @@ define(733, {
   original_name_en = "sand bag",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(732, {
   image = 429,
@@ -2254,6 +2374,8 @@ define(732, {
   original_name_en = "harvest",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(731, {
   image = 429,
@@ -2291,6 +2413,8 @@ define(731, {
   original_name_en = "4 dimensional pocket",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(730, {
   image = 538,
@@ -2328,6 +2452,8 @@ define(730, {
   original_name_en = "friendship",
   originalnameref2 = "token",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "/ore/",
 })
 define(729, {
   image = 391,
@@ -2365,6 +2491,8 @@ define(729, {
   original_name_en = "gift",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/spshop/",
+  rffilter = "",
 })
 define(728, {
   image = 474,
@@ -2402,6 +2530,8 @@ define(728, {
   original_name_en = "<Crimson Plate>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(727, {
   image = 453,
@@ -2439,6 +2569,8 @@ define(727, {
   original_name_en = "<Shield ofThorn>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(726, {
   image = 393,
@@ -2476,6 +2608,8 @@ define(726, {
   original_name_en = "<Al'ud>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(725, {
   image = 76,
@@ -2513,6 +2647,8 @@ define(725, {
   original_name_en = "<Kill Kill Piano>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(724, {
   image = 538,
@@ -2550,6 +2686,8 @@ define(724, {
   original_name_en = "music ticket",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "/ore/",
 })
 define(723, {
   image = 486,
@@ -2587,6 +2725,8 @@ define(723, {
   original_name_en = "<Twin Edge>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(722, {
   image = 486,
@@ -2624,6 +2764,8 @@ define(722, {
   original_name_en = "<Arbalest>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(721, {
   image = 687,
@@ -2661,6 +2803,8 @@ define(721, {
   original_name_en = "Ehekatl",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(720, {
   image = 649,
@@ -2698,6 +2842,8 @@ define(720, {
   original_name_en = "happy bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(719, {
   image = 698,
@@ -2735,6 +2881,8 @@ define(719, {
   original_name_en = "<Claymore>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(718, {
   image = 630,
@@ -2772,6 +2920,8 @@ define(718, {
   original_name_en = "<Shena's Panty>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(717, {
   image = 657,
@@ -2809,6 +2959,8 @@ define(717, {
   original_name_en = "Lomias",
   originalnameref2 = "secret experience",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(716, {
   image = 424,
@@ -2846,6 +2998,8 @@ define(716, {
   original_name_en = "<Vanilla Rock>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(715, {
   image = 657,
@@ -2883,6 +3037,8 @@ define(715, {
   original_name_en = "Kumiromi",
   originalnameref2 = "secret experience",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(714, {
   image = 537,
@@ -2920,6 +3076,8 @@ define(714, {
   original_name_en = "grenade",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(713, {
   image = 536,
@@ -2957,6 +3115,8 @@ define(713, {
   original_name_en = "shuriken",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(712, {
   image = 308,
@@ -2994,6 +3154,8 @@ define(712, {
   original_name_en = "dungeon",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(711, {
   image = 354,
@@ -3031,6 +3193,8 @@ define(711, {
   original_name_en = "evolution",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(710, {
   image = 429,
@@ -3068,6 +3232,8 @@ define(710, {
   original_name_en = "contingency",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(709, {
   image = 470,
@@ -3105,6 +3271,8 @@ define(709, {
   original_name_en = "contingency",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(708, {
   image = 429,
@@ -3142,6 +3310,8 @@ define(708, {
   original_name_en = "resurrection",
   originalnameref2 = "book",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(707, {
   image = 699,
@@ -3179,6 +3349,8 @@ define(707, {
   original_name_en = "<Stradivarius>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(706, {
   image = 354,
@@ -3216,6 +3388,8 @@ define(706, {
   original_name_en = "descent",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(705, {
   image = 486,
@@ -3253,6 +3427,8 @@ define(705, {
   original_name_en = "<Begger's Pendant>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(704, {
   image = 535,
@@ -3290,6 +3466,8 @@ define(704, {
   original_name_en = "vomit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(703, {
   image = 534,
@@ -3327,6 +3505,8 @@ define(703, {
   original_name_en = "whistle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(702, {
   image = 301,
@@ -3364,6 +3544,8 @@ define(702, {
   original_name_en = "rabbit's tail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(701, {
   image = 533,
@@ -3401,6 +3583,8 @@ define(701, {
   original_name_en = "deck",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(700, {
   image = 532,
@@ -3438,6 +3622,8 @@ define(700, {
   original_name_en = "town book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(699, {
   image = 658,
@@ -3475,6 +3661,8 @@ define(699, {
   original_name_en = "little ball",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(698, {
   image = 365,
@@ -3512,6 +3700,8 @@ define(698, {
   original_name_en = "salt solution",
   originalnameref2 = "potion",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(697, {
   image = 429,
@@ -3549,6 +3739,8 @@ define(697, {
   original_name_en = "magic laser",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(696, {
   image = 429,
@@ -3586,6 +3778,8 @@ define(696, {
   original_name_en = "magic ball",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(695, {
   image = 399,
@@ -3623,6 +3817,8 @@ define(695, {
   original_name_en = "<Axe of Destruction>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(694, {
   image = 659,
@@ -3660,6 +3856,8 @@ define(694, {
   original_name_en = "eastern partition",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(693, {
   image = 395,
@@ -3697,6 +3895,8 @@ define(693, {
   original_name_en = "harp",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(692, {
   image = 394,
@@ -3734,6 +3934,8 @@ define(692, {
   original_name_en = "harmonica",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(691, {
   image = 393,
@@ -3771,6 +3973,8 @@ define(691, {
   original_name_en = "lute",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(690, {
   image = 392,
@@ -3808,6 +4012,8 @@ define(690, {
   original_name_en = "pan flute",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(689, {
   image = 688,
@@ -3845,6 +4051,8 @@ define(689, {
   original_name_en = "guillotine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(688, {
   image = 689,
@@ -3882,6 +4090,8 @@ define(688, {
   original_name_en = "iron maiden",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(687, {
   image = 429,
@@ -3919,6 +4129,8 @@ define(687, {
   original_name_en = "ancient book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(686, {
   image = 690,
@@ -3956,6 +4168,8 @@ define(686, {
   original_name_en = "Jure",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(685, {
   image = 658,
@@ -3993,6 +4207,8 @@ define(685, {
   original_name_en = "monster ball",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(684, {
   image = 691,
@@ -4030,6 +4246,8 @@ define(684, {
   original_name_en = "gene machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(683, {
   image = 657,
@@ -4067,6 +4285,8 @@ define(683, {
   original_name_en = "Mani",
   originalnameref2 = "gem stone",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(682, {
   image = 657,
@@ -4104,6 +4324,8 @@ define(682, {
   original_name_en = "rejuvenation",
   originalnameref2 = "Kumiromi's gem stone",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(681, {
   image = 657,
@@ -4141,6 +4363,8 @@ define(681, {
   original_name_en = "holy rain",
   originalnameref2 = "Juere's gem stone",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(680, {
   image = 657,
@@ -4178,6 +4402,8 @@ define(680, {
   original_name_en = "god speed",
   originalnameref2 = "Lulwy's gem stone",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(679, {
   image = 504,
@@ -4215,6 +4441,8 @@ define(679, {
   original_name_en = "Gaia Hammer>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(678, {
   image = 400,
@@ -4252,6 +4480,8 @@ define(678, {
   original_name_en = "<Lucky Dagger>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(677, {
   image = 415,
@@ -4289,6 +4519,8 @@ define(677, {
   original_name_en = "<Holy Rance>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(676, {
   image = 425,
@@ -4326,6 +4558,8 @@ define(676, {
   original_name_en = "<Elemental Staff)",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(675, {
   image = 421,
@@ -4363,6 +4597,8 @@ define(675, {
   original_name_en = "<Kumiromi Sythe>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(674, {
   image = 514,
@@ -4400,6 +4636,8 @@ define(674, {
   original_name_en = "<Winchester Premium>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(673, {
   image = 404,
@@ -4437,6 +4675,8 @@ define(673, {
   original_name_en = "<Wind Bow>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(672, {
   image = 656,
@@ -4474,6 +4714,8 @@ define(672, {
   original_name_en = "secret treasure",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(671, {
   image = 632,
@@ -4511,6 +4753,8 @@ define(671, {
   original_name_en = "nuclear bomb",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(670, {
   image = 132,
@@ -4548,6 +4792,8 @@ define(670, {
   original_name_en = "canvas",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(669, {
   image = 92,
@@ -4585,6 +4831,8 @@ define(669, {
   original_name_en = "art",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(668, {
   image = 333,
@@ -4622,6 +4870,8 @@ define(668, {
   original_name_en = "book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(667, {
   image = 391,
@@ -4659,6 +4909,8 @@ define(667, {
   original_name_en = "sister's love fueled lunch",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(666, {
   image = 692,
@@ -4696,6 +4948,8 @@ define(666, {
   original_name_en = "Lulwy",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(665, {
   image = 680,
@@ -4733,6 +4987,8 @@ define(665, {
   original_name_en = "Opartos",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(664, {
   image = 489,
@@ -4770,6 +5026,8 @@ define(664, {
   original_name_en = "speed ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(663, {
   image = 654,
@@ -4807,6 +5065,8 @@ define(663, {
   original_name_en = "monster heart",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(662, {
   image = 189,
@@ -4844,6 +5104,8 @@ define(662, {
   original_name_en = "magic fruit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(661, {
   image = 459,
@@ -4881,6 +5143,8 @@ define(661, {
   original_name_en = "<Dal-i-thalion>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(660, {
   image = 429,
@@ -4918,6 +5182,8 @@ define(660, {
   original_name_en = "darkness arrow",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(659, {
   image = 653,
@@ -4955,6 +5221,8 @@ define(659, {
   original_name_en = "partition",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(658, {
   image = 652,
@@ -4992,6 +5260,8 @@ define(658, {
   original_name_en = "chochin",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(657, {
   image = 651,
@@ -5029,6 +5299,8 @@ define(657, {
   original_name_en = "eastern window",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(656, {
   image = 650,
@@ -5066,6 +5338,8 @@ define(656, {
   original_name_en = "eastern lamp",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(655, {
   image = 168,
@@ -5103,6 +5377,8 @@ define(655, {
   original_name_en = "hero cheese",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(654, {
   image = 649,
@@ -5140,6 +5416,8 @@ define(654, {
   original_name_en = "double bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(653, {
   image = 648,
@@ -5177,6 +5455,8 @@ define(653, {
   original_name_en = "junk",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(652, {
   image = 647,
@@ -5214,6 +5494,8 @@ define(652, {
   original_name_en = "sink",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(651, {
   image = 646,
@@ -5251,6 +5533,8 @@ define(651, {
   original_name_en = "craft cupboard",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(650, {
   image = 645,
@@ -5288,6 +5572,8 @@ define(650, {
   original_name_en = "toilet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(649, {
   image = 644,
@@ -5325,6 +5611,8 @@ define(649, {
   original_name_en = "flowerbed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(648, {
   image = 643,
@@ -5362,6 +5650,8 @@ define(648, {
   original_name_en = "sofa",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(647, {
   image = 642,
@@ -5399,6 +5689,8 @@ define(647, {
   original_name_en = "black board",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(646, {
   image = 641,
@@ -5436,6 +5728,8 @@ define(646, {
   original_name_en = "menu board",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(645, {
   image = 640,
@@ -5473,6 +5767,8 @@ define(645, {
   original_name_en = "king drawer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(644, {
   image = 639,
@@ -5510,6 +5806,8 @@ define(644, {
   original_name_en = "decorated window",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(643, {
   image = 638,
@@ -5547,6 +5845,8 @@ define(643, {
   original_name_en = "eastern bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(642, {
   image = 637,
@@ -5584,6 +5884,8 @@ define(642, {
   original_name_en = "rice barrel",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(641, {
   image = 636,
@@ -5621,6 +5923,8 @@ define(641, {
   original_name_en = "cooler box",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(640, {
   image = 635,
@@ -5658,6 +5962,8 @@ define(640, {
   original_name_en = "unicorn horn",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/spshop/",
+  rffilter = "",
 })
 define(639, {
   image = 172,
@@ -5695,6 +6001,8 @@ define(639, {
   original_name_en = "happy apple",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(638, {
   image = 470,
@@ -5732,6 +6040,8 @@ define(638, {
   original_name_en = "escape",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(637, {
   image = 633,
@@ -5769,6 +6079,8 @@ define(637, {
   original_name_en = "skeleton key",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(636, {
   image = 634,
@@ -5806,6 +6118,8 @@ define(636, {
   original_name_en = "lockpick",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(635, {
   image = 632,
@@ -5843,6 +6157,8 @@ define(635, {
   original_name_en = "mine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/spshop/",
+  rffilter = "",
 })
 define(634, {
   image = 631,
@@ -5880,6 +6196,8 @@ define(634, {
   original_name_en = "leash",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(633, {
   image = 630,
@@ -5917,6 +6235,8 @@ define(633, {
   original_name_en = "panty",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(632, {
   image = 470,
@@ -5954,6 +6274,8 @@ define(632, {
   original_name_en = "flying scroll",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(631, {
   image = 566,
@@ -5991,6 +6313,8 @@ define(631, {
   original_name_en = "moon gate",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(630, {
   image = 629,
@@ -6028,6 +6352,8 @@ define(630, {
   original_name_en = "material kit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/spshop/",
+  rffilter = "",
 })
 define(629, {
   image = 628,
@@ -6065,6 +6391,8 @@ define(629, {
   original_name_en = "disguise set",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(628, {
   image = 429,
@@ -6102,6 +6430,8 @@ define(628, {
   original_name_en = "incognito",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(627, {
   image = 480,
@@ -6139,6 +6469,8 @@ define(627, {
   original_name_en = "<Sage's Helm>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(626, {
   image = 354,
@@ -6176,6 +6508,8 @@ define(626, {
   original_name_en = "hermes blood",
   originalnameref2 = "bottle",
   has_random_name = true,
+  filter = "/spshop/",
+  rffilter = "",
 })
 define(625, {
   image = 627,
@@ -6213,6 +6547,8 @@ define(625, {
   original_name_en = "shrine gate",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(624, {
   image = 429,
@@ -6250,6 +6586,8 @@ define(624, {
   original_name_en = "girl's diary",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(623, {
   image = 429,
@@ -6287,6 +6625,8 @@ define(623, {
   original_name_en = "cat sister's diary",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(622, {
   image = 165,
@@ -6324,6 +6664,8 @@ define(622, {
   original_name_en = "small medal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "/ore/",
 })
 define(621, {
   image = 252,
@@ -6361,6 +6703,8 @@ define(621, {
   original_name_en = "treasure map",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/spshop/",
+  rffilter = "",
 })
 define(620, {
   image = 354,
@@ -6398,6 +6742,8 @@ define(620, {
   original_name_en = "love potion",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(619, {
   image = 310,
@@ -6435,6 +6781,8 @@ define(619, {
   original_name_en = "",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(618, {
   image = 310,
@@ -6472,6 +6820,8 @@ define(618, {
   original_name_en = "",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/fish/",
 })
 define(617, {
   image = 569,
@@ -6509,6 +6859,8 @@ define(617, {
   original_name_en = "bait",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(616, {
   image = 384,
@@ -6546,6 +6898,8 @@ define(616, {
   original_name_en = "tax master's tax box",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(615, {
   image = 383,
@@ -6583,6 +6937,8 @@ define(615, {
   original_name_en = "bill",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(614, {
   image = 568,
@@ -6620,6 +6976,8 @@ define(614, {
   original_name_en = "flower arch",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(613, {
   image = 569,
@@ -6657,6 +7015,8 @@ define(613, {
   original_name_en = "king's bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(612, {
   image = 382,
@@ -6694,6 +7054,8 @@ define(612, {
   original_name_en = "nice window",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(611, {
   image = 107,
@@ -6731,6 +7093,8 @@ define(611, {
   original_name_en = "house board",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(610, {
   image = 380,
@@ -6768,6 +7132,8 @@ define(610, {
   original_name_en = "triangle plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(609, {
   image = 379,
@@ -6805,6 +7171,8 @@ define(609, {
   original_name_en = "window",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(608, {
   image = 378,
@@ -6842,6 +7210,8 @@ define(608, {
   original_name_en = "square window",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(607, {
   image = 377,
@@ -6879,6 +7249,8 @@ define(607, {
   original_name_en = "giant cactus",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(606, {
   image = 376,
@@ -6916,6 +7288,8 @@ define(606, {
   original_name_en = "barbecue set",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(605, {
   image = 375,
@@ -6953,6 +7327,8 @@ define(605, {
   original_name_en = "money tree",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(604, {
   image = 374,
@@ -6990,6 +7366,8 @@ define(604, {
   original_name_en = "green plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(603, {
   image = 373,
@@ -7027,6 +7405,8 @@ define(603, {
   original_name_en = "president's chair",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(602, {
   image = 372,
@@ -7064,6 +7444,8 @@ define(602, {
   original_name_en = "holy well",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(601, {
   image = 371,
@@ -7101,6 +7483,8 @@ define(601, {
   original_name_en = "empty bottle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(600, {
   image = 370,
@@ -7138,6 +7522,8 @@ define(600, {
   original_name_en = "giant's shackle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(599, {
   image = 570,
@@ -7175,6 +7561,8 @@ define(599, {
   original_name_en = "christmas tree",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(598, {
   image = 134,
@@ -7212,6 +7600,8 @@ define(598, {
   original_name_en = "snow man",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(597, {
   image = 570,
@@ -7249,6 +7639,8 @@ define(597, {
   original_name_en = "christmas tree",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(596, {
   image = 369,
@@ -7286,6 +7678,8 @@ define(596, {
   original_name_en = "stained glass window",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(595, {
   image = 571,
@@ -7323,6 +7717,8 @@ define(595, {
   original_name_en = "pillar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(594, {
   image = 572,
@@ -7360,6 +7756,8 @@ define(594, {
   original_name_en = "holy cross",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(593, {
   image = 573,
@@ -7397,6 +7795,8 @@ define(593, {
   original_name_en = "modern lamp",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(592, {
   image = 368,
@@ -7434,6 +7834,8 @@ define(592, {
   original_name_en = "snow barrel",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(591, {
   image = 366,
@@ -7471,6 +7873,8 @@ define(591, {
   original_name_en = "mini snow man",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(590, {
   image = 367,
@@ -7508,6 +7912,8 @@ define(590, {
   original_name_en = "snow scarecrow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(589, {
   image = 574,
@@ -7545,6 +7951,8 @@ define(589, {
   original_name_en = "fir",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(588, {
   image = 575,
@@ -7582,6 +7990,8 @@ define(588, {
   original_name_en = "naked",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(587, {
   image = 365,
@@ -7619,6 +8029,8 @@ define(587, {
   original_name_en = "snow",
   originalnameref2 = "handful",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(586, {
   image = 576,
@@ -7656,6 +8068,8 @@ define(586, {
   original_name_en = "modern lamp",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(585, {
   image = 364,
@@ -7693,6 +8107,8 @@ define(585, {
   original_name_en = "fancy lamp",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(584, {
   image = 353,
@@ -7730,6 +8146,8 @@ define(584, {
   original_name_en = "candle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(583, {
   image = 352,
@@ -7767,6 +8185,8 @@ define(583, {
   original_name_en = "torch",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(582, {
   image = 429,
@@ -7804,6 +8224,8 @@ define(582, {
   original_name_en = "make door",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(581, {
   image = 471,
@@ -7841,6 +8263,8 @@ define(581, {
   original_name_en = "make door",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(580, {
   image = 236,
@@ -7878,6 +8302,8 @@ define(580, {
   original_name_en = "modern rack",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(579, {
   image = 577,
@@ -7915,6 +8341,8 @@ define(579, {
   original_name_en = "freezer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(578, {
   image = 348,
@@ -7952,6 +8380,8 @@ define(578, {
   original_name_en = "kitty bank",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(577, {
   image = 223,
@@ -7989,6 +8419,8 @@ define(577, {
   original_name_en = "molotov",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(576, {
   image = 516,
@@ -8026,6 +8458,8 @@ define(576, {
   original_name_en = "playback disc",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(575, {
   image = 340,
@@ -8063,6 +8497,8 @@ define(575, {
   original_name_en = "shit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(574, {
   image = 339,
@@ -8100,6 +8536,8 @@ define(574, {
   original_name_en = "milk",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(573, {
   image = 338,
@@ -8137,6 +8575,8 @@ define(573, {
   original_name_en = "egg",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(572, {
   image = 308,
@@ -8174,6 +8614,8 @@ define(572, {
   original_name_en = "ranch",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(571, {
   image = 337,
@@ -8211,6 +8653,8 @@ define(571, {
   original_name_en = "jerky",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(570, {
   image = 471,
@@ -8248,6 +8692,8 @@ define(570, {
   original_name_en = "fire wall",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(569, {
   image = 429,
@@ -8285,6 +8731,8 @@ define(569, {
   original_name_en = "fire wall",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(568, {
   image = 335,
@@ -8322,6 +8770,8 @@ define(568, {
   original_name_en = "coldproof blanket",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(567, {
   image = 335,
@@ -8359,6 +8809,8 @@ define(567, {
   original_name_en = "fireproof blanket",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(566, {
   image = 354,
@@ -8396,6 +8848,8 @@ define(566, {
   original_name_en = "acidproof liquid",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(565, {
   image = 471,
@@ -8433,6 +8887,8 @@ define(565, {
   original_name_en = "acid ground",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(564, {
   image = 429,
@@ -8470,6 +8926,8 @@ define(564, {
   original_name_en = "acid ground",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(563, {
   image = 334,
@@ -8507,6 +8965,8 @@ define(563, {
   original_name_en = "textbook",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(562, {
   image = 332,
@@ -8544,6 +9004,8 @@ define(562, {
   original_name_en = "register",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(561, {
   image = 197,
@@ -8581,6 +9043,8 @@ define(561, {
   original_name_en = "shop strongbox",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(560, {
   image = 331,
@@ -8618,6 +9082,8 @@ define(560, {
   original_name_en = "master's delivery chest",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(559, {
   image = 354,
@@ -8655,6 +9121,8 @@ define(559, {
   original_name_en = "cure corruption",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(558, {
   image = 489,
@@ -8692,6 +9160,8 @@ define(558, {
   original_name_en = "aurora ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(557, {
   image = 422,
@@ -8729,6 +9199,8 @@ define(557, {
   original_name_en = "vindale cloak",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(556, {
   image = 460,
@@ -8766,6 +9238,8 @@ define(556, {
   original_name_en = "seven league boots",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(555, {
   image = 330,
@@ -8803,6 +9277,8 @@ define(555, {
   original_name_en = "shelter",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(554, {
   image = 323,
@@ -8840,6 +9316,8 @@ define(554, {
   original_name_en = "magical seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(553, {
   image = 323,
@@ -8877,6 +9355,8 @@ define(553, {
   original_name_en = "gem seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(552, {
   image = 326,
@@ -8914,6 +9394,8 @@ define(552, {
   original_name_en = "feather",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(551, {
   image = 471,
@@ -8951,6 +9433,8 @@ define(551, {
   original_name_en = "healing hands",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(550, {
   image = 429,
@@ -8988,6 +9472,8 @@ define(550, {
   original_name_en = "healing hands",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(549, {
   image = 470,
@@ -9025,6 +9511,8 @@ define(549, {
   original_name_en = "healing rain",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(548, {
   image = 429,
@@ -9062,6 +9550,8 @@ define(548, {
   original_name_en = "healing rain",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(547, {
   image = 325,
@@ -9099,6 +9589,8 @@ define(547, {
   original_name_en = "salary chest",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(546, {
   image = 429,
@@ -9136,6 +9628,8 @@ define(546, {
   original_name_en = "wall creation",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(545, {
   image = 471,
@@ -9173,6 +9667,8 @@ define(545, {
   original_name_en = "wall creation",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(544, {
   image = 516,
@@ -9210,6 +9706,8 @@ define(544, {
   original_name_en = "disc",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(543, {
   image = 308,
@@ -9247,6 +9745,8 @@ define(543, {
   original_name_en = "storage house",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(542, {
   image = 308,
@@ -9284,6 +9784,8 @@ define(542, {
   original_name_en = "farm",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(541, {
   image = 134,
@@ -9321,6 +9823,8 @@ define(541, {
   original_name_en = "snow man",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(540, {
   image = 130,
@@ -9358,6 +9862,8 @@ define(540, {
   original_name_en = "black crystal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(539, {
   image = 578,
@@ -9395,6 +9901,8 @@ define(539, {
   original_name_en = "cat",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(538, {
   image = 131,
@@ -9432,6 +9940,8 @@ define(538, {
   original_name_en = "sunflower",
   originalnameref2 = "painting",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(537, {
   image = 92,
@@ -9469,6 +9979,8 @@ define(537, {
   original_name_en = "landscape",
   originalnameref2 = "painting",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(536, {
   image = 81,
@@ -9506,6 +10018,8 @@ define(536, {
   original_name_en = "madam",
   originalnameref2 = "painting",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(535, {
   image = 83,
@@ -9543,6 +10057,8 @@ define(535, {
   original_name_en = "big table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(534, {
   image = 582,
@@ -9580,6 +10096,8 @@ define(534, {
   original_name_en = "giant foliage plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(533, {
   image = 581,
@@ -9617,6 +10135,8 @@ define(533, {
   original_name_en = "stove",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(532, {
   image = 584,
@@ -9654,6 +10174,8 @@ define(532, {
   original_name_en = "fireplace",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(531, {
   image = 583,
@@ -9691,6 +10213,8 @@ define(531, {
   original_name_en = "furnance",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(530, {
   image = 587,
@@ -9728,6 +10252,8 @@ define(530, {
   original_name_en = "ash",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(529, {
   image = 588,
@@ -9765,6 +10291,8 @@ define(529, {
   original_name_en = "palm",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(528, {
   image = 589,
@@ -9802,6 +10330,8 @@ define(528, {
   original_name_en = "zelkova",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(527, {
   image = 590,
@@ -9839,6 +10369,8 @@ define(527, {
   original_name_en = "dead tree",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(526, {
   image = 591,
@@ -9876,6 +10408,8 @@ define(526, {
   original_name_en = "fruits",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(525, {
   image = 592,
@@ -9913,6 +10447,8 @@ define(525, {
   original_name_en = "fruitless",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(524, {
   image = 593,
@@ -9950,6 +10486,8 @@ define(524, {
   original_name_en = "cedar",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(523, {
   image = 527,
@@ -9987,6 +10525,8 @@ define(523, {
   original_name_en = "beech",
   originalnameref2 = "tree",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(522, {
   image = 308,
@@ -10024,6 +10564,8 @@ define(522, {
   original_name_en = "shop",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(521, {
   image = 308,
@@ -10061,6 +10603,8 @@ define(521, {
   original_name_en = "museum",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(520, {
   image = 522,
@@ -10098,6 +10642,8 @@ define(520, {
   original_name_en = "wing",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(519, {
   image = 354,
@@ -10135,6 +10681,8 @@ define(519, {
   original_name_en = "dye",
   originalnameref2 = "bottle",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(518, {
   image = 471,
@@ -10172,6 +10720,8 @@ define(518, {
   original_name_en = "alchemy",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(517, {
   image = 471,
@@ -10209,6 +10759,8 @@ define(517, {
   original_name_en = "change creature",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(516, {
   image = 354,
@@ -10246,6 +10798,8 @@ define(516, {
   original_name_en = "water",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(515, {
   image = 470,
@@ -10283,6 +10837,8 @@ define(515, {
   original_name_en = "recharge",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(514, {
   image = 520,
@@ -10320,6 +10876,8 @@ define(514, {
   original_name_en = "<Rail Gun>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(513, {
   image = 521,
@@ -10357,6 +10915,8 @@ define(513, {
   original_name_en = "energy cell",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(512, {
   image = 520,
@@ -10394,6 +10954,8 @@ define(512, {
   original_name_en = "laser gun",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(511, {
   image = 308,
@@ -10431,6 +10993,8 @@ define(511, {
   original_name_en = "heirship",
   originalnameref2 = "deed",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(510, {
   image = 253,
@@ -10468,6 +11032,8 @@ define(510, {
   original_name_en = "heir trunk",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(509, {
   image = 470,
@@ -10505,6 +11071,8 @@ define(509, {
   original_name_en = "greater enchant armor",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(508, {
   image = 470,
@@ -10542,6 +11110,8 @@ define(508, {
   original_name_en = "enchant armor",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(507, {
   image = 470,
@@ -10579,6 +11149,8 @@ define(507, {
   original_name_en = "greater enchant weapon",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(506, {
   image = 470,
@@ -10616,6 +11188,8 @@ define(506, {
   original_name_en = "enchant weapon",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(505, {
   image = 429,
@@ -10653,6 +11227,8 @@ define(505, {
   original_name_en = "little sister's diary",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(504, {
   image = 528,
@@ -10690,6 +11266,8 @@ define(504, {
   original_name_en = "card",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(503, {
   image = 531,
@@ -10727,6 +11305,8 @@ define(503, {
   original_name_en = "figurine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(502, {
   image = 470,
@@ -10764,6 +11344,8 @@ define(502, {
   original_name_en = "superior material",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/spshop/",
+  rffilter = "",
 })
 define(501, {
   image = 470,
@@ -10801,6 +11383,8 @@ define(501, {
   original_name_en = "change material",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(500, {
   image = 470,
@@ -10838,6 +11422,8 @@ define(500, {
   original_name_en = "inferior material",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(499, {
   image = 519,
@@ -10875,6 +11461,8 @@ define(499, {
   original_name_en = "cyber snack",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/fest/",
+  rffilter = "",
 })
 define(498, {
   image = 518,
@@ -10912,6 +11500,8 @@ define(498, {
   original_name_en = "fried potato",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/fest/",
+  rffilter = "",
 })
 define(497, {
   image = 517,
@@ -10949,6 +11539,8 @@ define(497, {
   original_name_en = "pop corn",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/fest/",
+  rffilter = "",
 })
 define(496, {
   image = 514,
@@ -10986,6 +11578,8 @@ define(496, {
   original_name_en = "shot gun",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(495, {
   image = 516,
@@ -11023,6 +11617,8 @@ define(495, {
   original_name_en = "blank disc",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(494, {
   image = 515,
@@ -11060,6 +11656,8 @@ define(494, {
   original_name_en = "chip",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(493, {
   image = 513,
@@ -11097,6 +11695,8 @@ define(493, {
   original_name_en = "trash can",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(492, {
   image = 512,
@@ -11134,6 +11734,8 @@ define(492, {
   original_name_en = "storage",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(491, {
   image = 511,
@@ -11171,6 +11773,8 @@ define(491, {
   original_name_en = "server",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(490, {
   image = 510,
@@ -11208,6 +11812,8 @@ define(490, {
   original_name_en = "microwave oven",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(489, {
   image = 509,
@@ -11245,6 +11851,8 @@ define(489, {
   original_name_en = "camera",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/fest/",
+  rffilter = "",
 })
 define(488, {
   image = 506,
@@ -11282,6 +11890,8 @@ define(488, {
   original_name_en = "training machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(487, {
   image = 508,
@@ -11319,6 +11929,8 @@ define(487, {
   original_name_en = "computer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(486, {
   image = 507,
@@ -11356,6 +11968,8 @@ define(486, {
   original_name_en = "machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(485, {
   image = 471,
@@ -11393,6 +12007,8 @@ define(485, {
   original_name_en = "web",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(484, {
   image = 429,
@@ -11430,6 +12046,8 @@ define(484, {
   original_name_en = "web",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(483, {
   image = 412,
@@ -11467,6 +12085,8 @@ define(483, {
   original_name_en = "bolt",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(482, {
   image = 498,
@@ -11504,6 +12124,8 @@ define(482, {
   original_name_en = "crossbow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(481, {
   image = 429,
@@ -11541,6 +12163,8 @@ define(481, {
   original_name_en = "domination",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(480, {
   image = 471,
@@ -11578,6 +12202,8 @@ define(480, {
   original_name_en = "domination",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(479, {
   image = 470,
@@ -11615,6 +12241,8 @@ define(479, {
   original_name_en = "ally",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(478, {
   image = 493,
@@ -11652,6 +12280,8 @@ define(478, {
   original_name_en = "stethoscope",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(477, {
   image = 489,
@@ -11689,6 +12319,8 @@ define(477, {
   original_name_en = "engagement ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(476, {
   image = 490,
@@ -11726,6 +12358,8 @@ define(476, {
   original_name_en = "ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(475, {
   image = 491,
@@ -11763,6 +12397,8 @@ define(475, {
   original_name_en = "armored ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(474, {
   image = 492,
@@ -11800,6 +12436,8 @@ define(474, {
   original_name_en = "composite ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(473, {
   image = 483,
@@ -11837,6 +12475,8 @@ define(473, {
   original_name_en = "engagement amulet",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(472, {
   image = 484,
@@ -11874,6 +12514,8 @@ define(472, {
   original_name_en = "bejeweled amulet",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(471, {
   image = 485,
@@ -11911,6 +12553,8 @@ define(471, {
   original_name_en = "charm",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(470, {
   image = 486,
@@ -11948,6 +12592,8 @@ define(470, {
   original_name_en = "neck guard",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(469, {
   image = 487,
@@ -11985,6 +12631,8 @@ define(469, {
   original_name_en = "talisman",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(468, {
   image = 488,
@@ -12022,6 +12670,8 @@ define(468, {
   original_name_en = "peridot",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(467, {
   image = 482,
@@ -12059,6 +12709,8 @@ define(467, {
   original_name_en = "composite helm",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(466, {
   image = 479,
@@ -12096,6 +12748,8 @@ define(466, {
   original_name_en = "helm",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(465, {
   image = 480,
@@ -12133,6 +12787,8 @@ define(465, {
   original_name_en = "knight helm",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(464, {
   image = 481,
@@ -12170,6 +12826,8 @@ define(464, {
   original_name_en = "heavy helm",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(463, {
   image = 413,
@@ -12207,6 +12865,8 @@ define(463, {
   original_name_en = "feather hat",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(462, {
   image = 476,
@@ -12244,6 +12904,8 @@ define(462, {
   original_name_en = "cloak",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(461, {
   image = 475,
@@ -12281,6 +12943,8 @@ define(461, {
   original_name_en = "armored cloak",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(460, {
   image = 474,
@@ -12318,6 +12982,8 @@ define(460, {
   original_name_en = "plate girdle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(459, {
   image = 474,
@@ -12355,6 +13021,8 @@ define(459, {
   original_name_en = "composite girdle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(458, {
   image = 461,
@@ -12392,6 +13060,8 @@ define(458, {
   original_name_en = "armored boots",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(457, {
   image = 459,
@@ -12429,6 +13099,8 @@ define(457, {
   original_name_en = "tight boots",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(456, {
   image = 473,
@@ -12466,6 +13138,8 @@ define(456, {
   original_name_en = "boots",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(455, {
   image = 473,
@@ -12503,6 +13177,8 @@ define(455, {
   original_name_en = "shoes",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(454, {
   image = 458,
@@ -12540,6 +13216,8 @@ define(454, {
   original_name_en = "tower shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(453, {
   image = 457,
@@ -12577,6 +13255,8 @@ define(453, {
   original_name_en = "kite shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(452, {
   image = 456,
@@ -12614,6 +13294,8 @@ define(452, {
   original_name_en = "large shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(451, {
   image = 455,
@@ -12651,6 +13333,8 @@ define(451, {
   original_name_en = "shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(450, {
   image = 454,
@@ -12688,6 +13372,8 @@ define(450, {
   original_name_en = "round shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(449, {
   image = 453,
@@ -12725,6 +13411,8 @@ define(449, {
   original_name_en = "small shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(448, {
   image = 452,
@@ -12762,6 +13450,8 @@ define(448, {
   original_name_en = "composite gauntlets",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(447, {
   image = 451,
@@ -12799,6 +13489,8 @@ define(447, {
   original_name_en = "light gloves",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(446, {
   image = 414,
@@ -12836,6 +13528,8 @@ define(446, {
   original_name_en = "plate gauntlets",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(445, {
   image = 448,
@@ -12873,6 +13567,8 @@ define(445, {
   original_name_en = "gloves",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(444, {
   image = 447,
@@ -12910,6 +13606,8 @@ define(444, {
   original_name_en = "bulletproof jacket",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(443, {
   image = 446,
@@ -12947,6 +13645,8 @@ define(443, {
   original_name_en = "breast plate",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(442, {
   image = 445,
@@ -12984,6 +13684,8 @@ define(442, {
   original_name_en = "coat",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(441, {
   image = 444,
@@ -13021,6 +13723,8 @@ define(441, {
   original_name_en = "light mail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(440, {
   image = 443,
@@ -13058,6 +13762,8 @@ define(440, {
   original_name_en = "pope robe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(439, {
   image = 442,
@@ -13095,6 +13801,8 @@ define(439, {
   original_name_en = "chain mail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(438, {
   image = 441,
@@ -13132,6 +13840,8 @@ define(438, {
   original_name_en = "composite mail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(437, {
   image = 440,
@@ -13169,6 +13879,8 @@ define(437, {
   original_name_en = "ring mail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(436, {
   image = 410,
@@ -13206,6 +13918,8 @@ define(436, {
   original_name_en = "plate mail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(435, {
   image = 409,
@@ -13243,6 +13957,8 @@ define(435, {
   original_name_en = "banded mail",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(434, {
   image = 429,
@@ -13280,6 +13996,8 @@ define(434, {
   original_name_en = "mutation",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(433, {
   image = 354,
@@ -13317,6 +14035,8 @@ define(433, {
   original_name_en = "cure mutation",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(432, {
   image = 354,
@@ -13354,6 +14074,8 @@ define(432, {
   original_name_en = "mutation",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(431, {
   image = 470,
@@ -13391,6 +14113,8 @@ define(431, {
   original_name_en = "faith",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(430, {
   image = 470,
@@ -13428,6 +14152,8 @@ define(430, {
   original_name_en = "growth",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(429, {
   image = 354,
@@ -13465,6 +14191,8 @@ define(429, {
   original_name_en = "weaken resistance",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(428, {
   image = 324,
@@ -13502,6 +14230,8 @@ define(428, {
   original_name_en = "sleeping bag",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(427, {
   image = 170,
@@ -13539,6 +14269,8 @@ define(427, {
   original_name_en = "stomafillia",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(426, {
   image = 170,
@@ -13576,6 +14308,8 @@ define(426, {
   original_name_en = "alraunia",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(425, {
   image = 170,
@@ -13613,6 +14347,8 @@ define(425, {
   original_name_en = "curaria",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(424, {
   image = 170,
@@ -13650,6 +14386,8 @@ define(424, {
   original_name_en = "spenseweed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(423, {
   image = 170,
@@ -13687,6 +14425,8 @@ define(423, {
   original_name_en = "mareilon",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(422, {
   image = 170,
@@ -13724,6 +14464,8 @@ define(422, {
   original_name_en = "morgia",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(421, {
   image = 323,
@@ -13761,6 +14503,8 @@ define(421, {
   original_name_en = "artifact seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/spshop/",
+  rffilter = "",
 })
 define(420, {
   image = 323,
@@ -13798,6 +14542,8 @@ define(420, {
   original_name_en = "unknown seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(419, {
   image = 323,
@@ -13835,6 +14581,8 @@ define(419, {
   original_name_en = "herb seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(418, {
   image = 323,
@@ -13872,6 +14620,8 @@ define(418, {
   original_name_en = "fruit seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(417, {
   image = 323,
@@ -13909,6 +14659,8 @@ define(417, {
   original_name_en = "vegetable seed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(416, {
   image = 322,
@@ -13946,6 +14698,8 @@ define(416, {
   original_name_en = "rare treasure ball",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/spshop/",
+  rffilter = "",
 })
 define(415, {
   image = 322,
@@ -13983,6 +14737,8 @@ define(415, {
   original_name_en = "treasure ball",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(414, {
   image = 321,
@@ -14020,6 +14776,8 @@ define(414, {
   original_name_en = "blue treasure machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(413, {
   image = 320,
@@ -14057,6 +14815,8 @@ define(413, {
   original_name_en = "red treasure machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(412, {
   image = 471,
@@ -14094,6 +14854,8 @@ define(412, {
   original_name_en = "uncurse",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(411, {
   image = 470,
@@ -14131,6 +14893,8 @@ define(411, {
   original_name_en = "detect objects",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(410, {
   image = 429,
@@ -14168,6 +14932,8 @@ define(410, {
   original_name_en = "detect objects",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(409, {
   image = 251,
@@ -14205,6 +14971,8 @@ define(409, {
   original_name_en = "inner tube",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(408, {
   image = 68,
@@ -14242,6 +15010,8 @@ define(408, {
   original_name_en = "noble toy",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(407, {
   image = 208,
@@ -14279,6 +15049,8 @@ define(407, {
   original_name_en = "whisky",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(406, {
   image = 316,
@@ -14316,6 +15088,8 @@ define(406, {
   original_name_en = "tuna fish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(405, {
   image = 161,
@@ -14353,6 +15127,8 @@ define(405, {
   original_name_en = "grave",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(404, {
   image = 312,
@@ -14390,6 +15166,8 @@ define(404, {
   original_name_en = "manboo",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(403, {
   image = 269,
@@ -14427,6 +15205,8 @@ define(403, {
   original_name_en = "coffin",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(402, {
   image = 202,
@@ -14464,6 +15244,8 @@ define(402, {
   original_name_en = "rope",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(401, {
   image = 292,
@@ -14501,6 +15283,8 @@ define(401, {
   original_name_en = "piano",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(400, {
   image = 72,
@@ -14538,6 +15322,8 @@ define(400, {
   original_name_en = "barrel",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(399, {
   image = 67,
@@ -14575,6 +15361,8 @@ define(399, {
   original_name_en = "rag doll",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(398, {
   image = 470,
@@ -14612,6 +15400,8 @@ define(398, {
   original_name_en = "knowledge",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(397, {
   image = 429,
@@ -14649,6 +15439,8 @@ define(397, {
   original_name_en = "knowledge",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(396, {
   image = 429,
@@ -14686,6 +15478,8 @@ define(396, {
   original_name_en = "nightmare",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(395, {
   image = 470,
@@ -14723,6 +15517,8 @@ define(395, {
   original_name_en = "gain material",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(394, {
   image = 438,
@@ -14760,6 +15556,8 @@ define(394, {
   original_name_en = "material box",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(393, {
   image = 319,
@@ -14797,6 +15595,8 @@ define(393, {
   original_name_en = "gem cutter",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(392, {
   image = 223,
@@ -14834,6 +15634,8 @@ define(392, {
   original_name_en = "sulfuric",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(391, {
   image = 471,
@@ -14871,6 +15673,8 @@ define(391, {
   original_name_en = "mana",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(390, {
   image = 470,
@@ -14908,6 +15712,8 @@ define(390, {
   original_name_en = "mana",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(389, {
   image = 470,
@@ -14945,6 +15751,8 @@ define(389, {
   original_name_en = "holy rain",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(388, {
   image = 470,
@@ -14982,6 +15790,8 @@ define(388, {
   original_name_en = "holy light",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(387, {
   image = 429,
@@ -15019,6 +15829,8 @@ define(387, {
   original_name_en = "holy rain",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(386, {
   image = 429,
@@ -15056,6 +15868,8 @@ define(386, {
   original_name_en = "holy light",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(385, {
   image = 471,
@@ -15093,6 +15907,8 @@ define(385, {
   original_name_en = "holy light",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(384, {
   image = 470,
@@ -15130,6 +15946,8 @@ define(384, {
   original_name_en = "holy veil",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(383, {
   image = 429,
@@ -15167,6 +15985,8 @@ define(383, {
   original_name_en = "holy veil",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(382, {
   image = 354,
@@ -15204,6 +16024,8 @@ define(382, {
   original_name_en = "weakness",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(381, {
   image = 429,
@@ -15241,6 +16063,8 @@ define(381, {
   original_name_en = "elemental scar",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(380, {
   image = 429,
@@ -15278,6 +16102,8 @@ define(380, {
   original_name_en = "weakness",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(379, {
   image = 354,
@@ -15315,6 +16141,8 @@ define(379, {
   original_name_en = "hero",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(378, {
   image = 429,
@@ -15352,6 +16180,8 @@ define(378, {
   original_name_en = "hero",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(377, {
   image = 471,
@@ -15389,6 +16219,8 @@ define(377, {
   original_name_en = "speed",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(376, {
   image = 354,
@@ -15426,6 +16258,8 @@ define(376, {
   original_name_en = "slow",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(375, {
   image = 354,
@@ -15463,6 +16297,8 @@ define(375, {
   original_name_en = "speed",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(374, {
   image = 429,
@@ -15500,6 +16336,8 @@ define(374, {
   original_name_en = "slow",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(373, {
   image = 429,
@@ -15537,6 +16375,8 @@ define(373, {
   original_name_en = "speed",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(372, {
   image = 354,
@@ -15574,6 +16414,8 @@ define(372, {
   original_name_en = "resistance",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(371, {
   image = 429,
@@ -15611,6 +16453,8 @@ define(371, {
   original_name_en = "resistance",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(370, {
   image = 354,
@@ -15648,6 +16492,8 @@ define(370, {
   original_name_en = "troll blood",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(369, {
   image = 429,
@@ -15685,6 +16531,8 @@ define(369, {
   original_name_en = "regeneration",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(368, {
   image = 354,
@@ -15722,6 +16570,8 @@ define(368, {
   original_name_en = "silence",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(367, {
   image = 429,
@@ -15759,6 +16609,8 @@ define(367, {
   original_name_en = "silence",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(366, {
   image = 471,
@@ -15796,6 +16648,8 @@ define(366, {
   original_name_en = "silence",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(365, {
   image = 429,
@@ -15833,6 +16687,8 @@ define(365, {
   original_name_en = "holy shield",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(364, {
   image = 354,
@@ -15870,6 +16726,8 @@ define(364, {
   original_name_en = "defender",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(363, {
   image = 470,
@@ -15907,6 +16765,8 @@ define(363, {
   original_name_en = "vanish curse",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(362, {
   image = 470,
@@ -15944,6 +16804,8 @@ define(362, {
   original_name_en = "greater identify",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(361, {
   image = 253,
@@ -15981,6 +16843,8 @@ define(361, {
   original_name_en = "shopkeeper's trunk",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(360, {
   image = 407,
@@ -16018,6 +16882,8 @@ define(360, {
   original_name_en = "<Palmia Pride>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(359, {
   image = 426,
@@ -16055,6 +16921,8 @@ define(359, {
   original_name_en = "<Rankis>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(358, {
   image = 425,
@@ -16092,6 +16960,8 @@ define(358, {
   original_name_en = "<Staff of Insanity>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(357, {
   image = 407,
@@ -16129,6 +16999,8 @@ define(357, {
   original_name_en = "<Ring of Steel Dragon>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(356, {
   image = 427,
@@ -16166,6 +17038,8 @@ define(356, {
   original_name_en = "<Blood Moon>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(355, {
   image = 414,
@@ -16203,6 +17077,8 @@ define(355, {
   original_name_en = "<Gloves of Vesda>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(354, {
   image = 318,
@@ -16240,6 +17116,8 @@ define(354, {
   original_name_en = "sandborer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(353, {
   image = 317,
@@ -16277,6 +17155,8 @@ define(353, {
   original_name_en = "cutlassfish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(352, {
   image = 316,
@@ -16314,6 +17194,8 @@ define(352, {
   original_name_en = "tuna",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(351, {
   image = 315,
@@ -16351,6 +17233,8 @@ define(351, {
   original_name_en = "globefish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(350, {
   image = 314,
@@ -16388,6 +17272,8 @@ define(350, {
   original_name_en = "salmon",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(349, {
   image = 313,
@@ -16425,6 +17311,8 @@ define(349, {
   original_name_en = "seabream",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(348, {
   image = 312,
@@ -16462,6 +17350,8 @@ define(348, {
   original_name_en = "manboo",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(347, {
   image = 311,
@@ -16499,6 +17389,8 @@ define(347, {
   original_name_en = "flatfish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(346, {
   image = 310,
@@ -16536,6 +17428,8 @@ define(346, {
   original_name_en = "sardine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(345, {
   image = 309,
@@ -16573,6 +17467,8 @@ define(345, {
   original_name_en = "moonfish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "/fish/",
 })
 define(344, {
   image = 308,
@@ -16610,6 +17506,8 @@ define(344, {
   original_name_en = "deed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(343, {
   image = 307,
@@ -16647,6 +17545,8 @@ define(343, {
   original_name_en = "rune",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(342, {
   image = 306,
@@ -16684,6 +17584,8 @@ define(342, {
   original_name_en = "fishing pole",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(341, {
   image = 305,
@@ -16721,6 +17623,8 @@ define(341, {
   original_name_en = "bone",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(340, {
   image = 304,
@@ -16758,6 +17662,8 @@ define(340, {
   original_name_en = "heart",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(339, {
   image = 303,
@@ -16795,6 +17701,8 @@ define(339, {
   original_name_en = "eye",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(338, {
   image = 302,
@@ -16832,6 +17740,8 @@ define(338, {
   original_name_en = "blood",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(337, {
   image = 301,
@@ -16869,6 +17779,8 @@ define(337, {
   original_name_en = "skin",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(336, {
   image = 300,
@@ -16906,6 +17818,8 @@ define(336, {
   original_name_en = "golden statue",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(335, {
   image = 299,
@@ -16943,6 +17857,8 @@ define(335, {
   original_name_en = "golden pedestal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(334, {
   image = 579,
@@ -16980,6 +17896,8 @@ define(334, {
   original_name_en = "throne",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(333, {
   image = 297,
@@ -17017,6 +17935,8 @@ define(333, {
   original_name_en = "traveler's food",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(332, {
   image = 296,
@@ -17054,6 +17974,8 @@ define(332, {
   original_name_en = "table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(331, {
   image = 295,
@@ -17091,6 +18013,8 @@ define(331, {
   original_name_en = "dress",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(330, {
   image = 294,
@@ -17128,6 +18052,8 @@ define(330, {
   original_name_en = "stump",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(329, {
   image = 293,
@@ -17165,6 +18091,8 @@ define(329, {
   original_name_en = "cross",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(328, {
   image = 292,
@@ -17202,6 +18130,8 @@ define(328, {
   original_name_en = "upright piano",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(327, {
   image = 291,
@@ -17239,6 +18169,8 @@ define(327, {
   original_name_en = "wide chair",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(326, {
   image = 290,
@@ -17276,6 +18208,8 @@ define(326, {
   original_name_en = "simple rack",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(325, {
   image = 289,
@@ -17313,6 +18247,8 @@ define(325, {
   original_name_en = "comfortable bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(324, {
   image = 288,
@@ -17350,6 +18286,8 @@ define(324, {
   original_name_en = "sacred altar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(323, {
   image = 586,
@@ -17387,6 +18325,8 @@ define(323, {
   original_name_en = "big cupboard",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(322, {
   image = 286,
@@ -17424,6 +18364,8 @@ define(322, {
   original_name_en = "simple dresser",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(321, {
   image = 285,
@@ -17461,6 +18403,8 @@ define(321, {
   original_name_en = "neat rack",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(320, {
   image = 284,
@@ -17498,6 +18442,8 @@ define(320, {
   original_name_en = "cheap table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(319, {
   image = 283,
@@ -17535,6 +18481,8 @@ define(319, {
   original_name_en = "cheap bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(318, {
   image = 282,
@@ -17572,6 +18520,8 @@ define(318, {
   original_name_en = "old bookshelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(317, {
   image = 281,
@@ -17609,6 +18559,8 @@ define(317, {
   original_name_en = "old shelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(316, {
   image = 280,
@@ -17646,6 +18598,8 @@ define(316, {
   original_name_en = "big foliage plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(315, {
   image = 279,
@@ -17683,6 +18637,8 @@ define(315, {
   original_name_en = "darts board",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(314, {
   image = 278,
@@ -17720,6 +18676,8 @@ define(314, {
   original_name_en = "slot machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(313, {
   image = 277,
@@ -17757,6 +18715,8 @@ define(313, {
   original_name_en = "casino table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(312, {
   image = 276,
@@ -17794,6 +18754,8 @@ define(312, {
   original_name_en = "pachisuro machine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(311, {
   image = 275,
@@ -17831,6 +18793,8 @@ define(311, {
   original_name_en = "bathtub",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(310, {
   image = 274,
@@ -17868,6 +18832,8 @@ define(310, {
   original_name_en = "clean bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(309, {
   image = 273,
@@ -17905,6 +18871,8 @@ define(309, {
   original_name_en = "dresser",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(308, {
   image = 272,
@@ -17942,6 +18910,8 @@ define(308, {
   original_name_en = "cheap rack",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(307, {
   image = 271,
@@ -17979,6 +18949,8 @@ define(307, {
   original_name_en = "soft bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(306, {
   image = 270,
@@ -18016,6 +18988,8 @@ define(306, {
   original_name_en = "food processor",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(305, {
   image = 269,
@@ -18053,6 +19027,8 @@ define(305, {
   original_name_en = "coffin",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(304, {
   image = 268,
@@ -18090,6 +19066,8 @@ define(304, {
   original_name_en = "plain bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(303, {
   image = 267,
@@ -18127,6 +19105,8 @@ define(303, {
   original_name_en = "giant bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(302, {
   image = 266,
@@ -18164,6 +19144,8 @@ define(302, {
   original_name_en = "clothes",
   originalnameref2 = "chest",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(301, {
   image = 265,
@@ -18201,6 +19183,8 @@ define(301, {
   original_name_en = "large bouquet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(300, {
   image = 264,
@@ -18238,6 +19222,8 @@ define(300, {
   original_name_en = "neat bar table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(299, {
   image = 263,
@@ -18275,6 +19261,8 @@ define(299, {
   original_name_en = "high grade dresser",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(298, {
   image = 262,
@@ -18312,6 +19300,8 @@ define(298, {
   original_name_en = "vase",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(297, {
   image = 261,
@@ -18349,6 +19339,8 @@ define(297, {
   original_name_en = "luxury bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(296, {
   image = 260,
@@ -18386,6 +19378,8 @@ define(296, {
   original_name_en = "cabinet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(295, {
   image = 259,
@@ -18423,6 +19417,8 @@ define(295, {
   original_name_en = "ragged table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(294, {
   image = 258,
@@ -18460,6 +19456,8 @@ define(294, {
   original_name_en = "towel",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(293, {
   image = 257,
@@ -18497,6 +19495,8 @@ define(293, {
   original_name_en = "accessaries",
   originalnameref2 = "rack",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(292, {
   image = 256,
@@ -18534,6 +19534,8 @@ define(292, {
   original_name_en = "good",
   originalnameref2 = "rack",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(291, {
   image = 255,
@@ -18571,6 +19573,8 @@ define(291, {
   original_name_en = "well kept armor",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(290, {
   image = 471,
@@ -18608,6 +19612,8 @@ define(290, {
   original_name_en = "wishing",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(289, {
   image = 429,
@@ -18645,6 +19651,8 @@ define(289, {
   original_name_en = "wishing",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(288, {
   image = 470,
@@ -18682,6 +19690,8 @@ define(288, {
   original_name_en = "curse",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(287, {
   image = 354,
@@ -18719,6 +19729,8 @@ define(287, {
   original_name_en = "potential",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/spshop/",
+  rffilter = "",
 })
 define(286, {
   image = 354,
@@ -18756,6 +19768,8 @@ define(286, {
   original_name_en = "restore spirit",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(285, {
   image = 354,
@@ -18793,6 +19807,8 @@ define(285, {
   original_name_en = "restore body",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(284, {
   image = 254,
@@ -18830,6 +19846,8 @@ define(284, {
   original_name_en = "wallet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(283, {
   image = 253,
@@ -18867,6 +19885,8 @@ define(283, {
   original_name_en = "suitcase",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(282, {
   image = 252,
@@ -18904,6 +19924,8 @@ define(282, {
   original_name_en = "mysterious map",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(281, {
   image = 251,
@@ -18941,6 +19963,8 @@ define(281, {
   original_name_en = "inner tube",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "",
 })
 define(280, {
   image = 250,
@@ -18978,6 +20002,8 @@ define(280, {
   original_name_en = "comfortable table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(279, {
   image = 249,
@@ -19015,6 +20041,8 @@ define(279, {
   original_name_en = "water tub",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(278, {
   image = 585,
@@ -19052,6 +20080,8 @@ define(278, {
   original_name_en = "street lamp",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(277, {
   image = 82,
@@ -19089,6 +20119,8 @@ define(277, {
   original_name_en = "broken pillar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(276, {
   image = 524,
@@ -19126,6 +20158,8 @@ define(276, {
   original_name_en = "long pillar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(275, {
   image = 248,
@@ -19163,6 +20197,8 @@ define(275, {
   original_name_en = "broom",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(274, {
   image = 232,
@@ -19200,6 +20236,8 @@ define(274, {
   original_name_en = "scarecrow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(273, {
   image = 231,
@@ -19237,6 +20275,8 @@ define(273, {
   original_name_en = "fire wood",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(272, {
   image = 429,
@@ -19274,6 +20314,8 @@ define(272, {
   original_name_en = "chaos ball",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(271, {
   image = 429,
@@ -19311,6 +20353,8 @@ define(271, {
   original_name_en = "sound ball",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(270, {
   image = 429,
@@ -19348,6 +20392,8 @@ define(270, {
   original_name_en = "fire ball",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(269, {
   image = 429,
@@ -19385,6 +20431,8 @@ define(269, {
   original_name_en = "ice ball",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(268, {
   image = 429,
@@ -19422,6 +20470,8 @@ define(268, {
   original_name_en = "illusion beam",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(267, {
   image = 429,
@@ -19459,6 +20509,8 @@ define(267, {
   original_name_en = "darkness beam",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(266, {
   image = 432,
@@ -19496,6 +20548,8 @@ define(266, {
   original_name_en = "wakizashi",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(265, {
   image = 429,
@@ -19533,6 +20587,8 @@ define(265, {
   original_name_en = "nerve eye",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(264, {
   image = 429,
@@ -19570,6 +20626,8 @@ define(264, {
   original_name_en = "chaos eye",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(263, {
   image = 429,
@@ -19607,6 +20665,8 @@ define(263, {
   original_name_en = "nether eye",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(262, {
   image = 354,
@@ -19644,6 +20704,8 @@ define(262, {
   original_name_en = "poison",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(261, {
   image = 201,
@@ -19681,6 +20743,8 @@ define(261, {
   original_name_en = "bomb fish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(260, {
   image = 233,
@@ -19718,6 +20782,8 @@ define(260, {
   original_name_en = "flour",
   originalnameref2 = "sack",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(259, {
   image = 233,
@@ -19755,6 +20821,8 @@ define(259, {
   original_name_en = "raw noodle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(258, {
   image = 117,
@@ -19792,6 +20860,8 @@ define(258, {
   original_name_en = "stick bread",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(257, {
   image = 429,
@@ -19829,6 +20899,8 @@ define(257, {
   original_name_en = "magic arrow",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(256, {
   image = 226,
@@ -19866,6 +20938,8 @@ define(256, {
   original_name_en = "portable cooking tool",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(255, {
   image = 349,
@@ -19903,6 +20977,8 @@ define(255, {
   original_name_en = "campfire",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(254, {
   image = 224,
@@ -19940,6 +21016,8 @@ define(254, {
   original_name_en = "horn",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(253, {
   image = 223,
@@ -19977,6 +21055,8 @@ define(253, {
   original_name_en = "beer",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(252, {
   image = 429,
@@ -20014,6 +21094,8 @@ define(252, {
   original_name_en = "cure <Jure>",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(251, {
   image = 429,
@@ -20051,6 +21133,8 @@ define(251, {
   original_name_en = "cure <Eris>",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(250, {
   image = 429,
@@ -20088,6 +21172,8 @@ define(250, {
   original_name_en = "cure critical wound",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(249, {
   image = 429,
@@ -20125,6 +21211,8 @@ define(249, {
   original_name_en = "cure minor wound",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(248, {
   image = 429,
@@ -20162,6 +21250,8 @@ define(248, {
   original_name_en = "return",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(247, {
   image = 429,
@@ -20199,6 +21289,8 @@ define(247, {
   original_name_en = "oracle",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(246, {
   image = 429,
@@ -20236,6 +21328,8 @@ define(246, {
   original_name_en = "magic mapping",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(245, {
   image = 470,
@@ -20273,6 +21367,8 @@ define(245, {
   original_name_en = "minor teleportation",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(244, {
   image = 470,
@@ -20310,6 +21406,8 @@ define(244, {
   original_name_en = "wonder",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(243, {
   image = 470,
@@ -20347,6 +21445,8 @@ define(243, {
   original_name_en = "gain attribute",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(242, {
   image = 470,
@@ -20384,6 +21484,8 @@ define(242, {
   original_name_en = "magical map",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(241, {
   image = 197,
@@ -20421,6 +21523,8 @@ define(241, {
   original_name_en = "safe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(240, {
   image = 220,
@@ -20458,6 +21562,8 @@ define(240, {
   original_name_en = "chest",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(239, {
   image = 220,
@@ -20495,6 +21601,8 @@ define(239, {
   original_name_en = "bejeweled chest",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(238, {
   image = 221,
@@ -20532,6 +21640,8 @@ define(238, {
   original_name_en = "sword",
   originalnameref2 = "figurine",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(237, {
   image = 222,
@@ -20569,6 +21679,8 @@ define(237, {
   original_name_en = "warrior",
   originalnameref2 = "figurine",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(236, {
   image = 470,
@@ -20606,6 +21718,8 @@ define(236, {
   original_name_en = "return",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(235, {
   image = 426,
@@ -20643,6 +21757,8 @@ define(235, {
   original_name_en = "halberd",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(234, {
   image = 399,
@@ -20680,6 +21796,8 @@ define(234, {
   original_name_en = "bardish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(233, {
   image = 233,
@@ -20717,6 +21835,8 @@ define(233, {
   original_name_en = "ration",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(232, {
   image = 503,
@@ -20754,6 +21874,8 @@ define(232, {
   original_name_en = "claymore",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(231, {
   image = 547,
@@ -20791,6 +21913,8 @@ define(231, {
   original_name_en = "machine gun",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(230, {
   image = 404,
@@ -20828,6 +21952,8 @@ define(230, {
   original_name_en = "short bow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(229, {
   image = 505,
@@ -20865,6 +21991,8 @@ define(229, {
   original_name_en = "long staff",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(228, {
   image = 494,
@@ -20902,6 +22030,8 @@ define(228, {
   original_name_en = "trident",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(227, {
   image = 504,
@@ -20939,6 +22069,8 @@ define(227, {
   original_name_en = "hammer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(226, {
   image = 500,
@@ -20976,6 +22108,8 @@ define(226, {
   original_name_en = "battle axe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(225, {
   image = 502,
@@ -21013,6 +22147,8 @@ define(225, {
   original_name_en = "scimitar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(224, {
   image = 431,
@@ -21050,6 +22186,8 @@ define(224, {
   original_name_en = "katana",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(223, {
   image = 198,
@@ -21087,6 +22225,8 @@ define(223, {
   original_name_en = "pot",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(222, {
   image = 199,
@@ -21124,6 +22264,8 @@ define(222, {
   original_name_en = "animal bone",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(221, {
   image = 200,
@@ -21161,6 +22303,8 @@ define(221, {
   original_name_en = "straw",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(220, {
   image = 201,
@@ -21198,6 +22342,8 @@ define(220, {
   original_name_en = "dead fish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "",
 })
 define(219, {
   image = 202,
@@ -21235,6 +22381,8 @@ define(219, {
   original_name_en = "tight rope",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(218, {
   image = 203,
@@ -21272,6 +22420,8 @@ define(218, {
   original_name_en = "bowl",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(217, {
   image = 206,
@@ -21309,6 +22459,8 @@ define(217, {
   original_name_en = "empty bowl",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(216, {
   image = 207,
@@ -21346,6 +22498,8 @@ define(216, {
   original_name_en = "basket",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(215, {
   image = 208,
@@ -21383,6 +22537,8 @@ define(215, {
   original_name_en = "empty bottles",
   originalnameref2 = "lot",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(214, {
   image = 209,
@@ -21420,6 +22576,8 @@ define(214, {
   original_name_en = "ore piece",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(213, {
   image = 401,
@@ -21457,6 +22615,8 @@ define(213, {
   original_name_en = "spear",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(212, {
   image = 425,
@@ -21494,6 +22654,8 @@ define(212, {
   original_name_en = "staff",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(211, {
   image = 421,
@@ -21531,6 +22693,8 @@ define(211, {
   original_name_en = "sickle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(210, {
   image = 424,
@@ -21568,6 +22732,8 @@ define(210, {
   original_name_en = "stone",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(209, {
   image = 470,
@@ -21605,6 +22771,8 @@ define(209, {
   original_name_en = "uncurse",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(208, {
   image = 33,
@@ -21642,6 +22810,8 @@ define(208, {
   original_name_en = "worthless fake gold bar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(207, {
   image = 404,
@@ -21679,6 +22849,8 @@ define(207, {
   original_name_en = "<Bow of Vinderre>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(206, {
   image = 400,
@@ -21716,6 +22888,8 @@ define(206, {
   original_name_en = "<Ether Dagger>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(205, {
   image = 210,
@@ -21753,6 +22927,8 @@ define(205, {
   original_name_en = "whisky",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(204, {
   image = 196,
@@ -21790,6 +22966,8 @@ define(204, {
   original_name_en = "corpse",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(203, {
   image = 471,
@@ -21827,6 +23005,8 @@ define(203, {
   original_name_en = "cure",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(202, {
   image = 471,
@@ -21864,6 +23044,8 @@ define(202, {
   original_name_en = "magic mapping",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(201, {
   image = 193,
@@ -21901,6 +23083,8 @@ define(201, {
   original_name_en = "leccho",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(200, {
   image = 192,
@@ -21938,6 +23122,8 @@ define(200, {
   original_name_en = "melon",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(199, {
   image = 191,
@@ -21975,6 +23161,8 @@ define(199, {
   original_name_en = "cbocchi",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(198, {
   image = 164,
@@ -22012,6 +23200,8 @@ define(198, {
   original_name_en = "green pea",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(197, {
   image = 189,
@@ -22049,6 +23239,8 @@ define(197, {
   original_name_en = "lemon",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(196, {
   image = 188,
@@ -22086,6 +23278,8 @@ define(196, {
   original_name_en = "tangerine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(195, {
   image = 187,
@@ -22123,6 +23317,8 @@ define(195, {
   original_name_en = "qucche",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(194, {
   image = 186,
@@ -22160,6 +23356,8 @@ define(194, {
   original_name_en = "rainbow fruit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(193, {
   image = 185,
@@ -22197,6 +23395,8 @@ define(193, {
   original_name_en = "healthy leaf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(192, {
   image = 184,
@@ -22234,6 +23434,8 @@ define(192, {
   original_name_en = "strawberry",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(191, {
   image = 183,
@@ -22271,6 +23473,8 @@ define(191, {
   original_name_en = "api nut",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(190, {
   image = 182,
@@ -22308,6 +23512,8 @@ define(190, {
   original_name_en = "imo",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(189, {
   image = 181,
@@ -22345,6 +23551,8 @@ define(189, {
   original_name_en = "dish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(188, {
   image = 180,
@@ -22382,6 +23590,8 @@ define(188, {
   original_name_en = "lettuce",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(187, {
   image = 179,
@@ -22419,6 +23629,8 @@ define(187, {
   original_name_en = "sweet potato",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(186, {
   image = 178,
@@ -22456,6 +23668,8 @@ define(186, {
   original_name_en = "radish",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(185, {
   image = 177,
@@ -22493,6 +23707,8 @@ define(185, {
   original_name_en = "carrot",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(184, {
   image = 176,
@@ -22530,6 +23746,8 @@ define(184, {
   original_name_en = "guava",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(183, {
   image = 175,
@@ -22567,6 +23785,8 @@ define(183, {
   original_name_en = "cherry",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(182, {
   image = 174,
@@ -22604,6 +23824,8 @@ define(182, {
   original_name_en = "kiwi",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(181, {
   image = 173,
@@ -22641,6 +23863,8 @@ define(181, {
   original_name_en = "grape",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(180, {
   image = 172,
@@ -22678,6 +23902,8 @@ define(180, {
   original_name_en = "apple",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(179, {
   image = 171,
@@ -22715,6 +23941,8 @@ define(179, {
   original_name_en = "edible wild plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(178, {
   image = 170,
@@ -22752,6 +23980,8 @@ define(178, {
   original_name_en = "aloe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(177, {
   image = 169,
@@ -22789,6 +24019,8 @@ define(177, {
   original_name_en = "quwapana",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(176, {
   image = 471,
@@ -22826,6 +24058,8 @@ define(176, {
   original_name_en = "slow",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(175, {
   image = 471,
@@ -22863,6 +24097,8 @@ define(175, {
   original_name_en = "lightning bolt",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(174, {
   image = 166,
@@ -22900,6 +24136,8 @@ define(174, {
   original_name_en = "bunk bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(173, {
   image = 355,
@@ -22937,6 +24175,8 @@ define(173, {
   original_name_en = "fountain",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(172, {
   image = 163,
@@ -22974,6 +24214,8 @@ define(172, {
   original_name_en = "ceremony altar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(171, {
   image = 163,
@@ -23011,6 +24253,8 @@ define(171, {
   original_name_en = "altar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(170, {
   image = 162,
@@ -23048,6 +24292,8 @@ define(170, {
   original_name_en = "old grave",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(169, {
   image = 161,
@@ -23085,6 +24331,8 @@ define(169, {
   original_name_en = "ancient tomb",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(168, {
   image = 160,
@@ -23122,6 +24370,8 @@ define(168, {
   original_name_en = "solemn tomb",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(167, {
   image = 159,
@@ -23159,6 +24409,8 @@ define(167, {
   original_name_en = "brand new grave",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(166, {
   image = 158,
@@ -23196,6 +24448,8 @@ define(166, {
   original_name_en = "ornamented with flowers",
   originalnameref2 = "grave",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(165, {
   image = 157,
@@ -23233,6 +24487,8 @@ define(165, {
   original_name_en = "crumbled grave",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(164, {
   image = 156,
@@ -23270,6 +24526,8 @@ define(164, {
   original_name_en = "collapsed grave",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(163, {
   image = 155,
@@ -23307,6 +24565,8 @@ define(163, {
   original_name_en = "silk cloth",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(162, {
   image = 154,
@@ -23344,6 +24604,8 @@ define(162, {
   original_name_en = "messy cloth",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(161, {
   image = 153,
@@ -23381,6 +24643,8 @@ define(161, {
   original_name_en = "carpenter's tool",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(160, {
   image = 152,
@@ -23418,6 +24682,8 @@ define(160, {
   original_name_en = "sewing kit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(159, {
   image = 151,
@@ -23455,6 +24721,8 @@ define(159, {
   original_name_en = "simple shelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(158, {
   image = 150,
@@ -23492,6 +24760,8 @@ define(158, {
   original_name_en = "gorgeous candlestick",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(157, {
   image = 149,
@@ -23529,6 +24799,8 @@ define(157, {
   original_name_en = "elegant table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(156, {
   image = 148,
@@ -23566,6 +24838,8 @@ define(156, {
   original_name_en = "narrow dining table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(155, {
   image = 147,
@@ -23603,6 +24877,8 @@ define(155, {
   original_name_en = "kitchen oven",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(154, {
   image = 146,
@@ -23640,6 +24916,8 @@ define(154, {
   original_name_en = "sink",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(153, {
   image = 145,
@@ -23677,6 +24955,8 @@ define(153, {
   original_name_en = "kitchen",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(152, {
   image = 144,
@@ -23714,6 +24994,8 @@ define(152, {
   original_name_en = "alcohols",
   originalnameref2 = "lot",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(151, {
   image = 143,
@@ -23751,6 +25033,8 @@ define(151, {
   original_name_en = "craft book shelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(150, {
   image = 142,
@@ -23788,6 +25072,8 @@ define(150, {
   original_name_en = "craft rack",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(149, {
   image = 141,
@@ -23825,6 +25111,8 @@ define(149, {
   original_name_en = "books",
   originalnameref2 = "lot",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(148, {
   image = 140,
@@ -23862,6 +25150,8 @@ define(148, {
   original_name_en = "disorderly book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(147, {
   image = 139,
@@ -23899,6 +25189,8 @@ define(147, {
   original_name_en = "armor",
   originalnameref2 = "statue",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(146, {
   image = 138,
@@ -23936,6 +25228,8 @@ define(146, {
   original_name_en = "decorated armor",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(145, {
   image = 137,
@@ -23973,6 +25267,8 @@ define(145, {
   original_name_en = "decorated cloth",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(144, {
   image = 136,
@@ -24010,6 +25306,8 @@ define(144, {
   original_name_en = "weapons",
   originalnameref2 = "bundle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(143, {
   image = 135,
@@ -24047,6 +25345,8 @@ define(143, {
   original_name_en = "bows",
   originalnameref2 = "bundle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(142, {
   image = 523,
@@ -24084,6 +25384,8 @@ define(142, {
   original_name_en = "food maker",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(141, {
   image = 133,
@@ -24121,6 +25423,8 @@ define(141, {
   original_name_en = "map",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(140, {
   image = 132,
@@ -24158,6 +25462,8 @@ define(140, {
   original_name_en = "canvas",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(139, {
   image = 526,
@@ -24195,6 +25501,8 @@ define(139, {
   original_name_en = "statue ornamented with flowers",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(138, {
   image = 525,
@@ -24232,6 +25540,8 @@ define(138, {
   original_name_en = "statue ornamented with plants",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(137, {
   image = 129,
@@ -24269,6 +25579,8 @@ define(137, {
   original_name_en = "carnation",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(136, {
   image = 128,
@@ -24306,6 +25618,8 @@ define(136, {
   original_name_en = "foxtail grass",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(135, {
   image = 127,
@@ -24343,6 +25657,8 @@ define(135, {
   original_name_en = "anemos",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(134, {
   image = 126,
@@ -24380,6 +25696,8 @@ define(134, {
   original_name_en = "nerine",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(133, {
   image = 125,
@@ -24417,6 +25735,8 @@ define(133, {
   original_name_en = "gazania",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(132, {
   image = 124,
@@ -24454,6 +25774,8 @@ define(132, {
   original_name_en = "sage",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(131, {
   image = 123,
@@ -24491,6 +25813,8 @@ define(131, {
   original_name_en = "large foliage plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(130, {
   image = 122,
@@ -24528,6 +25852,8 @@ define(130, {
   original_name_en = "rose",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(129, {
   image = 121,
@@ -24565,6 +25891,8 @@ define(129, {
   original_name_en = "small foliage plant",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(128, {
   image = 120,
@@ -24602,6 +25930,8 @@ define(128, {
   original_name_en = "pentagram",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(127, {
   image = 119,
@@ -24639,6 +25969,8 @@ define(127, {
   original_name_en = "alchemy kit",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(126, {
   image = 118,
@@ -24676,6 +26008,8 @@ define(126, {
   original_name_en = "beaker",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(125, {
   image = 471,
@@ -24713,6 +26047,8 @@ define(125, {
   original_name_en = "heal",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(124, {
   image = 116,
@@ -24750,6 +26086,8 @@ define(124, {
   original_name_en = "breads",
   originalnameref2 = "show case",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(123, {
   image = 471,
@@ -24787,6 +26125,8 @@ define(123, {
   original_name_en = "fire bolt",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(122, {
   image = 471,
@@ -24824,6 +26164,8 @@ define(122, {
   original_name_en = "ice bolt",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(121, {
   image = 471,
@@ -24861,6 +26203,8 @@ define(121, {
   original_name_en = "summon monsters",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(120, {
   image = 471,
@@ -24898,6 +26242,8 @@ define(120, {
   original_name_en = "magic missile",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(119, {
   image = 471,
@@ -24935,6 +26281,8 @@ define(119, {
   original_name_en = "cure minor wound",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(118, {
   image = 429,
@@ -24972,6 +26320,8 @@ define(118, {
   original_name_en = "summon monsters",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(117, {
   image = 109,
@@ -25009,6 +26359,8 @@ define(117, {
   original_name_en = "empty basket",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "",
 })
 define(116, {
   image = 429,
@@ -25046,6 +26398,8 @@ define(116, {
   original_name_en = "minor teleportation",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(115, {
   image = 381,
@@ -25083,6 +26437,8 @@ define(115, {
   original_name_en = "board",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(114, {
   image = 106,
@@ -25120,6 +26476,8 @@ define(114, {
   original_name_en = "crossroad sign",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(113, {
   image = 105,
@@ -25157,6 +26515,8 @@ define(113, {
   original_name_en = "sign",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(112, {
   image = 104,
@@ -25194,6 +26554,8 @@ define(112, {
   original_name_en = "oven",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(111, {
   image = 103,
@@ -25231,6 +26593,8 @@ define(111, {
   original_name_en = "furnace",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(110, {
   image = 102,
@@ -25268,6 +26632,8 @@ define(110, {
   original_name_en = "clothes",
   originalnameref2 = "variety",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(109, {
   image = 101,
@@ -25305,6 +26671,8 @@ define(109, {
   original_name_en = "well",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(108, {
   image = 100,
@@ -25342,6 +26710,8 @@ define(108, {
   original_name_en = "goods",
   originalnameref2 = "variety",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(107, {
   image = 99,
@@ -25379,6 +26749,8 @@ define(107, {
   original_name_en = "tools",
   originalnameref2 = "variety",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(106, {
   image = 98,
@@ -25416,6 +26788,8 @@ define(106, {
   original_name_en = "closet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(105, {
   image = 97,
@@ -25453,6 +26827,8 @@ define(105, {
   original_name_en = "neat shelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(104, {
   image = 96,
@@ -25490,6 +26866,8 @@ define(104, {
   original_name_en = "barn",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(103, {
   image = 95,
@@ -25527,6 +26905,8 @@ define(103, {
   original_name_en = "cupboard",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(102, {
   image = 94,
@@ -25564,6 +26944,8 @@ define(102, {
   original_name_en = "cheap chair",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(101, {
   image = 93,
@@ -25601,6 +26983,8 @@ define(101, {
   original_name_en = "square chair",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(100, {
   image = 580,
@@ -25638,6 +27022,8 @@ define(100, {
   original_name_en = "potions",
   originalnameref2 = "rack",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(99, {
   image = 91,
@@ -25675,6 +27061,8 @@ define(99, {
   original_name_en = "academic table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(98, {
   image = 90,
@@ -25712,6 +27100,8 @@ define(98, {
   original_name_en = "open pot",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(97, {
   image = 89,
@@ -25749,6 +27139,8 @@ define(97, {
   original_name_en = "closed pot",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(96, {
   image = 88,
@@ -25786,6 +27178,8 @@ define(96, {
   original_name_en = "anvil",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(95, {
   image = 87,
@@ -25823,6 +27217,8 @@ define(95, {
   original_name_en = "decorative armor",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(94, {
   image = 86,
@@ -25860,6 +27256,8 @@ define(94, {
   original_name_en = "lantern",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(93, {
   image = 85,
@@ -25897,6 +27295,8 @@ define(93, {
   original_name_en = "pick",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(92, {
   image = 84,
@@ -25934,6 +27334,8 @@ define(92, {
   original_name_en = "modern chair",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(91, {
   image = 72,
@@ -25971,6 +27373,8 @@ define(91, {
   original_name_en = "barrel",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(90, {
   image = 80,
@@ -26008,6 +27412,8 @@ define(90, {
   original_name_en = "bar table beta",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(89, {
   image = 78,
@@ -26045,6 +27451,8 @@ define(89, {
   original_name_en = "bar table alpha",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(88, {
   image = 76,
@@ -26082,6 +27490,8 @@ define(88, {
   original_name_en = "grand piano",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(87, {
   image = 75,
@@ -26119,6 +27529,8 @@ define(87, {
   original_name_en = "accessories",
   originalnameref2 = "lot",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(86, {
   image = 74,
@@ -26156,6 +27568,8 @@ define(86, {
   original_name_en = "goods",
   originalnameref2 = "lot",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(85, {
   image = 73,
@@ -26193,6 +27607,8 @@ define(85, {
   original_name_en = "armor",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(84, {
   image = 70,
@@ -26230,6 +27646,8 @@ define(84, {
   original_name_en = "dining table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(83, {
   image = 69,
@@ -26267,6 +27685,8 @@ define(83, {
   original_name_en = "modern table",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(82, {
   image = 68,
@@ -26304,6 +27724,8 @@ define(82, {
   original_name_en = "toy",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(81, {
   image = 67,
@@ -26341,6 +27763,8 @@ define(81, {
   original_name_en = "rag doll",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fest/",
+  rffilter = "",
 })
 define(80, {
   image = 66,
@@ -26378,6 +27802,8 @@ define(80, {
   original_name_en = "boring bed",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(79, {
   image = 234,
@@ -26415,6 +27841,8 @@ define(79, {
   original_name_en = "luxury drawer",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(78, {
   image = 235,
@@ -26452,6 +27880,8 @@ define(78, {
   original_name_en = "bookshelf",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(77, {
   image = 237,
@@ -26489,6 +27919,8 @@ define(77, {
   original_name_en = "round chair",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(76, {
   image = 354,
@@ -26526,6 +27958,8 @@ define(76, {
   original_name_en = "healer <Jure>",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(75, {
   image = 354,
@@ -26563,6 +27997,8 @@ define(75, {
   original_name_en = "healer <Eris>",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(74, {
   image = 354,
@@ -26600,6 +28036,8 @@ define(74, {
   original_name_en = "healer <Odina>",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(73, {
   image = 405,
@@ -26637,6 +28075,8 @@ define(73, {
   original_name_en = "<Ragnarok>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(72, {
   image = 354,
@@ -26674,6 +28114,8 @@ define(72, {
   original_name_en = "healer",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(71, {
   image = 354,
@@ -26711,6 +28153,8 @@ define(71, {
   original_name_en = "healing",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(70, {
   image = 354,
@@ -26748,6 +28192,8 @@ define(70, {
   original_name_en = "cure critical wound",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(69, {
   image = 354,
@@ -26785,6 +28231,8 @@ define(69, {
   original_name_en = "cure major wound",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(68, {
   image = 354,
@@ -26822,6 +28270,8 @@ define(68, {
   original_name_en = "cure minor wound",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(67, {
   image = 398,
@@ -26859,6 +28309,8 @@ define(67, {
   original_name_en = "decorative amulet",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(66, {
   image = 423,
@@ -26896,6 +28348,8 @@ define(66, {
   original_name_en = "girdle",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(65, {
   image = 422,
@@ -26933,6 +28387,8 @@ define(65, {
   original_name_en = "light cloak",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(64, {
   image = 405,
@@ -26970,6 +28426,8 @@ define(64, {
   original_name_en = "<Mournblade>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(63, {
   image = 421,
@@ -27007,6 +28465,8 @@ define(63, {
   original_name_en = "<Scythe of Void>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(62, {
   image = 420,
@@ -27044,6 +28504,8 @@ define(62, {
   original_name_en = "bullet",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(61, {
   image = 412,
@@ -27081,6 +28543,8 @@ define(61, {
   original_name_en = "arrow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(60, {
   image = 419,
@@ -27118,6 +28582,8 @@ define(60, {
   original_name_en = "pistol",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/sf/",
+  rffilter = "",
 })
 define(59, {
   image = 411,
@@ -27155,6 +28621,8 @@ define(59, {
   original_name_en = "knight shield",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(58, {
   image = 404,
@@ -27192,6 +28660,8 @@ define(58, {
   original_name_en = "long bow",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(57, {
   image = 501,
@@ -27229,6 +28699,8 @@ define(57, {
   original_name_en = "<Zantetsu>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(56, {
   image = 405,
@@ -27266,6 +28738,8 @@ define(56, {
   original_name_en = "<Diablo>",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(55, {
   image = 437,
@@ -27303,6 +28777,8 @@ define(55, {
   original_name_en = "platinum coin",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/noshop/",
+  rffilter = "",
 })
 define(54, {
   image = 433,
@@ -27340,6 +28816,8 @@ define(54, {
   original_name_en = "gold piece",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(53, {
   image = 247,
@@ -27377,6 +28855,8 @@ define(53, {
   original_name_en = "tombstone",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(52, {
   image = 246,
@@ -27414,6 +28894,8 @@ define(52, {
   original_name_en = "skeleton",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(51, {
   image = 245,
@@ -27451,6 +28933,8 @@ define(51, {
   original_name_en = "bone fragment",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(50, {
   image = 244,
@@ -27488,6 +28972,8 @@ define(50, {
   original_name_en = "broken sword",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(49, {
   image = 243,
@@ -27525,6 +29011,8 @@ define(49, {
   original_name_en = "flag",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(48, {
   image = 242,
@@ -27562,6 +29050,8 @@ define(48, {
   original_name_en = "bonfire",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(47, {
   image = 204,
@@ -27599,6 +29089,8 @@ define(47, {
   original_name_en = "washing",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(46, {
   image = 241,
@@ -27636,6 +29128,8 @@ define(46, {
   original_name_en = "broken vase",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(45, {
   image = 240,
@@ -27673,6 +29167,8 @@ define(45, {
   original_name_en = "garbage",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "",
 })
 define(44, {
   image = 238,
@@ -27710,6 +29206,8 @@ define(44, {
   original_name_en = "junk stone",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(43, {
   image = 239,
@@ -27747,6 +29245,8 @@ define(43, {
   original_name_en = "wood piece",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "/fish/",
+  rffilter = "",
 })
 define(42, {
   image = 213,
@@ -27784,6 +29284,8 @@ define(42, {
   original_name_en = "diamond",
   originalnameref2 = "raw ore",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(41, {
   image = 213,
@@ -27821,6 +29323,8 @@ define(41, {
   original_name_en = "emerald",
   originalnameref2 = "raw ore",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(40, {
   image = 212,
@@ -27858,6 +29362,8 @@ define(40, {
   original_name_en = "mika",
   originalnameref2 = "raw ore",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(39, {
   image = 212,
@@ -27895,6 +29401,8 @@ define(39, {
   original_name_en = "rubynus",
   originalnameref2 = "raw ore",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(38, {
   image = 33,
@@ -27932,6 +29440,8 @@ define(38, {
   original_name_en = "gold bar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(37, {
   image = 211,
@@ -27969,6 +29479,8 @@ define(37, {
   original_name_en = "sun crystal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(36, {
   image = 211,
@@ -28006,6 +29518,8 @@ define(36, {
   original_name_en = "mana crystal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(35, {
   image = 211,
@@ -28043,6 +29557,8 @@ define(35, {
   original_name_en = "earth crystal",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "/ore/",
 })
 define(34, {
   image = 429,
@@ -28080,6 +29596,8 @@ define(34, {
   original_name_en = "lightning bolt",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(33, {
   image = 429,
@@ -28117,6 +29635,8 @@ define(33, {
   original_name_en = "fire bolt",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(32, {
   image = 429,
@@ -28154,6 +29674,8 @@ define(32, {
   original_name_en = "ice bolt",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(31, {
   image = 354,
@@ -28191,6 +29713,8 @@ define(31, {
   original_name_en = "crim ale",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(30, {
   image = 354,
@@ -28228,6 +29752,8 @@ define(30, {
   original_name_en = "sleeping drug",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "/nogive/",
+  rffilter = "",
 })
 define(29, {
   image = 354,
@@ -28265,6 +29791,8 @@ define(29, {
   original_name_en = "paralysis",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(28, {
   image = 354,
@@ -28302,6 +29830,8 @@ define(28, {
   original_name_en = "confusion",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(27, {
   image = 354,
@@ -28339,6 +29869,8 @@ define(27, {
   original_name_en = "blindness",
   originalnameref2 = "potion",
   has_random_name = true,
+  filter = "/neg/",
+  rffilter = "",
 })
 define(26, {
   image = 354,
@@ -28376,6 +29908,8 @@ define(26, {
   original_name_en = "dirty water",
   originalnameref2 = "bottle",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(25, {
   image = 333,
@@ -28413,6 +29947,8 @@ define(25, {
   original_name_en = "bugged book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(24, {
   image = 333,
@@ -28450,6 +29986,8 @@ define(24, {
   original_name_en = "book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(23, {
   image = 333,
@@ -28487,6 +30025,8 @@ define(23, {
   original_name_en = "book",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(22, {
   image = 429,
@@ -28524,6 +30064,8 @@ define(22, {
   original_name_en = "uncurse",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(21, {
   image = 429,
@@ -28561,6 +30103,8 @@ define(21, {
   original_name_en = "identify",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(20, {
   image = 429,
@@ -28598,6 +30142,8 @@ define(20, {
   original_name_en = "teleportation",
   originalnameref2 = "spellbook",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(19, {
   image = 471,
@@ -28635,6 +30181,8 @@ define(19, {
   original_name_en = "teleportation",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(18, {
   image = 471,
@@ -28672,6 +30220,8 @@ define(18, {
   original_name_en = "identify",
   originalnameref2 = "rod",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(17, {
   image = 470,
@@ -28709,6 +30259,8 @@ define(17, {
   original_name_en = "incognito",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(16, {
   image = 470,
@@ -28746,6 +30298,8 @@ define(16, {
   original_name_en = "teleportation",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(15, {
   image = 470,
@@ -28783,6 +30337,8 @@ define(15, {
   original_name_en = "oracle",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(14, {
   image = 470,
@@ -28820,6 +30376,8 @@ define(14, {
   original_name_en = "identify",
   originalnameref2 = "scroll",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(13, {
   image = 407,
@@ -28857,6 +30415,8 @@ define(13, {
   original_name_en = "decorative ring",
   originalnameref2 = "",
   has_random_name = true,
+  filter = "",
+  rffilter = "",
 })
 define(12, {
   image = 460,
@@ -28894,6 +30454,8 @@ define(12, {
   original_name_en = "composite boots",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(11, {
   image = 418,
@@ -28931,6 +30493,8 @@ define(11, {
   original_name_en = "heavy boots",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(10, {
   image = 450,
@@ -28968,6 +30532,8 @@ define(10, {
   original_name_en = "thick gauntlets",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(9, {
   image = 449,
@@ -29005,6 +30571,8 @@ define(9, {
   original_name_en = "decorated gloves",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(8, {
   image = 408,
@@ -29042,6 +30610,8 @@ define(8, {
   original_name_en = "robe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(7, {
   image = 396,
@@ -29079,6 +30649,8 @@ define(7, {
   original_name_en = "breastplate",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(6, {
   image = 478,
@@ -29116,6 +30688,8 @@ define(6, {
   original_name_en = "fairy hat",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(5, {
   image = 477,
@@ -29153,6 +30727,8 @@ define(5, {
   original_name_en = "magic hat",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(4, {
   image = 427,
@@ -29190,6 +30766,8 @@ define(4, {
   original_name_en = "club",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(3, {
   image = 499,
@@ -29227,6 +30805,8 @@ define(3, {
   original_name_en = "hand axe",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(2, {
   image = 400,
@@ -29264,6 +30844,8 @@ define(2, {
   original_name_en = "dagger",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(1, {
   image = 405,
@@ -29301,6 +30883,8 @@ define(1, {
   original_name_en = "long sword",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 define(0, {
   image = 33,
@@ -29338,6 +30922,8 @@ define(0, {
   original_name_en = "gold bar",
   originalnameref2 = "",
   has_random_name = false,
+  filter = "",
+  rffilter = "",
 })
 
 -- vim: et sw=2 sts=2

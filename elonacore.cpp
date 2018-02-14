@@ -41663,7 +41663,7 @@ int blendcheckmat(int prm_1044)
                             if (id_at_m181 < 10000)
                             {
                                 if (instr(
-                                        rffilter_item(inv[cnt].id),
+                                        the_item_db[inv[cnt].id]->rffilter,
                                         0,
                                         u8"/"s
                                             + rfnameorg(0, (id_at_m181 - 9000))
@@ -41763,7 +41763,7 @@ int blendmatnum(int prm_1045, int prm_1046)
                     if (prm_1045 < 10000)
                     {
                         if (instr(
-                                rffilter_item(inv[cnt].id),
+                                the_item_db[inv[cnt].id]->rffilter,
                                 0,
                                 u8"/"s + rfnameorg(0, (prm_1045 - 9000))
                                     + u8"/"s)
@@ -41858,7 +41858,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                     else if (id_at_m183 < 10000)
                     {
                         if (instr(
-                                rffilter_item(inv[cnt].id),
+                                the_item_db[inv[cnt].id]->rffilter,
                                 0,
                                 u8"/"s + rfnameorg(0, (id_at_m183 - 9000))
                                     + u8"/"s)
@@ -69524,11 +69524,12 @@ void label_2265()
                 continue;
             }
             f = 0;
-            if (strutil::contains(filter_item(inv[ci].id), u8"/neg/"))
+            if (strutil::contains(the_item_db[inv[ci].id]->filter, u8"/neg/"))
             {
                 f = 1;
             }
-            if (strutil::contains(filter_item(inv[ci].id), u8"/noshop/"))
+            if (strutil::contains(
+                    the_item_db[inv[ci].id]->filter, u8"/noshop/"))
             {
                 if (cdata[tc].character_role != 1018)
                 {
