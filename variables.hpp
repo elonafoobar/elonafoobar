@@ -893,7 +893,6 @@ int rpdiff(int = 0, int = 0, int = 0);
 int servecard(int = 0);
 int skillexp(int = 0, int = 0, int = 0, int = 0, int = 0);
 int skillmod(int = 0, int = 0, int = 0);
-int synccheck(int = 0, int = 0);
 int talk_conv(std::string&, int = 0);
 int tradecheck(int = 0);
 int trashcard(int = 0);

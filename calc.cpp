@@ -5,6 +5,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "map.hpp"
 #include "variables.hpp"
 
 
@@ -1537,7 +1538,7 @@ int calcattackdmg(int prm_894)
         if (cdata[cc].rate_to_pierce > rnd(100))
         {
             pierce = 100;
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txtef(5);
                 txt(lang(u8" *シャキーン* "s, u8"*vopal*"s));
@@ -1550,7 +1551,7 @@ int calcattackdmg(int prm_894)
         if (ammoproc == 2)
         {
             pierce = 60;
-            if (synccheck(cc, -1))
+            if (is_in_fov(cc))
             {
                 txtef(5);
                 txt(lang(u8" *ズバシュッ* "s, u8"*vopal*"s));

@@ -2,6 +2,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "map.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -980,7 +981,7 @@ void cell_draw()
             if (map(x_, y_, 1) != 0)
             {
                 c_ = map(x_, y_, 1) - 1;
-                if (c_ != 0 && synccheck(c_, -1)
+                if (c_ != 0 && is_in_fov(c_)
                     && (cbit(6, c_) == 0 || cbit(7, 0) == 1
                         || cdata[c_].wet != 0))
                 {
