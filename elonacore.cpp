@@ -15,7 +15,7 @@
 #include "main.hpp"
 #include "map.hpp"
 #include "race.hpp"
-#include "snail/color.hpp"
+#include "snail/application.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -44007,12 +44007,17 @@ label_1948_internal:
     if (dy + inf_tiles <= windowh - inf_verh)
     {
         pos(dx, dy * (dy > 0));
-        gfini(
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::blend);
+        snail::application::instance().get_renderer().set_draw_color(
+            {127, 127, 255, 50});
+        snail::application::instance().get_renderer().fill_rect(
+            dx,
+            dy * (dy > 0),
             inf_tiles - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
             inf_tiles + (dy < 0) * inf_screeny
                 - (dy + inf_tiles > windowh - inf_verh)
                     * (dy + inf_tiles - windowh + inf_verh));
-        gfinc(50, 50, 100);
     }
     if (homemapmode == 1)
     {
@@ -44082,15 +44087,25 @@ label_1948_internal:
                             if (sy + inf_tiles <= windowh - inf_verh)
                             {
                                 pos(sx, sy * (sy > 0));
-                                gfini(
-                                    inf_tiles
-                                        - (sx + inf_tiles > windoww)
-                                            * (sx + inf_tiles - windoww),
-                                    inf_tiles + (sy < 0) * inf_screeny
-                                        - (sy + inf_tiles > windowh - inf_verh)
-                                            * (sy + inf_tiles - windowh
-                                               + inf_verh));
-                                gfinc(25, 25, 25);
+                                snail::application::instance()
+                                    .get_renderer()
+                                    .set_blend_mode(snail::blend_mode_t::blend);
+                                snail::application::instance()
+                                    .get_renderer()
+                                    .set_draw_color({255, 255, 255, 25});
+                                snail::application::instance()
+                                    .get_renderer()
+                                    .fill_rect(
+                                        sx,
+                                        sy * (sy > 0),
+                                        inf_tiles
+                                            - (sx + inf_tiles > windoww)
+                                                * (sx + inf_tiles - windoww),
+                                        inf_tiles + (sy < 0) * inf_screeny
+                                            - (sy + inf_tiles
+                                               > windowh - inf_verh)
+                                                * (sy + inf_tiles - windowh
+                                                   + inf_verh));
                             }
                         }
                     }
@@ -44390,16 +44405,27 @@ label_1953_internal:
                                 if (sy + inf_tiles <= windowh - inf_verh)
                                 {
                                     pos(sx, sy * (sy > 0));
-                                    gfini(
-                                        inf_tiles
-                                            - (sx + inf_tiles > windoww)
-                                                * (sx + inf_tiles - windoww),
-                                        inf_tiles + (sy < 0) * inf_screeny
-                                            - (sy + inf_tiles
-                                               > windowh - inf_verh)
-                                                * (sy + inf_tiles - windowh
-                                                   + inf_verh));
-                                    gfinc(25, 25, 25);
+                                    snail::application::instance()
+                                        .get_renderer()
+                                        .set_blend_mode(
+                                            snail::blend_mode_t::blend);
+                                    snail::application::instance()
+                                        .get_renderer()
+                                        .set_draw_color({255, 255, 255, 25});
+                                    snail::application::instance()
+                                        .get_renderer()
+                                        .fill_rect(
+                                            sx,
+                                            sy * (sy > 0),
+                                            inf_tiles
+                                                - (sx + inf_tiles > windoww)
+                                                    * (sx + inf_tiles
+                                                       - windoww),
+                                            inf_tiles + (sy < 0) * inf_screeny
+                                                - (sy + inf_tiles
+                                                   > windowh - inf_verh)
+                                                    * (sy + inf_tiles - windowh
+                                                       + inf_verh));
                                 }
                                 await();
                             }
@@ -44410,12 +44436,19 @@ label_1953_internal:
                     if (sy + inf_tiles <= windowh - inf_verh)
                     {
                         pos(sx, sy * (sy > 0));
-                        gfini(
+                        snail::application::instance()
+                            .get_renderer()
+                            .set_blend_mode(snail::blend_mode_t::blend);
+                        snail::application::instance()
+                            .get_renderer()
+                            .set_draw_color({127, 127, 255, 50});
+                        snail::application::instance().get_renderer().fill_rect(
+                            sx,
+                            sy * (sy > 0),
                             inf_tiles,
                             inf_tiles + (sy < 0) * inf_screeny
                                 - (sy + inf_tiles > windowh - inf_verh)
                                     * (sy + inf_tiles - windowh + inf_verh));
-                        gfinc(50, 50, 100);
                     }
                 }
                 display_key(
