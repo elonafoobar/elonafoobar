@@ -85,8 +85,6 @@ int define(lua_State* state)
     FIELD_I(image, 0);
     FIELD_I(level, 0);
     FIELD_I(male_image, 0);
-    FIELD_S(name_en, "");
-    FIELD_S(name_jp, "");
     FIELD_I(original_relationship, 0);
     FIELD_I(portrait, 0);
     FIELD_S(race, "");
@@ -160,8 +158,6 @@ int define(lua_State* state)
             image,
             level,
             male_image,
-            name_en,
-            name_jp,
             original_relationship,
             portrait,
             race,

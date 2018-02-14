@@ -57,8 +57,6 @@ struct character_data
     int image;
     int level;
     int male_image;
-    std::string name_en;
-    std::string name_jp;
     int original_relationship;
     int portrait;
     std::string race;

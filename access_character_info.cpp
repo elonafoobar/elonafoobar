@@ -23,7 +23,9 @@ int access_character_info()
     case 16:
         switch (dbspec)
         {
-        case 2: refstr = lang(data->name_jp, data->name_en); return 0;
+        case 2:
+            refstr = i18n::_(u8"character", std::to_string(dbid), u8"name");
+            return 0;
         case 3: return data->dbmode16_dbspec3;
         case 5: return data->dbmode16_dbspec5;
         case 6: return data->dbmode16_dbspec6;
@@ -55,7 +57,7 @@ int access_character_info()
         cdata[rc].act[8] = data->act_8;
         creaturepack = data->creaturepack;
         cdata[rc].can_talk = data->can_talk;
-        cdatan(0, rc) = lang(data->name_jp, data->name_en);
+        cdatan(0, rc) = i18n::_(u8"character", std::to_string(dbid), u8"name");
         if (data->has_random_name)
         {
             cdatan(0, rc) = lang(
