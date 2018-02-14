@@ -1,3 +1,4 @@
+#include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
