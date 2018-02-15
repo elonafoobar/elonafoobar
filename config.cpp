@@ -255,7 +255,7 @@ void load_config()
             [&](auto value) { cfg_windowanime = value; }),
         std::make_unique<config_integer>(
             u8"exAnime",
-            [&](auto value) { cfg_exanime = value; }),
+            [&](auto value) {}),
         std::make_unique<config_integer>(
             u8"hide_autoIdentify",
             [&](auto value) { cfg_hideautoidentify = value; }),
