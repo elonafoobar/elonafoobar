@@ -7,7 +7,6 @@ namespace elona
 {
 
 
-std::string calcage(int);
 
 void update_screen();
 void show_race_or_class_info(int);

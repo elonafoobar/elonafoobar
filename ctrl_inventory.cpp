@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "calc.hpp"
 #include "character.hpp"
 #include "draw.hpp"
 #include "elona.hpp"

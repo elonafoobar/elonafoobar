@@ -49329,19 +49329,24 @@ void label_2031()
         s = ""s + duration + lang(u8"ﾀｰﾝ "s, u8"t "s) + description;
         return;
     }
-    int stat = calcskill(i, cc, calcspellpower(i, cc));
-    if (cc == 0)
+    const auto damage = calc_skill_damage(i, cc, calcspellpower(i, cc));
+    if (damage)
     {
-        if (trait(165) != 0)
+        dice1 = damage->dice_x;
+        dice2 = damage->dice_y;
+        bonus = damage->damage_bonus;
+        ele = damage->element;
+        elep = damage->element_power;
+        if (cc == 0)
         {
-            if (ele == 50 || ele == 51 || ele == 52)
+            if (trait(165) != 0)
             {
-                dice2 = dice2 * 125 / 100;
+                if (ele == 50 || ele == 51 || ele == 52)
+                {
+                    dice2 = dice2 * 125 / 100;
+                }
             }
         }
-    }
-    if (stat == 1)
-    {
         if (dice1 != 0)
         {
             s += ""s + dice1 + u8"d"s + dice2;
@@ -50126,7 +50131,7 @@ label_2035_internal:
         pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
         mes(lang(u8"回避"s, u8"Evade"s));
         attackskill = 106;
-        evade = calcattackhit(2);
+        int evade = calc_evasion(tc);
         prot = calcattackdmg(2);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
@@ -51297,7 +51302,7 @@ void label_2048()
         attackrange = 1;
     }
     attackvar = 0;
-    hit = calcattackhit(1);
+    int tohit = calc_accuracy(false);
     dmg = calcattackdmg(1);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
@@ -52275,9 +52280,9 @@ void show_item_description()
                 u8"それは心温まる手作り品だ"s, u8"It is a hand-made item."s);
             ++p;
         }
-        calcweaponfix(inv[ci].id);
         if (inv[ci].dice_x != 0)
         {
+            const auto pierce = calc_rate_to_pierce(inv[ci].id);
             list(0, p) = 5;
             listn(0, p) = lang(
                               u8"それは武器として扱うことができる"s,
@@ -53577,7 +53582,7 @@ void label_2085()
     label_2047();
     tc = 0;
     attackskill = 106;
-    evade = calcattackhit(2);
+    int evade = calc_evasion(tc);
     prot = calcattackdmg(2);
     noteadd(u8"回避    : "s + evade + u8"%"s);
     noteadd(
@@ -63488,7 +63493,7 @@ label_22191_internal:
     }
     expmodifer = 1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc)
         + (gdata_current_map == 35);
-    hit = calcattackhit();
+    int hit = calcattackhit();
     i = 0;
     if (hit == 1)
     {
