@@ -52,6 +52,36 @@ std::tuple<int, int> calc_buff_effect(int id, int power)
 }
 
 
+
+std::vector<int> calc_effective_range(int id)
+{
+    switch (id)
+    {
+    case 788: return {60, 90, 100, 100, 80, 60, 20, 20, 20, 20};
+    case 758: return {100, 90, 70, 50, 20, 20, 20, 20, 20, 20};
+    case 725: return {60, 100, 70, 20, 20, 20, 20, 20, 20, 20};
+    case 718: return {50, 100, 50, 20, 20, 20, 20, 20, 20, 20};
+    case 716: return {60, 100, 70, 20, 20, 20, 20, 20, 20, 20};
+    case 714: return {80, 100, 90, 80, 60, 20, 20, 20, 20, 20};
+    case 713: return {60, 100, 70, 20, 20, 20, 20, 20, 20, 20};
+    case 674: return {100, 40, 20, 20, 20, 20, 20, 20, 20, 20};
+    case 673: return {50, 90, 100, 90, 80, 80, 70, 60, 50, 20};
+    case 633: return {50, 100, 50, 20, 20, 20, 20, 20, 20, 20};
+    case 514: return {100, 100, 100, 100, 100, 100, 100, 50, 20, 20};
+    case 512: return {100, 100, 100, 100, 100, 100, 100, 20, 20, 20};
+    case 496: return {100, 60, 20, 20, 20, 20, 20, 20, 20, 20};
+    case 482: return {80, 100, 90, 80, 70, 60, 50, 20, 20, 20};
+    case 231: return {80, 100, 100, 90, 80, 70, 20, 20, 20, 20};
+    case 230: return {70, 100, 100, 80, 60, 20, 20, 20, 20, 20};
+    case 210: return {60, 100, 70, 20, 20, 20, 20, 20, 20, 20};
+    case 207: return {50, 90, 100, 90, 80, 80, 70, 60, 50, 20};
+    case 60: return {100, 90, 70, 50, 20, 20, 20, 20, 20, 20};
+    case 58: return {50, 90, 100, 90, 80, 80, 70, 60, 50, 20};
+    default: return {100, 20, 20, 20, 20, 20, 20, 20, 20, 20};
+    }
+}
+
+
 } // namespace
 
 
@@ -60,7 +90,6 @@ namespace elona
 {
 
 
-elona_vector1<int> rangemap;
 int rangedist = 0;
 int value_at_m153 = 0;
 int p_at_m153 = 0;
@@ -513,341 +542,56 @@ int calcshopreform()
 
 
 
-int calcweaponfix(int prm_752)
+int calc_rate_to_pierce(int id)
 {
-    pierce = 0;
-    rangemap(0) = 100;
-    rangemap(1) = 20;
-    rangemap(2) = 20;
-    rangemap(3) = 20;
-    rangemap(4) = 20;
-    rangemap(5) = 20;
-    rangemap(6) = 20;
-    rangemap(7) = 20;
-    rangemap(8) = 20;
-    rangemap(9) = 20;
-    if (prm_752 == 788)
+    switch (id)
     {
-        pierce = 15;
-        rangemap(0) = 60;
-        rangemap(1) = 90;
-        rangemap(2) = 100;
-        rangemap(3) = 100;
-        rangemap(4) = 80;
-        rangemap(5) = 60;
-        return 1;
+    case 788: return 15;
+    case 781: return 40;
+    case 759: return 100;
+    case 758: return 35;
+    case 741: return 20;
+    case 739: return 65;
+    case 735: return 5;
+    case 725: return 0;
+    case 718: return 5;
+    case 716: return 50;
+    case 714: return 0;
+    case 713: return 15;
+    case 678: return 10;
+    case 677: return 30;
+    case 675: return 15;
+    case 674: return 30;
+    case 673: return 20;
+    case 633: return 5;
+    case 514: return 5;
+    case 512: return 5;
+    case 496: return 30;
+    case 482: return 25;
+    case 359: return 40;
+    case 266: return 5;
+    case 235: return 30;
+    case 231: return 0;
+    case 230: return 15;
+    case 228: return 25;
+    case 225: return 10;
+    case 224: return 20;
+    case 213: return 25;
+    case 211: return 5;
+    case 210: return 5;
+    case 207: return 20;
+    case 206: return 20;
+    case 73: return 20;
+    case 64: return 15;
+    case 63: return 15;
+    case 60: return 10;
+    case 58: return 20;
+    case 57: return 25;
+    case 56: return 10;
+    case 2: return 10;
+    case 1: return 5;
+    default: return 0;
     }
-    if (prm_752 == 781)
-    {
-        pierce = 40;
-        return 1;
-    }
-    if (prm_752 == 759)
-    {
-        pierce = 100;
-        return 1;
-    }
-    if (prm_752 == 758)
-    {
-        pierce = 35;
-        rangemap(0) = 100;
-        rangemap(1) = 90;
-        rangemap(2) = 70;
-        rangemap(3) = 50;
-        return 1;
-    }
-    if (prm_752 == 741)
-    {
-        pierce = 20;
-        return 1;
-    }
-    if (prm_752 == 739)
-    {
-        pierce = 65;
-        return 1;
-    }
-    if (prm_752 == 735)
-    {
-        pierce = 5;
-        return 1;
-    }
-    if (prm_752 == 725)
-    {
-        pierce = 0;
-        rangemap(0) = 60;
-        rangemap(1) = 100;
-        rangemap(2) = 70;
-        return 1;
-    }
-    if (prm_752 == 718)
-    {
-        pierce = 5;
-        rangemap(0) = 50;
-        rangemap(1) = 100;
-        rangemap(2) = 50;
-        return 1;
-    }
-    if (prm_752 == 716)
-    {
-        pierce = 50;
-        rangemap(0) = 60;
-        rangemap(1) = 100;
-        rangemap(2) = 70;
-        return 1;
-    }
-    if (prm_752 == 714)
-    {
-        pierce = 0;
-        rangemap(0) = 80;
-        rangemap(1) = 100;
-        rangemap(2) = 90;
-        rangemap(3) = 80;
-        rangemap(4) = 60;
-        return 1;
-    }
-    if (prm_752 == 713)
-    {
-        pierce = 15;
-        rangemap(0) = 60;
-        rangemap(1) = 100;
-        rangemap(2) = 70;
-        return 1;
-    }
-    if (prm_752 == 678)
-    {
-        pierce = 10;
-        return 1;
-    }
-    if (prm_752 == 677)
-    {
-        pierce = 30;
-        return 1;
-    }
-    if (prm_752 == 675)
-    {
-        pierce = 15;
-        return 1;
-    }
-    if (prm_752 == 674)
-    {
-        pierce = 30;
-        rangemap(0) = 100;
-        rangemap(1) = 40;
-        return 1;
-    }
-    if (prm_752 == 673)
-    {
-        pierce = 20;
-        rangemap(0) = 50;
-        rangemap(1) = 90;
-        rangemap(2) = 100;
-        rangemap(3) = 90;
-        rangemap(4) = 80;
-        rangemap(5) = 80;
-        rangemap(6) = 70;
-        rangemap(7) = 60;
-        rangemap(8) = 50;
-        return 1;
-    }
-    if (prm_752 == 633)
-    {
-        pierce = 5;
-        rangemap(0) = 50;
-        rangemap(1) = 100;
-        rangemap(2) = 50;
-        return 1;
-    }
-    if (prm_752 == 514)
-    {
-        pierce = 5;
-        rangemap(0) = 100;
-        rangemap(1) = 100;
-        rangemap(2) = 100;
-        rangemap(3) = 100;
-        rangemap(4) = 100;
-        rangemap(5) = 100;
-        rangemap(6) = 100;
-        rangemap(7) = 50;
-        return 1;
-    }
-    if (prm_752 == 512)
-    {
-        pierce = 5;
-        rangemap(0) = 100;
-        rangemap(1) = 100;
-        rangemap(2) = 100;
-        rangemap(3) = 100;
-        rangemap(4) = 100;
-        rangemap(5) = 100;
-        rangemap(6) = 100;
-        return 1;
-    }
-    if (prm_752 == 496)
-    {
-        pierce = 30;
-        rangemap(0) = 100;
-        rangemap(1) = 60;
-        return 1;
-    }
-    if (prm_752 == 482)
-    {
-        pierce = 25;
-        rangemap(0) = 80;
-        rangemap(1) = 100;
-        rangemap(2) = 90;
-        rangemap(3) = 80;
-        rangemap(4) = 70;
-        rangemap(5) = 60;
-        rangemap(6) = 50;
-        return 1;
-    }
-    if (prm_752 == 359)
-    {
-        pierce = 40;
-        return 1;
-    }
-    if (prm_752 == 266)
-    {
-        pierce = 5;
-        return 1;
-    }
-    if (prm_752 == 235)
-    {
-        pierce = 30;
-        return 1;
-    }
-    if (prm_752 == 231)
-    {
-        pierce = 0;
-        rangemap(0) = 80;
-        rangemap(1) = 100;
-        rangemap(2) = 100;
-        rangemap(3) = 90;
-        rangemap(4) = 80;
-        rangemap(5) = 70;
-        return 1;
-    }
-    if (prm_752 == 230)
-    {
-        pierce = 15;
-        rangemap(0) = 70;
-        rangemap(1) = 100;
-        rangemap(2) = 100;
-        rangemap(3) = 80;
-        rangemap(4) = 60;
-        return 1;
-    }
-    if (prm_752 == 228)
-    {
-        pierce = 25;
-        return 1;
-    }
-    if (prm_752 == 225)
-    {
-        pierce = 10;
-        return 1;
-    }
-    if (prm_752 == 224)
-    {
-        pierce = 20;
-        return 1;
-    }
-    if (prm_752 == 213)
-    {
-        pierce = 25;
-        return 1;
-    }
-    if (prm_752 == 211)
-    {
-        pierce = 5;
-        return 1;
-    }
-    if (prm_752 == 210)
-    {
-        pierce = 5;
-        rangemap(0) = 60;
-        rangemap(1) = 100;
-        rangemap(2) = 70;
-        return 1;
-    }
-    if (prm_752 == 207)
-    {
-        pierce = 20;
-        rangemap(0) = 50;
-        rangemap(1) = 90;
-        rangemap(2) = 100;
-        rangemap(3) = 90;
-        rangemap(4) = 80;
-        rangemap(5) = 80;
-        rangemap(6) = 70;
-        rangemap(7) = 60;
-        rangemap(8) = 50;
-        return 1;
-    }
-    if (prm_752 == 206)
-    {
-        pierce = 20;
-        return 1;
-    }
-    if (prm_752 == 73)
-    {
-        pierce = 20;
-        return 1;
-    }
-    if (prm_752 == 64)
-    {
-        pierce = 15;
-        return 1;
-    }
-    if (prm_752 == 63)
-    {
-        pierce = 15;
-        return 1;
-    }
-    if (prm_752 == 60)
-    {
-        pierce = 10;
-        rangemap(0) = 100;
-        rangemap(1) = 90;
-        rangemap(2) = 70;
-        rangemap(3) = 50;
-        return 1;
-    }
-    if (prm_752 == 58)
-    {
-        pierce = 20;
-        rangemap(0) = 50;
-        rangemap(1) = 90;
-        rangemap(2) = 100;
-        rangemap(3) = 90;
-        rangemap(4) = 80;
-        rangemap(5) = 80;
-        rangemap(6) = 70;
-        rangemap(7) = 60;
-        rangemap(8) = 50;
-        return 1;
-    }
-    if (prm_752 == 57)
-    {
-        pierce = 25;
-        return 1;
-    }
-    if (prm_752 == 56)
-    {
-        pierce = 10;
-        return 1;
-    }
-    if (prm_752 == 2)
-    {
-        pierce = 10;
-        return 1;
-    }
-    if (prm_752 == 1)
-    {
-        pierce = 5;
-        return 1;
-    }
-    return 0;
 }
 
 
@@ -882,7 +626,6 @@ int calcattackhit(int prm_893)
         tohitorg =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
         tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata[cc].hit_bonus;
-        pierce = std::clamp(sdata(attackskill, cc) / 5, 5, 50);
         if (cdata[cc].equipment_type & 1)
         {
             tohitorg = tohitorg * 100 / 130;
@@ -897,7 +640,6 @@ int calcattackhit(int prm_893)
         {
             tohitfix += inv[ammo].hit_bonus;
         }
-        calcweaponfix(inv[cw].id);
     }
     tohit = tohitorg + tohitfix;
     if (attackskill != 106)
@@ -915,7 +657,8 @@ int calcattackhit(int prm_893)
                         - 1,
                     0,
                     9);
-                tohit = tohit * rangemap(rangedist) / 100;
+                const auto effective_range = calc_effective_range(inv[cw].id);
+                tohit = tohit * effective_range[rangedist] / 100;
             }
         }
         else
@@ -1099,6 +842,7 @@ int calcattackdmg(int prm_894)
     int protfix = 0;
     int damagepierce = 0;
     int damagenormal = 0;
+    int pierce;
     if (attackskill == 106)
     {
         dmgfix =
@@ -1110,6 +854,7 @@ int calcattackdmg(int prm_894)
                   (sdata(10, cc) + sdata(attackskill, cc) / 5
                    + sdata(152, cc) * 2))
                 / 40;
+        pierce = std::clamp(sdata(attackskill, cc) / 5, 5, 50);
     }
     else
     {
@@ -1135,12 +880,14 @@ int calcattackdmg(int prm_894)
                        + sdata(attackskill, cc) / 5 + sdata(152, cc) * 2))
                     / 45;
         }
+        pierce = calc_rate_to_pierce(inv[cw].id);
     }
     if (attackrange)
     {
         if (prm_894 == 0)
         {
-            dmgmulti = dmgmulti * rangemap(rangedist) / 100;
+            const auto effective_range = calc_effective_range(inv[cw].id);
+            dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
     else if (cdata[cc].equipment_type & 2)

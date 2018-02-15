@@ -509,7 +509,6 @@ inline int pagemax;
 inline int pagesize;
 inline int pcattacker;
 inline int petarenawin;
-inline int pierce;
 inline int potionspill;
 inline int potionthrow;
 inline int promptmax;

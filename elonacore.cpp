@@ -52280,9 +52280,9 @@ void show_item_description()
                 u8"それは心温まる手作り品だ"s, u8"It is a hand-made item."s);
             ++p;
         }
-        calcweaponfix(inv[ci].id);
         if (inv[ci].dice_x != 0)
         {
+            const auto pierce = calc_rate_to_pierce(inv[ci].id);
             list(0, p) = 5;
             listn(0, p) = lang(
                               u8"それは武器として扱うことができる"s,

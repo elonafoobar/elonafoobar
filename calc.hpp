@@ -26,7 +26,7 @@ int calcfixlv(int = 0);
 int calcfame(int = 0, int = 0);
 int decfame(int = 0, int = 0);
 int calcshopreform();
-int calcweaponfix(int = 0);
+int calc_rate_to_pierce(int);
 std::string calcage(int);
 int calcexpalive(int = 0);
 int calcattackhit(int = 0);
