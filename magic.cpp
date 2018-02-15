@@ -144,7 +144,14 @@ int magic()
                 }
                 goto label_2186_internal;
             }
-            calcskill(efid, cc, efp);
+            {
+                const auto damage = calc_skill_damage(efid, cc, efp);
+                dice1 = damage->dice_x;
+                dice2 = damage->dice_y;
+                bonus = damage->damage_bonus;
+                ele = damage->element;
+                elep = damage->element_power;
+            }
             if (cc == 0)
             {
                 if (trait(165))
@@ -493,7 +500,12 @@ int magic()
                     tlocy = cdata[cc].position.y;
                     if (cdata[cc].state == 1)
                     {
-                        calcskill(efid, cc, efp);
+                        const auto damage = calc_skill_damage(efid, cc, efp);
+                        dice1 = damage->dice_x;
+                        dice2 = damage->dice_y;
+                        bonus = damage->damage_bonus;
+                        ele = damage->element;
+                        elep = damage->element_power;
                         stxt(
                             cc,
                             lang(

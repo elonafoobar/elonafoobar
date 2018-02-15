@@ -1,3 +1,4 @@
+#include "calc.hpp"
 #include "ability.hpp"
 #include "character.hpp"
 #include "debug.hpp"
@@ -274,469 +275,155 @@ void apply_buff(int cc, int id, int power)
 
 
 
-int calcskill(int prm_269, int prm_270, int prm_271)
+std::optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 {
-    int ep = 0;
-    int rs_at_m9 = 0;
-    rs_at_m9 = sdata(the_ability_db[prm_269].related_basic_attribute, prm_270);
-    ele = 0;
-    elep = 0;
-    if (prm_269 == 412)
+    int x = sdata(the_ability_db[skill].related_basic_attribute, cc);
+
+    switch (skill)
     {
-        dice1 = 0;
-        dice2 = 1;
-        bonus = rs_at_m9 * prm_271 * 5 / 100;
-        ele = 0;
-        elep = 0;
-        return 1;
+    case 412: return skill_damage{0, 1, x * power * 5 / 100, 0, 0};
+    case 461:
+        return skill_damage{
+            0, 1, std::clamp((x * 5 + power) / 20 + 40, 40, 100), 0, 0};
+    case 411: return skill_damage{0, 1, x * power * 10 / 100, 0, 0};
+    case 400:
+        return skill_damage{1 + x / 30, power / 40 + 5 + 1, power / 30, 0, 0};
+    case 401:
+        return skill_damage{2 + x / 26, power / 25 + 5 + 1, power / 15, 0, 0};
+    case 405:
+        return skill_damage{2 + x / 22, power / 18 + 5 + 1, power / 10, 0, 0};
+    case 402:
+        return skill_damage{3 + x / 15, power / 12 + 5 + 1, power / 6, 0, 0};
+    case 403:
+        return skill_damage{5 + x / 10, power / 7 + 5 + 1, power / 2, 0, 0};
+    case 406: return skill_damage{0, 1, x * 5 + power * 2, 0, 0};
+    case 407: return skill_damage{0, 1, x * 5 + power * 3 / 2, 0, 0};
+    case 623:
+        return skill_damage{
+            1 + x / 10, cdata[cc].piety_point / 70 + 1 + 1, 0, 0, 0};
+    case 624:
+        return skill_damage{
+            1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, 0, 0};
+    case 414:
+        return skill_damage{power / 125 + 2 + x / 50,
+                            power / 60 + 9 + 1,
+                            0,
+                            60,
+                            100 + power / 4};
+    case 459:
+        return skill_damage{power / 100 + 3 + x / 25,
+                            power / 40 + 12 + 1,
+                            0,
+                            60,
+                            100 + power / 4};
+    case 418:
+        return skill_damage{power / 80 + 1 + x / 18,
+                            power / 25 + 8 + 1,
+                            0,
+                            53,
+                            200 + power / 3};
+    case 415:
+        return skill_damage{power / 70 + 1 + x / 18,
+                            power / 25 + 8 + 1,
+                            0,
+                            56,
+                            200 + power / 3};
+    case 417:
+        return skill_damage{power / 70 + 1 + x / 18,
+                            power / 25 + 8 + 1,
+                            0,
+                            59,
+                            200 + power / 3};
+    case 416:
+        return skill_damage{power / 70 + 1 + x / 18,
+                            power / 25 + 8 + 1,
+                            0,
+                            58,
+                            200 + power / 3};
+    case 419:
+        return skill_damage{power / 50 + 1 + x / 20,
+                            power / 26 + 4 + 1,
+                            0,
+                            51,
+                            180 + power / 4};
+    case 420:
+        return skill_damage{power / 50 + 1 + x / 20,
+                            power / 26 + 4 + 1,
+                            0,
+                            50,
+                            180 + power / 4};
+    case 421:
+        return skill_damage{power / 50 + 1 + x / 20,
+                            power / 26 + 4 + 1,
+                            0,
+                            52,
+                            180 + power / 4};
+    case 422:
+        return skill_damage{power / 50 + 1 + x / 20,
+                            power / 25 + 4 + 1,
+                            0,
+                            53,
+                            180 + power / 4};
+    case 423:
+        return skill_damage{power / 50 + 1 + x / 20,
+                            power / 25 + 4 + 1,
+                            0,
+                            54,
+                            180 + power / 4};
+    case 431:
+        return skill_damage{power / 100 + 1 + x / 20,
+                            power / 15 + 2 + 1,
+                            0,
+                            51,
+                            150 + power / 5};
+    case 432:
+        return skill_damage{power / 100 + 1 + x / 20,
+                            power / 15 + 2 + 1,
+                            0,
+                            50,
+                            150 + power / 5};
+    case 433:
+        return skill_damage{power / 80 + 1 + x / 20,
+                            power / 12 + 2 + 1,
+                            0,
+                            59,
+                            150 + power / 5};
+    case 434:
+        return skill_damage{power / 80 + 1 + x / 20,
+                            power / 12 + 2 + 1,
+                            0,
+                            57,
+                            150 + power / 5};
+    case 460:
+        return skill_damage{
+            power / 100 + 1 + x / 25, power / 18 + 2 + 1, 0, 60, 100};
+    case 404:
+        return skill_damage{x / 20 + 3, power / 15 + 5 + 1, power / 10, 0, 0};
+    case 644: return skill_damage{1 + x / 25, 15 + x / 5 + 1, 1, 0, 0};
+    case 601: return skill_damage{1 + x / 15, 7, x / 4, 56, 200};
+    case 612: return skill_damage{1 + x / 20, 7, x / 15, 0, 0};
+    case 602: return skill_damage{1 + x / 15, 8, x / 8, 50, 100};
+    case 603: return skill_damage{1 + x / 15, 8, x / 8, 51, 100};
+    case 604: return skill_damage{1 + x / 15, 8, x / 8, 52, 100};
+    case 605: return skill_damage{1 + x / 15, 8, x / 8, 53, 100};
+    case 606: return skill_damage{1 + x / 15, 8, x / 8, 59, 100};
+    case 608: return skill_damage{1 + x / 15, 8, x / 8, 56, 100};
+    case 610: return skill_damage{1 + x / 15, 8, x / 8, 55, 100};
+    case 607: return skill_damage{1 + x / 15, 8, x / 8, 57, 100};
+    case 609: return skill_damage{1 + x / 15, 8, x / 8, 58, 100};
+    case 611: return skill_damage{1 + x / 15, 8, x / 8, 54, 100};
+    case 613: return skill_damage{1 + x / 10, 4, 1, 0, 0};
+    case 614: return skill_damage{1 + x / 10, 4, 1, 0, 0};
+    case 617: return skill_damage{1 + x / 10, 4, 0, 0, 100 + x * 2};
+    case 618: return skill_damage{1 + x / 10, 4, 0, 0, 100 + x * 3};
+    case 615: return skill_damage{1 + x / 10, 5, 0, 55, x * 4 + 20};
+    case 616: return skill_damage{1 + x / 10, 5, 0, 58, x * 4 + 20};
+    case 636: return skill_damage{1 + x / 20, 11, 1, 0, 0};
+    case 655:
+        return skill_damage{
+            power / 80 + 1, power / 8 + 2 + 1, 0, 57, 150 + power / 2};
+    default: return std::nullopt;
     }
-    if (prm_269 == 461)
-    {
-        dice1 = 0;
-        dice2 = 1;
-        bonus = std::clamp((rs_at_m9 * 5 + prm_271) / 20 + 40, 40, 100);
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 411)
-    {
-        dice1 = 0;
-        dice2 = 1;
-        bonus = rs_at_m9 * prm_271 * 10 / 100;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 400)
-    {
-        dice1 = 1 + rs_at_m9 / 30;
-        dice2 = prm_271 / 40 + 5 + 1;
-        bonus = prm_271 / 30;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 401)
-    {
-        dice1 = 2 + rs_at_m9 / 26;
-        dice2 = prm_271 / 25 + 5 + 1;
-        bonus = prm_271 / 15;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 405)
-    {
-        dice1 = 2 + rs_at_m9 / 22;
-        dice2 = prm_271 / 18 + 5 + 1;
-        bonus = prm_271 / 10;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 402)
-    {
-        dice1 = 3 + rs_at_m9 / 15;
-        dice2 = prm_271 / 12 + 5 + 1;
-        bonus = prm_271 / 6;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 403)
-    {
-        dice1 = 5 + rs_at_m9 / 10;
-        dice2 = prm_271 / 7 + 5 + 1;
-        bonus = prm_271 / 2;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 406)
-    {
-        dice1 = 0;
-        dice2 = 1;
-        bonus = rs_at_m9 * 5 + prm_271 * 2;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 407)
-    {
-        dice1 = 0;
-        dice2 = 1;
-        bonus = rs_at_m9 * 5 + prm_271 * 3 / 2;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 623)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = cdata[prm_270].piety_point / 70 + 1 + 1;
-        bonus = 0;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 624)
-    {
-        dice1 = 1 + rs_at_m9 / 20;
-        dice2 = cdata[prm_270].piety_point / 140 + 1 + 1;
-        bonus = 0;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 414)
-    {
-        dice1 = prm_271 / 125 + 2 + rs_at_m9 / 50;
-        dice2 = prm_271 / 60 + 9 + 1;
-        bonus = 0;
-        ele = 60;
-        elep = 100 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 459)
-    {
-        dice1 = prm_271 / 100 + 3 + rs_at_m9 / 25;
-        dice2 = prm_271 / 40 + 12 + 1;
-        bonus = 0;
-        ele = 60;
-        elep = 100 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 418)
-    {
-        dice1 = prm_271 / 80 + 1 + rs_at_m9 / 18;
-        dice2 = prm_271 / 25 + 8 + 1;
-        bonus = 0;
-        ele = 53;
-        elep = 200 + prm_271 / 3;
-        return 1;
-    }
-    if (prm_269 == 415)
-    {
-        dice1 = prm_271 / 70 + 1 + rs_at_m9 / 18;
-        dice2 = prm_271 / 25 + 8 + 1;
-        bonus = 0;
-        ele = 56;
-        elep = 200 + prm_271 / 3;
-        return 1;
-    }
-    if (prm_269 == 417)
-    {
-        dice1 = prm_271 / 70 + 1 + rs_at_m9 / 18;
-        dice2 = prm_271 / 25 + 8 + 1;
-        bonus = 0;
-        ele = 59;
-        elep = 200 + prm_271 / 3;
-        return 1;
-    }
-    if (prm_269 == 416)
-    {
-        dice1 = prm_271 / 70 + 1 + rs_at_m9 / 18;
-        dice2 = prm_271 / 25 + 8 + 1;
-        bonus = 0;
-        ele = 58;
-        elep = 200 + prm_271 / 3;
-        return 1;
-    }
-    if (prm_269 == 419)
-    {
-        dice1 = prm_271 / 50 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 26 + 4 + 1;
-        bonus = 0;
-        ele = 51;
-        elep = 180 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 420)
-    {
-        dice1 = prm_271 / 50 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 26 + 4 + 1;
-        bonus = 0;
-        ele = 50;
-        elep = 180 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 421)
-    {
-        dice1 = prm_271 / 50 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 26 + 4 + 1;
-        bonus = 0;
-        ele = 52;
-        elep = 180 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 422)
-    {
-        dice1 = prm_271 / 50 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 25 + 4 + 1;
-        bonus = 0;
-        ele = 53;
-        elep = 180 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 423)
-    {
-        dice1 = prm_271 / 50 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 25 + 4 + 1;
-        bonus = 0;
-        ele = 54;
-        elep = 180 + prm_271 / 4;
-        return 1;
-    }
-    if (prm_269 == 431)
-    {
-        dice1 = prm_271 / 100 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 15 + 2 + 1;
-        bonus = 0;
-        ele = 51;
-        elep = 150 + prm_271 / 5;
-        return 1;
-    }
-    if (prm_269 == 432)
-    {
-        dice1 = prm_271 / 100 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 15 + 2 + 1;
-        bonus = 0;
-        ele = 50;
-        elep = 150 + prm_271 / 5;
-        return 1;
-    }
-    if (prm_269 == 433)
-    {
-        dice1 = prm_271 / 80 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 12 + 2 + 1;
-        bonus = 0;
-        ele = 59;
-        elep = 150 + prm_271 / 5;
-        return 1;
-    }
-    if (prm_269 == 434)
-    {
-        dice1 = prm_271 / 80 + 1 + rs_at_m9 / 20;
-        dice2 = prm_271 / 12 + 2 + 1;
-        bonus = 0;
-        ele = 57;
-        elep = 150 + prm_271 / 5;
-        return 1;
-    }
-    if (prm_269 == 460)
-    {
-        dice1 = prm_271 / 100 + 1 + rs_at_m9 / 25;
-        dice2 = prm_271 / 18 + 2 + 1;
-        bonus = 0;
-        ele = 60;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 404)
-    {
-        dice1 = rs_at_m9 / 20 + 3;
-        dice2 = prm_271 / 15 + 5 + 1;
-        bonus = prm_271 / 10;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 644)
-    {
-        dice1 = 1 + rs_at_m9 / 25;
-        dice2 = 15 + rs_at_m9 / 5 + 1;
-        bonus = ele == 0;
-        elep = 0;
-        return 1;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 601)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 7;
-        bonus = rs_at_m9 / 4;
-        ele = 56;
-        elep = 200;
-        return 1;
-    }
-    if (prm_269 == 612)
-    {
-        dice1 = 1 + rs_at_m9 / 20;
-        dice2 = 7;
-        bonus = rs_at_m9 / 15;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 602)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 50;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 603)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 51;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 604)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 52;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 605)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 53;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 606)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 59;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 608)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 56;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 610)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 55;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 607)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 57;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 609)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 58;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 611)
-    {
-        dice1 = 1 + rs_at_m9 / 15;
-        dice2 = 8;
-        bonus = rs_at_m9 / 8;
-        ele = 54;
-        elep = 100;
-        return 1;
-    }
-    if (prm_269 == 613)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = 4;
-        bonus = ep == 0;
-        return 1;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 614)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = 4;
-        bonus = ep == 0;
-        return 1;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 617)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = 4;
-        bonus = 0;
-        ele = 0;
-        elep = 100 + rs_at_m9 * 2;
-        return 1;
-    }
-    if (prm_269 == 618)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = 4;
-        bonus = 0;
-        ele = 0;
-        elep = 100 + rs_at_m9 * 3;
-        return 1;
-    }
-    if (prm_269 == 615)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = 5;
-        bonus = 0;
-        ele = 55;
-        elep = rs_at_m9 * 4 + 20;
-        return 1;
-    }
-    if (prm_269 == 616)
-    {
-        dice1 = 1 + rs_at_m9 / 10;
-        dice2 = 5;
-        bonus = 0;
-        ele = 58;
-        elep = rs_at_m9 * 4 + 20;
-        return 1;
-    }
-    if (prm_269 == 636)
-    {
-        dice1 = 1 + rs_at_m9 / 20;
-        dice2 = 11;
-        bonus = elep == 0;
-        return 1;
-        ele = 0;
-        elep = 0;
-        return 1;
-    }
-    if (prm_269 == 655)
-    {
-        dice1 = prm_271 / 80 + 1;
-        dice2 = prm_271 / 8 + 2 + 1;
-        bonus = 0;
-        ele = 57;
-        elep = 150 + prm_271 / 2;
-        return 1;
-    }
-    return 0;
 }
 
 

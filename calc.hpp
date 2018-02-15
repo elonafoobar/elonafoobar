@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 
 
@@ -10,7 +11,16 @@ namespace elona
 int calc_buff_duration(int id, int power);
 std::string get_buff_description(int id, int power);
 void apply_buff(int cc, int id, int power);
-int calcskill(int = 0, int = 0, int = 0);
+
+struct skill_damage
+{
+    int dice_x;
+    int dice_y;
+    int damage_bonus;
+    int element;
+    int element_power;
+};
+std::optional<skill_damage> calc_skill_damage(int, int, int);
 int calcobjlv(int = 0);
 int calcfixlv(int = 0);
 int calcfame(int = 0, int = 0);

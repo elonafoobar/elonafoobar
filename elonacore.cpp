@@ -49329,19 +49329,24 @@ void label_2031()
         s = ""s + duration + lang(u8"ﾀｰﾝ "s, u8"t "s) + description;
         return;
     }
-    int stat = calcskill(i, cc, calcspellpower(i, cc));
-    if (cc == 0)
+    const auto damage = calc_skill_damage(i, cc, calcspellpower(i, cc));
+    if (damage)
     {
-        if (trait(165) != 0)
+        dice1 = damage->dice_x;
+        dice2 = damage->dice_y;
+        bonus = damage->damage_bonus;
+        ele = damage->element;
+        elep = damage->element_power;
+        if (cc == 0)
         {
-            if (ele == 50 || ele == 51 || ele == 52)
+            if (trait(165) != 0)
             {
-                dice2 = dice2 * 125 / 100;
+                if (ele == 50 || ele == 51 || ele == 52)
+                {
+                    dice2 = dice2 * 125 / 100;
+                }
             }
         }
-    }
-    if (stat == 1)
-    {
         if (dice1 != 0)
         {
             s += ""s + dice1 + u8"d"s + dice2;
