@@ -50131,7 +50131,7 @@ label_2035_internal:
         pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
         mes(lang(u8"回避"s, u8"Evade"s));
         attackskill = 106;
-        evade = calcattackhit(2);
+        int evade = calc_evasion(tc);
         prot = calcattackdmg(2);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         color(0, 0, 0);
@@ -51302,7 +51302,7 @@ void label_2048()
         attackrange = 1;
     }
     attackvar = 0;
-    hit = calcattackhit(1);
+    int tohit = calc_accuracy(false);
     dmg = calcattackdmg(1);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
@@ -53582,7 +53582,7 @@ void label_2085()
     label_2047();
     tc = 0;
     attackskill = 106;
-    evade = calcattackhit(2);
+    int evade = calc_evasion(tc);
     prot = calcattackdmg(2);
     noteadd(u8"回避    : "s + evade + u8"%"s);
     noteadd(
@@ -63493,7 +63493,7 @@ label_22191_internal:
     }
     expmodifer = 1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc)
         + (gdata_current_map == 35);
-    hit = calcattackhit();
+    int hit = calcattackhit();
     i = 0;
     if (hit == 1)
     {

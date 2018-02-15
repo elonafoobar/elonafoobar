@@ -614,39 +614,44 @@ int calcexpalive(int prm_892)
 
 
 
-int calcattackhit(int prm_893)
+int calc_evasion(int cc)
 {
-    int tohitorg = 0;
-    int tohitfix = 0;
-    int twohit = 0;
-    int evaderef = 0;
+    return sdata(13, cc) / 3 + sdata(173, cc) + cdata[cc].dv + 25;
+}
+
+
+int calc_accuracy(bool consider_distance)
+{
     critical = 0;
+    int accuracy;
+
     if (attackskill == 106)
     {
-        tohitorg =
+        accuracy =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
-        tohitfix = sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata[cc].hit_bonus;
         if (cdata[cc].equipment_type & 1)
         {
-            tohitorg = tohitorg * 100 / 130;
+            accuracy = accuracy * 100 / 130;
         }
+        accuracy +=
+            sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata[cc].hit_bonus;
     }
     else
     {
-        tohitorg = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3
+        accuracy = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3
             + sdata(attackskill, cc) + 50;
-        tohitfix = cdata[cc].hit_bonus + inv[cw].hit_bonus;
+        accuracy += cdata[cc].hit_bonus + inv[cw].hit_bonus;
         if (ammo != -1)
         {
-            tohitfix += inv[ammo].hit_bonus;
+            accuracy += inv[ammo].hit_bonus;
         }
     }
-    tohit = tohitorg + tohitfix;
+
     if (attackskill != 106)
     {
         if (attackrange)
         {
-            if (prm_893 == 0)
+            if (consider_distance)
             {
                 rangedist = std::clamp(
                     dist(
@@ -658,89 +663,84 @@ int calcattackhit(int prm_893)
                     0,
                     9);
                 const auto effective_range = calc_effective_range(inv[cw].id);
-                tohit = tohit * effective_range[rangedist] / 100;
+                accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
         else
         {
             if (cdata[cc].equipment_type & 2)
             {
-                tohit += 25;
+                accuracy += 25;
                 if (inv[cw].weight >= 4000)
                 {
-                    tohit += sdata(167, cc);
+                    accuracy += sdata(167, cc);
                 }
             }
-            if (cdata[cc].equipment_type & 4)
+            else if (cdata[cc].equipment_type & 4)
             {
                 if (attacknum == 1)
                 {
                     if (inv[cw].weight >= 4000)
                     {
-                        tohit -= (inv[cw].weight - 4000 + 400)
+                        accuracy -= (inv[cw].weight - 4000 + 400)
                             / (10 + sdata(166, cc) / 5);
                     }
                 }
                 else if (inv[cw].weight > 1500)
                 {
-                    tohit -= (inv[cw].weight - 1500 + 100)
+                    accuracy -= (inv[cw].weight - 1500 + 100)
                         / (10 + sdata(166, cc) / 5);
                 }
             }
         }
     }
+
     if (gdata_mount != 0)
     {
         if (cc == 0)
         {
-            tohit =
-                tohit * 100 / std::clamp((150 - sdata(301, cc) / 2), 115, 150);
-            if (attackskill != 106)
+            accuracy = accuracy * 100
+                / std::clamp((150 - sdata(301, cc) / 2), 115, 150);
+            if (attackskill != 106 && attackrange == 0
+                && inv[cw].weight >= 4000)
             {
-                if (attackrange == 0)
-                {
-                    if (inv[cw].weight >= 4000)
-                    {
-                        tohit -= (inv[cw].weight - 4000 + 400)
-                            / (10 + sdata(301, cc) / 5);
-                    }
-                }
+                accuracy -=
+                    (inv[cw].weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
             }
         }
         if (cc == gdata_mount)
         {
-            tohit =
-                tohit * 100 / std::clamp((150 - sdata(10, cc) / 2), 115, 150);
-            if (attackskill != 106)
+            accuracy = accuracy * 100
+                / std::clamp((150 - sdata(10, cc) / 2), 115, 150);
+            if (attackskill != 106 && attackrange == 0
+                && inv[cw].weight >= 4000)
             {
-                if (attackrange == 0)
-                {
-                    if (inv[cw].weight >= 4000)
-                    {
-                        tohit -= (inv[cw].weight - 4000 + 400)
-                            / (10 + sdata(10, cc) / 10);
-                    }
-                }
+                accuracy -=
+                    (inv[cw].weight - 4000 + 400) / (10 + sdata(10, cc) / 10);
             }
         }
     }
+
     if (attacknum > 1)
     {
-        twohit = 100 - (attacknum - 1) * (10000 / (100 + sdata(166, cc) * 10));
-        if (tohit > 0)
+        int twohit =
+            100 - (attacknum - 1) * (10000 / (100 + sdata(166, cc) * 10));
+        if (accuracy > 0)
         {
-            tohit = tohit * twohit / 100;
+            accuracy = accuracy * twohit / 100;
         }
     }
-    if (prm_893 == 1)
-    {
-        return tohit;
-    }
-    evade = sdata(13, tc) / 3 + sdata(173, tc) + cdata[tc].dv + 25;
-    if (prm_893 == 2)
-    {
-        return evade;
-    }
+
+    return accuracy;
+}
+
+
+
+int calcattackhit()
+{
+    int tohit = calc_accuracy(true);
+    int evasion = calc_evasion(tc);
+
     if (cdata[tc].dimmed != 0)
     {
         if (rnd(4) == 0)
@@ -748,7 +748,7 @@ int calcattackhit(int prm_893)
             critical = 1;
             return 1;
         }
-        evade /= 2;
+        evasion /= 2;
     }
     if (cdata[cc].blind != 0)
     {
@@ -756,7 +756,7 @@ int calcattackhit(int prm_893)
     }
     if (cdata[tc].blind != 0)
     {
-        evade /= 2;
+        evasion /= 2;
     }
     if (cdata[tc].sleep != 0)
     {
@@ -777,7 +777,7 @@ int calcattackhit(int prm_893)
     {
         if (tohit < sdata(187, tc) * 10)
         {
-            evaderef = evade * 100 / std::clamp(tohit, 1, tohit);
+            int evaderef = evasion * 100 / std::clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
                 if (rnd(sdata(187, tc) + 250) > 100)
@@ -823,11 +823,11 @@ int calcattackhit(int prm_893)
     {
         return -1;
     }
-    if (evade < 1)
+    if (evasion < 1)
     {
         return 1;
     }
-    if (rnd(tohit) > rnd(evade * 3 / 2))
+    if (rnd(tohit) > rnd(evasion * 3 / 2))
     {
         return 1;
     }
