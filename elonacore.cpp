@@ -1640,10 +1640,6 @@ void at(int prm_347)
 
 void text_set()
 {
-    elona_vector1<std::string> _tone;
-    elona_vector1<std::string> _stats;
-    std::string strfix;
-    std::string strsex;
     SDIM3(bodyn, 4, 15);
     bodyn(0) = "";
     bodyn(1) = u8"頭"s;
@@ -1674,7 +1670,7 @@ void text_set()
         _weather(3) = u8"雨"s;
         _weather(4) = u8"雷雨"s;
     }
-    if (en)
+    else
     {
         _weather(0) = "";
         _weather(1) = u8"Etherwind"s;
@@ -1744,7 +1740,6 @@ void text_set()
         _weight(8) = u8"legendary-size"s;
         _weight(9) = u8"heavier than an elephant"s;
     }
-    SDIM3(_tone, 20, 10);
     if (jp)
     {
         _reward(0) = "";
@@ -1754,7 +1749,7 @@ void text_set()
         _reward(4) = u8"武器"s;
         _reward(5) = u8"補給品"s;
     }
-    if (en)
+    else
     {
         _reward(0) = "";
         _reward(1) = u8"equipment"s;
@@ -1775,7 +1770,7 @@ void text_set()
         _time(6) = "";
         _time(7) = "";
     }
-    if (en)
+    else
     {
         _time(0) = u8"Midnight"s;
         _time(1) = u8"Dawn"s;
@@ -1788,28 +1783,6 @@ void text_set()
     }
     if (jp)
     {
-        _stats(0) = u8" 力"s;
-        _stats(1) = u8" 耐"s;
-        _stats(2) = u8" 器"s;
-        _stats(3) = u8" 感"s;
-        _stats(4) = u8" 習"s;
-        _stats(5) = u8" 意"s;
-        _stats(6) = u8" 魔"s;
-        _stats(7) = u8" 魅"s;
-    }
-    if (en)
-    {
-        _stats(0) = u8"STR"s;
-        _stats(1) = u8"CON"s;
-        _stats(2) = u8"DEX"s;
-        _stats(3) = u8"PER"s;
-        _stats(4) = u8"LER"s;
-        _stats(5) = u8"WIL"s;
-        _stats(6) = u8"MAG"s;
-        _stats(7) = u8"CHR"s;
-    }
-    if (jp)
-    {
         _stats2(0) = u8"筋力"s;
         _stats2(1) = u8"耐久"s;
         _stats2(2) = u8"器用"s;
@@ -1819,7 +1792,7 @@ void text_set()
         _stats2(6) = u8"魔力"s;
         _stats2(7) = u8"魅力"s;
     }
-    if (en)
+    else
     {
         _stats2(0) = u8" STR"s;
         _stats2(1) = u8" CON"s;
@@ -1846,7 +1819,7 @@ void text_set()
         _hunger(11) = u8"満腹"s;
         _hunger(12) = u8"食過ぎ"s;
     }
-    if (en)
+    else
     {
         _hunger(0) = u8"Starving!"s;
         _hunger(1) = u8"Starving"s;
@@ -1870,7 +1843,7 @@ void text_set()
         _burden(3) = u8"超過"s;
         _burden(4) = u8"潰れ中"s;
     }
-    if (en)
+    else
     {
         _burden(0) = "";
         _burden(1) = u8"Burden"s;
@@ -1884,7 +1857,7 @@ void text_set()
         _sleep(1) = u8"要睡眠"s;
         _sleep(2) = u8"要睡眠"s;
     }
-    if (en)
+    else
     {
         _sleep(0) = u8"Sleepy"s;
         _sleep(1) = u8"Need Sleep"s;
@@ -1895,7 +1868,7 @@ void text_set()
         _consick(0) = u8"病気"s;
         _consick(1) = u8"重病"s;
     }
-    if (en)
+    else
     {
         _consick(0) = u8"Sick"s;
         _consick(1) = u8"Very Sick"s;
@@ -1905,7 +1878,7 @@ void text_set()
         _conpoison(0) = u8"毒"s;
         _conpoison(1) = u8"猛毒"s;
     }
-    if (en)
+    else
     {
         _conpoison(0) = u8"Poisoned"s;
         _conpoison(1) = u8"Poisoned Bad!"s;
@@ -1916,7 +1889,7 @@ void text_set()
         _condim(1) = u8"混濁"s;
         _condim(2) = u8"気絶"s;
     }
-    if (en)
+    else
     {
         _condim(0) = u8"Dim"s;
         _condim(1) = u8"Muddled"s;
@@ -1927,7 +1900,7 @@ void text_set()
         _conangry(0) = u8"激怒"s;
         _conangry(1) = u8"狂乱"s;
     }
-    if (en)
+    else
     {
         _conangry(0) = u8"Fury"s;
         _conangry(1) = u8"Berserk"s;
@@ -1938,7 +1911,7 @@ void text_set()
         _conbleed(1) = u8"出血"s;
         _conbleed(2) = u8"大出血"s;
     }
-    if (en)
+    else
     {
         _conbleed(0) = u8"Bleeding"s;
         _conbleed(1) = u8"Bleeding!"s;
@@ -1950,93 +1923,37 @@ void text_set()
         _coninsane(1) = u8"狂気"s;
         _coninsane(2) = u8"崩壊"s;
     }
-    if (en)
+    else
     {
         _coninsane(0) = u8"Unsteady"s;
         _coninsane(1) = u8"Insane"s;
         _coninsane(2) = u8"Paranoia"s;
     }
-    if (jp)
-    {
-        _condrunk = u8"酔払い"s;
-    }
-    if (en)
-    {
-        _condrunk = u8"Drunk"s;
-    }
-    if (jp)
-    {
-        _conwet = u8"濡れ"s;
-    }
-    if (en)
-    {
-        _conwet = u8"Wet"s;
-    }
-    if (jp)
-    {
-        _congravity = u8"重力"s;
-    }
-    if (en)
-    {
-        _congravity = u8"Gravity"s;
-    }
+    _condrunk = lang(u8"酔払い"s, u8"Drunk"s);
+    _conwet = lang(u8"濡れ"s, u8"Wet"s);
+    _congravity = lang(u8"重力"s, u8"Gravity"s);
     if (jp)
     {
         _consleep(0) = u8"睡眠"s;
         _consleep(1) = u8"爆睡"s;
     }
-    if (en)
+    else
     {
         _consleep(0) = u8"Sleep"s;
         _consleep(1) = u8"Deep Sleep"s;
     }
-    if (jp)
-    {
-        _conblind = u8"盲目"s;
-    }
-    if (en)
-    {
-        _conblind = u8"Blinded"s;
-    }
-    if (jp)
-    {
-        _conparalyze = u8"麻痺"s;
-    }
-    if (en)
-    {
-        _conparalyze = u8"Paralyzed"s;
-    }
-    if (jp)
-    {
-        _conmochi = u8"窒息"s;
-    }
-    if (en)
-    {
-        _conmochi = u8"Choked"s;
-    }
-    if (jp)
-    {
-        _conconfuse = u8"混乱"s;
-    }
-    if (en)
-    {
-        _conconfuse = u8"Confused"s;
-    }
-    if (jp)
-    {
-        _confear = u8"恐怖"s;
-    }
-    if (en)
-    {
-        _confear = u8"Fear"s;
-    }
+    _conblind = lang(u8"盲目"s, u8"Blinded"s);
+    _conparalyze = lang(u8"麻痺"s, u8"Paralyzed"s);
+    _conmochi = lang(u8"窒息"s, u8"Choked"s);
+    _conconfuse = lang(u8"混乱"s, u8"Confused"s);
+    _confear = lang(u8"恐怖"s, u8"Fear"s);
     if (jp)
     {
         _confatigue(0) = u8"軽疲労"s;
         _confatigue(1) = u8"疲労"s;
         _confatigue(2) = u8"過労"s;
     }
-    if (en)
+    else
     {
         _confatigue(0) = u8"Tired"s;
         _confatigue(1) = u8"Very tired"s;
@@ -2052,7 +1969,7 @@ void text_set()
         _quality(5) = u8"神器"s;
         _quality(6) = u8"特別"s;
     }
-    if (en)
+    else
     {
         _quality(0) = "";
         _quality(1) = u8"bad"s;
@@ -2072,7 +1989,7 @@ void text_set()
         _resist(5) = u8"強い耐性"s;
         _resist(6) = u8"素晴らしい耐性"s;
     }
-    if (en)
+    else
     {
         _resist(0) = u8"Criticaly Weak"s;
         _resist(1) = u8"Weak"s;
@@ -2089,7 +2006,7 @@ void text_set()
         _mark(2) = u8"！"s;
         _mark(3) = "";
     }
-    if (en)
+    else
     {
         _mark(0) = u8"."s;
         _mark(1) = u8"?"s;
@@ -2101,7 +2018,7 @@ void text_set()
         _sex(0) = u8"男"s;
         _sex(1) = u8"女"s;
     }
-    if (en)
+    else
     {
         _sex(0) = u8"Male"s;
         _sex(1) = u8"Female"s;
@@ -2111,7 +2028,7 @@ void text_set()
         _sex2(0) = u8"男"s;
         _sex2(1) = u8"女"s;
     }
-    if (en)
+    else
     {
         _sex2(0) = u8"boy"s;
         _sex2(1) = u8"girl"s;
@@ -2290,7 +2207,7 @@ void text_set()
         _melee(1, 0) = u8"殴られた。"s;
         _melee(2, 0) = u8"手"s;
     }
-    if (en)
+    else
     {
         _melee(0, 0) = u8"punch"s;
         _melee(1, 0) = u8"punch"s;
@@ -2302,7 +2219,7 @@ void text_set()
         _melee(1, 3) = u8"噛み付かれた。"s;
         _melee(2, 3) = u8"牙"s;
     }
-    if (en)
+    else
     {
         _melee(0, 3) = u8"bite"s;
         _melee(1, 3) = u8"bite"s;
@@ -2314,7 +2231,7 @@ void text_set()
         _melee(1, 4) = u8"睨まれた。"s;
         _melee(2, 4) = u8"眼"s;
     }
-    if (en)
+    else
     {
         _melee(0, 4) = u8"gaze"s;
         _melee(1, 4) = u8"gaze"s;
@@ -2326,7 +2243,7 @@ void text_set()
         _melee(1, 1) = u8"引っ掻かれた。"s;
         _melee(2, 1) = u8"爪"s;
     }
-    if (en)
+    else
     {
         _melee(0, 1) = u8"claw"s;
         _melee(1, 1) = u8"claw"s;
@@ -2338,7 +2255,7 @@ void text_set()
         _melee(1, 5) = u8"刺された。"s;
         _melee(2, 5) = u8"針"s;
     }
-    if (en)
+    else
     {
         _melee(0, 5) = u8"sting"s;
         _melee(1, 5) = u8"sting"s;
@@ -2350,7 +2267,7 @@ void text_set()
         _melee(1, 6) = u8"触られた。"s;
         _melee(2, 6) = u8"手"s;
     }
-    if (en)
+    else
     {
         _melee(0, 6) = u8"touch"s;
         _melee(1, 6) = u8"touch"s;
@@ -2362,7 +2279,7 @@ void text_set()
         _melee(1, 7) = u8"胞子を飛ばされた。"s;
         _melee(2, 7) = u8"胞子"s;
     }
-    if (en)
+    else
     {
         _melee(0, 7) = u8"attack"s;
         _melee(1, 7) = u8"attack"s;
@@ -2388,7 +2305,7 @@ void text_set()
         _namepotion(4) = u8"茶色い"s;
         _namepotion(5) = u8"赤い"s;
     }
-    if (en)
+    else
     {
         _namepotion(0) = u8"clear"s;
         _namepotion(1) = u8"green"s;
@@ -2406,7 +2323,7 @@ void text_set()
         _namespellbook(4) = u8"古びた"s;
         _namespellbook(5) = u8"血の滴る"s;
     }
-    if (en)
+    else
     {
         _namespellbook(0) = u8"thick"s;
         _namespellbook(1) = u8"mossy"s;
@@ -2424,7 +2341,7 @@ void text_set()
         _namescroll(4) = u8"古びた"s;
         _namescroll(5) = u8"血文字の"s;
     }
-    if (en)
+    else
     {
         _namescroll(0) = u8"blurred"s;
         _namescroll(1) = u8"mossy"s;
@@ -2442,7 +2359,7 @@ void text_set()
         _namestaff(4) = u8"木の"s;
         _namestaff(5) = u8"錆の"s;
     }
-    if (en)
+    else
     {
         _namestaff(0) = u8"iron"s;
         _namestaff(1) = u8"ivy"s;
@@ -2460,7 +2377,7 @@ void text_set()
         _namering(4) = u8"木の"s;
         _namering(5) = u8"錆びた"s;
     }
-    if (en)
+    else
     {
         _namering(0) = u8"iron"s;
         _namering(1) = u8"green"s;
@@ -2469,167 +2386,26 @@ void text_set()
         _namering(4) = u8"wooden"s;
         _namering(5) = u8"rusty"s;
     }
-    if (jp)
-    {
-        homepage = u8"http://homepage3.nifty.com/rfish/index.html"s;
-    }
-    if (en)
-    {
-        homepage = u8"http://homepage3.nifty.com/rfish/index_e.html"s;
-    }
-    if (jp)
-    {
-        strcursed = u8"呪われた"s;
-    }
-    else
-    {
-        strcursed = u8"cursed"s;
-    }
-    if (jp)
-    {
-        strblessed = u8"祝福された"s;
-    }
-    else
-    {
-        strblessed = u8"blessed"s;
-    }
-    if (jp)
-    {
-        stramulet = u8"首飾り"s;
-    }
-    else
-    {
-        stramulet = u8"amulet"s;
-    }
-    if (jp)
-    {
-        strring = u8"指輪"s;
-    }
-    else
-    {
-        strring = u8"ring"s;
-    }
-    if (jp)
-    {
-        strpotion = u8"ポーション"s;
-    }
-    else
-    {
-        strpotion = u8"potion"s;
-    }
-    if (jp)
-    {
-        strspellbook = u8"魔法書"s;
-    }
-    else
-    {
-        strspellbook = u8"spellbook"s;
-    }
-    if (jp)
-    {
-        strscroll = u8"巻物"s;
-    }
-    else
-    {
-        strscroll = u8"scroll"s;
-    }
-    if (jp)
-    {
-        strstaff = u8"魔法棒"s;
-    }
-    else
-    {
-        strstaff = u8"rod"s;
-    }
-    if (jp)
-    {
-        strbracketleft = u8"『"s;
-    }
-    else
-    {
-        strbracketleft = u8"<"s;
-    }
-    if (jp)
-    {
-        strbracketright = u8"』"s;
-    }
-    else
-    {
-        strbracketright = u8">"s;
-    }
-    if (jp)
-    {
-        strfix = u8"修正"s;
-    }
-    else
-    {
-        strfix = u8"bonus"s;
-    }
-    if (jp)
-    {
-        strsex = u8"性別"s;
-    }
-    else
-    {
-        strsex = u8"sex"s;
-    }
-    if (jp)
-    {
-        strdoomed = u8"堕落した"s;
-    }
-    else
-    {
-        strdoomed = u8"doomed"s;
-    }
-    if (jp)
-    {
-        strgold = u8" gold"s;
-    }
-    else
-    {
-        strgold = u8" gold pieces"s;
-    }
-    if (jp)
-    {
-        strplat = u8" plat"s;
-    }
-    else
-    {
-        strplat = u8" platinum pieces"s;
-    }
-    if (jp)
-    {
-        strweight = u8"s"s;
-    }
-    else
-    {
-        strweight = u8"s"s;
-    }
-    if (jp)
-    {
-        stryes = u8"ああ"s;
-    }
-    else
-    {
-        stryes = u8"Yes"s;
-    }
-    if (jp)
-    {
-        strno = u8"いや…"s;
-    }
-    else
-    {
-        strno = u8"No.."s;
-    }
-    if (jp)
-    {
-        strblank = "";
-    }
-    else
-    {
-        strblank = u8" "s;
-    }
-    return;
+    homepage = lang(
+        u8"http://homepage3.nifty.com/rfish/index.html"s,
+        u8"http://homepage3.nifty.com/rfish/index_e.html"s);
+    strcursed = lang(u8"呪われた"s, u8"cursed"s);
+    strblessed = lang(u8"祝福された"s, u8"blessed"s);
+    stramulet = lang(u8"首飾り"s, u8"amulet"s);
+    strring = lang(u8"指輪"s, u8"ring"s);
+    strpotion = lang(u8"ポーション"s, u8"potion"s);
+    strspellbook = lang(u8"魔法書"s, u8"spellbook"s);
+    strscroll = lang(u8"巻物"s, u8"scroll"s);
+    strstaff = lang(u8"魔法棒"s, u8"rod"s);
+    strbracketleft = lang(u8"『"s, u8"<"s);
+    strbracketright = lang(u8"』"s, u8">"s);
+    strdoomed = lang(u8"堕落した"s, u8"doomed"s);
+    strgold = lang(u8" gold"s, u8" gold pieces"s);
+    strplat = lang(u8" plat"s, u8" platinum pieces"s);
+    strweight = lang(u8"s"s, u8"s"s);
+    stryes = lang(u8"ああ"s, u8"Yes"s);
+    strno = lang(u8"いや…"s, u8"No.."s);
+    strblank = lang("", u8" "s);
 }
 
 
