@@ -977,7 +977,7 @@ void delbottomcard(int = 0);
 void delbuff(int = 0, int = 0);
 void delmef(int = 0);
 void dipcursed(int = 0, int = 0);
-void display_customkey(const std::string&, int = 0, int = 0, int = 0);
+void display_customkey(const std::string&, int, int);
 void display_key(int = 0, int = 0, int = 0);
 void display_msg(int = 0, int = 0);
 void display_note(const std::string&, int = 0);

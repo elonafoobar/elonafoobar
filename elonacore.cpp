@@ -9673,11 +9673,7 @@ label_0410_internal:
 
 
 
-void display_customkey(
-    const std::string& prm_637,
-    int prm_638,
-    int prm_639,
-    int)
+void display_customkey(const std::string& key, int x, int y)
 {
     redraw(0);
     gsel(3);
@@ -9687,12 +9683,11 @@ void display_customkey(
     gcopy(3, 0, 30, 24, 18);
     pos(629, 31);
     color(50, 60, 80);
-    bmes(""s + prm_637, 250, 240, 230);
+    bmes(key, 250, 240, 230);
     gmode(2, inf_tiles, inf_tiles);
     gsel(0);
-    pos(prm_638, prm_639);
+    pos(x, y);
     gcopy(3, 624, 30, 24, 18);
-    return;
 }
 
 
