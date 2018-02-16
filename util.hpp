@@ -65,6 +65,24 @@ inline std::vector<std::string> split_lines(const std::string& str)
 
 
 
+inline std::string remove_str(
+    const std::string& str,
+    const std::string& pattern)
+{
+    std::string ret = str;
+    const auto length = std::size(pattern);
+    while (1)
+    {
+        const auto p = ret.find(pattern);
+        if (p == std::string::npos)
+            break;
+        ret.erase(p, length);
+    }
+    return ret;
+}
+
+
+
 } // namespace strutil
 
 

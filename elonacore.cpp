@@ -189,6 +189,64 @@ int ask_direction_to_close()
 
 
 
+void draw_scroll(int x, int y, int width, int height)
+{
+    int x3 = width + x - width % 8 - 64;
+    int y3 = height + y - height % 8 - 64;
+
+    for (int i = 0; i < width / 8; ++i)
+    {
+        if (i < 8)
+        {
+            if (i == 0)
+            {
+                pos(x, y);
+                gcopy(7, 0, 0, 64, 48);
+                pos(x, y3);
+                gcopy(7, 0, 144, 64, 48);
+            }
+            continue;
+        }
+        if (i < width / 8 - 8)
+        {
+            pos(i * 8 + x, y);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48);
+            pos(i * 8 + x, y3);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48);
+            continue;
+        }
+        pos(x3, y);
+        gcopy(7, 208, 0, 64, 48);
+        pos(x3, y3);
+        gcopy(7, 208, 144, 64, 48);
+        break;
+    }
+
+    for (int i = 0; i < height / 8 - 14; ++i)
+    {
+        for (int j = 0; j < width / 8; ++j)
+        {
+            if (j == 0)
+            {
+                pos(x, i * 8 + y + 48);
+                gcopy(7, 0, i % 12 * 8 + 48, 64, 8);
+                continue;
+            }
+            if (j < width / 8 - 15)
+            {
+                pos(j * 8 + x + 56, i * 8 + y + 48);
+                gcopy(7, j % 18 * 8 + 64, i % 12 * 8 + 48, 8, 8);
+                continue;
+            }
+            pos(x3, i * 8 + y + 48);
+            gcopy(7, 208, i % 12 * 8 + 48, 64, 8);
+            break;
+        }
+    }
+}
+
+
+
 } // namespace
 
 
@@ -622,14 +680,6 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
 
 
 
-int refclass(int prm_261, int prm_262)
-{
-    dbspec = prm_262;
-    return access_class_info(16, cdatan(3, prm_261));
-}
-
-
-
 std::string ranktitle(int prm_265)
 {
     int p_at_m6 = 0;
@@ -999,59 +1049,24 @@ void gain_race_feat()
 
 
 
-int iequiploc(int prm_281)
+int iequiploc(int ci)
 {
-    int p_at_m13 = 0;
-    p_at_m13 = the_item_db[inv[prm_281].id]->category;
-    if (p_at_m13 == 12000)
+    switch (the_item_db[inv[ci].id]->category)
     {
-        return 1;
+    case 12000: return 1;
+    case 34000: return 2;
+    case 20000: return 3;
+    case 16000: return 4;
+    case 10000: return 5;
+    case 14000: return 5;
+    case 32000: return 6;
+    case 22000: return 7;
+    case 18000: return 9;
+    case 24000: return 10;
+    case 25000: return 11;
+    case 19000: return 8;
+    default: return 0;
     }
-    if (p_at_m13 == 34000)
-    {
-        return 2;
-    }
-    if (p_at_m13 == 20000)
-    {
-        return 3;
-    }
-    if (p_at_m13 == 16000)
-    {
-        return 4;
-    }
-    if (p_at_m13 == 10000)
-    {
-        return 5;
-    }
-    if (p_at_m13 == 14000)
-    {
-        return 5;
-    }
-    if (p_at_m13 == 32000)
-    {
-        return 6;
-    }
-    if (p_at_m13 == 22000)
-    {
-        return 7;
-    }
-    if (p_at_m13 == 18000)
-    {
-        return 9;
-    }
-    if (p_at_m13 == 24000)
-    {
-        return 10;
-    }
-    if (p_at_m13 == 25000)
-    {
-        return 11;
-    }
-    if (p_at_m13 == 19000)
-    {
-        return 8;
-    }
-    return 0;
 }
 
 
@@ -1683,10 +1698,6 @@ void at(int prm_347)
 
 void text_set()
 {
-    elona_vector1<std::string> _tone;
-    elona_vector1<std::string> _stats;
-    std::string strfix;
-    std::string strsex;
     SDIM3(bodyn, 4, 15);
     bodyn(0) = "";
     bodyn(1) = u8"頭"s;
@@ -1717,7 +1728,7 @@ void text_set()
         _weather(3) = u8"雨"s;
         _weather(4) = u8"雷雨"s;
     }
-    if (en)
+    else
     {
         _weather(0) = "";
         _weather(1) = u8"Etherwind"s;
@@ -1787,7 +1798,6 @@ void text_set()
         _weight(8) = u8"legendary-size"s;
         _weight(9) = u8"heavier than an elephant"s;
     }
-    SDIM3(_tone, 20, 10);
     if (jp)
     {
         _reward(0) = "";
@@ -1797,7 +1807,7 @@ void text_set()
         _reward(4) = u8"武器"s;
         _reward(5) = u8"補給品"s;
     }
-    if (en)
+    else
     {
         _reward(0) = "";
         _reward(1) = u8"equipment"s;
@@ -1818,7 +1828,7 @@ void text_set()
         _time(6) = "";
         _time(7) = "";
     }
-    if (en)
+    else
     {
         _time(0) = u8"Midnight"s;
         _time(1) = u8"Dawn"s;
@@ -1831,28 +1841,6 @@ void text_set()
     }
     if (jp)
     {
-        _stats(0) = u8" 力"s;
-        _stats(1) = u8" 耐"s;
-        _stats(2) = u8" 器"s;
-        _stats(3) = u8" 感"s;
-        _stats(4) = u8" 習"s;
-        _stats(5) = u8" 意"s;
-        _stats(6) = u8" 魔"s;
-        _stats(7) = u8" 魅"s;
-    }
-    if (en)
-    {
-        _stats(0) = u8"STR"s;
-        _stats(1) = u8"CON"s;
-        _stats(2) = u8"DEX"s;
-        _stats(3) = u8"PER"s;
-        _stats(4) = u8"LER"s;
-        _stats(5) = u8"WIL"s;
-        _stats(6) = u8"MAG"s;
-        _stats(7) = u8"CHR"s;
-    }
-    if (jp)
-    {
         _stats2(0) = u8"筋力"s;
         _stats2(1) = u8"耐久"s;
         _stats2(2) = u8"器用"s;
@@ -1862,7 +1850,7 @@ void text_set()
         _stats2(6) = u8"魔力"s;
         _stats2(7) = u8"魅力"s;
     }
-    if (en)
+    else
     {
         _stats2(0) = u8" STR"s;
         _stats2(1) = u8" CON"s;
@@ -1889,7 +1877,7 @@ void text_set()
         _hunger(11) = u8"満腹"s;
         _hunger(12) = u8"食過ぎ"s;
     }
-    if (en)
+    else
     {
         _hunger(0) = u8"Starving!"s;
         _hunger(1) = u8"Starving"s;
@@ -1913,7 +1901,7 @@ void text_set()
         _burden(3) = u8"超過"s;
         _burden(4) = u8"潰れ中"s;
     }
-    if (en)
+    else
     {
         _burden(0) = "";
         _burden(1) = u8"Burden"s;
@@ -1927,7 +1915,7 @@ void text_set()
         _sleep(1) = u8"要睡眠"s;
         _sleep(2) = u8"要睡眠"s;
     }
-    if (en)
+    else
     {
         _sleep(0) = u8"Sleepy"s;
         _sleep(1) = u8"Need Sleep"s;
@@ -1938,7 +1926,7 @@ void text_set()
         _consick(0) = u8"病気"s;
         _consick(1) = u8"重病"s;
     }
-    if (en)
+    else
     {
         _consick(0) = u8"Sick"s;
         _consick(1) = u8"Very Sick"s;
@@ -1948,7 +1936,7 @@ void text_set()
         _conpoison(0) = u8"毒"s;
         _conpoison(1) = u8"猛毒"s;
     }
-    if (en)
+    else
     {
         _conpoison(0) = u8"Poisoned"s;
         _conpoison(1) = u8"Poisoned Bad!"s;
@@ -1959,7 +1947,7 @@ void text_set()
         _condim(1) = u8"混濁"s;
         _condim(2) = u8"気絶"s;
     }
-    if (en)
+    else
     {
         _condim(0) = u8"Dim"s;
         _condim(1) = u8"Muddled"s;
@@ -1970,7 +1958,7 @@ void text_set()
         _conangry(0) = u8"激怒"s;
         _conangry(1) = u8"狂乱"s;
     }
-    if (en)
+    else
     {
         _conangry(0) = u8"Fury"s;
         _conangry(1) = u8"Berserk"s;
@@ -1981,7 +1969,7 @@ void text_set()
         _conbleed(1) = u8"出血"s;
         _conbleed(2) = u8"大出血"s;
     }
-    if (en)
+    else
     {
         _conbleed(0) = u8"Bleeding"s;
         _conbleed(1) = u8"Bleeding!"s;
@@ -1993,93 +1981,37 @@ void text_set()
         _coninsane(1) = u8"狂気"s;
         _coninsane(2) = u8"崩壊"s;
     }
-    if (en)
+    else
     {
         _coninsane(0) = u8"Unsteady"s;
         _coninsane(1) = u8"Insane"s;
         _coninsane(2) = u8"Paranoia"s;
     }
-    if (jp)
-    {
-        _condrunk = u8"酔払い"s;
-    }
-    if (en)
-    {
-        _condrunk = u8"Drunk"s;
-    }
-    if (jp)
-    {
-        _conwet = u8"濡れ"s;
-    }
-    if (en)
-    {
-        _conwet = u8"Wet"s;
-    }
-    if (jp)
-    {
-        _congravity = u8"重力"s;
-    }
-    if (en)
-    {
-        _congravity = u8"Gravity"s;
-    }
+    _condrunk = lang(u8"酔払い"s, u8"Drunk"s);
+    _conwet = lang(u8"濡れ"s, u8"Wet"s);
+    _congravity = lang(u8"重力"s, u8"Gravity"s);
     if (jp)
     {
         _consleep(0) = u8"睡眠"s;
         _consleep(1) = u8"爆睡"s;
     }
-    if (en)
+    else
     {
         _consleep(0) = u8"Sleep"s;
         _consleep(1) = u8"Deep Sleep"s;
     }
-    if (jp)
-    {
-        _conblind = u8"盲目"s;
-    }
-    if (en)
-    {
-        _conblind = u8"Blinded"s;
-    }
-    if (jp)
-    {
-        _conparalyze = u8"麻痺"s;
-    }
-    if (en)
-    {
-        _conparalyze = u8"Paralyzed"s;
-    }
-    if (jp)
-    {
-        _conmochi = u8"窒息"s;
-    }
-    if (en)
-    {
-        _conmochi = u8"Choked"s;
-    }
-    if (jp)
-    {
-        _conconfuse = u8"混乱"s;
-    }
-    if (en)
-    {
-        _conconfuse = u8"Confused"s;
-    }
-    if (jp)
-    {
-        _confear = u8"恐怖"s;
-    }
-    if (en)
-    {
-        _confear = u8"Fear"s;
-    }
+    _conblind = lang(u8"盲目"s, u8"Blinded"s);
+    _conparalyze = lang(u8"麻痺"s, u8"Paralyzed"s);
+    _conmochi = lang(u8"窒息"s, u8"Choked"s);
+    _conconfuse = lang(u8"混乱"s, u8"Confused"s);
+    _confear = lang(u8"恐怖"s, u8"Fear"s);
     if (jp)
     {
         _confatigue(0) = u8"軽疲労"s;
         _confatigue(1) = u8"疲労"s;
         _confatigue(2) = u8"過労"s;
     }
-    if (en)
+    else
     {
         _confatigue(0) = u8"Tired"s;
         _confatigue(1) = u8"Very tired"s;
@@ -2095,7 +2027,7 @@ void text_set()
         _quality(5) = u8"神器"s;
         _quality(6) = u8"特別"s;
     }
-    if (en)
+    else
     {
         _quality(0) = "";
         _quality(1) = u8"bad"s;
@@ -2115,7 +2047,7 @@ void text_set()
         _resist(5) = u8"強い耐性"s;
         _resist(6) = u8"素晴らしい耐性"s;
     }
-    if (en)
+    else
     {
         _resist(0) = u8"Criticaly Weak"s;
         _resist(1) = u8"Weak"s;
@@ -2132,7 +2064,7 @@ void text_set()
         _mark(2) = u8"！"s;
         _mark(3) = "";
     }
-    if (en)
+    else
     {
         _mark(0) = u8"."s;
         _mark(1) = u8"?"s;
@@ -2144,7 +2076,7 @@ void text_set()
         _sex(0) = u8"男"s;
         _sex(1) = u8"女"s;
     }
-    if (en)
+    else
     {
         _sex(0) = u8"Male"s;
         _sex(1) = u8"Female"s;
@@ -2154,7 +2086,7 @@ void text_set()
         _sex2(0) = u8"男"s;
         _sex2(1) = u8"女"s;
     }
-    if (en)
+    else
     {
         _sex2(0) = u8"boy"s;
         _sex2(1) = u8"girl"s;
@@ -2333,7 +2265,7 @@ void text_set()
         _melee(1, 0) = u8"殴られた。"s;
         _melee(2, 0) = u8"手"s;
     }
-    if (en)
+    else
     {
         _melee(0, 0) = u8"punch"s;
         _melee(1, 0) = u8"punch"s;
@@ -2345,7 +2277,7 @@ void text_set()
         _melee(1, 3) = u8"噛み付かれた。"s;
         _melee(2, 3) = u8"牙"s;
     }
-    if (en)
+    else
     {
         _melee(0, 3) = u8"bite"s;
         _melee(1, 3) = u8"bite"s;
@@ -2357,7 +2289,7 @@ void text_set()
         _melee(1, 4) = u8"睨まれた。"s;
         _melee(2, 4) = u8"眼"s;
     }
-    if (en)
+    else
     {
         _melee(0, 4) = u8"gaze"s;
         _melee(1, 4) = u8"gaze"s;
@@ -2369,7 +2301,7 @@ void text_set()
         _melee(1, 1) = u8"引っ掻かれた。"s;
         _melee(2, 1) = u8"爪"s;
     }
-    if (en)
+    else
     {
         _melee(0, 1) = u8"claw"s;
         _melee(1, 1) = u8"claw"s;
@@ -2381,7 +2313,7 @@ void text_set()
         _melee(1, 5) = u8"刺された。"s;
         _melee(2, 5) = u8"針"s;
     }
-    if (en)
+    else
     {
         _melee(0, 5) = u8"sting"s;
         _melee(1, 5) = u8"sting"s;
@@ -2393,7 +2325,7 @@ void text_set()
         _melee(1, 6) = u8"触られた。"s;
         _melee(2, 6) = u8"手"s;
     }
-    if (en)
+    else
     {
         _melee(0, 6) = u8"touch"s;
         _melee(1, 6) = u8"touch"s;
@@ -2405,7 +2337,7 @@ void text_set()
         _melee(1, 7) = u8"胞子を飛ばされた。"s;
         _melee(2, 7) = u8"胞子"s;
     }
-    if (en)
+    else
     {
         _melee(0, 7) = u8"attack"s;
         _melee(1, 7) = u8"attack"s;
@@ -2431,7 +2363,7 @@ void text_set()
         _namepotion(4) = u8"茶色い"s;
         _namepotion(5) = u8"赤い"s;
     }
-    if (en)
+    else
     {
         _namepotion(0) = u8"clear"s;
         _namepotion(1) = u8"green"s;
@@ -2449,7 +2381,7 @@ void text_set()
         _namespellbook(4) = u8"古びた"s;
         _namespellbook(5) = u8"血の滴る"s;
     }
-    if (en)
+    else
     {
         _namespellbook(0) = u8"thick"s;
         _namespellbook(1) = u8"mossy"s;
@@ -2467,7 +2399,7 @@ void text_set()
         _namescroll(4) = u8"古びた"s;
         _namescroll(5) = u8"血文字の"s;
     }
-    if (en)
+    else
     {
         _namescroll(0) = u8"blurred"s;
         _namescroll(1) = u8"mossy"s;
@@ -2485,7 +2417,7 @@ void text_set()
         _namestaff(4) = u8"木の"s;
         _namestaff(5) = u8"錆の"s;
     }
-    if (en)
+    else
     {
         _namestaff(0) = u8"iron"s;
         _namestaff(1) = u8"ivy"s;
@@ -2503,7 +2435,7 @@ void text_set()
         _namering(4) = u8"木の"s;
         _namering(5) = u8"錆びた"s;
     }
-    if (en)
+    else
     {
         _namering(0) = u8"iron"s;
         _namering(1) = u8"green"s;
@@ -2512,167 +2444,26 @@ void text_set()
         _namering(4) = u8"wooden"s;
         _namering(5) = u8"rusty"s;
     }
-    if (jp)
-    {
-        homepage = u8"http://homepage3.nifty.com/rfish/index.html"s;
-    }
-    if (en)
-    {
-        homepage = u8"http://homepage3.nifty.com/rfish/index_e.html"s;
-    }
-    if (jp)
-    {
-        strcursed = u8"呪われた"s;
-    }
-    else
-    {
-        strcursed = u8"cursed"s;
-    }
-    if (jp)
-    {
-        strblessed = u8"祝福された"s;
-    }
-    else
-    {
-        strblessed = u8"blessed"s;
-    }
-    if (jp)
-    {
-        stramulet = u8"首飾り"s;
-    }
-    else
-    {
-        stramulet = u8"amulet"s;
-    }
-    if (jp)
-    {
-        strring = u8"指輪"s;
-    }
-    else
-    {
-        strring = u8"ring"s;
-    }
-    if (jp)
-    {
-        strpotion = u8"ポーション"s;
-    }
-    else
-    {
-        strpotion = u8"potion"s;
-    }
-    if (jp)
-    {
-        strspellbook = u8"魔法書"s;
-    }
-    else
-    {
-        strspellbook = u8"spellbook"s;
-    }
-    if (jp)
-    {
-        strscroll = u8"巻物"s;
-    }
-    else
-    {
-        strscroll = u8"scroll"s;
-    }
-    if (jp)
-    {
-        strstaff = u8"魔法棒"s;
-    }
-    else
-    {
-        strstaff = u8"rod"s;
-    }
-    if (jp)
-    {
-        strbracketleft = u8"『"s;
-    }
-    else
-    {
-        strbracketleft = u8"<"s;
-    }
-    if (jp)
-    {
-        strbracketright = u8"』"s;
-    }
-    else
-    {
-        strbracketright = u8">"s;
-    }
-    if (jp)
-    {
-        strfix = u8"修正"s;
-    }
-    else
-    {
-        strfix = u8"bonus"s;
-    }
-    if (jp)
-    {
-        strsex = u8"性別"s;
-    }
-    else
-    {
-        strsex = u8"sex"s;
-    }
-    if (jp)
-    {
-        strdoomed = u8"堕落した"s;
-    }
-    else
-    {
-        strdoomed = u8"doomed"s;
-    }
-    if (jp)
-    {
-        strgold = u8" gold"s;
-    }
-    else
-    {
-        strgold = u8" gold pieces"s;
-    }
-    if (jp)
-    {
-        strplat = u8" plat"s;
-    }
-    else
-    {
-        strplat = u8" platinum pieces"s;
-    }
-    if (jp)
-    {
-        strweight = u8"s"s;
-    }
-    else
-    {
-        strweight = u8"s"s;
-    }
-    if (jp)
-    {
-        stryes = u8"ああ"s;
-    }
-    else
-    {
-        stryes = u8"Yes"s;
-    }
-    if (jp)
-    {
-        strno = u8"いや…"s;
-    }
-    else
-    {
-        strno = u8"No.."s;
-    }
-    if (jp)
-    {
-        strblank = "";
-    }
-    else
-    {
-        strblank = u8" "s;
-    }
-    return;
+    homepage = lang(
+        u8"http://homepage3.nifty.com/rfish/index.html"s,
+        u8"http://homepage3.nifty.com/rfish/index_e.html"s);
+    strcursed = lang(u8"呪われた"s, u8"cursed"s);
+    strblessed = lang(u8"祝福された"s, u8"blessed"s);
+    stramulet = lang(u8"首飾り"s, u8"amulet"s);
+    strring = lang(u8"指輪"s, u8"ring"s);
+    strpotion = lang(u8"ポーション"s, u8"potion"s);
+    strspellbook = lang(u8"魔法書"s, u8"spellbook"s);
+    strscroll = lang(u8"巻物"s, u8"scroll"s);
+    strstaff = lang(u8"魔法棒"s, u8"rod"s);
+    strbracketleft = lang(u8"『"s, u8"<"s);
+    strbracketright = lang(u8"』"s, u8">"s);
+    strdoomed = lang(u8"堕落した"s, u8"doomed"s);
+    strgold = lang(u8" gold"s, u8" gold pieces"s);
+    strplat = lang(u8" plat"s, u8" platinum pieces"s);
+    strweight = lang(u8"s"s, u8"s"s);
+    stryes = lang(u8"ああ"s, u8"Yes"s);
+    strno = lang(u8"いや…"s, u8"No.."s);
+    strblank = lang("", u8" "s);
 }
 
 
@@ -2748,82 +2539,75 @@ std::string elename(int prm_348)
 
 
 
-void txttargetlevel()
+std::string txttargetlevel(int cc, int tc)
 {
-    if (cdata[cc].level * 20 < cdata[tc].level)
+    int x = cdata[cc].level;
+    int y = cdata[tc].level;
+    if (x * 20 < y)
     {
-        s = lang(
-            u8"相手が巨人だとすれば、あなたは蟻のフン以下だ。"s,
+        return lang(
+            u8"相手が巨人だとすれば、あなたは蟻のフン以下だ。",
             u8"If "s + he(tc)
-                + u8" is a giant, you are less than a dropping of an ant."s);
-        return;
+                + u8" is a giant, you are less than a dropping of an ant.");
     }
-    if (cdata[cc].level * 10 < cdata[tc].level)
+    else if (x * 10 < y)
     {
-        s = lang(
-            u8"絶対に勝てない相手だ。"s,
-            cnven(he(tc)) + u8" can mince you with "s + his(tc)
-                + u8" eyes closed."s);
-        return;
+        return lang(
+            u8"絶対に勝てない相手だ。",
+            cnven(he(tc)) + u8" can mince you with " + his(tc)
+                + u8" eyes closed.");
     }
-    if (cdata[cc].level * 5 < cdata[tc].level)
+    else if (x * 5 < y)
     {
-        s = lang(
-            u8"確実に殺されるだろう。"s,
-            u8"You will get killed, a hundred percent sure."s);
-        return;
+        return lang(
+            u8"確実に殺されるだろう。",
+            u8"You will get killed, a hundred percent sure.");
     }
-    if (cdata[cc].level * 3 < cdata[tc].level)
+    else if (x * 3 < y)
     {
-        s = lang(
-            u8"奇跡が起きなければ殺されるだろう。"s,
-            u8"You will get killed unless miracles happen."s);
-        return;
+        return lang(
+            u8"奇跡が起きなければ殺されるだろう。",
+            u8"You will get killed unless miracles happen.");
     }
-    if (cdata[cc].level * 2 < cdata[tc].level)
+    else if (x * 2 < y)
     {
-        s = lang(
-            u8"少なくとも、あなたの倍は強そうだ。"s,
-            cnven(he(tc)) + u8" "s + is(tc)
-                + u8" at least twice stronger than you."s);
-        return;
+        return lang(
+            u8"少なくとも、あなたの倍は強そうだ。",
+            cnven(he(tc)) + u8" " + is(tc)
+                + u8" at least twice stronger than you.");
     }
-    if (cdata[cc].level * 3 / 2 < cdata[tc].level)
+    else if (x * 3 / 2 < y)
     {
-        s = lang(
-            u8"相手はかなり強そうだ。"s, u8"The opponent looks quite strong."s);
-        return;
+        return lang(
+            u8"相手はかなり強そうだ。", u8"The opponent looks quite strong.");
     }
-    if (cdata[cc].level < cdata[tc].level)
+    else if (x < y)
     {
-        s = lang(u8"勝てない相手ではない。"s, u8"Won't be an easy fight."s);
-        return;
+        return lang(u8"勝てない相手ではない。", u8"Won't be an easy fight.");
     }
-    if (cdata[cc].level / 3 * 2 < cdata[tc].level)
+    else if (x / 3 * 2 < y)
     {
-        s = lang(u8"たぶん勝てそうだ。"s, u8"You will probably win."s);
-        return;
+        return lang(u8"たぶん勝てそうだ。", u8"You will probably win.");
     }
-    if (cdata[cc].level / 2 < cdata[tc].level)
+    else if (x / 2 < y)
     {
-        s = lang(
-            u8"負ける気はしない。"s,
-            cnven(he(tc)) + u8" "s + is(tc) + u8" a easy opponent."s);
-        return;
+        return lang(
+            u8"負ける気はしない。",
+            cnven(he(tc)) + u8" " + is(tc) + u8" a easy opponent.");
     }
-    if (cdata[cc].level / 3 < cdata[tc].level)
+    else if (x / 3 < y)
     {
-        s = lang(
-            u8"目隠ししていても勝てそうだ。"s,
-            u8"You bet you can beat "s + him(tc)
-                + u8" with your eyes closed."s);
-        return;
+        return lang(
+            u8"目隠ししていても勝てそうだ。",
+            u8"You bet you can beat "s + him(tc) + u8" with your eyes closed.");
     }
-    s = lang(
-        u8"目隠しして座っていても勝てる。"s,
-        u8"You can absolutely beat "s + him(tc)
-            + u8" with your eyes closed and arms crossed."s);
-    return;
+    else
+    {
+        return lang(
+            u8"目隠しして座っていても勝てる。",
+            u8"You can absolutely beat "s + him(tc)
+                + u8" with your eyes closed and arms crossed.");
+    }
 }
 
 
@@ -8338,52 +8122,37 @@ void cs_list(
 
 
 
-void gohostile()
+void go_hostile()
 {
+    for (int cc = 57; cc < 245; ++cc)
     {
-        int cnt = 57;
-        for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        if (cdata[cc].character_role == 14 || cdata[cc].character_role == 16
+            || cdata[cc].character_role == 1010)
         {
-            if (cdata[cnt].character_role == 14
-                || cdata[cnt].character_role == 16
-                || cdata[cnt].character_role == 1010)
-            {
-                cdata[cnt].relationship = -3;
-                cdata[cnt].hate = 80;
-                cdata[cnt].emotion_icon = 218;
-            }
+            cdata[cc].relationship = -3;
+            cdata[cc].hate = 80;
+            cdata[cc].emotion_icon = 218;
         }
     }
-    return;
 }
 
 
 
-void modkarma(int prm_550, int prm_551)
+void modify_karma(int cc, int delta)
 {
-    int a_at_m74 = 0;
-    int max_at_m74 = 0;
-    a_at_m74 = prm_551;
-    if (trait(162))
+    if (trait(162) && delta < 0)
     {
-        if (a_at_m74 < 0)
-        {
-            a_at_m74 = a_at_m74 * 75 / 100;
-            if (a_at_m74 == 0)
-            {
-                return;
-            }
-        }
+        delta = delta * 75 / 100;
+        if (delta == 0)
+            return;
     }
-    if (trait(169))
+    if (trait(169) && delta < 0)
     {
-        if (a_at_m74 < 0)
-        {
-            a_at_m74 = a_at_m74 * 150 / 100;
-        }
+        delta = delta * 150 / 100;
     }
+
     txtmore();
-    if (a_at_m74 >= 0)
+    if (delta >= 0)
     {
         txtef(5);
     }
@@ -8391,56 +8160,41 @@ void modkarma(int prm_550, int prm_551)
     {
         txtef(8);
     }
-    txt(lang(
-        u8"カルマ変動("s + a_at_m74 + u8") "s,
-        u8"Karma("s + a_at_m74 + u8")"s));
-    if (a_at_m74 > 0)
+    txt(lang(u8"カルマ変動("s + delta + u8") ", u8"Karma("s + delta + u8")"));
+    if (delta > 0)
     {
-        if (cdata[prm_550].karma < -30)
+        if (cdata[cc].karma < -30 && cdata[cc].karma + delta >= -30)
         {
-            if (cdata[prm_550].karma + a_at_m74 >= -30)
-            {
-                txtmore();
-                txtef(2);
-                txt(lang(
-                    u8"あなたの罪は軽くなった。"s,
-                    u8"You are no longer a criminal"s));
-            }
+            txtmore();
+            txtef(2);
+            txt(lang(
+                u8"あなたの罪は軽くなった。",
+                u8"You are no longer a criminal"));
         }
     }
-    if (a_at_m74 < 0)
+    else if (delta < 0)
     {
-        if (cdata[prm_550].karma >= -30)
+        if (cdata[cc].karma >= -30 && cdata[cc].karma + delta < -30)
         {
-            if (cdata[prm_550].karma + a_at_m74 < -30)
-            {
-                txtmore();
-                txtef(8);
-                txt(lang(
-                    u8"あなたは今や罪人だ。"s, u8"You are a criminal now."s));
-                gohostile();
-            }
+            txtmore();
+            txtef(8);
+            txt(lang(u8"あなたは今や罪人だ。", u8"You are a criminal now."));
+            go_hostile();
         }
     }
-    cdata[prm_550].karma += a_at_m74;
-    max_at_m74 = 20;
+
+    cdata[cc].karma += delta;
+
+    int max = 20;
     if (trait(162))
     {
-        max_at_m74 -= 20;
+        max -= 20;
     }
     if (trait(169))
     {
-        max_at_m74 += 20;
+        max += 20;
     }
-    if (cdata[prm_550].karma > max_at_m74)
-    {
-        cdata[prm_550].karma = max_at_m74;
-    }
-    if (cdata[prm_550].karma < -100)
-    {
-        cdata[prm_550].karma = -100;
-    }
-    return;
+    cdata[cc].karma = std::clamp(cdata[cc].karma, -100, max);
 }
 
 
@@ -8511,68 +8265,57 @@ void modrank(int prm_552, int prm_553, int prm_554)
 
 
 
-void modgrowth(int prm_559, int prm_560, int prm_561)
+void modify_potential(int cc, int id, int delta)
 {
-    int growth_at_m76 = 0;
-    growth_at_m76 = sdata.get(prm_560, prm_559).potential + prm_561;
-    if (growth_at_m76 > 400)
-    {
-        growth_at_m76 = 400;
-    }
-    if (growth_at_m76 < 2)
-    {
-        growth_at_m76 = 2;
-    }
-    sdata.get(prm_560, prm_559).potential = growth_at_m76;
+    sdata.get(id, cc).potential =
+        std::clamp(sdata.get(id, cc).potential + delta, 2, 400);
 }
 
 
 
-void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
+void skillgain(int cc, int id, int initial_level, int stock)
 {
-    int lv_at_m76 = 0;
-    if (prm_563 >= 400)
+    if (id >= 400)
     {
-        if (prm_562 == 0)
+        if (cc == 0)
         {
-            spell(prm_563 - 400) += prm_565;
-            modgrowth(prm_562, prm_563, 1);
+            spell(id - 400) += stock;
+            modify_potential(cc, id, 1);
         }
     }
-    if (sdata.get(prm_563, prm_562).original_level != 0)
+    if (sdata.get(id, cc).original_level != 0)
     {
-        if (prm_563 < 400)
+        if (id < 400)
         {
-            modgrowth(prm_562, prm_563, 20);
+            modify_potential(cc, id, 20);
         }
         return;
     }
-    lv_at_m76 = sdata.get(prm_563, prm_562).original_level + prm_564;
-    if (lv_at_m76 < 1)
+    int lv = sdata.get(id, cc).original_level + initial_level;
+    if (lv < 1)
     {
-        lv_at_m76 = 1;
+        lv = 1;
     }
-    if (prm_563 >= 400)
+    if (id >= 400)
     {
-        modgrowth(prm_562, prm_563, 200);
+        modify_potential(cc, id, 200);
     }
     else
     {
-        modgrowth(prm_562, prm_563, 50);
+        modify_potential(cc, id, 50);
     }
-    sdata.get(prm_563, prm_562).original_level = std::clamp(lv_at_m76, 0, 2000);
-    r1 = prm_562;
+    sdata.get(id, cc).original_level = std::clamp(lv, 0, 2000);
+    r1 = cc;
     refresh_character();
-    return;
 }
 
 
 
-int skillmod(int prm_566, int prm_567, int prm_568)
+int skillmod(int cc, int id, int experience)
 {
-    lv_at_m77 = sdata.get(prm_566, prm_567).original_level;
-    exp_at_m77 = sdata.get(prm_566, prm_567).experience + prm_568;
-    growth_at_m77 = sdata.get(prm_566, prm_567).potential;
+    lv_at_m77 = sdata.get(cc, id).original_level;
+    exp_at_m77 = sdata.get(cc, id).experience + experience;
+    growth_at_m77 = sdata.get(cc, id).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -8593,20 +8336,19 @@ int skillmod(int prm_566, int prm_567, int prm_568)
                 }
             }
         }
-        sdata.get(prm_566, prm_567).original_level =
-            std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(prm_566, prm_567).experience = exp_at_m77;
-        sdata.get(prm_566, prm_567).potential = growth_at_m77;
-        if (is_in_fov(prm_567))
+        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(cc, id).experience = exp_at_m77;
+        sdata.get(cc, id).potential = growth_at_m77;
+        if (is_in_fov(id))
         {
-            if (prm_567 == 0 || prm_567 < 16)
+            if (id == 0 || id < 16)
             {
                 snd(61);
                 txtef(2);
             }
-            txt(txtskillchange(prm_566, 0, prm_567));
+            txt(txtskillchange(cc, 0, id));
         }
-        r1 = prm_567;
+        r1 = id;
         refresh_character();
         return 1;
     }
@@ -8637,69 +8379,67 @@ int skillmod(int prm_566, int prm_567, int prm_568)
                 }
             }
         }
-        sdata.get(prm_566, prm_567).original_level =
-            std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(prm_566, prm_567).experience = exp_at_m77;
-        sdata.get(prm_566, prm_567).potential = growth_at_m77;
-        if (prm_567 == 0 || prm_567 < 16)
+        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(cc, id).experience = exp_at_m77;
+        sdata.get(cc, id).potential = growth_at_m77;
+        if (id == 0 || id < 16)
         {
-            if (is_in_fov(prm_567))
+            if (is_in_fov(id))
             {
                 if (lvchange_at_m77 != 0)
                 {
                     txtef(3);
-                    txt(txtskillchange(prm_566, 1, prm_567));
+                    txt(txtskillchange(cc, 1, id));
                 }
             }
         }
-        r1 = prm_567;
+        r1 = id;
         refresh_character();
         return 1;
     }
-    sdata.get(prm_566, prm_567).original_level = std::clamp(lv_at_m77, 0, 2000);
-    sdata.get(prm_566, prm_567).experience = exp_at_m77;
-    sdata.get(prm_566, prm_567).potential = growth_at_m77;
+    sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(cc, id).experience = exp_at_m77;
+    sdata.get(cc, id).potential = growth_at_m77;
     return 0;
 }
 
 
 
-int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
+int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
 {
     int exp2_at_m77 = 0;
-    if (sdata.get(prm_569, prm_570).original_level == 0)
+    if (sdata.get(cc, id).original_level == 0)
     {
         return 0;
     }
-    if (prm_571 == 0)
+    if (experience == 0)
     {
         return 0;
     }
-    if (the_ability_db[prm_569].related_basic_attribute != 0)
+    if (the_ability_db[cc].related_basic_attribute != 0)
     {
         skillexp(
-            the_ability_db[prm_569].related_basic_attribute,
-            prm_570,
-            prm_571 / (2 + prm_572));
+            the_ability_db[cc].related_basic_attribute,
+            id,
+            experience / (2 + prm_572));
     }
-    lv_at_m77 = sdata.get(prm_569, prm_570).original_level;
-    growth_at_m77 = sdata.get(prm_569, prm_570).potential;
+    lv_at_m77 = sdata.get(cc, id).original_level;
+    growth_at_m77 = sdata.get(cc, id).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
     }
-    if (prm_571 > 0)
+    if (experience > 0)
     {
-        exp_at_m77 = prm_571 * growth_at_m77 / (100 + lv_at_m77 * 15);
-        if (prm_569 >= 10)
+        exp_at_m77 = experience * growth_at_m77 / (100 + lv_at_m77 * 15);
+        if (cc >= 10)
         {
-            if (prm_569 <= 19)
+            if (cc <= 19)
             {
-                if (cdata[prm_570].growth_buffs[prm_569 - 10] > 0)
+                if (cdata[id].growth_buffs[cc - 10] > 0)
                 {
                     exp_at_m77 = exp_at_m77
-                        * (100 + cdata[prm_570].growth_buffs[prm_569 - 10])
-                        / 100;
+                        * (100 + cdata[id].growth_buffs[cc - 10]) / 100;
                 }
             }
         }
@@ -8717,7 +8457,7 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
     }
     else
     {
-        exp_at_m77 = prm_571;
+        exp_at_m77 = experience;
     }
     if (gdata_current_map == 35)
     {
@@ -8725,24 +8465,23 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
     }
     if (exp_at_m77 > 0)
     {
-        if (prm_569 >= 100)
+        if (cc >= 100)
         {
             if (prm_573 != 1000)
             {
-                exp2_at_m77 =
-                    rnd(cdata[prm_570].required_experience * exp_at_m77 / 1000
-                            / (cdata[prm_570].level + prm_573)
-                        + 1)
+                exp2_at_m77 = rnd(cdata[id].required_experience * exp_at_m77
+                                      / 1000 / (cdata[id].level + prm_573)
+                                  + 1)
                     + rnd(2);
-                cdata[prm_570].experience += exp2_at_m77;
-                if (prm_570 == 0)
+                cdata[id].experience += exp2_at_m77;
+                if (id == 0)
                 {
                     gdata_sleep_experience += exp2_at_m77;
                 }
             }
         }
     }
-    exp_at_m77 += sdata.get(prm_569, prm_570).experience;
+    exp_at_m77 += sdata.get(cc, id).experience;
     if (exp_at_m77 >= 1000)
     {
         lvchange_at_m77 = exp_at_m77 / 1000;
@@ -8759,21 +8498,20 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
                 }
             }
         }
-        sdata.get(prm_569, prm_570).original_level =
-            std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(prm_569, prm_570).experience = exp_at_m77;
-        sdata.get(prm_569, prm_570).potential = growth_at_m77;
-        if (is_in_fov(prm_570))
+        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(cc, id).experience = exp_at_m77;
+        sdata.get(cc, id).potential = growth_at_m77;
+        if (is_in_fov(id))
         {
-            if (prm_570 == 0 || prm_570 < 16)
+            if (id == 0 || id < 16)
             {
                 snd(61);
                 txtef(2);
                 msgalert = 1;
             }
-            txt(txtskillchange(prm_569, 0, prm_570));
+            txt(txtskillchange(cc, 0, id));
         }
-        r1 = prm_570;
+        r1 = id;
         refresh_character();
         return 1;
     }
@@ -8804,82 +8542,60 @@ int skillexp(int prm_569, int prm_570, int prm_571, int prm_572, int prm_573)
                 }
             }
         }
-        sdata.get(prm_569, prm_570).original_level =
-            std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(prm_569, prm_570).experience = exp_at_m77;
-        sdata.get(prm_569, prm_570).potential = growth_at_m77;
-        if (is_in_fov(prm_570))
+        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(cc, id).experience = exp_at_m77;
+        sdata.get(cc, id).potential = growth_at_m77;
+        if (is_in_fov(id))
         {
-            if (prm_570 == 0 || prm_570 < 16)
+            if (id == 0 || id < 16)
             {
                 if (lvchange_at_m77 != 0)
                 {
                     msgalert = 1;
                     txtef(3);
-                    txt(txtskillchange(prm_569, 1, prm_570));
+                    txt(txtskillchange(cc, 1, id));
                 }
             }
         }
-        r1 = prm_570;
+        r1 = id;
         refresh_character();
         return 1;
     }
-    sdata.get(prm_569, prm_570).original_level = std::clamp(lv_at_m77, 0, 2000);
-    sdata.get(prm_569, prm_570).experience = exp_at_m77;
-    sdata.get(prm_569, prm_570).potential = growth_at_m77;
+    sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(cc, id).experience = exp_at_m77;
+    sdata.get(cc, id).potential = growth_at_m77;
     return 0;
 }
 
 
 
-int getworker(int prm_578, int prm_579)
+int getworker(int map_id, int prm_579)
 {
-    int p_at_m78 = 0;
-    p_at_m78 = -1;
+    int ret = -1;
+    for (int i = 1; i < 16; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        if (prm_579 != 0 && i != prm_579)
+            continue;
+        if (cdata[i].current_map == map_id)
         {
-            if (cnt == 0)
-            {
-                continue;
-            }
-            if (prm_579 != 0)
-            {
-                if (cnt != prm_579)
-                {
-                    continue;
-                }
-            }
-            if (cdata[cnt].current_map == prm_578)
-            {
-                p_at_m78 = cnt;
-                break;
-            }
+            ret = i;
+            break;
         }
     }
-    return p_at_m78;
+    return ret;
 }
 
 
 
-void removeworker(int prm_580)
+void removeworker(int map_id)
 {
+    for (int i = 1; i < 16; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        if (cdata[i].current_map == map_id)
         {
-            if (cnt == 0)
-            {
-                continue;
-            }
-            if (cdata[cnt].current_map == prm_580)
-            {
-                cdata[cnt].current_map = 0;
-            }
+            cdata[i].current_map = 0;
         }
     }
-    return;
 }
 
 
@@ -9305,12 +9021,11 @@ int breath_list()
 
 
 
-void draw_emo(int prm_615, int prm_616, int prm_617)
+void draw_emo(int cc, int x, int y)
 {
     gmode(2, 16, 16);
-    pos(prm_616 + 16, prm_617);
-    gcopy(3, 32 + cdata[prm_615].emotion_icon % 100 * 16, 608);
-    return;
+    pos(x + 16, y);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608);
 }
 
 
@@ -10016,11 +9731,7 @@ label_0410_internal:
 
 
 
-void display_customkey(
-    const std::string& prm_637,
-    int prm_638,
-    int prm_639,
-    int)
+void display_customkey(const std::string& key, int x, int y)
 {
     redraw(0);
     gsel(3);
@@ -10030,21 +9741,19 @@ void display_customkey(
     gcopy(3, 0, 30, 24, 18);
     pos(629, 31);
     color(50, 60, 80);
-    bmes(""s + prm_637, 250, 240, 230);
+    bmes(key, 250, 240, 230);
     gmode(2, inf_tiles, inf_tiles);
     gsel(0);
-    pos(prm_638, prm_639);
+    pos(x, y);
     gcopy(3, 624, 30, 24, 18);
-    return;
 }
 
 
 
-void display_key(int prm_641, int prm_642, int prm_643)
+void display_key(int x, int y, int nth)
 {
-    pos(prm_641, prm_642);
-    gcopy(3, prm_643 * 24 + 72, 30, 24, 18);
-    return;
+    pos(x, y);
+    gcopy(3, nth * 24 + 72, 30, 24, 18);
 }
 
 
@@ -10119,137 +9828,45 @@ void lenfix(std::string& prm_644, int prm_645)
 
 
 
-void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
+void showscroll(const std::string& title, int x, int y, int width, int height)
 {
-    int x_at_m91 = 0;
-    int y_at_m91 = 0;
-    int x3_at_m91 = 0;
-    int y3_at_m91 = 0;
-    int cnt2_at_m91 = 0;
+    if (windowshadow != 0)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-        {
-            if (cnt == 0)
-            {
-                if (windowshadow == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    gmode(6, -1, -1, 80);
-                    x_at_m91 = prm_646 + 3;
-                    y_at_m91 = prm_647 + 3;
-                    windowshadow = 0;
-                }
-            }
-            else
-            {
-                gmode(2);
-                x_at_m91 = prm_646;
-                y_at_m91 = prm_647;
-            }
-            x3_at_m91 = prm_648 + x_at_m91 - prm_648 % 8 - 64;
-            y3_at_m91 = prm_649 + y_at_m91 - prm_649 % 8 - 64;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (prm_648 / 8); cnt < cnt_end; ++cnt)
-                {
-                    if (cnt < 8)
-                    {
-                        if (cnt == 0)
-                        {
-                            pos(x_at_m91, y_at_m91);
-                            gcopy(7, 0, 0, 64, 48);
-                            pos(x_at_m91, y3_at_m91);
-                            gcopy(7, 0, 144, 64, 48);
-                        }
-                        continue;
-                    }
-                    if (cnt < prm_648 / 8 - 8)
-                    {
-                        pos(cnt * 8 + x_at_m91, y_at_m91);
-                        gcopy(7, (cnt - 8) % 18 * 8 + 64, 0, 8, 48);
-                        pos(cnt * 8 + x_at_m91, y3_at_m91);
-                        gcopy(7, (cnt - 8) % 18 * 8 + 64, 144, 8, 48);
-                        continue;
-                    }
-                    pos(x3_at_m91, y_at_m91);
-                    gcopy(7, 208, 0, 64, 48);
-                    pos(x3_at_m91, y3_at_m91);
-                    gcopy(7, 208, 144, 64, 48);
-                    break;
-                }
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (prm_649 / 8 - 14); cnt < cnt_end;
-                     ++cnt)
-                {
-                    cnt2_at_m91 = cnt;
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (prm_648 / 8); cnt < cnt_end;
-                             ++cnt)
-                        {
-                            if (cnt == 0)
-                            {
-                                pos(x_at_m91, cnt2_at_m91 * 8 + y_at_m91 + 48);
-                                gcopy(7, 0, cnt2_at_m91 % 12 * 8 + 48, 64, 8);
-                                continue;
-                            }
-                            if (cnt < prm_648 / 8 - 15)
-                            {
-                                pos(cnt * 8 + x_at_m91 + 56,
-                                    cnt2_at_m91 * 8 + y_at_m91 + 48);
-                                gcopy(
-                                    7,
-                                    cnt % 18 * 8 + 64,
-                                    cnt2_at_m91 % 12 * 8 + 48,
-                                    8,
-                                    8);
-                                continue;
-                            }
-                            pos(x3_at_m91, cnt2_at_m91 * 8 + y_at_m91 + 48);
-                            gcopy(7, 208, cnt2_at_m91 % 12 * 8 + 48, 64, 8);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        gmode(6, -1, -1, 80);
+        draw_scroll(x + 3, y + 3, width, height);
+        windowshadow = 0;
+        gmode(2);
     }
-    if (s != ""s)
+    draw_scroll(x, y, width, height);
+
+    if (std::empty(title))
+        return;
+
+    pos(x + 40, y + height - 67 - height % 8);
+    gcopy(3, 96, 360, 24, 16);
+    color(194, 173, 161);
+    line(
+        x + 60,
+        y + height - 68 - height % 8,
+        x + width - 40,
+        y + height - 68 - height % 8);
+    color(224, 213, 191);
+    line(
+        x + 60,
+        y + height - 69 - height % 8,
+        x + width - 40,
+        y + height - 69 - height % 8);
+    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    color(0, 0, 0);
+    pos(x + 68, y + height - 63 - height % 8);
+    mes(s);
+    if (pagesize != 0)
     {
-        pos(x_at_m91 + 40, y_at_m91 + prm_649 - 67 - prm_649 % 8);
-        gcopy(3, 96, 360, 24, 16);
-        color(194, 173, 161);
-        line(
-            x_at_m91 + 60,
-            y_at_m91 + prm_649 - 68 - prm_649 % 8,
-            x_at_m91 + prm_648 - 40,
-            y_at_m91 + prm_649 - 68 - prm_649 % 8);
-        color(224, 213, 191);
-        line(
-            x_at_m91 + 60,
-            y_at_m91 + prm_649 - 69 - prm_649 % 8,
-            x_at_m91 + prm_648 - 40,
-            y_at_m91 + prm_649 - 69 - prm_649 % 8);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-        color(0, 0, 0);
-        pos(x_at_m91 + 68, y_at_m91 + prm_649 - 63 - prm_649 % 8);
+        s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
-        if (pagesize != 0)
-        {
-            s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-            pos(x_at_m91 + prm_648 - strlen_u(s) * 7 - 40,
-                y_at_m91 + prm_649 - 63 - prm_649 % 8);
-            mes(s);
-        }
     }
-    return;
 }
 
 
@@ -10639,33 +10256,25 @@ void display_msg(int prm_680, int prm_681)
 
 
 
-int role(int prm_686, int prm_687, int prm_688)
+int roll(int x, int y, int z)
 {
-    int d_at_m97 = 0;
-    d_at_m97 = 0;
-    if (prm_686 < 1)
+    if (x < 1)
+        x = 1;
+    if (y < 1)
+        y = 1;
+    int ret = 0;
+    for (int i = 0; i < x; ++i)
     {
-        prm_686 = 1;
+        ret += rnd(y) + 1;
     }
-    if (prm_687 < 1)
-    {
-        prm_687 = 1;
-    }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (prm_686); cnt < cnt_end; ++cnt)
-        {
-            d_at_m97 += rnd(prm_687) + 1;
-        }
-    }
-    return d_at_m97 + prm_688;
+    return ret + z;
 }
 
 
 
-int rolemax(int prm_689, int prm_690, int prm_691)
+int roll_max(int x, int y, int z)
 {
-    return prm_689 * prm_690 + prm_691;
+    return x * y + z;
 }
 
 
@@ -10948,29 +10557,6 @@ void arrayfile(bool fread, std::string_view fmode_str, const fs::path& filepath)
     }
 
     elona_export = 0;
-}
-
-
-
-std::string del_str(const std::string& prm_694, const std::string& prm_695)
-{
-    std::string s_at_m99;
-    s_at_m99 = prm_694;
-    {
-        int cnt = 0;
-        for (;; ++cnt)
-        {
-            if (!strutil::contains(s_at_m99, prm_695))
-            {
-                break;
-            }
-            s_at_m99 = strmid(s_at_m99, 0, instr(s_at_m99, 0, prm_695))
-                + strmid(s_at_m99,
-                         (instr(s_at_m99, 0, prm_695) + std::size(prm_695)),
-                         100);
-        }
-    }
-    return s_at_m99;
 }
 
 
@@ -13617,7 +13203,7 @@ void hostileaction(int prm_787, int prm_788)
     {
         if (cdata[prm_788].relationship == 0)
         {
-            modkarma(0, -2);
+            modify_karma(0, -2);
         }
         if (cdata[prm_788].id == 202)
         {
@@ -15634,7 +15220,7 @@ void check_kill(int prm_836, int prm_837)
     }
     if (p_at_m137 != 0)
     {
-        modkarma(0, p_at_m137);
+        modify_karma(0, p_at_m137);
     }
     return;
 }
@@ -25128,7 +24714,8 @@ void label_1573()
             cdata[rc].gold -= cdata[rc].gold / (1 + 3 * (cbit(17, rc) == 0));
         }
     }
-    switch (refclass(rc, 4))
+
+    switch (access_class_info(16, cdatan(3, rc)))
     {
     case 1:
         if (rnd(20) == 0)
@@ -27297,8 +26884,8 @@ void apply_general_eating_effect()
             ++fdmax;
         }
         nutrition = 500;
-        modgrowth(cc, 10, 2);
-        modgrowth(cc, 11, 2);
+        modify_potential(cc, 10, 2);
+        modify_potential(cc, 11, 2);
         if (cc == 0)
         {
             txtmore();
@@ -27360,8 +26947,8 @@ void apply_general_eating_effect()
             ++fdmax;
         }
         nutrition = 500;
-        modgrowth(cc, 16, 2);
-        modgrowth(cc, 15, 2);
+        modify_potential(cc, 16, 2);
+        modify_potential(cc, 15, 2);
         if (cc == 0)
         {
             txtmore();
@@ -27422,8 +27009,8 @@ void apply_general_eating_effect()
             fdlist(1, fdmax) = 10;
             ++fdmax;
         }
-        modgrowth(cc, 12, 2);
-        modgrowth(cc, 13, 2);
+        modify_potential(cc, 12, 2);
+        modify_potential(cc, 13, 2);
         nutrition = 500;
         if (cc == 0)
         {
@@ -27486,8 +27073,8 @@ void apply_general_eating_effect()
             ++fdmax;
         }
         nutrition = 500;
-        modgrowth(cc, 17, 2);
-        modgrowth(cc, 14, 2);
+        modify_potential(cc, 17, 2);
+        modify_potential(cc, 14, 2);
         if (cc == 0)
         {
             txtmore();
@@ -27705,7 +27292,7 @@ void apply_general_eating_effect()
                     {
                         continue;
                     }
-                    modgrowth(cc, cnt, rnd(10) + 1);
+                    modify_potential(cc, cnt, rnd(10) + 1);
                 }
             }
         }
@@ -27777,7 +27364,7 @@ void apply_general_eating_effect()
             {
                 if (cdata[cc].relationship >= 0)
                 {
-                    modkarma(0, -1);
+                    modify_karma(0, -1);
                 }
             }
             return;
@@ -27804,7 +27391,7 @@ void apply_general_eating_effect()
                            + cnvtalk(u8"Uh..uh..What is this feeling..."s))));
             cdata[cc].emotion_icon = 317;
             modimp(cc, 30);
-            modkarma(0, -10);
+            modify_karma(0, -10);
             lovemiracle(cc);
         }
         dmgcon(cc, 7, 500);
@@ -28020,7 +27607,7 @@ void eating_effect_eat_guard()
         txtef(8);
         txt(lang(u8"ガード達はあなたを憎悪した。"s, u8"Guards hate you."s));
     }
-    modkarma(cc, -15);
+    modify_karma(cc, -15);
     return;
 }
 
@@ -28247,7 +27834,7 @@ void eating_effect_eat_cat()
     {
         txt(lang(u8"猫を食べるなんて！！"s, u8"How can you eat a cat!!"s));
     }
-    modkarma(0, -5);
+    modify_karma(0, -5);
     return;
 }
 
@@ -36682,7 +36269,7 @@ void label_1754()
             {
                 txt(lang(
                     u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
-                modkarma(0, 1);
+                modify_karma(0, 1);
                 p = rnd(8) + 10;
                 if (sdata.get(p, 0).original_level >= 10)
                 {
@@ -37699,7 +37286,7 @@ label_1860_internal:
 label_1861_internal:
     redraw(0);
     s = strhint2 + strhint3b;
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"所持マテリアル"s, u8"Name"s), wx + 38, wy + 36);
     display_topic(lang(u8"説明"s, u8"Detail"s), wx + 296, wy + 36);
     keyrange = 0;
@@ -39177,7 +38764,7 @@ void label_1879()
                     txt(lang(
                         u8"イカサマが見つかってしまった…"s,
                         u8"You are caught in cheating..."s));
-                    modkarma(0, -5);
+                    modify_karma(0, -5);
                     list(0, listmax) = 0;
                     listn(0, listmax) =
                         lang(u8"濡れ衣だ！"s, u8"I didn't do it!"s);
@@ -40868,7 +40455,7 @@ label_1894_internal:
         {
             txt(lang(
                 u8"あなたは遺留品をあさった。"s, u8"You loot the remains."s));
-            modkarma(0, -2);
+            modify_karma(0, -2);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (1 + rnd(3)); cnt < cnt_end; ++cnt)
@@ -40895,7 +40482,7 @@ label_1894_internal:
             txt(lang(
                 u8"あなたは骨と遺留品を埋葬した。"s,
                 u8"You bury the corpse with respect."s));
-            modkarma(0, 5);
+            modify_karma(0, 5);
         }
         goto label_1895_internal;
     case 2:
@@ -41353,7 +40940,7 @@ void label_1901()
                     u8"名声値を"s + p + u8"失った。"s,
                     u8"You lose "s + p + u8" fame."s));
                 txtmore();
-                modkarma(0, -30 * 2);
+                modify_karma(0, -30 * 2);
             }
         }
         else
@@ -43515,7 +43102,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         if (cbit(6, i_at_m186) == 0 || cbit(7, 0) || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
-            txttargetlevel();
+            s = txttargetlevel(cc, tc);
             color(0, 0, 0);
             pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
@@ -47149,17 +46736,17 @@ void fix_wish()
 {
     if (jp)
     {
-        inputlog = del_str(inputlog, u8","s);
-        inputlog = del_str(inputlog, u8" "s);
-        inputlog = del_str(inputlog, u8"　"s);
+        inputlog = strutil::remove_str(inputlog, u8",");
+        inputlog = strutil::remove_str(inputlog, u8" ");
+        inputlog = strutil::remove_str(inputlog, u8"　");
     }
     else
     {
         inputlog = strutil::to_lower(inputlog(0));
     }
-    inputlog = del_str(inputlog, lang(u8"アイテム"s, u8"item"s));
-    inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill "s));
-    inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill"s));
+    inputlog = strutil::remove_str(inputlog, lang(u8"アイテム", u8"item"));
+    inputlog = strutil::remove_str(inputlog, lang(u8"スキル", u8"skill "));
+    inputlog = strutil::remove_str(inputlog, lang(u8"スキル", u8"skill"));
     return;
 }
 
@@ -47439,7 +47026,7 @@ void what_do_you_wish_for()
             wish_end();
             return;
         }
-        modkarma(0, cdata[0].karma / 2 * -1);
+        modify_karma(0, cdata[0].karma / 2 * -1);
         txt(lang(
             u8"あら…都合のいいことを言うのね。"s,
             u8"What a convenient wish!"s));
@@ -47790,7 +47377,7 @@ label_1999_internal:
                         + i18n::_(u8"ability", std::to_string(p), u8"name")
                         + u8" skill improves!"s));
                 skillmod(p, 0, 1000);
-                modgrowth(0, p, 25);
+                modify_potential(0, p, 25);
             }
         }
         else
@@ -50545,7 +50132,7 @@ label_2035_internal:
             --cdata[0].skill_bonus;
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
-            modgrowth(
+            modify_potential(
                 cc,
                 csskill,
                 std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
@@ -52685,7 +52272,7 @@ int label_2072()
 
 int label_2073()
 {
-    txttargetlevel();
+    s = txttargetlevel(cc, tc);
     txt(s);
     txtmore();
     txt(lang(
@@ -57083,7 +56670,7 @@ void label_2147()
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
-            modkarma(0, -1);
+            modify_karma(0, -1);
         }
         else
         {
@@ -57416,7 +57003,7 @@ void continuous_action_others()
                 txtmore();
                 txt(lang(
                     u8"盗みを見咎められた！"s, u8"You are found stealing."s));
-                modkarma(0, -5);
+                modify_karma(0, -5);
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
@@ -57430,7 +57017,7 @@ void continuous_action_others()
                         }
                     }
                 }
-                gohostile();
+                go_hostile();
             }
             if (tg != -1)
             {
@@ -57578,7 +57165,7 @@ void continuous_action_others()
                 txt(lang(
                     u8"あなたは良心の呵責を感じた。"s,
                     u8"You feel the stings of conscience."s));
-                modkarma(0, -1);
+                modify_karma(0, -1);
             }
         }
     }
@@ -57855,7 +57442,7 @@ void label_2151()
                 {
                     break;
                 }
-                modgrowth(0, 10 + rnd(8), 1);
+                modify_potential(0, 10 + rnd(8), 1);
                 ++grown;
                 if (cnt > 6)
                 {
@@ -58759,11 +58346,11 @@ void label_2161()
                     {
                         if (cdata[cc].relationship > 0)
                         {
-                            modkarma(0, -5);
+                            modify_karma(0, -5);
                         }
                         else
                         {
-                            modkarma(0, -1);
+                            modify_karma(0, -1);
                         }
                     }
                     modimp(tc, -25);
@@ -60167,7 +59754,7 @@ void label_2187()
         int cnt = 0;
         for (int cnt_end = cnt + (subloop); cnt < cnt_end; ++cnt)
         {
-            healhp(tc(cnt), role(dice1, dice2, bonus));
+            healhp(tc(cnt), roll(dice1, dice2, bonus));
             healcon(tc(cnt), 6);
             healcon(tc(cnt), 1, 50);
             healcon(tc(cnt), 5, 50);
@@ -61273,7 +60860,7 @@ void label_2201()
                 name(tc) + u8"は睡眠を妨害された。"s,
                 name(cc) + u8" disturb"s + _s(cc) + u8" "s + his(tc)
                     + u8" sleep."s));
-            modkarma(cc, -1);
+            modify_karma(cc, -1);
             cdata[tc].emotion_icon = 418;
         }
         cdata[tc].sleep = 0;
@@ -62583,7 +62170,7 @@ void do_open_command()
     int refweight = 0;
     if (inv[ci].id == 361)
     {
-        modkarma(0, -10);
+        modify_karma(0, -10);
         invctrl(0) = 22;
         invctrl(1) = 0;
         invfile = inv[ci].param1;
@@ -62937,11 +62524,11 @@ void open_box()
     inv[ri].param1 = 0;
     if (inv[ri].id == 284)
     {
-        modkarma(0, -4);
+        modify_karma(0, -4);
     }
     if (inv[ri].id == 283)
     {
-        modkarma(0, -8);
+        modify_karma(0, -8);
     }
     return;
 }
@@ -67140,7 +66727,7 @@ void label_2244()
                 if (chatval == 2)
                 {
                     cdata[0].platinum_coin -= calctraincost(csskill, 0, 1);
-                    modgrowth(
+                    modify_potential(
                         cc,
                         csskill,
                         std::clamp(
@@ -67584,7 +67171,7 @@ void label_2244()
             name(0) + your(0) + u8" potential of "s
                 + i18n::_(u8"ability", std::to_string(chatval), u8"name")
                 + u8" greatly expands."s));
-        modgrowth(0, chatval, 10);
+        modify_potential(0, chatval, 10);
         listmax = 0;
         buff = lang(
             u8"うむ、なかなか見所がある"s + _yo(),
@@ -67650,7 +67237,7 @@ void label_2244()
             cdata[0].gold -= p;
             snd(12);
             cdata[tc].gold += p;
-            modkarma(0, 2);
+            modify_karma(0, 2);
             listmax = 0;
             buff = lang(
                 _thanks(2) + u8"この恩は一生忘れない"s + _yo(),
@@ -68619,7 +68206,7 @@ void label_2254()
         if (csctrl == 2)
         {
             cdata[0].platinum_coin -= calctraincost(csskill, cc);
-            modgrowth(
+            modify_potential(
                 cc,
                 csskill,
                 std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
@@ -70266,7 +69853,7 @@ label_2277_internal:
 label_2278_internal:
     redraw(0);
     s = strhint2 + strhint3b;
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
@@ -70460,7 +70047,7 @@ label_2282_internal:
 label_2283_internal:
     redraw(0);
     s = strhint2 + strhint3b;
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     color(0, 0, 0);
@@ -72005,7 +71592,7 @@ void failed_quest()
             txt(lang(
                 u8"あなたは重大な罪を犯した!"s,
                 u8"You comit a serious crime!"s));
-            modkarma(0, -20);
+            modify_karma(0, -20);
         }
         if (qdata(3, rq) == 1007)
         {
@@ -72080,7 +71667,7 @@ void failed_quest()
                     }
                 }
             }
-            modkarma(0, -10);
+            modify_karma(0, -10);
         }
         qdata(3, rq) = 0;
         qdata(8, rq) = 0;
@@ -72327,7 +71914,7 @@ void complete_quest()
             }
         }
     }
-    modkarma(0, 1);
+    modify_karma(0, 1);
     gdata(74) = calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
     txt(lang(
@@ -73967,7 +73554,7 @@ void label_2693()
                                     {
                                         continue;
                                     }
-                                    modgrowth(cc, p, 4);
+                                    modify_potential(cc, p, 4);
                                     break;
                                 }
                             }
@@ -75330,7 +74917,7 @@ void label_2707()
     wy = winposy(wh);
     windowanime(wx, wy, ww, wh, 10, 4);
     s = lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s);
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     net_read();
     buff = "";
     notesel(buff);
@@ -76703,7 +76290,7 @@ void pass_one_turn(bool label_2738_flg)
                     txtmore();
                     txt(lang(
                         u8"あなたは法を犯した。"s, u8"You commit a crime."s));
-                    modkarma(0, -10);
+                    modify_karma(0, -10);
                 }
                 snd(72);
                 txt(lang(

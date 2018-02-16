@@ -1200,7 +1200,7 @@ void talk_npc()
             talk_npc();
             return;
         }
-        gohostile();
+        go_hostile();
         talk_end();
         return;
     }
@@ -1221,7 +1221,7 @@ void talk_npc()
             ++listmax;
             chatesc = 1;
             talk_window();
-            modkarma(0, -5);
+            modify_karma(0, -5);
         }
         else
         {
@@ -1234,7 +1234,7 @@ void talk_npc()
             ++listmax;
             chatesc = 1;
             talk_window();
-            modkarma(0, 5);
+            modify_karma(0, 5);
             ++gdata_lost_wallet_count;
             if (gdata_lost_wallet_count >= 4)
             {
@@ -1264,7 +1264,7 @@ void talk_npc()
                 ++listmax;
                 chatesc = 1;
                 talk_window();
-                modkarma(0, -10);
+                modify_karma(0, -10);
             }
         }
         refresh_burden_state();
@@ -1717,7 +1717,7 @@ void talk_npc()
         {
             snd(12);
             cdata[0].gold -= calcguiltvalue();
-            modkarma(0, (cdata[0].karma - -30) * -1 + 1);
+            modify_karma(0, (cdata[0].karma - -30) * -1 + 1);
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
         else
@@ -1913,7 +1913,7 @@ void talk_npc()
         if (chatval == 1)
         {
             txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mon..."s));
-            modkarma(0, -20);
+            modify_karma(0, -20);
             snd(11);
             cdata[0].gold += 50000;
             gdata_pael_and_her_mom = 1002;
