@@ -8529,23 +8529,15 @@ int getworker(int map_id, int prm_579)
 
 
 
-void removeworker(int prm_580)
+void removeworker(int map_id)
 {
+    for (int i = 1; i < 16; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        if (cdata[i].current_map == map_id)
         {
-            if (cnt == 0)
-            {
-                continue;
-            }
-            if (cdata[cnt].current_map == prm_580)
-            {
-                cdata[cnt].current_map = 0;
-            }
+            cdata[i].current_map = 0;
         }
     }
-    return;
 }
 
 
