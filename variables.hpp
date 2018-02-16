@@ -898,7 +898,7 @@ std::string mapname(int = 0, int = 0);
 std::string name(int = 0);
 std::string npcn(int = 0);
 std::string random_title(int = 0);
-std::string randomname(int = 0);
+std::string randomname();
 std::string ranktitle(int = 0);
 std::string refchara_str(int = 0, int = 0);
 std::string rpmatname(int = 0);
