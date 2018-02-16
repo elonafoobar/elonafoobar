@@ -942,10 +942,10 @@ int calcattackdmg(int prm_894)
         dmgfix = -100;
     }
     dmgmulti = int(dmgmulti * 100);
-    damage = role(dice1, dice2, dmgfix);
+    damage = roll(dice1, dice2, dmgfix);
     if (critical)
     {
-        damage = rolemax(dice1, dice2, dmgfix);
+        damage = roll_max(dice1, dice2, dmgfix);
         if (attackskill == 106)
         {
             dmgmulti *= 1.25;
@@ -1009,7 +1009,7 @@ int calcattackdmg(int prm_894)
     damagenormal = damage - damagepierce;
     if (prot > 0)
     {
-        damagenormal -= role(protdice1, protdice2, protfix);
+        damagenormal -= roll(protdice1, protdice2, protfix);
         if (damagenormal < 0)
         {
             damagenormal = 0;

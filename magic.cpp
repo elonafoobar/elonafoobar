@@ -239,7 +239,7 @@ int magic()
                                         }
                                     }
                                 }
-                                dmg = role(dice1, dice2, bonus);
+                                dmg = roll(dice1, dice2, bonus);
                                 int stat = calcmagiccontrol(cc, tc);
                                 if (stat == 1)
                                 {
@@ -416,7 +416,7 @@ int magic()
                                 }
                                 if (cc != tc)
                                 {
-                                    dmg = role(dice1, dice2, bonus) * 100
+                                    dmg = roll(dice1, dice2, bonus) * 100
                                         / (75
                                            + dist(tlocx, tlocy, dx, dy) * 25);
                                     txtmore();
@@ -522,7 +522,7 @@ int magic()
                 goto the_end;
             case 2:
                 play_animation(1);
-                dmg = role(dice1, dice2, bonus);
+                dmg = roll(dice1, dice2, bonus);
                 if (is_in_fov(tc))
                 {
                     txtmore();
@@ -685,7 +685,7 @@ int magic()
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
-                dmghp(tc, role(dice1, dice2, bonus), cc, ele, elep);
+                dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
                 {
                     dmgcon(tc, 6, elep);
@@ -1095,7 +1095,7 @@ int magic()
                             tc = map(dx, dy, 1) - 1;
                             if (cc != tc)
                             {
-                                dmg = role(dice1, dice2, bonus);
+                                dmg = roll(dice1, dice2, bonus);
                                 if (is_in_fov(tc))
                                 {
                                     txtmore();
@@ -1168,7 +1168,7 @@ label_2181_internal:
                     + u8" sick at entrails caught in "s + name(cc) + your(cc)
                     + u8" tentacles."s);
         }
-        dmgsan(tc, rnd(role(dice1, dice2, bonus) + 1));
+        dmgsan(tc, rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
         if (mdata(6) != 1)
@@ -3199,7 +3199,7 @@ label_2181_internal:
         }
         break;
     case 624:
-        healmp(tc, role(dice1, dice2, bonus));
+        healmp(tc, roll(dice1, dice2, bonus));
         if (is_in_fov(tc))
         {
             txt(lang(

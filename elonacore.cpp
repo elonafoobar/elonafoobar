@@ -10256,33 +10256,25 @@ void display_msg(int prm_680, int prm_681)
 
 
 
-int role(int prm_686, int prm_687, int prm_688)
+int roll(int x, int y, int z)
 {
-    int d_at_m97 = 0;
-    d_at_m97 = 0;
-    if (prm_686 < 1)
+    if (x < 1)
+        x = 1;
+    if (y < 1)
+        y = 1;
+    int ret = 0;
+    for (int i = 0; i < x; ++i)
     {
-        prm_686 = 1;
+        ret += rnd(y) + 1;
     }
-    if (prm_687 < 1)
-    {
-        prm_687 = 1;
-    }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (prm_686); cnt < cnt_end; ++cnt)
-        {
-            d_at_m97 += rnd(prm_687) + 1;
-        }
-    }
-    return d_at_m97 + prm_688;
+    return ret + z;
 }
 
 
 
-int rolemax(int prm_689, int prm_690, int prm_691)
+int roll_max(int x, int y, int z)
 {
-    return prm_689 * prm_690 + prm_691;
+    return x * y + z;
 }
 
 
@@ -59785,7 +59777,7 @@ void label_2187()
         int cnt = 0;
         for (int cnt_end = cnt + (subloop); cnt < cnt_end; ++cnt)
         {
-            healhp(tc(cnt), role(dice1, dice2, bonus));
+            healhp(tc(cnt), roll(dice1, dice2, bonus));
             healcon(tc(cnt), 6);
             healcon(tc(cnt), 1, 50);
             healcon(tc(cnt), 5, 50);
