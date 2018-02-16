@@ -154,6 +154,41 @@ position_t gmes(
 
 
 
+int ask_direction_to_close()
+{
+    int number_of_doors{};
+    position_t pos;
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            if (dy == 0 && dx == 0)
+                continue;
+            int x = cdata[0].position.x + dx;
+            int y = cdata[0].position.y + dy;
+            cell_featread(x, y);
+            if (feat(1) == 20 && map(x, y, 1) == 0)
+            {
+                ++number_of_doors;
+                pos = {x, y};
+            }
+        }
+    }
+    if (number_of_doors == 1)
+    {
+        x = pos.x;
+        y = pos.y;
+        return 1;
+    }
+
+    txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
+    update_screen();
+    val = 0;
+    return ask_direction();
+}
+
+
+
 } // namespace
 
 
@@ -63191,10 +63226,7 @@ void try_to_open_locked_door()
 
 void do_close_command()
 {
-    txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
-    update_screen();
-    val = 0;
-    int stat = ask_direction();
+    int stat = ask_direction_to_close();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
