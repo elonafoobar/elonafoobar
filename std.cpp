@@ -150,15 +150,10 @@ struct MessageBox
 
     void update()
     {
-        auto c = snail::to_char(snail::input::instance().get_pressed_key());
-        if (c)
+        buffer += snail::input::instance().get_text();
+        if (snail::input::instance().is_pressed(snail::key::enter))
         {
-            // TODO capslock
-            if (snail::input::instance().is_pressed_exactly(snail::key::shift))
-            {
-                c = std::toupper(c);
-            }
-            buffer += c;
+            buffer += u8'\n';
         }
     }
 
@@ -220,13 +215,8 @@ uint32_t last_await;
 void await(int msec)
 {
     snail::application::instance().proc_event();
-    for (auto&& b : mesbox_detail::message_boxes)
-    {
-        if (b)
-        {
-            b->update();
-        }
-    }
+    if (mesbox_detail::message_boxes.back())
+        mesbox_detail::message_boxes.back()->update();
 
     const auto now = ::SDL_GetTicks();
     if (await_detail::last_await == 0)
@@ -2039,6 +2029,8 @@ int ImmGetOpenStatus(int)
 
 void onkey_0()
 {
+    mesbox_detail::message_boxes.erase(
+        std::end(mesbox_detail::message_boxes) - 1);
 }
 
 

@@ -40,6 +40,7 @@ void application::initialize(int width, int height, const std::string& title)
         window::shown));
     _renderer.reset(new renderer(
         *_window, renderer::accelerated | renderer::present_vsync));
+    ::SDL_StartTextInput();
 }
 
 
@@ -153,6 +154,7 @@ void application::handle_event(const ::SDL_Event& event)
         break;
     case SDL_KEYUP:
     case SDL_KEYDOWN: input::instance()._handle_event(event.key); break;
+    case SDL_TEXTINPUT: input::instance()._handle_event(event.text); break;
     default: break;
     }
 }
