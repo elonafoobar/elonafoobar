@@ -8080,31 +8080,21 @@ void go_hostile()
 
 
 
-void modkarma(int prm_550, int prm_551)
+void modify_karma(int cc, int delta)
 {
-    int a_at_m74 = 0;
-    int max_at_m74 = 0;
-    a_at_m74 = prm_551;
-    if (trait(162))
+    if (trait(162) && delta < 0)
     {
-        if (a_at_m74 < 0)
-        {
-            a_at_m74 = a_at_m74 * 75 / 100;
-            if (a_at_m74 == 0)
-            {
-                return;
-            }
-        }
+        delta = delta * 75 / 100;
+        if (delta == 0)
+            return;
     }
-    if (trait(169))
+    if (trait(169) && delta < 0)
     {
-        if (a_at_m74 < 0)
-        {
-            a_at_m74 = a_at_m74 * 150 / 100;
-        }
+        delta = delta * 150 / 100;
     }
+
     txtmore();
-    if (a_at_m74 >= 0)
+    if (delta >= 0)
     {
         txtef(5);
     }
@@ -8112,56 +8102,41 @@ void modkarma(int prm_550, int prm_551)
     {
         txtef(8);
     }
-    txt(lang(
-        u8"カルマ変動("s + a_at_m74 + u8") "s,
-        u8"Karma("s + a_at_m74 + u8")"s));
-    if (a_at_m74 > 0)
+    txt(lang(u8"カルマ変動("s + delta + u8") ", u8"Karma("s + delta + u8")"));
+    if (delta > 0)
     {
-        if (cdata[prm_550].karma < -30)
+        if (cdata[cc].karma < -30 && cdata[cc].karma + delta >= -30)
         {
-            if (cdata[prm_550].karma + a_at_m74 >= -30)
-            {
-                txtmore();
-                txtef(2);
-                txt(lang(
-                    u8"あなたの罪は軽くなった。"s,
-                    u8"You are no longer a criminal"s));
-            }
+            txtmore();
+            txtef(2);
+            txt(lang(
+                u8"あなたの罪は軽くなった。",
+                u8"You are no longer a criminal"));
         }
     }
-    if (a_at_m74 < 0)
+    else if (delta < 0)
     {
-        if (cdata[prm_550].karma >= -30)
+        if (cdata[cc].karma >= -30 && cdata[cc].karma + delta < -30)
         {
-            if (cdata[prm_550].karma + a_at_m74 < -30)
-            {
-                txtmore();
-                txtef(8);
-                txt(lang(
-                    u8"あなたは今や罪人だ。"s, u8"You are a criminal now."s));
-                go_hostile();
-            }
+            txtmore();
+            txtef(8);
+            txt(lang(u8"あなたは今や罪人だ。", u8"You are a criminal now."));
+            go_hostile();
         }
     }
-    cdata[prm_550].karma += a_at_m74;
-    max_at_m74 = 20;
+
+    cdata[cc].karma += delta;
+
+    int max = 20;
     if (trait(162))
     {
-        max_at_m74 -= 20;
+        max -= 20;
     }
     if (trait(169))
     {
-        max_at_m74 += 20;
+        max += 20;
     }
-    if (cdata[prm_550].karma > max_at_m74)
-    {
-        cdata[prm_550].karma = max_at_m74;
-    }
-    if (cdata[prm_550].karma < -100)
-    {
-        cdata[prm_550].karma = -100;
-    }
-    return;
+    cdata[cc].karma = std::clamp(cdata[cc].karma, -100, max);
 }
 
 
@@ -13338,7 +13313,7 @@ void hostileaction(int prm_787, int prm_788)
     {
         if (cdata[prm_788].relationship == 0)
         {
-            modkarma(0, -2);
+            modify_karma(0, -2);
         }
         if (cdata[prm_788].id == 202)
         {
@@ -15355,7 +15330,7 @@ void check_kill(int prm_836, int prm_837)
     }
     if (p_at_m137 != 0)
     {
-        modkarma(0, p_at_m137);
+        modify_karma(0, p_at_m137);
     }
     return;
 }
@@ -27499,7 +27474,7 @@ void apply_general_eating_effect()
             {
                 if (cdata[cc].relationship >= 0)
                 {
-                    modkarma(0, -1);
+                    modify_karma(0, -1);
                 }
             }
             return;
@@ -27526,7 +27501,7 @@ void apply_general_eating_effect()
                            + cnvtalk(u8"Uh..uh..What is this feeling..."s))));
             cdata[cc].emotion_icon = 317;
             modimp(cc, 30);
-            modkarma(0, -10);
+            modify_karma(0, -10);
             lovemiracle(cc);
         }
         dmgcon(cc, 7, 500);
@@ -27742,7 +27717,7 @@ void eating_effect_eat_guard()
         txtef(8);
         txt(lang(u8"ガード達はあなたを憎悪した。"s, u8"Guards hate you."s));
     }
-    modkarma(cc, -15);
+    modify_karma(cc, -15);
     return;
 }
 
@@ -27969,7 +27944,7 @@ void eating_effect_eat_cat()
     {
         txt(lang(u8"猫を食べるなんて！！"s, u8"How can you eat a cat!!"s));
     }
-    modkarma(0, -5);
+    modify_karma(0, -5);
     return;
 }
 
@@ -36404,7 +36379,7 @@ void label_1754()
             {
                 txt(lang(
                     u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
-                modkarma(0, 1);
+                modify_karma(0, 1);
                 p = rnd(8) + 10;
                 if (sdata.get(p, 0).original_level >= 10)
                 {
@@ -38899,7 +38874,7 @@ void label_1879()
                     txt(lang(
                         u8"イカサマが見つかってしまった…"s,
                         u8"You are caught in cheating..."s));
-                    modkarma(0, -5);
+                    modify_karma(0, -5);
                     list(0, listmax) = 0;
                     listn(0, listmax) =
                         lang(u8"濡れ衣だ！"s, u8"I didn't do it!"s);
@@ -40590,7 +40565,7 @@ label_1894_internal:
         {
             txt(lang(
                 u8"あなたは遺留品をあさった。"s, u8"You loot the remains."s));
-            modkarma(0, -2);
+            modify_karma(0, -2);
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (1 + rnd(3)); cnt < cnt_end; ++cnt)
@@ -40617,7 +40592,7 @@ label_1894_internal:
             txt(lang(
                 u8"あなたは骨と遺留品を埋葬した。"s,
                 u8"You bury the corpse with respect."s));
-            modkarma(0, 5);
+            modify_karma(0, 5);
         }
         goto label_1895_internal;
     case 2:
@@ -41075,7 +41050,7 @@ void label_1901()
                     u8"名声値を"s + p + u8"失った。"s,
                     u8"You lose "s + p + u8" fame."s));
                 txtmore();
-                modkarma(0, -30 * 2);
+                modify_karma(0, -30 * 2);
             }
         }
         else
@@ -47161,7 +47136,7 @@ void what_do_you_wish_for()
             wish_end();
             return;
         }
-        modkarma(0, cdata[0].karma / 2 * -1);
+        modify_karma(0, cdata[0].karma / 2 * -1);
         txt(lang(
             u8"あら…都合のいいことを言うのね。"s,
             u8"What a convenient wish!"s));
@@ -56805,7 +56780,7 @@ void label_2147()
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
-            modkarma(0, -1);
+            modify_karma(0, -1);
         }
         else
         {
@@ -57138,7 +57113,7 @@ void continuous_action_others()
                 txtmore();
                 txt(lang(
                     u8"盗みを見咎められた！"s, u8"You are found stealing."s));
-                modkarma(0, -5);
+                modify_karma(0, -5);
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
@@ -57300,7 +57275,7 @@ void continuous_action_others()
                 txt(lang(
                     u8"あなたは良心の呵責を感じた。"s,
                     u8"You feel the stings of conscience."s));
-                modkarma(0, -1);
+                modify_karma(0, -1);
             }
         }
     }
@@ -58481,11 +58456,11 @@ void label_2161()
                     {
                         if (cdata[cc].relationship > 0)
                         {
-                            modkarma(0, -5);
+                            modify_karma(0, -5);
                         }
                         else
                         {
-                            modkarma(0, -1);
+                            modify_karma(0, -1);
                         }
                     }
                     modimp(tc, -25);
@@ -60995,7 +60970,7 @@ void label_2201()
                 name(tc) + u8"は睡眠を妨害された。"s,
                 name(cc) + u8" disturb"s + _s(cc) + u8" "s + his(tc)
                     + u8" sleep."s));
-            modkarma(cc, -1);
+            modify_karma(cc, -1);
             cdata[tc].emotion_icon = 418;
         }
         cdata[tc].sleep = 0;
@@ -62305,7 +62280,7 @@ void do_open_command()
     int refweight = 0;
     if (inv[ci].id == 361)
     {
-        modkarma(0, -10);
+        modify_karma(0, -10);
         invctrl(0) = 22;
         invctrl(1) = 0;
         invfile = inv[ci].param1;
@@ -62659,11 +62634,11 @@ void open_box()
     inv[ri].param1 = 0;
     if (inv[ri].id == 284)
     {
-        modkarma(0, -4);
+        modify_karma(0, -4);
     }
     if (inv[ri].id == 283)
     {
-        modkarma(0, -8);
+        modify_karma(0, -8);
     }
     return;
 }
@@ -67372,7 +67347,7 @@ void label_2244()
             cdata[0].gold -= p;
             snd(12);
             cdata[tc].gold += p;
-            modkarma(0, 2);
+            modify_karma(0, 2);
             listmax = 0;
             buff = lang(
                 _thanks(2) + u8"この恩は一生忘れない"s + _yo(),
@@ -71727,7 +71702,7 @@ void failed_quest()
             txt(lang(
                 u8"あなたは重大な罪を犯した!"s,
                 u8"You comit a serious crime!"s));
-            modkarma(0, -20);
+            modify_karma(0, -20);
         }
         if (qdata(3, rq) == 1007)
         {
@@ -71802,7 +71777,7 @@ void failed_quest()
                     }
                 }
             }
-            modkarma(0, -10);
+            modify_karma(0, -10);
         }
         qdata(3, rq) = 0;
         qdata(8, rq) = 0;
@@ -72049,7 +72024,7 @@ void complete_quest()
             }
         }
     }
-    modkarma(0, 1);
+    modify_karma(0, 1);
     gdata(74) = calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
     txt(lang(
@@ -76425,7 +76400,7 @@ void pass_one_turn(bool label_2738_flg)
                     txtmore();
                     txt(lang(
                         u8"あなたは法を犯した。"s, u8"You commit a crime."s));
-                    modkarma(0, -10);
+                    modify_karma(0, -10);
                 }
                 snd(72);
                 txt(lang(

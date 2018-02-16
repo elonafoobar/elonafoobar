@@ -394,7 +394,7 @@ void proc_event()
             }
             if (cdata[0].karma < -30)
             {
-                modkarma(0, 10);
+                modify_karma(0, 10);
             }
         }
         else
@@ -992,11 +992,11 @@ void proc_event()
         }
         if (mdata(6) == 3 || mdata(6) == 2)
         {
-            modkarma(0, -80 + trait(162) * 60);
+            modify_karma(0, -80 + trait(162) * 60);
         }
         else
         {
-            modkarma(0, -10);
+            modify_karma(0, -10);
         }
         goto label_2755_internal;
     case 18:

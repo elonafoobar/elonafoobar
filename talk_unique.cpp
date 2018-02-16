@@ -2176,7 +2176,7 @@ void talk_unique()
                         u8"エーテル抗体を1本渡した。"s,
                         u8"You hand her a potion."s));
                     snd(13);
-                    modkarma(0, 20);
+                    modify_karma(0, 20);
                     listmax = 0;
                     buff = lang(
                         u8"ありがとうございます。あなたは本当に優しい心の持ち主ね。ジュア様のご加護があるのかしら、なんだか聖夜祭の間はお薬がよく効く気がするわ。"s,
@@ -2252,7 +2252,7 @@ void talk_unique()
                     u8"エーテル抗体を1本渡した。"s,
                     u8"You hand her a potion."s));
                 snd(13);
-                modkarma(0, 20);
+                modify_karma(0, 20);
                 listmax = 0;
                 buff = lang(
                     u8"そんなものいくら飲んでも、元には戻らないのに…そんなもの…ありがとう…"s,
@@ -2430,12 +2430,12 @@ void talk_unique()
             {
                 dmgcon(tcbk, 11, 1000);
                 f = 1;
-                modkarma(0, 2);
+                modify_karma(0, 2);
             }
             else
             {
                 f = 0;
-                modkarma(0, -15);
+                modify_karma(0, -15);
             }
             listmax = 0;
             buff = lang(

@@ -1510,7 +1510,7 @@ void modcorrupt(int = 0);
 void modgrowth(int = 0, int = 0, int = 0);
 void modheight(int = 0, int = 0);
 void modimp(int = 0, int = 0);
-void modkarma(int = 0, int = 0);
+void modify_karma(int, int);
 void modrank(int = 0, int = 0, int = 0);
 void modweight(int = 0, int = 0, int = 0);
 void msg_clear();

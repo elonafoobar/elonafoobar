@@ -2286,7 +2286,7 @@ label_2181_internal:
             modimp(rc, 15);
             if (rc >= 16)
             {
-                modkarma(0, 2);
+                modify_karma(0, 2);
             }
         }
         break;
