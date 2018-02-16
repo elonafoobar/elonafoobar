@@ -8511,33 +8511,20 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
 
 
 
-int getworker(int prm_578, int prm_579)
+int getworker(int map_id, int prm_579)
 {
-    int p_at_m78 = 0;
-    p_at_m78 = -1;
+    int ret = -1;
+    for (int i = 1; i < 16; ++i)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        if (prm_579 != 0 && i != prm_579)
+            continue;
+        if (cdata[i].current_map == map_id)
         {
-            if (cnt == 0)
-            {
-                continue;
-            }
-            if (prm_579 != 0)
-            {
-                if (cnt != prm_579)
-                {
-                    continue;
-                }
-            }
-            if (cdata[cnt].current_map == prm_578)
-            {
-                p_at_m78 = cnt;
-                break;
-            }
+            ret = i;
+            break;
         }
     }
-    return p_at_m78;
+    return ret;
 }
 
 
