@@ -8207,19 +8207,10 @@ void modrank(int prm_552, int prm_553, int prm_554)
 
 
 
-void modgrowth(int prm_559, int prm_560, int prm_561)
+void modify_potential(int cc, int id, int delta)
 {
-    int growth_at_m76 = 0;
-    growth_at_m76 = sdata.get(prm_560, prm_559).potential + prm_561;
-    if (growth_at_m76 > 400)
-    {
-        growth_at_m76 = 400;
-    }
-    if (growth_at_m76 < 2)
-    {
-        growth_at_m76 = 2;
-    }
-    sdata.get(prm_560, prm_559).potential = growth_at_m76;
+    sdata.get(id, cc).potential =
+        std::clamp(sdata.get(id, cc).potential + delta, 2, 400);
 }
 
 
@@ -8232,14 +8223,14 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
         if (prm_562 == 0)
         {
             spell(prm_563 - 400) += prm_565;
-            modgrowth(prm_562, prm_563, 1);
+            modify_potential(prm_562, prm_563, 1);
         }
     }
     if (sdata.get(prm_563, prm_562).original_level != 0)
     {
         if (prm_563 < 400)
         {
-            modgrowth(prm_562, prm_563, 20);
+            modify_potential(prm_562, prm_563, 20);
         }
         return;
     }
@@ -8250,11 +8241,11 @@ void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
     }
     if (prm_563 >= 400)
     {
-        modgrowth(prm_562, prm_563, 200);
+        modify_potential(prm_562, prm_563, 200);
     }
     else
     {
-        modgrowth(prm_562, prm_563, 50);
+        modify_potential(prm_562, prm_563, 50);
     }
     sdata.get(prm_563, prm_562).original_level = std::clamp(lv_at_m76, 0, 2000);
     r1 = prm_562;
@@ -26994,8 +26985,8 @@ void apply_general_eating_effect()
             ++fdmax;
         }
         nutrition = 500;
-        modgrowth(cc, 10, 2);
-        modgrowth(cc, 11, 2);
+        modify_potential(cc, 10, 2);
+        modify_potential(cc, 11, 2);
         if (cc == 0)
         {
             txtmore();
@@ -27057,8 +27048,8 @@ void apply_general_eating_effect()
             ++fdmax;
         }
         nutrition = 500;
-        modgrowth(cc, 16, 2);
-        modgrowth(cc, 15, 2);
+        modify_potential(cc, 16, 2);
+        modify_potential(cc, 15, 2);
         if (cc == 0)
         {
             txtmore();
@@ -27119,8 +27110,8 @@ void apply_general_eating_effect()
             fdlist(1, fdmax) = 10;
             ++fdmax;
         }
-        modgrowth(cc, 12, 2);
-        modgrowth(cc, 13, 2);
+        modify_potential(cc, 12, 2);
+        modify_potential(cc, 13, 2);
         nutrition = 500;
         if (cc == 0)
         {
@@ -27183,8 +27174,8 @@ void apply_general_eating_effect()
             ++fdmax;
         }
         nutrition = 500;
-        modgrowth(cc, 17, 2);
-        modgrowth(cc, 14, 2);
+        modify_potential(cc, 17, 2);
+        modify_potential(cc, 14, 2);
         if (cc == 0)
         {
             txtmore();
@@ -27402,7 +27393,7 @@ void apply_general_eating_effect()
                     {
                         continue;
                     }
-                    modgrowth(cc, cnt, rnd(10) + 1);
+                    modify_potential(cc, cnt, rnd(10) + 1);
                 }
             }
         }
@@ -47487,7 +47478,7 @@ label_1999_internal:
                         + i18n::_(u8"ability", std::to_string(p), u8"name")
                         + u8" skill improves!"s));
                 skillmod(p, 0, 1000);
-                modgrowth(0, p, 25);
+                modify_potential(0, p, 25);
             }
         }
         else
@@ -50242,7 +50233,7 @@ label_2035_internal:
             --cdata[0].skill_bonus;
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
-            modgrowth(
+            modify_potential(
                 cc,
                 csskill,
                 std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
@@ -57552,7 +57543,7 @@ void label_2151()
                 {
                     break;
                 }
-                modgrowth(0, 10 + rnd(8), 1);
+                modify_potential(0, 10 + rnd(8), 1);
                 ++grown;
                 if (cnt > 6)
                 {
@@ -66837,7 +66828,7 @@ void label_2244()
                 if (chatval == 2)
                 {
                     cdata[0].platinum_coin -= calctraincost(csskill, 0, 1);
-                    modgrowth(
+                    modify_potential(
                         cc,
                         csskill,
                         std::clamp(
@@ -67281,7 +67272,7 @@ void label_2244()
             name(0) + your(0) + u8" potential of "s
                 + i18n::_(u8"ability", std::to_string(chatval), u8"name")
                 + u8" greatly expands."s));
-        modgrowth(0, chatval, 10);
+        modify_potential(0, chatval, 10);
         listmax = 0;
         buff = lang(
             u8"うむ、なかなか見所がある"s + _yo(),
@@ -68316,7 +68307,7 @@ void label_2254()
         if (csctrl == 2)
         {
             cdata[0].platinum_coin -= calctraincost(csskill, cc);
-            modgrowth(
+            modify_potential(
                 cc,
                 csskill,
                 std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
@@ -73664,7 +73655,7 @@ void label_2693()
                                     {
                                         continue;
                                     }
-                                    modgrowth(cc, p, 4);
+                                    modify_potential(cc, p, 4);
                                     break;
                                 }
                             }

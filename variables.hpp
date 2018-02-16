@@ -1507,7 +1507,7 @@ void mapitem_fire(int = 0, int = 0);
 void matdelmain(int = 0, int = 0);
 void matgetmain(int = 0, int = 0, int = 0);
 void modcorrupt(int = 0);
-void modgrowth(int = 0, int = 0, int = 0);
+void modify_potential(int, int, int);
 void modheight(int = 0, int = 0);
 void modimp(int = 0, int = 0);
 void modify_karma(int, int);

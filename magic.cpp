@@ -2717,7 +2717,8 @@ label_2181_internal:
                         {
                             continue;
                         }
-                        modgrowth(tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                        modify_potential(
+                            tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
                         if (cnt2 == 0)
                         {
                             s = lang(""s, u8"The "s);
@@ -2792,7 +2793,7 @@ label_2181_internal:
         skillexp(18, tc, efstatusfix(-4000, -1000, 8000, 12000));
         if (efstatus == 1)
         {
-            modgrowth(tc, 18, 15);
+            modify_potential(tc, 18, 15);
             txtef(2);
             txt(lang(u8"あつつ！"s, u8"It really burns!"s));
         }
@@ -2806,7 +2807,7 @@ label_2181_internal:
                 int cnt = 10;
                 for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
                 {
-                    modgrowth(
+                    modify_potential(
                         tc,
                         cnt,
                         rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
@@ -2830,7 +2831,8 @@ label_2181_internal:
                     name(tc) + u8"の"s + valn + u8"の潜在能力が上昇した。"s,
                     name(tc) + your(tc) + u8" potential of "s + valn
                         + u8" expands."s));
-                modgrowth(tc, i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
+                modify_potential(
+                    tc, i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
                 snd(24);
             }
             else
@@ -2839,7 +2841,7 @@ label_2181_internal:
                     name(tc) + u8"の"s + valn + u8"の潜在能力が減少した。"s,
                     name(tc) + your(tc) + u8" potential of "s + valn
                         + u8" decreases."s));
-                modgrowth(
+                modify_potential(
                     tc,
                     i,
                     (rnd(sdata.get(i, tc).potential / 10 + 10) + 1) * -1);
