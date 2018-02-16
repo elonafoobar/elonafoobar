@@ -808,14 +808,19 @@ void cell_draw()
             }
             if (map(x_, y_, 5) != 0)
             {
-                if (map(x_, y_, 5) < 0)
+                const bool mode_6_or_9 = mode == 6 || mode == 9;
+                if (mode_6_or_9)
                 {
-                    if (mode == 6 || mode == 9)
-                    {
-                        i_ = 0;
-                        p_ = 363;
-                        goto label_0380_internal;
-                    }
+                    i_ = 0;
+                    p_ = 363;
+                }
+                else
+                {
+                    i_ = wpeek(map(x_, y_, 5), 2);
+                    p_ = wpeek(map(x_, y_, 5), 0);
+                }
+                if (map(x_, y_, 5) < 0 && !mode_6_or_9)
+                {
                     p_ = -map(x_, y_, 5);
                     flooritem_(0) = p_ % 1000 + 5080;
                     flooritem_(1) = p_ / 1000 % 1000 + 5080;
@@ -907,9 +912,6 @@ void cell_draw()
                 }
                 else
                 {
-                    i_ = wpeek(map(x_, y_, 5), 2);
-                    p_ = wpeek(map(x_, y_, 5), 0);
-                label_0380_internal:
                     prepare_item_image(p_, i_);
                     if (mdata(6) == 1)
                     {
