@@ -9692,11 +9692,10 @@ void display_customkey(const std::string& key, int x, int y)
 
 
 
-void display_key(int prm_641, int prm_642, int prm_643)
+void display_key(int x, int y, int nth)
 {
-    pos(prm_641, prm_642);
-    gcopy(3, prm_643 * 24 + 72, 30, 24, 18);
-    return;
+    pos(x, y);
+    gcopy(3, nth * 24 + 72, 30, 24, 18);
 }
 
 
