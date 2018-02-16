@@ -1293,7 +1293,7 @@ void wish_for_card();
 void wish_for_figure();
 void select_wished_character();
 void do_short_cut();
-void label_2004();
+void do_dig_command();
 void label_2005();
 void label_2006();
 void label_2007();

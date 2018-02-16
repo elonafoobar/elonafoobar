@@ -47980,7 +47980,7 @@ void do_short_cut()
 
 
 
-void label_2004()
+void do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
@@ -78351,7 +78351,7 @@ label_2747:
     }
     if (key == key_dig)
     {
-        label_2004();
+        do_dig_command();
         return;
     }
     if (key == key_bash)
@@ -78492,6 +78492,22 @@ label_2747:
     cdata[0].direction = gdata(35);
     if (p == 1)
     {
+        // Autodig
+        int x = cdata[0].next_position.x;
+        int y = cdata[0].next_position.y;
+        if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
+            && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
+            && mdata(6) != 1)
+        {
+            refx = x;
+            refy = y;
+            tlocx = x;
+            tlocy = y;
+            screenupdate = -1;
+            update_screen();
+            label_2224();
+            return;
+        }
         label_2203();
         return;
     }
