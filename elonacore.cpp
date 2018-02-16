@@ -8963,12 +8963,11 @@ int breath_list()
 
 
 
-void draw_emo(int prm_615, int prm_616, int prm_617)
+void draw_emo(int cc, int x, int y)
 {
     gmode(2, 16, 16);
-    pos(prm_616 + 16, prm_617);
-    gcopy(3, 32 + cdata[prm_615].emotion_icon % 100 * 16, 608);
-    return;
+    pos(x + 16, y);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608);
 }
 
 
