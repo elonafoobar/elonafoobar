@@ -875,7 +875,6 @@ std::string cnvrank(int = 0);
 std::string cnvrare(int = 0);
 std::string cnvtalk(const std::string&);
 std::string cnvweight(int = 0);
-std::string del_str(const std::string&, const std::string&);
 std::string does(int = 0);
 std::string elename(int = 0);
 std::string fixtxt(const std::string&, int = 0);

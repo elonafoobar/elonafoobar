@@ -10561,29 +10561,6 @@ void arrayfile(bool fread, std::string_view fmode_str, const fs::path& filepath)
 
 
 
-std::string del_str(const std::string& prm_694, const std::string& prm_695)
-{
-    std::string s_at_m99;
-    s_at_m99 = prm_694;
-    {
-        int cnt = 0;
-        for (;; ++cnt)
-        {
-            if (!strutil::contains(s_at_m99, prm_695))
-            {
-                break;
-            }
-            s_at_m99 = strmid(s_at_m99, 0, instr(s_at_m99, 0, prm_695))
-                + strmid(s_at_m99,
-                         (instr(s_at_m99, 0, prm_695) + std::size(prm_695)),
-                         100);
-        }
-    }
-    return s_at_m99;
-}
-
-
-
 std::string cnv_str(
     std::string& prm_696,
     const std::string& prm_697,
@@ -46759,17 +46736,17 @@ void fix_wish()
 {
     if (jp)
     {
-        inputlog = del_str(inputlog, u8","s);
-        inputlog = del_str(inputlog, u8" "s);
-        inputlog = del_str(inputlog, u8"　"s);
+        inputlog = strutil::remove_str(inputlog, u8",");
+        inputlog = strutil::remove_str(inputlog, u8" ");
+        inputlog = strutil::remove_str(inputlog, u8"　");
     }
     else
     {
         inputlog = strutil::to_lower(inputlog(0));
     }
-    inputlog = del_str(inputlog, lang(u8"アイテム"s, u8"item"s));
-    inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill "s));
-    inputlog = del_str(inputlog, lang(u8"スキル"s, u8"skill"s));
+    inputlog = strutil::remove_str(inputlog, lang(u8"アイテム", u8"item"));
+    inputlog = strutil::remove_str(inputlog, lang(u8"スキル", u8"skill "));
+    inputlog = strutil::remove_str(inputlog, lang(u8"スキル", u8"skill"));
     return;
 }
 
