@@ -1544,7 +1544,7 @@ void showcard2(int = 0, int = 0);
 void showcardholder();
 void showcardpile();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
-void showscroll(int = 0, int = 0, int = 0, int = 0);
+void showscroll(const std::string&, int, int, int, int);
 void showtitle(const std::string&, const std::string&, int = 0, int = 0);
 void sickifcursed(int = 0, int = 0, int = 0);
 void skillgain(int = 0, int = 0, int = 0, int = 0);

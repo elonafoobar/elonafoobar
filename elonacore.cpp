@@ -189,6 +189,64 @@ int ask_direction_to_close()
 
 
 
+void draw_scroll(int x, int y, int width, int height)
+{
+    int x3 = width + x - width % 8 - 64;
+    int y3 = height + y - height % 8 - 64;
+
+    for (int i = 0; i < width / 8; ++i)
+    {
+        if (i < 8)
+        {
+            if (i == 0)
+            {
+                pos(x, y);
+                gcopy(7, 0, 0, 64, 48);
+                pos(x, y3);
+                gcopy(7, 0, 144, 64, 48);
+            }
+            continue;
+        }
+        if (i < width / 8 - 8)
+        {
+            pos(i * 8 + x, y);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48);
+            pos(i * 8 + x, y3);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48);
+            continue;
+        }
+        pos(x3, y);
+        gcopy(7, 208, 0, 64, 48);
+        pos(x3, y3);
+        gcopy(7, 208, 144, 64, 48);
+        break;
+    }
+
+    for (int i = 0; i < height / 8 - 14; ++i)
+    {
+        for (int j = 0; j < width / 8; ++j)
+        {
+            if (j == 0)
+            {
+                pos(x, i * 8 + y + 48);
+                gcopy(7, 0, i % 12 * 8 + 48, 64, 8);
+                continue;
+            }
+            if (j < width / 8 - 15)
+            {
+                pos(j * 8 + x + 56, i * 8 + y + 48);
+                gcopy(7, j % 18 * 8 + 64, i % 12 * 8 + 48, 8, 8);
+                continue;
+            }
+            pos(x3, i * 8 + y + 48);
+            gcopy(7, 208, i % 12 * 8 + 48, 64, 8);
+            break;
+        }
+    }
+}
+
+
+
 } // namespace
 
 
@@ -9770,137 +9828,45 @@ void lenfix(std::string& prm_644, int prm_645)
 
 
 
-void showscroll(int prm_646, int prm_647, int prm_648, int prm_649)
+void showscroll(const std::string& title, int x, int y, int width, int height)
 {
-    int x_at_m91 = 0;
-    int y_at_m91 = 0;
-    int x3_at_m91 = 0;
-    int y3_at_m91 = 0;
-    int cnt2_at_m91 = 0;
+    if (windowshadow != 0)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-        {
-            if (cnt == 0)
-            {
-                if (windowshadow == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    gmode(6, -1, -1, 80);
-                    x_at_m91 = prm_646 + 3;
-                    y_at_m91 = prm_647 + 3;
-                    windowshadow = 0;
-                }
-            }
-            else
-            {
-                gmode(2);
-                x_at_m91 = prm_646;
-                y_at_m91 = prm_647;
-            }
-            x3_at_m91 = prm_648 + x_at_m91 - prm_648 % 8 - 64;
-            y3_at_m91 = prm_649 + y_at_m91 - prm_649 % 8 - 64;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (prm_648 / 8); cnt < cnt_end; ++cnt)
-                {
-                    if (cnt < 8)
-                    {
-                        if (cnt == 0)
-                        {
-                            pos(x_at_m91, y_at_m91);
-                            gcopy(7, 0, 0, 64, 48);
-                            pos(x_at_m91, y3_at_m91);
-                            gcopy(7, 0, 144, 64, 48);
-                        }
-                        continue;
-                    }
-                    if (cnt < prm_648 / 8 - 8)
-                    {
-                        pos(cnt * 8 + x_at_m91, y_at_m91);
-                        gcopy(7, (cnt - 8) % 18 * 8 + 64, 0, 8, 48);
-                        pos(cnt * 8 + x_at_m91, y3_at_m91);
-                        gcopy(7, (cnt - 8) % 18 * 8 + 64, 144, 8, 48);
-                        continue;
-                    }
-                    pos(x3_at_m91, y_at_m91);
-                    gcopy(7, 208, 0, 64, 48);
-                    pos(x3_at_m91, y3_at_m91);
-                    gcopy(7, 208, 144, 64, 48);
-                    break;
-                }
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (prm_649 / 8 - 14); cnt < cnt_end;
-                     ++cnt)
-                {
-                    cnt2_at_m91 = cnt;
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (prm_648 / 8); cnt < cnt_end;
-                             ++cnt)
-                        {
-                            if (cnt == 0)
-                            {
-                                pos(x_at_m91, cnt2_at_m91 * 8 + y_at_m91 + 48);
-                                gcopy(7, 0, cnt2_at_m91 % 12 * 8 + 48, 64, 8);
-                                continue;
-                            }
-                            if (cnt < prm_648 / 8 - 15)
-                            {
-                                pos(cnt * 8 + x_at_m91 + 56,
-                                    cnt2_at_m91 * 8 + y_at_m91 + 48);
-                                gcopy(
-                                    7,
-                                    cnt % 18 * 8 + 64,
-                                    cnt2_at_m91 % 12 * 8 + 48,
-                                    8,
-                                    8);
-                                continue;
-                            }
-                            pos(x3_at_m91, cnt2_at_m91 * 8 + y_at_m91 + 48);
-                            gcopy(7, 208, cnt2_at_m91 % 12 * 8 + 48, 64, 8);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        gmode(6, -1, -1, 80);
+        draw_scroll(x + 3, y + 3, width, height);
+        windowshadow = 0;
+        gmode(2);
     }
-    if (s != ""s)
+    draw_scroll(x, y, width, height);
+
+    if (std::empty(title))
+        return;
+
+    pos(x + 40, y + height - 67 - height % 8);
+    gcopy(3, 96, 360, 24, 16);
+    color(194, 173, 161);
+    line(
+        x + 60,
+        y + height - 68 - height % 8,
+        x + width - 40,
+        y + height - 68 - height % 8);
+    color(224, 213, 191);
+    line(
+        x + 60,
+        y + height - 69 - height % 8,
+        x + width - 40,
+        y + height - 69 - height % 8);
+    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    color(0, 0, 0);
+    pos(x + 68, y + height - 63 - height % 8);
+    mes(s);
+    if (pagesize != 0)
     {
-        pos(x_at_m91 + 40, y_at_m91 + prm_649 - 67 - prm_649 % 8);
-        gcopy(3, 96, 360, 24, 16);
-        color(194, 173, 161);
-        line(
-            x_at_m91 + 60,
-            y_at_m91 + prm_649 - 68 - prm_649 % 8,
-            x_at_m91 + prm_648 - 40,
-            y_at_m91 + prm_649 - 68 - prm_649 % 8);
-        color(224, 213, 191);
-        line(
-            x_at_m91 + 60,
-            y_at_m91 + prm_649 - 69 - prm_649 % 8,
-            x_at_m91 + prm_648 - 40,
-            y_at_m91 + prm_649 - 69 - prm_649 % 8);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-        color(0, 0, 0);
-        pos(x_at_m91 + 68, y_at_m91 + prm_649 - 63 - prm_649 % 8);
+        s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
-        if (pagesize != 0)
-        {
-            s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-            pos(x_at_m91 + prm_648 - strlen_u(s) * 7 - 40,
-                y_at_m91 + prm_649 - 63 - prm_649 % 8);
-            mes(s);
-        }
     }
-    return;
 }
 
 
@@ -37351,7 +37317,7 @@ label_1860_internal:
 label_1861_internal:
     redraw(0);
     s = strhint2 + strhint3b;
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"所持マテリアル"s, u8"Name"s), wx + 38, wy + 36);
     display_topic(lang(u8"説明"s, u8"Detail"s), wx + 296, wy + 36);
     keyrange = 0;
@@ -69918,7 +69884,7 @@ label_2277_internal:
 label_2278_internal:
     redraw(0);
     s = strhint2 + strhint3b;
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
@@ -70112,7 +70078,7 @@ label_2282_internal:
 label_2283_internal:
     redraw(0);
     s = strhint2 + strhint3b;
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     color(0, 0, 0);
@@ -74982,7 +74948,7 @@ void label_2707()
     wy = winposy(wh);
     windowanime(wx, wy, ww, wh, 10, 4);
     s = lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s);
-    showscroll(wx, wy, ww, wh);
+    showscroll(s, wx, wy, ww, wh);
     net_read();
     buff = "";
     notesel(buff);
