@@ -254,9 +254,6 @@ void load_config()
             u8"windowAnime",
             [&](auto value) { cfg_windowanime = value; }),
         std::make_unique<config_integer>(
-            u8"exAnime",
-            [&](auto value) {}),
-        std::make_unique<config_integer>(
             u8"hide_autoIdentify",
             [&](auto value) { cfg_hideautoidentify = value; }),
         std::make_unique<config_integer>(

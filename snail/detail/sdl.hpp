@@ -4,6 +4,7 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include "../../lib/noncopyable.hpp"
 
@@ -56,7 +57,7 @@ T* enforce_img(T* result)
 template <typename T>
 T* enforce_mixer(T* result)
 {
-    // return result ? result : throw sdl_error(::MIX_GetError());
+    return result ? result : throw sdl_error(::Mix_GetError());
 }
 
 
