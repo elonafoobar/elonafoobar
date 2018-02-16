@@ -1,6 +1,7 @@
 #include "input.hpp"
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 #include <tuple>
 
 using namespace elona::snail;
@@ -169,107 +170,6 @@ namespace elona::snail
 {
 
 
-char to_char(key k)
-{
-    switch (k)
-    {
-    case key::key_0: return '0';
-    case key::key_1: return '1';
-    case key::key_2: return '2';
-    case key::key_3: return '3';
-    case key::key_4: return '4';
-    case key::key_5: return '5';
-    case key::key_6: return '6';
-    case key::key_7: return '7';
-    case key::key_8: return '8';
-    case key::key_9: return '9';
-    case key::key_a: return 'a';
-    case key::key_b: return 'b';
-    case key::key_c: return 'c';
-    case key::key_d: return 'd';
-    case key::key_e: return 'e';
-    case key::key_f: return 'f';
-    case key::key_g: return 'g';
-    case key::key_h: return 'h';
-    case key::key_i: return 'i';
-    case key::key_j: return 'j';
-    case key::key_k: return 'k';
-    case key::key_l: return 'l';
-    case key::key_m: return 'm';
-    case key::key_n: return 'n';
-    case key::key_o: return 'o';
-    case key::key_p: return 'p';
-    case key::key_q: return 'q';
-    case key::key_r: return 'r';
-    case key::key_s: return 's';
-    case key::key_t: return 't';
-    case key::key_u: return 'u';
-    case key::key_v: return 'v';
-    case key::key_w: return 'w';
-    case key::key_x: return 'x';
-    case key::key_y: return 'y';
-    case key::key_z: return 'z';
-    case key::space: return ' ';
-    case key::tab: return '\t';
-    case key::enter: return '\n';
-    case key::equal: return '=';
-    case key::backquote: return '`';
-    case key::quote: return '\'';
-    case key::backslash: return '\\';
-    case key::comma: return ',';
-    case key::minus: return '-';
-    case key::period: return '.';
-    case key::rightbracket: return ']';
-    case key::leftbracket: return '[';
-    case key::semicolon: return ';';
-    case key::slash: return '/';
-    case key::ampersand: return '&';
-    case key::asterisk: return '*';
-    case key::at: return '@';
-    case key::caret: return '^';
-    case key::colon: return ':';
-    case key::dollar: return '$';
-    case key::exclaim: return '!';
-    case key::greater: return '>';
-    case key::hash: return '#';
-    case key::leftparen: return '(';
-    case key::less: return '<';
-    case key::percent: return '%';
-    case key::plus: return '+';
-    case key::question: return '?';
-    case key::quotedbl: return '"';
-    case key::rightparen: return ')';
-    case key::underscore: return '_';
-    case key::keypad_0: return '0';
-    case key::keypad_1: return '1';
-    case key::keypad_2: return '2';
-    case key::keypad_3: return '3';
-    case key::keypad_4: return '4';
-    case key::keypad_5: return '5';
-    case key::keypad_6: return '6';
-    case key::keypad_7: return '7';
-    case key::keypad_8: return '8';
-    case key::keypad_9: return '9';
-    case key::keypad_a: return 'a';
-    case key::keypad_b: return 'b';
-    case key::keypad_c: return 'c';
-    case key::keypad_d: return 'd';
-    case key::keypad_e: return 'e';
-    case key::keypad_f: return 'f';
-    case key::keypad_space: return ' ';
-    case key::keypad_tab: return '\t';
-    case key::keypad_period: return '.';
-    case key::keypad_plus: return '+';
-    case key::keypad_minus: return '-';
-    case key::keypad_asterisk: return '*';
-    case key::keypad_slash: return '/';
-    case key::keypad_enter: return '\n';
-    case key::keypad_equal: return '=';
-    default: return '\0';
-    }
-}
-
-
 // class Mouse
 // {
 // static:
@@ -426,21 +326,6 @@ void input::set_key_repeat(int initial_key_wait, int key_wait) noexcept
 
 
 
-key input::get_pressed_key() const noexcept
-{
-    for (key k = key::none; k < key::_size;
-         k = static_cast<key>(static_cast<int>(k) + 1))
-    {
-        if (is_pressed(k))
-        {
-            return k;
-        }
-    }
-    return key::none;
-}
-
-
-
 void input::_update()
 {
     for (auto&& key : _keys)
@@ -487,6 +372,12 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
             _keys[static_cast<size_t>(std::get<0>(tuple))]._release();
         }
     }
+}
+
+
+void input::_handle_event(const ::SDL_TextInputEvent& event)
+{
+    _text = event.text;
 }
 
 

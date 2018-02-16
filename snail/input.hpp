@@ -229,9 +229,6 @@ enum class key
 };
 
 
-char to_char(key);
-
-
 
 class input final : public lib::noncopyable
 {
@@ -243,8 +240,12 @@ public:
     void set_key_repeat(int initial_key_wait, int key_wait) noexcept;
 
 
-    // Returns only one key even if you are pressing more than one key.
-    key get_pressed_key() const noexcept;
+    std::string get_text()
+    {
+        std::string ret = _text;
+        _text.clear();
+        return ret;
+    }
 
 
     virtual ~input() override = default;
@@ -255,12 +256,14 @@ public:
 
     void _update();
     void _handle_event(const ::SDL_KeyboardEvent& event);
+    void _handle_event(const ::SDL_TextInputEvent& event);
 
 
 private:
     std::array<button, static_cast<size_t>(key::_size)> _keys;
     int _initial_key_wait = 30; // frame
     int _key_wait = 5; // frame
+    std::string _text;
 
     input() = default;
 };

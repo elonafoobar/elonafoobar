@@ -143,7 +143,6 @@ void initialize_elona()
     color(0);
     boxf();
     redraw(1);
-    onkey_0();
     buffer(3, 1440, 800);
     picload(fs::u8path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
