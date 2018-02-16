@@ -1005,7 +1005,7 @@ void fixaiact(int = 0);
 void flt(int = 0, int = 0);
 void fltn(const std::string&);
 void getrandomcard(int = 0);
-void gohostile();
+void go_hostile();
 void gravecard(int = 0);
 void healcon(int = 0, int = 0, int = 0);
 void healhp(int = 0, int = 0);

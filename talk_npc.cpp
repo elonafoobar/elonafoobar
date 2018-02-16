@@ -1200,7 +1200,7 @@ void talk_npc()
             talk_npc();
             return;
         }
-        gohostile();
+        go_hostile();
         talk_end();
         return;
     }

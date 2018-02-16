@@ -8064,23 +8064,18 @@ void cs_list(
 
 
 
-void gohostile()
+void go_hostile()
 {
+    for (int cc = 57; cc < 245; ++cc)
     {
-        int cnt = 57;
-        for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        if (cdata[cc].character_role == 14 || cdata[cc].character_role == 16
+            || cdata[cc].character_role == 1010)
         {
-            if (cdata[cnt].character_role == 14
-                || cdata[cnt].character_role == 16
-                || cdata[cnt].character_role == 1010)
-            {
-                cdata[cnt].relationship = -3;
-                cdata[cnt].hate = 80;
-                cdata[cnt].emotion_icon = 218;
-            }
+            cdata[cc].relationship = -3;
+            cdata[cc].hate = 80;
+            cdata[cc].emotion_icon = 218;
         }
     }
-    return;
 }
 
 
@@ -8144,7 +8139,7 @@ void modkarma(int prm_550, int prm_551)
                 txtef(8);
                 txt(lang(
                     u8"あなたは今や罪人だ。"s, u8"You are a criminal now."s));
-                gohostile();
+                go_hostile();
             }
         }
     }
@@ -57157,7 +57152,7 @@ void continuous_action_others()
                         }
                     }
                 }
-                gohostile();
+                go_hostile();
             }
             if (tg != -1)
             {
