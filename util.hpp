@@ -28,6 +28,16 @@ inline bool contains(
 
 
 
+inline bool starts_with(
+    std::string_view str,
+    std::string_view prefix,
+    std::string_view::size_type pos = 0)
+{
+    return str.find(prefix, pos) == pos;
+}
+
+
+
 inline std::string to_lower(std::string_view source)
 {
     std::string ret;

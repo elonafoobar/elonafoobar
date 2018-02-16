@@ -1842,72 +1842,46 @@ void make_dish(int prm_523, int prm_524)
 
 
 
-int item_stack(int prm_525, int prm_526, int prm_527)
+int item_stack(int inventory_id, int ci, int show_message)
 {
-    elona_vector1<int> p_at_m65;
-    inv_getheader(prm_525);
-    p_at_m65 = 0;
-    if (inv[prm_526].quality == 6)
+    if (inv[ci].quality == 6 && the_item_db[inv[ci].id]->category < 50000)
     {
-        if (the_item_db[inv[prm_526].id]->category < 50000)
+        return 0;
+    }
+
+    bool did_stack = false;
+
+    inv_getheader(inventory_id);
+    for (int i = invhead; i < invhead + invrange; ++i)
+    {
+        if (i == ci || inv[i].number == 0 || inv[i].id != inv[ci].id)
+            continue;
+
+        bool stackable;
+        if (inv[i].id == 622)
+            stackable = inventory_id != -1 || mode == 6
+                || inv[i].position == inv[ci].position;
+        else
+            stackable =
+                inv[i].almost_euqals(inv[ci], inventory_id != -1 || mode == 6);
+
+        if (stackable)
         {
-            return p_at_m65;
+            inv[i].number += inv[ci].number;
+            inv[ci].number = 0;
+            ti = i;
+            did_stack = true;
+            break;
         }
     }
+
+    if (did_stack)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (mode != 6 && inv_getowner(ci) == -1)
         {
-            if (cnt == prm_526)
-            {
-                continue;
-            }
-            if (inv[cnt].number == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].id != inv[prm_526].id)
-            {
-                continue;
-            }
-            if (inv[cnt].id == 622)
-            {
-                if (prm_525 == -1 && mode != 6)
-                {
-                    if (inv[cnt].position.x != inv[prm_526].position.x
-                        || inv[cnt].position.y != inv[prm_526].position.y)
-                    {
-                        continue;
-                    }
-                }
-                p_at_m65(2) = 0;
-                goto label_0319_internal;
-            }
-            p_at_m65(1) = cnt;
-            p_at_m65(2) =
-                !inv(p_at_m65(1))
-                     .almost_euqals(inv(prm_526), prm_525 != -1 || mode == 6);
-        label_0319_internal:
-            if (p_at_m65(2) == 0)
-            {
-                inv[cnt].number += inv[prm_526].number;
-                inv[prm_526].number = 0;
-                p_at_m65 = 1;
-                ti = cnt;
-                break;
-            }
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
-    }
-    if (p_at_m65 == 1)
-    {
-        if (mode != 6)
-        {
-            if (inv_getowner(prm_526) == -1)
-            {
-                cell_refresh(inv[prm_526].position.x, inv[prm_526].position.y);
-            }
-        }
-        if (prm_527 != 0)
+        if (show_message)
         {
             txtmore();
             txt(lang(
@@ -1917,7 +1891,8 @@ int item_stack(int prm_525, int prm_526, int prm_527)
                     + inv[ti].number + u8")"s));
         }
     }
-    return p_at_m65;
+
+    return did_stack;
 }
 
 

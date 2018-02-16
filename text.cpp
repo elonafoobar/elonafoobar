@@ -11,7 +11,6 @@ namespace elona
 
 int p_at_m34 = 0;
 int talkref = 0;
-std::string s_at_m41;
 elona_vector1<int> p_at_m41;
 
 
@@ -4880,68 +4879,72 @@ void txtgod(int prm_407, int prm_408)
 
 
 
-std::string randomname(int)
+std::string randomname()
 {
-label_0223_internal:
-    s_at_m41 = rn1(rnd(length(rn1)));
-    if (s_at_m41 == ""s)
+    std::string ret;
+
+    while (1)
     {
-        goto label_0223_internal;
-    }
-    if (jp)
-    {
-        if (rnd(8) == 0)
+        ret = rn1(rnd(length(rn1)));
+        if (std::empty(ret))
         {
-            s_at_m41 += u8"ー"s;
+            continue;
         }
-    }
-    if (rnd(5))
-    {
-        s_at_m41 += rn2(rnd(length(rn2)));
-    }
-    p_at_m41 = std::size(s_at_m41);
-    if (p_at_m41 < 4)
-    {
-        goto label_0223_internal;
-    }
-    if (p_at_m41 < 6)
-    {
-        if (rnd(3))
+        if (jp)
         {
-            goto label_0223_internal;
+            if (rnd(8) == 0)
+            {
+                ret += u8"ー";
+            }
         }
-    }
-    if (p_at_m41 < 8)
-    {
-        if (rnd(2))
+        if (rnd(5))
         {
-            goto label_0223_internal;
+            ret += rn2(rnd(length(rn2)));
         }
-    }
-    if (jp)
-    {
-        if (strmid(s_at_m41, 0, 2) == u8"ー"s)
+        const auto length = std::size(ret);
+        if (length < 4)
         {
-            goto label_0223_internal;
+            continue;
         }
-        if (strutil::contains(s_at_m41, u8"ーッ"))
+        if (length < 6)
         {
-            goto label_0223_internal;
+            if (rnd(3))
+            {
+                continue;
+            }
         }
+        if (length < 8)
+        {
+            if (rnd(2))
+            {
+                continue;
+            }
+        }
+        if (jp)
+        {
+            if (strutil::starts_with(ret, u8"ー")
+                || strutil::contains(ret, u8"ーッ"))
+            {
+                continue;
+            }
+        }
+        break;
     }
 
-    return cnven(s_at_m41);
+    return cnven(ret);
 }
 
 
 
 std::string random_title(int prm_439)
 {
+    std::string ret;
+
     elona_vector1<std::string> randn2_at_m41;
     int rtval_at_m41 = 0;
     elona_vector1<std::string> s2_at_m41;
     // clang-format off
-label_0227_internal:
+redo:
     {
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
@@ -4959,7 +4962,7 @@ label_0227_internal:
     {
         if (rnlist(14, p_at_m41(2)) == u8"具"s)
         {
-            goto label_0227_internal;
+            goto redo;
         }
     }
     randn2_at_m41(0) = rnlist(p_at_m41(1), p_at_m41(2));
@@ -4967,80 +4970,79 @@ label_0227_internal:
     rtval_at_m41 = -1;
     if (jp)
     {
+        int cnt = 0;
+        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+            if (p_at_m41(1) == 10 || p_at_m41(1) == 11)
             {
-                if (p_at_m41(1) == 10 || p_at_m41(1) == 11)
+                if (rnd(5) == 0)
                 {
-                    if (rnd(5) == 0)
-                    {
-                        p_at_m41(1) = 0;
-                        p_at_m41(3) = rnd(2);
-                        if (p_at_m41(3) == 0)
-                        {
-                            randn2_at_m41 += u8"の"s;
-                        }
-                        break;
-                    }
-                    p_at_m41 = rnd(5);
-                    if (p_at_m41 == 0)
-                    {
-                        randn2_at_m41 += u8"・オブ・"s;
-                    }
-                    if (p_at_m41 == 1)
-                    {
-                        randn2_at_m41 = u8"ザ・"s + randn2_at_m41;
-                        rtval_at_m41 = 1;
-                        break;
-                    }
-                    if (p_at_m41 == 2)
-                    {
-                        randn2_at_m41 += u8"・"s;
-                    }
-                }
-                if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
-                {
-                    randn2_at_m41 += u8"の"s;
-                    p_at_m41(3) = rnd(10);
+                    p_at_m41(1) = 0;
+                    p_at_m41(3) = rnd(2);
                     if (p_at_m41(3) == 0)
                     {
-                        p_at_m41(1) = 10;
+                        randn2_at_m41 += u8"の"s;
                     }
+                    break;
+                }
+                p_at_m41 = rnd(5);
+                if (p_at_m41 == 0)
+                {
+                    randn2_at_m41 += u8"・オブ・"s;
+                }
+                if (p_at_m41 == 1)
+                {
+                    randn2_at_m41 = u8"ザ・"s + randn2_at_m41;
+                    rtval_at_m41 = 1;
+                    break;
+                }
+                if (p_at_m41 == 2)
+                {
+                    randn2_at_m41 += u8"・"s;
+                }
+            }
+            if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
+            {
+                randn2_at_m41 += u8"の"s;
+                p_at_m41(3) = rnd(10);
+                if (p_at_m41(3) == 0)
+                {
+                    p_at_m41(1) = 10;
                 }
             }
         }
     }
     else
     {
+        int cnt = 0;
+        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+            if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
             {
-                if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
+                if (rnd(6) == 0)
                 {
-                    if (rnd(6) == 0)
-                    {
-                        randn2_at_m41 += u8" of"s;
-                    }
-                    else if (rnd(6) == 0)
-                    {
-                        randn2_at_m41 = u8"the "s + randn2_at_m41;
-                        rtval_at_m41 = 1;
-                        break;
-                    }
+                    randn2_at_m41 += u8" of"s;
                 }
-                randn2_at_m41 += u8" "s;
+                else if (rnd(6) == 0)
+                {
+                    randn2_at_m41 = u8"the "s + randn2_at_m41;
+                    rtval_at_m41 = 1;
+                    break;
+                }
             }
+            randn2_at_m41 += u8" "s;
         }
         randn2_at_m41 = cnven(randn2_at_m41);
     }
+
     if (rtval_at_m41 == 1)
     {
-        s_at_m41 = randn2_at_m41;
-        goto label_0228_internal;
+        ret = randn2_at_m41;
+        goto skip;
     }
+
     rtval_at_m41 = -1;
+
     {
         int cnt = 0;
         for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
@@ -5079,7 +5081,7 @@ label_0227_internal:
     }
     if (rtval_at_m41 == -1)
     {
-        goto label_0227_internal;
+        goto redo;
     }
     if (en)
     {
@@ -5087,12 +5089,14 @@ label_0227_internal:
             cnven(rnlist(p_at_m41(1), p_at_m41(4)));
     }
     randn2_at_m41 += rnlist(p_at_m41(1), p_at_m41(4));
-    s_at_m41 = randn2_at_m41;
-    if (strlen_u(s_at_m41) >= 28)
+    ret = randn2_at_m41;
+    if (strlen_u(ret) >= 28)
     {
-        goto label_0227_internal;
+        goto redo;
     }
-label_0228_internal:
+
+skip:
+
     if (prm_439 == 2)
     {
         if (jp)
@@ -5110,7 +5114,7 @@ label_0228_internal:
             s2_at_m41(10) = u8"の団"s;
             if (rnd(5))
             {
-                s_at_m41 += s2_at_m41(rnd(10));
+                ret += s2_at_m41(rnd(10));
             }
         }
         else if (rnd(2))
@@ -5119,7 +5123,7 @@ label_0228_internal:
             s2_at_m41(1) = u8"The party of "s;
             s2_at_m41(2) = u8"The house of "s;
             s2_at_m41(3) = u8"Clan "s;
-            s_at_m41 = s2_at_m41(rnd(4)) + s_at_m41;
+            ret = s2_at_m41(rnd(4)) + ret;
         }
         else
         {
@@ -5130,10 +5134,11 @@ label_0228_internal:
             s2_at_m41(4) = u8"Gathering"s;
             s2_at_m41(5) = u8"House"s;
             s2_at_m41(6) = u8"Army"s;
-            s_at_m41 += u8" "s + s2_at_m41(rnd(7));
+            ret += u8" "s + s2_at_m41(rnd(7));
         }
     }
-    return s_at_m41;
+
+    return ret;
 }
 
 
