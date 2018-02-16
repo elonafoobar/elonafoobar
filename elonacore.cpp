@@ -8215,42 +8215,40 @@ void modify_potential(int cc, int id, int delta)
 
 
 
-void skillgain(int prm_562, int prm_563, int prm_564, int prm_565)
+void skillgain(int cc, int id, int initial_level, int stock)
 {
-    int lv_at_m76 = 0;
-    if (prm_563 >= 400)
+    if (id >= 400)
     {
-        if (prm_562 == 0)
+        if (cc == 0)
         {
-            spell(prm_563 - 400) += prm_565;
-            modify_potential(prm_562, prm_563, 1);
+            spell(id - 400) += stock;
+            modify_potential(cc, id, 1);
         }
     }
-    if (sdata.get(prm_563, prm_562).original_level != 0)
+    if (sdata.get(id, cc).original_level != 0)
     {
-        if (prm_563 < 400)
+        if (id < 400)
         {
-            modify_potential(prm_562, prm_563, 20);
+            modify_potential(cc, id, 20);
         }
         return;
     }
-    lv_at_m76 = sdata.get(prm_563, prm_562).original_level + prm_564;
-    if (lv_at_m76 < 1)
+    int lv = sdata.get(id, cc).original_level + initial_level;
+    if (lv < 1)
     {
-        lv_at_m76 = 1;
+        lv = 1;
     }
-    if (prm_563 >= 400)
+    if (id >= 400)
     {
-        modify_potential(prm_562, prm_563, 200);
+        modify_potential(cc, id, 200);
     }
     else
     {
-        modify_potential(prm_562, prm_563, 50);
+        modify_potential(cc, id, 50);
     }
-    sdata.get(prm_563, prm_562).original_level = std::clamp(lv_at_m76, 0, 2000);
-    r1 = prm_562;
+    sdata.get(id, cc).original_level = std::clamp(lv, 0, 2000);
+    r1 = cc;
     refresh_character();
-    return;
 }
 
 
