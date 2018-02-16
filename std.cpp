@@ -1676,9 +1676,25 @@ void GetSaveFileNameA()
 
 
 
+namespace mixer_detail
+{
+
+std::unordered_map<int, Mix_Chunk*> chunks;
+}
+
+
+
 int DSINIT()
 {
-    return 0;
+    Mix_AllocateChannels(16);
+    snail::application::instance().register_finalizer([&]() {
+        for (const auto& [_, ptr] : mixer_detail::chunks)
+        {
+            if (ptr)
+                ::Mix_FreeChunk(ptr);
+        }
+    });
+    return 1;
 }
 
 
@@ -1695,22 +1711,29 @@ void DSRELEASE(int)
 
 
 
-void DSLOADFNAME(const std::string& filename, int id)
+void DSLOADFNAME(const std::string& filename, int channel)
 {
-    (void)filename;
-    (void)id;
+    if (mixer_detail::chunks.find(channel) != std::end(mixer_detail::chunks))
+    {
+        if (mixer_detail::chunks[channel])
+            Mix_FreeChunk(mixer_detail::chunks[channel]);
+    }
+    auto chunk = snail::detail::enforce_mixer(Mix_LoadWAV(filename.c_str()));
+    mixer_detail::chunks[channel] = chunk;
 }
 
 
 
-void DSPLAY(int, int)
+void DSPLAY(int channel, int loop)
 {
+    Mix_PlayChannel(-1, mixer_detail::chunks[channel], loop ? -1 : 0);
 }
 
 
 
-void DSSTOP(int)
+void DSSTOP(int channel)
 {
+    Mix_HaltChannel(channel);
 }
 
 
@@ -1728,17 +1751,28 @@ int DSGETMASTERVOLUME()
 
 
 
-int CHECKPLAY(int id)
+int CHECKPLAY(int channel)
 {
-    (void)id;
-    return 0;
+    return Mix_Playing(channel) ? 1 : 0;
+}
+
+
+
+namespace mixer_detail
+{
+
+Mix_Music* music = nullptr;
 }
 
 
 
 int DMINIT()
 {
-    return 0;
+    snail::application::instance().register_finalizer([&]() {
+        if (mixer_detail::music)
+            ::Mix_FreeMusic(mixer_detail::music);
+    });
+    return 1;
 }
 
 
@@ -1748,21 +1782,33 @@ void DMEND()
 }
 
 
-
-void DMLOADFNAME(const std::string&, int)
+void DMLOADFNAME(const std::string& filename, int)
 {
+    if (mixer_detail::music)
+        ::Mix_FreeMusic(mixer_detail::music);
+
+    mixer_detail::music =
+        snail::detail::enforce_mixer(Mix_LoadMUS(filename.c_str()));
 }
 
 
 
-void DMPLAY(int, int)
+void DMPLAY(int loop, int)
 {
+    snail::detail::enforce_mixer(
+        Mix_PlayMusic(mixer_detail::music, loop ? -1 : 1));
 }
 
 
 
 void DMSTOP()
 {
+    ::Mix_HaltMusic();
+    if (mixer_detail::music)
+    {
+        ::Mix_FreeMusic(mixer_detail::music);
+        mixer_detail::music = nullptr;
+    }
 }
 
 

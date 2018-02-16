@@ -38,7 +38,7 @@ void enforce_mixer(int result)
 {
     if (result != 0)
     {
-        // throw sdl_error{::MIX_GetError()};
+        throw sdl_error{::Mix_GetError()};
     }
 }
 
@@ -93,14 +93,23 @@ sdl_image::~sdl_image()
 
 sdl_mixer::sdl_mixer()
 {
-    // Does nothing so far.
+    // auto flags = MIX_INIT_OGG | MIX_INIT_MP3;
+    auto flags = 0;
+    auto result = ::Mix_Init(flags);
+    if ((flags & result) != flags)
+    {
+        throw sdl_error{"Failed to initialize SDL2Mixer"};
+    }
+
+    enforce_mixer(::Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048));
 }
 
 
 
 sdl_mixer::~sdl_mixer()
 {
-    // Does nothing so far.
+    ::Mix_CloseAudio();
+    ::Mix_Quit();
 }
 
 
