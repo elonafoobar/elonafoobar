@@ -118,7 +118,7 @@ int access_class_info(int dbmode, const std::string& dbidn)
         classname = i18n::_(u8"class", dbidn, u8"name");
         buff = i18n::_(u8"class", dbidn, u8"description");
         return 0;
-    case 16: assert(dbspec == 4); return data->item_type;
+    case 16: return data->item_type;
     case 3: break;
     default: assert(0);
     }

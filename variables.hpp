@@ -823,7 +823,6 @@ int randomenclv(int = 0);
 int randomencp(int = 0);
 int randskill();
 int refchara(int = 0, int = 0);
-int refclass(int = 0, int = 0);
 int relationbetween(int = 0, int = 0);
 int relocate_chara(int = 0, int = 0, int = 0);
 int role(int = 0, int = 0, int = 0);

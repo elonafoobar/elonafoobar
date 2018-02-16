@@ -622,14 +622,6 @@ std::string lang(const std::string& prm_246, const std::string& prm_247)
 
 
 
-int refclass(int prm_261, int prm_262)
-{
-    dbspec = prm_262;
-    return access_class_info(16, cdatan(3, prm_261));
-}
-
-
-
 std::string ranktitle(int prm_265)
 {
     int p_at_m6 = 0;
@@ -25128,7 +25120,8 @@ void label_1573()
             cdata[rc].gold -= cdata[rc].gold / (1 + 3 * (cbit(17, rc) == 0));
         }
     }
-    switch (refclass(rc, 4))
+
+    switch (access_class_info(16, cdatan(3, rc)))
     {
     case 1:
         if (rnd(20) == 0)
