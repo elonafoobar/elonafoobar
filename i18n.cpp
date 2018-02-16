@@ -49,6 +49,7 @@ std::string _(
     {
         lua_rawgeti(
             lang_state.get(), -1, rnd(lua_rawlen(lang_state.get(), -1)) + 1);
+        ++pop_count;
     }
     const char* ret = lua_tostring(lang_state.get(), -1);
     lua_pop(lang_state.get(), pop_count);
