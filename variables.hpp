@@ -1584,7 +1584,7 @@ void txtmore();
 void txtnew();
 void txtsetlastword();
 void txtsetwinword(int = 0);
-void txttargetlevel();
+std::string txttargetlevel(int, int);
 void txttargetnpc(int = 0, int = 0, int = 0);
 void unzip2(const std::string&, const std::string&);
 void wake_up();

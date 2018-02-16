@@ -2481,82 +2481,75 @@ std::string elename(int prm_348)
 
 
 
-void txttargetlevel()
+std::string txttargetlevel(int cc, int tc)
 {
-    if (cdata[cc].level * 20 < cdata[tc].level)
+    int x = cdata[cc].level;
+    int y = cdata[tc].level;
+    if (x * 20 < y)
     {
-        s = lang(
-            u8"相手が巨人だとすれば、あなたは蟻のフン以下だ。"s,
+        return lang(
+            u8"相手が巨人だとすれば、あなたは蟻のフン以下だ。",
             u8"If "s + he(tc)
-                + u8" is a giant, you are less than a dropping of an ant."s);
-        return;
+                + u8" is a giant, you are less than a dropping of an ant.");
     }
-    if (cdata[cc].level * 10 < cdata[tc].level)
+    else if (x * 10 < y)
     {
-        s = lang(
-            u8"絶対に勝てない相手だ。"s,
-            cnven(he(tc)) + u8" can mince you with "s + his(tc)
-                + u8" eyes closed."s);
-        return;
+        return lang(
+            u8"絶対に勝てない相手だ。",
+            cnven(he(tc)) + u8" can mince you with " + his(tc)
+                + u8" eyes closed.");
     }
-    if (cdata[cc].level * 5 < cdata[tc].level)
+    else if (x * 5 < y)
     {
-        s = lang(
-            u8"確実に殺されるだろう。"s,
-            u8"You will get killed, a hundred percent sure."s);
-        return;
+        return lang(
+            u8"確実に殺されるだろう。",
+            u8"You will get killed, a hundred percent sure.");
     }
-    if (cdata[cc].level * 3 < cdata[tc].level)
+    else if (x * 3 < y)
     {
-        s = lang(
-            u8"奇跡が起きなければ殺されるだろう。"s,
-            u8"You will get killed unless miracles happen."s);
-        return;
+        return lang(
+            u8"奇跡が起きなければ殺されるだろう。",
+            u8"You will get killed unless miracles happen.");
     }
-    if (cdata[cc].level * 2 < cdata[tc].level)
+    else if (x * 2 < y)
     {
-        s = lang(
-            u8"少なくとも、あなたの倍は強そうだ。"s,
-            cnven(he(tc)) + u8" "s + is(tc)
-                + u8" at least twice stronger than you."s);
-        return;
+        return lang(
+            u8"少なくとも、あなたの倍は強そうだ。",
+            cnven(he(tc)) + u8" " + is(tc)
+                + u8" at least twice stronger than you.");
     }
-    if (cdata[cc].level * 3 / 2 < cdata[tc].level)
+    else if (x * 3 / 2 < y)
     {
-        s = lang(
-            u8"相手はかなり強そうだ。"s, u8"The opponent looks quite strong."s);
-        return;
+        return lang(
+            u8"相手はかなり強そうだ。", u8"The opponent looks quite strong.");
     }
-    if (cdata[cc].level < cdata[tc].level)
+    else if (x < y)
     {
-        s = lang(u8"勝てない相手ではない。"s, u8"Won't be an easy fight."s);
-        return;
+        return lang(u8"勝てない相手ではない。", u8"Won't be an easy fight.");
     }
-    if (cdata[cc].level / 3 * 2 < cdata[tc].level)
+    else if (x / 3 * 2 < y)
     {
-        s = lang(u8"たぶん勝てそうだ。"s, u8"You will probably win."s);
-        return;
+        return lang(u8"たぶん勝てそうだ。", u8"You will probably win.");
     }
-    if (cdata[cc].level / 2 < cdata[tc].level)
+    else if (x / 2 < y)
     {
-        s = lang(
-            u8"負ける気はしない。"s,
-            cnven(he(tc)) + u8" "s + is(tc) + u8" a easy opponent."s);
-        return;
+        return lang(
+            u8"負ける気はしない。",
+            cnven(he(tc)) + u8" " + is(tc) + u8" a easy opponent.");
     }
-    if (cdata[cc].level / 3 < cdata[tc].level)
+    else if (x / 3 < y)
     {
-        s = lang(
-            u8"目隠ししていても勝てそうだ。"s,
-            u8"You bet you can beat "s + him(tc)
-                + u8" with your eyes closed."s);
-        return;
+        return lang(
+            u8"目隠ししていても勝てそうだ。",
+            u8"You bet you can beat "s + him(tc) + u8" with your eyes closed.");
     }
-    s = lang(
-        u8"目隠しして座っていても勝てる。"s,
-        u8"You can absolutely beat "s + him(tc)
-            + u8" with your eyes closed and arms crossed."s);
-    return;
+    else
+    {
+        return lang(
+            u8"目隠しして座っていても勝てる。",
+            u8"You can absolutely beat "s + him(tc)
+                + u8" with your eyes closed and arms crossed.");
+    }
 }
 
 
@@ -43249,7 +43242,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         if (cbit(6, i_at_m186) == 0 || cbit(7, 0) || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
-            txttargetlevel();
+            s = txttargetlevel(cc, tc);
             color(0, 0, 0);
             pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
@@ -52419,7 +52412,7 @@ int label_2072()
 
 int label_2073()
 {
-    txttargetlevel();
+    s = txttargetlevel(cc, tc);
     txt(s);
     txtmore();
     txt(lang(
